@@ -1,0 +1,36 @@
+name: Audit actual Pacific metadata
+
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/audit-metadata.yml, src/compute_forecast/metadata_audit.py]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Fetch pinned source on hosted runner
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e . modal
+      - name: Inspect immutable cached data on Modal
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: modal run -m compute_forecast.metadata_audit
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: metadata-audit-${{ github.sha }}
+          path: artifacts/
+          retention-days: 30
