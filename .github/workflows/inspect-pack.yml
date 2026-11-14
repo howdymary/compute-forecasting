@@ -1,0 +1,97 @@
+name: Inspect authorized Pacific pack
+
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/inspect-pack.yml]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Download and verify official archive on hosted runner
+        run: |
+          python -m pip install gdown
+          mkdir -p audit
+          python - <<'PY'
+          import hashlib, pathlib, zipfile
+          import gdown
+          expected = "f0b52af28c52545732208bcc4905facd9b941aa5779da683e1d9884c283b7c7c"
+          archive = pathlib.Path("pack.zip")
+          gdown.download(id="1_TeAyT2SYBg3HcLCaFxeWVhA2K3rtN7j", output=str(archive), quiet=False)
+          digest = hashlib.file_digest(archive.open("rb"), "sha256").hexdigest()
+          if digest != expected:
+              raise SystemExit("REFUSED: archive checksum differs from the published ZIP.sha256")
+          print("Verified published archive SHA-256:", digest)
+          with zipfile.ZipFile(archive) as source:
+              for member in source.infolist():
+                  path = pathlib.PurePosixPath(member.filename)
+                  if path.is_absolute() or ".." in path.parts or (member.external_attr >> 16) & 0o170000 == 0o120000:
+                      raise SystemExit("REFUSED: unsafe archive member")
+              source.extractall("pack")
+          roots = list(pathlib.Path("pack").rglob("MANIFEST.sha256"))
+          if len(roots) != 1:
+              raise SystemExit("REFUSED: expected exactly one pack manifest")
+          root = roots[0].parent
+          failures, count = [], 0
+          for line in roots[0].read_text().splitlines():
+              if not line.strip():
+                  continue
+              wanted, filename = line.split(maxsplit=1)
+              filename = filename.lstrip(" *")
+              relative = pathlib.PurePosixPath(filename)
+              if relative.is_absolute() or ".." in relative.parts:
+                  raise SystemExit("REFUSED: unsafe manifest path")
+              file = root / filename
+              if not file.is_file() or hashlib.file_digest(file.open("rb"), "sha256").hexdigest() != wanted:
+                  failures.append(filename)
+              count += 1
+          if failures:
+              raise SystemExit("REFUSED: manifest mismatches: " + repr(failures))
+          pathlib.Path("audit/pack-root.txt").write_text(str(root))
+          pathlib.Path("audit/integrity.txt").write_text(f"archive_sha256={digest}\nmanifest_files_verified={count}\n")
+          print("Verified manifest files:", count)
+          print("Pack root:", root)
+          print("Source: Pacific Machines (2026), gpu-price-pack v0.1.1-handover; CC BY 4.0 compilation.")
+          print("Official brief: https://drive.google.com/file/d/1r-dIO5Ol6RYLmcHXRwEUFr1vIBpi5CiZ/view")
+          print("Public archive: https://drive.google.com/file/d/1_TeAyT2SYBg3HcLCaFxeWVhA2K3rtN7j/view")
+          PY
+
+      - name: Inspect license, attribution, data definitions and starter contracts
+        run: |
+          python - <<'PY'
+          import pathlib
+          root = pathlib.Path("audit/pack-root.txt").read_text().strip()
+          root = pathlib.Path(root)
+          docs = ["README.md", "DATA.md", "ATTRIBUTION.md", "LICENSE", "LICENSE.txt", "sources_register.csv", "starter/requirements.txt", "starter/run_demo.sh", "starter/build_series.py", "starter/baselines.py", "starter/scorer.py", "starter/make_sample_submission.py"]
+          for name in docs:
+              path = root / name
+              if not path.is_file():
+                  continue
+              text = path.read_text(errors="replace")
+              print("\n===== " + name + " =====\n")
+              print(text[:120000])
+          print("\n===== CSV headers only; no post-cutoff truth retrieval =====")
+          for name in ("daily_statistics.csv", "aggregator_medians.csv", "sources_register.csv"):
+              path = root / name
+              if path.is_file():
+                  with path.open() as stream:
+                      print(name + ": " + stream.readline().strip())
+          PY
+
+      - name: Save integrity evidence without redistributing the archive
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pacific-pack-integrity
+          path: audit/
+          retention-days: 14
