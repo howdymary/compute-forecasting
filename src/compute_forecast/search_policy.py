@@ -66,6 +66,26 @@ def choices(task,revealed):
     descriptions={c["id"]:f"Ridge; target representation {c['space']}; auxiliary features {c['aux']}; rolling window {c['days']} calendar days; alpha {c['alpha']}" for c in CONFIGS}
     return [(c,descriptions[c]) for c in remaining]
 
+def family_id(config):
+    return config["space"]+"__"+config["aux"]
+
+def family_choices(task,revealed):
+    metadata={c["id"]:c for c in CONFIGS};families={}
+    for identifier,description in choices(task,revealed):
+        config=metadata[identifier];key=family_id(config)
+        families.setdefault(key,[]).append((config["days"],config["alpha"]))
+    return [(key,"Target representation "+key.split("__")[0]+"; auxiliary features "+key.split("__")[1]+"; available (lookback days, alpha): "+str(parameters)) for key,parameters in families.items()]
+
+def parameter_choices(task,revealed,family):
+    metadata={c["id"]:c for c in CONFIGS}
+    return [(identifier,description) for identifier,description in choices(task,revealed) if family_id(metadata[identifier])==family]
+
+def family_question(task,revealed):
+    return question(task,revealed)+"\nFirst choose a model family. This family choice does not consume an experiment trial."
+
+def parameter_question(task,revealed,family):
+    return question(task,revealed)+"\nSelected family: "+family+". Choose one untested parameter configuration. Executing this configuration consumes one experiment trial."
+
 def finish(task,revealed):
     if len(revealed)!=6 or len(set(revealed))!=6:raise ValueError("Unequal trial budget")
     selected=min(revealed,key=lambda c:task["validation"][c]["loss"])
@@ -101,18 +121,29 @@ async def train(tasks,excluded,out,epochs=5):
     trainer=await service.create_lora_training_client(base_model=MODEL,rank=16,seed=42)
     tokenizer=trainer.get_tokenizer();renderer=renderers.get_renderer(model_info.get_recommended_renderer_name(MODEL),tokenizer);decision_renderer=DecisionRenderer(renderer)
     indexed={t["task_id"]:t for t in training}
-    pairs=[(Decision(question(indexed[e["task_id"]],e["revealed"]),choices(indexed[e["task_id"]],e["revealed"])),e["chosen_config_id"]) for e in examples]
+    pairs=[];metadata={c["id"]:c for c in CONFIGS}
+    for e in examples:
+        task=indexed[e["task_id"]];revealed=e["revealed"];family=family_id(metadata[e["chosen_config_id"]]);e["chosen_family_id"]=family
+        pairs.append((Decision(family_question(task,revealed),family_choices(task,revealed)),family))
+        pairs.append((Decision(parameter_question(task,revealed,family),parameter_choices(task,revealed,family)),e["chosen_config_id"]))
+    write(out/"training-examples.json",examples)
     datums=list(decision_choice_datums(decision_renderer,pairs));comparisons=[];updates=[];checkpoints=[];semaphore=asyncio.Semaphore(4)
+    model_calls=[]
     async def evaluate(sampler,label):
+        async def select_stage(prompt,options,stage):
+            started=time.perf_counter()
+            async with semaphore:distribution=await sample_decision(sampler,decision_renderer.render(Decision(prompt,options)))
+            if set(distribution)!={c for c,_ in options} or any(not math.isfinite(p) or p<0 for p in distribution.values()):raise ValueError("Invalid bounded action probabilities")
+            selected=max((c for c,_ in options),key=lambda c:distribution[c]);elapsed=time.perf_counter()-started
+            model_calls.append({"policy":label,"stage":stage,"runtime_seconds":elapsed,"options":len(options)})
+            return selected,distribution,elapsed
         async def episode(task):
             revealed=list(INITIAL);decisions=[]
             for step in range(4):
-                observation=model_observation(task,revealed);options=choices(task,revealed)
-                started=time.perf_counter()
-                async with semaphore:distribution=await sample_decision(sampler,decision_renderer.render(Decision(question(task,revealed),options)))
-                if set(distribution)!={c for c,_ in options} or any(not math.isfinite(p) or p<0 for p in distribution.values()):raise ValueError("Invalid bounded action probabilities")
-                selected=max((c for c,_ in options),key=lambda c:distribution[c])
-                decisions.append({"step":step,"observation":observation,"selected_config_id":selected,"probabilities":distribution,"revealed_validation_result":task["validation"][selected],"runtime_seconds":time.perf_counter()-started})
+                observation=model_observation(task,revealed)
+                family,family_probabilities,family_time=await select_stage(family_question(task,revealed),family_choices(task,revealed),"family")
+                selected,probabilities,parameter_time=await select_stage(parameter_question(task,revealed,family),parameter_choices(task,revealed,family),"parameters")
+                decisions.append({"step":step,"observation":observation,"selected_family_id":family,"family_probabilities":family_probabilities,"selected_config_id":selected,"probabilities":probabilities,"revealed_validation_result":task["validation"][selected],"runtime_seconds":family_time+parameter_time})
                 revealed.append(selected)
             row=finish(task,revealed);row["decisions"]=decisions;return row
         rows=await asyncio.gather(*(episode(t) for t in development));summary=summarize(label,rows)
@@ -136,7 +167,7 @@ async def train(tasks,excluded,out,epochs=5):
         comparisons.append(summarize("random_seed_"+str(seed),rows))
     references={method:sum(t["future_evaluator_only"][method]["loss"]*t["future_evaluator_only"][method]["n_cells"] for t in development)/sum(t["future_evaluator_only"][method]["n_cells"] for t in development) for method in ("last_value","last_value_empirical","drift","seasonal_naive")}
     selected=min((r for r in comparisons if r["policy"].startswith("sft_")),key=lambda r:r["pooled_pinball"])["policy"]
-    report={"schema_version":"1","study_kind":"six_trial_experiment_selection","model":MODEL,"lora_rank":16,"learning_rate":1e-4,"epochs":epochs,"training_examples":len(examples),"training_temporal_origins":len(training),"development_temporal_origins":len(development),"actual_training_updates":len(updates),"trial_budget_per_task":6,"common_initial_trials":INITIAL,"teacher":"Minimum validation loss among untested candidates; only matured training-period experiments","selected_checkpoint_on_development":selected,"selection_is_development_tuning":True,"metric_provenance":"Exact unrounded per-cell losses emitted by the official Pacific scorer","fixed_forecaster_references":references,"comparisons":[{k:v for k,v in r.items() if k!="traces"} for r in comparisons],"checkpoints":checkpoints,"excluded_tasks":excluded,"final_period_opened":False,"training_cost_status":"unavailable","training_cost_value":None,"created_at":datetime.now(timezone.utc).isoformat(),"code_sha":os.environ.get("GITHUB_SHA"),"limitations":["Small and temporally dependent chronological sample","Only eligible afhubbard headline A100/H100 daily-statistics targets","Eight prefixes do not increase independent temporal sample size","Grid is retrospective frozen-vintage data, not proof of historical accessibility","No improvement is assumed; negative results and regressions retained"]}
+    report={"schema_version":"1","study_kind":"six_trial_experiment_selection","model":MODEL,"lora_rank":16,"learning_rate":1e-4,"epochs":epochs,"policy_structure":"Hierarchical family (at most 6 choices), then parameters (at most 4); two model decisions per experiment","training_examples":len(examples),"training_datums":len(datums),"training_datums_seen":len(datums)*epochs,"completed_model_decisions":len(model_calls),"training_temporal_origins":len(training),"development_temporal_origins":len(development),"actual_training_updates":len(updates),"trial_budget_per_task":6,"common_initial_trials":INITIAL,"teacher":"Minimum validation loss among untested candidates; only matured training-period experiments","selected_checkpoint_on_development":selected,"selection_is_development_tuning":True,"metric_provenance":"Exact unrounded per-cell losses emitted by the official Pacific scorer","fixed_forecaster_references":references,"comparisons":[{k:v for k,v in r.items() if k!="traces"} for r in comparisons],"checkpoints":checkpoints,"excluded_tasks":excluded,"final_period_opened":False,"training_cost_status":"unavailable","training_cost_value":None,"created_at":datetime.now(timezone.utc).isoformat(),"code_sha":os.environ.get("GITHUB_SHA"),"limitations":["Small and temporally dependent chronological sample","Only eligible afhubbard headline A100/H100 daily-statistics targets","Eight prefixes do not increase independent temporal sample size","Grid is retrospective frozen-vintage data, not proof of historical accessibility","No improvement is assumed; negative results and regressions retained"]}
     write(out/"search-report.json",report)
     for r in comparisons:write(out/(r["policy"]+"-development.json"),r)
     with open(os.environ["GITHUB_STEP_SUMMARY"],"a") as f:
