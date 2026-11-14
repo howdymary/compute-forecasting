@@ -76,7 +76,7 @@ jobs:
           import json, os, re, urllib.request
           from pathlib import Path
           text=Path('artifacts/deployment.txt').read_text()
-          urls=re.findall(r'https://[a-zA-Z0-9-]+[.]modal[.]run',text)
+          urls=re.findall(r'https://[a-zA-Z0-9.-]+[.]modal[.]run',text)
           assert urls, 'No deployed web URL was returned'
           url=urls[-1]
           with urllib.request.urlopen(url+'/health',timeout=120) as response:
