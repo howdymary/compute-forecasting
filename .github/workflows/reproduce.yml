@@ -1,0 +1,67 @@
+name: Reproduce verified Compute Forecast experiments
+
+on:
+  workflow_dispatch:
+    inputs:
+      full_grid:
+        description: Run every registered training and development origin
+        type: boolean
+        default: false
+        required: true
+      train_policy:
+        description: Train five Tinker checkpoints after the full grid (requires full_grid)
+        type: boolean
+        default: false
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  reproduce:
+    if: github.ref == 'refs/heads/compute-observatory'
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - name: Fetch immutable source on hosted runner
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate the release entrypoint and causal contracts
+        run: |
+          python -m pip install -e '.[dev]' modal numpy
+          python -m pytest --junitxml=artifacts/reproduction-tests.xml
+          python -m compileall -q src
+      - name: Install CPU-only training clients if requested
+        if: inputs.train_policy == true
+        run: |
+          python -m pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install tinker tinker-cookbook
+      - name: Execute the single verified entrypoint
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+          FULL_GRID: ${{ inputs.full_grid }}
+          TRAIN_POLICY: ${{ inputs.train_policy }}
+        run: |
+          args=(reproduce)
+          if [ "$FULL_GRID" = "true" ]; then args+=(--full-grid); fi
+          if [ "$TRAIN_POLICY" = "true" ]; then args+=(--train-policy); fi
+          python -m compute_forecast "${args[@]}"
+      - name: Preserve resolved client versions
+        if: always()
+        run: |
+          mkdir -p artifacts
+          python -m pip freeze > artifacts/reproduction-client-environment.txt
+      - name: Retain actual results and reproducibility evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reproduction-${{ github.sha }}-${{ github.run_id }}
+          path: artifacts/
+          retention-days: 30
