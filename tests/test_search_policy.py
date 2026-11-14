@@ -48,3 +48,24 @@ def test_grid_rejects_validation_labels_after_the_decision_cutoff():
     next(r for r in reports if r["origin"]=="2026-05-02")["label_end"]="2026-05-10"
     grid={"protocol":"representation-study-v2","code_sha":"a"*40,"final_period_opened":False,"origins":reports}
     with pytest.raises(ValueError,match="not mature"):make_tasks(grid,"a"*40)
+
+
+def test_hierarchical_choices_preserve_every_untried_experiment_under_api_limits():
+    from compute_forecast.search_policy import family_choices,parameter_choices
+    value=task();revealed=[*INITIAL,*CANDIDATES[:3]]
+    families=family_choices(value,revealed)
+    assert 1<=len(families)<=6
+    options=[parameter_choices(value,revealed,family) for family,_ in families]
+    assert all(1<=len(stage)<=4 for stage in options)
+    identifiers=[identifier for stage in options for identifier,_ in stage]
+    assert len(identifiers)==len(set(identifiers))
+    assert set(identifiers)==set(CANDIDATES)-set(revealed)
+
+
+def test_both_hierarchical_prompts_exclude_future_evaluation_results():
+    from compute_forecast.search_policy import family_question,parameter_question,family_choices
+    original=task();changed=deepcopy(original)
+    for row in changed['future_evaluator_only'].values():row['loss']=987654.321
+    revealed=list(INITIAL);family=family_choices(original,revealed)[0][0]
+    assert family_question(original,revealed)==family_question(changed,revealed)
+    assert parameter_question(original,revealed,family)==parameter_question(changed,revealed,family)
