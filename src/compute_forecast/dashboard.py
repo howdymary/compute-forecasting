@@ -126,25 +126,35 @@ def publish_snapshot(snapshot: dict):
 @modal.concurrent(max_inputs=20)
 @modal.asgi_app()
 def web():
+    import threading
+    from importlib import metadata
     from fastapi import FastAPI
     from fastapi.responses import HTMLResponse, JSONResponse
     web_app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
-    file = Path("/public/current.json")
-    snapshot = json.loads(file.read_text()) if file.exists() else None
-    if snapshot is not None:
-        validate_snapshot(snapshot)
-    headers = {"X-Content-Type-Options": "nosniff", "Referrer-Policy": "strict-origin-when-cross-origin", "Content-Security-Policy": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'"}
+    read_lock=threading.Lock()
+    headers = {"X-Content-Type-Options": "nosniff", "Referrer-Policy": "strict-origin-when-cross-origin", "Cache-Control":"no-store", "Content-Security-Policy": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'"}
+    def latest():
+        # A warm web container must explicitly refresh commits from the publisher.
+        with read_lock:
+            public.reload()
+            file=Path("/public/current.json")
+            if not file.exists():return None,None
+            raw=file.read_bytes();snapshot=json.loads(raw)
+            validate_snapshot(snapshot)
+            return snapshot,hashlib.sha256(raw).hexdigest()
     @web_app.get("/")
     def index():
         return HTMLResponse(HTML, headers=headers)
     @web_app.get("/api/snapshot")
     def read_snapshot():
+        snapshot,digest=latest()
         if snapshot is None:
-            return JSONResponse({"error": "No measured snapshot has been published"}, status_code=503, headers=headers)
-        return JSONResponse(snapshot, headers={**headers, "Cache-Control": "public, max-age=60"})
+            return JSONResponse({"error":"No measured snapshot has been published"},status_code=503,headers=headers)
+        return JSONResponse(snapshot,headers={**headers,"ETag":digest})
     @web_app.get("/health")
     def health():
-        return JSONResponse({"status": "ok" if snapshot else "awaiting_results", "snapshot_sha": hashlib.sha256(json.dumps(snapshot,sort_keys=True).encode()).hexdigest() if snapshot else None}, headers=headers)
+        snapshot,digest=latest()
+        return JSONResponse({"status":"ok" if snapshot else "awaiting_results","snapshot_sha":digest,"code_sha":snapshot["code_sha"] if snapshot else None,"has_research":bool(snapshot and snapshot.get("research")),"has_representation":bool(snapshot and snapshot.get("representation")),"runtime_packages":{name:metadata.version(name) for name in ("fastapi","starlette","uvicorn")}},headers=headers)
     return web_app
 
 @app.local_entrypoint()
