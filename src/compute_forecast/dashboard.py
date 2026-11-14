@@ -16,7 +16,44 @@ image = modal.Image.debian_slim(python_version="3.11").pip_install("fastapi[stan
 WARMUP_FIELDS = ("study_kind", "model", "lora_rank", "epochs", "learning_rate", "actual_training_updates", "training_examples", "training_examples_seen", "training_temporal_origins", "development_examples", "development_temporal_origins", "budget_per_case", "inference_decisions", "training_data_last_label", "development_origin", "reference_diagnostic_losses", "seeded_random_diagnostic_loss", "training_cost_status", "training_cost_value", "final_period_opened", "main_six_trial_search_study_complete", "metric_note", "limitation")
 METRICS = ("n_cells", "pinball", "baseline_pinball", "skill_pooled", "skill_mean_of_series", "skill_median_of_series", "skill_geomean")
 
-def build_snapshot(warmup, training, development, code_sha):
+def representation_snapshot(grid):
+    if grid["protocol"]!="representation-study-v2" or grid["final_period_opened"] is not False or len(grid["code_sha"])!=40:
+        raise ValueError("REFUSED: unverified representation study")
+    frames=[]
+    for run in grid["origins"]:
+        if run["dataset_sha256"]!=PACK_SHA256 or run["final_period_opened"] is not False or run["origin"]>"2026-09-12":
+            raise ValueError("REFUSED: final or unverified representation data")
+        frames.append({"origin":run["origin"],"status":run["status"],"run_id":run["run_id"],"runtime_seconds":run["runtime_seconds"],"series":[{key:row[key] for key in ("series_id","gpu_model","instrument_class","pricing_tier","statistic")} for row in run["primary_catalog"]],"methods":[{"config_id":r["config_id"],"pinball":r["exact_metrics"]["pinball"],"skill_pooled":r["exact_metrics"]["skill_pooled"],"n_cells":r["exact_metrics"]["n_cells"],"fallbacks":r["fallbacks"],"by_horizon":{str(h):{key:r["by_horizon"][str(h)].get(key) for key in ("pinball","skill_pooled","n_cells")} for h in (1,3,7)}} for r in run["results"]]})
+    return {"scope":"Official afhubbard headline H100/A100 daily-statistics targets; other targets are outside this representation subset","metric":"Unrounded official scorer per-cell pinball","code_sha":grid["code_sha"],"frames":frames,"final_period_opened":False,"link":"https://github.com/howdymary/compute-forecasting/actions/runs/43644119627"}
+
+def research_snapshot(report):
+    if report["status"]!="completed" or report["scope"]!="current_research" or report["historical_benchmark_input"] is not False or report["actual_cross_agent_use"] is not True:
+        raise ValueError("REFUSED: memory integration was not verified")
+    if len(set(report["writers"]))<2 or len(set(report["readers"]))<2:
+        raise ValueError("REFUSED: multiple actual readers and writers are required")
+    authors={e["source_id"]:e["role"] for e in report["events"] if e["event"]=="write"}
+    events=[]
+    for e in report["events"]:
+        common={"event":e["event"],"role":e["role"],"created_at":e["created_at"]}
+        if e["event"]=="read":
+            required=e["required_source_id"]
+            if required not in e["returned_source_ids"] or authors.get(required)==e["role"]:
+                raise ValueError("REFUSED: cross-agent source was not actually recalled")
+            common.update(required_source_id=required,returned_source_ids=e["returned_source_ids"])
+        elif e["event"]=="write":
+            common.update(source_id=e["source_id"],author=e["record"]["author"],kind=e["record"]["kind"],content_sha256=e["content_sha256"])
+            if e["record"]["kind"]=="criticism":common["criticism"]=e["record"]["content"]["criticism"]
+            if e["record"]["kind"]=="completed_numerical_experiment":common["numerical_result"]=e["record"]["content"]
+        elif e["event"]=="decision":
+            if not any(authors.get(sid)!=e["role"] and sid in authors for sid in e["used_memory_source_ids"]):
+                raise ValueError("REFUSED: decision lacks another role's actual memory")
+            common.update(selected_action=e["selected_action"],used_memory_source_ids=e["used_memory_source_ids"],model=e["model"])
+        else:raise ValueError("Unknown research event")
+        events.append(common)
+    evidence=report["exa_evidence"]
+    return {"run_id":report["run_id"],"code_sha":report["code_sha"],"scope":report["scope"],"audience":report["audience"],"writers":report["writers"],"readers":report["readers"],"events":events,"sources":[{k:s.get(k) for k in ("title","url","published_at","retrieved_at","historical_eligibility")} for s in evidence["sources"]],"exa_request_id":evidence["request_id"],"exa_cost_dollars":evidence["cost_dollars"],"actual_cross_agent_use":True,"memory_performance_gain_claimed":False,"historical_benchmark_input":False,"link":"https://github.com/howdymary/compute-forecasting/actions/runs/43644295953"}
+
+def build_snapshot(warmup, training, development, code_sha, representation=None, research=None):
     if warmup["dataset_sha256"] != PACK_SHA256 or warmup["final_period_opened"] is not False:
         raise ValueError("REFUSED: wrong dataset or final results opened")
     if warmup["study_kind"] != "baseline_choice_warmup_not_main_search_study":
@@ -41,11 +78,13 @@ def build_snapshot(warmup, training, development, code_sha):
                 "source_code_sha": report["code_sha"], "runtime_seconds": report["runtime_seconds"],
                 "overall": {key: scored["overall"].get(key) for key in METRICS},
                 "horizons": {str(h): {key: scored["by_horizon"][str(h)].get(key) for key in METRICS} for h in (1,3,7)}})
+    result["representation"]=representation_snapshot(representation) if representation else None
+    result["research"]=research_snapshot(research) if research else None
     validate_snapshot(result)
     return result
 
 def validate_snapshot(snapshot):
-    if set(snapshot) != {"schema_version", "created_at", "code_sha", "dataset_sha256", "warmup", "baselines", "links"}:
+    if set(snapshot) != {"schema_version", "created_at", "code_sha", "dataset_sha256", "warmup", "baselines", "links", "representation", "research"}:
         raise ValueError("REFUSED: unexpected public snapshot fields")
     if snapshot["dataset_sha256"] != PACK_SHA256 or len(snapshot["code_sha"]) != 40:
         raise ValueError("REFUSED: missing content provenance")
@@ -109,8 +148,8 @@ def web():
     return web_app
 
 @app.local_entrypoint()
-def main(warmup_report: str = "inputs/policy-warmup/warmup-report.json", training_report: str = "inputs/starter-training.json", development_report: str = "inputs/starter-development.json"):
-    snapshot = build_snapshot(json.loads(Path(warmup_report).read_text()), json.loads(Path(training_report).read_text()), json.loads(Path(development_report).read_text()), os.environ["GITHUB_SHA"])
+def main(warmup_report: str = "inputs/policy-warmup/warmup-report.json", training_report: str = "inputs/starter-training.json", development_report: str = "inputs/starter-development.json", representation_report: str = "", research_report: str = ""):
+    snapshot = build_snapshot(json.loads(Path(warmup_report).read_text()), json.loads(Path(training_report).read_text()), json.loads(Path(development_report).read_text()), os.environ["GITHUB_SHA"], json.loads(Path(representation_report).read_text()) if representation_report else None, json.loads(Path(research_report).read_text()) if research_report else None)
     result = publish_snapshot.remote(snapshot)
     Path("artifacts").mkdir(exist_ok=True)
     Path("artifacts/dashboard-snapshot.json").write_text(json.dumps(snapshot,indent=2)+"\n")
