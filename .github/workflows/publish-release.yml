@@ -1,0 +1,91 @@
+name: Publish frozen research release
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: compute-forecast-public-release
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/compute-observatory'
+    runs-on: ubuntu-latest
+    timeout-minutes: 95
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+    steps:
+      - name: Fetch immutable authorized source on hosted runner
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate Python, causal boundaries and browser script
+        run: |
+          python -m pip install -e '.[dev]' modal numpy
+          python -m compileall -q src
+          python -m pytest --junitxml=artifacts/release-tests.xml
+          python - <<'PY'
+          from pathlib import Path
+          from compute_forecast.release_ui import HTML
+          assert HTML.count('<script>')==1
+          Path('artifacts/release-ui.js').write_text(HTML.split('<script>',1)[1].split('</script>',1)[0])
+          PY
+          node --check artifacts/release-ui.js
+      - name: Retrieve exact successful source runs, including final export
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import json,os,subprocess
+          from pathlib import Path
+          repo=os.environ['GITHUB_REPOSITORY'];root=Path('inputs');root.mkdir(exist_ok=True)
+          specs=[('policy','43648086958','six-trial-policy','d843a065a82eae366e330ce5e7be0d22c9faeccf'),('grid','43644639332','representation','736955f311e6a94323df8ad5df6cb2b41d48669d'),('memory','43649141181','current-research','d3a18a8d4d82e91d2e7fc5b0f8616116dc83079f'),('baseline','43646617180','official-baseline-selection','672a06e4cd5dd5b6edcd7ccc7d2683d78333332d'),('final','43653016797','final-evaluation','5d5b2ebac6e8d913ed858fd5af66bde6e7f96874'),('submission','43653016797','submission','5d5b2ebac6e8d913ed858fd5af66bde6e7f96874')]
+          for kind,run_id,prefix,sha in specs:
+              subprocess.run(['gh','run','watch',run_id,'--repo',repo,'--exit-status','--interval','30'],check=True)
+              run=json.loads(subprocess.check_output(['gh','api','repos/'+repo+'/actions/runs/'+run_id],text=True))
+              assert run['conclusion']=='success' and run['head_branch']=='compute-observatory' and run['head_sha']==sha
+              artifacts=json.loads(subprocess.check_output(['gh','api','repos/'+repo+'/actions/runs/'+run_id+'/artifacts'],text=True))['artifacts']
+              matches=[a for a in artifacts if a['name'].startswith(prefix+'-'+sha+'-'+run_id) and not a['expired']]
+              assert len(matches)==1,(kind,[a['name'] for a in matches])
+              subprocess.run(['gh','run','download',run_id,'--repo',repo,'--name',matches[0]['name'],'--dir',str(root/kind)],check=True)
+              (root/(kind+'-source.json')).write_text(json.dumps({'run_id':run_id,'source_sha':sha,'artifact':matches[0]['name']},indent=2))
+          PY
+      - name: Build allowlisted public result payload and publish verified files
+        run: modal run -m compute_forecast.release_web
+      - name: Deploy the measured observatory
+        run: modal deploy -m compute_forecast.release_web 2>&1 | tee artifacts/release-deployment.txt
+      - name: Verify public release matches exact publication receipt
+        run: |
+          python - <<'PY'
+          import hashlib,json,os,re,urllib.request
+          from pathlib import Path
+          text=Path('artifacts/release-deployment.txt').read_text()
+          urls=re.findall(r'https://[^\s]+\.modal\.run',text)
+          assert urls,'No deployment URL'
+          url=next(u for u in urls if '-web.' in u)
+          def get(path):return urllib.request.urlopen(url+path,timeout=90).read()
+          receipt=json.loads(Path('artifacts/release-publication.json').read_text())
+          health=json.loads(get('/health'))
+          assert health['status']=='ok' and health['code_sha']==os.environ['GITHUB_SHA']
+          assert health['release_sha256']==receipt['sha256'] and health['training_updates']==50 and health['final_origins']==5 and health['actual_cross_agent_use'] is True
+          assert hashlib.sha256(get('/api/release')).hexdigest()==receipt['sha256']
+          for name,item in receipt['files'].items():assert hashlib.sha256(get('/files/'+name)).hexdigest()==item['sha256']
+          Path('artifacts/release-health.json').write_text(json.dumps(health,indent=2))
+          Path('artifacts/public-url.txt').write_text(url+'\n')
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:f.write('\nLive measured observatory: '+url+'\n')
+          PY
+      - name: Retain public release, source receipts and remote validation
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: public-release-${{ github.sha }}-${{ github.run_id }}
+          path: artifacts/
+          retention-days: 30
