@@ -1,0 +1,80 @@
+name: Select official full-headline baseline
+
+on:
+  push:
+    branches: [compute-observatory]
+    paths:
+      - .github/workflows/select-official-baseline.yml
+      - src/compute_forecast/select_baseline.py
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: official-development-baselines
+  cancel-in-progress: false
+
+jobs:
+  forecast:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        origin: ['2026-08-08','2026-08-15','2026-08-22','2026-08-29','2026-09-05','2026-09-12']
+    steps:
+      - name: Fetch immutable source on hosted runner
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e . modal
+      - name: Run all four unmodified official methods and refusal check
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+          ORIGIN: ${{ matrix.origin }}
+        run: modal run -m compute_forecast.starter_probe --cutoff "$ORIGIN" --output "artifacts/baseline-$ORIGIN.json"
+      - name: Preserve genuine origin results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: official-baseline-${{ matrix.origin }}-${{ github.sha }}-${{ github.run_id }}
+          path: artifacts/
+          retention-days: 30
+  select:
+    needs: forecast
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Fetch immutable selector source on hosted runner
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e . modal
+      - name: Retrieve all six actual origin artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run download "$GITHUB_RUN_ID" --repo "$GITHUB_REPOSITORY" --pattern "official-baseline-*-$GITHUB_RUN_ID" --dir inputs/baselines
+      - name: Verify private score-file hashes and select using exact cell losses
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: python -m compute_forecast.select_baseline
+      - name: Retain selection and full provenance
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: official-baseline-selection-${{ github.sha }}-${{ github.run_id }}
+          path: artifacts/
+          retention-days: 30
