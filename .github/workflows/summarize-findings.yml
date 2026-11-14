@@ -1,0 +1,46 @@
+name: Summarize frozen representation findings
+on:
+  workflow_dispatch:
+  push:
+    branches: [compute-observatory]
+    paths:
+      - src/compute_forecast/summarize_representations.py
+      - .github/workflows/summarize-findings.yml
+permissions:
+  contents: read
+  actions: read
+jobs:
+  summarize:
+    if: github.ref == 'refs/heads/compute-observatory'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Fetch exact source remotely
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Retrieve measured final grid without accessing any new data
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import json,os,subprocess
+          repo=os.environ['GITHUB_REPOSITORY'];run_id='43653016797';sha='5d5b2ebac6e8d913ed858fd5af66bde6e7f96874'
+          run=json.loads(subprocess.check_output(['gh','api','repos/'+repo+'/actions/runs/'+run_id],text=True))
+          assert run['conclusion']=='success' and run['head_branch']=='compute-observatory' and run['head_sha']==sha
+          subprocess.run(['gh','run','download',run_id,'--repo',repo,'--name','final-evaluation-'+sha+'-'+run_id+'-attempt1','--dir','inputs/final'],check=True)
+          PY
+      - name: Aggregate every registered configuration and verify reference concordance
+        run: |
+          python -m pip install -e .
+          python -m compute_forecast.summarize_representations
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: frozen-representation-findings-${{ github.sha }}-${{ github.run_id }}
+          path: artifacts/
+          retention-days: 30
