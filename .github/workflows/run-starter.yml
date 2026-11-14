@@ -1,0 +1,84 @@
+name: Run genuine Pacific baselines on Modal
+
+on:
+  push:
+    branches: [compute-observatory]
+    paths:
+      - .github/workflows/run-starter.yml
+      - src/compute_forecast/starter_probe.py
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pacific-starter-probe
+  cancel-in-progress: false
+
+jobs:
+  baseline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+    steps:
+      - name: Fetch exact source archive on hosted runner
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+          SOURCE_REPOSITORY: ${{ github.repository }}
+        run: gh api "repos/$SOURCE_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install hosted client dependencies
+        run: python -m pip install -e . modal tinker
+
+      - name: Compile project sources
+        run: python -m compileall -q src
+
+      - name: Record credential presence without exposing values
+        env:
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+          EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
+          PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
+        run: python -m compute_forecast preflight --output artifacts/preflight.json
+
+      - name: Run actual training-period starter experiments on Modal
+        run: modal run src/compute_forecast/starter_probe.py --cutoff 2026-07-24 --output artifacts/starter-training.json
+
+      - name: Run actual development-period starter experiments on Modal
+        run: modal run src/compute_forecast/starter_probe.py --cutoff 2026-08-08 --output artifacts/starter-development.json
+
+      - name: Verify Tinker capabilities through its current SDK
+        env:
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+        run: |
+          python - <<'PY'
+          import json, pathlib
+          import tinker
+          capabilities = tinker.RestClient().get_server_capabilities().result()
+          payload = capabilities.model_dump(mode="json")
+          pathlib.Path("artifacts/tinker-capabilities.json").write_text(json.dumps(payload, indent=2) + "\n")
+          models = [item.get("model_name", item.get("name")) for item in payload.get("supported_models", [])]
+          print("Tinker capability request succeeded. Supported model IDs:")
+          print(json.dumps(models, indent=2))
+          print("This is an access probe, not a training update or a research improvement result.")
+          PY
+
+      - name: Record resolved hosted dependencies
+        if: always()
+        run: |
+          mkdir -p artifacts
+          python -m pip freeze > artifacts/hosted-python-environment.txt
+
+      - name: Preserve genuine execution evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: genuine-starter-${{ github.sha }}
+          path: artifacts/
+          retention-days: 30
