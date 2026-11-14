@@ -1,0 +1,70 @@
+name: Run genuine evidence and memory research loop
+
+on:
+  push:
+    branches: [compute-observatory]
+    paths:
+      - .github/workflows/run-research-loop.yml
+      - src/compute_forecast/research_loop.py
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: scoped-current-research-loop
+  cancel-in-progress: false
+
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Fetch pinned source on hosted runner
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install and check the research pipeline
+        run: |
+          python -m pip install -e '.[dev]' modal httpx
+          python -m compileall -q src
+          python -m pytest --junitxml=artifacts/research-tests.xml
+          python -m pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install tinker tinker-cookbook
+      - name: Retrieve verified completed training-origin experiments
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p inputs
+          gh run download 43637893251 --repo "$GITHUB_REPOSITORY" --name genuine-starter-61c6e305521f2cb6baa21bce4c101e4495cc721b --dir inputs
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/43637893251" > inputs/source-run.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          run=json.loads(Path('inputs/source-run.json').read_text())
+          assert run['conclusion']=='success' and run['head_branch']=='compute-observatory'
+          assert run['head_sha']=='61c6e305521f2cb6baa21bce4c101e4495cc721b'
+          PY
+      - name: Execute Exa search, actual scoped recall, numerical audits and criticism
+        env:
+          EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
+          PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+        run: python -m compute_forecast.research_loop --training-report inputs/starter-training.json
+      - name: Record resolved client versions
+        if: always()
+        run: |
+          mkdir -p artifacts
+          python -m pip freeze > artifacts/research-client-environment.txt
+      - name: Preserve authorship and actual cross-agent-use evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: current-research-${{ github.sha }}-${{ github.run_id }}
+          path: artifacts/
+          retention-days: 30
