@@ -64,7 +64,7 @@ async def run(source,output):
     import tinker
     from tinker_cookbook import model_info,renderers
     from tinker_cookbook.recipes.decisions import Decision,DecisionRenderer,sample_decision
-    run_id=uuid.uuid4().hex; audience="cf-current-methods-"+run_id
+    run_id=uuid.uuid4().hex; audience="cf-methods-"+run_id[:24]
     actors={r:"cf-"+run_id+"-"+r for r in ("evidence_researcher","forecast_scientist","skeptic")}
     events=[];calls=[];out=Path(output);out.mkdir(parents=True,exist_ok=True)
     manifest={"schema_version":"1","run_id":run_id,"scope":"current_research","phase":"training_diagnostic_only","market_cutoff":None,"created_at":now(),"code_sha":os.environ.get("GITHUB_SHA"),"model":MODEL,"audience":audience,"actors":actors,"events":events,"api_calls":calls,"historical_benchmark_input":False,"memory_performance_gain_claimed":False,"status":"running"}
