@@ -1,0 +1,42 @@
+{
+  "schema_version": "1",
+  "frozen_at": "2026-11-14T23:14:44.501058+00:00",
+  "dataset_sha256": "f0b52af28c52545732208bcc4905facd9b941aa5779da683e1d9884c283b7c7c",
+  "protocol_version": "hierarchical-six-trial-v4",
+  "final_origins": [
+    "2026-09-27",
+    "2026-10-04",
+    "2026-10-11",
+    "2026-10-18",
+    "2026-10-25"
+  ],
+  "trial_budget": 6,
+  "common_initial": [
+    "last_value",
+    "last_value_empirical"
+  ],
+  "policy_model": "Qwen/Qwen3.5-4B",
+  "policy_checkpoint_label": "sft_epoch_1",
+  "policy_checkpoint": "tinker://b6fe1927-f667-5faf-9909-9a8ec69c47e7:train:0/sampler_weights/search_sft_epoch_1",
+  "policy_training_run_id": 43648086958,
+  "policy_training_source_sha": "d843a065a82eae366e330ce5e7be0d22c9faeccf",
+  "policy_training_temporal_origins": 5,
+  "policy_development_temporal_origins": 6,
+  "policy_actual_training_updates": 50,
+  "official_method": "last_value_empirical",
+  "official_selection_run_id": 43646617180,
+  "official_selection_source_sha": "672a06e4cd5dd5b6edcd7ccc7d2683d78333332d",
+  "official_selection_last_label": "2026-09-19",
+  "numerical_code_sha256": {
+    "starter_probe.py": "f95249e88a216ec84cad78682708c64e4c164d02f50c6ca1f831eb332d7e87a4",
+    "representation_study.py": "ef020ba334e869c10b52108c9b8aafb71c57f09d61ce2aa3fa209cc3aa5dc6f3",
+    "search_policy.py": "7a6761993461824619c4755dd7b53b950578bc10cb66a51d4ce5141d8949cede",
+    "select_baseline.py": "aa3c66bde6e9c2b28595dcb161bb50d84e0cb3631f6ad5e4bfe2b0794b070c52",
+    "freeze_contract.py": "4d3beef964e176f5840fb171148a701a76bbbcdc69d56e0124d7703ee147044a",
+    "final_evaluation.py": "d67491d72f4f1b53286d86014c1159ffea2ba5a8468e9c0b15f229bf0887b7a5",
+    "export_submission.py": "90cb8fc7cd22440446395d6ca9ae2d271fb32c2a46906377ccd7f42f29d1df8c"
+  },
+  "freeze_producer_source_sha": "55da96a0fe7a6185410c8ee5a1d056827939bafa",
+  "final_truth_opened": false,
+  "note": "Selection used development data; final numerical outcomes have not been opened by this release pipeline. Retrospective data-vintage and pretraining limitations remain."
+}
