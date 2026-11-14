@@ -1,0 +1,9 @@
+# Supported hierarchical policy choices
+
+The first main-study inference failed before any optimizer update. The Tinker service rejected 24 target token IDs for the rendered prompt: target_prompt_logprobs accepts at most 20 distinct IDs for this prompt size. The failed run and exact server error are retained at https://github.com/howdymary/compute-forecasting/actions/runs/43644874250 . No successful training or main-study improvement is attributed to that run.
+
+The policy now makes two bounded decisions per experiment: one of at most six representation/auxiliary-feature families, then one of at most four lookback/regularization configurations in that family. Empty families and previously tested configurations are excluded. All 24 candidates remain reachable. Both the starting model and trained checkpoints use the identical hierarchy, observations and six-experiment budget. Family selection consumes model inference but does not reveal a numerical experiment result; the subsequent parameter choice consumes one experiment trial.
+
+Each training prefix yields a family demonstration and a parameter demonstration, both labeled from the same matured training-period experiments. Report prefix examples separately from model-training datums and independent temporal cutoffs. Save five checkpoints, every optimizer update and both stage distributions. Model inference cost and latency are additional overhead and are not equated with fixed/random search cost. No experiment-budget advantage is granted to a learned policy.
+
+The complete numerical grid contains 26 registered origins. Seven have no eligible primary catalog contracts. Only June 27; July 4, 11, 18 and 24 have an eligible training decision and all three required mature validation folds. All six development cutoffs remain eligible. Five training cutoffs and repeated prefixes are a small, dependent sample; they are not hundreds of independent research tasks. The final period remains unopened.
