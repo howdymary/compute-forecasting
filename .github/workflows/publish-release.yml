@@ -15,9 +15,6 @@ jobs:
     if: github.ref == 'refs/heads/compute-observatory'
     runs-on: ubuntu-latest
     timeout-minutes: 95
-    env:
-      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
-      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
     steps:
       - name: Fetch immutable authorized source on hosted runner
         env:
@@ -59,8 +56,14 @@ jobs:
               (root/(kind+'-source.json')).write_text(json.dumps({'run_id':run_id,'source_sha':sha,'artifact':matches[0]['name']},indent=2))
           PY
       - name: Build allowlisted public result payload and publish verified files
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
         run: modal run -m compute_forecast.release_web
       - name: Deploy the measured observatory
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
         run: modal deploy -m compute_forecast.release_web 2>&1 | tee artifacts/release-deployment.txt
       - name: Verify public release matches exact publication receipt
         run: |
