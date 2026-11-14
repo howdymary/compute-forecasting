@@ -69,3 +69,13 @@ def test_both_hierarchical_prompts_exclude_future_evaluation_results():
     revealed=list(INITIAL);family=family_choices(original,revealed)[0][0]
     assert family_question(original,revealed)==family_question(changed,revealed)
     assert parameter_question(original,revealed,family)==parameter_question(changed,revealed,family)
+
+
+def test_single_remaining_parameter_is_forced_without_removing_experiments():
+    from compute_forecast.search_policy import forced_choice,family_choices,parameter_choices
+    value=task();same_family=[c for c in CANDIDATES if c.startswith('ridge_level_target_only_')]
+    revealed=[*INITIAL,*same_family[:3]]
+    remaining=parameter_choices(value,revealed,'level__target_only')
+    assert len(remaining)==1 and forced_choice(remaining)==same_family[3]
+    assert forced_choice(family_choices(value,revealed)) is None
+    with pytest.raises(ValueError,match='No eligible'):forced_choice([])
