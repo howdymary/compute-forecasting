@@ -30,10 +30,12 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies on hosted runner
-        run: python -m pip install -e '.[dev]'
+        run: python -m pip install -e '.[dev]' modal numpy
 
       - name: Validate cutoff, record, and scoring contracts
-        run: python -m pytest --junitxml=artifacts/test-results.xml
+        run: |
+          python -m compileall -q src
+          python -m pytest --junitxml=artifacts/test-results.xml
 
       - name: Record readiness without exposing credentials
         if: github.event_name == 'push'
