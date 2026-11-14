@@ -1,0 +1,66 @@
+name: Validate UI and record submission demo
+
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: compute-forecast-demo-video
+  cancel-in-progress: false
+jobs:
+  record:
+    if: github.ref == 'refs/heads/compute-observatory'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Fetch immutable source on hosted runner
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install official browser testing and video tools remotely
+        run: |
+          python -m pip install -e . modal playwright
+          python -m playwright install --with-deps chromium
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg fonts-dejavu-core
+          python -m compileall -q src
+      - name: Verify real results and record public app flows
+        run: python -m compute_forecast.record_demo
+      - name: Publish the video against its measured release digest
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: |
+          python - <<'PY'
+          import hashlib,json,os,urllib.request
+          from pathlib import Path
+          import modal
+          manifest=json.loads(Path('artifacts/demo-manifest.json').read_text())
+          data=Path('artifacts/demo.mp4').read_bytes()
+          result=modal.Function.from_name('compute-forecast-observatory','publish_video').remote(data,manifest['release_sha256'])
+          assert result['video_sha256']==hashlib.sha256(data).hexdigest()
+          response=urllib.request.urlopen(result['url'],timeout=90)
+          assert hashlib.sha256(response.read()).hexdigest()==result['video_sha256']
+          partial=urllib.request.urlopen(urllib.request.Request(result['url'],headers={'Range':'bytes=0-31'}),timeout=90)
+          assert partial.status==206 and b'ftyp' in partial.read()
+          Path('artifacts/video-publication.json').write_text(json.dumps(result,indent=2)+'\n')
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:
+              f.write('# Verified two-minute public demo\n\nVideo: '+result['url']+'\n\nRecorded actual results; captioned, silent; no live inference claim. Desktop and 390px mobile flows checked. Upload to YouTube, Drive or Loom before event submission.\n\n~~~json\n'+json.dumps(manifest,indent=2)+'\n~~~\n')
+          PY
+      - name: Preserve the video, captions and UI validation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: submission-video-${{ github.sha }}-${{ github.run_id }}
+          path: |
+            artifacts/demo.mp4
+            artifacts/demo.srt
+            artifacts/demo-manifest.json
+            artifacts/video-publication.json
+            artifacts/desktop.png
+            artifacts/mobile.png
+          retention-days: 30
