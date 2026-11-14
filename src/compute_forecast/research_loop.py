@@ -29,7 +29,19 @@ OBJECTIONS={
  "historical_availability":"These pages were retrieved now. Publication dates do not prove historical content availability; keep this evidence outside historical benchmark observations."}
 
 def now():return datetime.now(timezone.utc).isoformat()
-def save(path,value):path.write_text(json.dumps(value,indent=2,allow_nan=False)+"\n")
+def public_evidence(value):
+    if isinstance(value,list):return [public_evidence(v) for v in value]
+    if not isinstance(value,dict):return value
+    output={}
+    for key,item in value.items():
+        if key=="recall":
+            output[key]={"asOf":item.get("asOf"),"results":[{"id":r.get("id"),"source_ids":[s["sourceId"] for s in r.get("sources",[])],"content_sha256":hashlib.sha256(r["content"].encode()).hexdigest(),"body":"Retained privately in past.dev; omitted from public artifact"} for r in item.get("results",[])]}
+        elif key in ("highlights","excerpts"):
+            output[key+"_sha256"]=hashlib.sha256(json.dumps(item,sort_keys=True).encode()).hexdigest()
+        else:output[key]=public_evidence(item)
+    return output
+
+def save(path,value):path.write_text(json.dumps(public_evidence(value),indent=2,allow_nan=False)+"\n")
 
 def numerical_diagnostic(name,report):
     if report["is_synthetic"] or report["cutoff"]!="2026-07-24" or not report["refusal_check_passed"]:
@@ -107,7 +119,7 @@ async def run(source,output):
             started=time.perf_counter()
             response=await client.post("https://api.exa.ai/search",headers={"x-api-key":os.environ["EXA_API_KEY"]},json={"query":QUERIES[query_id],"type":"auto","numResults":4,"includeDomains":["silicondata.com","semianalysis.com"],"contents":{"highlights":True}})
             response.raise_for_status();exa=response.json()
-            sources=[{"title":r.get("title"),"url":r["url"],"published_at":r.get("publishedDate"),"retrieved_at":now(),"highlights":[h[:350] for h in r.get("highlights",[])[:2]],"historical_eligibility":False} for r in exa.get("results",[])]
+            sources=[{"title":r.get("title"),"url":r["url"],"published_at":r.get("publishedDate"),"retrieved_at":now(),"highlights":[" ".join(h.split()[:18]) for h in r.get("highlights",[])[:1]],"historical_eligibility":False} for r in exa.get("results",[])]
             if not sources:raise RuntimeError("Exa returned no methodological evidence")
             exa_evidence={"query":QUERIES[query_id],"request_id":exa.get("requestId"),"response_sha256":hashlib.sha256(response.content).hexdigest(),"sources":sources,"cost_dollars":exa.get("costDollars"),"runtime_seconds":time.perf_counter()-started,"scope":"current_research","note":"Retrieved now, not historical benchmark features. Provider/configuration normalization has established precedents."}
             calls.append({"service":"Exa","status_code":response.status_code,"request_id":exa.get("requestId"),"cost_dollars":exa.get("costDollars"),"created_at":now()})
