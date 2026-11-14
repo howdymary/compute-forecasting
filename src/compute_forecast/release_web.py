@@ -1,5 +1,4 @@
 """Public observatory: derived results only, without raw data mounts or account secrets."""
-from __future__ import annotations
 import hashlib,json,os
 from datetime import datetime,timezone
 from pathlib import Path
