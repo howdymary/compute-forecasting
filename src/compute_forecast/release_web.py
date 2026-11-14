@@ -63,6 +63,14 @@ def web():
         return Response(raw,media_type=FILES[name],headers=download_headers)
     return api
 
+@app.function(image=image,cpu=.25,memory=512,timeout=90,volumes={"/public":public})
+def publish_video(data:bytes,release_sha256:str):
+    root=Path("/public/release");raw=(root/"results.json").read_bytes()
+    if hashlib.sha256(raw).hexdigest()!=release_sha256:raise ValueError("Video refers to a different public release")
+    if not isinstance(data,bytes) or not 10000<len(data)<100_000_000 or b"ftyp" not in data[:32]:raise ValueError("Invalid MP4 payload")
+    temporary=root/"demo.pending";temporary.write_bytes(data);temporary.replace(root/"demo.mp4");public.commit()
+    return {"video_sha256":hashlib.sha256(data).hexdigest(),"bytes":len(data),"release_sha256":release_sha256,"url":"https://howdymary--compute-forecast-observatory-web.us-east.modal.run/files/demo.mp4","mode":"recorded_actual_public_results"}
+
 @app.local_entrypoint()
 def main(inputs:str="inputs"):
     payload=build(inputs,os.environ["GITHUB_SHA"])
