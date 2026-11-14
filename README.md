@@ -21,6 +21,10 @@ SFT was **2.68% worse than the starting policy**. Five random seeds are retained
 
 The final dates were September 27 and October 4, 11, 18, 25. We committed [the selection freeze](configs/release-freeze.json) before opening their numerical results. Later rolling decisions can use matured earlier outcomes, with weights and the procedure frozen. No additional training occurs in the final job. All unsuccessful checkpoints and failed engineering pilots remain in Actions.
 
+## Representation findings
+
+Across the same five frozen dates, the best individual candidate was level-target Ridge with fixed-basket features, 56 days and alpha 1 (0.01722556 pinball). Across matched settings, target-only features had lower mean configuration loss (0.01914378) than fixed-basket (0.01976813) or raw composition (0.02122474). This descriptive comparison does not establish a universal normalization benefit. It was aggregated after final opening and does not change the official submission. [All 28 methods and factor marginals](docs/representation-findings.md) are retained.
+
 ## What was built
 
 - A browser observatory with forecast quantiles, all candidate scores, saved-checkpoint comparisons, actual policy trace replays and cross-agent provenance.
@@ -69,7 +73,7 @@ It fails closed outside the authorized GitHub Actions branch. Training requires 
 5. Selection and final evaluation are separate: **Prepare measured release freeze** creates a reviewable configuration from completed development artifacts; commit it before **Evaluate frozen policy and export submission**. Reproducing the existing frozen final requires access to its saved Tinker sampler checkpoint. Independent users can retrain and create their own separately identified freeze. Do not tune using the reported final period and continue calling it untouched.
 6. **Publish frozen research release** validates the exact successful source runs, projects an allowlisted public payload, publishes derived files, deploys on Modal and verifies the public content hashes. Public web containers have no raw-data mount or account API credentials.
 
-The end-to-end remote entrypoint [passed](https://github.com/howdymary/compute-forecasting/actions/runs/43647264275). Python boundary tests, compilation, browser-script syntax, forecast file hashing and public-health checks are captured by Actions. Resolved client versions and per-call timings are retained with each run.
+The end-to-end remote entrypoint [passed](https://github.com/howdymary/compute-forecasting/actions/runs/43647264275). All 53 Python boundary tests passed in the public release validation. Compilation, browser-script syntax, forecast file hashing and public-health checks are captured by Actions. Resolved client versions and per-call timings are retained with each run.
 
 ## Execution receipts
 
@@ -104,6 +108,8 @@ The public UI is plain HTML/CSS/JavaScript and SVG. FastAPI serves it on Modal. 
 The pack describes compilation licensing as **CC BY 4.0, owner's default pending confirmation**, with upstream terms and unresolved owner decisions. We do not represent that as an unconditional redistribution permission. Raw pack files and third-party source excerpts stay outside this public repository. Preserve the pack's source and license metadata when reproducing through authorized access. EWLuda is not used.
 
 Dependencies include Modal, Tinker and tinker-cookbook, NumPy, FastAPI/Starlette/Uvicorn, pytest and the official Pacific starter; their own licenses apply. Exa and past.dev are hosted services. No private development session is uploaded to Originator by this project.
+
+[Live demo guide](docs/demo.md) · [Sponsor evidence and remaining event actions](docs/submission-and-prizes.md) · [Measured status](docs/measured-status.md)
 
 ## Public claim
 
