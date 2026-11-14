@@ -16,7 +16,7 @@ permissions:
 
 concurrency:
   group: observatory-deployment
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   publish:
@@ -106,8 +106,14 @@ jobs:
           with urllib.request.urlopen(url+'/health',timeout=120) as response:
               health=json.load(response)
           assert health['status']=='ok', health
+          publication=json.loads(Path('artifacts/publication.json').read_text())
+          assert health['snapshot_sha']==publication['sha256'], 'Live server returned an older published snapshot'
           with urllib.request.urlopen(url+'/api/snapshot',timeout=120) as response:
               snapshot=json.load(response)
+          assert snapshot['code_sha']==os.environ['GITHUB_SHA'], 'Live source revision differs from this deployment'
+          assert snapshot['research']['actual_cross_agent_use'] is True
+          assert len(snapshot['research']['writers'])>=2 and len(snapshot['research']['readers'])>=2
+          assert len(snapshot['representation']['frames'])==2
           assert snapshot['warmup']['actual_training_updates']==15
           assert snapshot['warmup']['final_period_opened'] is False
           Path('artifacts/live-health.json').write_text(json.dumps({'url':url,'health':health},indent=2))
