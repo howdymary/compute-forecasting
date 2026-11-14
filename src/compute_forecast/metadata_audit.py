@@ -3,7 +3,9 @@ from __future__ import annotations
 import json
 import os
 from pathlib import Path
-from .starter_probe import app, image, volume, PACK_NAME, PACK_SHA256, verify_manifest
+import modal
+from .starter_probe import image, volume, PACK_NAME, PACK_SHA256, verify_manifest
+app = modal.App("compute-forecast-metadata-audit")
 
 @app.function(image=image, cpu=2, memory=4096, timeout=300, volumes={"/data": volume})
 def inspect_metadata():
