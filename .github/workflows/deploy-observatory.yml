@@ -16,7 +16,7 @@ permissions:
 
 concurrency:
   group: observatory-deployment
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   publish:
@@ -59,12 +59,36 @@ jobs:
               run=json.loads(Path('inputs/'+name+'.json').read_text())
               assert run['conclusion']=='success' and run['head_branch']=='compute-observatory' and run['head_sha']==expected
           PY
+      - name: Retrieve pinned representation and cross-agent research evidence
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p inputs/representation inputs/research
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/43644119627" > inputs/representation-run.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/43644295953" > inputs/research-run.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          for name,expected in [('representation','c6f163694218979f57fb1b531b6b21b456877bd8'),('research','25831211c64d25d107a44b2df46a93a8a1e98f85')]:
+              run=json.loads(Path('inputs/'+name+'-run.json').read_text())
+              assert run['conclusion']=='success' and run['head_branch']=='compute-observatory' and run['head_sha']==expected
+          PY
+          gh run download 43644119627 --repo "$GITHUB_REPOSITORY" --name representation-c6f163694218979f57fb1b531b6b21b456877bd8-43644119627 --dir inputs/representation
+          gh run download 43644295953 --repo "$GITHUB_REPOSITORY" --name current-research-25831211c64d25d107a44b2df46a93a8a1e98f85-43644295953 --dir inputs/research
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          grid=json.loads(Path('inputs/representation/representation-grid.json').read_text())
+          memory=json.loads(Path('inputs/research/current-research/research-loop.json').read_text())
+          assert grid['code_sha']=='c6f163694218979f57fb1b531b6b21b456877bd8' and grid['final_period_opened'] is False
+          assert memory['code_sha']=='25831211c64d25d107a44b2df46a93a8a1e98f85' and memory['status']=='completed' and memory['actual_cross_agent_use'] is True
+          PY
       - name: Publish allowlisted aggregate snapshot
         env:
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
           MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
         run: |
-          modal run -m compute_forecast.dashboard --warmup-report inputs/policy/policy-warmup/warmup-report.json --training-report inputs/starter/starter-training.json --development-report inputs/starter/starter-development.json
+          modal run -m compute_forecast.dashboard --warmup-report inputs/policy/policy-warmup/warmup-report.json --training-report inputs/starter/starter-training.json --development-report inputs/starter/starter-development.json --representation-report inputs/representation/representation-grid.json --research-report inputs/research/current-research/research-loop.json
       - name: Deploy read-only application
         env:
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
