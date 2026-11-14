@@ -1,43 +1,31 @@
-# Measured status and release boundaries
+# Measured status — November 14, 2026
 
-All code and workflows are on compute-observatory. No metagame branch was created or modified. Development, package installation, tests, downloads and experiments run on hosted GitHub Actions and Modal, not a workstation checkout.
+This page supersedes earlier development-status notes. The historical protocol and amendment files describe their respective frozen stages.
 
-## Verified runs
+## Completed
 
-- Pack integrity: Actions run 43634354788. Published archive SHA-256 f0b52af28c52545732208bcc4905facd9b941aa5779da683e1d9884c283b7c7c; all 672 manifest-listed files verified.
-- Official starter execution: run 43637893251, code 61c6e305521f2cb6baa21bce4c101e4495cc721b. Four unmodified official methods at July 24 (training) and August 8 (development); official scorer refused deliberately contaminated history. Raw pack is retained privately on Modal.
-- Tinker warmup: run 43639917509, code 3e3abfad1c0be72f8dfc83e8a0507fb70edbd963. Qwen/Qwen3.5-4B, rank-16 LoRA, 147 training cases from one temporal origin, 168 development cases from one later origin. Three epochs, 15 actual optimizer updates, 441 training-example presentations, 672 inference decisions. Three state and sampler checkpoints are retained in the run artifact.
+- Verified official archive and 672 manifest entries; raw pack kept private.
+- Official scorer integration, four reference methods and a genuine future-history refusal test.
+- A 26-origin representation grid: 19 eligible origins, 24 candidate configurations plus four official references. Early ineligible dates are retained in the manifest.
+- Main Tinker SFT study: Qwen3.5-4B LoRA, rank 16, five saved checkpoints, 50 actual optimizer updates. Five training and six development decision dates.
+- Equal six-trial reveal comparisons with starting, all SFT checkpoints, fixed search and random seeds 42–46. Main numerical grid is precomputed; reveal budget is not equal billed cost.
+- A committed selection freeze before final numerical results were opened.
+- Frozen final evaluation: five rolling origins, 30 series/horizon cells, 80 actual model decisions, no training updates. SFT loss 0.01781945 versus starting 0.01735406 (2.68% worse); fixed search 0.01733246.
+- Official November 6 CSV: all 111 rows / 37 headline series, exact six-column schema, quantile ordering and positivity verified; no future competition truth loaded.
+- Separate two-/three-year assumption-based rental and resale scenarios.
+- Actual Exa → scientist → skeptic → followup integration with three past.dev readers and writers and verified cross-agent record use. Cached, hash-verified numerical experiment reveals are labeled accurately.
+- Public observatory with final comparisons, forecast intervals, configuration/horizon controls, actual recorded policy replay, memory IDs, source links and downloads.
+- Passing [remote single entrypoint](https://github.com/howdymary/compute-forecasting/actions/runs/43647264275) and [verified public publication](https://github.com/howdymary/compute-forecasting/actions/runs/43655110500). Compilation, causal tests, browser-script syntax, public payload and download hashes passed.
+- [README](../README.md), [submission evidence matrix](submission-and-prizes.md) and [90-second demo guide](demo.md).
 
-## Warmup results (diagnostic, not the main experiment)
+The earlier 15-update integration warmup is separate and not substituted for the main result.
 
-Mean pinball losses reconstructed from the official report's rounded per-cell metrics on the August 8 development origin:
+## Limits and remaining event actions
 
-| Policy | Diagnostic loss |
-|---|---:|
-| Starting model | 0.05654880 |
-| SFT epoch 1 | 0.04938868 |
-| SFT epoch 2 | 0.04593399 |
-| SFT epoch 3 | 0.05287022 |
-| Fixed last-value empirical | 0.04321399 |
-| Fixed drift | 0.04396017 |
-| Seeded random choice | 0.05714498 |
+Actual billed training/execution cost is unavailable. Chronological coverage is small and dependent. The retrospective data vintage and model pretraining knowledge limit leakage claims. No research-policy improvement or memory performance gain is established.
 
-Epoch 2 is about 18.8% below the starting policy, but does not beat the strongest fixed reference. Checkpoint selection uses development results, so these are not held-out final results. Cases share an origin, series and horizons; 168 cases are not 168 independent temporal replications. This warmup selects one of four starter methods per case. It does not implement the proposed equal-budget six-trial experiment-selection study, and does not establish improved research ability. No RL result is claimed.
+The remote two-minute recording workflow produces a captioned silent MP4 and desktop/mobile evidence. Its successful artifact and publication receipt, rather than this note, establish video completion.
 
-On July 24 the official drift baseline's pooled skill was 0.207774, while mean per-series skill was -2.621166. This is a reproduced baseline, not a contribution or an out-of-sample result. Both aggregations must be retained in the main evaluation.
+The event requires video hosting on YouTube, Drive or Loom, a registered team, and the actual submission form. Those event actions are separate from generating source and artifacts. Originator participation remains incomplete: no development session has been uploaded and no private session should be shared automatically.
 
-Actual model billing was not available in the SDK result. Cost is marked unavailable, never inferred from credits.
-
-## Information boundaries
-
-The final evaluation origins remain unopened: September 27; October 4, 11, 18 and 25. The official competition origin is November 6. The pack is a retrospectively assembled frozen vintage, not proof that every row was accessible in its current form at a historical origin. Retrieval timestamps and provisional aggregation windows require separate scrutiny. No post-November-6 competition truth has been requested.
-
-## Data and licensing
-
-The primary measurement is advertised rental offers, not executed transactions, guaranteed available capacity or hardware resale prices. Provider/configuration normalization is established practice; credit Silicon Data's Silicon Index and SemiAnalysis's GPU Pricing Index. Our intended contribution is a reproducible empirical evaluation.
-
-DATA.md describes CC BY 4.0 for the compilation as the owner's default pending confirmation and retains open owner decisions and upstream terms. Do not redistribute the raw pack. Preserve ATTRIBUTION.md, sources_register.csv, licenses and table provenance. EWLuda is a pointer with unresolved licensing and must remain excluded. Removed Vast.ai and RunPod rows must not be reconstructed. Provisional weekly/index tables are not eligible benchmark features by default.
-
-## Outstanding release work
-
-The main representation benchmark, equal-budget search study, cross-agent Exa/past.dev loop, polished application, final-period evaluation and official submission export are not yet complete. The reproduce CLI remains blocked until the official adapter and release checks are integrated. Credentials and credits alone do not establish sponsor eligibility.
+No metagame branch was used. Source changes were made directly on compute-observatory; builds, tests, experiments and deployment ran remotely.
