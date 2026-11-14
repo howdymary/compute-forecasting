@@ -1,0 +1,64 @@
+name: Run representation benchmark on Modal
+
+on:
+  push:
+    branches: [compute-observatory]
+    paths:
+      - .github/workflows/run-representation.yml
+      - src/compute_forecast/representation_study.py
+  workflow_dispatch:
+    inputs:
+      full_grid:
+        description: Run all registered chronological training and development folds
+        type: boolean
+        required: true
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: representation-benchmark
+  cancel-in-progress: false
+
+jobs:
+  experiment:
+    runs-on: ubuntu-latest
+    timeout-minutes: 110
+    steps:
+      - name: Fetch pinned source archive on hosted runner
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate causal invariants before using data
+        run: |
+          python -m pip install -e '.[dev]' modal numpy
+          python -m compileall -q src
+          python -m pytest --junitxml=artifacts/representation-tests.xml
+      - name: Execute actual official-scored configurations in parallel
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+          FULL_GRID: ${{ inputs.full_grid }}
+        run: |
+          if [ "$FULL_GRID" = "true" ]; then
+            modal run -m compute_forecast.representation_study --no-smoke
+          else
+            modal run -m compute_forecast.representation_study
+          fi
+      - name: Capture resolved remote client versions
+        if: always()
+        run: |
+          mkdir -p artifacts
+          python -m pip freeze > artifacts/representation-client-environment.txt
+      - name: Preserve every official score, fallback and provenance record
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: representation-${{ github.sha }}-${{ github.run_id }}
+          path: artifacts/
+          retention-days: 30
