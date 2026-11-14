@@ -59,7 +59,34 @@ def numerical_diagnostic(name,report):
         output["methods"][method]=value
     return output
 
-async def run(source,output):
+def completed_forecast_experiment(config_id,grid):
+    import csv,io,math,re
+    import modal
+    from .representation_study import CONFIGS,PACK_SHA256
+    if config_id not in {c["id"] for c in CONFIGS} or grid["final_period_opened"] is not False:
+        raise ValueError("REFUSED: unvalidated experiment or final-period data")
+    run=next(r for r in grid["origins"] if r["origin"]=="2026-07-24")
+    if run["status"]!="completed" or run["is_synthetic"] or run["dataset_sha256"]!=PACK_SHA256 or run["label_end"]!="2026-07-31" or not re.fullmatch(r"[0-9a-f]{32}",run["run_id"]):
+        raise ValueError("REFUSED: invalid training-period experiment source")
+    result=next(r for r in run["results"] if r["config_id"]==config_id)
+    file="cells_"+config_id+".csv"
+    digest=next(a["sha256"] for a in run["artifacts"] if a["path"]==file)
+    volume=modal.Volume.from_name("compute-forecast-data",create_if_missing=False)
+    raw=b"".join(volume.read_file("/representation/"+run["run_id"]+"/"+file))
+    if hashlib.sha256(raw).hexdigest()!=digest:raise ValueError("REFUSED: cached experiment artifact digest mismatch")
+    losses=[]
+    for row in csv.DictReader(io.StringIO(raw.decode())):
+        try:value=float(row["loss"])
+        except (ValueError,TypeError):continue
+        if math.isfinite(value):losses.append(value)
+    exact=sum(losses)/len(losses)
+    if len(losses)!=result["exact_metrics"]["n_cells"] or abs(exact-result["exact_metrics"]["pinball"])>1e-12:
+        raise ValueError("REFUSED: cached official loss could not be reproduced")
+    references={r["config_id"]:r["exact_metrics"]["pinball"] for r in run["results"] if r["config_id"] in ("last_value","last_value_empirical","drift","seasonal_naive")}
+    best_reference=min(references.values())
+    return {"tool":"completed_forecast_experiment","config_id":config_id,"config":next(c for c in CONFIGS if c["id"]==config_id),"execution_mode":"reveal_completed_officially_scored_experiment","cache_hit":True,"new_numerical_execution":False,"source_run_id":run["run_id"],"source_code_sha":grid["code_sha"],"dataset_sha256":PACK_SHA256,"forecast_origin":"2026-07-24","last_label_date":"2026-07-31","information_scope":"current_research_on_training_period_only","retrieved_at":now(),"official_cell_file_sha256":digest,"pinball":exact,"n_cells":len(losses),"by_horizon":{str(h):result["by_horizon"][str(h)] for h in (1,3,7)},"fixed_baseline_losses":references,"loss_delta_vs_best_fixed_reference":exact-best_reference,"hypothesis_status":"supported_on_this_case" if exact<best_reference else "not_supported_on_this_case","limitation":"One completed training origin; this is not a new independent experiment or a generalization claim."}
+
+async def run(source,output,grid=None):
     import httpx
     import tinker
     from tinker_cookbook import model_info,renderers
@@ -67,7 +94,7 @@ async def run(source,output):
     run_id=uuid.uuid4().hex; audience="cf-methods-"+run_id[:24]
     actors={r:"cf-"+run_id+"-"+r for r in ("evidence_researcher","forecast_scientist","skeptic")}
     events=[];calls=[];out=Path(output);out.mkdir(parents=True,exist_ok=True)
-    manifest={"schema_version":"1","run_id":run_id,"scope":"current_research","phase":"training_diagnostic_only","market_cutoff":None,"created_at":now(),"code_sha":os.environ.get("GITHUB_SHA"),"model":MODEL,"audience":audience,"actors":actors,"events":events,"api_calls":calls,"historical_benchmark_input":False,"memory_performance_gain_claimed":False,"status":"running"}
+    manifest={"schema_version":"1","run_id":run_id,"scope":"current_research","research_kind":"forecast_configuration_selection" if grid else "scoring_audit","github_run_id":os.environ.get("GITHUB_RUN_ID"),"phase":"training_diagnostic_only","market_cutoff":None,"created_at":now(),"code_sha":os.environ.get("GITHUB_SHA"),"model":MODEL,"audience":audience,"actors":actors,"events":events,"api_calls":calls,"historical_benchmark_input":False,"memory_performance_gain_claimed":False,"status":"running"}
     def flush():save(out/"research-loop.json",manifest)
     flush()
     service=tinker.ServiceClient(display_name="Compute Forecast: evidence scientist skeptic")
@@ -112,8 +139,15 @@ async def run(source,output):
             if set(distribution)!=set(options):raise RuntimeError("Unexpected bounded model action")
             selected=max(options,key=lambda key:distribution[key])
             event={"event":"decision","role":role,"model":MODEL,"selected_action":selected,"probabilities":distribution,"used_memory_source_ids":sorted({sid for e in read_events for sid in e["returned_source_ids"]}),"created_at":now()};events.append(event);flush();return selected,event
+        async def choose_forecast(read_events,excluded=()):
+            from .representation_study import CONFIGS
+            available=[c for c in CONFIGS if c["id"] not in excluded]
+            families={c["space"]+"__"+c["aux"]:"Ridge target "+c["space"]+"; auxiliary features "+c["aux"] for c in available}
+            family,_=await choose("forecast_scientist","Choose the next model family to investigate using the recalled method evidence or criticism. Only completed training-period experiments will be revealed.",families,read_events)
+            options={c["id"]:"Lookback "+str(c["days"])+" calendar days; alpha "+str(c["alpha"]) for c in available if c["space"]+"__"+c["aux"]==family}
+            return await choose("forecast_scientist","Choose one untested configuration in family "+family+". This requests a cached, actual official-scored experiment; no unseen score is supplied.",options,read_events)
         try:
-            question=await write("forecast_scientist","unresolved_question",{"hypothesis":"Representation and provider composition may change forecast conclusions. Before broadening the candidate grid, inspect which measurement or scoring audit is most useful.","allowed_tools":DIAGNOSTICS,"scope_note":"Current methods research only. No current market-price news may enter historical forecasts."})
+            question=await write("forecast_scientist","unresolved_question",{"hypothesis":"Representation and provider composition may change forecast conclusions. Choose a configuration to investigate, inspect its measured training-period result, then use criticism to choose a followup." if grid else "Representation and provider composition may change forecast conclusions. Inspect which measurement or scoring audit is most useful.","allowed_tools":"24 validated Ridge configurations across level/log targets, target-only/raw/fixed-basket features, 28/56-day windows and alpha 1/100" if grid else DIAGNOSTICS,"scope_note":"Current methods research only. No current market-price news may enter historical forecasts."})
             prior=await read("evidence_researcher","What unresolved Compute Forecast methodological question should I research, and which diagnostic tools are allowed?",question)
             query_id,query_decision=await choose("evidence_researcher","Select the most useful methodological search query. Search must not seek post-cutoff GPU prices.",QUERIES,[prior])
             started=time.perf_counter()
@@ -125,16 +159,24 @@ async def run(source,output):
             calls.append({"service":"Exa","status_code":response.status_code,"request_id":exa.get("requestId"),"cost_dollars":exa.get("costDollars"),"created_at":now()})
             evidence=await write("evidence_researcher","dated_methodological_evidence",exa_evidence,[question])
             recalled=await read("forecast_scientist","What methodological evidence and normalization precedents did the evidence researcher find for Compute Forecast?",evidence)
-            action,decision=await choose("forecast_scientist","Choose one deterministic numerical audit to run on the verified July training-origin reports. Current pages inform the methodological question, not numerical forecasts.",DIAGNOSTICS,[recalled])
-            diagnostic=numerical_diagnostic(action,source)
+            if grid:
+                action,decision=await choose_forecast([recalled])
+                diagnostic=completed_forecast_experiment(action,grid)
+            else:
+                action,decision=await choose("forecast_scientist","Choose one deterministic numerical audit to run on the verified July training-origin reports. Current pages inform the methodological question, not numerical forecasts.",DIAGNOSTICS,[recalled])
+                diagnostic=numerical_diagnostic(action,source)
             result=await write("forecast_scientist","completed_numerical_experiment",diagnostic,[evidence])
             criticism_input=await read("skeptic","What did the forecast scientist's completed numerical audit find, and which source run supplied its numbers?",result)
             objection,critic_decision=await choose("skeptic","Select the most consequential limitation to retain before the next experiment. Do not invent errors or performance gains.",OBJECTIONS,[criticism_input])
             criticism=await write("skeptic","criticism",{"objection_id":objection,"criticism":OBJECTIONS[objection],"result_record_id":result},[result])
             critic_memory=await read("forecast_scientist","What criticism did the skeptic write about my completed experiment, and how should it affect the next diagnostic?",criticism)
-            remaining={key:value for key,value in DIAGNOSTICS.items() if key!=action}
-            followup,next_decision=await choose("forecast_scientist","Choose the next untested diagnostic after reading the skeptic. Both audits are valid; make the decision from the recalled objection and evidence.",remaining,[recalled,critic_memory])
-            next_result=numerical_diagnostic(followup,source)
+            if grid:
+                followup,next_decision=await choose_forecast([recalled,critic_memory],excluded=[action])
+                next_result=completed_forecast_experiment(followup,grid)
+            else:
+                remaining={key:value for key,value in DIAGNOSTICS.items() if key!=action}
+                followup,next_decision=await choose("forecast_scientist","Choose the next untested diagnostic after reading the skeptic. Both audits are valid; make the decision from the recalled objection and evidence.",remaining,[recalled,critic_memory])
+                next_result=numerical_diagnostic(followup,source)
             final=await write("forecast_scientist","criticism_informed_followup",{"selected_action":followup,"used_criticism_source_id":criticism,"numerical_result":next_result,"no_performance_gain_claimed":True},[criticism,result,evidence])
             writers={e["role"] for e in events if e["event"]=="write"};readers={e["role"] for e in events if e["event"]=="read"}
             used={sid for e in events if e["event"]=="decision" for sid in e["used_memory_source_ids"]}
@@ -152,5 +194,5 @@ async def run(source,output):
         for start in range(0,len(text),3000):f.write("~~~json\n"+text[start:start+3000]+"\n~~~\n\n")
 
 if __name__=="__main__":
-    parser=argparse.ArgumentParser();parser.add_argument("--training-report",required=True);parser.add_argument("--output",default="artifacts/current-research")
-    args=parser.parse_args();asyncio.run(run(json.loads(Path(args.training_report).read_text()),args.output))
+    parser=argparse.ArgumentParser();parser.add_argument("--training-report",required=True);parser.add_argument("--grid-report");parser.add_argument("--output",default="artifacts/current-research")
+    args=parser.parse_args();asyncio.run(run(json.loads(Path(args.training_report).read_text()),args.output,json.loads(Path(args.grid_report).read_text()) if args.grid_report else None))
