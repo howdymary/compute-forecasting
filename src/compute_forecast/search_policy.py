@@ -54,7 +54,7 @@ def model_observation(task,revealed):
     if any(task["validation"][c]["last_label_date"]>task["origin"] for c in revealed):raise ValueError("REFUSED: nonmatured trial")
     scale=max(task["validation"][c]["loss"] for c in INITIAL)
     scale=max(scale,1e-8)
-    return {"history_statistics":task["observation"],"trial_budget_total":6,"trials_used":len(revealed),"trials_remaining":6-len(revealed),"observed_trials":[{"config_id":c,"relative_validation_pinball":task["validation"][c]["loss"]/scale,"validation_cells":task["validation"][c]["n_cells"]} for c in revealed],"score_scale":"relative to strongest common-initial loss scale; lower is better"}
+    return {"history_statistics":task["observation"],"trial_budget_total":6,"trials_used":len(revealed),"trials_remaining":6-len(revealed),"observed_trials":[{"config_id":c,"relative_validation_pinball":task["validation"][c]["loss"]/scale,"validation_cells":task["validation"][c]["n_cells"]} for c in revealed],"score_scale":"relative to the larger common-initial loss, with a 1e-8 floor; lower is better"}
 
 def question(task,revealed):
     return "Choose the next untested forecasting experiment. The goal is to find the lowest validation pinball loss under six total trials. Two common baseline trials are already complete. Only matured prior backtests are revealed; future forecast outcomes are unavailable. All candidate forecasts use the same official target and scorer.\n"+json.dumps(model_observation(task,revealed),sort_keys=True)
