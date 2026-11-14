@@ -141,7 +141,7 @@ def auxiliary_panels(root, cutoff):
     return panels,audit
 
 @app.function(image=image,cpu=4,memory=8192,timeout=1800,max_containers=6,volumes={"/data":volume})
-def evaluate_origin(origin: str):
+def evaluate_origin(origin: str, final_freeze: dict | None = None):
     import importlib.metadata
     import shutil
     import subprocess
@@ -152,8 +152,15 @@ def evaluate_origin(origin: str):
     from datetime import datetime,timezone
     import pandas as pd
     started=time.perf_counter()
-    if origin not in ORIGINS or date.fromisoformat(origin)+timedelta(days=7)>=date(2026,9,27):
-        raise ValueError("REFUSED: origin is outside the registered development protocol")
+    if final_freeze is None:
+        if origin not in ORIGINS or date.fromisoformat(origin)+timedelta(days=7)>=date(2026,9,27):
+            raise ValueError("REFUSED: origin is outside the registered development protocol")
+    else:
+        from .freeze_contract import validate_freeze,FINAL_ORIGINS
+        validate_freeze(final_freeze)
+        allowed={(date.fromisoformat(t)-timedelta(days=k)).isoformat() for t in FINAL_ORIGINS for k in (0,7,14,21)}
+        if origin not in allowed or date.fromisoformat(origin)+timedelta(days=7)>date(2026,11,1):
+            raise ValueError("REFUSED: origin is outside the frozen final protocol")
     run_id=uuid.uuid4().hex
     output=Path("/data/representation")/run_id;output.mkdir(parents=True)
     # One sequential immutable archive read, then fast ephemeral container storage.
@@ -187,7 +194,7 @@ def evaluate_origin(origin: str):
         raise RuntimeError("REFUSED: official catalog contract changed")
     primary=cat[(cat["tier"]=="headline")&(cat["table"]=="daily_statistics")&(cat["source_id"]=="afhubbard")&cat["gpu_model"].str.upper().str.startswith(("H100","A100"))].copy()
     if primary.empty:
-        report={"schema_version":"1","is_synthetic":False,"status":"ineligible","reason":"No primary contracts meet the preregistered official headline criteria","run_id":run_id,"origin":origin,"label_end":label_end,"dataset_sha256":PACK_SHA256,"primary_catalog":[],"results":[],"per_cell_columns":[],"runtime_seconds":time.perf_counter()-started,"final_period_opened":False}
+        report={"schema_version":"1","is_synthetic":False,"status":"ineligible","reason":"No primary contracts meet the preregistered official headline criteria","run_id":run_id,"origin":origin,"label_end":label_end,"dataset_sha256":PACK_SHA256,"primary_catalog":[],"results":[],"per_cell_columns":[],"runtime_seconds":time.perf_counter()-started,"final_period_opened":final_freeze is not None}
         dump(output/"summary.json",report);volume.commit();shutil.rmtree(temporary)
         return report
     primary_path=local/"primary-catalog.csv";primary.to_csv(primary_path,index=False)
@@ -257,7 +264,7 @@ def evaluate_origin(origin: str):
             payload=path.read_bytes();files.append({"path":path.name,"bytes":len(payload),"sha256":hashlib.sha256(payload).hexdigest()})
             shutil.copyfile(path,output/path.name)
     vectors=[v for series in values.values() if (v:=features_at(series,at,"log")) is not None]
-    report={"schema_version":"1","is_synthetic":False,"status":"completed","run_id":run_id,"origin":origin,"label_end":label_end,"dataset_sha256":PACK_SHA256,"scope":"afhubbard official headline daily_statistics H100/A100; targets unchanged","primary_catalog":primary.to_dict("records"),"configs":CONFIGS,"observation":{"n_primary_series":len(primary),"mean_log_changes":[float(sum(v[i] for v in vectors if math.isfinite(v[i]))/max(1,sum(math.isfinite(v[i]) for v in vectors))) for i in (1,2,3,4)]},"results":results,"basket_audit":basket_audit,"commands":commands,"artifacts":files,"runtime_seconds":time.perf_counter()-started,"modal_call_id":modal.current_function_call_id(),"cost_status":"unavailable","cost_value":None,"created_at":datetime.now(timezone.utc).isoformat(),"final_period_opened":False,"per_cell_columns":next(csv.reader((local/"cells_drift.csv").open())),"packages":{n:importlib.metadata.version(n) for n in ("numpy","pandas","duckdb","pyarrow")}}
+    report={"schema_version":"1","is_synthetic":False,"status":"completed","run_id":run_id,"origin":origin,"label_end":label_end,"dataset_sha256":PACK_SHA256,"scope":"afhubbard official headline daily_statistics H100/A100; targets unchanged","primary_catalog":primary.to_dict("records"),"configs":CONFIGS,"observation":{"n_primary_series":len(primary),"mean_log_changes":[float(sum(v[i] for v in vectors if math.isfinite(v[i]))/max(1,sum(math.isfinite(v[i]) for v in vectors))) for i in (1,2,3,4)]},"results":results,"basket_audit":basket_audit,"commands":commands,"artifacts":files,"runtime_seconds":time.perf_counter()-started,"modal_call_id":modal.current_function_call_id(),"cost_status":"unavailable","cost_value":None,"created_at":datetime.now(timezone.utc).isoformat(),"final_period_opened":final_freeze is not None,"per_cell_columns":next(csv.reader((local/"cells_drift.csv").open())),"packages":{n:importlib.metadata.version(n) for n in ("numpy","pandas","duckdb","pyarrow")}}
     dump(output/"summary.json",report);volume.commit();shutil.rmtree(temporary)
     return report
 
