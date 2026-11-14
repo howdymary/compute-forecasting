@@ -1,14 +1,16 @@
 {
   "schema_version": "1",
   "measurement": "advertised_rental_offer_rate",
-  "status": "blocked_pending_official_contract",
+  "status": "official_adapter_verified_restricted_data",
   "official_contract": {
-    "verified": false,
-    "target_definitions_verified": false,
-    "origin_timezone_verified": false,
-    "export_schema_verified": false,
-    "scorer_verified": false,
-    "license_status": "unknown"
+    "verified": true,
+    "starter_reference": "https://drive.google.com/file/d/1_TeAyT2SYBg3HcLCaFxeWVhA2K3rtN7j/view",
+    "starter_sha256": "f0b52af28c52545732208bcc4905facd9b941aa5779da683e1d9884c283b7c7c",
+    "target_definitions_verified": true,
+    "origin_timezone_verified": true,
+    "export_schema_verified": true,
+    "scorer_verified": true,
+    "license_status": "restricted"
   },
   "requested_horizons_days": [
     1,
@@ -25,9 +27,16 @@
     "common_initial_trials": 2
   },
   "data": {
-    "download_url": null,
-    "sha256": null,
-    "redistribution_allowed": false
+    "download_url": "https://drive.google.com/file/d/1_TeAyT2SYBg3HcLCaFxeWVhA2K3rtN7j/view",
+    "sha256": "f0b52af28c52545732208bcc4905facd9b941aa5779da683e1d9884c283b7c7c",
+    "redistribution_allowed": false,
+    "license_note": "DATA.md: compilation CC BY 4.0 is owner default pending confirmation. Upstream terms retained; raw pack stays private; EWLuda excluded.",
+    "hash_scope": "Published archive including starter; all 672 manifest entries were verified."
   },
+  "verification_evidence": [
+    "https://github.com/howdymary/compute-forecasting/actions/runs/43634354788",
+    "https://github.com/howdymary/compute-forecasting/actions/runs/43637893251",
+    "https://github.com/howdymary/compute-forecasting/actions/runs/43644119627"
+  ],
   "submission_deadline": "2026-11-15T14:00:00-08:00"
 }
