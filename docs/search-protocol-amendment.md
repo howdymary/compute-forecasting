@@ -1,0 +1,13 @@
+# Search protocol amendment: stronger common incumbents
+
+Recorded after the July 24 and August 8 integration runs, before the complete chronological grid, search-policy training or any final-period evaluation. These development observations are not an untouched test.
+
+The common first two trials for all search policies are now last_value and last_value_empirical. The earlier draft used last_value_empirical and drift. On the completed July training case those two had identical pooled losses, while last_value had zero loss. Keeping the stronger, distinct last-value incumbent avoids weakening a simple reference. The 24 Ridge candidates and the six-trial total budget are unchanged. Every search gets four further candidate reveals and returns the configuration with lowest observed validation loss, retaining the incumbent on ties.
+
+Training decision cutoffs: May 9, 16, 23, 30; June 6, 13, 20, 27; July 4, 11, 18, 24. Development decision cutoffs remain August 8, 15, 22, 29; September 5, 12. For each cutoff, candidate validation scores pool the official unrounded per-cell losses from origins 7, 14 and 21 days earlier; their labels mature no later than the decision cutoff. Forecast loss at the decision cutoff is withheld by the evaluator until search ends. Ineligible catalog folds are reported and never silently replaced with different targets.
+
+Fixed search reveals, in order: ridge_log_target_only_56_100, ridge_level_target_only_56_100, ridge_log_target_only_28_100, ridge_level_target_only_28_100. Random search uses seed 42 and the same budget; additional random seeds are descriptive sensitivity checks. Also retain each of the four official fixed forecasting methods as strong references, without selecting the best using future outcomes. Starting and trained Tinker policies receive identical prompts, permitted observations, candidate sets, information and budgets.
+
+Train Qwen/Qwen3.5-4B rank-16 LoRA for five epochs, saving and evaluating each actual checkpoint. Demonstrations use completed training-period experiments, never development/final labels. Eight deterministic revealed-trial prefixes per training cutoff increase state coverage; they do not create new independent temporal cases. Teacher labels choose the best untried candidate using only that task's matured validation experiments. Future evaluation losses are absent from rendered model prompts and training-example files.
+
+Checkpoint selection may use the six development cutoffs. Report every checkpoint and regressions, and freeze one checkpoint before final evaluation. No improvement is assumed. Cost and token counts are reported only if observed. RL remains a separate optional experiment, not another name for this SFT procedure.
