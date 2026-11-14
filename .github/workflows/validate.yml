@@ -1,0 +1,60 @@
+name: Validate research foundation
+
+on:
+  push:
+    branches: [compute-observatory]
+  pull_request:
+    branches: [compute-observatory]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: foundation-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Fetch pinned source archive on hosted runner
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          SOURCE_REPOSITORY: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
+        run: gh api "repos/$SOURCE_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies on hosted runner
+        run: python -m pip install -e '.[dev]'
+
+      - name: Validate cutoff, record, and scoring contracts
+        run: python -m pytest --junitxml=artifacts/test-results.xml
+
+      - name: Record readiness without exposing credentials
+        if: github.event_name == 'push'
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+          EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
+          PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
+        run: python -m compute_forecast preflight --output artifacts/preflight.json
+
+      - name: Validate synthetic contract serialization
+        run: python -m compute_forecast synthetic-smoke --output artifacts/synthetic/smoke.json
+
+      - name: Record resolved dependency versions
+        run: python -m pip freeze > artifacts/python-environment.txt
+
+      - name: Save remote validation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: foundation-${{ github.sha }}
+          path: artifacts/
+          retention-days: 14
