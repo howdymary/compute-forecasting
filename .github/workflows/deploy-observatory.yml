@@ -1,0 +1,99 @@
+name: Deploy measured research observatory
+
+on:
+  push:
+    branches: [compute-observatory]
+    paths:
+      - .github/workflows/deploy-observatory.yml
+      - src/compute_forecast/dashboard.py
+      - src/compute_forecast/dashboard_ui.py
+      - tests/test_dashboard.py
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: observatory-deployment
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Fetch pinned source on hosted runner
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate Python and browser code
+        run: |
+          python -m pip install -e '.[dev]' modal
+          python -m pytest --junitxml=artifacts/dashboard-tests.xml
+          python -m compileall -q src
+          python - <<'PY'
+          from pathlib import Path
+          from compute_forecast.dashboard_ui import HTML
+          script = HTML.split('<script>',1)[1].split('</script>',1)[0]
+          Path('artifacts/dashboard.js').write_text(script)
+          PY
+          node --check artifacts/dashboard.js
+      - name: Retrieve genuine completed source experiments
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p inputs/starter inputs/policy
+          gh run download 43637893251 --repo "$GITHUB_REPOSITORY" --name genuine-starter-61c6e305521f2cb6baa21bce4c101e4495cc721b --dir inputs/starter
+          gh run download 43639917509 --repo "$GITHUB_REPOSITORY" --name tinker-policy-3e3abfad1c0be72f8dfc83e8a0507fb70edbd963 --dir inputs/policy
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/43637893251" > inputs/baseline-run.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/43639917509" > inputs/policy-run.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          for name, expected in [('baseline-run','61c6e305521f2cb6baa21bce4c101e4495cc721b'), ('policy-run','3e3abfad1c0be72f8dfc83e8a0507fb70edbd963')]:
+              run=json.loads(Path('inputs/'+name+'.json').read_text())
+              assert run['conclusion']=='success' and run['head_branch']=='compute-observatory' and run['head_sha']==expected
+          PY
+      - name: Publish allowlisted aggregate snapshot
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: |
+          modal run -m compute_forecast.dashboard --warmup-report inputs/policy/policy-warmup/warmup-report.json --training-report inputs/starter/starter-training.json --development-report inputs/starter/starter-development.json
+      - name: Deploy read-only application
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: modal deploy -m compute_forecast.dashboard 2>&1 | tee artifacts/deployment.txt
+      - name: Check actual public endpoint
+        run: |
+          python - <<'PY'
+          import json, os, re, urllib.request
+          from pathlib import Path
+          text=Path('artifacts/deployment.txt').read_text()
+          urls=re.findall(r'https://[a-zA-Z0-9-]+[.]modal[.]run',text)
+          assert urls, 'No deployed web URL was returned'
+          url=urls[-1]
+          with urllib.request.urlopen(url+'/health',timeout=120) as response:
+              health=json.load(response)
+          assert health['status']=='ok', health
+          with urllib.request.urlopen(url+'/api/snapshot',timeout=120) as response:
+              snapshot=json.load(response)
+          assert snapshot['warmup']['actual_training_updates']==15
+          assert snapshot['warmup']['final_period_opened'] is False
+          Path('artifacts/live-health.json').write_text(json.dumps({'url':url,'health':health},indent=2))
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:
+              f.write('## Live research observatory\n\n['+url+']('+url+')\n\nHealth and measured snapshot verified on the deployed endpoint.\n')
+          PY
+      - name: Retain validation and deployment evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: observatory-${{ github.sha }}
+          path: artifacts/
+          retention-days: 30
