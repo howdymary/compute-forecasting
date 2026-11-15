@@ -1,0 +1,265 @@
+{
+  "source_sha": "0dc19cdd805a485dd9a78944618bd00997d290a5",
+  "case": 1,
+  "pair": 0,
+  "condition": "conditional_K8_overlap_cuts",
+  "seed": 1518001,
+  "starting_source_guided_case": 3,
+  "source225_sha256": "00c3d55ae3e18ef50ead603182064cf86c444fb9af71848a5841a1d2f4572b16",
+  "normalization": [
+    [
+      32767,
+      65535
+    ]
+  ],
+  "hint_sha256": "09d5536c7eef95845bb61f27bb6b955487e07cf967e23afea28c397629c9ddcb",
+  "hint_verification": {
+    "accepted": true,
+    "cardinality": 225,
+    "reports": [
+      {
+        "cardinality": 225,
+        "distinct_descendants": 6393,
+        "length": 16,
+        "method": "distinct_string_two_deletions",
+        "valid": true,
+        "witness_sha256": "09d5536c7eef95845bb61f27bb6b955487e07cf967e23afea28c397629c9ddcb"
+      },
+      {
+        "cardinality": 225,
+        "largest_pairwise_lcs": 13,
+        "length": 16,
+        "method": "independent_dynamic_programming_lcs",
+        "pairs_checked": 25200,
+        "valid": true,
+        "witness_sha256": "09d5536c7eef95845bb61f27bb6b955487e07cf967e23afea28c397629c9ddcb"
+      }
+    ]
+  },
+  "fixed_count": 64,
+  "fixed_sha256": "47d7836c50a1fb83d5c774794b0812dc793d0689b38ada3f2204f935b3ecd92d",
+  "fixed_verification": {
+    "accepted": true,
+    "cardinality": 64,
+    "reports": [
+      {
+        "cardinality": 64,
+        "distinct_descendants": 1780,
+        "length": 16,
+        "method": "distinct_string_two_deletions",
+        "valid": true,
+        "witness_sha256": "47d7836c50a1fb83d5c774794b0812dc793d0689b38ada3f2204f935b3ecd92d"
+      },
+      {
+        "cardinality": 64,
+        "largest_pairwise_lcs": 13,
+        "length": 16,
+        "method": "independent_dynamic_programming_lcs",
+        "pairs_checked": 2016,
+        "valid": true,
+        "witness_sha256": "47d7836c50a1fb83d5c774794b0812dc793d0689b38ada3f2204f935b3ecd92d"
+      }
+    ]
+  },
+  "pool_count": 7379,
+  "pool_sha256": "334d82ff4802441a811f7816b2f5caa9582f2a1102ac5b17c50f075592ca6512",
+  "pool_restriction": "All65536words compatible with this fixed64, no candidate subsampling",
+  "incidences": 223544,
+  "model_sha256": "c6ce6ae5f248d7d55776af6b10f78a44a3952b9ef0ed1093091ba137194ee6e1",
+  "model_text_sha256": "9234de010f4a34c29cb85a626a362790180a223cfc9b5c25275313cae102f52c",
+  "model_gzip_sha256": "9f54fba42459b3ffae891b7b5403c7f890f105b9228916f1fb0059946f70b470",
+  "cuts_source_sha256": "b4083cd24a2f3ddf6b1034910f60735dfbdfa07067042b6ae678f8986444df43",
+  "conditional_cuts": [
+    {
+      "cut": 0,
+      "fixed_overlap": 52,
+      "eligible_variable_words": 147,
+      "limit": 216
+    },
+    {
+      "cut": 1,
+      "fixed_overlap": 2,
+      "eligible_variable_words": 31,
+      "limit": 216
+    },
+    {
+      "cut": 2,
+      "fixed_overlap": 2,
+      "eligible_variable_words": 42,
+      "limit": 216
+    },
+    {
+      "cut": 3,
+      "fixed_overlap": 2,
+      "eligible_variable_words": 32,
+      "limit": 216
+    },
+    {
+      "cut": 4,
+      "fixed_overlap": 63,
+      "eligible_variable_words": 161,
+      "limit": 216
+    },
+    {
+      "cut": 5,
+      "fixed_overlap": 2,
+      "eligible_variable_words": 32,
+      "limit": 216
+    },
+    {
+      "cut": 6,
+      "fixed_overlap": 2,
+      "eligible_variable_words": 43,
+      "limit": 216
+    },
+    {
+      "cut": 7,
+      "fixed_overlap": 2,
+      "eligible_variable_words": 34,
+      "limit": 216
+    },
+    {
+      "cut": 8,
+      "fixed_overlap": 3,
+      "eligible_variable_words": 35,
+      "limit": 216
+    },
+    {
+      "cut": 9,
+      "fixed_overlap": 3,
+      "eligible_variable_words": 43,
+      "limit": 216
+    },
+    {
+      "cut": 10,
+      "fixed_overlap": 3,
+      "eligible_variable_words": 32,
+      "limit": 216
+    },
+    {
+      "cut": 11,
+      "fixed_overlap": 64,
+      "eligible_variable_words": 161,
+      "limit": 216
+    },
+    {
+      "cut": 12,
+      "fixed_overlap": 3,
+      "eligible_variable_words": 36,
+      "limit": 216
+    },
+    {
+      "cut": 13,
+      "fixed_overlap": 3,
+      "eligible_variable_words": 44,
+      "limit": 216
+    },
+    {
+      "cut": 14,
+      "fixed_overlap": 2,
+      "eligible_variable_words": 31,
+      "limit": 216
+    },
+    {
+      "cut": 15,
+      "fixed_overlap": 51,
+      "eligible_variable_words": 150,
+      "limit": 216
+    },
+    {
+      "cut": 16,
+      "fixed_overlap": 3,
+      "eligible_variable_words": 43,
+      "limit": 216
+    },
+    {
+      "cut": 17,
+      "fixed_overlap": 3,
+      "eligible_variable_words": 33,
+      "limit": 216
+    },
+    {
+      "cut": 18,
+      "fixed_overlap": 64,
+      "eligible_variable_words": 161,
+      "limit": 216
+    },
+    {
+      "cut": 19,
+      "fixed_overlap": 3,
+      "eligible_variable_words": 32,
+      "limit": 216
+    },
+    {
+      "cut": 20,
+      "fixed_overlap": 3,
+      "eligible_variable_words": 43,
+      "limit": 216
+    },
+    {
+      "cut": 21,
+      "fixed_overlap": 3,
+      "eligible_variable_words": 34,
+      "limit": 216
+    },
+    {
+      "cut": 22,
+      "fixed_overlap": 64,
+      "eligible_variable_words": 161,
+      "limit": 216
+    },
+    {
+      "cut": 23,
+      "fixed_overlap": 3,
+      "eligible_variable_words": 32,
+      "limit": 216
+    }
+  ],
+  "known_exact226_exclusions": 0,
+  "solver_wall_limit_seconds": 150,
+  "solver_workers": 2,
+  "solutions": [
+    {
+      "path": "candidate_0.txt",
+      "verification": {
+        "accepted": true,
+        "cardinality": 225,
+        "reports": [
+          {
+            "cardinality": 225,
+            "distinct_descendants": 6393,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "09d5536c7eef95845bb61f27bb6b955487e07cf967e23afea28c397629c9ddcb"
+          },
+          {
+            "cardinality": 225,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25200,
+            "valid": true,
+            "witness_sha256": "09d5536c7eef95845bb61f27bb6b955487e07cf967e23afea28c397629c9ddcb"
+          }
+        ]
+      },
+      "solver_seconds": 4.729962841,
+      "conditional_cut_violations": []
+    }
+  ],
+  "best_seed_verified": 225,
+  "solver_best_verified": 225,
+  "retained_global_best_verified": 226,
+  "proof_artifact": null,
+  "status": "FEASIBLE",
+  "solver_wall_seconds": 150.042156692,
+  "solver_process_cpu_seconds": 292.99126700000005,
+  "best_objective_bound_total": 227.0,
+  "response_stats": "CpSolverResponse summary:\nstatus: FEASIBLE\nobjective: 225\nbest_bound: 227\nintegers: 2335\nbooleans: 7554\nconflicts: 47538\nbranches: 589033\npropagations: 71814843\ninteger_propagations: 25703522\nrestarts: 238117\nlp_iterations: 1181594\nwalltime: 150.019\nusertime: 150.019\ndeterministic_time: 168.765\ngap_integral: 113.231\nsolution_fingerprint: 0x51ed7af54309a3b7\n",
+  "best_method_independently_verified": 225,
+  "wall_including_model_and_verification": 155.035134048,
+  "scope": "Four paired wide fixed64packing families on new225seeds. Same fixed set/full pool/hint/seed,150solver-wall/two-worker caps; actual processCPU recorded, not a matched-native-CPU claim. Control has only exact-known226goal exclusions; treatment adds source-audited unfiltered K8overlap caps, conditional on size>=226.225hints remain eligible and larger supersets of known226remain eligible. Every positive uses both unchanged protected verifiers. A timeout is open; OPTIMAL225only concerns this encoded fixed family/goal model and treatment evidence assumptions, never global optimality. No Tinker or global-record claim.",
+  "controller_and_solver_self_cpu_seconds": 296.000433,
+  "verifier_children_cpu_seconds": 3.427277
+}

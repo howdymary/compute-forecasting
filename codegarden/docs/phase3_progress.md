@@ -1,62 +1,58 @@
-# CodeGarden research status — 2026-11-15T16:43:00Z
+# CodeGarden research checkpoint
 
-**Objective open. Best found and independently verified:226, reproduced from kgrey’s arena construction. No227 witness or new global record is claimed.**
+Updated 2026-11-15, 17:35 UTC. **Goal not achieved. Best found and independently verified: 226, reproduced from the arena.** No new 227-word construction or global record is claimed.
 
-## Current target and acceptance
+## Mathematical status
 
-The actual remote official preflight at16:36:11UTC reproduced arena solution2778 at226. Witness SHA-256: `417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa`. Both unchanged protected verifiers accept6410 distinct14-bit descendants and25425 pairwise LCS checks, maximum13. The official verifier hash remains `563cc3bc7d39bdc261dd6cff08eb634c03e149d59df8f0c7ceff5b3f68730325`. See the [official arena](https://einsteinarena.com/problems/two-deletion-code-16).
+The arena preflight at 17:27:55 UTC still lists kgrey’s solution 2778 with 226 words. The official verifier is unchanged. The reproduced witness has SHA-256 `417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa`, occupies 6,410 distinct length-14 descendants, and passes all 25,425 pairwise LCS checks with maximum 13. Historical 208 and the Weindel–Heckel literature result of 215 are separate comparisons. The global literature audit remains incomplete.
 
-A separate fresh verifier-only runner rechecked the226 witness and six distinct225 checkpoints from immutable source. It ran no search proposer. Its [report](../artifacts/phase3/isolated_acceptance_001/report.json) records frozen checker hashes. This fresh acceptance path is required before promoting a future claimed227 result.
+The protected descendant and LCS verifiers are unchanged. A separate verifier-only job has replayed the baseline and six 225-word witnesses with frozen checker source `ce5eab1859c271686876ee5c2d21c0e0a5316d67`. Every future 227-word candidate must pass fresh isolated acceptance before the goal can be completed.
 
-Historical208, published215, and current arena226 are different comparisons. The global literature audit remains incomplete. A valid227 would meet the numerical goal; a global-record label additionally requires a fresh source audit.
+## Latest experiments
 
-## Completed experiments and exact scope
+| Experiment | Result | What remains open |
+| --- | --- | --- |
+| Broad fixed-64 CP models, four control/treatment pairs | All eight retained 225 after 150 solver-wall seconds and two workers; no treatment gain | All eight models timed out; the imposed 227 ceiling is not a global bound |
+| Fresh 225-word radius-nine exchanges | Six of seven families completed, with no new code; five completed families are unfiltered | 405 roots remain in the final narrower goal-filtered family |
+| Neutral radius nine from the 226-word root | All 56,840 roots completed; no new 226 or 227; 701.5274 summed native CPU seconds | Disconnected unsaturated neutral exchanges are outside the completeness claim |
+| Three-parent unions from seven fresh families | 560 orientation proposals reduced to 556 distinct models; all attempted; 134 completed without a new 226 | 422 models timed out after two native CPU seconds each |
+| Neutral radius ten | 54,720 of 61,871 roots completed; no new code | 7,151 roots remain open |
 
-The [machine-readable report](phase3_progress.json) retains original source commits, seeds, parents, budgets, coverage and previous results.
+The neutral searches exclude the 152 known oriented 226-word arrays as exact goals. Larger supersets remain eligible. Coverage concerns connected outside-blocker bundles and saturated repair pools. These results are conditional native computations, without independent formal absence certificates.
 
-- The incumbent radius10 native search covered61427 canonical roots with the documented safe reductions; no strict improvement. Coverage was separately audited. This is local, conditional computational evidence, not global optimality or a formal absence certificate.
-- The shared216-core closure has38 independently enumerated226 maxima in57 variable words. Supported removal ranks1–5 and51569 single forced-pivot hulls are complete. Millions of compound-pivot queries found no new code within their explicit neighborhoods.
-- Corrected per-worker archive recovery supersedes flattened continuation publications. Eight minimum-growth/random matched pairs closed123 versus68 additional goal-families, while both stayed225. This is throughput evidence, not a cardinality gain or trained-policy result.
-- All256 common-coordinate lift models and1,048,576 arbitrary-extra-word queries completed without227. Two-choice domain search completed12000 model occurrences,10097 canonical unique, with90308608 extra queries and no new code. These are finite transformation classes.
-- All16 two-parent union searches now exclude227 with at most **seven** arbitrary outside words. Ordinary union independence is225. Source-pinned stages cover outside counts2–7. Eight-outside searches are partial and remain open. No new226 was found;226 novelty sampling was not exhaustive.
-- A safe fixed-matching bound reduced native runtime on two identical completed K5 fixtures by24.75x and24.94x. Candidate propagation added roughly1.26x/1.30x on those small fixtures. These ratios are fixture-specific and do not imply improved code cardinality.
-- Eight matched uniform/sparse-edge-weight pairs all stopped at raw227 states with pair energy2. Such states are **invalid**; weighting showed no gain.
-- Exact repair of conflict endpoints completed24664 query occurrences without227. A later fixed8/adaptive2–16 clean-word-release comparison completed47920 query occurrences without227, all within their encoded fixed subsets and full compatible pools. Query occurrences are not globally deduplicated; no global absence claim follows.
+The new neutral kernel passed 1,200 exhaustive saturated-graph fixtures and 400 connected-blocker fixtures. The goal-filtered triple kernel passed 1,300 exhaustive graph fixtures, including excluded minimum goals with eligible larger extensions.
 
-Large raw per-query logs remain at original immutable CodeGarden commits instead of being copied repeatedly. The [log index](../artifacts/phase3/immutable_query_log_index.json) pins exact paths, Git blob hashes, sizes and links. Reports, plain witnesses and verification outputs are consolidated here. No original log was removed.
+The first neutral-nine launch passed its native fixtures but failed before any mathematical workers because an unused import required ortools. Removing that import kept setup dependency-free; the corrected preflight and search succeeded. This setup failure is retained in the detailed report. An older radius-nine continuation printed legacy FRESH8 labels; its structured `exchange_rank: 9` and `native.k: 9` were correct. No score depended on the label.
 
-## Latest completed cycle
+## Current hypothesis: whole low-blocker corridors
 
-The guided/control comparison found28portfolio-new225orbits versus zero against the earlier402-orbit portfolio. These are four correlated projections from each of seven treated raw states; the eighth treated state ends at invalid energy3. Both conditions remain225. This is secondary diversity evidence only, not a record or a training result.
+A RAM-only profile found 185 outside words with one or two distinct blockers around the 226-word root. Their mate graph contains a stub-reachable component touching 95 incumbent words. The seven fresh 225-word families have such components touching 77–107 incumbent words. A large component does not establish a compatible augmenting path.
 
-Optional-pivot and neutral-swap searches found no new226or227. The neutral bank contains69independently checked225entries, including starting seeds and duplicates of earlier portfolio orbits. Full-portfolio recombination merged guided and neutral inputs into39new canonical225parents against the older codes in all relative complement/reversal orientations. Its74880explicit represented pairs completed without a larger code; some pairs repeat earlier experiments.
+[Dong et al., MetaMIS](https://mauricio.resende.info/doc/metaMIS.pdf), sections 3.2–3.4, describes one-tight and two-tight neighborhoods and alternating augmenting paths. Our adaptation searches the entire induced packing pool at once, allowing an unlimited number of affected incumbent words to change. It widens blocker thresholds from two to three to four after exact model closure or bounded stagnation, recording those reasons separately.
 
-The valid matching-completion search completed16bounded runs with no new226or227. Exact residual matching does not make the heuristic outside-set loop exhaustive.
+The proposed batch uses eight starting codes and 60 native CPU seconds per explicit model. Only incumbent words untouched by every eligible outside word are fixed. All other incumbent words and all eligible outside words remain in the pool. Exact known 226-word goals are excluded; larger supersets remain eligible. A new 226-word code is independently checked and receives strict augmentation attempts toward 227. The active branch is `codegarden-low-blocker-001`; no result is assumed in this checkpoint.
 
-Seven representative new225families all closed strict exchanges through K7. Initial K8–12budgets timed out. A new saturated-repair coloring bound passes1200independent exhaustive graph fixtures,160blocker fixtures and an actual small deletion-code root-partition test. Same-input K7fixtures show1.16x/1.40x nativeCPU ratios, not a cardinality gain.
+## Earlier findings retained
 
-## Current rank continuation
+The detailed JSON report preserves the completed strict radius-ten search around the reproduced root; the 38 known 226-word codes and their 216-word common core; supported core removals through rank five; single and compound pivot studies; pair recombination; coordinate lifts; two-choice domains; conditional guidance; matching completion; and exact-family studies.
 
-The K8audit now covers338442canonical root occurrences across all seven source families, combining each old contiguous prefix and four disjoint suffix shards, with no gaps or duplicate completed roots. All closed without improvement. Six are unfiltered strict exchange neighborhoods; the seventh uses known226goal filtering and supports only that narrower encoded scope. These are source-pinned native computations, not formal independent absence certificates.
+These have produced no new 226 or 227. Guided search supplied 28 portfolio-new 225-word orbits; the combined guided/neutral delta supplied 39 relative to the recorded older portfolio. All 74,880 explicitly represented pair queries incident to the new canonical parents completed without a strict new code. Some overlap older or symmetry-equivalent families. Diversity is secondary evidence, not objective success.
 
-[The K9continuation](https://github.com/howdymary/compute-forecasting/actions/runs/43737025742) checks that completed K8audit before launching. It resumes the separate old K9prefixes with four disjoint150nativeCPU shards per parent. Candidate orders and witnesses are checked literally. Five families are unfiltered; two retain explicit known226goal filtering. No result is inferred from a running job.
+An adaptive minimum-growth study closed 123 families versus 68 for random selection, but both retained a method score of 225. Earlier Tinker evaluation did not establish a cardinality benefit. Positive-energy 227-word states remain invalid. Neither speed nor diversity nor negative-query counts substitute for a verified 227-word witness.
 
-## Verification and negative memory limitations
+## Budget, preservation, and evidence
 
-Protected descendant and LCS checkers remain unchanged. Positive pair-energy scores are never code cardinalities. Each completed negative applies only to its fixed outside code, full candidate pool, encoded constraints and completed enumeration. A timeout is not infeasibility.
+All new batches in this checkpoint use standard public GitHub runners. No new Exa, past.dev, Tinker, or Modal requests or reservations were created. The paid allocation expired at 12:00 UTC; unknown balances remain unavailable. Existing conservative holds and other-project and verification reserves are preserved. The last dashboard attempt reported a locked Mac. No credits were bought, no card was added, and no billing settings changed.
 
-Stages1–3 union reports accidentally labeled a sorted-set pool hash as a search-order hash. Full literal orders were retained and compared exactly on continuation, so root coverage did not depend on that mislabeled field. Stage4 and new guided logs use SHA-256 of uint32 big-endian entries in recorded order.
+Earlier genuine sponsor calls remain in their original artifacts. New artifact reuse is labeled as local-artifact reuse. The MetaMIS refresh used web research and is not labeled as an Exa call. The provenance is: query → primary paper → extracted neighborhood method → measured topology → explicit repair experiment → protected witness checks.
 
-The native exact search has small exhaustive regression tests and source/coverage audits, but most negative findings lack formal independently checkable absence certificates. No local result is promoted into a statement about every length16 code.
+All application code, dependencies, results, and logs remain under `codegarden/`. Only approved isolated launchers use `.github/workflows/codegarden.yml` on experiment branches. The main launcher, protected checkers, default branch, BoundForge, and other project files are preserved. No project checkout, generated artifact, or environment was written on the workstation.
 
-## Providers and budget
+- Full findings and source revisions: `docs/phase3_progress.json`.
+- Exact solver models, pools, environment snapshots, and checks: `artifacts/phase3/fresh_cp_001/`.
+- Fresh radius-nine coverage: `artifacts/phase3/fresh9_resume_001/` and `artifacts/phase3/fresh9_tail_001/`.
+- Neutral coverage: `artifacts/phase3/neutral9_goal_001/` and `artifacts/phase3/neutral10_goal_001/`.
+- Explicit three-parent models and statuses: `artifacts/phase3/fresh_triples_001/`.
+- Large older raw logs: immutable source links in `artifacts/phase3/immutable_query_log_index.json`.
 
-The earlier real Exa → source → method → experiment chain, past.dev cross-role reuse, Tinker policy sample and CPU Modal run remain in the artifacts. Earlier trained/untrained Tinker evaluation showed no established benefit. Current comparisons are untrained.
-
-The paid allocation expired at12:00UTC. No new Exa, past.dev, Tinker or Modal request or reservation has been made since that cutoff. Conservative cumulative holds remain Exa$0.112, past319credits, Modal$149.998 and Tinker$23.05; these are not attributed charges. Other-project and verification reserves remain untouched. Read-only account observations are retained in the JSON report. Exa/Tinker current prepaid balances remain unknown; their desktop dashboards were inaccessible because the Mac was locked. No purchases, refill, card, plan or billing settings were changed.
-
-All new experiment jobs use standard runners in this public GitHub repository. All project source/artifacts stay remote under `codegarden/`, with only the previously authorized isolated workflow exception. BoundForge and unrelated checkout/jobs are untouched.
-
-## Next decision
-
-Finish the K9coverage audit, then select a bounded continuation or a different structural repair from the actual result. Promote only independently verified code size. Keep the objective open until an explicit accepted227-word witness or independently source-audited global record exists.
+The demo is a dated replay of verified evidence. A timeout is open. A completed local result applies only to its encoded pool and move rules. The research goal remains active.
