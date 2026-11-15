@@ -67,6 +67,11 @@ def main():
     if not(lo>bh and verify.improves(best,baseline)):raise ValueError("both checkers must prove strict improvement")
     report=copy.deepcopy(winning)
     report["workflow_run"]=rid;report["publication_workflow_run"]=os.environ.get("GITHUB_RUN_ID")
+    snapshot=json.loads((ROOT/"budget-snapshot.json").read_text())
+    for provider,initial in snapshot["providers"].items():
+        for field in ("initial_cap","operational_cap","enabled"):
+            report["providers"][provider][field]=initial.get(field)
+    report["providers"]["tinker"]["units"]="USD prepaid credits"
     report["independent"]={"valid":True,"strict_improvement":True,"method":"independent rational logarithm series; rechecked at publication","ratio_interval":[verify_independent.decimal(lo),verify_independent.decimal(hi,True)]}
     report["campaigns"]=summaries
     report["actual_tinker_decisions"]=sum(e["kind"]=="tinker_decision" for e in events)
