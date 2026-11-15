@@ -1,0 +1,41 @@
+{
+  "source_sha": "3ed4ee23547c3c9f8749b6137374a0b56703f7d5",
+  "universe": 65536,
+  "fixed_words": [],
+  "workers": [
+    {
+      "mode": "warm_default",
+      "seed": 2271141,
+      "seconds": 180,
+      "memory_mb": 8192,
+      "as_limit_gib": 6,
+      "force_cand": null
+    },
+    {
+      "mode": "warm_selected",
+      "seed": 2271141,
+      "seconds": 180,
+      "memory_mb": 8192,
+      "as_limit_gib": 6,
+      "force_cand": 1
+    }
+  ],
+  "cpu_per_worker": 2,
+  "selected_action": {
+    "action": "uniform_forcing",
+    "valid_reply": true,
+    "force_cand": 1,
+    "default_force_cand": 4,
+    "model": "Qwen/Qwen3.5-4B",
+    "prompt_tokens": 2332,
+    "output_tokens": 4,
+    "reply_sha256": "9cdd47de56dcec5b80df2c9e975479353bb98a2fe2407216d5a89f45f2058bce",
+    "memory_in_prompt": true,
+    "trained": false
+  },
+  "same_seed_and_starting_code": true,
+  "archive_limit_per_worker": 64,
+  "max_exact_polishes_per_worker": 4,
+  "large_graph_cache": "Ephemeral Volume; graph source, profile and hash retained.",
+  "upstream_revision": "2e4b3861b8063f05e8520434b97ce59e21ca49e7"
+}
