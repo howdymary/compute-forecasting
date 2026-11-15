@@ -1,0 +1,46 @@
+{
+  "source_sha": "a8cbffbd3602fd2cc3862b2628b3f1f0302f8a96",
+  "case": 5,
+  "condition": "matched_size_random",
+  "seed": 1170003,
+  "weight_band": [
+    7,
+    11
+  ],
+  "removed_count": 150,
+  "fixed_count": 76,
+  "fixed_sha256": "e4590da2ec166542891533933851d55f1711ce3656f4ee0d946ea7ca3465cb8d",
+  "incumbent_verification": {
+    "accepted": true,
+    "cardinality": 226,
+    "reports": [
+      {
+        "cardinality": 226,
+        "distinct_descendants": 6410,
+        "length": 16,
+        "method": "distinct_string_two_deletions",
+        "valid": true,
+        "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+      },
+      {
+        "cardinality": 226,
+        "largest_pairwise_lcs": 13,
+        "length": 16,
+        "method": "independent_dynamic_programming_lcs",
+        "pairs_checked": 25425,
+        "valid": true,
+        "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+      }
+    ]
+  },
+  "pool_count": 4284,
+  "pool_sha256": "8bde74e8494070e25c24dc0a9d4f668299137ac7f88419a6056884a7dbce1bb1",
+  "target_added": 151,
+  "model_sha256": "82c9130642056a4f04b17794a604ddb03fb7a1756197dcfba2e562e6a45e6526",
+  "solutions": [],
+  "seconds_limit": 300,
+  "workers": 2,
+  "hypothesis": "Deletion descendant weights lie in [wt(x)-2,wt(x)], so conflicts occur only between weight layers at distance at most two. Reoptimize an entire multi-layer band rather than a bounded k-exchange. Random controls remove the same number of incumbent words.",
+  "scope": "Every binary 16-bit word compatible with the explicitly fixed outside code is eligible. No component, symmetry, dominance or learned cuts; a timeout is not local optimality.",
+  "proof_artifact": null
+}
