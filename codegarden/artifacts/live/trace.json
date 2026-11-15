@@ -3,25 +3,26 @@
     "kind": "memory_write",
     "value": {
       "role": "analyst",
-      "source_id": "codegarden-43672967716-analyst-scoped_negative-21c40fba",
+      "source_id": "codegarden-43673585173-analyst-scoped_negative-e9c04092",
       "experiment": "negative-001",
       "parent_sources": [],
       "estimated_credits": 3
     },
-    "time": 1794713737.3466234
+    "time": 1794714244.306656
   },
   {
     "kind": "memory_read",
     "value": {
       "role": "researcher",
-      "required_source": "codegarden-43672967716-analyst-scoped_negative-21c40fba",
+      "required_source": "codegarden-43673585173-analyst-scoped_negative-e9c04092",
       "returned_source_ids": [
         "codegarden-43672598278-analyst-scoped_negative-457459ac",
-        "codegarden-43672967716-analyst-scoped_negative-21c40fba"
+        "codegarden-43672967716-analyst-scoped_negative-21c40fba",
+        "codegarden-43673585173-analyst-scoped_negative-e9c04092"
       ],
       "used_in_next_decision": true
     },
-    "time": 1794713738.2861984
+    "time": 1794714245.3269591
   },
   {
     "kind": "exa_reuse",
@@ -31,6 +32,154 @@
       "query": "binary two deletion correcting codes length 16 maximum independent set variable neighborhood exact set packing CP-SAT",
       "influenced_experiment": "modal-repair-001"
     },
-    "time": 1794713738.286689
+    "time": 1794714245.3275037
+  },
+  {
+    "kind": "tinker_strategy",
+    "value": {
+      "action": "random8greedy",
+      "valid_action": true,
+      "strict_format": true,
+      "output_tokens": 5,
+      "raw_reply_sha256": "76415a5b5044ec5fef6161eb85315a8543a3a9d19e39b6acf8ad5902a2e42b82",
+      "state_sha256": "3c99a53eb2aa7de641dbd9399ecf1f1cab1105d42e019b5f6baf4fa1fc44fea6",
+      "reservation": "8eb31c21b97b4a37978c21fa4f918b32",
+      "model": "Qwen/Qwen3.5-4B",
+      "used_action": "random8greedy",
+      "explicit_fallback": false,
+      "used_memory_source": "codegarden-43673585173-analyst-scoped_negative-e9c04092",
+      "experiment_id": "modal-repair-001"
+    },
+    "time": 1794714255.6992204
+  },
+  {
+    "kind": "memory_write",
+    "value": {
+      "role": "researcher",
+      "source_id": "codegarden-43673585173-researcher-source_backed_method-36e348c0",
+      "experiment": "modal-repair-001",
+      "parent_sources": [
+        "codegarden-43673585173-analyst-scoped_negative-e9c04092"
+      ],
+      "estimated_credits": 7
+    },
+    "time": 1794714263.9140198
+  },
+  {
+    "kind": "memory_read",
+    "value": {
+      "role": "strategist",
+      "required_source": "codegarden-43673585173-researcher-source_backed_method-36e348c0",
+      "returned_source_ids": [
+        "codegarden-43672598278-analyst-scoped_negative-457459ac",
+        "codegarden-43672967716-analyst-scoped_negative-21c40fba",
+        "codegarden-43673585173-analyst-scoped_negative-e9c04092",
+        "codegarden-43673585173-researcher-source_backed_method-36e348c0"
+      ],
+      "used_in_next_decision": true
+    },
+    "time": 1794714264.8143718
+  },
+  {
+    "kind": "memory_write",
+    "value": {
+      "role": "strategist",
+      "source_id": "codegarden-43673585173-strategist-experiment_plan-1dd00061",
+      "experiment": "modal-repair-001",
+      "parent_sources": [
+        "codegarden-43673585173-researcher-source_backed_method-36e348c0"
+      ],
+      "estimated_credits": 2
+    },
+    "time": 1794714275.2836628
+  },
+  {
+    "kind": "memory_read",
+    "value": {
+      "role": "analyst",
+      "required_source": "codegarden-43673585173-strategist-experiment_plan-1dd00061",
+      "returned_source_ids": [
+        "codegarden-43672598278-analyst-scoped_negative-457459ac",
+        "codegarden-43672967716-analyst-scoped_negative-21c40fba",
+        "codegarden-43673585173-analyst-scoped_negative-e9c04092",
+        "codegarden-43673585173-researcher-source_backed_method-36e348c0",
+        "codegarden-43673585173-strategist-experiment_plan-1dd00061"
+      ],
+      "used_in_next_decision": true
+    },
+    "time": 1794714351.0928693
+  },
+  {
+    "kind": "memory_write",
+    "value": {
+      "role": "analyst",
+      "source_id": "codegarden-43673585173-analyst-verified_result-ef116a06",
+      "experiment": "modal-repair-001",
+      "parent_sources": [
+        "codegarden-43673585173-strategist-experiment_plan-1dd00061"
+      ],
+      "estimated_credits": 5
+    },
+    "time": 1794714366.2484498
+  },
+  {
+    "kind": "memory_read",
+    "value": {
+      "role": "researcher",
+      "required_source": "codegarden-43673585173-analyst-verified_result-ef116a06",
+      "returned_source_ids": [
+        "codegarden-43672598278-analyst-scoped_negative-457459ac",
+        "codegarden-43673585173-analyst-scoped_negative-e9c04092",
+        "codegarden-43673585173-analyst-verified_result-ef116a06",
+        "codegarden-43673585173-strategist-experiment_plan-1dd00061"
+      ],
+      "used_in_next_decision": true
+    },
+    "time": 1794714367.1958652
+  },
+  {
+    "kind": "exa_search",
+    "value": {
+      "query": "binary two deletion correcting code length 16 226 227 latest explicit construction",
+      "request_id": "40d715204ef808238e5a0700c590260a",
+      "cost_dollars": {
+        "total": 0.007,
+        "search": {
+          "neural": 0.007
+        }
+      },
+      "sources": [
+        {
+          "title": "[2609.19493] Polynomially larger deletion codes by linear hashing of substring counts",
+          "url": "https://arxiv.org/abs/2609.19493",
+          "published": "2026-09-16T23:24:08.000Z",
+          "excerpt": "# Polynomially larger deletion codes by linear hashing of substring",
+          "content_sha256": "7c634111cfad768850e63aa7b635be47cbe301038519aa4de6ddf5e1ec3c69b3"
+        },
+        {
+          "title": "[2007.10592] Explicit two-deletion codes with redundancy matching the existential bound",
+          "url": "https://ar5iv.labs.arxiv.org/html/2007.10592",
+          "published": null,
+          "excerpt": "###### Abstract We give an explicit construction of length- $n$",
+          "content_sha256": "089b203a64c7fb1d52b42ae2813f9561ffe037a947cc179abddce9447dcc4f57"
+        },
+        {
+          "title": "LLM-Guided Search for Deletion-Correcting Codes",
+          "url": "https://doi.org/10.48550/arxiv.2504.00613",
+          "published": "2025-04-01T00:00:00.000Z",
+          "excerpt": "Code length n Method 6 7 8 9 10 11",
+          "content_sha256": "6c0e610c85873de450f587998e77786daa75459fc59bf7bffaec118796ba1aee"
+        },
+        {
+          "title": "Explicit Construction of q-ary 2-deletion Correcting Codes with Low Redundancy",
+          "url": "https://arxiv.org/abs/2306.02868",
+          "published": "2023-06-05T13:42:23.000Z",
+          "excerpt": "# Explicit Construction of q-ary 2-deletion Correcting Codes with Low",
+          "content_sha256": "bae026c594d7c87ad5d5e55611514aae129d7344c228121b8cd6bbb23a1fe619"
+        }
+      ],
+      "influenced_experiment": "record-check-001"
+    },
+    "time": 1794714368.3686588
   }
 ]

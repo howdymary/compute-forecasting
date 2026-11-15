@@ -1,5 +1,5 @@
 {
-  "source_sha": "2a4eac4ccaac46389ca60782c5c49395548b2429",
+  "source_sha": "9377df4a407ddbcc3dc37539fb6405596eadedfe",
   "best": {
     "path": "/home/runner/work/compute-forecasting/compute-forecasting/codegarden/artifacts/baselines/arena_226_kgrey.txt",
     "verification": {
@@ -212,6 +212,58 @@
     },
     {
       "path": "/home/runner/work/compute-forecasting/compute-forecasting/codegarden/artifacts/cp_global.txt",
+      "verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6410,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+          }
+        ]
+      }
+    },
+    {
+      "path": "/home/runner/work/compute-forecasting/compute-forecasting/codegarden/artifacts/live/modal_2d956cda081045ada2b1045cd350c95c.txt",
+      "verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6410,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+          }
+        ]
+      }
+    },
+    {
+      "path": "/home/runner/work/compute-forecasting/compute-forecasting/codegarden/artifacts/live/modal_4e8a58b1235c4b48b6db31bcae2e2be6.txt",
       "verification": {
         "accepted": true,
         "cardinality": 226,
