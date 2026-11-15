@@ -1,0 +1,39 @@
+{
+  "source_sha": "688b600764c9eae9a7a1abf889bb66351a76d343",
+  "case": 7,
+  "mode": "adaptive",
+  "seed": 1431004,
+  "target": 227,
+  "core_quota": 206,
+  "starting_verification": {
+    "accepted": true,
+    "cardinality": 225,
+    "reports": [
+      {
+        "cardinality": 225,
+        "distinct_descendants": 6357,
+        "length": 16,
+        "method": "distinct_string_two_deletions",
+        "valid": true,
+        "witness_sha256": "4b162596f58ed789c7ad79fdb40e2c6dc2c3cce3f2ec50cf52159a5e3bea582c"
+      },
+      {
+        "cardinality": 225,
+        "largest_pairwise_lcs": 13,
+        "length": 16,
+        "method": "independent_dynamic_programming_lcs",
+        "pairs_checked": 25200,
+        "valid": true,
+        "witness_sha256": "4b162596f58ed789c7ad79fdb40e2c6dc2c3cce3f2ec50cf52159a5e3bea582c"
+      }
+    ]
+  },
+  "starting_sha256": "4b162596f58ed789c7ad79fdb40e2c6dc2c3cce3f2ec50cf52159a5e3bea582c",
+  "best_verified": 226,
+  "novel": [],
+  "polish": [],
+  "minimum_pair_conflicts": 2,
+  "cpu_seconds": 600.001,
+  "iterations": 2678773,
+  "scope": "Quota210 follows conditional local exclusions; quota206 cases are deliberately stronger heuristic diversification, not safe global cuts.600nativeCPU each. All multi-edge hubs are captured online, not just one-edge states. Pair-energy states with positive score remain invalid. No absence claim from bounded heuristics; no matched total-CPU claim when polish differs."
+}

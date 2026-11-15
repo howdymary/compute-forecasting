@@ -1,0 +1,71 @@
+{
+  "source_sha": "e88696335e995a05c96884c69500c25643749cbe",
+  "case": 6,
+  "seed": 1441004,
+  "condition": "core_quota210",
+  "starting_verification": {
+    "accepted": true,
+    "cardinality": 225,
+    "reports": [
+      {
+        "cardinality": 225,
+        "distinct_descendants": 6372,
+        "length": 16,
+        "method": "distinct_string_two_deletions",
+        "valid": true,
+        "witness_sha256": "59a02fdff8b8dea6bf8e422678b1c914e9badca7e3a0e524cf241c5d8e056dd0"
+      },
+      {
+        "cardinality": 225,
+        "largest_pairwise_lcs": 13,
+        "length": 16,
+        "method": "independent_dynamic_programming_lcs",
+        "pairs_checked": 25200,
+        "valid": true,
+        "witness_sha256": "59a02fdff8b8dea6bf8e422678b1c914e9badca7e3a0e524cf241c5d8e056dd0"
+      }
+    ]
+  },
+  "incumbent_sha256": "59a02fdff8b8dea6bf8e422678b1c914e9badca7e3a0e524cf241c5d8e056dd0",
+  "fixed_count": 206,
+  "fixed_sha256": "e3eb23b4d4095268f0ff32d0b0565ba8476980b2d24ef6939eb1c9d2d03c76b5",
+  "pool_count": 91,
+  "pool_sha256": "f225d7a3f94980fd7a3578d51b32ce1aa1f65c9781e082f76490da576e1285c4",
+  "wall_limit_seconds": 600,
+  "solver_workers": 2,
+  "solutions": [
+    {
+      "witness": "candidate_0.txt",
+      "verification": {
+        "accepted": true,
+        "cardinality": 225,
+        "reports": [
+          {
+            "cardinality": 225,
+            "distinct_descendants": 6372,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "59a02fdff8b8dea6bf8e422678b1c914e9badca7e3a0e524cf241c5d8e056dd0"
+          },
+          {
+            "cardinality": 225,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25200,
+            "valid": true,
+            "witness_sha256": "59a02fdff8b8dea6bf8e422678b1c914e9badca7e3a0e524cf241c5d8e056dd0"
+          }
+        ]
+      },
+      "wall_seconds": 0.0037352970000000003
+    }
+  ],
+  "best_in_family_verified": 225,
+  "retained_global_best_verified": 226,
+  "scope": "Only the full compatible universe for this explicit fixed core. Conditional core cuts rely on earlier computational closure; exact-size known-code exclusions reject only supplied226 arrays, not larger supersets. No global optimality or record inference.",
+  "proof_artifact": null,
+  "known_exclusion_count": 0,
+  "model_sha256": "a766eb98a2d22b3fa5e21942d7b42c6a61af9153303ce8cf070b11d128c61518"
+}

@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-15T12:56:00Z",
+  "updated_at": "2026-11-15T13:35:49Z",
   "target_achieved": false,
   "best_found": 226,
   "best_independently_verified": 226,
@@ -9,7 +9,7 @@
     "agent": "kgrey",
     "id": 2778,
     "sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa",
-    "last_checked": "2026-11-15T12:51:45Z",
+    "last_checked": "2026-11-15T13:32:16Z",
     "scope": "Live arena only; global literature audit incomplete"
   },
   "completed_local_findings": {
@@ -351,6 +351,182 @@
       "input_source": "837f34e3cecd135eab6e44a07f6150a05cedb58d",
       "authority": "Existing33 explicit long portfolio codes and prior412-case plan; full complement/reversal orbit canonicalization in RAM, no files on workstation.",
       "conclusion": "Do not rerun already-completed neighborhoods solely because the checkpoint came from a later worker."
+    },
+    "compound_pivots": {
+      "cases": 16,
+      "best_verified": 226,
+      "new226": 0,
+      "processed_query_occurrences": 38785634,
+      "duplicate_proposals_skipped": 189374,
+      "native_cpu_seconds": 9600.046,
+      "timeouts": 0,
+      "pool_cap_skips": 0,
+      "scope": "Bounded randomized occurrences, not globally unique neighborhoods or exhaustive compound-pivot coverage. All exact negatives apply only to their forced-set repair.",
+      "source": "e30decb5f8997fc59f27252f7e21525dfc0e3402",
+      "run": 43715553644,
+      "artifact_commit": "79749a5fa6a1a1974ffd7c60394a7c9acffdf80b"
+    },
+    "corequota": {
+      "source": "e026ab0f1467b3cd9e14ed25a2c24f7b13af8cb1",
+      "run": 43715961417,
+      "energies": [
+        1,
+        3,
+        1,
+        1,
+        2,
+        3,
+        1,
+        5
+      ],
+      "new226": 0,
+      "verified227": 0,
+      "scope": "Positive pair-energy states are invalid; method ends below226 except retained external baseline. Fixed/adaptive energy controls show no adaptive advantage."
+    },
+    "quota_frontiers": {
+      "source": "4e3a337a897704dc71c1fbd7c2cb109325c5bb97",
+      "run": 43717267612,
+      "projections_verified": 34,
+      "fresh225_selected": 8,
+      "known226_recoveries": 2,
+      "novel226": 0,
+      "strict_no_improvement_complete": {
+        "radius6": 6,
+        "radius7": 6,
+        "radius8": 4
+      },
+      "timeouts": {
+        "radius8": 2,
+        "radius9": 6
+      },
+      "scope": "Two cases stop after known226 recovery; their larger neighborhoods are unsearched. Other six remain225. No global optimum."
+    },
+    "goal_filtered_bundle": {
+      "source": "6851dc55b0d305bacf52e695ea7b6440a8435a6a",
+      "run": 43717980341,
+      "cases": 8,
+      "novel226": 0,
+      "verified227": 0,
+      "tests": {
+        "unfiltered_arbitrary_graphs": 160,
+        "goal_logic": 2
+      },
+      "scope": "Known-code filter continues past earlier recoveries. Completion covers enumerated connected bundles and saturated pools only; the strict-gain component lemma does not establish novelty completeness. Disconnected combinations can remain."
+    },
+    "hub_capture": {
+      "source": "688b600764c9eae9a7a1abf889bb66351a76d343",
+      "run": 43718106114,
+      "cases": 8,
+      "energies": [
+        2,
+        3,
+        2,
+        2,
+        2,
+        7,
+        2,
+        2
+      ],
+      "novel226": 0,
+      "verified227": 0,
+      "independent_multi_edge_regressions": 2,
+      "scope": "Capture every star collision pattern at ordinary swaps and restart inspections. Regression reproduces known226 only. No new code or adaptive benefit."
+    },
+    "full_core_hulls": {
+      "source": "e88696335e995a05c96884c69500c25643749cbe",
+      "run": 43718733127,
+      "models": [
+        {
+          "case": 0,
+          "condition": "core_quota210",
+          "fixed": 185,
+          "pool": 457,
+          "pool_sha256": "90f91455d4ff7504a7666463bacce99a2f1f358f265c419d6b5339fe3c70f6b5",
+          "model_sha256": "f7460178dd8cc4325664bcdcc5fdfeb5c3cc9c5c981e81816cfe664dd21b12f2",
+          "status": "OPTIMAL",
+          "goal_model_optimum": 225,
+          "process_cpu_seconds": 3.049682
+        },
+        {
+          "case": 1,
+          "condition": "exact_known226_exclusion",
+          "fixed": 185,
+          "pool": 457,
+          "pool_sha256": "90f91455d4ff7504a7666463bacce99a2f1f358f265c419d6b5339fe3c70f6b5",
+          "model_sha256": "63dd8ce7b9d17f3a1868fbdd31e07c968adb1c46cfdd18114dcdef9db05aebac",
+          "status": "OPTIMAL",
+          "goal_model_optimum": 225,
+          "process_cpu_seconds": 42.709541
+        },
+        {
+          "case": 2,
+          "condition": "core_quota210",
+          "fixed": 201,
+          "pool": 369,
+          "pool_sha256": "795f18ce5238913e145e56dd09bf97bdbea6e6bf4a451fedff3b9b0af887a628",
+          "model_sha256": "91be2b7d1bb90ae33633e8aa6e20c1968f24b7238558d5ba6bb438680b634ebb",
+          "status": "OPTIMAL",
+          "goal_model_optimum": 225,
+          "process_cpu_seconds": 1.9290380000000007
+        },
+        {
+          "case": 3,
+          "condition": "exact_known226_exclusion",
+          "fixed": 201,
+          "pool": 369,
+          "pool_sha256": "795f18ce5238913e145e56dd09bf97bdbea6e6bf4a451fedff3b9b0af887a628",
+          "model_sha256": "ac4691cf1cc54e70be7f770c2758797362f55c4bd2dd7952b0b4ac49d085c614",
+          "status": "OPTIMAL",
+          "goal_model_optimum": 225,
+          "process_cpu_seconds": 2.341426
+        },
+        {
+          "case": 4,
+          "condition": "core_quota210",
+          "fixed": 209,
+          "pool": 75,
+          "pool_sha256": "0ea53bb52898a55c4fdc3d71776cfd400c910f87cea46573a599b3bbe6a2a84d",
+          "model_sha256": "f953f8ed4a7adb7982278074c18f70b9f894569c739d77787783d2f9a2a1867f",
+          "status": "OPTIMAL",
+          "goal_model_optimum": 225,
+          "process_cpu_seconds": 0.0074270000000002945
+        },
+        {
+          "case": 5,
+          "condition": "exact_known226_exclusion",
+          "fixed": 209,
+          "pool": 75,
+          "pool_sha256": "0ea53bb52898a55c4fdc3d71776cfd400c910f87cea46573a599b3bbe6a2a84d",
+          "model_sha256": "ec432f9db188a81ede3e6ed1f8c1c47ce0e31373456eb68b58835455eef104b1",
+          "status": "OPTIMAL",
+          "goal_model_optimum": 225,
+          "process_cpu_seconds": 0.04355700000000029
+        },
+        {
+          "case": 6,
+          "condition": "core_quota210",
+          "fixed": 206,
+          "pool": 91,
+          "pool_sha256": "f225d7a3f94980fd7a3578d51b32ce1aa1f65c9781e082f76490da576e1285c4",
+          "model_sha256": "a766eb98a2d22b3fa5e21942d7b42c6a61af9153303ce8cf070b11d128c61518",
+          "status": "OPTIMAL",
+          "goal_model_optimum": 225,
+          "process_cpu_seconds": 0.00990000000000002
+        },
+        {
+          "case": 7,
+          "condition": "exact_known226_exclusion",
+          "fixed": 206,
+          "pool": 91,
+          "pool_sha256": "f225d7a3f94980fd7a3578d51b32ce1aa1f65c9781e082f76490da576e1285c4",
+          "model_sha256": "6e553c8d206d5931af241d0a47cdfb120c4954a3e848afe7d23af5e4a5cd2e81",
+          "status": "OPTIMAL",
+          "goal_model_optimum": 225,
+          "process_cpu_seconds": 0.027123999999999926
+        }
+      ],
+      "known_goal_logic_tests": 3,
+      "scope": "Four exact fixed-core families, two formulations each. All OPTIMAL225 AFTER excluding supplied known226 or imposing conditional core cuts. Larger codes remain eligible in exact-size exclusion controls. These are goal-model optima, not claims that the ordinary unfiltered family lacks known226."
     }
   },
   "provider_result": {
@@ -387,20 +563,37 @@
     "verification_and_other_projects_reserves_preserved": true,
     "paid_allocation_expired_at": "2026-11-15T12:00:00Z",
     "new_paid_work": false,
-    "long_case2": "Retried logical case; summed attempt CPU6004.28, censored from matched-total-compute claims. Only own app stopped after bounded allowances."
+    "long_case2": "Retried logical case; summed attempt CPU6004.28, censored from matched-total-compute claims. Only own app stopped after bounded allowances.",
+    "latest_read_only_usage": {
+      "source": "f2b0e15124446c4d5e51a107409615dd84fe9be0",
+      "run": 43717388159,
+      "observed_at": "2026-11-15T13:08:36.423478+00:00",
+      "modal_account_wide_gross_usd": 3.49103696,
+      "modal_account_wide_billed_usd": 0,
+      "past_balance_left": 699096,
+      "tinker_priced_row_estimated_gross_usd": 22.645927005,
+      "tinker_unpriced_rows": 8,
+      "tinker_cost_data_through": null,
+      "not_attributed_project_cost": true,
+      "allocation_renewed": false,
+      "holds_released": 0,
+      "current_exa_tinker_prepaid_balances_unknown": true,
+      "desktop_locked": true
+    }
   },
   "active": [
     {
-      "branch": "codegarden-compound-pivot-003",
-      "source": "e30decb5f8997fc59f27252f7e21525dfc0e3402",
-      "run": 43715553644,
-      "scope": "Coordinated mutually compatible2..5 pivots, full compatible repair, bounded600nativeCPU per case,16cases, no paid provider calls"
-    },
-    {
-      "branch": "codegarden-corequota-003",
-      "source": "e026ab0f1467b3cd9e14ed25a2c24f7b13af8cb1",
-      "run": 43715961417,
-      "scope": "Eight600-native-CPU pair-conflict searches, target226/227, quota210 conditional exclusion or deliberately stronger206 heuristic, fixed/adaptive controls. Actual prerequisite and literal-string move tests passed."
+      "branch": "codegarden-adaptive-hulls-003",
+      "source": "8853af608e27f63a9db6072a42c824ff3d44c6cb",
+      "run": 43719457523,
+      "cases": 8,
+      "parent_fixed_sizes": [
+        185,
+        201,
+        209,
+        206
+      ],
+      "scope": "Equal600-wall-second/2-thread envelopes. Random single-word relaxation versus adaptive unlock-ranked1/2/4-word relaxation. Carry prior completed goal-family exclusions only for size>=226. Unknown/FEASIBLE restores last completed parent; all positive candidates use both protected verifiers."
     }
   ],
   "consolidated_sources": [
@@ -524,5 +717,58 @@
     "No strict adaptive or Tinker policy superiority demonstrated.",
     "All current new compute is on free public standard GitHub runners; paid balances/allocation require renewal before another paid reservation.",
     "Most bulk negative-query logs save reconstructible family definitions/status vectors and sample literal candidate-pool hashes, not an individual SHA256 for every pool. No formal absence certificate is claimed."
-  ]
+  ],
+  "research_cycle": [
+    {
+      "hypothesis": "Finish interrupted root radius10",
+      "result": "Completed coverage of61427 canonical roots; no strict local improvement",
+      "run": 43705132167
+    },
+    {
+      "hypothesis": "Exploit shared216-core blocker support",
+      "result": "All supported rank4 and5 families completed; no227 or new226",
+      "run": 43714413441
+    },
+    {
+      "hypothesis": "Force outside pivots before exact repair",
+      "result": "All51569 single hulls closed;38,785,634 sampled compound occurrences found no new code",
+      "run": 43715553644
+    },
+    {
+      "hypothesis": "Use local closure to escape known basins",
+      "result": "Core quotas produced no valid227. General projections yielded eight fresh225 codes",
+      "run": 43715961417
+    },
+    {
+      "hypothesis": "Continue past known226 recovery",
+      "result": "Eight goal-filtered connected searches found no new code; incomplete novelty coverage explicitly documented",
+      "run": 43717980341
+    },
+    {
+      "hypothesis": "Capture multi-edge star projections",
+      "result": "Two independent regressions pass; eight runs found no novel226 or227",
+      "run": 43718106114
+    },
+    {
+      "hypothesis": "Rebuild full compatible core hulls",
+      "result": "Eight models on four fixed sets returned OPTIMAL225 under novelty constraints",
+      "run": 43718733127
+    },
+    {
+      "hypothesis": "Expand only after solver exhaustion",
+      "result": "Running random-one versus adaptive unlock-ranked relaxations; target remains open",
+      "run": 43719457523
+    }
+  ],
+  "verification": {
+    "protected_files_changed": false,
+    "target_achieved": false,
+    "best226_witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa",
+    "official_verifier_sha256": "563cc3bc7d39bdc261dd6cff08eb634c03e149d59df8f0c7ceff5b3f68730325",
+    "positive_methods": [
+      "distinct_string_two_deletions",
+      "independent_dynamic_programming_lcs"
+    ],
+    "formal_absence_proof": false
+  }
 }

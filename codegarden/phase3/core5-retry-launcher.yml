@@ -21,10 +21,11 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          mkdir -p codegarden/.tmp
           for attempt in 1 2 3; do
-            if gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" > codegarden-source.tar.gz; then
-              tar -xz --strip-components=1 -f codegarden-source.tar.gz
-              rm codegarden-source.tar.gz
+            if gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" > codegarden/.tmp/source.tar.gz; then
+              tar -xz --strip-components=1 -f codegarden/.tmp/source.tar.gz
+              rm codegarden/.tmp/source.tar.gz
               break
             fi
             sleep 2

@@ -87,3 +87,34 @@ remote run/branch. Inspect the source and refresh run configuration before a fut
 Protected source SHA-256 checks precede acceptance. Complement/reversal are the only
 symmetries used; orbit probes checked their deletion-descendant preservation on all words.
 Timeouts remain unknown; cached negatives require exact matching scope.
+
+## Current adaptive research
+
+The [current phase-three report](docs/phase3_progress.md) distinguishes completed local
+results, open neighborhoods, actual provider evidence and the still-open227 objective.
+The active strategy expands a fixed-core repair only after CP-SAT closes its novelty
+model at225. A timeout remains open. Search goals can reject known226 arrays; code
+validity remains the unchanged descendant/LCS specification.
+
+For an authorized **remote** checkout with the committed parent artifacts:
+
+~~~sh
+python3.11 -m venv codegarden/.venv
+codegarden/.venv/bin/python -m pip install ortools==9.14.6206
+mkdir -p codegarden/.build
+g++ -O3 -std=c++17 codegarden/phase3/bundle_guard.cpp -o codegarden/.build/bundle
+export GITHUB_SHA=$(git rev-parse HEAD)
+codegarden/.venv/bin/python -B codegarden/phase3/adaptive_hulls.py --prepare
+codegarden/.venv/bin/python -B codegarden/phase3/adaptive_hulls.py --case 0
+~~~
+
+Cases0–7 compare paired random-one/adaptive-unlock relaxations from four frozen225
+parents. Each search batch targets600wall seconds with two solver threads; verification
+and successful-code augmentation add bounded overhead. To continue an interrupted225
+checkpoint with the same engine, add `--resume`. Checkpoint source/engine hashes,
+explicit candidate pools, negative scopes and independently accepted witnesses live
+under `artifacts/phase3/adaptive_hulls_001/`.
+
+These commands make no Exa, past.dev, Tinker or Modal calls. A new paid campaign must
+refresh the shared allocation; all unresolved holds and other-project reserves remain
+in force. Standalone witness verification needs no optional packages or providers.

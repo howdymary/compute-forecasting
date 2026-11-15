@@ -1,0 +1,89 @@
+name: CodeGarden complete conflict-cover projections and fresh-frontier repairs
+on:
+  push:
+    branches: [codegarden-quota-frontiers-003]
+    paths: [.github/workflows/codegarden.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: codegarden-free-quota-frontiers-003
+  cancel-in-progress: false
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+  SOURCE_SHA: ${{ github.sha }}
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - name: Wait for own bounded upstream run
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run watch 43715961417 --repo "$GITHUB_REPOSITORY" --exit-status --interval 20
+      - uses: actions/download-artifact@v4
+        with:
+          name: codegarden-bundle-collected
+          run-id: 43715961417
+          github-token: ${{ github.token }}
+          path: codegarden/artifacts/phase3/corequota_001/
+      - name: Independently project full conflict graphs and select fresh codes
+        run: python -B -u codegarden/phase3/quota_frontiers.py --prepare
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          retention-days: 1
+          name: codegarden-quota-projections
+          path: codegarden/artifacts/phase3/quota_frontiers_001/
+  repairs:
+    needs: prepare
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      max-parallel: 8
+      matrix:
+        case: [0, 1, 2, 3, 4, 5, 6, 7]
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/download-artifact@v4
+        with:
+          name: codegarden-quota-projections
+          path: codegarden/artifacts/phase3/quota_frontiers_001/
+      - name: Compile and run bounded exact repair
+        run: |
+          mkdir -p codegarden/.build
+          g++ -O3 -std=c++17 codegarden/phase3/bundle_guard.cpp -o codegarden/.build/bundle
+          python -B -u codegarden/phase3/quota_frontiers.py --case ${{ matrix.case }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          retention-days: 1
+          name: codegarden-quota-repair-${{ matrix.case }}
+          path: codegarden/artifacts/phase3/quota_frontiers_001/
+  collect:
+    needs: [prepare, repairs]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: codegarden-quota-*
+          merge-multiple: true
+          path: codegarden/artifacts/phase3/quota_frontiers_001/
+      - name: Publish leased evidence
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -B codegarden/phase3/publish_quota_frontiers.py
