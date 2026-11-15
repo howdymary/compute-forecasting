@@ -1,0 +1,547 @@
+{
+  "lineage_audit": [
+    {
+      "family": "arena_208_CPro1",
+      "maximum_jaccard_against_226_modulo_symmetries": 0.01639344262295082
+    },
+    {
+      "family": "arena_223_nightshift-dc16",
+      "maximum_jaccard_against_226_modulo_symmetries": 0.01126126126126126
+    },
+    {
+      "family": "arena_224_apollo-preview",
+      "maximum_jaccard_against_226_modulo_symmetries": 0.4423076923076923
+    },
+    {
+      "family": "arena_225_lobster-boy",
+      "maximum_jaccard_against_226_modulo_symmetries": 0.714828897338403
+    },
+    {
+      "family": "arena_226_kgrey",
+      "maximum_jaccard_against_226_modulo_symmetries": 1.0
+    }
+  ],
+  "main_summary": {
+    "fixed": {
+      "cases": 8,
+      "completed_chunks": 32,
+      "sum_best_sizes": 1777,
+      "improved_cases": 6,
+      "search_cpu_seconds": 960,
+      "controller_seconds": 2.4356999801966595e-05
+    },
+    "adaptive_no_external": {
+      "cases": 8,
+      "completed_chunks": 32,
+      "sum_best_sizes": 1777,
+      "improved_cases": 6,
+      "search_cpu_seconds": 960,
+      "controller_seconds": 8.834300024318509e-05
+    },
+    "adaptive_with_research": {
+      "cases": 8,
+      "completed_chunks": 32,
+      "sum_best_sizes": 1777,
+      "improved_cases": 6,
+      "search_cpu_seconds": 960.01,
+      "controller_seconds": 9.154699989721848e-05
+    }
+  },
+  "supplement_summary": {
+    "strong_fixed": {
+      "cases": 8,
+      "sum_best_sizes": 1807,
+      "search_cpu_seconds": 160,
+      "controller_seconds": 5.671999986134324e-06,
+      "valid_model_choices": 0
+    },
+    "untrained_no_external": {
+      "cases": 8,
+      "sum_best_sizes": 1776,
+      "search_cpu_seconds": 160.01,
+      "controller_seconds": 44.07025936300002,
+      "valid_model_choices": 8
+    },
+    "untrained_with_memory": {
+      "cases": 8,
+      "sum_best_sizes": 1771,
+      "search_cpu_seconds": 160.01,
+      "controller_seconds": 45.312515501000036,
+      "valid_model_choices": 8
+    },
+    "historical_trained_with_memory": {
+      "cases": 8,
+      "sum_best_sizes": 1807,
+      "search_cpu_seconds": 160,
+      "controller_seconds": 44.18048273400004,
+      "valid_model_choices": 8
+    }
+  },
+  "memory_summary": null,
+  "long_search": {
+    "workers": 16,
+    "iterations": 8488730,
+    "search_cpu_seconds": 3840,
+    "distinct_archived_symmetry_orbits": 178,
+    "best": 226,
+    "exact_augmentations_are_not_global_improvements": true
+  },
+  "reward_audit": {
+    "cases": [
+      {
+        "case_id": "train-0",
+        "family_reference_size": 208,
+        "starting_size": 207,
+        "best_counterfactual_size": 208,
+        "gains_beyond_reference": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "case_id": "train-1",
+        "family_reference_size": 223,
+        "starting_size": 223,
+        "best_counterfactual_size": 223,
+        "gains_beyond_reference": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "case_id": "train-2",
+        "family_reference_size": 224,
+        "starting_size": 222,
+        "best_counterfactual_size": 224,
+        "gains_beyond_reference": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "case_id": "train-3",
+        "family_reference_size": 225,
+        "starting_size": 225,
+        "best_counterfactual_size": 225,
+        "gains_beyond_reference": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "case_id": "train-4",
+        "family_reference_size": 208,
+        "starting_size": 208,
+        "best_counterfactual_size": 208,
+        "gains_beyond_reference": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "case_id": "train-5",
+        "family_reference_size": 223,
+        "starting_size": 218,
+        "best_counterfactual_size": 223,
+        "gains_beyond_reference": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "case_id": "train-6",
+        "family_reference_size": 224,
+        "starting_size": 221,
+        "best_counterfactual_size": 224,
+        "gains_beyond_reference": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "case_id": "train-7",
+        "family_reference_size": 225,
+        "starting_size": 225,
+        "best_counterfactual_size": 225,
+        "gains_beyond_reference": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "case_id": "train-8",
+        "family_reference_size": 208,
+        "starting_size": 201,
+        "best_counterfactual_size": 208,
+        "gains_beyond_reference": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "case_id": "train-9",
+        "family_reference_size": 223,
+        "starting_size": 220,
+        "best_counterfactual_size": 223,
+        "gains_beyond_reference": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "case_id": "train-10",
+        "family_reference_size": 224,
+        "starting_size": 224,
+        "best_counterfactual_size": 224,
+        "gains_beyond_reference": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "case_id": "train-11",
+        "family_reference_size": 225,
+        "starting_size": 217,
+        "best_counterfactual_size": 225,
+        "gains_beyond_reference": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "case_id": "train-12",
+        "family_reference_size": 208,
+        "starting_size": 197,
+        "best_counterfactual_size": 208,
+        "gains_beyond_reference": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "case_id": "train-13",
+        "family_reference_size": 223,
+        "starting_size": 223,
+        "best_counterfactual_size": 223,
+        "gains_beyond_reference": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "case_id": "train-14",
+        "family_reference_size": 224,
+        "starting_size": 218,
+        "best_counterfactual_size": 224,
+        "gains_beyond_reference": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "case_id": "train-15",
+        "family_reference_size": 225,
+        "starting_size": 222,
+        "best_counterfactual_size": 225,
+        "gains_beyond_reference": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "case_id": "train-16",
+        "family_reference_size": 208,
+        "starting_size": 208,
+        "best_counterfactual_size": 208,
+        "gains_beyond_reference": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "case_id": "train-17",
+        "family_reference_size": 223,
+        "starting_size": 209,
+        "best_counterfactual_size": 223,
+        "gains_beyond_reference": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "case_id": "train-18",
+        "family_reference_size": 224,
+        "starting_size": 222,
+        "best_counterfactual_size": 224,
+        "gains_beyond_reference": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "case_id": "train-19",
+        "family_reference_size": 225,
+        "starting_size": 225,
+        "best_counterfactual_size": 225,
+        "gains_beyond_reference": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "case_id": "train-20",
+        "family_reference_size": 208,
+        "starting_size": 206,
+        "best_counterfactual_size": 208,
+        "gains_beyond_reference": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "case_id": "train-21",
+        "family_reference_size": 223,
+        "starting_size": 223,
+        "best_counterfactual_size": 223,
+        "gains_beyond_reference": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "case_id": "train-22",
+        "family_reference_size": 224,
+        "starting_size": 224,
+        "best_counterfactual_size": 224,
+        "gains_beyond_reference": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "case_id": "train-23",
+        "family_reference_size": 225,
+        "starting_size": 223,
+        "best_counterfactual_size": 225,
+        "gains_beyond_reference": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "case_id": "train-24",
+        "family_reference_size": 208,
+        "starting_size": 207,
+        "best_counterfactual_size": 208,
+        "gains_beyond_reference": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "case_id": "train-25",
+        "family_reference_size": 223,
+        "starting_size": 223,
+        "best_counterfactual_size": 223,
+        "gains_beyond_reference": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "case_id": "train-26",
+        "family_reference_size": 224,
+        "starting_size": 221,
+        "best_counterfactual_size": 224,
+        "gains_beyond_reference": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "case_id": "train-27",
+        "family_reference_size": 225,
+        "starting_size": 220,
+        "best_counterfactual_size": 225,
+        "gains_beyond_reference": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "case_id": "train-28",
+        "family_reference_size": 208,
+        "starting_size": 208,
+        "best_counterfactual_size": 208,
+        "gains_beyond_reference": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "case_id": "train-29",
+        "family_reference_size": 223,
+        "starting_size": 215,
+        "best_counterfactual_size": 223,
+        "gains_beyond_reference": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "case_id": "train-30",
+        "family_reference_size": 224,
+        "starting_size": 221,
+        "best_counterfactual_size": 224,
+        "gains_beyond_reference": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "case_id": "train-31",
+        "family_reference_size": 225,
+        "starting_size": 225,
+        "best_counterfactual_size": 225,
+        "gains_beyond_reference": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "recovery_only_differential_cases": 19,
+    "differential_cases_beyond_known_parent": 0,
+    "cases_exceeding_parent": 0,
+    "new_training": false,
+    "corrected_future_gate": "dataset.py now labels gains beyond max(known parent size, episode best); raw executed receipts remain unchanged."
+  },
+  "configuration_duplicates": 16
+}
