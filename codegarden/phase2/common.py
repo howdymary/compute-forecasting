@@ -18,7 +18,7 @@ def kernel(words,seed,seconds,arm=0,policy="fixed",checkpoint="",target=227):
  r=json.loads(p.stdout);r["words"]=[format(w,"016b") for w in r["best"]]
  return r
 def state(words,recent=(),stagnation=0,remaining=120):
- return {"length":16,"starting_cardinality":len(words),"weight_histogram":[sum(w.count("1")==k for w in words) for k in range(17)],
+ return {"incumbent_sha256":sha(words),"symmetry_orbit_sha256":orbit(words),"length":16,"starting_cardinality":len(words),"weight_histogram":[sum(w.count("1")==k for w in words) for k in range(17)],
   "stagnation_cpu_seconds":round(stagnation,3),"recent_verified_results":list(recent)[-6:],"remaining_search_cpu_seconds":remaining}
 def before_cutoff():
  spec=json.loads((ROOT/"budget/shared-allocation.json").read_text())

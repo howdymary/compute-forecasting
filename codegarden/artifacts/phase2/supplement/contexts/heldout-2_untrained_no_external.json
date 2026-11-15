@@ -1,0 +1,57 @@
+{
+  "state": {
+    "length": 16,
+    "starting_cardinality": 225,
+    "weight_histogram": [
+      1,
+      0,
+      0,
+      5,
+      3,
+      20,
+      29,
+      26,
+      44,
+      30,
+      32,
+      18,
+      8,
+      8,
+      0,
+      0,
+      1
+    ],
+    "stagnation_cpu_seconds": 0.081,
+    "recent_verified_results": [
+      {
+        "action": "exchange23",
+        "gain": 12,
+        "cpu_seconds": 0.085332
+      }
+    ],
+    "remaining_search_cpu_seconds": 20,
+    "incumbent_sha256": "fc26d48c24a260c6447d53d9a8a9536ef73f9fe8677a927bfd523b92c7b955e8",
+    "compiled_backend_mapping": {
+      "random8greedy": 1,
+      "random16greedy": 0,
+      "structural24greedy": 3,
+      "opportunity12exact": 4,
+      "random24exact": 4,
+      "conflict8exact": 2,
+      "random40greedy": 5,
+      "structural48exact": 3,
+      "opportunity6ejection": 2
+    }
+  },
+  "decision": {
+    "action": "random40greedy",
+    "valid_action": true,
+    "strict_format": true,
+    "output_tokens": 6,
+    "raw_reply_sha256": "8930e4707578124110d8c8b447d39667153bb00d11990134384cff476d30c377",
+    "state_sha256": "c37fc1f5e7a9fcaa9151b63d2f4a4fcf2679d9eb284764d14ac16db663f2d305",
+    "reservation": "dc55b4328977422ab310646617c2fab0",
+    "model": "Qwen/Qwen3.5-4B",
+    "prompt_tokens": 417
+  }
+}

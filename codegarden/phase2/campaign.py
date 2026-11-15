@@ -79,6 +79,7 @@ def main():
   def worker(words,seed,seconds,policy,arm,target,tag):
    import importlib.util,threading
    runid=uuid.uuid4().hex;path=pathlib.Path("/codegarden/results")/runid;path.mkdir();cpfile=path/"checkpoint.txt"
+   (path/"metadata.json").write_text(json.dumps({"seed":seed,"seconds_cap":seconds,"policy":policy,"arm":arm,"target":target,"tag":tag,"starting_words":words}));volume.commit()
    stop=threading.Event();commits=[]
    def persist():
     while not stop.wait(20):
@@ -151,6 +152,7 @@ def main():
       if time.time()-trial["created_at"]>=2400:raise TimeoutError("Preregistered case wall-time cap reached")
       context=state(trial["words"],trial["recent"],
        trial["chunks"][-1]["stagnation_cpu_seconds"] if trial["chunks"] else case["state"]["stagnation_cpu_seconds"],(4-round_id)*30)
+      context["last_blocker_histogram_sample"]=trial["chunks"][-1]["blocker_histogram_sample"] if trial["chunks"] else case["state"].get("blocker_histogram_sample")
       decision=None;arm=0;t=time.perf_counter()
       if condition!="fixed":
        if condition in ["adaptive_with_research","trained"]:context["external_research"]=memory_context

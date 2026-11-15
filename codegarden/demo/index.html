@@ -10,6 +10,8 @@
 <p class="muted" id="run-state"></p><p class="muted">Actual recorded experiments. The decoder below runs live in your browser. A replay is never presented as a live research worker.</p>
 <div class="grid"><div class="card"><div>Best independently verified</div><div class="big" id="best">—</div><div id="best-kind"></div></div><div class="card"><div>Strongest reproduced baseline</div><div class="big" id="baseline">—</div><div>226-word arena witness</div></div><div class="card"><div>Strict-improvement target</div><div class="big" id="target">—</div><div>No new global record claimed</div></div></div>
 <section class="card section"><h2>Last tested hypothesis</h2><p id="hypothesis"></p><p class="muted">Operators: randomized construction → bounded exchanges → structural destruction → opportunity-driven ejection → exact repair.</p></section>
+<section class="card section"><h2>Phase-two research cycle · recorded replay</h2><ol id="phase2-cycle"></ol><p class="muted" id="phase2-scope"></p></section>
+<section class="card section"><h2>Matched recovery controls</h2><p class="muted">These cases start from perturbed known constructions. Recovering 226 does not establish a larger code. The original fallback study and supplemental frozen-proposer study have different budgets and are shown separately.</p><table><thead><tr><th>Condition</th><th>Cases</th><th>Sum of verified best sizes</th><th>Search CPU s</th><th>Controller s</th></tr></thead><tbody id="phase2-controls"></tbody></table><img src="phase2_curve.svg" alt="Independently verified episode best versus search CPU allowance, with separate original and supplemental studies" style="width:100%;background:white;border-radius:8px;margin-top:15px"></section>
 <section class="card section"><h2>Decode two deletions</h2><p>Choose a word and two zero-based positions. The decoder scans every codeword and recovers the unique original.</p>
 <label>Word <select id="word"></select></label><label>Delete position <input id="d1" type="number" min="0" max="15" value="2" style="width:65px"></label><label>and <input id="d2" type="number" min="0" max="15" value="7" style="width:65px"></label><button id="decode">Decode</button>
 <p class="bits" id="original"></p><p class="bits" id="received"></p><p class="success" id="recovered"></p>
@@ -41,6 +43,13 @@ async function main(){
  for(const [id,value]of [["best",data.best.size],["baseline",data.baseline],["target",data.target],["best-kind",data.best.kind],["hypothesis",data.hypothesis],["hash","SHA-256 "+data.best.sha256]])document.getElementById(id).textContent=value;
  data.best.words.forEach((w,i)=>{const o=document.createElement("option");o.value=i;o.textContent=i+": "+w;document.querySelector("#word").append(o);});
  for(const r of data.experiments){const tr=document.createElement("tr");for(const v of [r.method,r.seed,r.size,r.cycles,r.seconds===null?"—":r.seconds.toFixed(3)]){const td=document.createElement("td");td.textContent=v;tr.append(td);}document.querySelector("#runs").append(tr);}
+ if(data.phase2){
+ for(const item of data.phase2.cycle){const li=document.createElement("li");li.textContent=item.step+": "+item.evidence;document.querySelector("#phase2-cycle").append(li);}
+ document.querySelector("#phase2-scope").textContent=data.phase2.scope;
+ for(const [study,table] of [["Original fallback",data.phase2.analysis.main_summary],["Supplement",data.phase2.analysis.supplement_summary]]){
+ for(const [name,r]of Object.entries(table||{})){const tr=document.createElement("tr");for(const v of [study+" / "+name,r.cases,r.sum_best_sizes,r.search_cpu_seconds.toFixed(2),r.controller_seconds.toFixed(2)]){const td=document.createElement("td");td.textContent=v;tr.append(td);}document.querySelector("#phase2-controls").append(tr);}
+ }
+ }
  document.querySelector("#fusion").textContent="21 exact union experiments: no improvement. Each certificate applies only to that union.";
  document.querySelector("#verification").textContent=JSON.stringify(data.verification,null,2);
  for(const s of data.sources){const li=document.createElement("li"),a=document.createElement("a");a.href=s.url;a.textContent=s.title;a.rel="noreferrer";li.append(a);document.querySelector("#sources").append(li);}
@@ -53,7 +62,7 @@ async function main(){
  function el(name,attrs,text){const e=document.createElementNS(ns,name);for(const[k,v]of Object.entries(attrs))e.setAttribute(k,v);if(text)e.textContent=text;svg.append(e);return e;}
  const y=s=>130-(s-200)*3;
  for(const s of [200,215,230]){el("line",{x1:50,x2:735,y1:y(s),y2:y(s),stroke:"#314538"});el("text",{x:8,y:y(s)+4,fill:"#acc0b0","font-size":11},String(s));}
- const points=data.progression.map((p,i)=>[65+i*160,y(p.size)]);
+ const points=data.progression.map((p,i)=>[65+i*(650/Math.max(1,data.progression.length-1)),y(p.size)]);
  el("polyline",{points:points.map(p=>p.join(",")).join(" "),fill:"none",stroke:"#b3efba","stroke-width":3});
  data.progression.forEach((p,i)=>{const[x,yy]=points[i];el("circle",{cx:x,cy:yy,r:5,fill:"#c7f7cc"});el("text",{x,y:yy-12,fill:"#e8eee9","text-anchor":"middle","font-size":12},String(p.size));el("text",{x,y:157,fill:"#acc0b0","text-anchor":"middle","font-size":10},p.label);});
  document.querySelector("#decode").onclick=decode;

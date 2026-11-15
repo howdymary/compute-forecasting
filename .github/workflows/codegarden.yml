@@ -1,4 +1,4 @@
-name: CodeGarden isolated research
+name: CodeGarden isolated verification
 on:
   push:
     branches: [codegarden]
@@ -14,9 +14,9 @@ env:
   XDG_CACHE_HOME: ${{ github.workspace }}/codegarden/.cache
   PYTHONDONTWRITEBYTECODE: '1'
 jobs:
-  phase-two:
+  verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 62
+    timeout-minutes: 14
     steps:
       - name: Fetch immutable source
         env:
@@ -26,32 +26,46 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Verify protected boundary and compiled exchanges
-        run: |
-          python -B -m unittest discover -s codegarden/tests -v
-          python -B codegarden/supervisor.py codegarden/artifacts/best_code.txt
-          mkdir -p codegarden/.build
-          g++ -O3 -std=c++17 codegarden/phase2/kernel_v2.cpp -o codegarden/.build/kernel_v2
-          python -B codegarden/phase2/test_exchange.py
-      - name: Install isolated pinned clients and sparse solver
+      - name: Install isolated verification and reporting clients
         run: |
           python -m venv codegarden/.venv
-          codegarden/.venv/bin/python -m pip install -r codegarden/requirements-providers.txt -r codegarden/requirements-exact.txt
-      - name: Execute the bounded phase-two research campaign
+          codegarden/.venv/bin/python -m pip install -r codegarden/requirements-providers.txt -r codegarden/requirements-report.txt
+      - name: Close this one bounded campaign and refresh current records
+        if: github.event_name == 'push' && startsWith(github.event.head_commit.message, 'Finalize bounded CodeGarden phase-two')
         env:
           GH_TOKEN: ${{ github.token }}
-          SOURCE_SHA: ${{ github.sha }}
           EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
           PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
           TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
           MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
-        run: codegarden/.venv/bin/python -B -u codegarden/phase2/campaign.py
-      - name: Verify retained best exports and publish last checkpoint
-        if: always()
+          CODEGARDEN_FINAL_RECORD_QUERY: '1'
+        run: codegarden/.venv/bin/python -B -u codegarden/phase2/closeout.py
+      - name: Verify protected boundary and retained exported data
+        run: |
+          codegarden/.venv/bin/python -B -m unittest discover -s codegarden/tests -v
+          codegarden/.venv/bin/python -B -u codegarden/ci/final_check.py
+          g++ -std=c++17 -fsyntax-only codegarden/phase2/kernel_v2.cpp
+          g++ -std=c++17 -fsyntax-only codegarden/phase2/radius_sweep.cpp
+          g++ -std=c++17 -fsyntax-only codegarden/phase2/neutral_kernel.cpp
+      - name: Check scope-keyed reuse and generate evidence tables and figures
+        run: |
+          codegarden/.venv/bin/python -B codegarden/phase2/exhaustion_index.py
+          codegarden/.venv/bin/python -B -u codegarden/phase2/report.py
+      - name: Publish this campaign's verification and demo
+        if: github.event_name == 'push' && startsWith(github.event.head_commit.message, 'Finalize bounded CodeGarden phase-two')
         env:
           GH_TOKEN: ${{ github.token }}
           SOURCE_SHA: ${{ github.sha }}
-        run: |
-          python -B codegarden/ci/final_check.py
-          python -B codegarden/phase2/publish.py
+        run: codegarden/.venv/bin/python -B codegarden/phase2/final_publish.py
+      - name: Retain closeout evidence even if publication fails
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: codegarden-phase2-closeout
+          path: |
+            codegarden/artifacts/
+            codegarden/budget/phase2-usage-summary.json
+            codegarden/demo/
+            !codegarden/artifacts/**/environment.txt
+          retention-days: 30

@@ -1,3 +1,5 @@
+> Phase one is preserved below. See [the phase-two report](phase2_report.md) for the subsequent bounded campaign and current limitations.
+
 # CodeGarden research report
 Research date: November 14, 2026 (America/Los_Angeles); execution timestamps use UTC.
 

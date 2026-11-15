@@ -1,0 +1,50 @@
+{
+  "status": "artifacts_lost_after_computation",
+  "source_sha": "a24421538e91f9620654aaa6e23d2aaf57c92cfa",
+  "finished_at": "2026-11-15T05:32:00.671Z",
+  "budget": {
+    "exa": {
+      "cap": 5,
+      "other_project_reserves": 15,
+      "verification_reserve": 5,
+      "reserved": 0.028,
+      "provider_reported_or_estimated": 0
+    },
+    "past": {
+      "cap": 2000,
+      "other_project_reserves": 10200,
+      "verification_reserve": 5000,
+      "reserved": 165,
+      "provider_reported_or_estimated": 0
+    },
+    "modal": {
+      "cap": 50,
+      "other_project_reserves": 75,
+      "verification_reserve": 20,
+      "reserved": 23.560000000000002,
+      "provider_reported_or_estimated": 0
+    },
+    "tinker": {
+      "cap": 70,
+      "other_project_reserves": 140,
+      "verification_reserve": 10,
+      "reserved": 22.65,
+      "provider_reported_or_estimated": 0
+    }
+  },
+  "error": "Publisher KeyError: SOURCE_SHA. The invocation supplied GITHUB_SHA but omitted SOURCE_SHA. Per-question data on the ephemeral runner was not committed.",
+  "evidence": {
+    "run_id": 43681234748,
+    "job_id": 132712116786,
+    "log_url": "https://github.com/howdymary/compute-forecasting/actions/runs/43681234748",
+    "last_error": "KeyError: 'SOURCE_SHA'"
+  },
+  "accounting": {
+    "new_tinker_maximum_pending_usd": 1.2,
+    "new_past_maximum_pending_credits": 32,
+    "modal_new": 0,
+    "exa_new": 0,
+    "rule": "Reserve full bounded maximum because the final per-call ledger was not published. Do not silently release these holds."
+  },
+  "conclusion": "No durable per-question scores; memory ablation remains incomplete. Successful API invocation is not a verified benchmark result."
+}

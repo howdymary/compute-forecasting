@@ -1,0 +1,24 @@
+{
+  "preregistered_before_own_measurements": true,
+  "source": "training data inspection before any supplemental held-out outcomes",
+  "fixed_operator": "exchange23",
+  "selection_data": "24 training cases excluding the 225-word lineage, whose symmetry-adjusted Jaccard similarity to kgrey is .7148",
+  "heldout_cases": "same eight frozen kgrey-lineage cases; no supplemental outcomes inspected before registration",
+  "conditions": [
+    "strong_fixed",
+    "untrained_no_external",
+    "untrained_with_memory",
+    "historical_trained_with_memory"
+  ],
+  "search_cpu_seconds_per_case": 20,
+  "new_training": false,
+  "reason": "The phase-two conditional-learning gate failed. Use the pinned historical sampler for a separately labeled transfer comparison; do not manufacture new labels.",
+  "sampler_hash": "da17c9ec31e782ae2f5a265b12c6f8d68a634d6f274b5377f3695264d97203cb",
+  "same_prompt_and_operator_mapping_across_model_conditions": true,
+  "provider_coordination": "Queue behind main CodeGarden via identical concurrency group, then import main final cumulative reservations before any paid calls.",
+  "limitations": [
+    "One decision per case; no within-episode switching claim",
+    "Explicit many-to-one mapping of historical proposal labels into new native operators",
+    "Supplemental protocol differs from original 120-CPU-second study; report both separately"
+  ]
+}
