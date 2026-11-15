@@ -1,4 +1,4 @@
-name: CodeGarden independent repair audit
+name: CodeGarden symmetry packing probes
 on:
   push:
     branches: [codegarden-radius34]
@@ -11,9 +11,9 @@ concurrency:
 env:
   PYTHONDONTWRITEBYTECODE: '1'
 jobs:
-  audit:
+  orbit-probes:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 8
     steps:
       - name: Fetch immutable source
         env:
@@ -23,10 +23,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Rebuild pools using protected strings and independently verify all negative repairs
-        run: python -B -u codegarden/phase2/audit_certificates.py
-      - name: Publish independent audit
+      - name: Install isolated exact solver
+        run: |
+          python -m venv codegarden/.venv
+          codegarden/.venv/bin/python -m pip install -r codegarden/requirements-exact.txt
+      - name: Check all symmetries then run two bounded invariant-family probes
         env:
           GH_TOKEN: ${{ github.token }}
           SOURCE_SHA: ${{ github.sha }}
-        run: python -B codegarden/phase2/publish_audit.py
+        run: codegarden/.venv/bin/python -B -u codegarden/phase2/orbit_search.py
