@@ -1,0 +1,50 @@
+{
+  "state": {
+    "length": 16,
+    "starting_cardinality": 198,
+    "weight_histogram": [
+      1,
+      0,
+      0,
+      5,
+      7,
+      14,
+      23,
+      33,
+      36,
+      32,
+      21,
+      14,
+      7,
+      4,
+      1,
+      0,
+      0
+    ],
+    "stagnation_cpu_seconds": 30,
+    "recent_verified_results": [
+      {
+        "action": "ruin32",
+        "best_verified_gain": 3,
+        "cpu_seconds": 30
+      },
+      {
+        "action": "ruin8",
+        "best_verified_gain": 0,
+        "cpu_seconds": 30
+      },
+      {
+        "action": "ejection3",
+        "best_verified_gain": 0,
+        "cpu_seconds": 30
+      }
+    ],
+    "remaining_search_cpu_seconds": 30
+  },
+  "decision": {
+    "action": "weight_band",
+    "valid_action": true,
+    "fallback": "Empirical operator sweep; training-data gate failed"
+  },
+  "actual_memory_source": null
+}
