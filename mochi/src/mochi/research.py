@@ -79,4 +79,6 @@ async def run(out):
 if __name__=='__main__':
     import argparse
     p=argparse.ArgumentParser();p.add_argument('--out',default='mochi/artifacts/live');a=p.parse_args()
-    report=asyncio.run(run(a.out));print(json.dumps({'run_id':report['run_id'],'services':report['services'],'rollouts':report['remote_rollouts'],'heldout':{k:v for k,v in report['evaluation']['heldout'].items() if k!='paired_results'}}))
+    import modal
+    with modal.enable_output():report=asyncio.run(run(a.out))
+    print(json.dumps({'run_id':report['run_id'],'services':report['services'],'rollouts':report['remote_rollouts'],'heldout':{k:v for k,v in report['evaluation']['heldout'].items() if k!='paired_results'}}))

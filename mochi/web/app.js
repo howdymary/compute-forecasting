@@ -16,7 +16,7 @@ function sceneView(element){
  function mesh(geo,material,parent=scene,pos=[0,0,0]){const o=new THREE.Mesh(geo,materials[material]);o.position.set(...pos);o.castShadow=true;o.receiveShadow=true;parent.add(o);return o}
  function box(size,pos,mat,parent=scene,r=.01){return mesh(new RoundedBoxGeometry(...size,3,r),mat,parent,pos)}
  function sphere(size,pos,mat,parent=scene){const o=mesh(new THREE.SphereGeometry(1,24,16),mat,parent,pos);o.scale.set(...size);return o}
- function capsule(a,b,rad,mat,parent){const v=new THREE.Vector3(...b).sub(new THREE.Vector3(...a));const o=mesh(new THREE.CylinderGeometry(rad,rad,v.length,24),mat,parent,new THREE.Vector3(...a).addScaledVector(v,.5).toArray());o.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),v.normalize());sphere([rad,rad,rad],a,mat,parent);sphere([rad,rad,rad],b,mat,parent)}
+ function capsule(a,b,rad,mat,parent){const v=new THREE.Vector3(...b).sub(new THREE.Vector3(...a));const o=mesh(new THREE.CylinderGeometry(rad,rad,v.length(),24),mat,parent,new THREE.Vector3(...a).addScaledVector(v,.5).toArray());o.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),v.normalize());sphere([rad,rad,rad],a,mat,parent);sphere([rad,rad,rad],b,mat,parent)}
  box([1.13,.98,.055],[0,.08,-.03],'floor',scene,.04);box([20,20,.02],[0,0,-.075],'floor',scene,.005);box([.72,.58,.05],[0,0,.435],'wood',scene,.012);
  for(const x of [-.29,.29])for(const y of [-.22,.22])box([.034,.034,.42],[x,y,.21],'wood');
  const bodies={};for(const name of ['torso','head','left-upper','left-fore','right-yaw','right-upper','right-fore','hand','left-leg','right-leg','left-foot','right-foot','puck']){bodies[name]=new THREE.Group();scene.add(bodies[name])}
