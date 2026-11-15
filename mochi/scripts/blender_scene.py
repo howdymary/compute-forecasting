@@ -65,10 +65,12 @@ for frame,f in enumerate(frames,1):
     for i,name in enumerate(r['trajectory']['body_names']):
         o=bodies[name];o.location=f['positions'][i];o.rotation_quaternion=f['quaternions'][i];o.keyframe_insert('location',frame=frame);o.keyframe_insert('rotation_quaternion',frame=frame)
 scene=bpy.context.scene;scene.frame_start=1;scene.frame_end=len(frames);scene.render.fps=25;scene.render.fps_base=args.stride
-bpy.ops.object.camera_add(location=(.92,-1.2,1.03));camera=bpy.context.object;camera.rotation_euler=(Vector((0,.10,.49))-camera.location).to_track_quat('-Z','Y').to_euler();camera.data.type='ORTHO';camera.data.ortho_scale=1.18;scene.camera=camera
+bpy.ops.object.camera_add(location=(.92,-1.2,1.03));camera=bpy.context.object;camera.rotation_euler=(Vector((0,.10,.47))-camera.location).to_track_quat('-Z','Y').to_euler();camera.data.type='ORTHO';camera.data.ortho_scale=1.48;scene.camera=camera
 for loc,power,size in [((-.7,-.6,1.8),110,1.4),((.9,.3,1.6),85,1.0),((-.3,1.1,1.3),95,.8)]:
     bpy.ops.object.light_add(type='AREA',location=loc);l=bpy.context.object;l.data.energy=power;l.data.shape='DISK';l.data.size=size;l.rotation_euler=(Vector((0,.1,.4))-l.location).to_track_quat('-Z','Y').to_euler()
-scene.world.color=(.35,.35,.35);scene.render.engine='CYCLES';scene.cycles.samples=16;scene.cycles.use_denoising=True
+box('Ground',(0,0,-.075),(200,200,.025),floor,bevel=0)
+scene.world.use_nodes=True;scene.world.node_tree.nodes['Background'].inputs['Color'].default_value=(.70,.72,.66,1);scene.world.node_tree.nodes['Background'].inputs['Strength'].default_value=.45
+scene.render.engine='CYCLES';scene.cycles.samples=16;scene.cycles.use_denoising=True
 scene.render.resolution_x=args.width;scene.render.resolution_y=int(args.width*.8);scene.render.resolution_percentage=100
 scene.view_settings.view_transform='AgX';scene.render.image_settings.file_format='PNG'
 scene.frame_set(min(25,len(frames)));bpy.ops.wm.save_as_mainfile(filepath=str(out/'mochi.blend'))

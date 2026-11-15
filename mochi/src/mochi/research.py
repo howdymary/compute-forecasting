@@ -16,8 +16,8 @@ async def run(out):
         await s.read('critic',private);await s.read('researcher',private,allowed=False)
         prior_id=await s.write('critic',{'kind':'rule','rule':'Use development scenarios only for selection. Hypotheses need physical tests; search excerpts are not proof. Report failed ideas.'})
         dev=PROTOCOL['development_seeds'];selected=Policy();all_rows=[];receipt_count=0
-        with app.run():
-            initial=batch(asdict(selected),dev);receipt_count+=len(initial)
+        async with app.run():
+            initial=await batch(asdict(selected),dev);receipt_count+=len(initial)
             prior_results=initial
             for round_id in range(2):
                 prior=await s.read('researcher',prior_id)
@@ -36,7 +36,7 @@ async def run(out):
                 diagnostic=await s.decide('experimenter','Choose the failure diagnostic to emphasize; every registered metric will still be measured.',plan,['contact_loss','distance_and_dwell','effort_and_overshoot'],[proposal_id])
                 rows=[]
                 for p in proposed:
-                    results=batch(asdict(p),dev);receipt_count+=len(results)
+                    results=await batch(asdict(p),dev);receipt_count+=len(results)
                     rows.append({'policy':asdict(p),'summary':summarize(results),'results':results,'round':round_id,'source_record':evidence_id})
                 all_rows+=rows;best=max(rows,key=rank)
                 experiment_id=await s.write('experimenter',{'kind':'observation','diagnostic':diagnostic,'candidates':[{'policy':r['policy'],'summary':r['summary']} for r in rows],'incumbent':summarize(prior_results),'selected_candidate':best['policy']})
@@ -54,14 +54,14 @@ async def run(out):
             # Equal 6-candidate x 8-seed control; no Exa or memory in this arm.
             random_rows=[]
             for p in candidates(seed=42,n=6):
-                rs=batch(asdict(p),dev);receipt_count+=len(rs);random_rows.append({'policy':asdict(p),'summary':summarize(rs),'results':rs})
+                rs=await batch(asdict(p),dev);receipt_count+=len(rs);random_rows.append({'policy':asdict(p),'summary':summarize(rs),'results':rs})
             control=max(random_rows,key=rank);report['random_control']={'candidates':random_rows,'selected':control['policy'],'budget_rollouts':48}
             report['research_budget_rollouts']=48
             sections={}
             for scope,seeds,shift in [('development',dev,False),('heldout',PROTOCOL['heldout_seeds'],False),('changed_conditions',PROTOCOL['shift_seeds'],True)]:
                 section={};paired={}
                 for label,policy in [('baseline',asdict(Policy())),('selected',asdict(selected)),('random',control['policy'])]:
-                    rs=batch(policy,seeds,shift);receipt_count+=len(rs);section[label]=summarize(rs);paired[label]=rs
+                    rs=await batch(policy,seeds,shift);receipt_count+=len(rs);section[label]=summarize(rs);paired[label]=rs
                 section['paired_results']=paired;sections[scope]=section
             report['evaluation']=sections;report['remote_rollouts']=receipt_count
         report['memory']=s.report();report['sources']=s.sources
