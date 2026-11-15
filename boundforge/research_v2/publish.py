@@ -172,7 +172,7 @@ proposal scores, with collapsed solutions marked separately. Neither is a mathem
     (view/"trace.jsonl").write_text((out/"trace.jsonl").read_text())
     demo.ROOT=HERE/"view";demo.build()
     page_text=(view/"demo.html").read_text().replace("</style>", """
-*{box-sizing:border-box}main{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)}
+*{box-sizing:border-box}body{overflow-wrap:anywhere}header>*{min-width:0}main{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)}
 select{max-width:100%}h3,#checks,#lawdata{overflow-wrap:anywhere}pre{max-width:100%}
 @media(max-width:760px){main{grid-template-columns:minmax(0,1fr)}}
 </style>""")
@@ -189,7 +189,10 @@ select{max-width:100%}h3,#checks,#lawdata{overflow-wrap:anywhere}pre{max-width:1
             errors=[];page.on("pageerror",lambda e:errors.append(str(e)))
             page.goto((out/"demo.html").as_uri());page.locator("#check").click()
             assert page.locator("#checks").inner_text().startswith("PASS")
-            assert page.evaluate("document.documentElement.scrollWidth <= window.innerWidth")
+            overflow=page.evaluate("""() => ({viewport:innerWidth,width:document.documentElement.scrollWidth,offenders:[...document.querySelectorAll('body *')].filter(e=>e.getBoundingClientRect().right>innerWidth+1).map(e=>({tag:e.tagName,id:e.id,class:e.className,right:e.getBoundingClientRect().right,text:(e.innerText||'').slice(0,150)})).slice(0,12)})""")
+            print("BF2_LAYOUT "+json.dumps(overflow),flush=True)
+            page.screenshot(path=str(out/f"demo-{width}.png"),full_page=True)
+            assert overflow["width"] <= width
             with page.expect_download() as download_event:page.locator("#download").click()
             p=out/"download-check.json";download_event.value.save_as(p);assert json.loads(p.read_text())==best;p.unlink()
             assert not errors
