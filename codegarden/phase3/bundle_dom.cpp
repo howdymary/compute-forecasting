@@ -12,6 +12,7 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <functional>
+#include <fstream>
 #include <cstdlib>
 using namespace std;
 double cpu(){return double(clock())/CLOCKS_PER_SEC;}
