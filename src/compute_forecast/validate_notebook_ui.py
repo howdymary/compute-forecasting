@@ -56,6 +56,7 @@ def main():
             assert values()[0]!=original[0]
             close(page.evaluate("S.pins[0].values"),original)
             assert "annual" in page.locator("#notebook-note").inner_text()
+            assert format(values()[1],".1f") in page.locator("#notebook-note").inner_text()
             page.locator("#pin-point").click()
             assert page.locator(".pinned-note").count()==2
             page.get_by_text("Add a dollar anchor & spending example",exact=True).click()
@@ -65,6 +66,9 @@ def main():
             page.get_by_role("button",name="Study notes",exact=True).click()
             page.get_by_role("heading",name="Better questions for the results.",exact=True).wait_for()
             assert page.locator("#coverage-audit tbody tr").count()==6
+            first=next(r for r in notes["calibration"] if r["mode"]=="sft")
+            assert str(first["reference"]["covered_cells"])+" / "+str(first["reference"]["n_cells"]) in page.locator("#coverage-reference").inner_text()
+            assert "SFT runs" in page.locator("#feedback-interpretation").inner_text()
             for r in notes["calibration"]:
                 if r["mode"]!="sft":continue
                 row=page.locator('[data-diagnostic-run="'+r["run_id"]+'"]')

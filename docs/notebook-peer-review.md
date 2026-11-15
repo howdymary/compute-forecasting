@@ -47,3 +47,6 @@ All three use public derived artifacts only. Their read/aggregation cost is a sm
 3. Research study notes with the three diagnostics above and a linked peer-review matrix. The archived v1 result and running v2 reports remain distinct. Methods and Downloads explain calculations, attribution and publication boundaries.
 
 Every visual note is tied to a forecast artifact or explicit formula. Decorative ink strokes do not perturb axes, points, quantiles or scenario values. The chart is not a probability fan for scenarios. A future usability study is needed before claiming improved comprehension.
+
+
+[Implementation and post-hoc audit register](notebook-improvements.json) · [Notebook controls, font attribution and remote verification](notebook-experience.md)

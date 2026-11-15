@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "registered_at": "2026-11-14 America/Los_Angeles, after the evaluation was opened",
+  "classification": "Post-hoc descriptive audit registration, not a preregistered forecasting experiment",
+  "model_or_selection_changes": false,
+  "inputs": "Already public saved reports and matched trace analysis only. No new benchmark inputs, no November 7–13 competition truth, no current market sources as historical features.",
+  "scientific_improvements": [
+    {
+      "id": "N1",
+      "weakness": "Pooled pinball alone hides interval coverage/width tradeoffs and tiny denominators.",
+      "sources": [
+        "calibration-2007",
+        "cqr-2019"
+      ],
+      "hypothesis": "Comparing coverage, width and denominators will expose whether a lower-loss selected checkpoint also has a useful uncertainty tradeoff; this is descriptive, not a significance test.",
+      "acceptance": "Covered cells reconstruct stored coverage exactly; all widths/pinball values match reports, with per-horizon/series detail and starting-policy reference.",
+      "cutoff": "The existing retrospective August 29/September 5/12 evaluation; values already exposed. No fitting or recalibration.",
+      "negative_result": "Poor coverage or wider intervals remain visible; 80% nominal coverage is not claimed as a validated population rate."
+    },
+    {
+      "id": "N2",
+      "weakness": "A forecast-loss tie can be incorrectly described as a static action policy, or changed behaviour as useful learning.",
+      "sources": [
+        "aira",
+        "metabo",
+        "metadistill"
+      ],
+      "hypothesis": "Matched saved trajectories can separate changed actions, final choices and forecast loss; a changed sequence may leave the final outcome unchanged.",
+      "acceptance": "Counts use existing matched analysis by run ID; missing analyses are null/pending rather than zero. The final validation chooser remains explicit.",
+      "cutoff": "The same already opened evaluation; no extra trials or altered observations.",
+      "negative_result": "Action sensitivity without loss improvement limits the incremental utility claim."
+    },
+    {
+      "id": "N3",
+      "weakness": "Equal six-result budgets can be mistaken for equal total computation, spending or independent evidence.",
+      "sources": [
+        "mlebench",
+        "rolling-origin"
+      ],
+      "hypothesis": "Separately accounting for cached reveals, weight updates and fresh executions makes resource claims assessable.",
+      "acceptance": "Completed reports and operational receipts supply each count. In-progress updates are not folded into completed-report totals.",
+      "cutoff": "Current execution receipts; no current sources enter historical numerical inputs.",
+      "negative_result": "An equal reveal count does not establish compute or cost competitiveness."
+    }
+  ],
+  "execution": {
+    "new_model_calls": 0,
+    "new_optimizer_updates": 0,
+    "new_forecast_trials": 0,
+    "execution": "Small CPU projection in the existing Modal web application and remote Actions validation",
+    "cost": "Serving/validation charges are not individually attributed; no measured zero-cost claim",
+    "first_validation": {
+      "source_sha": "be399c5afe9cd8524ff6c57f6b702e894ccb7063",
+      "run_id": 43683991615,
+      "diagnostic_api_roundtrip_seconds": 1.0387,
+      "note": "One observed HTTP roundtrip, including network/serving overhead; not a CPU throughput benchmark"
+    }
+  },
+  "product_improvements": [
+    "Coherent paper-and-ink SVG notebook with self-hosted licensed handwriting for short annotations",
+    "Source-bound margin note, movable time ruler and immutable session pins",
+    "Study notes exposing coverage, feedback utility and separate resource ledgers"
+  ],
+  "remaining_evidence": "Independent periods, more eligible contracts and matured prospective outcomes are needed for stronger forecasting/generalization claims."
+}

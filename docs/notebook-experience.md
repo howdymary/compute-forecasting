@@ -40,3 +40,6 @@ deploy-pricing.yml runs the full existing foundation checks, Python compilation 
 validate-notebook-ui.yml runs separately after successful deployment. It repeats all pricing checks, then checks exact pinned snapshots, immutable values after changing assumptions, bounded pin retention/removal, navigation/disclosure preservation, diagnostic metrics against public reports, the licensed font blob, keyboard/touch interaction, reduced motion, API retry recovery and 1512/390/320-pixel layouts. It captures PNG screenshots only and records the source revision and diagnostic request timing.
 
 Existing pricing and experimental UI workflows continue to run independently. Raw offers, private models, credentials and restricted content are not part of these checks or the public assets.
+
+
+The first remote notebook check observed a 1.0387-second diagnostics HTTP roundtrip at source be399c5 (run 43683991615). This includes network and serving overhead and is not a CPU benchmark. Coverage is displayed with the same-cell starting-policy reference. The feedback summary distinguishes equal loss from changed action sequences. The [post-hoc improvement register](notebook-improvements.json) records hypotheses, cutoffs, acceptance criteria, negative-result interpretations and cost limits.
