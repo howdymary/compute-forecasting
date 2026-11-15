@@ -1,17 +1,23 @@
-# Second autoconvolution inequality: backup preflight
+# CodeGarden C2: exact certificates and bounded polish
 
-This CPU-only preflight prepares the fallback selected during the Kakeya pilot. It does not start a GPU search or claim a new result.
+The CPU preflight reproduces the current Second Autocorrelation leader and certifies a nearby integer construction. It starts no remote optimization itself. `polish.py` adds a bounded Modal search; actual hardware, errors and any fallback are recorded.
 
-It fetches the current official problem and leading explicit construction, requires the live verifier hash to match the pinned source, and reproduces the score. It then quantizes the normalized nonnegative values to integers in0..2^32, recording any score change rather than pretending the approximation is identical.
-
-For integer coefficients a and exact autoconvolution c=a*a, the piecewise-linear integral score is
+The objective is the **autoconvolution** ratio. For explicit integer coefficients a and exact c=a*a, its piecewise-linear integration score is exactly
 
 `(2*sum(c_k^2)+sum(c_k*c_(k+1)))/(3*sum(c_k)*max(c_k))`.
 
-The native certificate uses three prime-modulus NTTs and CRT. It checks primality, supported transform length, root order, a proven bound ensuring unique reconstruction, exact zeroth/first moment identities, and schoolbook agreement on small inputs. The final numerator/denominator are exact integers. The bound on input length and coefficients also protects fixed-width accumulators. Boost uint256 handles the degree-four moments.
+`exact.cpp` uses three NTT primes with checked roots, a proven unique-CRT coefficient bound, exact moment identities and small-instance schoolbook checks. It returns an exact integer numerator and denominator. `official.py` is the pinned Arena implementation. `manifest.json` freezes both verifier sources.
 
-Run `g++ -O3 -std=c++17 codegarden/c2/exact.cpp -o codegarden/c2/.build/exact`, then pass a text witness containing n followed by n integers to that executable. No model, API or search history is needed. The GHA artifact contains the plain text witness, JSON integer witness, original Arena response, tests and exact certificate.
+The standalone exact command needs no model, API or search history:
 
-The current floating leader and the integer approximation are distinct witnesses. Only a candidate beating a fresh current score by the required margin after independent verification could qualify as a new Arena record. A global claim requires a separate source audit.
+```sh
+mkdir -p codegarden/c2/.build
+g++ -O3 -std=c++17 -Icodegarden/c2/.deps/boost/usr/include codegarden/c2/exact.cpp -o codegarden/c2/.build/exact
+codegarden/c2/.build/exact < integer_witness.txt
+```
 
-Published optimizer research is credited to [justinkang221/second-autocorrelation-inequality](https://github.com/justinkang221/second-autocorrelation-inequality), inspected at revision `04eba482710e013f14e669be53d6fea89342cc99`. No optimizer from that repository is executed by this preflight. It is preparation while the bounded Kakeya experiment continues; no provider balances or billing APIs are queried.
+The dedicated workflows extract Boost headers under codegarden, create an isolated Python environment, and preserve plain JSON/text witnesses in their downloadable artifacts. Large search checkpoints live in a dedicated CodeGarden Modal volume. GitHub metadata carries hashes and exact certificates.
+
+Search adapts [published C2 methods](https://github.com/justinkang221/second-autocorrelation-inequality) inspected at `04eba482710e013f14e669be53d6fea89342cc99`. Its floating FP64 objective only proposes candidates. Fixed mass and fixed inner smooth-max temperature control scale drift. No convergence-to-global-optimum or trained-policy advantage is assumed.
+
+An Arena lead requires comparison against the fresh live leaderboard; a global-record claim requires an additional literature/source audit. Quantized approximations are identified as distinct witnesses. No billing dashboards, purchases or account-setting changes are authorized or used.

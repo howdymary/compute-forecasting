@@ -1,0 +1,23 @@
+{
+  "status": "baseline_reproduced_and_integer_approximation_certified",
+  "problem": "second-autocorrelation-inequality",
+  "leader_id": 2783,
+  "author": "MLAI_YONSEI",
+  "n": 1999999,
+  "live_score": 0.9636615620620852,
+  "reproduced_official_score": 0.963661562062085,
+  "integer_score_exact": 0.9636615619075807,
+  "integer_score_official": 0.9636615619075807,
+  "quantization_change": -1.5450429824426237e-10,
+  "quantization_scale": 4294967296,
+  "official_verifier_sha256": "dc5ccffaa20ba6c112cab36ffe602c657372d192d8b486abd66b14bcad1ca768",
+  "baseline_response_sha256": "4cdffbc54347936eabb59e7d7d773b8dbcd9ee70e56829a8f3436b52432f575f",
+  "integer_witness_sha256": "64d1fab1a7262d20460ebdac36a2fa35ca53591b64ca898a202cd3decfba6a71",
+  "binary_sha256": "472ca60d70ae9657632693c7a06b4e24c44f318528e91176ca27c7a018b44eff",
+  "exact_certificate_seconds": 3.479874402000007,
+  "schoolbook_fixture_count": 28,
+  "record_claim": false,
+  "provider_calls": 0,
+  "gpu_search_started": false,
+  "note": "Quantization produces a nearby explicit integer construction; it is not claimed to be identical to the floating leader. Integer NTT/CRT proves its score independently of FFT rounding."
+}
