@@ -12,7 +12,7 @@ def client():
     with _lock:
         if _client is None:
             import httpx
-            _client=httpx.Client(http2=True,timeout=90,limits=httpx.Limits(max_connections=8,max_keepalive_connections=8,keepalive_expiry=60),verify=True,follow_redirects=False,headers={"Cache-Control":"no-cache"})
+            _client=httpx.Client(http2=True,timeout=90,limits=httpx.Limits(max_connections=8,max_keepalive_connections=8,keepalive_expiry=5),verify=True,follow_redirects=False,headers={"Cache-Control":"no-cache"})
             atexit.register(_client.close)
         return _client
 def get_bytes(path):
@@ -28,4 +28,4 @@ def get_bytes(path):
     finally:
         with _lock:_active-=1
 def snapshot():
-    with _lock:return {"kind":"pooled HTTP/2 where negotiated; HTTP/1.1 fallback","automatic_retries":0,"maximum_connections":8,"maximum_observed_in_flight":_max_active,"http_versions":sorted({r["http_version"] for r in _observations}),"requests":list(_observations)}
+    with _lock:return {"kind":"pooled HTTP/2 where negotiated; HTTP/1.1 fallback","automatic_retries":0,"keepalive_expiry_seconds":5,"maximum_connections":8,"maximum_observed_in_flight":_max_active,"http_versions":sorted({r["http_version"] for r in _observations}),"requests":list(_observations)}

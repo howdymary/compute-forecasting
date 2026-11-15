@@ -1,0 +1,52 @@
+name: Validate prospective runtime with synthetic inputs
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/validate-prospective-runtime-v4.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  runtime:
+    if: github.ref == 'refs/heads/compute-observatory'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Fetch exact source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/${{ github.sha }}" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e . modal
+      - name: Validate pinned Chronos and the complete candidate adapter on Modal
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from compute_forecast.review_remote_v4 import app,runtime_contract
+          from compute_forecast.review_v4 import encoded
+          with app.run():result=runtime_contract.remote()
+          out=Path('artifacts/prospective-runtime-v4');out.mkdir(parents=True)
+          (out/'runtime.json').write_bytes(encoded(result))
+          print('V4_RUNTIME:'+encoded(result).decode(),flush=True)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: prospective-runtime-v4-${{ github.run_id }}
+          path: artifacts/prospective-runtime-v4/
+          retention-days: 90
+      - name: Retain the labeled synthetic validation receipt
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          from compute_forecast.review_v4 import publish_append_only
+          print('V4_RUNTIME_COMMIT:'+publish_append_only({'results/review-v4/runtime/'+os.environ['GITHUB_RUN_ID']+'.json':Path('artifacts/prospective-runtime-v4/runtime.json').read_bytes()}),flush=True)
+          PY

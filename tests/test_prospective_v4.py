@@ -97,3 +97,13 @@ def test_market_date_precision_and_timezone():
     assert not before("2026-11-16",bound)
     assert not before("2026-11-15T13:00:00+00:00",bound)
     with pytest.raises(ValueError):before("2026-11-15T11:00:00",bound)
+
+def test_source_cache_keeps_first_vintage_and_rejects_identity_collision(tmp_path):
+    from compute_forecast.vintage_v4 import retained_source_cache
+    a={"retrieved_at":"2000-01-01T00:00:00+00:00","source_objects":[{"key":"synthetic","etag":"same","bytes":4,"sha256":"first"}]}
+    b={**a,"retrieved_at":"2000-01-02T00:00:00+00:00"}
+    (tmp_path/"a.json").write_text(json.dumps(a));(tmp_path/"b.json").write_text(json.dumps(b))
+    assert retained_source_cache(tmp_path)[("synthetic","same",4)]["downloaded_no_later_than"]==a["retrieved_at"]
+    b["source_objects"]=[{**a["source_objects"][0],"sha256":"changed"}]
+    (tmp_path/"b.json").write_text(json.dumps(b))
+    with pytest.raises(ValueError,match="ETag"):retained_source_cache(tmp_path)

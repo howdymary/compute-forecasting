@@ -103,7 +103,7 @@ def train_successor(task_set,mode="sft",resume_id="",parent_id=""):
     finally:data.commit()
 
 
-@app.function(image=forecast_image,cpu=2,memory=4096,timeout=900)
+@app.function(image=forecast_image,cpu=2,memory=4096,timeout=900,volumes={"/data":data})
 def runtime_contract():
     import importlib.metadata
     import numpy as np
@@ -111,10 +111,26 @@ def runtime_contract():
     from .prospective_panel_v4 import protocol
     p=protocol();pipeline=Chronos2Pipeline.from_pretrained(p["chronos"]["model"],revision=p["chronos"]["revision"],device_map="cpu")
     quantiles,_=pipeline.predict_quantiles(inputs=[np.arange(1,65,dtype=np.float32)],prediction_length=8,quantile_levels=[.1,.5,.9],cross_learning=False)
-    values=quantiles[0].tolist()
+    values=quantiles[0].detach().cpu().numpy()
+    native_shape=list(values.shape)
+    if values.shape==(1,8,3):values=values[0]
+    values=values.tolist()
     if len(values)!=8 or any(len(row)!=3 or row!=sorted(row) for row in values):raise ValueError("Chronos runtime contract")
     from tinker_cookbook.recipes.decisions import Decision,DecisionRenderer
-    return {"status":"passed","fixture":"Explicitly synthetic increasing sequence; no historical prices or accuracy result","chronos_revision":p["chronos"]["revision"],"prediction_shape":[8,3],"versions":{name:importlib.metadata.version(name) for name in ("tinker","tinker-cookbook","torch","transformers","chronos-forecasting")},"new_training_updates":0}
+    from .prospective_panel_v4 import numerical
+    from datetime import date,timedelta
+    at=date(2000,8,1)
+    synthetic={"series":[{"id":"hubbard-independent-a100-40","points":[{"date":(at-timedelta(days=i)).isoformat(),"value":2.+i*.001} for i in range(200)],"auxiliary":{}}]}
+    fits,failures=numerical(synthetic,"hubbard-independent-a100-40","2000-08-02")
+    if fits is None or len(fits)!=42 or any(len(rows)!=3 for rows in fits.values()):raise ValueError("Synthetic selector numerical contract")
+    if any(row["fallback"] is not None for identifier in ("tree_28_3","tree_56_7") for row in fits[identifier]):raise ValueError("Core target-only tree adapter failed its synthetic contract")
+    vintages=[]
+    for file in Path("/data/review-v4/vintages").glob("*.json"):
+        if file.name.endswith(".receipt.json"):continue
+        value=json.loads(file.read_bytes())
+        if "series" not in value:continue
+        vintages.append({"snapshot_sha256":digest(value),"retrieved_at":value["retrieved_at"],"requested_cutoff":value["cutoff"],"source_objects":len(value["source_objects"]),"source_bytes":sum(o["bytes"] for o in value["source_objects"]),"actual_coverage":[{"series_id":s["id"],"observations":len(s["points"]),"first_observation":min((p["date"] for p in s["points"]),default=None),"last_observation":max((p["date"] for p in s["points"]),default=None),"quote_freshness_verified":False} for s in value["series"]]})
+    return {"status":"passed","actual_retained_vintage_metadata":vintages,"synthetic_numerical_candidates":42,"synthetic_numerical_rows":126,"fallbacks":sum(r["fallback"] is not None for rows in fits.values() for r in rows),"fixture":"Explicitly synthetic increasing sequence; no historical prices or accuracy result","chronos_revision":p["chronos"]["revision"],"prediction_shape":[8,3],"native_prediction_shape":native_shape,"versions":{name:importlib.metadata.version(name) for name in ("tinker","tinker-cookbook","torch","transformers","chronos-forecasting")},"new_training_updates":0}
 
 @app.function(image=light,cpu=.25,memory=512,timeout=120,volumes={"/data":data})
 def retain_market(payload):

@@ -43,6 +43,10 @@ The policy evaluations and retrospective Chronos control cover **A100 series onl
 
 The [Findings notebook](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/#research) decomposes the measured gain by GPU, origin and horizon. A hash-verified replay finds that the operational SFT policy tests the same four tree configurations on all four evaluation tasks: feedback changes order, while the selected configurations and losses remain the same. This is a post-hoc explanation, not a preregistered portfolio win. Raw prediction equality remains unavailable.
 
+The new 48-episode evidence/criticism diagnostic found no improvement from relevant evidence for frozen SFT; criticism worsened its score. An 18-cell retrospective interval diagnostic lowered loss with wider intervals. Future selector and interval outcomes remain pending, and further training is gated on broader informative tasks.
+
+[Executed v4 findings](docs/review-v4-findings.md) · [Forward-only market context](docs/market-context-v4.md) · [Credential-free operation checks](.github/workflows/verify-public-v4.yml)
+
 [Review v4 methods and remote workflows](docs/review-v4.md) · [Mechanism and contribution data](results/review-v4/findings.json) · [Registered prospective panel](configs/prospective-selector-v4.json)
 
 ## Inspect the evidence without credentials
@@ -66,7 +70,7 @@ The interface uses HTML, CSS, JavaScript, and SVG, served by FastAPI on Modal. N
 3. Configure the documented GitHub Actions secrets and use the remote workflows on `compute-observatory`. The workflows verify source hashes, archive manifests, cutoffs, and output contracts.
 4. Audit the committed snapshots without accounts, or reproduce recorded decisions from the [derived research archive](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/experimental/downloads/43677783872.zip). New training is stochastic and should receive its own run identity.
 
-The current code passed **105 tests**, with one existing optional dependency skip. [Pricing](https://github.com/howdymary/compute-forecasting/actions/runs/43691563096), [experimental](https://github.com/howdymary/compute-forecasting/actions/runs/43691563062), [notebook](https://github.com/howdymary/compute-forecasting/actions/runs/43691563067), and [research-explorer](https://github.com/howdymary/compute-forecasting/actions/runs/43691563100) UI checks passed. Desktop and mobile PNGs were inspected at 1512, 390, and 320 pixels. Stress checks retained eight simultaneous callers, exact numerical assertions, and zero automatic retries.
+The current research-foundation suite passed **122 tests**, with one optional dependency skip; the fuller deployment checks also enforce frozen sources, numerical contracts and exact CSV bytes. [Pricing](https://github.com/howdymary/compute-forecasting/actions/runs/43691563096), [experimental](https://github.com/howdymary/compute-forecasting/actions/runs/43691563062), [notebook](https://github.com/howdymary/compute-forecasting/actions/runs/43691563067), and [research-explorer](https://github.com/howdymary/compute-forecasting/actions/runs/43691563100) UI checks passed. Desktop and mobile PNGs were inspected at 1512, 390, and 320 pixels. Stress checks retained eight simultaneous callers, exact numerical assertions, and zero automatic retries.
 
 ## Repository guide
 
@@ -86,9 +90,3 @@ The data measures **advertised rental offers**, not transactions, guaranteed cap
 Independent historical context is derived from [Alex Hubbard's GPU Price Tracker](https://github.com/alex-hubbard/gpu_price_tracker) under its explicit CC BY 4.0 data license. Competition-compilation history remains unpublished because its redistribution permission is unresolved. Model, library, and data licenses apply independently; see [sources and publication rights](docs/DATA_SOURCES.md) and [attribution](NOTICE.md).
 
 For citation metadata, see [CITATION.cff](CITATION.cff).
-
-### Review v4
-
-[Findings and forward commitments](docs/review-v4-findings.md) explain the four-tree portfolio reconstruction, matched contribution views,18-cell interval diagnostic and48-episode evidence/criticism study. Relevant evidence did not improve the frozen SFT result; criticism worsened it on this small retrospective cohort. Future selector and interval outcomes remain pending, and new training is gated on broader informative tasks.
-
-[Supplementary market context](docs/market-context-v4.md) keeps current news and source-grounded research planning separate from the archived benchmark. [Credential-free verification](.github/workflows/verify-public-v4.yml) checks the published operation arithmetic.

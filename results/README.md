@@ -15,6 +15,9 @@ This directory contains versioned public research outputs. It is sufficient for 
 | [explorer-v3/chronos-control.json](explorer-v3/chronos-control.json) | One fixed Chronos-2 control, exact 12-cell scope, model revision, runtime, and pending future commitment |
 | [explorer-v3/history-and-traces.json](explorer-v3/history-and-traces.json) | Independently licensed context, source-by-source permission decisions, and real paired traces |
 | [explorer-v3/diagnostics.json](explorer-v3/diagnostics.json) | Coverage/width, feedback changes, denominators, and separate work units |
+| [review-v4/findings.json](review-v4/findings.json) | Hash-verified portfolio reconstruction, exact matched contributions and training-readiness diagnostic |
+| [review-v4/manifest.json](review-v4/manifest.json) | Byte hashes of the v4 core analysis |
+| [review-v4/operations-index.json](review-v4/operations-index.json) | Versioned interval, controlled evidence/criticism and pack-access receipts |
 | [explorer-v3/series-metadata.json](explorer-v3/series-metadata.json) | Verified series labels, units, archived forecast points, and scenario definitions |
 
 ## Scope and interpretation

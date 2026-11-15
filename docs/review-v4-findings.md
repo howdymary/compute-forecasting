@@ -76,3 +76,13 @@ python -m compute_forecast.reproduce_operations_v4
 The existing review reconstruction additionally verifies the full public derived ZIP, indexed members, matched contributions and original chooser replay. Public arithmetic is reproducible without source-pack or model accounts. Re-fitting needs authorized source inputs; original sampler access needs the account's private resources. Raw evidence bodies, model paths and private sessions remain private.
 
 The full Pacific pack was reverified privately:284,917,807 bytes and672 manifest entries. Limited policy-study coverage reflects eligible temporal cases, not absence of the full pack. The project's code has no newly granted blanket license; existing source-specific and third-party licenses remain in force.
+
+## Validation notes
+
+The credential-free verifier reconstructed all committed operation hashes, the18-cell interval arithmetic, 48 intervention episodes and 519 sampler calls. Source-to-screen checks retain exact values and the unchanged official CSV. A repeated HTTP/2 stress failure affected all eight streams after an idle client pool; a five-second idle expiry, HTTPX's documented default, is being validated without changing concurrency, retries or response assertions. This diagnostic status must not be reported as a server-side fix before the rerun completes.
+ 
+The prompt-intervention sampler phase took396.85 seconds; that duration excludes earlier evidence retrieval, memory ingestion and environment setup. It is not an end-to-end cost estimate. Modal/Tinker/past.dev monetary costs remain unknown where no provider receipt is available.
+
+Daily capture revalidates source ETags and byte counts, reuses hash-verified unchanged objects, and preserves the first retained content vintage. Cache reuse does not imply that a provider quote was refreshed. An ETag or input-hash mismatch fails collection visibly.
+
+The first new source capture completed successfully on November15. Its initial downstream Chronos runtime check failed because a univariate axis was not removed. The correction is confined to the new adapter; the archived comparator and commitments are unchanged. The rerun retains this failure as execution evidence.

@@ -117,9 +117,12 @@ def chronos_rows(snapshot,sid,origin,p):
     context=torch.tensor([values.get(d,float("nan")) for d in days],dtype=torch.float32)
     pipeline=Chronos2Pipeline.from_pretrained(p["chronos"]["model"],revision=p["chronos"]["revision"],device_map="cpu")
     q,_=pipeline.predict_quantiles(inputs=[context],prediction_length=8,quantile_levels=[.1,.5,.9],cross_learning=False)
+    values=q[0].detach().cpu().numpy()
+    if values.shape==(1,8,3):values=values[0]
+    if values.shape!=(8,3):raise ValueError("Unexpected univariate Chronos axes")
     out=[]
     for h in (1,3,7):
-        qs=q[0][h].tolist()
+        qs=values[h].tolist()
         if qs!=sorted(qs) or any(not math.isfinite(v) or v<=0 for v in qs):raise ValueError("Invalid native Chronos quantiles")
         out.append({"series_id":sid,"origin":origin,"target_date":(date.fromisoformat(origin)+timedelta(days=h)).isoformat(),"horizon_days":h,"effective_lead_days":h+1,"q10":qs[0],"q50":qs[1],"q90":qs[2]})
     return out

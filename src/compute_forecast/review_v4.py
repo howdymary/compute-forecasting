@@ -137,6 +137,38 @@ def publish_files(files):
     if github("GET","repos/"+repo+"/branches/compute-observatory")["commit"]["sha"]!=parent:raise ValueError("Branch changed during publication")
     github("PATCH","repos/"+repo+"/git/refs/heads/compute-observatory",{"sha":commit["sha"],"force":False})
     return commit["sha"]
+
+def publish_append_only(files):
+    """Retain uniquely named reports while preserving independently advanced heads."""
+    import base64,re
+    from urllib.error import HTTPError
+    from .public_results import github,private_guard
+    if os.environ.get("GITHUB_REF")!="refs/heads/compute-observatory":raise ValueError("Publication branch")
+    repo=os.environ["GITHUB_REPOSITORY"];blobs={}
+    for path,raw in files.items():
+        if not re.fullmatch(r"results/review-v4/(market|runtime|vintages|prospective)/[0-9]+(?:-[a-z]+)?\.json",path):raise ValueError("Only uniquely named operation reports may append")
+        private_guard(json.loads(raw))
+        blobs[path]=github("POST","repos/"+repo+"/git/blobs",{"encoding":"base64","content":base64.b64encode(raw).decode()})["sha"]
+    for attempt in range(3):
+        branch=github("GET","repos/"+repo+"/branches/compute-observatory");parent=branch["commit"]["sha"];entries=[]
+        for path,sha in blobs.items():
+            try:existing=github("GET","repos/"+repo+"/contents/"+path+"?ref="+parent)["sha"]
+            except HTTPError as error:
+                if error.code!=404:raise
+                existing=None
+            if existing and existing!=sha:raise ValueError("An immutable operation report already exists with different bytes")
+            if not existing:entries.append({"path":path,"mode":"100644","type":"blob","sha":sha})
+        if not entries:return parent
+        tree=github("POST","repos/"+repo+"/git/trees",{"base_tree":branch["commit"]["commit"]["tree"]["sha"],"tree":entries})
+        commit=github("POST","repos/"+repo+"/git/commits",{"message":"Publish versioned v4 operation receipts","parents":[parent],"tree":tree["sha"]})
+        if github("GET","repos/"+repo+"/branches/compute-observatory")["commit"]["sha"]!=parent:continue
+        try:
+            github("PATCH","repos/"+repo+"/git/refs/heads/compute-observatory",{"sha":commit["sha"],"force":False})
+            return commit["sha"]
+        except HTTPError as error:
+            if error.code not in (409,422):raise
+    raise ValueError("Branch changed repeatedly during append-only publication")
+
 def main():
     p=argparse.ArgumentParser();p.add_argument("--publish",action="store_true");p.add_argument("--archive");a=p.parse_args()
     raw=Path(a.archive).read_bytes() if a.archive else urlopen(ARCHIVE_URL,timeout=90).read()

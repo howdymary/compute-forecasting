@@ -15,7 +15,7 @@ on:
         type: string
         description: Immutable record hash required for score
 permissions:
-  contents: read
+  contents: write
 concurrency:
   group: prospective-panel-v4-source
   cancel-in-progress: false
@@ -69,3 +69,18 @@ jobs:
           path: artifacts/review-v4-operations/
           if-no-files-found: ignore
           retention-days: 90
+
+      - name: Retain immutable public collection and forecast receipts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          from compute_forecast.review_v4 import publish_append_only
+          files={}
+          for mode in ('capture','issue','score'):
+              path=Path('artifacts/review-v4-operations')/(mode+'.json')
+              if path.exists():files['results/review-v4/prospective/'+os.environ['GITHUB_RUN_ID']+'-'+mode+'.json']=path.read_bytes()
+          if files:print('V4_PROSPECTIVE_COMMIT:'+publish_append_only(files),flush=True)
+          PY

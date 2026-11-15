@@ -10,6 +10,7 @@ from .review_v4 import digest,encoded
 BASE="https://hubbard-gpu-price-data.s3.amazonaws.com/"
 LICENSE="https://raw.githubusercontent.com/alex-hubbard/gpu_price_tracker/ac287bacc95f3b2ceaa97af10a50031ee0abcacf/DATA_LICENSE"
 LICENSE_SHA="5935a23bebd1f3add38258ebd4167ad55ca9a001bfb88e32396b36b77152f7cb"
+CURRENT_LICENSE="https://raw.githubusercontent.com/alex-hubbard/gpu_price_tracker/main/DATA_LICENSE"
 IDS={"A100_40GB":"hubbard-independent-a100-40","T4":"hubbard-independent-t4"}
 TARGET={"measurement":"advertised_rental_offer_rate","unit":"USD per GPU-hour","statistic":"daily median of quality-ok AWS/Azure/GCP spot observations; SKU hourly rate / GPU count","composition":"mixed regions and changing provider/configuration population","source_license_sha256":LICENSE_SHA}
 def permitted(day):return day<="2026-11-06" or day>="2026-11-14"
@@ -49,7 +50,11 @@ def retain(root,v):
             for p in s["points"]:
                 key=(s["id"],p["date"])
                 if key in known and known[key]!=p["value"]:revisions.append({"series_id":s["id"],"date":p["date"],"previous":known[key],"new":p["value"]})
-    receipt={"schema_version":4,"snapshot_id":identifier,"snapshot_bytes_sha256":hashlib.sha256(raw).hexdigest(),"retrieved_at":v["retrieved_at"],"cutoff":v["cutoff"],"target_definition_sha256":digest(TARGET),"revisions":revisions,"first_observed_vintage_preserved":True}
+    coverage=[]
+    for series in v["series"]:
+        days=sorted(p["date"] for p in series["points"])
+        coverage.append({"series_id":series["id"],"observations":len(days),"first_observation":days[0] if days else None,"last_observation":days[-1] if days else None,"missing_calendar_days":(date.fromisoformat(days[-1])-date.fromisoformat(days[0])).days+1-len(days) if days else None,"quote_freshness_verified":False})
+    receipt={"schema_version":4,"coverage":coverage,"snapshot_id":identifier,"snapshot_bytes_sha256":hashlib.sha256(raw).hexdigest(),"retrieved_at":v["retrieved_at"],"cutoff":v["cutoff"],"target_definition_sha256":digest(TARGET),"revisions":revisions,"first_observed_vintage_preserved":True}
     receipt_path=root/(identifier+".receipt.json")
     if not receipt_path.exists():
         with receipt_path.open("xb") as out:out.write(encoded(receipt))
@@ -87,18 +92,37 @@ def list_objects(cutoff):
     else:raise ValueError("Source listing limit")
     if not rows or len(rows)>750 or sum(r["bytes"] for r in rows)>300_000_000:raise ValueError("Source object budget")
     return sorted(rows,key=lambda r:r["key"])
+def retained_source_cache(root):
+    known={}
+    for path in sorted(Path(root).glob("*.json")):
+        if path.name.endswith(".receipt.json"):continue
+        snapshot=json.loads(path.read_bytes())
+        for obj in snapshot.get("source_objects",[]):
+            key=(obj["key"],obj["etag"],obj["bytes"])
+            row={"sha256":obj["sha256"],"downloaded_no_later_than":snapshot["retrieved_at"]}
+            if key in known and known[key]["sha256"]!=row["sha256"]:raise ValueError("Source reused an ETag for changed content")
+            if key not in known or row["downloaded_no_later_than"]<known[key]["downloaded_no_later_than"]:known[key]=row
+    return known
 def capture(root,cutoff):
     if cutoff>datetime.now(timezone.utc).date().isoformat():raise ValueError("Future source request")
     license_raw,_=fetch(LICENSE,100_000)
-    if hashlib.sha256(license_raw).hexdigest()!=LICENSE_SHA:raise ValueError("Data license changed")
+    current_license,_=fetch(CURRENT_LICENSE,100_000)
+    if hashlib.sha256(license_raw).hexdigest()!=LICENSE_SHA or hashlib.sha256(current_license).hexdigest()!=LICENSE_SHA:raise ValueError("Data license changed")
     import numpy as np
     import pandas as pd
     import pyarrow.parquet as pq
-    frames=[];receipts=[];raw_root=Path(root)/"source-objects";raw_root.mkdir(parents=True,exist_ok=True)
-    for item in list_objects(cutoff):
+    frames=[];receipts=[];raw_root=Path(root)/"source-objects";raw_root.mkdir(parents=True,exist_ok=True);known=retained_source_cache(root);listing_at=datetime.now(timezone.utc).isoformat()
+    objects=list_objects(cutoff)
+    for number,item in enumerate(objects,1):
+        if number==1 or number%25==0:print("V4_CAPTURE_PROGRESS:"+json.dumps({"object":number,"total":len(objects),"cutoff":cutoff}),flush=True)
         if not permitted(item["partition_date"]):raise ValueError("Protected source partition")
-        url=BASE+quote(item["key"],safe="/=");raw,headers=fetch(url,min(item["bytes"]+1024,30_000_000))
-        if len(raw)!=item["bytes"]:raise ValueError("Source revision during listing")
+        url=BASE+quote(item["key"],safe="/=");cached=known.get((item["key"],item["etag"],item["bytes"]));hit=False
+        if cached and (raw_root/(cached["sha256"]+".parquet")).is_file():
+            raw=(raw_root/(cached["sha256"]+".parquet")).read_bytes();headers={"ETag":item["etag"]};hit=True
+            if hashlib.sha256(raw).hexdigest()!=cached["sha256"]:raise ValueError("Retained source hash changed")
+        else:raw,headers=fetch(url,min(item["bytes"]+1024,30_000_000))
+        response_etag=next((value for key,value in headers.items() if key.lower()=="etag"),None)
+        if len(raw)!=item["bytes"] or response_etag!=item["etag"]:raise ValueError("Source revision during listing")
         sha=hashlib.sha256(raw).hexdigest();saved=raw_root/(sha+".parquet")
         if not saved.exists():
             with saved.open("xb") as out:out.write(raw)
@@ -113,7 +137,7 @@ def capture(root,cutoff):
         frame["model"]=np.select([family.str.contains("A100")&memory.eq(40),family.str.contains(r"\bT4\b")&memory.eq(16)],["A100_40GB","T4"],default="")
         frame["value"]=pd.to_numeric(frame["price_per_hour"],errors="coerce")/pd.to_numeric(frame["gpu_count"],errors="coerce")
         frame=frame[(frame["model"]!="")&np.isfinite(frame["value"])&(frame["value"]>0)]
-        frames.append(frame);receipts.append({**item,"sha256":sha,"url":url,"response_etag":headers.get("ETag")})
+        frames.append(frame);receipts.append({**item,"sha256":sha,"url":url,"response_etag":response_etag,"metadata_checked_at":listing_at,"cache_hit":hit,"content_downloaded_no_later_than":cached["downloaded_no_later_than"] if hit else datetime.now(timezone.utc).isoformat()})
     rows=pd.concat(frames,ignore_index=True);series=[]
     for model,sid in IDS.items():
         group=rows[rows["model"]==model].copy()
@@ -141,5 +165,5 @@ def capture(root,cutoff):
                         row["change_"+str(lag)]=row["log_index"]-prev if row["log_index"] is not None and prev is not None else None
             aux={"raw":raw_panel,"fixed_basket":basket}
         series.append({"id":sid,"gpu_model":model,"points":points,"auxiliary":aux,"auxiliary_status":"verified source identities" if aux else "unsupported source identity; explicit numerical fallbacks will be reported"})
-    v={"schema_version":4,"retrieved_at":datetime.now(timezone.utc).isoformat(),"cutoff":cutoff,"target_definition":TARGET,"source":{"dataset_url":"https://github.com/alex-hubbard/gpu_price_tracker","license":"CC BY 4.0","license_url":"https://creativecommons.org/licenses/by/4.0/","license_sha256":LICENSE_SHA,"license_evidence_url":LICENSE,"changes":"Independent retrieval; quality-ok hyperscaler spot filtering, rate/GPU normalization, UTC medians; no gap filling"},"series":series,"source_objects":receipts,"quote_verification_age":None}
+    v={"schema_version":4,"retrieved_at":datetime.now(timezone.utc).isoformat(),"cutoff":cutoff,"target_definition":TARGET,"source":{"dataset_url":"https://github.com/alex-hubbard/gpu_price_tracker","license":"CC BY 4.0","license_url":"https://creativecommons.org/licenses/by/4.0/","license_sha256":LICENSE_SHA,"license_evidence_url":LICENSE,"current_license_url":CURRENT_LICENSE,"license_checked_at":datetime.now(timezone.utc).isoformat(),"changes":"Independent retrieval; quality-ok hyperscaler spot filtering, rate/GPU normalization, UTC medians; no gap filling"},"series":series,"source_objects":receipts,"quote_verification_age":None}
     return retain(root,v)

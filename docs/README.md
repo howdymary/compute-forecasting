@@ -13,7 +13,7 @@
 
 ## Review v4
 
-[Mechanism, contribution notebook and successor workflows](review-v4.md) · [Verified derived findings](../results/review-v4/findings.json) · [Prospective registration](../configs/prospective-selector-v4.json) · [Interval, learning and feedback registration](../configs/review-v4-experiments.json)
+[Executed findings](review-v4-findings.md) · [Supplementary market context](market-context-v4.md) · [Mechanism, contribution notebook and successor workflows](review-v4.md) · [Verified derived findings](../results/review-v4/findings.json) · [Prospective registration](../configs/prospective-selector-v4.json) · [Interval, learning and feedback registration](../configs/review-v4-experiments.json)
 
 ## Studies and protocols
 
@@ -31,6 +31,3 @@ The earlier pricing/notebook guides describe their original release state. Histo
 ## Historical and event records
 
 [Original measured status](measured-status.md), [representation study design](representation-study.md), [hierarchical policy design](hierarchical-policy.md), and [submission evidence](submission-and-prizes.md) preserve the project's earlier stages. Their dates and scopes matter. Current published results are indexed above.
-
-- [Review v4 findings and forward commitments](review-v4-findings.md)
-- [Supplementary market context](market-context-v4.md)
