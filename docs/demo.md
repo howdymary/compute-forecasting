@@ -2,9 +2,9 @@
 
 Live product: https://howdymary--compute-forecast-observatory-web.us-east.modal.run
 
-Public video, once the recording workflow passes: https://howdymary--compute-forecast-observatory-web.us-east.modal.run/files/demo.mp4
+Reviewed final 120-second video: https://howdymary--compute-forecast-observatory-web.us-east.modal.run/files/demo.mp4
 
-The generated two-minute video is captioned and silent. It records the public app and real saved traces, not private account screens. Upload the reviewed MP4 to YouTube, Drive or Loom for the event's stated video-hosting requirement. The event submission itself is a separate action.
+The [final video workflow passed](https://github.com/howdymary/compute-forecasting/actions/runs/43656275785), including desktop and 390px mobile flows with no browser page errors or failed public requests. The generated two-minute video is captioned and silent. It records the public app and real saved traces, not private account screens. Upload the reviewed MP4 to YouTube, Drive or Loom for the event's stated video-hosting requirement. The event submission itself is a separate action.
 
 ## 90-second live demo
 
@@ -12,7 +12,7 @@ The generated two-minute video is captioned and silent. It records the public ap
 | --- | --- | --- |
 | 0–15s | Overview, top cards | “Compute Forecast asks two questions: how should we represent GPU rental markets, and can a trained research policy choose better experiments? We built the benchmark, trained the policy, then froze it before evaluation.” |
 | 15–30s | Benchmarks: August 8, change configuration | “These are advertised offers, not transactions. We compare 24 configurations without changing the official targets. The tool computes exact scores. Missing early targets and losing configurations remain visible.” |
-| 30–50s | Policy replay: choose one final date, click Next four times | “This is a recorded replay from actual checkpoints. Both policies get two common trials and four further result reveals. The same information and budget apply; future outcomes stay hidden until selection finishes.” |
+| 30–50s | Policy replay: choose October 25, click Next four times | “This is a recorded replay from actual checkpoints. Both policies get two common trials and four further result reveals. The same information and budget apply; future outcomes stay hidden until selection finishes.” |
 | 50–65s | Evidence & memory: source links, skeptic and followup | “Exa finds methodological evidence. Three agents write and read shared past.dev records. The scientist uses the skeptic's returned record to choose its next cached, hash-verified experiment. This current-methods loop stays out of historical forecast inputs.” |
 | 65–80s | Overview, frozen comparison | “Fifty real Tinker updates did not beat the starting model. SFT loss was 0.017819 versus 0.017354, 2.68 percent worse. Fixed search was slightly better than both. There are only five dependent final dates; we kept the negative result.” |
 | 80–90s | Forecast intervals / Reproduce downloads | “The official export has all 111 forecasts across 37 series. The source, frozen configuration, failed runs and long-term assumptions are inspectable. Our contribution is research you can audit.” |
