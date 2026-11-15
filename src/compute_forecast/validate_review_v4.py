@@ -20,6 +20,13 @@ def main():
             page.wait_for_selector("#v4-contribution-chart",timeout=90000)
             assert page.locator("#v4-candidate").inner_text()==format(expected["comparisons"][0]["candidate_pinball"],".8f")
             assert page.locator(".v4-bar").count()==2
+            page.wait_for_selector("#v4-interval-loss",timeout=90000)
+            operations=page.request.get(URL+"/api/review-v4/operations").json()
+            init=operations["operations"]["initialize"]["payload"]
+            assert page.locator("#v4-interval-loss").inner_text()==format(init["interval"]["metrics"]["candidate_pinball"],".8f")
+            if "feedback" in operations["operations"]:
+                feedback=operations["operations"]["feedback"]["payload"]
+                assert page.locator("#v4-feedback-table tbody tr").count()==len(feedback["results"])
             page.screenshot(path=str(out/(str(width)+"-default.png")))
             page.locator(".v4-grid").screenshot(path=str(out/(str(width)+"-contributions.png")))
             page.locator("#v4-comparison").select_option("static")

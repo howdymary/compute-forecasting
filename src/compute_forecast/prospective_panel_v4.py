@@ -100,11 +100,11 @@ async def policy_clients():
     trained=await service.create_sampling_client(model_path=checkpoint["sampler_path"])
     renderer=DecisionRenderer(renderers.get_renderer(model_info.get_recommended_renderer_name(MODEL),base.get_tokenizer()))
     return {"starting_policy":base,"frozen_operational_sft":trained},renderer
-async def select_policy(task,sampler,renderer):
+async def select_policy(task,sampler,renderer,evidence=None):
     from .policy_v2 import choose
     revealed=list(INITIAL);steps=[]
     for i in range(4):
-        choice,decisions=await choose(task,revealed,sampler,renderer)
+        choice,decisions=await choose(task,revealed,sampler,renderer,evidence=evidence)
         steps.append({"step":i,"selected_config_id":choice,"decisions":[{k:v for k,v in d.items() if k!="decision"} for d in decisions]});revealed.append(choice)
     selected=min(revealed,key=lambda c:task["validation"][c]["loss"])
     return selected,revealed,steps
@@ -159,6 +159,15 @@ async def issue(root,origin,scale,now=None):
                     choice,revealed,steps=await select_policy(task,clients[label],renderer)
                     record["rows"].extend({**r,"forecaster":label,"cohort":cohort} for r in fits[choice]);record["decisions"].append({"forecaster":label,"task_id":task["task_id"],"selected":choice,"revealed":revealed,"steps":steps,"validation_vintages":task["validation_vintages"]})
                 except Exception as e:record["failures"].append({"forecaster":label,"series_id":sid,"reason":type(e).__name__})
+            from .market_context_v4 import load_for_issue
+            market=load_for_issue("/data/review-v4/market",now.isoformat())
+            if clients is not None and market is not None:
+                try:
+                    choice,revealed,steps=await select_policy(task,clients["frozen_operational_sft"],renderer,evidence=market)
+                    record["rows"].extend({**r,"forecaster":"exploratory_sft_market_context","cohort":cohort} for r in fits[choice])
+                    record["decisions"].append({"forecaster":"exploratory_sft_market_context","classification":"Separate exploratory extra-information treatment","selected":choice,"revealed":revealed,"steps":steps,"market_context_sha256":market["source_sha256"],"market_available_at":market["available_at"]})
+                except Exception as e:record["failures"].append({"forecaster":"exploratory_sft_market_context","series_id":sid,"reason":type(e).__name__})
+            else:record["failures"].append({"forecaster":"exploratory_sft_market_context","series_id":sid,"reason":"missing_fresh_market_context_or_sampler"})
     import importlib.metadata
     record["packages"]={name:importlib.metadata.version(name) for name in ("numpy","pandas","scikit-learn","scipy","torch","tinker","tinker-cookbook","chronos-forecasting")}
     record["checkpoint"]=p["checkpoint"]
@@ -166,6 +175,7 @@ async def issue(root,origin,scale,now=None):
     record["candidate_registry_sha256"]=digest(REGISTRY)
     record["status"]="issued_with_failures" if record["failures"] else "issued"
     if not record["rows"]:record["status"]="pending_no_eligible_cases"
+    record["issued_at"]=datetime.now(timezone.utc).isoformat()
     record["runtime_seconds"]=time.perf_counter()-begin;record["outcome_status"]="pending"
     return record
 def retain_commitment(root,record,now=None):
@@ -188,8 +198,10 @@ def score_locked(record,expected_sha,truth,now=None):
     if digest(truth["target_definition"])!=record["target_definition_sha256"]:raise ValueError("Truth identity differs")
     actual={(s["id"],p["date"]):p["value"] for s in truth["series"] for p in s["points"]}
     groups={}
-    for r in record["rows"]:groups.setdefault(r["forecaster"],[]).append(r)
-    baseline={ (r["series_id"],r["target_date"],r["horizon_days"]):r for r in groups.get("direct_last_value",[])}
+    for r in record["rows"]:
+        label=r["forecaster"]+("|"+r["cohort"] if "cohort" in r else "")
+        groups.setdefault(label,[]).append(r)
+    baseline={ (r["series_id"],r["target_date"],r["horizon_days"]):r for r in record["rows"] if r["forecaster"]=="direct_last_value"}
     scores={};missing=[]
     for label,rows in groups.items():
         keys=[(r["series_id"],r["target_date"],r["horizon_days"]) for r in rows]
@@ -202,5 +214,5 @@ def score_locked(record,expected_sha,truth,now=None):
             if qs!=sorted(qs) or any(not math.isfinite(v) or v<=0 for v in qs):raise ValueError("Invalid committed quantiles")
             k=(r["series_id"],r["target_date"],r["horizon_days"]);y=actual[k[:2]]
             loss.append(pinball(y,r));base.append(pinball(y,baseline[k]));covered.append(qs[0]<=y<=qs[2]);width.append(qs[2]-qs[0])
-        scores[label]={"pinball":statistics.mean(loss),"baseline_pinball":statistics.mean(base),"coverage":statistics.mean(covered),"covered":sum(covered),"n_cells":len(rows),"mean_width":statistics.mean(width),"cell_keys":[list(k) for k in sorted(keys)]}
+        scores[label]={"forecaster":rows[0]["forecaster"],"cohort":rows[0].get("cohort","synthetic_fixture"),"pinball":statistics.mean(loss),"baseline_pinball":statistics.mean(base),"coverage":statistics.mean(covered),"covered":sum(covered),"n_cells":len(rows),"mean_width":statistics.mean(width),"cell_keys":[list(k) for k in sorted(keys)]}
     return {"schema_version":4,"status":"pending_missing_outcomes" if missing else "scored_locked_commitment","scores":scores or None,"missing_keys":[list(k) for k in sorted(set(missing))],"commitment_sha256":expected_sha,"truth_sha256":digest(truth),"limitations":["Pairwise scored cohorts can differ after declared issuance failures; compare only exact cell keys","Weekly dates and series remain dependent; no population calibration claim"],"issued_failures":record["failures"]}

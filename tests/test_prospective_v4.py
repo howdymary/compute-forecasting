@@ -71,3 +71,29 @@ def test_learning_gate_creates_no_model_client(tmp_path):
 def test_packet_format_has_fixed_character_budget():
     from compute_forecast.feedback_v4 import padded
     assert len(padded("synthetic"))==len(padded("x"*5000))==900
+
+def test_transfer_cohort_not_pooled():
+    r=commitment()
+    for row in r["rows"]:row["cohort"]="primary"
+    more=[]
+    for row in r["rows"]:more.append({**row,"cohort":"transfer","series_id":"hubbard-independent-t4"})
+    r["rows"]+=more
+    truth=snapshot([{"date":"2026-11-24","value":1.}]);truth["series"].append({"id":"hubbard-independent-t4","points":[{"date":"2026-11-24","value":1.}],"auxiliary":{}});truth["cutoff"]="2026-11-24";truth["retrieved_at"]="2026-11-25T00:00:00+00:00"
+    result=score_locked(r,digest(r),truth,datetime(2026,12,1,tzinfo=timezone.utc))
+    assert result["scores"]["test|primary"]["n_cells"]==1
+    assert result["scores"]["test|transfer"]["n_cells"]==1
+def test_market_context_never_backdated(tmp_path):
+    from compute_forecast.market_context_v4 import load_for_issue
+    v={"study_id":"market-context-v4","completed_at":"2026-11-20T12:00:00+00:00","sources":[]}
+    (tmp_path/"synthetic.json").write_text(json.dumps(v))
+    assert load_for_issue(tmp_path,"2026-11-19T12:00:00+00:00") is None
+    assert load_for_issue(tmp_path,"2026-11-21T12:00:00+00:00")["sources"]==[]
+    assert load_for_issue(tmp_path,"2026-12-01T12:00:00+00:00") is None
+
+def test_market_date_precision_and_timezone():
+    from compute_forecast.market_context_v4 import before
+    bound=datetime(2026,11,15,12,tzinfo=timezone.utc)
+    assert before("2026-11-15",bound)
+    assert not before("2026-11-16",bound)
+    assert not before("2026-11-15T13:00:00+00:00",bound)
+    with pytest.raises(ValueError):before("2026-11-15T11:00:00",bound)

@@ -9,9 +9,9 @@ app=modal.App("compute-forecast-review-v4-operations")
 data=modal.Volume.from_name("compute-forecast-data",create_if_missing=False,version=2)
 public=modal.Volume.from_name("compute-forecast-public",create_if_missing=False,version=2)
 def configuration(image):
-    return image.env({"GITHUB_SHA":os.environ.get("GITHUB_SHA","unknown")}).add_local_file("configs/prospective-selector-v4.json","/root/configs/prospective-selector-v4.json",copy=True).add_local_file("configs/review-v4-experiments.json","/root/configs/review-v4-experiments.json",copy=True).add_local_python_source("compute_forecast")
+    return image.env({"GITHUB_SHA":os.environ.get("GITHUB_SHA","unknown")}).add_local_file("configs/prospective-selector-v4.json","/root/configs/prospective-selector-v4.json",copy=True).add_local_file("configs/review-v4-experiments.json","/root/configs/review-v4-experiments.json",copy=True).add_local_file("configs/market-context-v4.json","/root/configs/market-context-v4.json",copy=True).add_local_python_source("compute_forecast")
 light=configuration(modal.Image.debian_slim(python_version="3.11").pip_install("numpy==2.2.6","pandas==2.3.1","pyarrow>=16,<24","scipy>=1.12,<2","scikit-learn>=1.5,<2"))
-forecast_image=configuration(modal.Image.debian_slim(python_version="3.11").pip_install("torch==2.8.0",index_url="https://download.pytorch.org/whl/cpu").pip_install("numpy==2.2.6","pandas==2.3.1","pyarrow>=16,<24","scipy>=1.12,<2","scikit-learn>=1.5,<2","tinker","tinker-cookbook","chronos-forecasting==2.3.2","transformers==4.57.1"))
+forecast_image=configuration(modal.Image.debian_slim(python_version="3.11").pip_install("torch==2.15.0",index_url="https://download.pytorch.org/whl/cpu").pip_install("numpy==2.2.6","pandas==2.3.1","pyarrow>=16,<24","scipy>=1.12,<2","scikit-learn>=1.5,<2","tinker==0.39.0","tinker-cookbook==0.6.1","chronos-forecasting==2.3.2","transformers==5.23.0"))
 def interval_diagnostic(context):
     from .interval_v4 import empirical_interval
     from .prospective_panel_v4 import reference,pinball
@@ -43,7 +43,9 @@ def initialize(context,archive,source_sha):
 @app.function(image=light,cpu=2,memory=8192,timeout=1800,max_containers=1,volumes={"/data":data})
 def capture_source(cutoff):
     from .vintage_v4 import capture
-    receipt=capture("/data/review-v4/vintages",cutoff);data.commit();return receipt
+    try:return {"status":"captured","receipt":capture("/data/review-v4/vintages",cutoff)}
+    except Exception as error:return {"status":"collection_failed","cutoff":cutoff,"retrieved_at":datetime.now(timezone.utc).isoformat(),"error_type":type(error).__name__,"no_forecast_inputs_replaced":True}
+    finally:data.commit()
 @app.function(image=forecast_image,cpu=4,memory=8192,timeout=1800,max_containers=2,volumes={"/data":data},secrets=[modal.Secret.from_dict({"TINKER_API_KEY":os.environ["TINKER_API_KEY"]})] if os.environ.get("TINKER_API_KEY") else [])
 def issue_origin(origin,scale):
     from .prospective_panel_v4 import issue,retain_commitment
@@ -57,7 +59,16 @@ def score_origin(origin,commitment_sha):
     target=max(r["target_date"] for r in record["rows"]) if record["rows"] else origin
     if datetime.now(timezone.utc).date()<=date.fromisoformat(target):raise ValueError("Future outcomes remain sealed")
     files=[p for p in Path("/data/review-v4/vintages").glob("*.json") if not p.name.endswith(".receipt.json")]
-    truth=max((json.loads(p.read_bytes()) for p in files),key=lambda v:v["retrieved_at"])
+    needed={(r["series_id"],r["target_date"]) for r in record["rows"]}
+    eligible=[]
+    from .vintage_v4 import utc
+    for file in files:
+        v=json.loads(file.read_bytes())
+        if v["cutoff"]<target or utc(v["retrieved_at"]).date()<=date.fromisoformat(target):continue
+        present={(s["id"],p["date"]) for s in v["series"] for p in s["points"]}
+        if needed<=present:eligible.append(v)
+    if not eligible:return {"schema_version":4,"status":"pending_missing_outcomes","scores":None,"required_cells":len(needed)}
+    truth=min(eligible,key=lambda v:v["retrieved_at"])
     return score_locked(record,commitment_sha,truth)
 @app.function(image=light,cpu=.25,memory=512,timeout=120,volumes={"/data":data})
 def retain_private(identifier,files):
@@ -71,7 +82,7 @@ def retain_private(identifier,files):
 def publish_operation(kind,payload):
     from .public_results import private_guard
     private_guard(payload)
-    if kind not in ("initialize","feedback","capture","issuance","scoring","learning"):raise ValueError("Operation kind")
+    if kind not in ("initialize","feedback","capture","issuance","scoring","learning","market"):raise ValueError("Operation kind")
     public.reload();root=Path("/public/review-v4");root.mkdir(exist_ok=True);identifier=uuid.uuid4().hex
     raw=encoded(payload);version=root/(kind+"-"+identifier+".json");version.write_bytes(raw)
     pointer=root/"operations.json";state=json.loads(pointer.read_bytes()) if pointer.exists() else {"schema_version":4,"operations":{}}
@@ -91,11 +102,47 @@ def train_successor(task_set,mode="sft",resume_id="",parent_id=""):
         return asyncio.run(train(tasks,run_root,output,mode=mode,parent=str(run_root/parent_id/"selected.json") if parent_id else None,resume=str(run_root/resume_id/"resume.json") if resume_id else None))
     finally:data.commit()
 
+
+@app.function(image=forecast_image,cpu=2,memory=4096,timeout=900)
+def runtime_contract():
+    import importlib.metadata
+    import numpy as np
+    from chronos import Chronos2Pipeline
+    from .prospective_panel_v4 import protocol
+    p=protocol();pipeline=Chronos2Pipeline.from_pretrained(p["chronos"]["model"],revision=p["chronos"]["revision"],device_map="cpu")
+    quantiles,_=pipeline.predict_quantiles(inputs=[np.arange(1,65,dtype=np.float32)],prediction_length=8,quantile_levels=[.1,.5,.9],cross_learning=False)
+    values=quantiles[0].tolist()
+    if len(values)!=8 or any(len(row)!=3 or row!=sorted(row) for row in values):raise ValueError("Chronos runtime contract")
+    from tinker_cookbook.recipes.decisions import Decision,DecisionRenderer
+    return {"status":"passed","fixture":"Explicitly synthetic increasing sequence; no historical prices or accuracy result","chronos_revision":p["chronos"]["revision"],"prediction_shape":[8,3],"versions":{name:importlib.metadata.version(name) for name in ("tinker","tinker-cookbook","torch","transformers","chronos-forecasting")},"new_training_updates":0}
+
+@app.function(image=light,cpu=.25,memory=512,timeout=120,volumes={"/data":data})
+def retain_market(payload):
+    from .public_results import private_guard
+    private_guard(payload);root=Path("/data/review-v4/market");root.mkdir(parents=True,exist_ok=True)
+    identifier=payload["run_id"]
+    if len(identifier)!=32 or not identifier.isalnum():raise ValueError("Market run identity")
+    file=root/(identifier+".json")
+    with file.open("xb") as f:f.write(encoded(payload))
+    data.commit();return {"retained_context_sha256":digest(payload)}
+
 def main():
-    p=argparse.ArgumentParser();p.add_argument("--mode",choices=["initialize","capture","issue","feedback","score","train"],required=True);p.add_argument("--origin");p.add_argument("--commitment-sha");p.add_argument("--task-set",default="original-pack-tasks");p.add_argument("--training-mode",choices=["sft","rl"],default="sft");p.add_argument("--resume-id",default="");p.add_argument("--parent-id",default="");a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument("--mode",choices=["initialize","capture","issue","feedback","score","train","market"],required=True);p.add_argument("--origin");p.add_argument("--commitment-sha");p.add_argument("--task-set",default="original-pack-tasks");p.add_argument("--training-mode",choices=["sft","rl"],default="sft");p.add_argument("--resume-id",default="");p.add_argument("--parent-id",default="");a=p.parse_args()
     out=Path("artifacts/review-v4-operations");out.mkdir(parents=True,exist_ok=True)
     from urllib.request import urlopen
-    if a.mode=="feedback":
+    if a.mode=="market":
+        from .market_context_v4 import run as run_market
+        private_dir=Path("inputs/private-market-v4");private_dir.mkdir(parents=True,exist_ok=True)
+        with app.run():
+            runtime=runtime_contract.remote()
+        (out/"runtime-contract.json").write_bytes(encoded(runtime))
+        payload=asyncio.run(run_market(private_dir,out/"market.json"))
+        with app.run():
+            retain_private.remote(payload["run_id"],{p.name:p.read_bytes() for p in private_dir.glob("*.json")})
+            retain_market.remote(payload)
+            receipt=publish_operation.remote("market",payload)
+        (out/"market-publication.json").write_bytes(encoded(receipt))
+    elif a.mode=="feedback":
         from .feedback_v4 import run
         archive=urlopen(ARCHIVE_URL,timeout=90).read();private_dir=Path("inputs/private-evidence-v4");private_dir.mkdir(parents=True,exist_ok=True)
         payload=asyncio.run(run(archive,private_dir,out/"feedback.json"))

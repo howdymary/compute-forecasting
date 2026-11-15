@@ -1,0 +1,78 @@
+{
+  "schema_version": 4,
+  "study_id": "market-context-v4",
+  "classification": "Current source-grounded research planning; supplementary prospective context, no historical benchmark features",
+  "availability_rule": "Available at actual retrieval time; publication dates alone never backdate availability",
+  "publication": "Links, metadata, authored summaries and hashes only; raw provider responses retained privately",
+  "sources": [
+    {
+      "id": "nvidia-supply-20261021",
+      "url": "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-and-Supply-Chain-Partners-Expand-Capacity-to-Accelerate-AI-Infrastructure-Buildout/",
+      "published_date": "2026-10-21",
+      "kind": "vendor_capacity_plan",
+      "topic": "supply_pipeline",
+      "summary": "NVIDIA describes supplier expansion across substrates, packaging, testing and optics, with additions scheduled into 2027–2028. These are plans rather than verified rentable GPU capacity.",
+      "caveat": "Do not convert announced manufacturing capacity into available GPU-hours or an automatic rental-price decline.",
+      "horizon": "12–36 months"
+    },
+    {
+      "id": "aws-capacity-20260826",
+      "url": "https://press.aboutamazon.com/aws/2026/8/aws-and-nvidia-to-deliver-2-million-additional-gpus-and-next-generation-infrastructure-for-agentic-and-physical-ai",
+      "published_date": "2026-08-26",
+      "kind": "provider_capacity_plan",
+      "topic": "supply_pipeline",
+      "summary": "AWS and NVIDIA describe additional deployments across 2027–2028 and broader infrastructure collaboration. Delivery timing, location and realized utilization remain separate questions.",
+      "caveat": "A deployment announcement is not a transaction, current quote or capacity guarantee.",
+      "horizon": "12–36 months"
+    },
+    {
+      "id": "aws-regions-20260828",
+      "url": "https://aws.amazon.com/about-aws/whats-new/2026/08/amazon-ec2-p6-b300-instances-available-additional-regions/",
+      "published_date": "2026-08-28",
+      "kind": "provider_availability_announcement",
+      "topic": "configuration_substitution",
+      "summary": "AWS announces P6-B300 availability in additional regions and describes its multi-GPU memory and networking configuration. It can motivate a substitution or regional-coverage hypothesis.",
+      "caveat": "An eight-GPU B300 instance cannot be equated with a per-GPU H100/A100 contract without verifying units and configuration.",
+      "horizon": "1–12 months"
+    },
+    {
+      "id": "lbl-queues-2026",
+      "url": "https://emp.lbl.gov/queues",
+      "published_date": null,
+      "published_period": "2026-06",
+      "kind": "national_lab_dataset_description",
+      "topic": "power_constraints",
+      "summary": "Berkeley Lab documents generation and storage projects seeking grid interconnection and emphasizes withdrawals and long development timelines.",
+      "caveat": "Generation/storage queues are not data-center load queues or direct measures of GPU availability.",
+      "horizon": "12–36 months"
+    },
+    {
+      "id": "lbl-energy-20260618",
+      "url": "https://www.energy.gov/documents/united-states-data-center-energy-usage-report-2025-update",
+      "published_date": "2026-06-18",
+      "kind": "research_scenario_report",
+      "topic": "power_constraints",
+      "summary": "The Berkeley Lab update models data-center electricity consumption under alternative equipment, utilization and deployment assumptions. It supplies scenarios and measurement distinctions for long-run research.",
+      "caveat": "Annual energy consumption, peak power and interconnection requests are different quantities; these scenarios are not rental forecasts.",
+      "horizon": "12–36 months"
+    },
+    {
+      "id": "nvidia-rubin-20260105",
+      "url": "https://nvidianews.nvidia.com/news/rubin-platform-ai-supercomputer",
+      "published_date": "2026-01-05",
+      "kind": "vendor_hardware_announcement",
+      "topic": "hardware_efficiency",
+      "summary": "NVIDIA describes Rubin architecture and workload-specific efficiency claims. Those claims motivate checks on hardware substitution and workload economics.",
+      "caveat": "Vendor performance and cost-per-token claims do not establish GPU-hour rental prices.",
+      "horizon": "6–36 months"
+    }
+  ],
+  "bounded_plans": [
+    "collect_new_price_vintage",
+    "audit_configuration_substitution",
+    "test_supply_announcement_lags",
+    "audit_power_constraint_exposure"
+  ],
+  "forward_use": "Separate exploratory market-context selector only; primary selector controls and archived studies unchanged",
+  "original_numerical_forecasts_changed": false
+}

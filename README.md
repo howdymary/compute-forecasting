@@ -86,3 +86,9 @@ The data measures **advertised rental offers**, not transactions, guaranteed cap
 Independent historical context is derived from [Alex Hubbard's GPU Price Tracker](https://github.com/alex-hubbard/gpu_price_tracker) under its explicit CC BY 4.0 data license. Competition-compilation history remains unpublished because its redistribution permission is unresolved. Model, library, and data licenses apply independently; see [sources and publication rights](docs/DATA_SOURCES.md) and [attribution](NOTICE.md).
 
 For citation metadata, see [CITATION.cff](CITATION.cff).
+
+### Review v4
+
+[Findings and forward commitments](docs/review-v4-findings.md) explain the four-tree portfolio reconstruction, matched contribution views,18-cell interval diagnostic and48-episode evidence/criticism study. Relevant evidence did not improve the frozen SFT result; criticism worsened it on this small retrospective cohort. Future selector and interval outcomes remain pending, and new training is gated on broader informative tasks.
+
+[Supplementary market context](docs/market-context-v4.md) keeps current news and source-grounded research planning separate from the archived benchmark. [Credential-free verification](.github/workflows/verify-public-v4.yml) checks the published operation arithmetic.

@@ -166,6 +166,19 @@ def web():
         payload=json.loads(raw);private_guard(payload)
         return Response(raw,media_type="application/json",headers={**headers,"ETag":hashlib.sha256(raw).hexdigest()})
 
+
+    @api.get("/api/review-v4/artifacts/{name}")
+    def review_operation_artifact(name:str):
+        import re
+        if not re.fullmatch(r"(initialize|feedback|capture|issuance|scoring|learning|market)-[0-9a-f]{32}\.json",name):return Response(status_code=404,headers=headers)
+        with lock:
+            public.reload();path=Path("/public/review-v4")/name
+            if not path.is_file():return Response(status_code=404,headers=headers)
+            raw=path.read_bytes()
+        from .public_results import private_guard
+        private_guard(json.loads(raw))
+        return Response(raw,media_type="application/json",headers={**headers,"ETag":hashlib.sha256(raw).hexdigest()})
+
     @api.get("/health")
     def health():
         raw=read("results.json");r=json.loads(raw) if raw else None

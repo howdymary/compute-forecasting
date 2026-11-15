@@ -104,7 +104,9 @@
     "failures": "Retain every failure; no implicit zero, no substitution for a failed policy; pairwise cohorts and missingness explicit",
     "analysis_schedule": "After each registered origin fully matures, descriptive cumulative results; final analysis after eight origins; no checkpoint/configuration reselection",
     "independence": "Weekly origins avoid overlapping target dates but share history and market regimes; cells are not independent",
-    "stopping": "Eight origins or terminal source unavailability documented; no performance-based stopping"
+    "stopping": "Eight origins or terminal source unavailability documented; no performance-based stopping",
+    "truth_vintage": "First complete retained licensed-source snapshot collected after the final target day. Retain its hash; never select a truth revision based on scores.",
+    "cohorts": "Primary A10040 and T4 transfer are reported separately; no pooled score across the cohorts."
   },
   "protected_dates": {
     "start": "2026-11-07",
@@ -130,5 +132,15 @@
     "seasonal_naive": "Last observed weekday cycle using7-day season, with centered same-lead residual quantiles",
     "failures": "Invalid positive ordered native reference quantiles fail the reference; custom method fallback uses the registered empirical reference and is recorded",
     "comparison_scope": "New independent-source study; these adapters are not claimed to reproduce the original official export"
-  }
+  },
+  "exploratory_selectors": [
+    {
+      "id": "exploratory_sft_market_context",
+      "checkpoint": "same frozen operational SFT",
+      "information": "Same numerical feedback plus separately retained current market context available before issuance, maximum age7days",
+      "budget": "Same six numerical reveals; extra retrieval/inference usage reported separately",
+      "comparison": "Exploratory extra-information treatment; excluded from the primary equal-information selector contrast",
+      "failure": "Missing context or unavailable sampler is an explicit failure; never silently replaced by the baseline"
+    }
+  ]
 }

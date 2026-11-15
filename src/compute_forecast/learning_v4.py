@@ -31,12 +31,12 @@ async def train(tasks,private_root,output,mode="sft",parent=None,resume=None):
     if resume:
         saved=json.loads(Path(resume).read_bytes())
         if saved["tasks_sha256"]!=digest(tasks) or saved["mode"]!=mode:raise ValueError("Resume source mismatch")
-        trainer=await service.create_training_client_from_state_with_optimizer(saved["state_path"])
+        trainer=await service.create_training_client_from_state_with_optimizer_async(saved["state_path"])
         updates=saved["updates"];trajectories=saved["trajectories"];checkpoints=saved["checkpoints"];iteration=saved["iteration"]
         state=saved["rng_state"];rng.setstate((state[0],tuple(state[1]),state[2]))
         identifier=saved["run_id"];private=Path(resume).parent
     else:
-        trainer=await service.create_lora_training_client(base_model=MODEL,rank=settings["rank"],seed=settings["seed"])
+        trainer=await service.create_lora_training_client_async(base_model=MODEL,rank=settings["rank"],seed=settings["seed"])
         if parent:
             p=json.loads(Path(parent).read_bytes())
             if p.get("selection_uses_evaluation") is not False:raise ValueError("Parent not frozen on development")
@@ -66,7 +66,7 @@ async def train(tasks,private_root,output,mode="sft",parent=None,resume=None):
             weights=await trainer.save_weights_for_sampler("v4_rollout_"+identifier+"_"+str(iteration),ttl_seconds=3600)
             sampler=await service.create_sampling_client(model_path=weights.path);task=rng.choice(rl_tasks)
             rollouts=await asyncio.gather(*(episode(task,sampler,renderer,random.Random(settings["seed"]*10000+iteration*10+i)) for i in range(4)))
-            await tinker.RestClient().delete_checkpoint_from_tinker_path(weights.path)
+            await service.create_rest_client().delete_checkpoint_from_tinker_path(weights.path)
             rewards=[max(-5,min(5,-r[0]["pinball"]/task["scale"])) for r in rollouts]
             trajectories.extend({"iteration":iteration,"task_id":task["task_id"],"reward":reward,"phase":"training","reward_label_end":task["reward_label_end"],"trace":r[0]} for r,reward in zip(rollouts,rewards))
             if max(rewards)-min(rewards)<1e-10:
