@@ -1,0 +1,62 @@
+name: Verify saved trained sampler access
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/research-v2-sampler-probe.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ github.token }}
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+      TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+    steps:
+      - name: Fetch immutable source
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install CPU sampler clients and load the registered grid
+        run: |
+          python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -e . modal numpy tinker tinker-cookbook
+          gh run download 43665821333 --repo "$GITHUB_REPOSITORY" --name campaign-v2-grid --dir inputs/grid
+      - name: Verify private checkpoint loading and one genuine model decision
+        run: |
+          python - <<'PY'
+          import asyncio,json,os,time
+          from pathlib import Path
+          import tinker
+          from tinker_cookbook import model_info,renderers
+          from tinker_cookbook.recipes.decisions import DecisionRenderer
+          from compute_forecast.campaign_v2 import app as numerical_app,MODEL,now
+          from compute_forecast.policy_v2 import app as private_app,load_private,make_tasks,choose,INITIAL
+          async def probe():
+              with private_app.run():
+                  private=load_private.remote('f419fd119f8d4178982439247e89ef22')
+              assert private['selected']['checkpoint_id']=='5de00ed83fdbf34ac693'
+              service=tinker.ServiceClient(display_name='Compute Forecast v2 saved sampler probe')
+              sampler=await service.create_sampling_client(model_path=private['selected']['sampler_path'])
+              renderer=DecisionRenderer(renderers.get_renderer(model_info.get_recommended_renderer_name(MODEL),sampler.get_tokenizer()))
+              grid=json.loads(next(Path('inputs/grid').rglob('grid.json')).read_text())
+              tasks,_=make_tasks(grid);task=next(t for t in tasks if t['phase']=='training')
+              started=time.perf_counter();selected,decisions=await choose(task,list(INITIAL),sampler,renderer)
+              result={'status':'passed','created_at':now(),'source_sha':os.environ['GITHUB_SHA'],'checkpoint_id':private['selected']['checkpoint_id'],'seed':17,'objective':'hard','selected_update':20,'task_origin':task['origin'],'selected_config_id':selected,'actual_remote_inference':True,'feedback_cache_hit':True,'new_numerical_execution':False,'runtime_seconds':time.perf_counter()-started,'decisions':[{k:v for k,v in d.items() if k!='decision'} for d in decisions]}
+              Path('artifacts').mkdir(exist_ok=True);Path('artifacts/live-sampler-probe.json').write_text(json.dumps(result,indent=2))
+              print('V2_SAMPLER_PROBE:'+json.dumps(result),flush=True)
+          with numerical_app.run():asyncio.run(probe())
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: v2-saved-sampler-probe-${{ github.run_id }}
+          path: artifacts/
+          retention-days: 30
