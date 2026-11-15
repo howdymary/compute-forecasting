@@ -43,14 +43,14 @@ jobs:
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
           MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
         run: codegarden/.venv/bin/python -B codegarden/budget/preflight.py
-      - name: Execute bounded actual Exa memory Modal and Tinker research
+      - name: Execute one memory-informed bounded feedback cycle
         env:
           EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
           PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
           TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
           MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
-        run: codegarden/.venv/bin/python -B -u codegarden/live_campaign.py
+        run: codegarden/.venv/bin/python -B -u codegarden/feedback_cycle.py
       - name: Collect read-only attributed billing receipts
         if: always()
         env:
@@ -71,3 +71,4 @@ jobs:
         run: python -B codegarden/ci/publish_results.py
 # Normalize Transformers template output and serialize isolated Modal closures.
 # Resume only the unfinished live research and policy evaluation; native paired batch is complete.
+# Feed actual recalled content into the next strategy and verify a fresh bounded experiment.

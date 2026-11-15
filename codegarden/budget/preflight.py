@@ -32,8 +32,8 @@ def main():
       "exa_can_cover_5usd":isinstance(exa.get("data",{}).get("credits_usd"),(int,float)) and exa["data"]["credits_usd"]>=5,
       "past_balance_available":past["available"],"past_error":{k:v for k,v in past.items() if k!="data"},
       "past_can_cover_5000credits":isinstance(past.get("data",{}).get("balance",{}).get("left"),(int,float)) and past["data"]["balance"]["left"]>=5000,
-      "actual_codegarden_billable_calls":0,"billable_enabled":False,
-      "reason":"Provider balances are inspected privately; shared external reservations remain unverified."}
+      "billable_calls_in_this_preflight":0,"billable_enabled_for_this_preflight":False,
+      "reason":"Read-only diagnostic only. Billable stages separately require a valid explicit Ledger allocation and reservation."}
     out=pathlib.Path("codegarden/artifacts/provider_preflight_v2.json");out.parent.mkdir(parents=True,exist_ok=True)
     out.write_text(json.dumps(result,indent=2)+"\n");print(json.dumps(result))
 if __name__=="__main__":main()
