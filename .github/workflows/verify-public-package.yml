@@ -1,0 +1,42 @@
+name: Verify public research package
+on:
+  workflow_run:
+    workflows: ["Publish verified public research snapshot"]
+    types: [completed]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  verify:
+    if: (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/compute-observatory') || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'compute-observatory')
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Fetch the exact published branch head
+        run: |
+          SOURCE_SHA=$(gh api "repos/$GITHUB_REPOSITORY/branches/compute-observatory" --jq '.commit.sha')
+          echo "SOURCE_SHA=$SOURCE_SHA" >> "$GITHUB_ENV"
+          gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install and run the existing contract checks
+        run: |
+          python -m pip install -e '.[dev]' modal numpy
+          python -m compileall -q src
+          python -m pytest --junitxml=artifacts/public-tests.xml
+      - name: Retrieve original successful PNG evidence without recording
+        run: |
+          gh run download 43691563067 --repo "$GITHUB_REPOSITORY" --name notebook-ui-80bf0d6af21bed45cd236d9d756d9f1b1a130983-43691563067 --dir inputs/ui/notebook
+          gh run download 43691563100 --repo "$GITHUB_REPOSITORY" --name research-explorer-ui-80bf0d6af21bed45cd236d9d756d9f1b1a130983-43691563100 --dir inputs/ui/research
+      - name: Verify published results, documentation and image provenance
+        run: python -m compute_forecast.public_results verify
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: public-package-${{ env.SOURCE_SHA }}-${{ github.run_id }}
+          path: artifacts/
+          retention-days: 30

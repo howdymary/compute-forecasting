@@ -1,5 +1,7 @@
 # GPU pricing observatory
 
+> Historical release note. For the current product, completed campaign, publication decisions, and validation receipts, see the [current methods](research-explorer-v3.md) and [project overview](../README.md). The original observations below retain their release-time scope.
+
 The product starts with **Explore**, then separates **Research**, **Methods** and **Downloads**. The main chart shows either the actual archived forecast or assumption-driven long-term scenarios. It does not merge those instruments into one apparent model forecast.
 
 ## Data contract

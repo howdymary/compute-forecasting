@@ -1,5 +1,7 @@
 # Measured status — November 14, 2026
 
+> Historical release note. For the current product, completed campaign, publication decisions, and validation receipts, see the [current methods](research-explorer-v3.md) and [project overview](../README.md). The original observations below retain their release-time scope.
+
 This page supersedes earlier development-status notes. The historical protocol and amendment files describe their respective frozen stages.
 
 ## Completed

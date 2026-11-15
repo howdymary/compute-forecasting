@@ -1,134 +1,82 @@
 # Compute Forecast
 
-**Explore archived GPU rental forecasts and test explicit long-term pricing scenarios.**
+**A GPU pricing notebook with reproducible forecasting experiments.**
 
-[Experimental Research v2](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/experimental) compares 42 forecasters and six completed Tinker SFT runs (600 optimizer updates), plus three RL reports (99 cumulative updates). The development-selected SFT lowers loss by 22.84% on three reused A100 dates; 5/6 feedback-hidden controls tie. RL versus its SFT parents: 0 improve, 3 tie, 0 worsen. [Measured findings](docs/campaign-v2-findings.md) · [All checkpoints](docs/campaign-v2-checkpoints.json) · [Verified archive](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/experimental/downloads/43677783872.zip). The frozen submission and negative v1 result remain unchanged; no H100 policy performance is claimed.
+Explore advertised rental prices, inspect an archived forecast, and see how explicit assumptions change longer-term pricing paths. The research atlas connects saved model checkpoints, forecast scores, uncertainty, and actual experiment-selection decisions.
 
-[Checkpoint retention and verified cleanup](docs/campaign-v2-retention.md): every reported model and nonzero SFT optimizer state remains available; only consumed rollout samplers and redundant zero-update optimizer copies were removed.
+[Explore the notebook](https://howdymary--compute-forecast-observatory-web.us-east.modal.run) · [Research atlas](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/#research) · [Results and downloads](results/README.md) · [Methods](docs/README.md)
 
-[Related work and contribution boundary](docs/campaign-v2-related-work.md) reviews 14 primary sources on GPU pricing, learned experiment selection and research/forecasting evaluation. It distinguishes this small empirical study from established methods and commercial products.
+![Interactive GPU rental-price scenarios in the Compute Forecast notebook](docs/images/pricing-scenarios.png)
 
-[Open the research observatory](https://howdymary--compute-forecast-observatory-web.us-east.modal.run) · [Two-minute demo video](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/files/demo.mp4) · [Frozen evaluation and official forecast export](https://github.com/howdymary/compute-forecasting/actions/runs/43653016797) · [Source branch](https://github.com/howdymary/compute-forecasting/tree/compute-observatory)
+*Assumption-based scenarios, starting at index 100. These paths are calculations, not trained forecasts or confidence intervals. Screenshots come from the verified deployed application.*
 
-The pricing-first Explore view puts a large interactive chart at the center of the product. Switch between the exact submitted 1/3/7-day quantiles and separate 12/24/36-month rental or resale scenarios. Adjust annual assumptions, inspect any month with mouse/touch/keyboard, and optionally supply your own rental-dollar anchor. All 37 source series have verified names and USD/GPU-hour units. Historical prices remain unpublished while redistribution permission is unresolved.
+## What you can explore
 
-[Pricing controls, formulas and data contract](docs/pricing-observatory.md) · [Verified deployment](https://github.com/howdymary/compute-forecasting/actions/runs/43658918382) · [Independent desktop/mobile checks](https://github.com/howdymary/compute-forecasting/actions/runs/43659021941). Research, Methods and Downloads keep the evidence and limitations accessible without crowding the chart.
+- **Historical context.** Independently licensed A100 40GB and T4 hyperscaler-spot series: 234 observed dates each, January 12–November 6, 2026, with 65 missing calendar dates. Gaps remain visible. This context failed the strict numerical-identity check against competition targets and is never stitched to their forecasts.
+- **Archived benchmark forecasts.** The exact November 6, 2026 submission: 37 headline series, 111 rows, 1/3/7-day horizons, and q10/q50/q90. This is an archived forecast, not a live quote.
+- **Long-term scenarios.** Separate 12/24/36-month rental and resale assumptions, explicit compounding, a time ruler, and immutable session pins. Dollar anchors are user-supplied assumptions.
+- **Research results.** Actual checkpoint curves, matched controls, coverage versus interval width, paired action traces, and separate accounting for cached reveals, fresh executions, optimizer updates, time, and partial provider receipts.
 
-We compare data representations for forecasting **advertised GPU rental offers**, then ask whether a Tinker-trained experiment-selection policy outperforms starting, fixed and random search under the same six-trial budget. The numerical forecasts and scores come from deterministic tools and the Pacific starter kit. The language model selects experiments; it does not invent prices or scores.
+![Saved checkpoint trajectories and uncertainty comparisons in the research atlas](docs/images/research-atlas.png)
 
-## Frozen v1 result
+## What the research found
 
-The main result is negative: supervised fine-tuning did not improve experiment selection over the starting model on this small frozen evaluation.
+The two policy studies have different evaluation scopes and must not be pooled.
 
-| Frozen policy / procedure | Pooled pinball ↓ | Skill against last value |
-| --- | ---: | ---: |
-| Fixed search | 0.01733246 | 15.998% |
-| Starting Qwen3.5-4B policy | 0.01735406 | 15.893% |
-| Frozen SFT epoch 1 | 0.01781945 | 13.638% |
-| Random search, seed 42 | 0.01891276 | 8.339% |
+| Study | Comparison | Pinball loss ↓ | Evaluation scope |
+| --- | --- | ---: | --- |
+| Frozen v1 | Starting policy | 0.01735406 | 30 cells across five dependent dates |
+| Frozen v1 | Selected SFT policy | 0.01781945 | Same cells; **2.68% worse** |
+| Expanded v2 | Starting selector | 0.01499533 | 12 eligible cells across three dependent dates |
+| Expanded v2 | Development-selected operational SFT | 0.01156980 | Same cells; **22.84% lower** |
+| Additional control | Fixed zero-shot Chronos-2 | 0.01211355 | Same 12 cells; additional retrospective comparison |
 
-SFT was **2.68% worse than the starting policy**. Five random seeds are retained, including one that ties SFT. These are five dependent rolling origins and **30 scored series × horizon cells**, not 30 independent experiments. The exploratory moving-block interval for trained minus starting mean-origin loss is [0, 0.00139616]; its tiny temporal sample does not support a generalization guarantee.
+The expanded campaign completed **six SFT runs / 600 optimizer updates** and **three RL runs / 99 updates**. All three RL selections returned update zero, their frozen SFT parent: there was **no incremental RL gain**.
 
-The final dates were September 27 and October 4, 11, 18, 25. We committed [the selection freeze](configs/release-freeze.json) before opening their numerical results. Later rolling decisions can use matured earlier outcomes, with weights and the procedure frozen. No additional training occurs in the final job. All unsuccessful checkpoints and failed engineering pilots remain in Actions.
+Feedback-hidden controls tie in forecast loss in five of six SFT runs. Some tied runs nevertheless change their action sequences. Changed behaviour and improved forecasting are separate questions.
 
-## Representation findings
+The policy evaluations and retrospective Chronos control cover **A100 series only**. They do not establish H100 policy performance or general research intelligence. V2 reuses previously inspected dates; its improvement is not an untouched or prospective result. Three dependent dates do not establish population calibration.
 
-Across the same five frozen dates, the best individual candidate was level-target Ridge with fixed-basket features, 56 days and alpha 1 (0.01722556 pinball). Across matched settings, target-only features had lower mean configuration loss (0.01914378) than fixed-basket (0.01976813) or raw composition (0.02122474). This descriptive comparison does not establish a universal normalization benefit. It was aggregated after final opening and does not change the official submission. [All 28 methods and factor marginals](docs/representation-findings.md) are retained.
+[Full campaign findings](docs/campaign-v2-findings.md) · [Frozen v1 representation findings](docs/representation-findings.md) · [Chronos control and publication audit](docs/research-explorer-v3.md)
 
-## What was built
+## Inspect the evidence without credentials
 
-- A browser observatory with forecast quantiles, all candidate scores, saved-checkpoint comparisons, actual policy trace replays and cross-agent provenance.
-- **24 Ridge configurations**: level/log target, target-only/raw-composition/fixed-basket features, 28/56-day window, alpha 1/100. Official targets remain unchanged. Chronological residuals estimate quantiles; preprocessing is fit on past data only.
-- A genuine Tinker LoRA run on **Qwen/Qwen3.5-4B**: rank 16, learning rate 1e-4, five saved checkpoints, **50 optimizer updates**, 160 training prefix examples, 320 datums, 1,600 datum presentations. Five training and six development dates. Training examples do not multiply independent temporal coverage.
-- An equal-budget search protocol: two common initial experiments plus four additional choices. A bounded hierarchy chooses family and then parameters. Starting and trained policies receive the same observations, candidate space and budget. Fixed search and five random seeds use the same numerical results. The numerical grid is precomputed on Modal; the six-trial budget counts result reveals, not equal wall-clock or dollar expenditure.
-- An Exa → scientist → skeptic → next-decision demonstration using **past.dev**. Three roles actually write and read; required source IDs are checked in real recall results. Cached experiment reveals are labeled as such. This current-methods loop is separate from benchmark observations; no memory performance gain is claimed.
-- An official November 6 submission with **111 rows across 37 headline series**, 1/3/7-day horizons, q10/q50/q90. Full-catalog development selection chose the unmodified official **last_value_empirical** method. Export schema, positivity, quantile ordering and full coverage passed. The exporter never loads November 7–13 competition truth.
-- A separate 2–3-year rental and resale scenario note. Assumptions are explicit; scenario ranges are not calibrated confidence intervals, and resale has no observed dollar-price anchor.
+The [results directory](results/README.md) contains versioned, hash-indexed snapshots of the official forecast, numerical summaries, checkpoints, paired traces, contextual history, and scenario assumptions. Raw competition offers, restricted source excerpts, private model paths, and credentials are excluded.
 
-An earlier 15-update Tinker integration warmup is retained separately. It is not the main study. The frozen v1 study uses **supervised fine-tuning**. Separate v2 reward-learning runs and their current status are reported in the [v2 findings](docs/campaign-v2-findings.md).
+- [Official forecast CSV](results/frozen-v1/forecasts.csv)
+- [Expanded campaign results](results/expanded-v2/summary.json)
+- [Chronos-2 control and future commitment](results/explorer-v3/chronos-control.json)
+- [Historical context, permissions, and paired traces](results/explorer-v3/history-and-traces.json)
+- [Artifact checksums and provenance](results/manifest.json)
 
-## What the data measures
+A separate **14-series / 42-row prospective commitment** targets November 16, 18, and 22, 2026. Outcomes remain pending. The locked evaluator cannot score before November 23 UTC and additionally requires verified compatible outcome data. Both comparators use the same stale November 6 snapshot.
 
-Pacific Machines (2026), **gpu-price-pack v0.1.1-handover**. Archive SHA-256:
+## Reproduce and validate
 
-~~~text
-f0b52af28c52545732208bcc4905facd9b941aa5779da683e1d9884c283b7c7c
-~~~
+The interface uses HTML, CSS, JavaScript, and SVG, served by FastAPI on Modal. Numerical tools score forecasts deterministically; a Tinker-trained Qwen policy selects bounded experiment configurations. Exa and past.dev support a separate evidence-and-criticism loop.
 
-The pack contains about 3.78 million advertised offer rows. Those are neither executed transaction prices nor proof of capacity availability. Physical GPU resale is a separate scenario analysis.
+1. Start with the [reproduction guide](docs/campaign-v2-reproduction.md) and [frozen v1 protocol](docs/protocol.md).
+2. Numerical reruns require authorized access to the source pack. Training additionally requires Tinker access; saved private checkpoints are not bundled here.
+3. Configure the documented GitHub Actions secrets and use the remote workflows on `compute-observatory`. The workflows verify source hashes, archive manifests, cutoffs, and output contracts.
+4. Audit the committed snapshots without accounts, or reproduce recorded decisions from the [derived research archive](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/experimental/downloads/43677783872.zip). New training is stochastic and should receive its own run identity.
 
-The policy/representation experiment uses the eligible **afhubbard headline daily-statistics H100/A100 target subset**. Eligibility is narrow: only 19 of 26 attempted development origins qualify, and only one or two series may exist at a given origin. The actual final policy evaluation contains **A100 40GB and A100 SXM 80GB only**; no H100 series is eligible in that final subset. It therefore does not establish H100 policy performance. The separate complete-catalog official export includes the required H100/A100 targets. The observatory displays actual GPU metadata per origin. The complete official headline catalog is used separately for the competition CSV. Do not generalize this subset to every GPU or provider.
+The current code passed **105 tests**, with one existing optional dependency skip. [Pricing](https://github.com/howdymary/compute-forecasting/actions/runs/43691563096), [experimental](https://github.com/howdymary/compute-forecasting/actions/runs/43691563062), [notebook](https://github.com/howdymary/compute-forecasting/actions/runs/43691563067), and [research-explorer](https://github.com/howdymary/compute-forecasting/actions/runs/43691563100) UI checks passed. Desktop and mobile PNGs were inspected at 1512, 390, and 320 pixels. Stress checks retained eight simultaneous callers, exact numerical assertions, and zero automatic retries.
 
-The canonical history and scorer remain official. Every historical origin has its own cutoff; labels must mature before they are exposed. No random row split or current-news price feature is used. Weekly index windows with ambiguous availability are excluded. Missing raw composition values and coverage are explicit. The provider/SKU/region/GPU identity proxy does not prove perfect hardware normalization. The AWS archive gap is not interpolated.
+## Repository guide
 
-This is a **retrospective frozen data vintage**, published after the November 6 origin. It does not prove that each historical value or revision was accessible in real time. Masking dates and SKUs reduces obvious model knowledge shortcuts but cannot eliminate pretrained knowledge contamination.
-
-Provider/configuration normalization is established practice. We credit [Silicon Data](https://www.silicondata.com/products/silicon-index) and [SemiAnalysis](https://semianalysis.com/gpu-pricing-index/). Our contribution is an inspectable empirical evaluation on this pack; we do not claim to have invented normalization or established the first forecasting benchmark.
-
-## Reproduce remotely
-
-All project code is on **compute-observatory**. Do not use or modify metagame. This project was developed directly through GitHub; no workstation checkout is required.
-
-1. Supply authorized access to the official Pacific starter/data archive. The remote pipeline verifies the archive and all 672 manifest entries before using it. The pack stays in a private Modal Volume.
-2. Configure GitHub Actions secrets: MODAL_TOKEN_ID, MODAL_TOKEN_SECRET and TINKER_API_KEY. The separate evidence workflow also requires EXA_API_KEY and PAST_API_KEY. Never commit their values.
-3. In Actions, run **Reproduce verified Compute Forecast experiments** on compute-observatory. The default reproduces the starter integration and two-date representation smoke. Enable **full_grid** for all registered training/development origins and **train_policy** for the genuine five-checkpoint SFT experiment.
-4. The single entrypoint inside the hosted runner is:
-
-~~~bash
-python -m compute_forecast reproduce --full-grid --train-policy
-~~~
-
-It fails closed outside the authorized GitHub Actions branch. Training requires usable Tinker access and actual account quota. Existing credits do not remove service rate limits. Stochastic service behavior can change exact trained checkpoints; saved run artifacts preserve the reported run.
-
-5. Selection and final evaluation are separate: **Prepare measured release freeze** creates a reviewable configuration from completed development artifacts; commit it before **Evaluate frozen policy and export submission**. Reproducing the existing frozen final requires access to its saved Tinker sampler checkpoint. Independent users can retrain and create their own separately identified freeze. Do not tune using the reported final period and continue calling it untouched.
-6. **Publish frozen research release** validates the exact successful source runs, projects an allowlisted public payload, publishes derived files, deploys on Modal and verifies the public content hashes. Public web containers have no raw-data mount or account API credentials.
-
-The end-to-end remote entrypoint [passed](https://github.com/howdymary/compute-forecasting/actions/runs/43647264275). All 64 Python contract and numerical tests passed in the pricing release validation. Compilation, browser-script syntax, forecast file hashing and public-health checks are captured by Actions. Resolved client versions and per-call timings are retained with each run.
-
-## Execution receipts
-
-| Artifact | Actual remote run |
+| Directory | Contents |
 | --- | --- |
-| Archive / starter / deliberate future-history refusal | [43637893251](https://github.com/howdymary/compute-forecasting/actions/runs/43637893251) |
-| 26-origin representation grid | [43644639332](https://github.com/howdymary/compute-forecasting/actions/runs/43644639332) |
-| Main 50-update Tinker training | [43648086958](https://github.com/howdymary/compute-forecasting/actions/runs/43648086958) |
-| Full-headline development method selection | [43646617180](https://github.com/howdymary/compute-forecasting/actions/runs/43646617180) |
-| Exa / past.dev / scientist / skeptic | [43649141181](https://github.com/howdymary/compute-forecasting/actions/runs/43649141181) |
-| Freeze producer | [43652218020](https://github.com/howdymary/compute-forecasting/actions/runs/43652218020) |
-| Frozen evaluation and 111-row export | [43653016797](https://github.com/howdymary/compute-forecasting/actions/runs/43653016797) |
+| [src/compute_forecast](src/compute_forecast) | Forecasting, policy training, evaluation, publication, and interface code |
+| [configs](configs) | Registered experiments, immutable selection boundaries, and model revisions |
+| [results](results/README.md) | Public numerical snapshots, forecast exports, and provenance |
+| [docs](docs/README.md) | Methods, findings, related work, data definitions, and reproduction guides |
+| [tests](tests) | Cutoff, scoring, publication, and contract checks |
+| [.github/workflows](.github/workflows) | Remote experiments, validation, artifact publication, and deployment |
 
-Grid execution took 10m13s, main training 18m13s and frozen evaluation plus export 8m25s end to end in their reported workflows. These include client and setup overhead, not pure accelerator time. Actual billed Tinker/Modal costs are **unavailable**; no invented dollar amounts are reported. Exa returns request cost where available. Rate-limit failures and their targeted retries remain visible.
+## Sources and reuse
 
-## Files and architecture
+The data measures **advertised rental offers**, not transactions, guaranteed capacity, or physical GPU resale prices. Provider/configuration normalization has established precedents, including [Silicon Data](https://www.silicondata.com/products/silicon-index) and [SemiAnalysis](https://semianalysis.com/gpu-pricing-index/).
 
-- src/compute_forecast/starter_probe.py: official archive verification and starter execution on Modal.
-- representation_study.py: seeded, bounded chronological numerical experiments.
-- search_policy.py: demonstrations, Tinker SFT, equal-budget development comparisons.
-- freeze_contract.py / final_evaluation.py: frozen access guard and final evaluation, with no training.
-- export_submission.py: official forecast CSV and separate long-term scenarios.
-- research_loop.py: current-methods Exa and cross-agent past.dev integration.
-- release_payload.py / release_web.py: allowlisted research results and the credential-free public service.
-- pricing_contract.py / pricing_publish.py / explore_ui.py: verified chart data, scenario calculations and the pricing-first interface. The earlier release_ui.py remains as the prior interface source.
-- configs/release-freeze.json: actual checkpoint and numerical source hashes selected before final results.
-- docs/: research protocol, scope amendments and demo / sponsor evidence notes.
+Independent historical context is derived from [Alex Hubbard's GPU Price Tracker](https://github.com/alex-hubbard/gpu_price_tracker) under its explicit CC BY 4.0 data license. Competition-compilation history remains unpublished because its redistribution permission is unresolved. Model, library, and data licenses apply independently; see [sources and publication rights](docs/DATA_SOURCES.md) and [attribution](NOTICE.md).
 
-The captioned silent [two-minute demo](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/files/demo.mp4) records actual public results and saved policy traces. [Desktop/mobile browser validation and the video publication receipt](https://github.com/howdymary/compute-forecasting/actions/runs/43656275785) passed with zero page errors or failed public requests. The event requires uploading the reviewed video to YouTube, Drive or Loom; generating this MP4 does not submit the entry.
-
-The public UI is plain HTML/CSS/JavaScript and SVG. FastAPI serves it on Modal. JSON artifacts and two Volumes provide sufficient storage; there is no database or agent framework. Model inference, deterministic experiment execution and UI replay are distinct components. Replay animates actual saved traces and is labeled as recorded.
-
-## Attribution and data restrictions
-
-The pack describes compilation licensing as **CC BY 4.0, owner's default pending confirmation**, with upstream terms and unresolved owner decisions. We do not represent that as an unconditional redistribution permission. Raw pack files and third-party source excerpts stay outside this public repository. Preserve the pack's source and license metadata when reproducing through authorized access. EWLuda is not used.
-
-Dependencies include Modal, Tinker and tinker-cookbook, NumPy, FastAPI/Starlette/Uvicorn, pytest and the official Pacific starter; their own licenses apply. Exa and past.dev are hosted services. No private development session is uploaded to Originator by this project.
-
-[Live demo guide](docs/demo.md) · [Sponsor evidence and remaining event actions](docs/submission-and-prizes.md) · [Measured status](docs/measured-status.md)
-
-## Frozen v1 public claim
-
-**Compute Forecast is an auditable GPU rental forecasting experiment. We trained a small policy with Tinker to choose experiments, compared it with fixed and random search under equal budgets, and found no improvement over the starting policy on five frozen rolling dates. Every score and decision has a reproducible trail.**
-
-
-The [interactive compute notebook](https://howdymary--compute-forecast-observatory-web.us-east.modal.run) adds source-bound margin notes and immutable session pins. [Notebook guide](docs/notebook-experience.md) · [15-source peer review](docs/notebook-peer-review.md) · [Descriptive audit register](docs/notebook-improvements.json). Coverage, feedback utility and resource budgets are inspected without retuning the frozen campaign. No new forecasting gain is claimed from these interface changes.
-
-[Measured notebook audit](docs/notebook-diagnostic-findings.md): observed interval coverage/width, action changes without forecast gains, and separate execution budgets. The snapshot is explicitly partial while the remaining RL seeds run.
+For citation metadata, see [CITATION.cff](CITATION.cff).

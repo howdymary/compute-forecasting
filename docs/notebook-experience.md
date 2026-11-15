@@ -1,5 +1,7 @@
 # The Compute Forecast notebook
 
+> Historical release note. For the current product, completed campaign, publication decisions, and validation receipts, see the [current methods](research-explorer-v3.md) and [project overview](../README.md). The original observations below retain their release-time scope.
+
 The notebook edition makes the pricing SVG the first experience. Its paper, ink and handwritten annotations are a presentation layer: chart geometry, submitted quantiles, scenario formulas and frozen model artifacts are unchanged.
 
 ## Controls and provenance
