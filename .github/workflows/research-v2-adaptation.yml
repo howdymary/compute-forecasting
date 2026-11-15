@@ -1,0 +1,73 @@
+name: Adapt the research plan after an uninformative task
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/research-v2-adaptation.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  adapt:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      GH_TOKEN: ${{ github.token }}
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+      TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+      EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
+      PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
+    steps:
+      - name: Fetch immutable source
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install CPU clients and load real earlier results
+        run: |
+          python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -e '.[dev]' modal numpy tinker tinker-cookbook
+          python -m pytest tests/test_policy_v2.py
+          gh run download 43665821333 --repo "$GITHUB_REPOSITORY" --name campaign-v2-grid --dir inputs/grid
+          gh run download 43665969971 --repo "$GITHUB_REPOSITORY" --pattern 'campaign-v2-autonomy-*' --dir inputs/prior
+      - name: Let the scientist choose a non-flat training case after criticism
+        id: next
+        run: |
+          python - <<'PY'
+          import asyncio,json,math,os,statistics
+          from pathlib import Path
+          import tinker
+          from tinker_cookbook import model_info,renderers
+          from tinker_cookbook.recipes.decisions import Decision,DecisionRenderer,sample_decision
+          from compute_forecast.campaign_v2 import MODEL,protocol,now
+          async def select():
+              grid=json.loads(next(Path('inputs/grid').rglob('grid.json')).read_text())
+              prior=[json.loads(p.read_text()) for p in Path('inputs/prior').rglob('autonomy.json')]
+              assert len(prior)==2 and all(r['status']=='completed' for r in prior)
+              assert all(next(t['pinball'] for t in r['trials'] if t['config_id']=='last_value')==0 for r in prior)
+              objection={'author':'skeptic','source_run_ids':[r['run_id'] for r in prior],'finding':'Both completed July24 cycles had zero-loss persistence. That task cannot show a forecasting improvement. Test a training date with variation before using more numerical trials.','information_scope':'completed training-period cases only'}
+              eligible=[r for r in grid['origins'] if r['origin'] in protocol()['training_origins'] and next(m['pinball'] for m in r['methods'] if m['config_id']=='last_value')>1e-6]
+              assert 1<=len(eligible)<=6
+              options=[(r['origin'],json.dumps({'history_audit':r['series_audit'],'completed_reference_pinball':next(m['pinball'] for m in r['methods'] if m['config_id']=='last_value')})) for r in eligible]
+              service=tinker.ServiceClient(display_name='Compute Forecast v2 scientist task adaptation')
+              sampler=await service.create_sampling_client(base_model=MODEL)
+              renderer=DecisionRenderer(renderers.get_renderer(model_info.get_recommended_renderer_name(MODEL),sampler.get_tokenizer()))
+              distribution=await sample_decision(sampler,renderer.render(Decision('Choose a training origin for the next fresh six-trial research cycle. Actual skeptic objection: '+json.dumps(objection)+'. No candidate scores or evaluation dates are supplied.',options)))
+              chosen=max(distribution,key=distribution.get)
+              plan={'created_at':now(),'source_grid_sha':grid['code_sha'],'skeptic_objection':objection,'eligible_training_origins':[r['origin'] for r in eligible],'selected_origin':chosen,'action_probabilities':distribution,'selection_uses_evaluation':False,'reference_feedback_cache_hit':True,'next_experiments_will_be_fresh':True}
+              Path('inputs/next-origin.json').write_text(json.dumps(plan,indent=2));Path('artifacts').mkdir(exist_ok=True);Path('artifacts/adapted-plan.json').write_text(json.dumps(plan,indent=2))
+              with open(os.environ['GITHUB_OUTPUT'],'a') as f:f.write('origin='+chosen+'\n')
+              print('V2_ADAPTED_PLAN:'+json.dumps(plan),flush=True)
+          asyncio.run(select())
+          PY
+      - name: Execute the adapted research plan with fresh Modal backtests
+        run: python -m compute_forecast.autonomy_v2 --question calibration --origin ${{ steps.next.outputs.origin }} --plan inputs/next-origin.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: campaign-v2-adapted-research-${{ github.run_id }}
+          path: artifacts/
+          retention-days: 30

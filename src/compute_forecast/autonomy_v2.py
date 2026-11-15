@@ -13,12 +13,17 @@ def publish(identifier,payload,private_response=None):
     write(Path("/public/experimental-v2/autonomy")/(identifier+".json"),payload)
     volume.commit();public_volume.commit()
     return {"public_digest":digest(payload),"run_id":identifier}
-async def run(output,question="calibration"):
+async def run(output,question="calibration",origin="2026-07-24",plan=None):
     import httpx,tinker
     from tinker_cookbook import model_info,renderers
     if question not in QUESTIONS:raise ValueError("Unregistered research question")
+    from .campaign_v2 import protocol
+    from datetime import date,timedelta
+    if origin not in protocol()["training_origins"]:raise ValueError("Only registered training-origin research")
+    label_end=(date.fromisoformat(origin)+timedelta(days=7)).isoformat()
     run_id=uuid.uuid4().hex;out=Path(output);out.mkdir(parents=True,exist_ok=True);started=time.perf_counter()
-    report={"schema_version":2,"run_id":run_id,"github_run_id":os.environ.get("GITHUB_RUN_ID"),"question_id":question,"question":QUESTIONS[question],"status":"running","started_at":now(),"code_sha":os.environ.get("GITHUB_SHA"),"origin":"2026-07-24","last_label_date":"2026-07-31","scope":"current methodological research on training-period retrospective backtests","trial_budget":6,"events":[],"trials":[],"evidence":[],"cache_hits":0,"new_executions":0,"cost":None,"cost_status":"not yet available","model":MODEL,"historical_market_input":False}
+    report={"schema_version":2,"run_id":run_id,"github_run_id":os.environ.get("GITHUB_RUN_ID"),"question_id":question,"question":QUESTIONS[question],"status":"running","started_at":now(),"code_sha":os.environ.get("GITHUB_SHA"),"origin":origin,"last_label_date":label_end,"scope":"current methodological research on training-period retrospective backtests","trial_budget":6,"events":[],"trials":[],"evidence":[],"cache_hits":0,"new_executions":0,"cost":None,"cost_status":"not yet available","model":MODEL,"historical_market_input":False}
+    report["research_plan"]=json.loads(Path(plan).read_text()) if plan else None
     raw_responses=[]
     def flush():
         write(out/"autonomy.json",report);publish.remote(run_id,report,raw_responses)
@@ -27,7 +32,7 @@ async def run(output,question="calibration"):
     sampler=await service.create_sampling_client(base_model=MODEL)
     from tinker_cookbook.recipes.decisions import DecisionRenderer
     renderer=DecisionRenderer(renderers.get_renderer(model_info.get_recommended_renderer_name(MODEL),sampler.get_tokenizer()))
-    task={"task_id":run_id,"origin":"2026-07-24","phase":"current_training_research","group":"eligible_A100_daily","scale":.01,"observation":{"measurement":"advertised daily rental offers","matured_labels_through":"2026-07-31"},"validation":{}}
+    task={"task_id":run_id,"origin":origin,"phase":"current_training_research","group":"eligible_A100_daily","scale":.01,"observation":{"measurement":"advertised daily rental offers","matured_labels_through":label_end},"validation":{}}
     revealed=[]
     memory_records=[];memory_calls=[];audience="cf-v2-"+run_id[:24]
     actors={r:"cf-v2-"+run_id+"-"+r for r in ("evidence_researcher","forecast_scientist","skeptic")}
@@ -81,7 +86,7 @@ async def run(output,question="calibration"):
         async def execute(configs,hypothesis):
             event={"event":"experiment_requested","config_ids":configs,"hypothesis":hypothesis,"requested_at":now(),"status":"running","cache_hit":False,"new_numerical_execution":True}
             report["events"].append(event);flush();begin=time.perf_counter()
-            result=await evaluate_origin.remote.aio("2026-07-24",config_ids=configs)
+            result=await evaluate_origin.remote.aio(origin,config_ids=configs)
             if result["status"]!="completed" or result["cache_hit"] or not result["new_numerical_execution"]:raise ValueError("Expected fresh completed numerical execution")
             report["new_executions"]+=1
             for m in result["methods"]:
@@ -90,11 +95,20 @@ async def run(output,question="calibration"):
             event.update(status="completed",completed_at=now(),execution_run_id=result["run_id"],modal_call_id=result["modal_call_id"],wall_seconds=time.perf_counter()-begin)
             flush()
         try:
+            if report["research_plan"]:
+                plan_record=await remember("skeptic","task_selection_objection",report["research_plan"]["skeptic_objection"])
+                report["events"].append({"event":"plan_adapted","chosen_training_origin":origin,"selection":report["research_plan"],"used_critic":await recall("forecast_scientist",plan_record,"Why should this research cycle use a different training origin?")})
             packet,evidence_record=await evidence(question,QUESTIONS[question])
             await execute(INITIAL,"Establish the same two persistence references before choosing alternatives")
             task["scale"]=max(statistics.mean(t["pinball"] for t in report["trials"]),1e-6)
             for step in range(4):
                 critic=criticism(task,revealed)
+                latest=report["trials"][-1]
+                if latest["fallbacks"]:critic["objection"]="The latest method used numerical fallbacks; compare an eligible family before interpreting its score"
+                elif latest["coverage"]<.6:critic["objection"]="The latest interval covers fewer than 60% of this tiny training case; investigate calibration and compare persistence"
+                elif min(t["pinball"] for t in report["trials"])<=1e-10:critic["objection"]="Persistence already has zero loss on this training case. No candidate can improve it; any further finding is a robustness diagnostic"
+                critic["cutoff_check"]="All outcomes end "+label_end+" within the July31 training boundary"
+                critic["sample_size_objection"]="One training origin cannot establish temporal generalization"
                 result_record=await remember("forecast_scientist","measured_results",{"revealed_trials":report["trials"],"next_uncertainty":critic["objection"]},[evidence_record])
                 skeptic_context=await recall("skeptic",result_record,"Which measured trials and limitations should the skeptic inspect?")
                 critic_record=await remember("skeptic","criticism",{**critic,"used_result_record":result_record},[result_record])
@@ -102,7 +116,8 @@ async def run(output,question="calibration"):
                 combined={"method_evidence":packet,"criticism":used_critic}
                 selected,decisions=await choose(task,revealed,sampler,renderer,ablation="with_criticism",evidence=combined)
                 counterfactual,_=await choose(task,revealed,sampler,renderer)
-                report["events"].append({"event":"scientist_decision","step":step,"selected_config_id":selected,"without_evidence_or_criticism_config_id":counterfactual,"decision_changed_with_context":selected!=counterfactual,"used_evidence_record_id":evidence_record,"used_critic_record_id":critic_record,"decisions":[{k:v for k,v in d.items() if k!="decision"} for d in decisions],"created_at":now()})
+                blind,_=await choose(task,revealed,sampler,renderer,ablation="no_observation")
+                report["events"].append({"event":"scientist_decision","step":step,"selected_config_id":selected,"without_evidence_or_criticism_config_id":counterfactual,"decision_changed_with_context":selected!=counterfactual,"without_results_config_id":blind,"results_changed_choice":counterfactual!=blind,"used_evidence_record_id":evidence_record,"used_critic_record_id":critic_record,"decisions":[{k:v for k,v in d.items() if k!="decision"} for d in decisions],"created_at":now()})
                 await execute([selected],"Test "+selected+" in response to "+used_critic["objection"])
                 if step==1:
                     packet,evidence_record=await evidence("missingness","Could missingness or coverage explain the measured differences?")
@@ -113,6 +128,6 @@ async def run(output,question="calibration"):
             report.update(status="failed",error_type=type(error).__name__,failed_at=now(),runtime_seconds=time.perf_counter()-started);flush();raise
     return report
 if __name__=="__main__":
-    parser=argparse.ArgumentParser();parser.add_argument("--question",choices=list(QUESTIONS),default="calibration");parser.add_argument("--output",default="artifacts/v2-autonomy")
+    parser=argparse.ArgumentParser();parser.add_argument("--question",choices=list(QUESTIONS),default="calibration");parser.add_argument("--output",default="artifacts/v2-autonomy");parser.add_argument("--origin",default="2026-07-24");parser.add_argument("--plan")
     args=parser.parse_args()
-    with app.run():asyncio.run(run(args.output,args.question))
+    with app.run():asyncio.run(run(args.output,args.question,args.origin,args.plan))
