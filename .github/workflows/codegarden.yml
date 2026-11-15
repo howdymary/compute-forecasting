@@ -1,0 +1,53 @@
+# GitHub discovers workflows only at .github/workflows/*.yml.
+# Review copy: all application code/results remain under codegarden/.
+name: CodeGarden isolated research
+on:
+  push:
+    branches: [codegarden]
+    paths: [.github/workflows/codegarden.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: codegarden-only
+  cancel-in-progress: false
+jobs:
+  verify-and-search:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - name: Fetch pinned CodeGarden branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify protected code and run independent checks
+        run: |
+          python -B -m unittest discover -s codegarden/tests -v
+          python -B codegarden/protected/verify_descendants.py codegarden/artifacts/baselines/arena_226_kgrey.txt
+          python -B codegarden/protected/verify_lcs.py codegarden/artifacts/baselines/arena_226_kgrey.txt
+      - name: Isolated provider clients; do not install forecasting project
+        run: |
+          python -m venv codegarden/.venv
+          codegarden/.venv/bin/python -m pip install modal tinker httpx
+      - name: Read balances and active account usage before spending
+        env:
+          EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
+          PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: codegarden/.venv/bin/python -B codegarden/budget/preflight.py
+      - name: Bounded CPU search without sponsor calls
+        run: |
+          python -B codegarden/search.py --start codegarden/artifacts/baselines/arena_226_kgrey.txt --seconds 180 --cycles 1200 --seed 2026 --policy adaptive --output codegarden/artifacts/remote_run.json
+          python -B codegarden/protected/verify_descendants.py codegarden/artifacts/remote_run.txt
+          python -B codegarden/protected/verify_lcs.py codegarden/artifacts/remote_run.txt
+      - name: Commit only CodeGarden results with a branch lease
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: python -B codegarden/ci/publish_results.py

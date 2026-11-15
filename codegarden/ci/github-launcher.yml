@@ -43,7 +43,7 @@ jobs:
         run: codegarden/.venv/bin/python -B codegarden/budget/preflight.py
       - name: Bounded CPU search without sponsor calls
         run: |
-          python -B codegarden/search.py --start codegarden/artifacts/baselines/arena_226_kgrey.txt --seconds 180 --seed 2026 --policy adaptive --output codegarden/artifacts/remote_run.json
+          python -B codegarden/search.py --start codegarden/artifacts/baselines/arena_226_kgrey.txt --seconds 180 --cycles 1200 --seed 2026 --policy adaptive --output codegarden/artifacts/remote_run.json
           python -B codegarden/protected/verify_descendants.py codegarden/artifacts/remote_run.txt
           python -B codegarden/protected/verify_lcs.py codegarden/artifacts/remote_run.txt
       - name: Commit only CodeGarden results with a branch lease

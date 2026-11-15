@@ -198,9 +198,9 @@ def main():
     from pathlib import Path
     p=argparse.ArgumentParser();p.add_argument("--start",required=True);p.add_argument("--seconds",type=float,default=30)
     p.add_argument("--seed",type=int,default=0);p.add_argument("--policy",choices=["fixed","adaptive"],default="adaptive")
-    p.add_argument("--output",default="codegarden/artifacts/run.json");a=p.parse_args()
+    p.add_argument("--output",default="codegarden/artifacts/run.json");p.add_argument("--cycles",type=int,default=120);a=p.parse_args()
     words=Path(a.start).read_text().splitlines();inc=Incidence(len(words[0]))
-    result=run(inc,[int(w,2) for w in words],a.seed,a.seconds,a.policy)
+    result=run(inc,[int(w,2) for w in words],a.seed,a.seconds,a.policy,max_cycles=a.cycles)
     Path(a.output).parent.mkdir(parents=True,exist_ok=True);Path(a.output).write_text(json.dumps(result))
     witness=Path(a.output).with_suffix(".txt");witness.write_text(canonical(result["best"],inc.n))
     print(json.dumps({"best_size_unverified":len(result["best"]),"witness":str(witness),"cycles":result["cycles"]}))
