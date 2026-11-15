@@ -4,10 +4,10 @@
   "scope": "Focused primary-source review; not an exhaustive systematic review",
   "discovery": {
     "provider": "Exa",
-    "search_angles": 6,
-    "requested_result_slots": 41,
+    "search_angles": 7,
+    "requested_result_slots": 46,
     "selected_primary_sources": 15,
-    "note": "Result slots are the sum of requested numResults, not unique full-text papers. Publisher abstracts, current vendor pages and preprint revisions are labeled individually.",
+    "note": "46 requested result slots across seven discovery angles and one targeted temporal-method verification; not 46 unique full-text papers. The matrix selects 15 sources; MLS-Bench remains additional background. No fetched market values enter training.",
     "verification_searches": 1
   },
   "historical_input_use": false,
@@ -112,8 +112,7 @@
       "limitations": "A row timestamp alone does not establish data vintage; our final dates were already inspected.",
       "availability": "Open textbook and associated R examples.",
       "adopt": "Expose origin, label maturity and retrospective reuse in the interface and ledger.",
-      "difference": "Our pack/access constraints require additional vintage and publication caveats.",
-      "verified_text_url": "https://otexts.com/fpptr/tscv.html"
+      "difference": "Our pack/access constraints require additional vintage and publication caveats."
     },
     {
       "id": "cqr-2019",
@@ -201,21 +200,21 @@
       "difference": "Our feedback diagnostics inspect fixed recorded traces, not a replication of AIRA."
     },
     {
-      "id": "mlsbench",
-      "title": "MLS-Bench: A Holistic and Rigorous Assessment of AI Systems on Building Better AI",
-      "url": "https://arxiv.org/abs/2605.08678",
-      "date": "2026-05 preprint; fetched revision 2026-07-06",
-      "type": "Research preprint and benchmark",
-      "question": "Can AI invent methods that generalize across settings and scales?",
-      "data": "140 tasks across 12 domains according to the authors.",
-      "horizon": "Controlled transfer/scaling evaluations; not a calendar forecast target.",
-      "method": "Targeted component improvements and cross-setting evaluation.",
-      "evaluation": "Generalization and scalability separated from engineering-style tuning.",
-      "result": "Authors find robust method invention more difficult than local tuning.",
-      "limitations": "Our three reused dates and fixed methods cannot establish method discovery.",
-      "availability": "Paper and authors' https://mls-bench.com platform.",
-      "adopt": "Narrow claims to bounded selection and state the independent-evaluation gap.",
-      "difference": "We demonstrate a transparent empirical pipeline rather than general scientific invention."
+      "id": "chronos2",
+      "title": "Chronos-2: From Univariate to Universal Forecasting",
+      "url": "https://arxiv.org/abs/2510.15821",
+      "date": "2025-10-17 preprint; official release October 20, 2025",
+      "type": "Technical research report, official model card and open implementation",
+      "question": "Can one pretrained model perform zero-shot univariate, multivariate and covariate-informed probabilistic forecasting?",
+      "data": "Authors evaluate fev-bench, GIFT-Eval and Chronos Benchmark II; not the Pacific GPU pack.",
+      "horizon": "Multi-step quantile forecasts; horizon is task-specific. The official interface accepts 0.1/0.5/0.9 quantiles.",
+      "method": "Pretrained encoder with group attention and in-context cross-series/covariate information; compared with pretrained and task-specific forecasters.",
+      "evaluation": "Authors' multi-benchmark comparisons and task/domain case studies.",
+      "result": "Authors report strong zero-shot results, particularly with covariates; no result on our dataset has been measured.",
+      "limitations": "Not run here. Model revision, pretraining provenance, covariate vintage and exact target mapping need an independent audit before a fair comparison.",
+      "availability": "Official https://huggingface.co/amazon/chronos-2 model card and https://github.com/amazon-science/chronos-forecasting code/weights.",
+      "adopt": "Name it as an important untested baseline; fix the model revision and compare the exact scorer on an independent period.",
+      "difference": "Our transparent classical-method selector experiment is not evidence of competitiveness against modern pretrained time-series models."
     },
     {
       "id": "forecastbench",
@@ -249,8 +248,7 @@
       "limitations": "Does not prove that our interface improves comprehension.",
       "availability": "Official landing page and publicly linked full review.",
       "adopt": "Explain what changes a scenario; show uncertainty limits and measured forecast errors plainly.",
-      "difference": "Our assumption paths have no probabilities and remain visually separate from submitted quantiles.",
-      "supporting_url": "https://www.bankofengland.co.uk/-/media/boe/files/independent-evaluation-office/2024/forecasting-for-monetary-policy-making-and-communication-at-the-bank-of-england-a-review.pdf"
+      "difference": "Our assumption paths have no probabilities and remain visually separate from submitted quantiles."
     },
     {
       "id": "explorable",
@@ -277,5 +275,24 @@
     "Matched superiority over commercial indices or published agent leaderboards",
     "Untouched evaluation from reused dates",
     "Prospective accuracy before outcomes resolve"
+  ],
+  "additional_background_sources": [
+    {
+      "id": "mlsbench",
+      "title": "MLS-Bench: A Holistic and Rigorous Assessment of AI Systems on Building Better AI",
+      "url": "https://arxiv.org/abs/2605.08678",
+      "date": "2026-05 preprint; fetched revision 2026-07-06",
+      "type": "Research preprint and benchmark",
+      "question": "Can AI invent methods that generalize across settings and scales?",
+      "data": "140 tasks across 12 domains according to the authors.",
+      "horizon": "Controlled transfer/scaling evaluations; not a calendar forecast target.",
+      "method": "Targeted component improvements and cross-setting evaluation.",
+      "evaluation": "Generalization and scalability separated from engineering-style tuning.",
+      "result": "Authors find robust method invention more difficult than local tuning.",
+      "limitations": "Our three reused dates and fixed methods cannot establish method discovery.",
+      "availability": "Paper and authors' https://mls-bench.com platform.",
+      "adopt": "Narrow claims to bounded selection and state the independent-evaluation gap.",
+      "difference": "We demonstrate a transparent empirical pipeline rather than general scientific invention."
+    }
   ]
 }
