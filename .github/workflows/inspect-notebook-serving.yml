@@ -27,7 +27,7 @@ jobs:
           from pathlib import Path
           root=Path('artifacts');root.mkdir(exist_ok=True)
           base='https://howdymary--compute-forecast-observatory-web.us-east.modal.run'
-          paths=['/notebook-assets/caveat-f84acf2c.ttf','/files/forecasts.csv','/api/pricing','/api/notebook']*2
+          paths=['/health','/api/research-assets','/api/chronos-control','/notebook-assets/caveat-f84acf2c.ttf','/files/forecasts.csv','/api/pricing','/api/notebook']*2
           def request(path):
               start=time.monotonic()
               try:
@@ -39,6 +39,17 @@ jobs:
               for future in concurrent.futures.as_completed([executor.submit(request,p) for p in paths]):
                   row=future.result();rows.append(row);print('NOTEBOOK_HTTP_TIMING:'+json.dumps(row),flush=True)
           (root/'endpoint-observations.json').write_text(json.dumps({'kind':'investigation_only_not_a_passing_test','rows':rows},indent=2))
+          for cmd in (['modal','app','info','compute-forecast-observatory','--json'],['modal','app','history','compute-forecast-observatory','--json']):
+              observed=subprocess.run(cmd,capture_output=True,text=True,timeout=90)
+              print('MODAL_DEPLOYMENT_OBSERVATION:'+observed.stdout+' '+observed.stderr,flush=True)
+          import modal
+          function=modal.Function.from_name('compute-forecast-observatory','web')
+          function.hydrate()
+          print('MODAL_WEB_ID:'+function.object_id,flush=True)
+          print('MODAL_WEB_URL:'+str(function.get_web_url()),flush=True)
+          print('MODAL_WEB_INFO:'+str(function.info()),flush=True)
+          try:print('ACTUAL_HTTP_HEALTH:'+urllib.request.urlopen(base+'/health?diagnostic=4349606',timeout=30).read().decode(),flush=True)
+          except Exception as error:print('ACTUAL_HEALTH_ERROR:'+str(error),flush=True)
           result=subprocess.run(['modal','app','logs','compute-forecast-observatory','--tail','250','--since','30m','--timestamps','--show-container-id'],capture_output=True,text=True,timeout=90)
           output=result.stdout+'\n'+result.stderr
           (root/'public-app-logs.txt').write_text(output)
