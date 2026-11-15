@@ -1,0 +1,48 @@
+{
+  "status": "failed_or_partial",
+  "source_sha": "0221384cb28b67be89565a01fe17d5f97fbcb084",
+  "started_at": "2026-11-15T11:08:46.025663+00:00",
+  "history": {
+    "source_run": "after-long-9e02d5fbec4b5bef09c05f3182dc6f7109ea1090",
+    "conservative_totals": {
+      "exa": 0.098,
+      "past": 278.0,
+      "modal": 148.98,
+      "tinker": 22.85
+    },
+    "reason": "All historical holds retained, including complete long reservation and its retry-aware concurrency envelope."
+  },
+  "credit_floor": 247.02982535,
+  "error": "Required other-role source not present in real recall",
+  "budget": {
+    "exa": {
+      "cap": 5,
+      "other_project_reserves": 15,
+      "verification_reserve": 5,
+      "reserved": 0.098,
+      "provider_reported_or_estimated": 0
+    },
+    "past": {
+      "cap": 2000,
+      "other_project_reserves": 10200,
+      "verification_reserve": 5000,
+      "reserved": 278.0,
+      "provider_reported_or_estimated": 4.0
+    },
+    "modal": {
+      "cap": 150,
+      "other_project_reserves": 75,
+      "verification_reserve": 20,
+      "reserved": 148.98,
+      "provider_reported_or_estimated": 0
+    },
+    "tinker": {
+      "cap": 70,
+      "other_project_reserves": 140,
+      "verification_reserve": 10,
+      "reserved": 22.85,
+      "provider_reported_or_estimated": 0
+    }
+  },
+  "finished_at": "2026-11-15T11:09:05.405016+00:00"
+}
