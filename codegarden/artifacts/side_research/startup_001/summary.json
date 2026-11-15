@@ -1,0 +1,82 @@
+{
+  "source_sha": "4e4e3eec815ced48acbfa18204ba0b4ea0025eef",
+  "status": "completed_batch",
+  "best_verified": 226,
+  "workers": [
+    {
+      "mode": "cold_thin",
+      "status": "completed",
+      "native_returncode": 0,
+      "cardinality": 212,
+      "not_in_recorded152_arrays": false,
+      "actual_startup_config": {
+        "policy": "thin",
+        "partitions": 1,
+        "separators": 1,
+        "k_separators": 1,
+        "multiway_blocks": 2,
+        "population_size": 4,
+        "repetitions": 1,
+        "ils_iterations": 1000
+      },
+      "phase_markers": {
+        "separator_pool_completed": true,
+        "initialization": true,
+        "evolution": true
+      },
+      "wall_seconds": 264.14479625,
+      "max_child_rss_kib": 18172112
+    },
+    {
+      "mode": "cold_balanced",
+      "status": "completed",
+      "native_returncode": 0,
+      "cardinality": 208,
+      "not_in_recorded152_arrays": false,
+      "actual_startup_config": {
+        "policy": "balanced",
+        "partitions": 2,
+        "separators": 2,
+        "k_separators": 1,
+        "multiway_blocks": 2,
+        "population_size": 8,
+        "repetitions": 2,
+        "ils_iterations": 1000
+      },
+      "phase_markers": {
+        "separator_pool_completed": true,
+        "initialization": true,
+        "evolution": true
+      },
+      "wall_seconds": 260.18386871300004,
+      "max_child_rss_kib": 18182852
+    },
+    {
+      "mode": "cold_selected_fresh",
+      "status": "completed",
+      "native_returncode": 0,
+      "cardinality": 208,
+      "not_in_recorded152_arrays": false,
+      "actual_startup_config": {
+        "policy": "balanced",
+        "partitions": 2,
+        "separators": 2,
+        "k_separators": 1,
+        "multiway_blocks": 2,
+        "population_size": 8,
+        "repetitions": 2,
+        "ils_iterations": 1000
+      },
+      "phase_markers": {
+        "separator_pool_completed": true,
+        "initialization": true,
+        "evolution": true
+      },
+      "wall_seconds": 269.183095329,
+      "max_child_rss_kib": 18313860
+    }
+  ],
+  "global_record_claim": false,
+  "proof_of_absence": false,
+  "large_cache": "Ephemeral graph volume context closed; durable reports and witnesses retained."
+}
