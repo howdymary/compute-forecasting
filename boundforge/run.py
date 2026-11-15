@@ -16,7 +16,7 @@ def main():
     if not os.environ.get("GITHUB_ACTIONS") and not os.environ.get("BOUNDFORGE_ALLOW_LOCAL"):raise SystemExit("Run this project on GitHub Actions; no workstation execution authorised.")
     if not 1<=a.trials<=240 or not 1<=a.seconds<=60:raise SystemExit("batch outside bounded limits")
     out=ROOT/"results";out.mkdir(exist_ok=True)
-    if not a.resume:prepare_output(out)
+    if not a.resume and os.environ.get("BOUNDFORGE_OUTPUT_PREPARED")!="1":prepare_output(out)
     path=out/"trace.jsonl"
     def log(kind,payload):
         row={"timestamp":dt.datetime.now(dt.timezone.utc).isoformat(),"kind":kind,**payload}
@@ -130,6 +130,9 @@ if __name__=="__main__":
         # Start only after a verified snapshot and a conservative image/build reservation.
         from providers import Ledger
         remote_out=ROOT/"results";remote_out.mkdir(exist_ok=True)
+        if "--resume" not in sys.argv:
+            prepare_output(remote_out)
+            os.environ["BOUNDFORGE_OUTPUT_PREPARED"]="1"
         Ledger(remote_out).reserve("modal",2.0)
         from modal_worker import app
         with app.run():main()
