@@ -1,0 +1,44 @@
+{
+  "observed_at": "2026-11-15T13:02:10.598574+00:00",
+  "source_sha": "b0b17379769ae1c949dc427d0df95ffa1dd328e7",
+  "billable_work_started": false,
+  "historical_holds_unchanged": true,
+  "allocation_renewed": false,
+  "credit_purchases_or_setting_changes": false,
+  "desktop_balance_refresh": "Unavailable: native surface reported locked Mac.",
+  "providers": {
+    "modal": {
+      "financial_scalars": {},
+      "response_sha256": "a326015642fdb9c03c83b894ead642748ce4ee241da042a67d628038675cb4b0",
+      "scope": "Account-wide gross usage, not attributed CodeGarden spend. No release of unresolved holds or new worker."
+    },
+    "past": {
+      "balance_left": 699096.0,
+      "source": "Authenticated GET /api/v1/usage; no recall/ingest request."
+    },
+    "tinker": {
+      "begin": "2026-11-15T00:00:00+00:00",
+      "ending_before": "2026-11-15T13:00:00+00:00",
+      "event_rows": 0,
+      "estimated_gross_cost_usd": 0,
+      "unpriced_rows": 0,
+      "cost_data_through": null,
+      "storage_financial_scalars": {
+        "effective_rate_usd_per_gigabyte_month": 0.0
+      },
+      "usage_response_sha256": "b7f2e61f2071b6455ae290857645bdc4fbe935b5f475c9b8e90de54b41ed3b2a",
+      "balance_unknown": true,
+      "scope": "Read-only RestClient billing/storage metadata; no ServiceClient, sampler, training client or checkpoint creation. Usage can lag hours and is not prepaid balance."
+    },
+    "exa": {
+      "balance_unknown": true,
+      "read_status": "No documented regular-key prepaid-balance endpoint available; separate admin service credentials not assumed. No billable search started."
+    }
+  },
+  "official_docs": [
+    "https://modal.com/docs/guide/billing",
+    "https://modal.com/docs/sdk/py/releases",
+    "https://tinker-docs.thinkingmachines.ai/tinker/api-reference/restclient/",
+    "https://tinker-docs.thinkingmachines.ai/tinker/cli/billing/"
+  ]
+}
