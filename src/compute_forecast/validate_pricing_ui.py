@@ -20,7 +20,8 @@ def main():
         context=browser.new_context(viewport={"width":1512,"height":982},reduced_motion="reduce")
         page=context.new_page();page.on("pageerror",lambda e:errors.append(str(e)))
         page.on("response",lambda r:failures.append({"url":r.url,"status":r.status}) if r.url.startswith(URL) and r.status>=400 and not r.url.endswith("/favicon.ico") else None)
-        page.goto(URL,wait_until="networkidle")
+        page.goto(URL,wait_until="domcontentloaded",timeout=90000)
+        page.locator("#price-chart").wait_for(timeout=90000)
         page.get_by_role("heading",name="See what compute could cost.",exact=True).wait_for()
         assert page.locator("#series-select option").count()==37
         def values():return [float(v) for v in page.locator("[data-point-value]").evaluate_all("(els)=>els.map(e=>e.dataset.value)")]
@@ -84,7 +85,8 @@ def main():
         assert page.locator('a[href="/files/forecasts.csv"]').count()==1
         mobile=browser.new_context(viewport={"width":390,"height":844},is_mobile=True,has_touch=True,reduced_motion="reduce")
         phone=mobile.new_page();phone.on("pageerror",lambda e:errors.append(str(e)))
-        phone.goto(URL,wait_until="networkidle")
+        phone.goto(URL,wait_until="domcontentloaded",timeout=90000)
+        phone.locator("#price-chart").wait_for(timeout=90000)
         phone.get_by_role("heading",name="See what compute could cost.",exact=True).wait_for()
         assert phone.evaluate("document.documentElement.scrollWidth<=innerWidth+2"),"Mobile overflow"
         phone.locator("#price-chart").scroll_into_view_if_needed()

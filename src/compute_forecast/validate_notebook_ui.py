@@ -55,11 +55,30 @@ def main():
     errors=[];checks=[]
     with sync_playwright() as pw:
         browser=pw.chromium.launch()
+        independent=browser.new_context(viewport={"width":390,"height":844},reduced_motion="reduce")
+        first=independent.new_page();held=[]
+        first.route("**/api/release",lambda route:held.append(route))
+        first.route("**/api/notebook",lambda route:held.append(route))
+        first.goto(URL,wait_until="domcontentloaded",timeout=90000)
+        first.locator("#price-chart").wait_for(timeout=15000)
+        first.locator("#pin-point").click()
+        assert first.locator(".pinned-note").count()==1
+        assert len(held)==2
+        frozen_release=get("/api/release").decode()
+        for route in held:
+            route.fulfill(status=200,content_type="application/json",body=json.dumps(notes) if route.request.url.endswith("/api/notebook") else frozen_release)
+        first.get_by_role("button",name="Research",exact=True).click()
+        first.get_by_role("button",name="Study notes",exact=True).click()
+        first.get_by_role("heading",name="Better questions for the results.",exact=True).wait_for()
+        first.get_by_role("button",name="Explore",exact=True).click()
+        assert first.locator(".pinned-note").count()==1
+        independent.close()
         for label,width,height,mobile in (("desktop",1512,1000,False),("mobile",390,844,True),("small-mobile",320,780,True)):
             context=browser.new_context(viewport={"width":width,"height":height},is_mobile=mobile,has_touch=mobile,reduced_motion="reduce")
             page=context.new_page();page.on("pageerror",lambda e:errors.append(str(e)))
             page.route("**/api/notebook",lambda route:route.fulfill(status=200,content_type="application/json",body=json.dumps(notes)))
-            page.goto(URL,wait_until="networkidle",timeout=120000)
+            page.goto(URL,wait_until="domcontentloaded",timeout=90000)
+            page.locator("#price-chart").wait_for(timeout=90000)
             page.get_by_role("heading",name="See what compute could cost.",exact=True).wait_for()
             loaded_faces=page.evaluate("document.fonts.load('24px Caveat','Notes on the price of compute').then(faces=>faces.length)")
             assert loaded_faces>=1, "The self-hosted handwriting face did not load"
@@ -143,13 +162,13 @@ def main():
         context=browser.new_context(viewport={"width":390,"height":844},reduced_motion="reduce")
         page=context.new_page()
         page.route("**/api/pricing",lambda route:route.fulfill(status=503,content_type="application/json",body='{"error":"validation outage"}'))
-        page.goto(URL,wait_until="networkidle")
+        page.goto(URL,wait_until="domcontentloaded",timeout=90000)
         page.get_by_role("heading",name="Verified pricing data is temporarily unavailable.",exact=True).wait_for()
         page.unroute("**/api/pricing");page.get_by_role("button",name="Try again",exact=True).click()
         page.locator("#price-chart").wait_for()
         context.close();browser.close()
     assert not errors,errors
-    report={"status":"passed","checks":checks,"source_sha":os.environ.get("SOURCE_SHA"),"font_license_and_blob_verified":True,"explicit_loaded_font_faces":loaded_faces,"concurrent_asset_and_data_requests":len(concurrent_results),"peer_sources":15,"diagnostic_report_count":len(notes["calibration"]),"diagnostic_api_roundtrip_seconds":round(elapsed,4),"diagnostics_match_public_saved_results":True,"pricing_outage_retry":True,"page_errors":errors,"reduced_motion":True,"recording":False}
+    report={"status":"passed","checks":checks,"source_sha":os.environ.get("SOURCE_SHA"),"font_license_and_blob_verified":True,"explicit_loaded_font_faces":loaded_faces,"concurrent_asset_and_data_requests":len(concurrent_results),"peer_sources":15,"diagnostic_report_count":len(notes["calibration"]),"diagnostic_api_roundtrip_seconds":round(elapsed,4),"diagnostics_match_public_saved_results":True,"pricing_outage_retry":True,"primary_chart_independent_of_research_requests":True,"page_errors":errors,"reduced_motion":True,"recording":False}
     (out/"validation.json").write_text(json.dumps(report,indent=2)+"\n")
     (out/"diagnostic-snapshot.json").write_text(json.dumps(notes,indent=2)+"\n")
     print("NOTEBOOK_UI_REPORT:"+json.dumps(report),flush=True)

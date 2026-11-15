@@ -1,5 +1,5 @@
 """Public observatory: derived results only, without raw data mounts or account secrets."""
-import hashlib,json,os
+import hashlib,json,os,time
 from datetime import datetime,timezone
 from pathlib import Path
 import modal
@@ -31,12 +31,16 @@ def web():
     import threading
     from fastapi import FastAPI,Request
     from fastapi.responses import HTMLResponse,JSONResponse,Response
-    api=FastAPI(docs_url=None,redoc_url=None,openapi_url=None);lock=threading.Lock();archive_cache={"sha":None,"bytes":None};asset_cache={}
+    api=FastAPI(docs_url=None,redoc_url=None,openapi_url=None);lock=threading.Lock();archive_cache={"sha":None,"bytes":None};asset_cache={};release_cache={}
     headers={"Cache-Control":"no-store","X-Content-Type-Options":"nosniff","Referrer-Policy":"strict-origin-when-cross-origin","Content-Security-Policy":"default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'"}
     def read(name):
         with lock:
+            cached=release_cache.get(name)
+            if cached and time.monotonic()-cached["at"]<5:return cached["raw"]
             public.reload();file=Path("/public/release")/name
-            return file.read_bytes() if file.is_file() else None
+            raw=file.read_bytes() if file.is_file() else None
+            if raw is not None:release_cache[name]={"at":time.monotonic(),"raw":raw}
+            return raw
     @api.get("/")
     def index():return HTMLResponse(HTML,headers=headers)
     @api.get("/experimental")

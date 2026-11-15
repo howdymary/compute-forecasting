@@ -43,3 +43,10 @@ Existing pricing and experimental UI workflows continue to run independently. Ra
 
 
 The first remote notebook check observed a 1.0387-second diagnostics HTTP roundtrip at source be399c5 (run 43683991615). This includes network and serving overhead and is not a CPU benchmark. Coverage is displayed with the same-cell starting-policy reference. The feedback summary distinguishes equal loss from changed action sequences. The [post-hoc improvement register](notebook-improvements.json) records hypotheses, cutoffs, acceptance criteria, negative-result interpretations and cost limits.
+
+
+### Loading and concurrent reads
+
+Pricing loads independently of the secondary research and diagnostics requests. A remote browser case holds both research responses pending and verifies that the real chart and pin interaction still work, then releases the genuine responses and verifies the Research view. Rendered chart readiness replaces Playwright's discouraged network-idle navigation condition. HTTP failures remain test failures.
+
+Public notebook assets use the same volume-read lock as data routes. The pinned font/license bytes are cached in memory, and frozen release files have a five-second server-side byte cache; dynamic experimental reports are read independently. A remote concurrent-request probe checks font, CSV, pricing and diagnostic endpoints together. These changes affect serving and loading only, not forecasts or model selection.
