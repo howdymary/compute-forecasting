@@ -1,0 +1,36 @@
+{
+  "graph_fixtures": [
+    {
+      "n": 6,
+      "vertices": 64,
+      "independently_checked_pairs": 2016,
+      "edges": 1494
+    },
+    {
+      "n": 7,
+      "vertices": 80,
+      "independently_checked_pairs": 3160,
+      "edges": 1957
+    },
+    {
+      "n": 8,
+      "vertices": 96,
+      "independently_checked_pairs": 4560,
+      "edges": 2601
+    }
+  ],
+  "native_smoke": [
+    {
+      "binary": "redumis",
+      "returncode": 0,
+      "independent_set_size": 2
+    },
+    {
+      "binary": "codegarden_pool_warm",
+      "returncode": 0,
+      "independent_set_size": 2
+    }
+  ],
+  "default_force_cand": 4,
+  "scope": "Arbitrary small graph fixtures, not length16 codeword submissions."
+}
