@@ -3,68 +3,33 @@
     "kind": "memory_write",
     "value": {
       "role": "analyst",
-      "source_id": "codegarden-43671948159-analyst-scoped_negative-71be45a4",
+      "source_id": "codegarden-43672598278-analyst-scoped_negative-457459ac",
       "experiment": "negative-001",
       "parent_sources": [],
       "estimated_credits": 3
     },
-    "time": 1794712910.3566608
+    "time": 1794713444.6396332
   },
   {
     "kind": "memory_read",
     "value": {
       "role": "researcher",
-      "required_source": "codegarden-43671948159-analyst-scoped_negative-71be45a4",
+      "required_source": "codegarden-43672598278-analyst-scoped_negative-457459ac",
       "returned_source_ids": [
-        "codegarden-43671948159-analyst-scoped_negative-71be45a4"
+        "codegarden-43672598278-analyst-scoped_negative-457459ac"
       ],
       "used_in_next_decision": true
     },
-    "time": 1794712911.3649595
+    "time": 1794713445.6305923
   },
   {
-    "kind": "exa_search",
+    "kind": "exa_reuse",
     "value": {
-      "query": "binary two deletion correcting codes length 16 maximum independent set variable neighborhood exact set packing CP-SAT",
+      "source_run": "43671948159",
       "request_id": "f1430a04e1611934dad997956c2528af",
-      "cost_dollars": {
-        "total": 0.007,
-        "search": {
-          "neural": 0.007
-        }
-      },
-      "sources": [
-        {
-          "title": "A057591 - OEIS",
-          "url": "https://oeis.org/A057591/internal",
-          "published": null,
-          "excerpt": "A057591 - OEIS Maximal size of binary code of length",
-          "content_sha256": "25aa352a4be9ed903b015c2056ed633f02c945799241dfe0758a9cf0f72731e8"
-        },
-        {
-          "title": "Nonasymptotic Upper Bounds on Binary Single Deletion Codes via Mixed Integer Linear Programming",
-          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7514547/",
-          "published": "2019-12-06T00:00:00.000Z",
-          "excerpt": "### 2.3. Maximum Independent Set Approach Consider a graph where",
-          "content_sha256": "31f3388a7532e4d4603f35f42e0148d2f499fecdadeaf844a7948d1a55aaaef9"
-        },
-        {
-          "title": "Binary two-deletion-correcting code, length 16: number of codewords \u00b7 DiscoverIA",
-          "url": "https://discoveria.ai/frontiers/einsteinarena-two-deletion-code-16",
-          "published": "2026-10-05T00:00:00.000Z",
-          "excerpt": "# Binary two-deletion-correcting code, length 16: number of codewords 219\u2264",
-          "content_sha256": "e33d7c74ea1cd2838196a2fc407514cd2d2e6390ec27a0fa00c5e97e5a65a9fb"
-        },
-        {
-          "title": "[2007.10592] Explicit two-deletion codes with redundancy matching the existential bound",
-          "url": "https://ar5iv.labs.arxiv.org/html/2007.10592",
-          "published": null,
-          "excerpt": "We give an explicit construction of length- $n$ binary codes",
-          "content_sha256": "5fc818690cb923447100358366b3b006ea4da08686d024cb2a42dff757db22d9"
-        }
-      ],
+      "query": "binary two deletion correcting codes length 16 maximum independent set variable neighborhood exact set packing CP-SAT",
       "influenced_experiment": "modal-repair-001"
     },
-    "time": 1794712913.3289368
+    "time": 1794713445.6310356
   }
 ]
