@@ -12,7 +12,7 @@ parent=api("repos/"+REPO+"/git/commits/"+HEAD)
 entries=[]
 for path in sorted(pathlib.Path("codegarden/artifacts").glob("remote_run.*")):
     entries.append({"path":str(path),"mode":"100644","type":"blob","content":path.read_text()})
-path=pathlib.Path("codegarden/artifacts/provider_preflight.json")
+path=pathlib.Path("codegarden/artifacts/provider_preflight_v2.json")
 if path.exists():entries.append({"path":str(path),"mode":"100644","type":"blob","content":path.read_text()})
 tree=api("repos/"+REPO+"/git/trees",{"base_tree":parent["tree"]["sha"],"tree":entries})
 commit=api("repos/"+REPO+"/git/commits",{"message":"Record verified CodeGarden CPU batch","parents":[HEAD],"tree":tree["sha"]})
