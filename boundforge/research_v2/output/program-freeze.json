@@ -1,0 +1,507 @@
+{
+  "programs": [
+    {
+      "name": "slope-half",
+      "expr": [
+        "div",
+        [
+          "neg",
+          "d"
+        ],
+        2
+      ],
+      "arm": "structured"
+    },
+    {
+      "name": "slope-third",
+      "expr": [
+        "div",
+        [
+          "neg",
+          "d"
+        ],
+        3
+      ],
+      "arm": "structured"
+    },
+    {
+      "name": "odd-x-third",
+      "expr": [
+        "add",
+        [
+          "div",
+          [
+            "neg",
+            "d"
+          ],
+          3
+        ],
+        [
+          "mod",
+          [
+            "sub",
+            [
+              "sub",
+              1,
+              "d"
+            ],
+            [
+              "div",
+              [
+                "neg",
+                "d"
+              ],
+              3
+            ]
+          ],
+          2
+        ]
+      ],
+      "arm": "structured"
+    },
+    {
+      "name": "odd-x-half",
+      "expr": [
+        "add",
+        [
+          "div",
+          [
+            "neg",
+            "d"
+          ],
+          2
+        ],
+        [
+          "mod",
+          [
+            "sub",
+            [
+              "sub",
+              1,
+              "d"
+            ],
+            [
+              "div",
+              [
+                "neg",
+                "d"
+              ],
+              2
+            ]
+          ],
+          2
+        ]
+      ],
+      "arm": "structured"
+    },
+    {
+      "name": "periodic-third",
+      "expr": [
+        "add",
+        [
+          "div",
+          [
+            "neg",
+            "d"
+          ],
+          3
+        ],
+        [
+          "mod",
+          "d",
+          3
+        ]
+      ],
+      "arm": "structured"
+    },
+    {
+      "name": "staircase-fifths",
+      "expr": [
+        "div",
+        [
+          "mul",
+          -2,
+          "d"
+        ],
+        5
+      ],
+      "arm": "structured"
+    },
+    {
+      "name": "random-0",
+      "expr": [
+        "add",
+        [
+          "div",
+          [
+            "mul",
+            -4,
+            "d"
+          ],
+          3
+        ],
+        [
+          "sub",
+          [
+            "mod",
+            [
+              "add",
+              "d",
+              0
+            ],
+            4
+          ],
+          2
+        ]
+      ],
+      "arm": "random"
+    },
+    {
+      "name": "random-1",
+      "expr": [
+        "add",
+        [
+          "div",
+          [
+            "mul",
+            -4,
+            "d"
+          ],
+          3
+        ],
+        [
+          "sub",
+          [
+            "mod",
+            [
+              "add",
+              "d",
+              0
+            ],
+            4
+          ],
+          2
+        ]
+      ],
+      "arm": "random"
+    },
+    {
+      "name": "random-2",
+      "expr": [
+        "add",
+        [
+          "div",
+          [
+            "mul",
+            -1,
+            "d"
+          ],
+          4
+        ],
+        [
+          "sub",
+          [
+            "mod",
+            [
+              "add",
+              "d",
+              -1
+            ],
+            2
+          ],
+          1
+        ]
+      ],
+      "arm": "random"
+    },
+    {
+      "name": "random-3",
+      "expr": [
+        "add",
+        [
+          "div",
+          [
+            "mul",
+            -4,
+            "d"
+          ],
+          2
+        ],
+        [
+          "sub",
+          [
+            "mod",
+            [
+              "add",
+              "d",
+              0
+            ],
+            5
+          ],
+          2
+        ]
+      ],
+      "arm": "random"
+    },
+    {
+      "name": "random-4",
+      "expr": [
+        "add",
+        [
+          "div",
+          [
+            "mul",
+            -3,
+            "d"
+          ],
+          2
+        ],
+        [
+          "sub",
+          [
+            "mod",
+            [
+              "add",
+              "d",
+              -2
+            ],
+            3
+          ],
+          1
+        ]
+      ],
+      "arm": "random"
+    },
+    {
+      "name": "random-5",
+      "expr": [
+        "add",
+        [
+          "div",
+          [
+            "mul",
+            -4,
+            "d"
+          ],
+          3
+        ],
+        [
+          "sub",
+          [
+            "mod",
+            [
+              "add",
+              "d",
+              2
+            ],
+            3
+          ],
+          1
+        ]
+      ],
+      "arm": "random"
+    },
+    {
+      "name": "model-0-mod-slope-cube",
+      "expr": [
+        "add",
+        [
+          "mul",
+          3,
+          [
+            "div",
+            "d",
+            4
+          ]
+        ],
+        [
+          "mod",
+          [
+            "mul",
+            "d",
+            "d"
+          ],
+          7
+        ]
+      ],
+      "arm": "model",
+      "reason": "Combines a coarse staircase slope (d//4 scaled by 3) with a quadratic modular perturbation (d^2 mod 7). This structure forces multiple distinct d values to map to the same y via the periodic modulo term while maintaining a global trend, thereby increasing projection collisions in the (X-Y, Y) plane and creating the complementary entropy imbalance required for nondegenerate free energy."
+    },
+    {
+      "name": "model-1-mod-sawtooth-c3c",
+      "expr": [
+        "add",
+        [
+          "mul",
+          3,
+          [
+            "mod",
+            "d",
+            8
+          ]
+        ],
+        [
+          "div",
+          [
+            "sub",
+            "d",
+            [
+              "mod",
+              "d",
+              8
+            ]
+          ],
+          8
+        ]
+      ],
+      "arm": "model",
+      "reason": "Previous 'staircase' and 'periodic' attempts yielded degenerate free energy (F\u22480), indicating insufficient structural complexity to generate complementary entropy imbalances. This proposal constructs a 'modulated sawtooth' function: a coarse linear trend (slope 1/8) combined with a high-frequency sawtooth oscillation (amplitude 3, period 8). This specific combination of slopes (1/8 and 3) and the modulo operation is designed to force numerous projection collisions in the L=(X,Y,X+Y,X+2Y) views while maintaining injectivity on X-Y. The non-linear interaction between the divisor 8 and the multiplier 3 breaks the simple symmetries of previous failed candidates, aiming for a non-degenerate F>0 by creating a probability law with distinct local clusters rather than a uniform or simple linear dis"
+    },
+    {
+      "name": "model-2-mod-parity-sawtooth-c3c",
+      "expr": [
+        "add",
+        [
+          "mul",
+          3,
+          [
+            "div",
+            [
+              "mod",
+              [
+                "add",
+                "d",
+                [
+                  "mul",
+                  2,
+                  [
+                    "abs",
+                    [
+                      "mod",
+                      "d",
+                      7
+                    ]
+                  ]
+                ]
+              ],
+              14
+            ],
+            2
+          ]
+        ],
+        [
+          "mod",
+          [
+            "add",
+            "d",
+            [
+              "mul",
+              2,
+              [
+                "abs",
+                [
+                  "mod",
+                  "d",
+                  7
+                ]
+              ]
+            ]
+          ],
+          2
+        ]
+      ],
+      "arm": "model",
+      "reason": "Constructs a C3c law by combining a coarse sawtooth (via mod 14 and div 2) scaled by 3 with a fine parity correction (mod 2). The inner term abs(mod(d,7)) introduces a non-monotonic V-shape every 7 units, breaking the simple linearity of previous staircase attempts. This structure aims to create projection collisions in X-Y while maintaining distinct values in the complementary projections (X, Y, X+Y, X+2Y) to maximize the free energy objective F > 0, avoiding the degenerate F\u22480 results of purely periodic or linear programs."
+    },
+    {
+      "name": "model-3-mod-parity-sawtooth-c3c",
+      "expr": [
+        "add",
+        [
+          "mul",
+          3,
+          [
+            "div",
+            [
+              "mod",
+              [
+                "add",
+                "d",
+                [
+                  "mul",
+                  2,
+                  "r"
+                ]
+              ],
+              16
+            ],
+            2
+          ]
+        ],
+        [
+          "div",
+          [
+            "mod",
+            [
+              "add",
+              "d",
+              [
+                "mul",
+                2,
+                "r"
+              ]
+            ],
+            8
+          ],
+          2
+        ]
+      ],
+      "arm": "model",
+      "reason": "Proposes a construction combining modulo-16 and modulo-8 periodicities scaled by factors of 3 and 1 respectively, then summed. This creates a composite sawtooth waveform with specific symmetries intended to induce projection collisions in the C3c law while maintaining non-degenerate entropy balance, distinct from previous single-modulus or simple parity approaches."
+    },
+    {
+      "name": "model-5-mod-cubic-resonance-c3c",
+      "expr": [
+        "add",
+        [
+          "mul",
+          3,
+          [
+            "mod",
+            [
+              "add",
+              "d",
+              [
+                "mul",
+                2,
+                "r"
+              ]
+            ],
+            7
+          ]
+        ],
+        [
+          "div",
+          [
+            "sub",
+            "d",
+            [
+              "mod",
+              "d",
+              5
+            ]
+          ],
+          5
+        ]
+      ],
+      "arm": "model",
+      "reason": "Previous attempts using simple parity, sawtooth, or single-slope periodicity yielded degenerate free energy (F\u22480), indicating insufficient structural complexity to generate complementary entropy imbalances. This proposal introduces a 'cubic-resonance' structure by combining two distinct modular bases (7 and 5) with different scaling factors. The term mod(d+2r, 7) creates a\u659c\u7387-dependent periodic shift that breaks the simple linearity of previous models, while the div term introduces a coarse staircase effect based on d mod 5. The interaction between these two incommensurate periods (7 and 5) over the domain d\u2208[-24,24] is designed to force non-trivial projection collisions in the (X-Y, Y) plane, specifically targeting the C3c constraint by creating clusters of points that share differences bu"
+    }
+  ],
+  "sha256": "6cfedc93170a6c1c097113f5ee6ab5332651c2dd8969468e157d04714b3a8f88",
+  "held_out_seeds": [
+    202,
+    303
+  ],
+  "freeze_timestamp": "2026-11-15T04:16:35.743481+00:00"
+}

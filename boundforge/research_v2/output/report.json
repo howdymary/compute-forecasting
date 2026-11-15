@@ -1,0 +1,179 @@
+{
+  "date": "2026-11-15T04:18:43.592094+00:00",
+  "source_sha": "026c7c89f542338d2185e4e1335bc161ef2d0b59",
+  "run_id": "43675810337",
+  "strict_improvement": false,
+  "baseline": {
+    "valid": true,
+    "claim_certified": true,
+    "ratio_interval_arb": [
+      "[1.6748942113071162287645651731628015389078200425658263583947935815 +/- 4.16e-65]",
+      "[1.6748942113071162287645651731628015389078200425658263583947935815 +/- 4.16e-65]"
+    ],
+    "entropies": {
+      "x-y": "[1.901440925560701110457490379654798113503036871413343472 +/- 1.11e-55]",
+      "x": "[1.135260312397153687844464347351506125953372518247593571 +/- 3.02e-56]",
+      "y": "[1.135260312397153687844464347351506125953372518247593571 +/- 3.02e-56]",
+      "x+y": "[1.135260312397153687844464347351506125953372518247593571 +/- 3.02e-56]",
+      "x+2y": "[1.135260312397153687844464347351506125953372518247593571 +/- 3.02e-56]"
+    }
+  },
+  "best": {
+    "valid": true,
+    "claim_certified": true,
+    "ratio_interval_arb": [
+      "[1.6748942113071162287645651731628015389078200425658263583947935815 +/- 4.16e-65]",
+      "[1.6748942113071162287645651731628015389078200425658263583947935815 +/- 4.16e-65]"
+    ],
+    "entropies": {
+      "x-y": "[1.901440925560701110457490379654798113503036871413343472 +/- 1.11e-55]",
+      "x": "[1.135260312397153687844464347351506125953372518247593571 +/- 3.02e-56]",
+      "y": "[1.135260312397153687844464347351506125953372518247593571 +/- 3.02e-56]",
+      "x+y": "[1.135260312397153687844464347351506125953372518247593571 +/- 3.02e-56]",
+      "x+2y": "[1.135260312397153687844464347351506125953372518247593571 +/- 3.02e-56]"
+    }
+  },
+  "independent_interval": [
+    "1.674894211307116228764565173162801538907820042565826358394793581",
+    "1.674894211307116228764565173162801538907820042565826358394793582"
+  ],
+  "arms": {
+    "structured": {
+      "cases": 18,
+      "nondegenerate": 4,
+      "positive_oracles_over_1e-9": 0,
+      "best_free_energy": -9.51450349775899e-10,
+      "function_evaluations": 5772,
+      "worker_seconds": 0.48003920299999736,
+      "per_seed": {
+        "101": -0.002278436323155386,
+        "202": -0.0011943810656058762,
+        "303": -1.3234345352941546e-05
+      },
+      "best_nondegenerate_free_energy": -1.3234345352941546e-05,
+      "distinct_supports": 6
+    },
+    "random": {
+      "cases": 18,
+      "nondegenerate": 0,
+      "positive_oracles_over_1e-9": 0,
+      "best_free_energy": -2.358783244419335e-09,
+      "function_evaluations": 2197,
+      "worker_seconds": 0.22515226100001673,
+      "per_seed": {
+        "101": null,
+        "202": null,
+        "303": null
+      },
+      "best_nondegenerate_free_energy": null,
+      "distinct_supports": 5
+    },
+    "model": {
+      "cases": 15,
+      "nondegenerate": 0,
+      "positive_oracles_over_1e-9": 0,
+      "best_free_energy": -1.7609365285821959e-09,
+      "function_evaluations": 1759,
+      "worker_seconds": 0.1698838820000077,
+      "per_seed": {
+        "101": null,
+        "202": null,
+        "303": null
+      },
+      "best_nondegenerate_free_energy": null,
+      "distinct_supports": 5
+    },
+    "basin-mutation": {
+      "cases": 36,
+      "nondegenerate": 3,
+      "positive_oracles_over_1e-9": 0,
+      "best_free_energy": -2.0734520692981716e-09,
+      "function_evaluations": 6938,
+      "worker_seconds": 0.6087098329998923,
+      "per_seed": {
+        "101": -0.0007607176218344947,
+        "202": -0.0011674041500226995,
+        "303": -0.0012925674174153468
+      },
+      "best_nondegenerate_free_energy": -0.0007607176218344947,
+      "distinct_supports": 36
+    }
+  },
+  "model_proposals_budget": 6,
+  "model_programs_valid": 5,
+  "model_inference_calls": 6,
+  "training": "not performed: this pilot does not supply a diverse independent training/evaluation corpus",
+  "claims": "Descriptive three-start diagnostic on one C3c representation; no universal bound, optimality, model advantage or publication acceptance follows.",
+  "providers": {
+    "exa": {
+      "initial_cap": 119.52,
+      "units": "USD prepaid",
+      "enabled": true,
+      "operational_cap": 8,
+      "reserved_or_actual": 0.31
+    },
+    "past": {
+      "initial_cap": 699443,
+      "units": "credits",
+      "enabled": true,
+      "operational_cap": 400,
+      "reserved_or_actual": 78.0
+    },
+    "tinker": {
+      "initial_cap": 281.71,
+      "units": "USD prepaid",
+      "enabled": true,
+      "operational_cap": 20,
+      "reserved_or_actual": 2.4
+    },
+    "modal": {
+      "initial_cap": 249.24,
+      "units": "USD compute credit",
+      "enabled": true,
+      "operational_cap": 60,
+      "reserved_or_actual": 37.05
+    }
+  },
+  "protected_sha256": {
+    "verify.py": "3c5cd73bf3d50eea098d3253e46e9e5ea9812ec3c2fa2711ea16b349f586ef30",
+    "verify_independent.py": "49e1cbbc9d287a227d8f790b2f7a678972a88f53d3c2e88592f6c1424dda0774"
+  },
+  "elapsed_seconds": 270.01062733599997,
+  "publication_exact_check": {
+    "valid": true,
+    "claim_certified": true,
+    "ratio_interval_arb": [
+      "[1.6748942113071162287645651731628015389078200425658263583947935815 +/- 4.16e-65]",
+      "[1.6748942113071162287645651731628015389078200425658263583947935815 +/- 4.16e-65]"
+    ],
+    "entropies": {
+      "x-y": "[1.901440925560701110457490379654798113503036871413343472 +/- 1.11e-55]",
+      "x": "[1.135260312397153687844464347351506125953372518247593571 +/- 3.02e-56]",
+      "y": "[1.135260312397153687844464347351506125953372518247593571 +/- 3.02e-56]",
+      "x+y": "[1.135260312397153687844464347351506125953372518247593571 +/- 3.02e-56]",
+      "x+2y": "[1.135260312397153687844464347351506125953372518247593571 +/- 3.02e-56]"
+    }
+  },
+  "publication_independent_interval": [
+    "1.674894211307116228764565173162801538907820042565826358394793581",
+    "1.674894211307116228764565173162801538907820042565826358394793582"
+  ],
+  "publication_provenance": {
+    "run_id": "43675810337",
+    "source_sha": "026c7c89f542338d2185e4e1335bc161ef2d0b59",
+    "artifact_sha256": "ac1382253ecf3fde2179317f9a5fe58436caa1580f3248ea10cd5a91ddab453d",
+    "url": "https://github.com/howdymary/compute-forecasting/actions/runs/43675810337"
+  },
+  "usage": {
+    "campaign_exa_response_usd": 0.07800000000000001,
+    "tinker_token_estimate_usd": 0.0460587,
+    "past_estimated_credits": 9,
+    "unreconciled_or_held_by_provider": {
+      "exa": 0,
+      "modal": 15.050000000000024,
+      "tinker": 1.2,
+      "past": 0
+    },
+    "note": "Preserved prior allowances are separate. Gross token estimates and held allowances are not invoices. No purchases/upgrades/reloads."
+  }
+}
