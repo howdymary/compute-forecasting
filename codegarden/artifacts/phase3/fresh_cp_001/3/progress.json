@@ -1,0 +1,250 @@
+{
+  "source_sha": "0dc19cdd805a485dd9a78944618bd00997d290a5",
+  "case": 3,
+  "pair": 1,
+  "condition": "conditional_K8_overlap_cuts",
+  "seed": 1518002,
+  "starting_source_guided_case": 5,
+  "source225_sha256": "8b4b50f187f06cbecd53ee6c8338f516b54063a83a9d463d0954f08fdc6f766b",
+  "normalization": [],
+  "hint_sha256": "8b4b50f187f06cbecd53ee6c8338f516b54063a83a9d463d0954f08fdc6f766b",
+  "hint_verification": {
+    "accepted": true,
+    "cardinality": 225,
+    "reports": [
+      {
+        "cardinality": 225,
+        "distinct_descendants": 6354,
+        "length": 16,
+        "method": "distinct_string_two_deletions",
+        "valid": true,
+        "witness_sha256": "8b4b50f187f06cbecd53ee6c8338f516b54063a83a9d463d0954f08fdc6f766b"
+      },
+      {
+        "cardinality": 225,
+        "largest_pairwise_lcs": 13,
+        "length": 16,
+        "method": "independent_dynamic_programming_lcs",
+        "pairs_checked": 25200,
+        "valid": true,
+        "witness_sha256": "8b4b50f187f06cbecd53ee6c8338f516b54063a83a9d463d0954f08fdc6f766b"
+      }
+    ]
+  },
+  "fixed_count": 64,
+  "fixed_sha256": "3eada0977aec6b3935dbcac892c1077ab703784c60db3653553fe9973459e1a9",
+  "fixed_verification": {
+    "accepted": true,
+    "cardinality": 64,
+    "reports": [
+      {
+        "cardinality": 64,
+        "distinct_descendants": 1672,
+        "length": 16,
+        "method": "distinct_string_two_deletions",
+        "valid": true,
+        "witness_sha256": "3eada0977aec6b3935dbcac892c1077ab703784c60db3653553fe9973459e1a9"
+      },
+      {
+        "cardinality": 64,
+        "largest_pairwise_lcs": 13,
+        "length": 16,
+        "method": "independent_dynamic_programming_lcs",
+        "pairs_checked": 2016,
+        "valid": true,
+        "witness_sha256": "3eada0977aec6b3935dbcac892c1077ab703784c60db3653553fe9973459e1a9"
+      }
+    ]
+  },
+  "pool_count": 7543,
+  "pool_sha256": "e15cc675c44266ff27fbd671fb1010d412aa5a92631788228c4c7f58676dd1e0",
+  "pool_restriction": "All65536words compatible with this fixed64, no candidate subsampling",
+  "incidences": 252108,
+  "model_sha256": "2a3af2e4662da76bd2aa15be4c99c8f01d12e2e8af0ee6348d75cecd6744349f",
+  "model_text_sha256": "a837df9db34ac3a56398127b709ffd0667b04e086d1e772b1c7446488a20c26b",
+  "model_gzip_sha256": "23562aa81205e41e4e4a0abf5b1f3de9d70e7bec9761f76a3fb43fc3138bc5c0",
+  "cuts_source_sha256": "b4083cd24a2f3ddf6b1034910f60735dfbdfa07067042b6ae678f8986444df43",
+  "conditional_cuts": [
+    {
+      "cut": 0,
+      "fixed_overlap": 2,
+      "eligible_variable_words": 30,
+      "limit": 216
+    },
+    {
+      "cut": 1,
+      "fixed_overlap": 2,
+      "eligible_variable_words": 28,
+      "limit": 216
+    },
+    {
+      "cut": 2,
+      "fixed_overlap": 2,
+      "eligible_variable_words": 22,
+      "limit": 216
+    },
+    {
+      "cut": 3,
+      "fixed_overlap": 45,
+      "eligible_variable_words": 143,
+      "limit": 216
+    },
+    {
+      "cut": 4,
+      "fixed_overlap": 1,
+      "eligible_variable_words": 31,
+      "limit": 216
+    },
+    {
+      "cut": 5,
+      "fixed_overlap": 1,
+      "eligible_variable_words": 27,
+      "limit": 216
+    },
+    {
+      "cut": 6,
+      "fixed_overlap": 2,
+      "eligible_variable_words": 21,
+      "limit": 216
+    },
+    {
+      "cut": 7,
+      "fixed_overlap": 61,
+      "eligible_variable_words": 161,
+      "limit": 216
+    },
+    {
+      "cut": 8,
+      "fixed_overlap": 64,
+      "eligible_variable_words": 161,
+      "limit": 216
+    },
+    {
+      "cut": 9,
+      "fixed_overlap": 4,
+      "eligible_variable_words": 21,
+      "limit": 216
+    },
+    {
+      "cut": 10,
+      "fixed_overlap": 2,
+      "eligible_variable_words": 27,
+      "limit": 216
+    },
+    {
+      "cut": 11,
+      "fixed_overlap": 2,
+      "eligible_variable_words": 30,
+      "limit": 216
+    },
+    {
+      "cut": 12,
+      "fixed_overlap": 49,
+      "eligible_variable_words": 143,
+      "limit": 216
+    },
+    {
+      "cut": 13,
+      "fixed_overlap": 4,
+      "eligible_variable_words": 21,
+      "limit": 216
+    },
+    {
+      "cut": 14,
+      "fixed_overlap": 3,
+      "eligible_variable_words": 29,
+      "limit": 216
+    },
+    {
+      "cut": 15,
+      "fixed_overlap": 3,
+      "eligible_variable_words": 29,
+      "limit": 216
+    },
+    {
+      "cut": 16,
+      "fixed_overlap": 3,
+      "eligible_variable_words": 22,
+      "limit": 216
+    },
+    {
+      "cut": 17,
+      "fixed_overlap": 63,
+      "eligible_variable_words": 161,
+      "limit": 216
+    },
+    {
+      "cut": 18,
+      "fixed_overlap": 2,
+      "eligible_variable_words": 31,
+      "limit": 216
+    },
+    {
+      "cut": 19,
+      "fixed_overlap": 2,
+      "eligible_variable_words": 27,
+      "limit": 216
+    },
+    {
+      "cut": 20,
+      "fixed_overlap": 3,
+      "eligible_variable_words": 21,
+      "limit": 216
+    },
+    {
+      "cut": 21,
+      "fixed_overlap": 62,
+      "eligible_variable_words": 161,
+      "limit": 216
+    },
+    {
+      "cut": 22,
+      "fixed_overlap": 2,
+      "eligible_variable_words": 31,
+      "limit": 216
+    },
+    {
+      "cut": 23,
+      "fixed_overlap": 2,
+      "eligible_variable_words": 27,
+      "limit": 216
+    }
+  ],
+  "known_exact226_exclusions": 0,
+  "solver_wall_limit_seconds": 150,
+  "solver_workers": 2,
+  "solutions": [
+    {
+      "path": "candidate_0.txt",
+      "verification": {
+        "accepted": true,
+        "cardinality": 225,
+        "reports": [
+          {
+            "cardinality": 225,
+            "distinct_descendants": 6354,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "8b4b50f187f06cbecd53ee6c8338f516b54063a83a9d463d0954f08fdc6f766b"
+          },
+          {
+            "cardinality": 225,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25200,
+            "valid": true,
+            "witness_sha256": "8b4b50f187f06cbecd53ee6c8338f516b54063a83a9d463d0954f08fdc6f766b"
+          }
+        ]
+      },
+      "solver_seconds": 5.505443533,
+      "conditional_cut_violations": []
+    }
+  ],
+  "best_seed_verified": 225,
+  "solver_best_verified": 225,
+  "retained_global_best_verified": 226,
+  "proof_artifact": null
+}
