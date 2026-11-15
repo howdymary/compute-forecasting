@@ -1,0 +1,72 @@
+{
+  "source_sha": "b2d102e0b29a2b7aaf32e151a9e0328bccdb7a2e",
+  "starting_verification": {
+    "accepted": true,
+    "cardinality": 226,
+    "reports": [
+      {
+        "cardinality": 226,
+        "distinct_descendants": 6410,
+        "length": 16,
+        "method": "distinct_string_two_deletions",
+        "valid": true,
+        "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+      },
+      {
+        "cardinality": 226,
+        "largest_pairwise_lcs": 13,
+        "length": 16,
+        "method": "independent_dynamic_programming_lcs",
+        "pairs_checked": 25425,
+        "valid": true,
+        "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+      }
+    ]
+  },
+  "starting_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa",
+  "known_codes": 152,
+  "known_codes_sha256": "b47de6ecfa277c3563e06f4e67d50d3948b286b2d53b81a0b9a29b00235b0ced",
+  "pool_size": 56840,
+  "pool_sha256": "82355b3364659526b9291f9a54f8f70c35bf101eac804467c18176ce31c05504",
+  "ordered_pool_sha256": "83259702182ca2f0a41fbb318cb8d7770ddbcb9124c316a70a898655a9f53d38",
+  "native_profile": {
+    "found": false,
+    "complete": true,
+    "cpu_seconds": 0.915059,
+    "nodes": 0,
+    "closed_blocker_sets": 0,
+    "cache_hits": 0,
+    "retained_closed_keys": 0,
+    "cache_evictions": 0,
+    "k": 9,
+    "n": 16,
+    "memory_limited": false,
+    "budget_limited": false,
+    "neutral_cap_reached": false,
+    "root_begin": 0,
+    "root_end": 0,
+    "colored_saturated_repair": true,
+    "neutral_or_improving": true,
+    "known_goal_codes": 152,
+    "filtered_known_goals": 0,
+    "root_shard": 0,
+    "root_shards": 8,
+    "completed_roots": 0,
+    "active_root": -1,
+    "last_finished_root": -1,
+    "learned_groups": 0,
+    "learned_prunes": 0,
+    "candidate_count": 56840,
+    "profiled_bitset_bytes": 520769088,
+    "removed": [],
+    "added": [],
+    "scope": "All outside words with at most k incumbent blockers. With known-goal filtering, completion concerns the enumerated connected bundles and saturated repair pools only: the strict-gain connected-component lemma does not imply completeness for novelty. Disconnected combinations can remain unsearched. Known arrays are search-goal exclusions, not changes to code validity. Complete is false on every cap."
+  },
+  "prior_neutral8_report_sha256": "e7ad9a4f9df6fbe45ccc12a8508e0294b15cdef7ec41afd11bde35fda1b068bb",
+  "prior_neutral8_source_sha": "9224f55aa15d730fd0022d4d7e9a5616498af7df",
+  "kernel_sha256": "85f613cee63bc8f601ae5e8f0f58d729f8d23323bc187fd5d44d13c6af382dad",
+  "shards": 8,
+  "native_cpu_per_shard": 300,
+  "hypothesis": "The previous completed radius8neutral root found no outside226basin. Radius9neutral-or-improving proposals may reach a different226code even where strict227augmentations are closed. Known152oriented codes are excluded as exact arrays only, never excluding227supersets.",
+  "scope": "Connected outside-blocker bundles plus saturated repair pools, not all disconnected neutral exchanges. Coverage has no formal absence certificate. All valid new226codes retained; primary target remains227."
+}
