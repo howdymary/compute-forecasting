@@ -1,0 +1,25 @@
+{
+  "query": "maximum independent set iterated local search plateau neutral solutions recombination solution diversity set packing",
+  "tool": "Exa web_search_exa",
+  "sources": [
+    {
+      "url": "https://arxiv.org/pdf/1502.01687",
+      "title": "Graph Partitioning for Independent Sets",
+      "authors": "Sebastian Lamm, Peter Sanders, Christian Schulz"
+    },
+    {
+      "url": "https://publikationen.bibliothek.kit.edu/1000048276/3609658",
+      "title": "Evolutionary Algorithms For Independent Sets"
+    }
+  ],
+  "extracted_method": "Plateau moves and population diversity can expose additional opportunities without immediately improving cardinality.",
+  "source_inspection": {
+    "revision": "2e4b3861b8063f05e8520434b97ce59e21ca49e7",
+    "file": "lib/mis/ils/ils.cpp",
+    "finding": "The final best_solution is copied only for strict cardinality improvements; equal-cardinality states need separate observation."
+  },
+  "hypothesis": "The two previously identical final226 exports may hide neutral states. Archive bounded distinct states and independently verify them before testing strict exact repairs.",
+  "experiment": "archive_001",
+  "status": "implementation ready; no result claimed",
+  "attribution": "Adaptation of published plateau/diversification ideas, not a novel mathematical construction claim."
+}
