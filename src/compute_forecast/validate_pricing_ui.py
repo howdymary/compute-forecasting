@@ -53,6 +53,7 @@ def main():
         assert page.get_by_text("Your dollar anchor is an assumption",exact=False).count()==1
         selected=page.locator("#series-select").input_value()
         page.get_by_role("button",name="Research",exact=True).click()
+        page.get_by_role("button",name="Frozen v1",exact=True).click()
         page.get_by_role("heading",name="Did training improve experiment selection?",exact=True).wait_for()
         assert page.get_by_text("2.68% worse",exact=True).count()==1
         page.get_by_role("button",name="Representations",exact=True).click()

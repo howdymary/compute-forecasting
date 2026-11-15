@@ -122,6 +122,28 @@ def web():
         if raw is None:return JSONResponse({"error":"Verified pricing adapter is not yet published"},status_code=503,headers=headers)
         validate_pricing(json.loads(raw))
         return Response(raw,media_type="application/json",headers={**headers,"ETag":hashlib.sha256(raw).hexdigest()})
+
+    @api.get("/api/research-assets")
+    def research_assets():
+        from .history_contract_v3 import validate_assets
+        with lock:
+            public.reload();file=Path("/public/phase3/explorer.json")
+            if not file.is_file():return JSONResponse({"error":"Verified historical context and traces are not yet published"},status_code=503,headers=headers)
+            raw=file.read_bytes()
+        try:validate_assets(json.loads(raw))
+        except (ValueError,KeyError,TypeError,json.JSONDecodeError):
+            return JSONResponse({"error":"Research assets failed validation"},status_code=503,headers=headers)
+        return Response(raw,media_type="application/json",headers={**headers,"ETag":hashlib.sha256(raw).hexdigest()})
+    @api.get("/api/chronos-control")
+    def chronos_control():
+        with lock:
+            public.reload();file=Path("/public/phase3/chronos-control.json")
+            if not file.is_file():return JSONResponse({"status":"pending","metrics":None},headers=headers)
+            raw=file.read_bytes()
+        payload=json.loads(raw)
+        if payload["scope"]["cells"]!=12 or payload["official_export_changed"] or payload["selector_registry_changed"] or payload["future_competition_truth_loaded"]:return JSONResponse({"error":"Comparator boundary validation failed"},status_code=503,headers=headers)
+        return Response(raw,media_type="application/json",headers={**headers,"ETag":hashlib.sha256(raw).hexdigest()})
+
     @api.get("/health")
     def health():
         raw=read("results.json");r=json.loads(raw) if raw else None
