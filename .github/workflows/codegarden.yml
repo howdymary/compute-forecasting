@@ -1,18 +1,18 @@
-name: CodeGarden pinned KaMIS comparison
+name: CodeGarden saturating-plateau KaMIS experiment
 on:
   push:
-    branches: [codegarden-kamis-003]
+    branches: [codegarden-kamis-004]
     paths: [.github/workflows/codegarden.yml]
   workflow_dispatch:
 permissions:
   contents: write
 concurrency:
-  group: codegarden-free-kamis-003
+  group: codegarden-free-kamis-004
   cancel-in-progress: false
 env:
   PYTHONDONTWRITEBYTECODE: '1'
   SOURCE_SHA: ${{ github.sha }}
-  CODEGARDEN_BATCH: kamis_001
+  CODEGARDEN_BATCH: kamis_escape_001
   OMP_NUM_THREADS: '1'
 jobs:
   build:
@@ -39,10 +39,11 @@ jobs:
           with p.open("a") as stream:
               stream.write('\nadd_executable(codegarden_warm ${CMAKE_SOURCE_DIR}/../../phase3/kamis_warm.cpp $<TARGET_OBJECTS:libkaffpa> $<TARGET_OBJECTS:libfiles>)\ntarget_link_libraries(codegarden_warm ${OpenMP_CXX_LIBRARIES})\n')
           PY
+          python -B -u codegarden/phase3/patch_kamis.py
           cmake -S codegarden/vendor/KaMIS -B codegarden/.build/kamis-upstream -DCMAKE_BUILD_TYPE=Release
           cmake --build codegarden/.build/kamis-upstream --target redumis codegarden_warm -j 2
-          git -C codegarden/vendor/KaMIS submodule status --recursive > codegarden/artifacts/phase3/kamis_001/submodule_revisions.txt
-          sha256sum codegarden/.build/kamis-upstream/redumis codegarden/.build/kamis-upstream/codegarden_warm > codegarden/artifacts/phase3/kamis_001/binary_hashes.txt
+          git -C codegarden/vendor/KaMIS submodule status --recursive > codegarden/artifacts/phase3/kamis_escape_001/submodule_revisions.txt
+          sha256sum codegarden/.build/kamis-upstream/redumis codegarden/.build/kamis-upstream/codegarden_warm > codegarden/artifacts/phase3/kamis_escape_001/binary_hashes.txt
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -55,7 +56,7 @@ jobs:
         if: always()
         with:
           name: codegarden-kamis-preflight
-          path: codegarden/artifacts/phase3/kamis_001/
+          path: codegarden/artifacts/phase3/kamis_escape_001/
   probes:
     needs: build
     runs-on: ubuntu-latest
@@ -64,7 +65,7 @@ jobs:
       fail-fast: false
       max-parallel: 2
       matrix:
-        mode: [warm, scratch]
+        mode: [root, distant]
     steps:
       - name: Fetch immutable source
         env:
@@ -77,16 +78,16 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: codegarden-kamis-preflight
-          path: codegarden/artifacts/phase3/kamis_001/
+          path: codegarden/artifacts/phase3/kamis_escape_001/
       - name: Apply executable permissions and run bounded solver
         run: |
           chmod +x codegarden/.build/graph codegarden/.build/kamis-upstream/redumis codegarden/.build/kamis-upstream/codegarden_warm
-          python -B -u codegarden/phase3/kamis.py --mode ${{ matrix.mode }}
+          python -B -u codegarden/phase3/kamis_escape.py --mode ${{ matrix.mode }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: codegarden-kamis-${{ matrix.mode }}
-          path: codegarden/artifacts/phase3/kamis_001/
+          path: codegarden/artifacts/phase3/kamis_escape_001/
   collect:
     needs: [build, probes]
     if: always()
@@ -101,13 +102,13 @@ jobs:
         with:
           pattern: codegarden-kamis-*
           merge-multiple: true
-          path: codegarden/artifacts/phase3/kamis_001/
+          path: codegarden/artifacts/phase3/kamis_escape_001/
       - name: Remove ephemeral solver binaries from collection then publish evidence
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python -B -u codegarden/phase3/publish_kamis.py
+        run: python -B -u codegarden/phase3/publish_kamis_escape.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: codegarden-kamis-collected
-          path: codegarden/artifacts/phase3/kamis_001/
+          path: codegarden/artifacts/phase3/kamis_escape_001/
