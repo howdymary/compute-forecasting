@@ -1,10 +1,10 @@
-# CodeGarden research status — 2026-11-15T15:43:00Z
+# CodeGarden research status — 2026-11-15T16:43:00Z
 
 **Objective open. Best found and independently verified:226, reproduced from kgrey’s arena construction. No227 witness or new global record is claimed.**
 
 ## Current target and acceptance
 
-The actual remote official preflight at15:41:44UTC reproduced arena solution2778 at226. Witness SHA-256: `417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa`. Both unchanged protected verifiers accept6410 distinct14-bit descendants and25425 pairwise LCS checks, maximum13. The official verifier hash remains `563cc3bc7d39bdc261dd6cff08eb634c03e149d59df8f0c7ceff5b3f68730325`. See the [official arena](https://einsteinarena.com/problems/two-deletion-code-16).
+The actual remote official preflight at16:36:11UTC reproduced arena solution2778 at226. Witness SHA-256: `417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa`. Both unchanged protected verifiers accept6410 distinct14-bit descendants and25425 pairwise LCS checks, maximum13. The official verifier hash remains `563cc3bc7d39bdc261dd6cff08eb634c03e149d59df8f0c7ceff5b3f68730325`. See the [official arena](https://einsteinarena.com/problems/two-deletion-code-16).
 
 A separate fresh verifier-only runner rechecked the226 witness and six distinct225 checkpoints from immutable source. It ran no search proposer. Its [report](../artifacts/phase3/isolated_acceptance_001/report.json) records frozen checker hashes. This fresh acceptance path is required before promoting a future claimed227 result.
 
@@ -25,12 +25,21 @@ The [machine-readable report](phase3_progress.json) retains original source comm
 
 Large raw per-query logs remain at original immutable CodeGarden commits instead of being copied repeatedly. The [log index](../artifacts/phase3/immutable_query_log_index.json) pins exact paths, Git blob hashes, sizes and links. Reports, plain witnesses and verification outputs are consolidated here. No original log was removed.
 
-## Active hypotheses
+## Latest completed cycle
 
-1. [Larger adaptive repair](https://github.com/howdymary/compute-forecasting/actions/runs/43729312828): fixed release32 versus adaptive8/16/32/64/128. Both use uniform pair costs and600 nativeCPU-seconds, with2048 candidate gates and250ms soft query budgets. Observed completed workers still have invalid minimum energy2. Timeouts and gates remain open.
-2. [Scoped-memory proposal guidance](https://github.com/howdymary/compute-forecasting/actions/runs/43731234570): all16 recorded near-solutions violate at least one completed union exclusion. The new paired experiment compares core-only proposals with64 symmetry-transferred union caps. The remote64-receipt provenance/coverage audit and both full-CLI smoke tests passed. Long-run results are pending.
+The guided/control comparison found28portfolio-new225orbits versus zero against the earlier402-orbit portfolio. These are four correlated projections from each of seven treated raw states; the eighth treated state ends at invalid energy3. Both conditions remain225. This is secondary diversity evidence only, not a record or a training result.
 
-The union caps are conditional proposal guidance: if a227 code must have at least8 words outside a particular union, it can select at most219 inside. Complement and reversal preserve deletion behavior. Neither exact repair nor either acceptance verifier enforces these optional caps. The unguided control remains. A valid candidate contradicting a cut must be accepted and investigated, not discarded. See [guidance design](conditional_union_guidance.md).
+Optional-pivot and neutral-swap searches found no new226or227. The neutral bank contains69independently checked225entries, including starting seeds and duplicates of earlier portfolio orbits. Full-portfolio recombination merged guided and neutral inputs into39new canonical225parents against the older codes in all relative complement/reversal orientations. Its74880explicit represented pairs completed without a larger code; some pairs repeat earlier experiments.
+
+The valid matching-completion search completed16bounded runs with no new226or227. Exact residual matching does not make the heuristic outside-set loop exhaustive.
+
+Seven representative new225families all closed strict exchanges through K7. Initial K8–12budgets timed out. A new saturated-repair coloring bound passes1200independent exhaustive graph fixtures,160blocker fixtures and an actual small deletion-code root-partition test. Same-input K7fixtures show1.16x/1.40x nativeCPU ratios, not a cardinality gain.
+
+## Current rank continuation
+
+The K8audit now covers338442canonical root occurrences across all seven source families, combining each old contiguous prefix and four disjoint suffix shards, with no gaps or duplicate completed roots. All closed without improvement. Six are unfiltered strict exchange neighborhoods; the seventh uses known226goal filtering and supports only that narrower encoded scope. These are source-pinned native computations, not formal independent absence certificates.
+
+[The K9continuation](https://github.com/howdymary/compute-forecasting/actions/runs/43737025742) checks that completed K8audit before launching. It resumes the separate old K9prefixes with four disjoint150nativeCPU shards per parent. Candidate orders and witnesses are checked literally. Five families are unfiltered; two retain explicit known226goal filtering. No result is inferred from a running job.
 
 ## Verification and negative memory limitations
 
@@ -50,4 +59,4 @@ All new experiment jobs use standard runners in this public GitHub repository. A
 
 ## Next decision
 
-Read completed paired outcomes before extending a policy. Promote only independently verified code size. If guidance changes surrogate energy but produces no valid improvement, report that distinction and test a different structural or repair hypothesis. Keep the objective open until an explicit accepted227-word witness or independently source-audited global record exists.
+Finish the K9coverage audit, then select a bounded continuation or a different structural repair from the actual result. Promote only independently verified code size. Keep the objective open until an explicit accepted227-word witness or independently source-audited global record exists.

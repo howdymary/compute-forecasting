@@ -1,0 +1,73 @@
+{
+  "source_sha": "54ad79cfe9a450e464808d752490e3d980c1c76d",
+  "case": 9,
+  "parent": 2,
+  "shard": 1,
+  "status": "SEARCHED",
+  "starting_sha256": "8b4b50f187f06cbecd53ee6c8338f516b54063a83a9d463d0954f08fdc6f766b",
+  "starting_verification": {
+    "accepted": true,
+    "cardinality": 225,
+    "reports": [
+      {
+        "cardinality": 225,
+        "distinct_descendants": 6354,
+        "length": 16,
+        "method": "distinct_string_two_deletions",
+        "valid": true,
+        "witness_sha256": "8b4b50f187f06cbecd53ee6c8338f516b54063a83a9d463d0954f08fdc6f766b"
+      },
+      {
+        "cardinality": 225,
+        "largest_pairwise_lcs": 13,
+        "length": 16,
+        "method": "independent_dynamic_programming_lcs",
+        "pairs_checked": 25200,
+        "valid": true,
+        "witness_sha256": "8b4b50f187f06cbecd53ee6c8338f516b54063a83a9d463d0954f08fdc6f766b"
+      }
+    ]
+  },
+  "pool_sha256": "7f838b1f36298205092119a99a3a5faf52d94653f4e7c7d5517df77ea79bef36",
+  "ordered_pool_sha256": "34e43f653a81777822cb1b41758a5371d06a514b06d56ab10c23dd497f08b13a",
+  "old_completed_prefix": 41188,
+  "expected_suffix_roots": 1819,
+  "new_completed_roots": 1819,
+  "native": {
+    "found": false,
+    "complete": true,
+    "cpu_seconds": 13.5847,
+    "nodes": 131440703,
+    "closed_blocker_sets": 3337874,
+    "cache_hits": 1402991,
+    "retained_closed_keys": 114334,
+    "cache_evictions": 3223540,
+    "k": 8,
+    "n": 16,
+    "memory_limited": false,
+    "budget_limited": false,
+    "neutral_cap_reached": false,
+    "root_begin": 41188,
+    "root_end": 48465,
+    "colored_saturated_repair": true,
+    "known_goal_codes": 0,
+    "filtered_known_goals": 0,
+    "root_shard": 1,
+    "root_shards": 4,
+    "completed_roots": 1819,
+    "active_root": -1,
+    "last_finished_root": 48461,
+    "learned_groups": 0,
+    "learned_prunes": 0,
+    "candidate_count": 48465,
+    "profiled_bitset_bytes": 393244336,
+    "removed": [],
+    "added": [],
+    "scope": "All outside words with at most k incumbent blockers. With known-goal filtering, completion concerns the enumerated connected bundles and saturated repair pools only: the strict-gain connected-component lemma does not imply completeness for novelty. Disconnected combinations can remain unsearched. Known arrays are search-goal exclusions, not changes to code validity. Complete is false on every cap."
+  },
+  "positive": null,
+  "wall_seconds": 13.920212793999994,
+  "best_method_independently_verified": 225,
+  "retained_global_best_verified": 226,
+  "scope": "Only this disjoint modulo4suffix of the source-pinned K8candidate order. Old completed prefix remains separately attributed. Time/node/memory caps are open. Filtered queries only concern enumerated connected goal bundles and saturated pools, not all novel codes. Positive acceptance unchanged; no formal global absence proof."
+}

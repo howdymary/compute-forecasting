@@ -1,0 +1,88 @@
+{
+  "source_sha": "0734215b962725633f47a49c161e37d7e98174e9",
+  "root_partition_tests": {
+    "actual_n4_instance": [
+      0,
+      15
+    ],
+    "pool": [
+      5,
+      6,
+      9,
+      10,
+      3,
+      12,
+      2,
+      4,
+      11,
+      13,
+      1,
+      7,
+      8,
+      14
+    ],
+    "old_complete": true,
+    "prefix_roots": 2,
+    "tail_shards": [
+      {
+        "shard": 0,
+        "completed_roots": 4,
+        "expected_roots": [
+          3,
+          6,
+          9,
+          12
+        ]
+      },
+      {
+        "shard": 1,
+        "completed_roots": 4,
+        "expected_roots": [
+          4,
+          7,
+          10,
+          13
+        ]
+      },
+      {
+        "shard": 2,
+        "completed_roots": 4,
+        "expected_roots": [
+          2,
+          5,
+          8,
+          11
+        ]
+      }
+    ],
+    "no_gaps_or_duplicate_roots": true
+  },
+  "rows": [
+    {
+      "case": 0,
+      "same_ordered_pool": true,
+      "pool_sha256": "2976325da8d3ea250ee1267bd754b81c9fb4a5af4d250c6207f8e25da09f9b7f",
+      "old_complete": true,
+      "new_complete": true,
+      "old_found": false,
+      "new_found": false,
+      "old_cpu": 6.94029,
+      "new_cpu": 5.98135,
+      "cpu_speed_ratio": 1.1603216665134126
+    },
+    {
+      "case": 3,
+      "same_ordered_pool": true,
+      "pool_sha256": "30475caf603d424e20e593d2870720ec3e0ca054d7c1d9c69c79a0d28af6b141",
+      "old_complete": true,
+      "new_complete": true,
+      "old_found": false,
+      "new_found": false,
+      "old_cpu": 10.1864,
+      "new_cpu": 7.25964,
+      "cpu_speed_ratio": 1.4031549773817986
+    }
+  ],
+  "verified_completion_contradictions": [],
+  "scope": "Two same-input known-closed K7fixtures with30nativeCPU caps per kernel; runtime ratio only when both complete. Changing inner closure traversal preserves candidate universe/root order. Native exhaustive algorithm tests and independent positives, not formal global absence proof."
+}

@@ -1,0 +1,143 @@
+{
+  "pivot_is_forced": false,
+  "pool_below_target": 0,
+  "root_only_queries": 2985,
+  "candidate_pool_min": 39,
+  "candidate_pool_max": 197,
+  "candidate_pool_mean": 59.36882510013351,
+  "neutral_rate": 0.2,
+  "neutral_attempts": 661030,
+  "neutral_moves": 1169,
+  "projection225_bank": [
+    {
+      "path": "projection225_0.txt",
+      "sha256": "4b162596f58ed789c7ad79fdb40e2c6dc2c3cce3f2ec50cf52159a5e3bea582c",
+      "verification": {
+        "accepted": true,
+        "cardinality": 225,
+        "reports": [
+          {
+            "cardinality": 225,
+            "distinct_descendants": 6357,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "4b162596f58ed789c7ad79fdb40e2c6dc2c3cce3f2ec50cf52159a5e3bea582c"
+          },
+          {
+            "cardinality": 225,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25200,
+            "valid": true,
+            "witness_sha256": "4b162596f58ed789c7ad79fdb40e2c6dc2c3cce3f2ec50cf52159a5e3bea582c"
+          }
+        ]
+      }
+    },
+    {
+      "path": "projection225_1.txt",
+      "sha256": "597dc779a3fef8c809a84eca573cec3c85d44749b04e8399a7e26d308adadd46",
+      "verification": {
+        "accepted": true,
+        "cardinality": 225,
+        "reports": [
+          {
+            "cardinality": 225,
+            "distinct_descendants": 6356,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "597dc779a3fef8c809a84eca573cec3c85d44749b04e8399a7e26d308adadd46"
+          },
+          {
+            "cardinality": 225,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25200,
+            "valid": true,
+            "witness_sha256": "597dc779a3fef8c809a84eca573cec3c85d44749b04e8399a7e26d308adadd46"
+          }
+        ]
+      }
+    }
+  ],
+  "comparison_control": {
+    "source": "c5fa351f79f7f73e11aef7d4df91b4e68c42c264",
+    "run": 43731873426,
+    "case": 0,
+    "same_seed_start_budget_policy": true,
+    "historical_not_simultaneous_control": true
+  },
+  "compressed_logs": [
+    {
+      "path": "checkpoint_raw_invalid_unless_zero.txt.repairs.jsonl.gz",
+      "raw_sha256": "53b7294413a88545bf97dd61e8bd480d40d1bc6346a804b3c1c2903382b03518",
+      "gzip_sha256": "791e353ab05dab1955330ef019751171ef0e33cd0ef1fd09c9d7cf6aa302d1c2",
+      "raw_bytes": 5748699,
+      "gzip_bytes": 853942
+    },
+    {
+      "path": "repair_trials.jsonl.gz",
+      "raw_sha256": "79a1e125cc9d7f977a77d7c58c031d5976827e973e22ebe7222fed10b3961eba",
+      "gzip_sha256": "7abf4c3f0a55550595339c3d22caf52ada35b37ea3f92c4a3c7fc711207f892e",
+      "raw_bytes": 6929123,
+      "gzip_bytes": 1292058
+    }
+  ],
+  "wall_including_controller": 604.0495053909999,
+  "controller_self_cpu_seconds": 0.818422,
+  "all_children_cpu_seconds": 603.152143,
+  "release_histogram": {
+    "32": 2996
+  },
+  "forced_pivot_trials": 2996,
+  "repair_trials": 2996,
+  "repair_complete_no227": 2996,
+  "repair_timeouts": 0,
+  "repair_pool_gates": 0,
+  "repair_cpu_seconds": 2.13772,
+  "repair_logs_sha256": "79a1e125cc9d7f977a77d7c58c031d5976827e973e22ebe7222fed10b3961eba",
+  "source_sha": "941d63d920a6f6658b809d2996d13c50115b9dc0",
+  "case": 0,
+  "pair": 0,
+  "mode": "neutral_clean_swaps",
+  "seed": 1501001,
+  "starting_verification": {
+    "accepted": true,
+    "cardinality": 225,
+    "reports": [
+      {
+        "cardinality": 225,
+        "distinct_descendants": 6357,
+        "length": 16,
+        "method": "distinct_string_two_deletions",
+        "valid": true,
+        "witness_sha256": "4b162596f58ed789c7ad79fdb40e2c6dc2c3cce3f2ec50cf52159a5e3bea582c"
+      },
+      {
+        "cardinality": 225,
+        "largest_pairwise_lcs": 13,
+        "length": 16,
+        "method": "independent_dynamic_programming_lcs",
+        "pairs_checked": 25200,
+        "valid": true,
+        "witness_sha256": "4b162596f58ed789c7ad79fdb40e2c6dc2c3cce3f2ec50cf52159a5e3bea582c"
+      }
+    ]
+  },
+  "starting_sha256": "4b162596f58ed789c7ad79fdb40e2c6dc2c3cce3f2ec50cf52159a5e3bea582c",
+  "plan_sha256": "bd4d3130029d197c05c23fc7cfb91123c3640d45ca210fb8a939197ba7c4e131",
+  "target": 227,
+  "quota": 210,
+  "minimum_pair_conflicts": 2,
+  "cpu_seconds": 600.003,
+  "iterations": 3302076,
+  "edge_weight_updates": 0,
+  "best_method_independently_verified": 225,
+  "retained_global_best_verified": 226,
+  "novel": [],
+  "scope": "Eight600-native-CPU neutral-clean-swap runs, uniform pair costs, conditional corequota210, optional-pivot fixed32 repair. At most20percent iterations attempt a unique-blocker clean swap preserving pair energy exactly; reverse taboo50. Historical controls are corresponding even-numbered optional-hybrid runs, same parents/seeds/budgets, not simultaneous or independent fresh seeds. Exact repair remains bounded by300CPU total,2048candidate gate and250ms soft queries. Projections225are independently verified support artifacts; no structural novelty or227claim without separate checks. Timeouts/gates remain open. Positive pair energy is invalid."
+}

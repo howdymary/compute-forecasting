@@ -1,0 +1,113 @@
+name: CodeGarden independently harvest guided225frontiers and delta unions
+on:
+  push:
+    branches: [codegarden-guided-frontier-delta-001]
+    paths: [.github/workflows/codegarden.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: codegarden-free-guided-frontier-delta-001
+  cancel-in-progress: false
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+  SOURCE_SHA: ${{ github.sha }}
+  TMPDIR: ${{ github.workspace }}/codegarden/.tmp
+  CODEGARDEN_BATCH: guided_frontier_delta_001
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -o pipefail
+          for attempt in 1 2 3; do
+            if gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1; then break; fi
+            sleep 2
+          done
+          test -f codegarden/phase3/frontier_delta.cpp
+          mkdir -p codegarden/.tmp
+      - name: Compile and independently exhaust small cases
+        run: |
+          mkdir -p codegarden/.build
+          g++ -O3 -std=c++17 codegarden/phase3/frontier_delta.cpp -o codegarden/.build/frontier_delta
+          python -B -u codegarden/phase3/test_frontier_delta.py
+          python -B -u codegarden/phase3/preflight.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: codegarden-guided-delta-preflight
+          path: codegarden/artifacts/phase3/guided_frontier_delta_001/
+  probes:
+    needs: preflight
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        case: [0, 1]
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -o pipefail
+          for attempt in 1 2 3; do
+            if gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1; then break; fi
+            sleep 2
+          done
+          test -f codegarden/phase3/frontier_delta.cpp
+          mkdir -p codegarden/.tmp
+      - uses: actions/download-artifact@v4
+        with:
+          name: codegarden-guided-delta-preflight
+          path: codegarden/artifacts/phase3/guided_frontier_delta_001/
+      - name: Compile and run bounded component
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p codegarden/.build
+          g++ -O3 -std=c++17 codegarden/phase3/frontier_delta.cpp -o codegarden/.build/frontier_delta
+          GH_TOKEN="$GITHUB_TOKEN" python -B -u codegarden/phase3/guided_frontier_delta.py ${{ matrix.case }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          retention-days: 1
+          name: codegarden-guided-delta-${{ matrix.case }}
+          path: codegarden/artifacts/phase3/guided_frontier_delta_001/
+  collect:
+    needs: [preflight, probes]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -o pipefail
+          for attempt in 1 2 3; do
+            if gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1; then break; fi
+            sleep 2
+          done
+          test -f codegarden/phase3/frontier_delta.cpp
+          mkdir -p codegarden/.tmp
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: codegarden-guided-delta-*
+          merge-multiple: true
+          path: codegarden/artifacts/phase3/guided_frontier_delta_001/
+      - name: Publish leased results
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -B -u codegarden/phase3/publish_guided_frontier_delta.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          retention-days: 1
+          name: codegarden-guided-delta-collected
+          path: codegarden/artifacts/phase3/guided_frontier_delta_001/

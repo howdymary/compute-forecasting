@@ -1,0 +1,71 @@
+{
+  "compressed_logs": [
+    {
+      "path": "checkpoint_raw_invalid_unless_zero.txt.repairs.jsonl.gz",
+      "raw_sha256": "4bf3e7a6cb05d57dea06c374ae4331170a9aec1205ae7800e044bcd50c5439e1",
+      "gzip_sha256": "f7ec1a8f85252c0e3bb7a04e62b3f30ec6be70941448de818e18429557a73bb0",
+      "raw_bytes": 5435369,
+      "gzip_bytes": 759988
+    },
+    {
+      "path": "repair_trials.jsonl.gz",
+      "raw_sha256": "54f8e5f03db3d6102c9076deeea6573c221d5f2f4f7a897c9d34a3b1dca9be78",
+      "gzip_sha256": "23d6157898bcae81dd15b7402e7736300f8a077daf721285061b35df2ea5b92a",
+      "raw_bytes": 6454689,
+      "gzip_bytes": 1078382
+    }
+  ],
+  "wall_including_controller": 601.618956812,
+  "controller_self_cpu_seconds": 0.601633,
+  "all_children_cpu_seconds": 600.9585,
+  "release_histogram": {
+    "32": 2998
+  },
+  "forced_pivot_trials": 2998,
+  "repair_trials": 2998,
+  "repair_complete_no227": 2998,
+  "repair_timeouts": 0,
+  "repair_pool_gates": 0,
+  "repair_cpu_seconds": 2.00928,
+  "repair_logs_sha256": "54f8e5f03db3d6102c9076deeea6573c221d5f2f4f7a897c9d34a3b1dca9be78",
+  "source_sha": "c5fa3245d9d4708ac4affa714b678c0a853b254f",
+  "case": 0,
+  "pair": 0,
+  "mode": "fixed_release32",
+  "seed": 1501001,
+  "starting_verification": {
+    "accepted": true,
+    "cardinality": 225,
+    "reports": [
+      {
+        "cardinality": 225,
+        "distinct_descendants": 6357,
+        "length": 16,
+        "method": "distinct_string_two_deletions",
+        "valid": true,
+        "witness_sha256": "4b162596f58ed789c7ad79fdb40e2c6dc2c3cce3f2ec50cf52159a5e3bea582c"
+      },
+      {
+        "cardinality": 225,
+        "largest_pairwise_lcs": 13,
+        "length": 16,
+        "method": "independent_dynamic_programming_lcs",
+        "pairs_checked": 25200,
+        "valid": true,
+        "witness_sha256": "4b162596f58ed789c7ad79fdb40e2c6dc2c3cce3f2ec50cf52159a5e3bea582c"
+      }
+    ]
+  },
+  "starting_sha256": "4b162596f58ed789c7ad79fdb40e2c6dc2c3cce3f2ec50cf52159a5e3bea582c",
+  "plan_sha256": "bd4d3130029d197c05c23fc7cfb91123c3640d45ca210fb8a939197ba7c4e131",
+  "target": 227,
+  "quota": 210,
+  "minimum_pair_conflicts": 2,
+  "cpu_seconds": 600.004,
+  "iterations": 4441677,
+  "edge_weight_updates": 0,
+  "best_method_independently_verified": 225,
+  "retained_global_best_verified": 226,
+  "novel": [],
+  "scope": "Eight matched pairs with equal600nativeCPU deadlines and the same conditional core quota. Uniform pair costs in both conditions; fixed release32 versus adaptive release8/16/32/64/128 following exact solver status and runtime. Force an opportunity pivot when sampled, releasing all its blockers and additional clean words. Separate repair RNG; at most5accepted trials per elapsed CPU second spreads the3000-trial budget across the run. Both use the same starts/seeds and600nativeCPU caps. Positive-energy227 states remain invalid. Each COMPLETE_NO227 receipt concerns only its explicitly fixed valid subset and full compatible pool. Pool gates/timeouts are open. Repair allowance300CPU, maximum3000trials, candidate pool gate2048, per-query250ms soft cap inside the600CPU envelope. No global absence proof or trained-policy claim. Positive candidates pass both protected verifiers; any later polishing is a separate experiment."
+}
