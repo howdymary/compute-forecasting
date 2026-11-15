@@ -30,7 +30,8 @@ class ExpandedServices(Services):
         # Reuse proven identity/audience/Tinker setup, then upgrade if advertised.
         await super().setup();self.model='Qwen/Qwen3.5-4B';self.model_selection='Existing verified base model'
         try:
-            caps=self.service.get_server_capabilities()
+            import tinker
+            caps=tinker.RestClient().get_server_capabilities()
             if inspect.isawaitable(caps):caps=await caps
             if hasattr(caps,'result'):caps=caps.result()
             rows=getattr(caps,'supported_models',[])
@@ -44,6 +45,28 @@ class ExpandedServices(Services):
                     candidate_renderer=DecisionRenderer(renderers.get_renderer(model_info.get_recommended_renderer_name(preferred),candidate_sampler.get_tokenizer()))
                     self.sampler=candidate_sampler;self.renderer=candidate_renderer;self.model=preferred;self.model_selection='Advertised stronger model selected for follow-up';break
         except Exception as error:self.model_selection='Verified 4B fallback; capability inspection: '+type(error).__name__
+
+    async def write(self,role,content,private=False):
+        # Store semantic findings in memory; exact numerical records belong in
+        # artifacts. The source ID + canonical hash binds those layers together.
+        rid=self.run_id+'-record-'+str(len(self.records));at=now();started=time.perf_counter()
+        value={'record_id':rid,'author':self.actors[role],'occurred_at':at,'content':content}
+        kind=content.get('kind','finding')
+        if kind=='observation':
+            summary={'kind':kind,'diagnostic':content['diagnostic'],'candidate_successes':[x['summary']['successes'] for x in content['candidates']],'trials_per_candidate':content['candidates'][0]['summary']['n'],'incumbent':content['incumbent'],'environment':content['environment']}
+        elif kind=='proposal':summary={k:content[k] for k in ['kind','family','predicted_effect','source_record']}
+        else:summary=content
+        narrative=f'Mochi {role} record {rid}. Canonical artifact SHA256: {digest(value)}. Finding: '+json.dumps(summary,sort_keys=True)
+        x=await self.request('POST','/ingest',{'id':rid,'identity':self.actors[role],'audience':self.private if private else self.audience,'timestamp':at,'label':f'Mochi {role}: {kind}','content':narrative})
+        for attempt in range(150):
+            status=await self.request('GET','/ingest/'+x['ingestionId'])
+            if status.get('status')=='completed':break
+            if status.get('status')=='failed':raise RuntimeError('past.dev ingestion failed')
+            if attempt%20==19:print('MOCHI_MEMORY_WAIT:'+json.dumps({'record':rid,'seconds':round(time.perf_counter()-started)}),flush=True)
+            await asyncio.sleep(2)
+        else:raise TimeoutError('past.dev ingestion exceeded the expanded five-minute bound')
+        self.records[rid]={'id':rid,'role':role,'author':self.actors[role],'audience':self.private if private else self.audience,'at':at,'sha256':digest(value),'ingestion_id':x['ingestionId'],'write_to_ready_seconds':time.perf_counter()-started,'payload':value,'memory_summary':summary,'memory_layout':'Semantic finding and canonical artifact hash in past.dev; exact parameter/numerical payload in artifact storage'}
+        return rid
 
     async def read(self,role,rid,allowed=True):
         # Semantic recall is not a key/value lookup. Use the documented occurrence
