@@ -1,0 +1,113 @@
+name: CodeGarden pinned KaMIS comparison
+on:
+  push:
+    branches: [codegarden-kamis-003]
+    paths: [.github/workflows/codegarden.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: codegarden-free-kamis-003
+  cancel-in-progress: false
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+  SOURCE_SHA: ${{ github.sha }}
+  CODEGARDEN_BATCH: kamis_001
+  OMP_NUM_THREADS: '1'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - name: Verify current arena and build profiled sparse graph generator
+        run: |
+          mkdir -p codegarden/.build codegarden/vendor
+          g++ -O3 -std=c++17 codegarden/phase3/graph.cpp -o codegarden/.build/graph
+          python -B -u codegarden/phase3/preflight.py
+      - name: Build pinned KaMIS and separate warm-start adapter
+        run: |
+          git clone --no-checkout https://github.com/KarlsruheMIS/KaMIS.git codegarden/vendor/KaMIS
+          git -C codegarden/vendor/KaMIS checkout 2e4b3861b8063f05e8520434b97ce59e21ca49e7
+          git -C codegarden/vendor/KaMIS submodule update --init --recursive
+          python -B - <<'PY'
+          import pathlib
+          p=pathlib.Path("codegarden/vendor/KaMIS/CMakeLists.txt")
+          with p.open("a") as stream:
+              stream.write('\nadd_executable(codegarden_warm ${CMAKE_SOURCE_DIR}/../../phase3/kamis_warm.cpp $<TARGET_OBJECTS:libkaffpa> $<TARGET_OBJECTS:libfiles>)\ntarget_link_libraries(codegarden_warm ${OpenMP_CXX_LIBRARIES})\n')
+          PY
+          cmake -S codegarden/vendor/KaMIS -B codegarden/.build/kamis-upstream -DCMAKE_BUILD_TYPE=Release
+          cmake --build codegarden/.build/kamis-upstream --target redumis codegarden_warm -j 2
+          git -C codegarden/vendor/KaMIS submodule status --recursive > codegarden/artifacts/phase3/kamis_001/submodule_revisions.txt
+          sha256sum codegarden/.build/kamis-upstream/redumis codegarden/.build/kamis-upstream/codegarden_warm > codegarden/artifacts/phase3/kamis_001/binary_hashes.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: codegarden-kamis-build
+          path: |
+            codegarden/.build/graph
+            codegarden/.build/kamis-upstream/redumis
+            codegarden/.build/kamis-upstream/codegarden_warm
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: codegarden-kamis-preflight
+          path: codegarden/artifacts/phase3/kamis_001/
+  probes:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        mode: [warm, scratch]
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/download-artifact@v4
+        with:
+          name: codegarden-kamis-build
+          path: codegarden/.build/
+      - uses: actions/download-artifact@v4
+        with:
+          name: codegarden-kamis-preflight
+          path: codegarden/artifacts/phase3/kamis_001/
+      - name: Apply executable permissions and run bounded solver
+        run: |
+          chmod +x codegarden/.build/graph codegarden/.build/kamis-upstream/redumis codegarden/.build/kamis-upstream/codegarden_warm
+          python -B -u codegarden/phase3/kamis.py --mode ${{ matrix.mode }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: codegarden-kamis-${{ matrix.mode }}
+          path: codegarden/artifacts/phase3/kamis_001/
+  collect:
+    needs: [build, probes]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: codegarden-kamis-*
+          merge-multiple: true
+          path: codegarden/artifacts/phase3/kamis_001/
+      - name: Remove ephemeral solver binaries from collection then publish evidence
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -B -u codegarden/phase3/publish_kamis.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: codegarden-kamis-collected
+          path: codegarden/artifacts/phase3/kamis_001/
