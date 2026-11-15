@@ -1,7 +1,7 @@
 name: CodeGarden quota-diversified tensor CPU prototype
 on:
   push:
-    branches: [codegarden-tensor-cpu-004]
+    branches: [codegarden-tensor-cpu-005]
     paths: [.github/workflows/codegarden.yml]
 permissions:
   contents: write
@@ -11,7 +11,7 @@ concurrency:
 env:
   SOURCE_SHA: ${{ github.sha }}
   PYTHONDONTWRITEBYTECODE: '1'
-  CODEGARDEN_BATCH: tensor_cpu_002
+  CODEGARDEN_BATCH: tensor_cpu_003
 jobs:
   cpu:
     runs-on: ubuntu-latest
@@ -31,17 +31,17 @@ jobs:
       - name: Check exact tensor energies and weighted derivatives against literal string descendants
         run: |
           python -B -u codegarden/phase3/preflight.py
-          codegarden/.venv/bin/python -B -u codegarden/phase3/tensor_search2.py --action test
-          codegarden/.venv/bin/python -B -u codegarden/phase3/tensor_search2.py --action profile
-          codegarden/.venv/bin/python -B -u codegarden/phase3/tensor_search2.py --action search --seconds 60
-          python -B -u codegarden/phase3/project_tensor.py --batch tensor_cpu_002
+          codegarden/.venv/bin/python -B -u codegarden/phase3/tensor_search3.py --action test
+          codegarden/.venv/bin/python -B -u codegarden/phase3/tensor_search3.py --action profile
+          codegarden/.venv/bin/python -B -u codegarden/phase3/tensor_search3.py --action search --seconds 300 --steps 3030
+          python -B -u codegarden/phase3/project_tensor2.py --batch tensor_cpu_003
       - name: Publish bounded CPU evidence
         if: always()
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python -B -u codegarden/phase3/publish_tensor_cpu2.py
+        run: python -B -u codegarden/phase3/publish_tensor_cpu3.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: codegarden-tensor-cpu
-          path: codegarden/artifacts/phase3/tensor_cpu_002/
+          path: codegarden/artifacts/phase3/tensor_cpu_003/
