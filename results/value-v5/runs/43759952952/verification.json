@@ -1,0 +1,176 @@
+{
+  "status": "passed",
+  "study_file_sha256": "4490497a114c034e2935967d4e85ddd65e006ea81958918dd7a4efb73cff9319",
+  "official_csv_sha256": "67a043255a716db6bc9b73cd28f9258c30fb299fd8671a9ee3430c0d94cadd80",
+  "historical_series": 36,
+  "historical_observations": 3204,
+  "baseline_reconstruction": [
+    {
+      "method": "last_value",
+      "cells": 12,
+      "reconstructed_pinball": 0.01590833333333334,
+      "official_printed_pinball": 0.015908
+    },
+    {
+      "method": "last_value_empirical",
+      "cells": 12,
+      "reconstructed_pinball": 0.013267708752777774,
+      "official_printed_pinball": 0.013268
+    },
+    {
+      "method": "drift",
+      "cells": 12,
+      "reconstructed_pinball": 0.013267708752777774,
+      "official_printed_pinball": 0.013268
+    },
+    {
+      "method": "seasonal_naive",
+      "cells": 12,
+      "reconstructed_pinball": 0.01515150884444444,
+      "official_printed_pinball": 0.015152
+    }
+  ],
+  "memory": {
+    "writers": 3,
+    "readers": 3,
+    "cross_role_uses": 6,
+    "forecast_improvement_established": false
+  },
+  "economic_calculations": [
+    {
+      "gpu": "H100 SXM80",
+      "months": 24,
+      "path": "Supply expansion",
+      "annual_change": -0.35,
+      "rental_usd_gpu_hour": 1.5015227500000001,
+      "operating_pv": 15339.303933760788,
+      "income_residual_proxy_at_horizon": 3855.1765228487816,
+      "break_even_utilization": 0.05290324482677102
+    },
+    {
+      "gpu": "H100 SXM80",
+      "months": 24,
+      "path": "Moderate decline",
+      "annual_change": -0.15,
+      "rental_usd_gpu_hour": 2.56769275,
+      "operating_pv": 20028.637575490546,
+      "income_residual_proxy_at_horizon": 9802.046612560756,
+      "break_even_utilization": 0.029925827011793638
+    },
+    {
+      "gpu": "H100 SXM80",
+      "months": 24,
+      "path": "Persistent constraints",
+      "annual_change": 0.05,
+      "rental_usd_gpu_hour": 3.9181747500000004,
+      "operating_pv": 25054.04093728934,
+      "income_residual_proxy_at_horizon": 19456.401232911492,
+      "break_even_utilization": 0.01930511479174029
+    },
+    {
+      "gpu": "H100 SXM80",
+      "months": 36,
+      "path": "Supply expansion",
+      "annual_change": -0.35,
+      "rental_usd_gpu_hour": 0.9759897875000001,
+      "operating_pv": 18257.82982950373,
+      "income_residual_proxy_at_horizon": 1447.5745808325896,
+      "break_even_utilization": 0.08511741981572574
+    },
+    {
+      "gpu": "H100 SXM80",
+      "months": 36,
+      "path": "Moderate decline",
+      "annual_change": -0.15,
+      "rental_usd_gpu_hour": 2.1825388374999997,
+      "operating_pv": 26429.195577850347,
+      "income_residual_proxy_at_horizon": 4683.6659988705,
+      "break_even_utilization": 0.035495049269542764
+    },
+    {
+      "gpu": "H100 SXM80",
+      "months": 36,
+      "path": "Persistent constraints",
+      "annual_change": 0.05,
+      "rental_usd_gpu_hour": 4.1140834875,
+      "operating_pv": 36474.014229518434,
+      "income_residual_proxy_at_horizon": 10560.201214607481,
+      "break_even_utilization": 0.01835987456478886
+    },
+    {
+      "gpu": "A100 SXM80",
+      "months": 24,
+      "path": "Supply expansion",
+      "annual_change": -0.35,
+      "rental_usd_gpu_hour": 0.823875,
+      "operating_pv": 8060.240002093028,
+      "income_residual_proxy_at_horizon": 1865.8783900443286,
+      "break_even_utilization": 0.09572589083432732
+    },
+    {
+      "gpu": "A100 SXM80",
+      "months": 24,
+      "path": "Moderate decline",
+      "annual_change": -0.15,
+      "rental_usd_gpu_hour": 1.4088749999999999,
+      "operating_pv": 10633.244476437556,
+      "income_residual_proxy_at_horizon": 5128.884291993837,
+      "break_even_utilization": 0.054318420072671444
+    },
+    {
+      "gpu": "A100 SXM80",
+      "months": 24,
+      "path": "Persistent constraints",
+      "annual_change": 0.05,
+      "rental_usd_gpu_hour": 2.149875,
+      "operating_pv": 13390.64804871243,
+      "income_residual_proxy_at_horizon": 10426.160948535642,
+      "break_even_utilization": 0.035091390145893235
+    },
+    {
+      "gpu": "A100 SXM80",
+      "months": 36,
+      "path": "Supply expansion",
+      "annual_change": -0.35,
+      "rental_usd_gpu_hour": 0.53551875,
+      "operating_pv": 9511.543738089485,
+      "income_residual_proxy_at_horizon": 662.4997182054249,
+      "break_even_utilization": 0.15334673381431532
+    },
+    {
+      "gpu": "A100 SXM80",
+      "months": 36,
+      "path": "Moderate decline",
+      "annual_change": -0.15,
+      "rental_usd_gpu_hour": 1.19754375,
+      "operating_pv": 13995.11480347565,
+      "income_residual_proxy_at_horizon": 2438.120378655614,
+      "break_even_utilization": 0.06437840570429372
+    },
+    {
+      "gpu": "A100 SXM80",
+      "months": 36,
+      "path": "Persistent constraints",
+      "annual_change": 0.05,
+      "rental_usd_gpu_hour": 2.2573687500000004,
+      "operating_pv": 19506.636334962972,
+      "income_residual_proxy_at_horizon": 5662.534028642139,
+      "break_even_utilization": 0.033377496615957895
+    }
+  ],
+  "conditional_capability_ratios": [
+    {
+      "benchmark": "ship_only_inf_llm_offline_a100ref_sxm80_precmatch",
+      "relative_h100_rental_cost": 0.44327863582919497
+    },
+    {
+      "benchmark": "ship_only_inf_llm_server_a100ref_sxm80_precmatch",
+      "relative_h100_rental_cost": 0.3786943497501045
+    },
+    {
+      "benchmark": "ship_only_inf_cross_benchmark_median_a100ref_sxm80_precmatch",
+      "relative_h100_rental_cost": 0.7393681464358557
+    }
+  ],
+  "limitations": "Public artifacts reproduce published arithmetic. Pack acquisition, private model sampling and independent outcome maturity remain separate requirements."
+}
