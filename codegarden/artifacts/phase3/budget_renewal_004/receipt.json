@@ -1,0 +1,73 @@
+{
+  "status": "renewed",
+  "source_sha": "b0039e3dcc3e8884cb667ca3e914c19a2d709d80",
+  "at": "2026-11-15T09:04:14.865234+00:00",
+  "live_past_balance": 699137.0,
+  "modal_account_summary": {
+    "metered_cost": "2.61021913",
+    "billed_cost": "0E-8",
+    "adjustments": {
+      "credits": "-2.60000000",
+      "reservation_adjustment": "-0E-8",
+      "free_storage": "-0.00922532",
+      "network_egress_allowance": "-0.00099381",
+      "plan_cost": "0E-8"
+    },
+    "metered_cost_breakdown": {
+      "volumes": "0.00922532",
+      "deployed_apps": "0.07194245",
+      "network_egress": "0.00099381",
+      "llm_tokens": "0E-8",
+      "ephemeral_apps": "2.52595039"
+    }
+  },
+  "modal_remaining_credit_conservative_floor": 247.89984035,
+  "modal_other_and_verification_reserves": 95,
+  "modal_cumulative_operational_cap": 145,
+  "modal_unallocated_floor_after_all_caps": 7.899840350000005,
+  "dashboard_evidence": {
+    "observed_at": "2026-11-15T07:20:00Z",
+    "exa_remaining_usd": 119.14,
+    "exa_boundary": "Free/no payment method; no topups or account changes",
+    "tinker_remaining_usd": 276.33,
+    "tinker_due_usd": 0,
+    "tinker_autoreload": false,
+    "tinker_storage_gb": 25,
+    "tinker_storage_limit_gb": 100,
+    "tinker_checkpoints": 88,
+    "tinker_checkpoint_limit": 100,
+    "source": "Authenticated Safari UI reloads; no credentials or account configuration changed"
+  },
+  "budget": {
+    "exa": {
+      "cap": 5,
+      "other_project_reserves": 15,
+      "verification_reserve": 5,
+      "reserved": 0.098,
+      "provider_reported_or_estimated": 0
+    },
+    "past": {
+      "cap": 2000,
+      "other_project_reserves": 10200,
+      "verification_reserve": 5000,
+      "reserved": 278.0,
+      "provider_reported_or_estimated": 0
+    },
+    "modal": {
+      "cap": 145,
+      "other_project_reserves": 75,
+      "verification_reserve": 20,
+      "reserved": 126.36,
+      "provider_reported_or_estimated": 0
+    },
+    "tinker": {
+      "cap": 70,
+      "other_project_reserves": 140,
+      "verification_reserve": 10,
+      "reserved": 22.85,
+      "provider_reported_or_estimated": 0
+    }
+  },
+  "no_provider_settings_changed": true,
+  "no_new_billable_calls": true
+}
