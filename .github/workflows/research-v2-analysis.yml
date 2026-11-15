@@ -1,0 +1,50 @@
+name: Analyze paired policy results and strong static control
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/research-v2-analysis.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    env:
+      GH_TOKEN: ${{ github.token }}
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+    steps:
+      - name: Fetch immutable source
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install deterministic analysis tools
+        run: |
+          python -m pip install -e '.[dev]' modal numpy scipy scikit-learn
+          python -m compileall -q src
+          python -m pytest tests/test_policy_v2.py tests/test_campaign_v2.py
+      - name: Wait for controlled runs and retain any failed RL status
+        run: |
+          gh run watch 43665821333 --repo "$GITHUB_REPOSITORY" --exit-status --interval 30
+          gh run download 43665821333 --repo "$GITHUB_REPOSITORY" --pattern 'campaign-v2-*' --dir inputs/campaign
+          python - <<'PY'
+          import json,os,subprocess
+          from pathlib import Path
+          subprocess.run(['gh','run','watch','43666948222','--repo',os.environ['GITHUB_REPOSITORY'],'--interval','30'])
+          run=json.loads(subprocess.check_output(['gh','api','repos/'+os.environ['GITHUB_REPOSITORY']+'/actions/runs/43666948222'],text=True))
+          Path('artifacts').mkdir(exist_ok=True);Path('artifacts/rl-run-status.json').write_text(json.dumps(run,indent=2))
+          subprocess.run(['gh','run','download','43666948222','--repo',os.environ['GITHUB_REPOSITORY'],'--pattern','campaign-v2-rl-*','--dir','inputs/rl'],check=False)
+          PY
+      - name: Evaluate the training-selected control and paired sensitivities
+        run: modal run -m compute_forecast.analysis_v2 --inputs inputs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: campaign-v2-analysis-${{ github.run_id }}
+          path: artifacts/
+          retention-days: 30
