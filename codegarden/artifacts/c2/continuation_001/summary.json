@@ -1,0 +1,43 @@
+{
+  "status": "completed_batch",
+  "source_sha": "fc46fe0ab9a16d3bfb2353579c409d678fd4a420",
+  "problem": "second-autocorrelation-inequality",
+  "baseline": 0.9636615620620854,
+  "best_exact_verified": 0.9636616088232245,
+  "best_reproduced_or_verified": 0.9636616088232245,
+  "workers": [
+    {
+      "label": "greedy_best",
+      "profile": {
+        "cpu_forward_seconds": 0.04918771200000016,
+        "device": "cpu",
+        "gpu_name": null,
+        "score_seconds": 0.0444310343333334,
+        "torch": "2.9.1+cu128"
+      },
+      "best_gpu_proposal": 0.9636616094034782,
+      "exact_score": 0.9636616088232245,
+      "evaluations": 3607,
+      "wall_seconds": 903.807067791
+    },
+    {
+      "label": "endpoint",
+      "profile": {
+        "cpu_forward_seconds": 0.21341052500000046,
+        "device": "cpu",
+        "gpu_name": null,
+        "score_seconds": 0.18732243666666695,
+        "torch": "2.9.1+cu128"
+      },
+      "best_gpu_proposal": 0.9636616094034781,
+      "exact_score": 0.9636616088232245,
+      "evaluations": 1811,
+      "wall_seconds": 901.3929992430001
+    }
+  ],
+  "new_verified_candidate": false,
+  "arena_min_improvement_met": false,
+  "global_record_claim": false,
+  "warm_start_float": 0.9636616094034778,
+  "comparison": "equal wall-clock budgets; same schedule and seed; only propagation differs"
+}
