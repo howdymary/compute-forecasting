@@ -1,7 +1,7 @@
-name: CodeGarden read-only shared budget renewal
+name: CodeGarden exact radius six across 38-code component
 on:
   push:
-    branches: [codegarden-budget-004]
+    branches: [codegarden-modal-006]
     paths: [.github/workflows/codegarden.yml]
 permissions:
   contents: write
@@ -16,7 +16,7 @@ env:
 jobs:
   research:
     runs-on: ubuntu-latest
-    timeout-minutes: 16
+    timeout-minutes: 55
     steps:
       - name: Fetch immutable source
         env:
@@ -30,7 +30,7 @@ jobs:
           python -m venv codegarden/.venv
           codegarden/.venv/bin/python -m pip install -r codegarden/requirements-providers.txt
       - name: Check cross-phase imports before any provider calls
-        run: python -B -c 'import sys; sys.path.insert(0, "codegarden/phase3"); import renew_budget'
+        run: python -B -c 'import sys; sys.path.insert(0, "codegarden/phase3"); import modal_component6'
       - name: Refresh live account receipts, then research within the unchanged cumulative caps
         env:
           GH_TOKEN: ${{ github.token }}
@@ -39,19 +39,19 @@ jobs:
           TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
           MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
-        run: codegarden/.venv/bin/python -B -u codegarden/phase3/renew_budget.py
+        run: codegarden/.venv/bin/python -B -u codegarden/phase3/modal_component6.py
       - name: Publish evidence and unresolved accounting
         if: always()
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python -B codegarden/phase3/publish_renewal.py
+        run: python -B codegarden/phase3/publish_component6.py
       - name: Retain all evidence even if a publisher fails
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: codegarden-phase3-research
           path: |
-            codegarden/artifacts/phase3/budget_renewal_002/
+            codegarden/artifacts/phase3/component6_001/
             codegarden/artifacts/shared-budget.sqlite
             codegarden/budget/shared-allocation.json
             codegarden/budget/historical-usage.json
