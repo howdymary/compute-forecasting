@@ -1,0 +1,207 @@
+{
+  "recovery_source_sha": "6753ac673f66e4d29650fe9021818451d5251a95",
+  "source": {
+    "run": 43721175424,
+    "source": "3ab7f42e2b94bb2cfbf808ba0cb8e44021548fb7",
+    "prefix": "codegarden-random-resume-",
+    "cases": [
+      0,
+      2,
+      4,
+      6
+    ],
+    "out": "random_resume_recovered_001"
+  },
+  "observed_at": "2026-11-15T14:06:42.201306+00:00",
+  "original_run_conclusion": "success",
+  "artifact_rule": "Each numeric directory comes solely from its own named worker artifact; never merge stale sibling directories.",
+  "plan_sha256": "4e7ce64710087be5a63dcafc290667107cf2f01f639a793b91f4fa315dff2e91",
+  "cases": [
+    {
+      "case": 0,
+      "source_run": 43721175424,
+      "source_sha": "3ab7f42e2b94bb2cfbf808ba0cb8e44021548fb7",
+      "artifact_name": "codegarden-random-resume-0",
+      "artifact_id": 14165175023,
+      "archive_sha256": "14d904684075f871b39665f3a6ae6e436f2604f65d08f8483f275cd212b5d0e9",
+      "checkpoint_sha256": "a8a32b9da8b9011a91d7ecfc96e077e8bcd1ce0db283b903826dc77750a37c47",
+      "report_sha256": "018bd1dfcd3413ec5a7cc5de853c8dbe1171a4a35fa9a03e133c81cbbe2d1c4c",
+      "copied_files": 178,
+      "starting_fixed_count": 153,
+      "final_fixed_count": 134,
+      "new_trials": 38,
+      "new_closed_families": 19,
+      "cumulative_trials": 86,
+      "cumulative_closed_families": 51,
+      "best_in_family_verified": 225,
+      "retained_global_best_verified": 226,
+      "verification": {
+        "accepted": true,
+        "cardinality": 225,
+        "reports": [
+          {
+            "cardinality": 225,
+            "distinct_descendants": 6347,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "c8fda988772a5b51d8458eaa0506185a4fb0e389a032693c12d22934bec21a10"
+          },
+          {
+            "cardinality": 225,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25200,
+            "valid": true,
+            "witness_sha256": "c8fda988772a5b51d8458eaa0506185a4fb0e389a032693c12d22934bec21a10"
+          }
+        ]
+      },
+      "condition": "random_one",
+      "wall_seconds": 600.0575975539999,
+      "self_cpu_seconds": null,
+      "children_cpu_seconds": null
+    },
+    {
+      "case": 2,
+      "source_run": 43721175424,
+      "source_sha": "3ab7f42e2b94bb2cfbf808ba0cb8e44021548fb7",
+      "artifact_name": "codegarden-random-resume-2",
+      "artifact_id": 14164593942,
+      "archive_sha256": "a36041c6be2ca055bc6376b3a58bd1ccdc9b3e70cd02e46b74f290827da8325d",
+      "checkpoint_sha256": "850c5507893f70e032f5244010ab0f6d69660ff5ebe91481a5c485f536b90e09",
+      "report_sha256": "1c41f7b527ca0a475113da79254b620b31670e4943a87c2099d8bad2354993f7",
+      "copied_files": 206,
+      "starting_fixed_count": 154,
+      "final_fixed_count": 128,
+      "new_trials": 42,
+      "new_closed_families": 26,
+      "cumulative_trials": 100,
+      "cumulative_closed_families": 73,
+      "best_in_family_verified": 225,
+      "retained_global_best_verified": 226,
+      "verification": {
+        "accepted": true,
+        "cardinality": 225,
+        "reports": [
+          {
+            "cardinality": 225,
+            "distinct_descendants": 6367,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "fc4183716581302b27b3dfd09b1fbf22403e2dc66ec5043953d3f985a25cad93"
+          },
+          {
+            "cardinality": 225,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25200,
+            "valid": true,
+            "witness_sha256": "fc4183716581302b27b3dfd09b1fbf22403e2dc66ec5043953d3f985a25cad93"
+          }
+        ]
+      },
+      "condition": "random_one",
+      "wall_seconds": 600.05043312,
+      "self_cpu_seconds": null,
+      "children_cpu_seconds": null
+    },
+    {
+      "case": 4,
+      "source_run": 43721175424,
+      "source_sha": "3ab7f42e2b94bb2cfbf808ba0cb8e44021548fb7",
+      "artifact_name": "codegarden-random-resume-4",
+      "artifact_id": 14164019608,
+      "archive_sha256": "a8ab45c5b8b004099df0e77652e0e534e9ba537a362f546c1ba4db009a320b28",
+      "checkpoint_sha256": "9d888e7bea073a2ff03c6a52454cae2a22f05d3a713a8324e98e0d9bcbb40f1b",
+      "report_sha256": "c7d03a1152ce435fcf4794148dce5648e549deb13f449b2e9ac7e8642648a26a",
+      "copied_files": 288,
+      "starting_fixed_count": 118,
+      "final_fixed_count": 117,
+      "new_trials": 30,
+      "new_closed_families": 1,
+      "cumulative_trials": 141,
+      "cumulative_closed_families": 92,
+      "best_in_family_verified": 225,
+      "retained_global_best_verified": 226,
+      "verification": {
+        "accepted": true,
+        "cardinality": 225,
+        "reports": [
+          {
+            "cardinality": 225,
+            "distinct_descendants": 6400,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "9b47f026b188e2ef818ec7bd9e599bfd8f5cd60a99e09a3df424c6c2f17fe62b"
+          },
+          {
+            "cardinality": 225,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25200,
+            "valid": true,
+            "witness_sha256": "9b47f026b188e2ef818ec7bd9e599bfd8f5cd60a99e09a3df424c6c2f17fe62b"
+          }
+        ]
+      },
+      "condition": "random_one",
+      "wall_seconds": 600.065337068,
+      "self_cpu_seconds": null,
+      "children_cpu_seconds": null
+    },
+    {
+      "case": 6,
+      "source_run": 43721175424,
+      "source_sha": "3ab7f42e2b94bb2cfbf808ba0cb8e44021548fb7",
+      "artifact_name": "codegarden-random-resume-6",
+      "artifact_id": 14164509221,
+      "archive_sha256": "8164859162a3bfd92196c5f072be33c9ed9c34765078292c817d06db3d0bd187",
+      "checkpoint_sha256": "cb4b2f20dc9f6f385a93b294660fdfce9ff01ddfe8e715536e00d631855de84e",
+      "report_sha256": "8daf5ad292bdcba32394e8d0ba0d3c084c1426de08b270cc69cb4ea712ad3056",
+      "copied_files": 286,
+      "starting_fixed_count": 116,
+      "final_fixed_count": 116,
+      "new_trials": 30,
+      "new_closed_families": 0,
+      "cumulative_trials": 140,
+      "cumulative_closed_families": 90,
+      "best_in_family_verified": 225,
+      "retained_global_best_verified": 226,
+      "verification": {
+        "accepted": true,
+        "cardinality": 225,
+        "reports": [
+          {
+            "cardinality": 225,
+            "distinct_descendants": 6383,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "df5e2a95cf284304ffbde4df8b6a0f00d475edb6f0b580503e7b702887b2cd40"
+          },
+          {
+            "cardinality": 225,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25200,
+            "valid": true,
+            "witness_sha256": "df5e2a95cf284304ffbde4df8b6a0f00d475edb6f0b580503e7b702887b2cd40"
+          }
+        ]
+      },
+      "condition": "random_one",
+      "wall_seconds": 600.048279158,
+      "self_cpu_seconds": null,
+      "children_cpu_seconds": null
+    }
+  ],
+  "best_independently_verified": 226,
+  "scope": "Evidence recovery, no repeated search/provider spending. Original pins preserved. Each incumbent passes both protected verifiers. Local negatives are scoped, without a formal global proof."
+}
