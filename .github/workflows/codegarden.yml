@@ -1,107 +1,34 @@
-name: CodeGarden portable whole-universe KaMIS
+name: CodeGarden retain global findings in memory
 on:
   push:
-    branches: [codegarden-side-global-001]
+    branches: [codegarden-side-global-memory-001]
     paths: [.github/workflows/codegarden.yml]
-  workflow_dispatch:
 permissions:
   contents: write
-concurrency:
-  group: codegarden-side-global-001
-  cancel-in-progress: false
 env:
   SOURCE_SHA: ${{ github.sha }}
   PYTHONDONTWRITEBYTECODE: '1'
-  HF_HOME: ${{ github.workspace }}/codegarden/.cache/huggingface
-  XDG_CACHE_HOME: ${{ github.workspace }}/codegarden/.cache
-  TMPDIR: ${{ github.workspace }}/codegarden/.tmp
 jobs:
-  research:
+  remember:
     runs-on: ubuntu-latest
-    timeout-minutes: 22
-    outputs:
-      has_candidate: ${{ steps.cycle.outputs.has_candidate }}
+    timeout-minutes: 3
     steps:
-      - name: Fetch minimal isolated source
+      - name: Fetch isolated memory-post source and verified data
         run: |
           python3 -B - <<'PY'
           import os,pathlib,urllib.request
-          pathlib.Path("codegarden/.tmp").mkdir(parents=True,exist_ok=True)
-          for name in ["codegarden/side_global/build.py","codegarden/side_global/smoke.py","codegarden/side_global/experiment.py","codegarden/side_global/graph.cpp","codegarden/side_global/warm.cpp","codegarden/side_global/known226.txt","codegarden/side_global/requirements.txt","codegarden/phase3/bundle_colored.cpp","codegarden/side_services/cycle.py","codegarden/supervisor.py","codegarden/protected/manifest.json","codegarden/protected/verify_descendants.py","codegarden/protected/verify_lcs.py","codegarden/artifacts/best_code.txt"]:
+          for name in ["codegarden/side_global/post_memory.py","codegarden/side_services/cycle.py","codegarden/supervisor.py","codegarden/protected/manifest.json","codegarden/protected/verify_descendants.py","codegarden/protected/verify_lcs.py","codegarden/artifacts/side_research/global_001/summary.json","codegarden/artifacts/side_research/global_001/next_hypothesis.json"]:
               p=pathlib.Path(name);p.parent.mkdir(parents=True,exist_ok=True)
-              p.write_bytes(urllib.request.urlopen("https://raw.githubusercontent.com/howdymary/compute-forecasting/"+os.environ["SOURCE_SHA"]+"/"+name,timeout=45).read())
+              p.write_bytes(urllib.request.urlopen("https://raw.githubusercontent.com/howdymary/compute-forecasting/"+os.environ["SOURCE_SHA"]+"/"+name,timeout=30).read())
           PY
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - name: Build graph generator and strict augmentation kernel
-        run: |
-          mkdir -p codegarden/.build
-          g++ -O3 -std=c++17 -static -march=x86-64 -mtune=generic codegarden/side_global/graph.cpp -o codegarden/.build/global_graph
-          g++ -O3 -std=c++17 -static -march=x86-64 -mtune=generic codegarden/phase3/bundle_colored.cpp -o codegarden/.build/global_bundle
-          codegarden/.build/global_bundle --synthetic-tests
-      - name: Build pinned portable KaMIS before provider calls
-        run: python3 -B -u codegarden/side_global/build.py
-      - name: Independently test graph incidence and native binaries
-        run: python3 -B -u codegarden/side_global/smoke.py
-      - name: Install isolated service clients
-        run: |
-          python3 -m venv codegarden/.venv
-          codegarden/.venv/bin/python -m pip install --disable-pip-version-check -r codegarden/side_global/requirements.txt
-      - name: Research and run three bounded whole-universe workers
-        id: cycle
+      - name: Store verified findings and poll the same ingestion handle
         env:
           GH_TOKEN: ${{ github.token }}
-          EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
           PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
-          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
-          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
-          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
-        run: codegarden/.venv/bin/python -B -u codegarden/side_global/experiment.py
+        run: python3 -B -u codegarden/side_global/post_memory.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: codegarden-global-research
+          name: codegarden-global-memory
           retention-days: 30
-          path: codegarden/artifacts/side_research/global_001/
-      - uses: actions/upload-artifact@v4
-        if: steps.cycle.outputs.has_candidate == 'true'
-        with:
-          name: codegarden-global-227-candidate
-          retention-days: 30
-          path: codegarden/artifacts/side_research/global_001/candidate.txt
-  accept:
-    needs: research
-    if: needs.research.outputs.has_candidate == 'true'
-    runs-on: ubuntu-latest
-    timeout-minutes: 6
-    steps:
-      - name: Fetch frozen independent checker sources
-        run: |
-          python3 -B - <<'PY'
-          import pathlib,urllib.request
-          for name in ["supervisor.py","protected/manifest.json","protected/verify_descendants.py","protected/verify_lcs.py"]:
-              p=pathlib.Path("codegarden")/name;p.parent.mkdir(parents=True,exist_ok=True)
-              p.write_bytes(urllib.request.urlopen("https://raw.githubusercontent.com/howdymary/compute-forecasting/ce5eab1859c271686876ee5c2d21c0e0a5316d67/codegarden/"+name,timeout=30).read())
-          PY
-      - uses: actions/download-artifact@v4
-        with:
-          name: codegarden-global-227-candidate
-          path: codegarden/.verify-input/
-      - name: Accept candidate without proposer or service credentials
-        run: |
-          python3 -B - <<'PY'
-          import pathlib,json,sys
-          sys.path.insert(0,"codegarden")
-          from supervisor import verify
-          result=verify(pathlib.Path("codegarden/.verify-input/candidate.txt"))
-          assert result["cardinality"]>=227
-          pathlib.Path("codegarden/isolated_acceptance.json").write_text(json.dumps(result,indent=2))
-          print(json.dumps(result))
-          PY
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: codegarden-global-isolated-acceptance
-          retention-days: 30
-          path: codegarden/isolated_acceptance.json
+          path: codegarden/artifacts/side_research/global_memory_001/
