@@ -101,7 +101,7 @@ Grid execution took 10m13s, main training 18m13s and frozen evaluation plus expo
 - configs/release-freeze.json: actual checkpoint and numerical source hashes selected before final results.
 - docs/: research protocol, scope amendments and demo / sponsor evidence notes.
 
-The captioned silent [two-minute demo](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/files/demo.mp4) records actual public results and saved policy traces. [Desktop/mobile browser validation and the video publication receipt](https://github.com/howdymary/compute-forecasting/actions/runs/43655823254) passed with zero page errors or failed public requests. The event requires uploading the reviewed video to YouTube, Drive or Loom; generating this MP4 does not submit the entry.
+The captioned silent [two-minute demo](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/files/demo.mp4) records actual public results and saved policy traces. [Desktop/mobile browser validation and the video publication receipt](https://github.com/howdymary/compute-forecasting/actions/runs/43656275785) passed with zero page errors or failed public requests. The event requires uploading the reviewed video to YouTube, Drive or Loom; generating this MP4 does not submit the entry.
 
 The public UI is plain HTML/CSS/JavaScript and SVG. FastAPI serves it on Modal. JSON artifacts and two Volumes provide sufficient storage; there is no database or agent framework. Model inference, deterministic experiment execution and UI replay are distinct components. Replay animates actual saved traces and is labeled as recorded.
 
