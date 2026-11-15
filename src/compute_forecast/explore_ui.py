@@ -217,3 +217,6 @@ start().catch(e=>{$('#app').innerHTML='<div class="empty"><h2>Verified pricing d
 
 from .review_ui_v4 import enhance as enhance_review_v4
 HTML=enhance_review_v4(HTML)
+
+from .value_ui_v5 import enhance as enhance_value_v5
+HTML=enhance_value_v5(HTML)

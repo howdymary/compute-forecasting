@@ -179,6 +179,44 @@ def web():
         private_guard(json.loads(raw))
         return Response(raw,media_type="application/json",headers={**headers,"ETag":hashlib.sha256(raw).hexdigest()})
 
+
+    @api.get("/api/value-v5")
+    def value_study_v5():
+        with lock:
+            public.reload();path=Path("/public/value-v5/current.json")
+            if not path.is_file():return JSONResponse({"error":"Value study is pending publication"},status_code=503,headers=headers)
+            raw=path.read_bytes()
+        v=json.loads(raw)
+        from .pricing_contract import FORECAST_SHA
+        from .capability_v5 import rental_pairs
+        if v["schema_version"]!=5 or v["official_csv_sha256"]!=FORECAST_SHA or v["protected_outcomes_loaded"]:return JSONResponse({"error":"Value study identity failed"},status_code=503,headers=headers)
+        approved={r["series_id"] for r in v["history"]["publication_decisions"] if r["approved"]}
+        if any(s["id"] not in approved or any(p["date"]>"2026-11-06" for p in s["points"]) for s in v["history"]["series"]):return JSONResponse({"error":"History publication boundary failed"},status_code=503,headers=headers)
+        # Normalize human catalog labels into the registered canonical pairing IDs.
+        v["capability"]["rental_pairs"]=rental_pairs(v)
+        v["adapter_source_sha"]=os.environ.get("OBSERVATORY_UI_SHA")
+        v["stored_artifact_sha256"]=hashlib.sha256(raw).hexdigest()
+        return JSONResponse(v,headers=headers)
+
+    @api.get("/api/value-v5/memory")
+    def value_memory_v5():
+        with lock:
+            public.reload();path=Path("/public/value-v5/memory.json")
+            if not path.is_file():return JSONResponse({"schema_version":5,"status":"pending","steps":[],"verified_cross_role_reads":0,"actual_tinker_decisions":0,"outcome_claim":"Pending actual execution"},headers=headers)
+            raw=path.read_bytes()
+        from .public_results import private_guard
+        private_guard(json.loads(raw));return Response(raw,media_type="application/json",headers=headers)
+
+    @api.get("/value-notices/{name}")
+    def value_notice_v5(name:str):
+        import re
+        if not re.fullmatch(r"[A-Za-z0-9_.-]+",name) or name in (".",".."):return Response(status_code=404,headers=headers)
+        with lock:
+            public.reload();path=Path("/public/value-v5/notices")/name
+            if not path.is_file():return Response(status_code=404,headers=headers)
+            raw=path.read_bytes()
+        return Response(raw,media_type="text/plain",headers=headers)
+
     @api.get("/health")
     def health():
         raw=read("results.json");r=json.loads(raw) if raw else None
