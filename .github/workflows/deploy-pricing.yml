@@ -4,6 +4,9 @@ on:
   push:
     branches: [compute-observatory]
     paths:
+      - src/compute_forecast/notebook_assets.py
+      - src/compute_forecast/notebook_diagnostics.py
+      - docs/notebook-peer-studies.json
       - src/compute_forecast/explore_ui.py
       - src/compute_forecast/experimental_ui_v2.py
       - src/compute_forecast/pricing_contract.py
@@ -64,6 +67,11 @@ jobs:
           assert run['conclusion']=='success' and run['head_branch']=='compute-observatory' and run['head_sha']=='38a37b6065bbd1f374f935ec1208ac2274842a2f'
           subprocess.run(['gh','run','download','43657301892','--repo',repo,'--name','pricing-metadata-38a37b6065bbd1f374f935ec1208ac2274842a2f-43657301892','--dir','inputs/metadata'],check=True)
           PY
+      - name: Publish licensed notebook typography and peer-study metadata
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: modal run -m compute_forecast.notebook_assets
       - name: Publish pricing adapter without rewriting existing artifacts
         env:
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}

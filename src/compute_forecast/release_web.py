@@ -72,6 +72,27 @@ def web():
                 archive_cache.update(sha=manifest["sha256"],bytes=raw)
             raw=archive_cache["bytes"]
         return Response(raw,media_type="application/zip",headers={**headers,"ETag":manifest["sha256"],"Content-Disposition":'attachment; filename="compute-forecast-v2-'+identifier+'.zip"'})
+    @api.get("/api/notebook")
+    def notebook_diagnostics():
+        from .notebook_diagnostics import build as build_diagnostics
+        response=experimental_results()
+        if response.status_code!=200:return response
+        try:
+            payload=build_diagnostics(json.loads(response.body))
+            return JSONResponse(payload,headers=headers)
+        except (ValueError,KeyError,TypeError):
+            return JSONResponse({"error":"Notebook diagnostics await verified artifacts"},status_code=503,headers=headers)
+
+    @api.get("/notebook-assets/{name}")
+    def notebook_asset(name:str):
+        allowed={"caveat-f84acf2c.ttf":"font/ttf","OFL.txt":"text/plain","peer-studies.json":"application/json"}
+        if name not in allowed:return Response(status_code=404,headers=headers)
+        public.reload();path=Path("/public/notebook")/name
+        if not path.is_file():return Response(status_code=404,headers=headers)
+        raw=path.read_bytes()
+        if len(raw)>1_000_000:return Response(status_code=503,headers=headers)
+        return Response(raw,media_type=allowed[name],headers={**headers,"Cache-Control":"public, max-age=31536000, immutable" if name.endswith(".ttf") else "no-store","ETag":hashlib.sha256(raw).hexdigest()})
+
     @api.get("/api/release")
     def results():
         raw=read("results.json")

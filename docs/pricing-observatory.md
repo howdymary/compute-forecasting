@@ -79,3 +79,8 @@ All source work is direct through GitHub on compute-observatory. Builds, tests a
 - Deployed interface/adapter revision: 0133224571e66fc783018f0a9cdde101f8fe5635. Documentation may advance independently of this deployed code revision.
 
 The deployed scenario cursor/readout and archived forecast band were also visually reviewed in Safari. Historical data remains unavailable for public plotting. The 2026-11-06 forecasts are archived, and long-term paths remain user-adjustable scenarios rather than trained predictions.
+
+
+## Interactive notebook edition
+
+The [notebook guide](notebook-experience.md) documents source-bound margin notes, immutable session pins, licensed self-hosted typography and separate coverage/feedback/budget diagnostics. The [15-source peer review](notebook-peer-review.md) explains the research precedents and contribution boundary. Pricing formulas, the original CSV, publication limits and numerical selection remain unchanged.
