@@ -1,0 +1,32 @@
+{
+  "schema_version": 2,
+  "registered_at_utc": "2026-11-15 04:35:48 UTC",
+  "replaces_only": "Checkpoint lifecycle and exact optimizer-state resumption; reward, action distribution, curriculum, six SFT runs and development-selection rule unchanged",
+  "reason": "Tinker free organization storage cap closed two RL clients after exactly ten optimizer updates and thirteen sampling groups each. Seed43 could not create a training client.",
+  "failed_run_id": "43671941385",
+  "cleanup_run_id": "43677120366",
+  "preserved": "Every original/frozen/evaluated checkpoint and both latest RL optimizer recovery states",
+  "temporary_rollout_samplers_deleted": 26,
+  "resume_prefixes": [
+    {
+      "seed": 17,
+      "optimizer_updates": 10,
+      "sampling_iterations": 13
+    },
+    {
+      "seed": 29,
+      "optimizer_updates": 10,
+      "sampling_iterations": 13
+    }
+  ],
+  "discarded_optimizer_updates": 0,
+  "continuation_budget": "Cumulative per seed maximum sixty sampling groups, including the retained thirteen groups; seed43 starts at zero",
+  "changes": [
+    "Delete consumed rollout sampler immediately after all sampling completes",
+    "Reuse preserved SFT-parent checkpoint for a fresh RL update-zero reference",
+    "Keep only latest unevaluated optimizer-recovery state after successfully saving its replacement; evaluated checkpoints remain permanent",
+    "Restore saved optimizer and RNG state; require exact equality of saved update and trajectory prefix",
+    "Reduce maximum concurrent RL jobs to one to bound peak checkpoint storage"
+  ],
+  "billing_changes": false
+}

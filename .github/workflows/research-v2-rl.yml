@@ -1,6 +1,9 @@
 name: Run gated three-seed reward learning
 run-name: V2 reward learning · ${{ inputs.controller_id || 'manual' }}
 on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/research-v2-rl.yml]
   workflow_dispatch:
     inputs:
       controller_id:
@@ -18,7 +21,7 @@ jobs:
     timeout-minutes: 360
     strategy:
       fail-fast: false
-      max-parallel: 2
+      max-parallel: 1
       matrix:
         seed: [17, 29, 43]
     env:
@@ -39,7 +42,7 @@ jobs:
           python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
           python -m pip install -e '.[dev]' modal numpy scipy scikit-learn tinker tinker-cookbook
           python -m compileall -q src
-          python -m pytest tests/test_policy_v2.py tests/test_experimental_v2.py tests/test_rl_gate_v2.py
+          python -m pytest tests/test_policy_v2.py tests/test_experimental_v2.py tests/test_rl_gate_v2.py tests/test_resume_v2.py
       - name: Await the complete controlled SFT campaign
         run: |
           gh run watch 43665821333 --repo "$GITHUB_REPOSITORY" --exit-status --interval 30
@@ -67,8 +70,21 @@ jobs:
           Path('inputs/evidence.json').write_text(next(Path('inputs/evidence').rglob('evidence.json')).read_text())
           with open(os.environ['GITHUB_OUTPUT'],'a') as f:f.write('manifest='+best['private_manifest_id']+'\nobjective='+best['objective']+'\n')
           PY
+      - name: Restore exact interrupted prefixes without restarting their budgets
+        id: resume
+        env:
+          TRAINING_SEED: ${{ matrix.seed }}
+        run: |
+          python - <<'PY'
+          import os,subprocess
+          seed=int(os.environ['TRAINING_SEED'])
+          manifests={17:'1950e1e469044574995b74983430fc96',29:'ad590d9263ed4653a0debddd9d10beb8'}
+          if seed in manifests:
+              subprocess.run(['gh','run','download','43671941385','--repo',os.environ['GITHUB_REPOSITORY'],'--name','campaign-v2-rl-'+str(seed),'--dir','inputs/resume'],check=True)
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:f.write('manifest='+manifests.get(seed,'')+'\n')
+          PY
       - name: Test reachable reward variation then sample actual trajectories
-        run: modal run -m compute_forecast.policy_v2 --grid inputs/grid.json --evidence inputs/evidence.json --mode rl --objective ${{ steps.parent.outputs.objective }} --seed ${{ matrix.seed }} --parent ${{ steps.parent.outputs.manifest }} --max-updates 60
+        run: modal run -m compute_forecast.policy_v2 --grid inputs/grid.json --evidence inputs/evidence.json --mode rl --objective ${{ steps.parent.outputs.objective }} --seed ${{ matrix.seed }} --parent ${{ steps.parent.outputs.manifest }} --max-updates 60 --resume "${{ steps.resume.outputs.manifest }}" --resume-inputs inputs/resume
       - uses: actions/upload-artifact@v4
         if: always()
         with:

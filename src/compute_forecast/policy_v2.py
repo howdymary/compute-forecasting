@@ -196,7 +196,21 @@ def reachable_training_rewards(task):
     rewards=[max(-5,min(5,-task["future_evaluator_only"][c]["loss"]/task["scale"])) for c in possible]
     return {"task_id":task["task_id"],"possible_terminal_reward_range":max(rewards)-min(rewards),"possible_winners":len(possible),"reward_is_clipped":True}
 
-async def run(grid_path,output,objective,seed,mode="sft",parent=None,max_updates=None,evidence_path=None):
+def recover_prefix(updates,trajectories,recovery,rng_state,iteration_limit):
+    """Require the exact saved optimizer/trajectory prefix; never hide discarded work."""
+    if len(updates)!=recovery["update"] or [u["update"] for u in updates]!=list(range(1,len(updates)+1)):raise ValueError("Recovery update prefix mismatch")
+    groups={}
+    for t in trajectories:
+        if t["phase"]!="training" or t["reward_label_end"]>protocol()["train_last_label"]:raise ValueError("Non-training resume trajectory")
+        groups[t["step"]]=groups.get(t["step"],0)+1
+    last=max(groups,default=0)
+    if last!=recovery["rollout_iteration"] or set(groups)!=set(range(1,last+1)) or any(n!=4 for n in groups.values()):raise ValueError("Recovery trajectory prefix mismatch")
+    if not 0<last<iteration_limit:raise ValueError("No registered iterations remain")
+    if updates[-1]["rollout_iteration"]!=last:raise ValueError("Recovery was not saved after the last useful group")
+    rng=random.Random();rng.setstate((rng_state[0],tuple(rng_state[1]),rng_state[2]))
+    return last,rng
+
+async def run(grid_path,output,objective,seed,mode="sft",parent=None,max_updates=None,evidence_path=None,resume=None,resume_inputs=None):
     import tinker,torch
     from tinker_cookbook import model_info,renderers
     from tinker_cookbook.recipes.decisions import Decision,DecisionRenderer,decision_dist_datums,probability_loss
@@ -210,16 +224,41 @@ async def run(grid_path,output,objective,seed,mode="sft",parent=None,max_updates
     out=Path(output);out.mkdir(parents=True,exist_ok=True);run_id=uuid.uuid4().hex;started=time.perf_counter()
     service=tinker.ServiceClient(display_name=f"Compute Forecast v2 {mode} {objective} seed{seed}")
     private={"run_id":run_id,"mode":mode,"seed":seed,"objective":objective,"checkpoints":[],"created_at":now()}
-    trainer=await service.create_lora_training_client(base_model=MODEL,rank=16,seed=seed)
+    restored_updates=[];restored_trajectories=[];resume_iteration=0;resumption=None;chosen=None
+    if resume:
+        if mode!="rl":raise ValueError("Only interrupted RL can resume")
+        private=load_private.remote(resume)
+        if private["mode"]!="rl" or private["seed"]!=seed or private["objective"]!=objective:raise ValueError("Resume identity mismatch")
+        run_id=private["run_id"]
+        recovery=max(private["recovery_states"],key=lambda r:r["update"])
+        root=Path(resume_inputs or "")
+        restored_updates=json.loads(next(root.rglob("updates.json")).read_text())
+        restored_trajectories=json.loads(next(root.rglob("rl-trajectories.json")).read_text())
+        resume_iteration,restored_rng=recover_prefix(restored_updates,restored_trajectories,recovery,private["rng_state"],protocol()["rl_max_updates"])
+        trainer=await service.create_training_client_from_state_with_optimizer(recovery["state_path"])
+        resumption={"source_failed_run_id":"43671941385","recovery_checkpoint_id":recovery["checkpoint_id"],"optimizer_updates_already_executed":len(restored_updates),"sampling_iterations_already_executed":resume_iteration,"discarded_optimizer_updates":0,"optimizer_state_restored":True,"resumed_at":now()}
+        private["resumption"]=resumption
+    else:
+        trainer=await service.create_lora_training_client(base_model=MODEL,rank=16,seed=seed)
+        if parent:
+            private_parent=load_private.remote(parent);chosen=private_parent["selected"];private["parent_checkpoint_id"]=chosen["checkpoint_id"]
+            await trainer.load_state(chosen["state_path"])
     tokenizer=trainer.get_tokenizer();renderer=DecisionRenderer(renderers.get_renderer(model_info.get_recommended_renderer_name(MODEL),tokenizer))
-    if parent:
-        private_parent=load_private.remote(parent);chosen=private_parent["selected"];private["parent_checkpoint_id"]=chosen["checkpoint_id"]
-        await trainer.load_state(chosen["state_path"])
+    rest=tinker.RestClient()
     base=await service.create_sampling_client(base_model=MODEL)
     starting=await evaluate(dev,base,renderer,"starting_policy_development");write(out/"starting-development.json",starting)
-    checkpoints=[];updates=[];rng=random.Random(seed)
+    checkpoints=[{k:v for k,v in c.items() if k not in ("state_path","sampler_path")} for c in private["checkpoints"]] if resume else []
+    updates=list(restored_updates);rng=random.Random(seed)
+    if resume:
+        rng=restored_rng
+        write(out/"updates.json",updates);write(out/"rl-trajectories.json",restored_trajectories);write(out/"checkpoints.json",checkpoints)
     async def checkpoint(step):
-        state=await trainer.save_state("v2_"+mode+"_"+str(step));weights=await trainer.save_weights_for_sampler("v2_"+mode+"_"+str(step))
+        # Update zero reuses the already preserved SFT parent rather than duplicating storage.
+        if mode=="rl" and step==0 and chosen:
+            from types import SimpleNamespace
+            state=SimpleNamespace(path=chosen["state_path"]);weights=SimpleNamespace(path=chosen["sampler_path"])
+        else:
+            state=await trainer.save_state("v2_"+mode+"_"+str(step));weights=await trainer.save_weights_for_sampler("v2_"+mode+"_"+str(step))
         sampler=await service.create_sampling_client(model_path=weights.path)
         scored=await evaluate(dev,sampler,renderer,mode+"_"+objective+"_step"+str(step))
         row={"update":len(updates),"rollout_iteration":step,"checkpoint_id":hashlib.sha256(weights.path.encode()).hexdigest()[:20],"development_pinball":scored["pinball"]}
@@ -227,12 +266,19 @@ async def run(grid_path,output,objective,seed,mode="sft",parent=None,max_updates
         private["rng_state"]=rng.getstate();private["completed_optimizer_updates"]=len(updates)
         retain_private.remote(run_id,private);write(out/"checkpoints.json",checkpoints);write(out/("development-"+str(step)+".json"),scored)
         print("V2_CHECKPOINT:"+json.dumps({**row,"seed":seed,"objective":objective,"mode":mode}),flush=True)
-    await checkpoint(0)
+    if not resume:await checkpoint(0)
     ceiling=protocol()["sft_max_updates"] if mode=="sft" else protocol()["rl_max_updates"]
     limit=max_updates or ceiling
     if not 1<=limit<=ceiling:raise ValueError("Update limit exceeds registered ceiling")
-    rl_trajectories=[];gate=None;constant_streak=0;skipped_constant_groups=0;recovery_checkpoints=[]
-    private["rollout_snapshots"]=[];private["recovery_states"]=[]
+    rl_trajectories=list(restored_trajectories);gate=None;constant_streak=0
+    previous_groups={}
+    for t in restored_trajectories:previous_groups.setdefault(t["step"],[]).append(t["reward"])
+    skipped_constant_groups=sum(max(v)-min(v)<1e-10 for v in previous_groups.values())
+    for n in sorted(previous_groups,reverse=True):
+        if max(previous_groups[n])-min(previous_groups[n])>=1e-10:break
+        constant_streak+=1
+    recovery_checkpoints=[{k:v for k,v in c.items() if k!="state_path"} for c in private.get("recovery_states",[])]
+    if not resume:private["rollout_snapshots"]=[];private["recovery_states"]=[]
     variation=[reachable_training_rewards(t) for t in train]
     informative_ids={v["task_id"] for v in variation if v["possible_terminal_reward_range"]>1e-8}
     rl_train=[t for t in train if t["task_id"] in informative_ids]
@@ -255,7 +301,7 @@ async def run(grid_path,output,objective,seed,mode="sft",parent=None,max_updates
     else:
         # True sampled-action PPO-style policy gradient on the bounded categorical distribution.
         # Rewards are tool-computed subsequent forecast losses inside TRAINING only.
-        for step in range(1,limit+1):
+        for step in range(resume_iteration+1,limit+1):
             weights=await trainer.save_weights_for_sampler("v2_rl_rollout_"+str(step),ttl_seconds=3600)
             rollout_checkpoint_id=hashlib.sha256(weights.path.encode()).hexdigest()[:20]
             private["rollout_snapshots"].append({"iteration":step,"checkpoint_id":rollout_checkpoint_id,"sampler_path":weights.path,"ttl_seconds":3600})
@@ -263,6 +309,9 @@ async def run(grid_path,output,objective,seed,mode="sft",parent=None,max_updates
             task=rl_train[rng.randrange(len(rl_train))]
             batch_tasks=[task]*4  # Same task, four genuinely sampled trajectories.
             rollouts=await asyncio.gather(*(episode(t,sampler,renderer,random.Random(seed*100000+step*10+i)) for i,t in enumerate(batch_tasks)))
+            # Sampling has finished; gradients use recorded propensities, never this sampler resource.
+            await rest.delete_checkpoint_from_tinker_path(weights.path)
+            private["rollout_snapshots"][-1]["deleted_after_use"]=True
             rewards=[max(-5,min(5,-r[0]["pinball"]/t["scale"])) for r,t in zip(rollouts,batch_tasks)]
             for (r,raw),reward,t in zip(rollouts,rewards,batch_tasks):
                 rl_trajectories.append({"step":step,"task_id":t["task_id"],"phase":"training","feedback_cache_hit":True,"new_numerical_execution":False,"rollout_checkpoint_id":rollout_checkpoint_id,"reward":reward,"reward_label_end":t["reward_label_end"],"trace":r,"sampled_actions":[{k:v for k,v in d.items() if k!="decision"} for d in raw]})
@@ -293,8 +342,15 @@ async def run(grid_path,output,objective,seed,mode="sft",parent=None,max_updates
             if len(updates)%10==0:
                 recovery=await trainer.save_state("v2_rl_recovery_"+str(len(updates)))
                 record={"update":len(updates),"rollout_iteration":step,"checkpoint_id":hashlib.sha256(recovery.path.encode()).hexdigest()[:20],"kind":"optimizer_state","development_evaluated":False}
-                recovery_checkpoints.append(record);private["recovery_states"].append({**record,"state_path":recovery.path})
+                old_recovery=list(private["recovery_states"])
+                recovery_checkpoints.append(record);private["recovery_states"]=[{**record,"state_path":recovery.path}]
                 private["rng_state"]=rng.getstate();private["completed_optimizer_updates"]=len(updates);retain_private.remote(run_id,private)
+                for old in old_recovery:
+                    if old["state_path"] in {c["state_path"] for c in private["checkpoints"]}:raise ValueError("Refused evaluated-state deletion")
+                    await rest.delete_checkpoint_from_tinker_path(old["state_path"])
+                    private.setdefault("retired_recovery_states",[]).append({k:v for k,v in old.items() if k!="state_path"}|{"status":"superseded_and_deleted"})
+                    for r in recovery_checkpoints:
+                        if r["checkpoint_id"]==old["checkpoint_id"]:r["status"]="superseded_and_deleted"
             if step in (20,50,limit):await checkpoint(step)
     if mode=="rl" and updates and checkpoints[-1]["update"]!=len(updates):await checkpoint(rl_trajectories[-1]["step"])
     best=min(private["checkpoints"],key=lambda x:(x["development_pinball"],x["update"]));private["selected"]=best
@@ -318,7 +374,7 @@ async def run(grid_path,output,objective,seed,mode="sft",parent=None,max_updates
     if evidence_report:write(out/"with-evidence.json",evidence_report)
     result={"schema_version":2,"run_id":run_id,"mode":mode,"objective":objective,"seed":seed,"model":MODEL,
       "dataset_sha256":PACK_SHA256,"grid_source_sha":grid["code_sha"],"code_sha":os.environ.get("GITHUB_SHA"),"created_at":now(),
-      "actual_optimizer_updates":len(updates),"checkpoints":checkpoints,"selected_update":best["update"],"private_manifest_id":run_id,
+      "actual_optimizer_updates":len(updates),"resumption":resumption,"optimizer_updates_this_process":len(updates)-len(restored_updates),"checkpoints":checkpoints,"selected_update":best["update"],"private_manifest_id":run_id,
       "training_tasks":len(train),"training_temporal_origins":len({t["origin"] for t in train}),"development_tasks":len(dev),"evaluation_tasks":len(test),
       "evaluation_status":protocol()["evaluation_status"],"future_competition_truth_loaded":False,"v1_final_used":False,
       "comparisons":[public_score(x) for x in [initial,trained,*([parent_evaluation] if parent_evaluation else []),noobs,critic,*([evidence_report] if evidence_report else []),*refs]],"static_portfolio":fixed,
@@ -328,6 +384,6 @@ async def run(grid_path,output,objective,seed,mode="sft",parent=None,max_updates
     with open(os.environ["GITHUB_STEP_SUMMARY"],"a") as f:f.write("# V2 policy "+mode+" "+objective+" seed"+str(seed)+"\n\n~~~json\n"+json.dumps(result,indent=2)+"\n~~~\n")
     return result
 @app.local_entrypoint()
-def main(grid:str="inputs/grid/grid.json",output:str="artifacts/v2-policy",objective:str="hard",seed:int=17,mode:str="sft",parent:str="",max_updates:int=0,evidence:str=""):
+def main(grid:str="inputs/grid/grid.json",output:str="artifacts/v2-policy",objective:str="hard",seed:int=17,mode:str="sft",parent:str="",max_updates:int=0,evidence:str="",resume:str="",resume_inputs:str=""):
     if objective not in ("hard","soft") or seed not in protocol()["training_seeds"] or mode not in ("sft","rl"):raise ValueError("Unregistered policy campaign")
-    asyncio.run(run(grid,output,objective,seed,mode,parent or None,max_updates or None,evidence or None))
+    asyncio.run(run(grid,output,objective,seed,mode,parent or None,max_updates or None,evidence or None,resume or None,resume_inputs or None))
