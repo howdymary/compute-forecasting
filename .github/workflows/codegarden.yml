@@ -1,18 +1,18 @@
-name: CodeGarden matched soft collective repair
+name: CodeGarden sequential presolve diagnostic
 on:
   push:
-    branches: [codegarden-hamming-soft-003]
+    branches: [codegarden-hamming-diag-003]
     paths: [.github/workflows/codegarden.yml]
   workflow_dispatch:
 permissions:
   contents: write
 concurrency:
-  group: codegarden-free-hamming-soft-003
+  group: codegarden-free-hamming-diag-003
   cancel-in-progress: false
 env:
   PYTHONDONTWRITEBYTECODE: '1'
   SOURCE_SHA: ${{ github.sha }}
-  CODEGARDEN_BATCH: hamming_soft_001
+  CODEGARDEN_BATCH: hamming_diag_001
 jobs:
   preflight:
     runs-on: ubuntu-latest
@@ -32,12 +32,12 @@ jobs:
       - name: Verify current official baseline
         run: |
           python -B -u codegarden/phase3/preflight.py
-          codegarden/.venv/bin/python -B -u codegarden/phase3/hamming_soft.py --test
-          codegarden/.venv/bin/python -B -u codegarden/phase3/hamming_soft.py --prepare
+          codegarden/.venv/bin/python -B -u codegarden/phase3/hamming_diag.py --test
+          codegarden/.venv/bin/python -B -u codegarden/phase3/hamming_diag.py --prepare
       - uses: actions/upload-artifact@v4
         with:
           name: codegarden-bundle-preflight
-          path: codegarden/artifacts/phase3/hamming_soft_001/
+          path: codegarden/artifacts/phase3/hamming_diag_001/
   probes:
     needs: preflight
     runs-on: ubuntu-latest
@@ -46,7 +46,7 @@ jobs:
       fail-fast: false
       max-parallel: 4
       matrix:
-        case: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+        case: [0]
     steps:
       - name: Fetch immutable source
         env:
@@ -55,7 +55,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: codegarden-bundle-preflight
-          path: codegarden/artifacts/phase3/hamming_soft_001/
+          path: codegarden/artifacts/phase3/hamming_diag_001/
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -67,12 +67,15 @@ jobs:
         run: |
           mkdir -p codegarden/.build
           g++ -O3 -std=c++17 codegarden/phase3/bundle_connected_v2.cpp -o codegarden/.build/bundle
-          codegarden/.venv/bin/python -B -u codegarden/phase3/hamming_soft.py --case ${{ matrix.case }}
+          for case in 0 1 3 2
+          do
+            codegarden/.venv/bin/python -B -u codegarden/phase3/hamming_diag.py --case "$case"
+          done
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: codegarden-bundle-${{ matrix.case }}
-          path: codegarden/artifacts/phase3/hamming_soft_001/
+          path: codegarden/artifacts/phase3/hamming_diag_001/
   collect:
     needs: [preflight, probes]
     if: always()
@@ -87,13 +90,13 @@ jobs:
         with:
           pattern: codegarden-bundle-*
           merge-multiple: true
-          path: codegarden/artifacts/phase3/hamming_soft_001/
+          path: codegarden/artifacts/phase3/hamming_diag_001/
       - name: Publish leased results
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python -B -u codegarden/phase3/publish_hamming_soft.py
+        run: python -B -u codegarden/phase3/publish_hamming_diag.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: codegarden-bundle-collected
-          path: codegarden/artifacts/phase3/hamming_soft_001/
+          path: codegarden/artifacts/phase3/hamming_diag_001/
