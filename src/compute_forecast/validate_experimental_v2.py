@@ -42,6 +42,12 @@ async def run():
                 for r in rl_curves.values():
                     for c in r["checkpoints"]:
                         assert any(c["checkpoint_id"] in t and format(c["development_pinball"],".8f") in t for t in titles)
+            if rl_curves:
+                await page.locator("section").first.evaluate("(el)=>el.scrollIntoView({block:'start',behavior:'instant'})")
+                capture=await page.screenshot(path=str(out/(label+"-rl-learning.png")),full_page=False)
+                encoded=base64.b64encode(capture)
+                for n in range(0,len(encoded),2048):
+                    print("V2_SCREENSHOT:"+label+"-rl-learning:"+str(n//2048)+":"+encoded[n:n+2048].decode(),flush=True)
             await page.locator("#stage").select_option("sft")
             await page.locator("#phase").select_option("development");await page.locator("#horizon").select_option("3")
             assert await page.locator("#phase").input_value()=="development" and await page.locator("#horizon").input_value()=="3"
