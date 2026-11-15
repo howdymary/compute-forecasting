@@ -6,11 +6,13 @@ from pathlib import Path
 import modal
 from .campaign_v2 import unpack,build_history,invoke,protocol
 from .policy_v2 import make_tasks
-from .starter_probe import image as base_image,volume,PACK_SHA256
+from .starter_probe import volume,PACK_SHA256
 app=modal.App("compute-forecast-chronos2-control-v3")
 public=modal.Volume.from_name("compute-forecast-public",create_if_missing=False,version=2)
-image=(base_image.pip_install("torch==2.8.0",index_url="https://download.pytorch.org/whl/cpu")
-       .pip_install("chronos-forecasting==2.3.2","transformers==4.57.1","huggingface-hub==0.36.0"))
+image=(modal.Image.debian_slim(python_version="3.11")
+       .pip_install("gdown>=6,<7","duckdb==1.2.2","pandas==2.3.1","numpy==2.2.6","pyarrow>=16,<24")
+       .pip_install("torch==2.8.0",index_url="https://download.pytorch.org/whl/cpu")
+       .pip_install("chronos-forecasting==2.3.2","transformers==4.57.1","huggingface-hub==0.36.0").add_local_python_source("compute_forecast"))
 def canonical(value):return json.dumps(value,sort_keys=True,allow_nan=False).encode()
 def atomic(path,value):
     path.parent.mkdir(parents=True,exist_ok=True);tmp=path.with_name(path.name+".pending")

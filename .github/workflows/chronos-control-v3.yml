@@ -35,3 +35,5 @@ jobs:
           name: chronos-control-v3-${{ github.run_id }}
           path: artifacts/
           retention-days: 30
+
+# Engineering retry: install dependencies before mounting source; fixed model/config unchanged.
