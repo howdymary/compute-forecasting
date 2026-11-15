@@ -214,3 +214,6 @@ loadAssets();loadExpanded();fetchJson('/api/chronos-control').then(v=>{C=v;if(P&
 
 start().catch(e=>{$('#app').innerHTML='<div class="empty"><h2>Verified pricing data is temporarily unavailable.</h2><p>No substitute values are displayed. '+esc(e.message)+'</p><button class="retry" id="retry">Try again</button><p style="margin-top:15px">'+link('https://github.com/howdymary/compute-forecasting/tree/compute-observatory','Inspect source artifacts')+'</p></div>';$('#retry').onclick=()=>location.reload()});
 </script></body></html>'''
+
+from .review_ui_v4 import enhance as enhance_review_v4
+HTML=enhance_review_v4(HTML)

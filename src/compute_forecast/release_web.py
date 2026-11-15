@@ -10,7 +10,7 @@ from .pricing_contract import validate as validate_pricing
 app=modal.App("compute-forecast-observatory")
 public=modal.Volume.from_name("compute-forecast-public",create_if_missing=True,version=2)
 STATIC_ASSET_BUILD="python - <<'PY'\nfrom pathlib import Path\nfrom urllib.request import urlopen\nimport hashlib\nbase=\"https://raw.githubusercontent.com/google/fonts/a85fc09e44c70c7159761adfdc9d5dd007792c15/ofl/caveat/\"\nroot=Path(\"/opt/notebook-static\");root.mkdir(parents=True,exist_ok=True)\nfor source,name,expected in [(\"Caveat%5Bwght%5D.ttf\",\"caveat-f84acf2c.ttf\",\"f84acf2ce2d1b3329b194749530dbaec047e6df6\"),(\"OFL.txt\",\"OFL.txt\",\"6e5220c9576d98dfc684e550ddf0d87f68b3edc5\")]:\n    raw=urlopen(base+source,timeout=60).read()\n    assert hashlib.sha1(b\"blob \"+str(len(raw)).encode()+b\"\\0\"+raw).hexdigest()==expected,\"Unverified static asset\"\n    (root/name).write_bytes(raw)\nPY"
-image=modal.Image.debian_slim(python_version="3.11").pip_install("fastapi[standard]>=0.115,<1").run_commands(STATIC_ASSET_BUILD).env({"OBSERVATORY_UI_SHA":os.environ.get("GITHUB_SHA","unknown")}).add_local_python_source("compute_forecast")
+image=modal.Image.debian_slim(python_version="3.11").pip_install("fastapi[standard]>=0.115,<1").run_commands(STATIC_ASSET_BUILD).env({"OBSERVATORY_UI_SHA":os.environ.get("GITHUB_SHA","unknown")}).add_local_file("results/review-v4/findings.json","/opt/review-v4/findings.json",copy=True).add_local_file("configs/prospective-selector-v4.json","/opt/review-v4/prospective.json",copy=True).add_local_file("configs/review-v4-experiments.json","/opt/review-v4/experiments.json",copy=True).add_local_python_source("compute_forecast")
 FILES={"forecasts.csv":"text/csv","outlook.md":"text/markdown","outlook-scenarios.json":"application/json","demo.mp4":"video/mp4"}
 
 @app.function(image=image,cpu=.25,memory=256,timeout=90,volumes={"/public":public})
@@ -143,6 +143,18 @@ def web():
         payload=json.loads(raw)
         if payload["scope"]["cells"]!=12 or payload["official_export_changed"] or payload["selector_registry_changed"] or payload["future_competition_truth_loaded"]:return JSONResponse({"error":"Comparator boundary validation failed"},status_code=503,headers=headers)
         return Response(raw,media_type="application/json",headers={**headers,"ETag":hashlib.sha256(raw).hexdigest()})
+
+    @api.get("/api/review-v4")
+    def review_v4():
+        from .review_v4 import validate as validate_review
+        raw=Path("/opt/review-v4/findings.json").read_bytes()
+        try:validate_review(json.loads(raw))
+        except (ValueError,KeyError,TypeError):
+            return JSONResponse({"error":"Review artifact failed validation"},status_code=503,headers=headers)
+        return Response(raw,media_type="application/json",headers={**headers,"ETag":hashlib.sha256(raw).hexdigest()})
+    @api.get("/api/review-v4/protocols")
+    def review_protocols():
+        return JSONResponse({"schema_version":4,"prospective":json.loads(Path("/opt/review-v4/prospective.json").read_bytes()),"experiments":json.loads(Path("/opt/review-v4/experiments.json").read_bytes())},headers=headers)
 
     @api.get("/health")
     def health():

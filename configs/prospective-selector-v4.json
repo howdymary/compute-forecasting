@@ -1,0 +1,126 @@
+{
+  "schema_version": 4,
+  "study_id": "prospective-selector-v4",
+  "classification": "New independent-source prospective study; never replaces frozen competition targets",
+  "origins": [
+    "2026-11-23",
+    "2026-11-30",
+    "2026-12-07",
+    "2026-12-14",
+    "2026-12-21",
+    "2026-12-28",
+    "2027-01-04",
+    "2027-01-11"
+  ],
+  "issuance_deadline_hours_utc": 2,
+  "horizons": [
+    1,
+    3,
+    7
+  ],
+  "quantiles": [
+    0.1,
+    0.5,
+    0.9
+  ],
+  "input_cutoff": "Previous UTC calendar day; observation and retrieval timestamps retained",
+  "validation_lags_days": [
+    8,
+    15
+  ],
+  "target_definition": {
+    "unit": "USD per GPU-hour",
+    "measurement": "advertised_rental_offer_rate",
+    "statistic": "daily median across quality-ok AWS/Azure/GCP spot observations; SKU rate divided by GPU count",
+    "region": "mixed",
+    "composition": "changing population",
+    "source": "Alex Hubbard independently retrieved CC BY4 archive",
+    "gap_rule": "No interpolation, forward fill or cross-series stitching",
+    "revision_rule": "First captured vintage preserved; later captures append revisions"
+  },
+  "cohorts": {
+    "primary": [
+      "hubbard-independent-a100-40"
+    ],
+    "transfer": [
+      "hubbard-independent-t4"
+    ]
+  },
+  "eligibility": {
+    "minimum_observed_days": 56,
+    "history_window_days": 120,
+    "required_latest_input_age_days": 0,
+    "require_both_matured_validation_folds": true,
+    "missing_fold": "pending case; never synthesized"
+  },
+  "candidate_pool": "Exact 42 identifiers in frozen v2 registry, same implementations and explicit logged baseline fallbacks for unavailable auxiliaries; no candidates added",
+  "selectors": [
+    "starting_policy",
+    "frozen_operational_sft",
+    "four_tree_portfolio",
+    "training_selected_static",
+    "gp_complete_metadata",
+    "random_seed_17"
+  ],
+  "common_initial": [
+    "last_value",
+    "last_value_empirical"
+  ],
+  "trial_budget": 6,
+  "four_tree_portfolio": [
+    "tree_56_3",
+    "tree_56_7",
+    "tree_28_3",
+    "tree_28_7"
+  ],
+  "training_selected_static": [
+    "drift",
+    "tree_28_3",
+    "tree_28_7",
+    "ensemble_0.25"
+  ],
+  "direct_forecasters": [
+    "last_value",
+    "last_value_empirical",
+    "chronos2_fixed"
+  ],
+  "selector_scale": "Frozen v2 training-only scale loaded from hash-verified derived archive; never estimated from prospective outcomes",
+  "checkpoint": {
+    "model": "Qwen/Qwen3.5-4B",
+    "run_id": "c24ee0b5943f48c2bfa17032598f42f4",
+    "checkpoint_id": "ef9cf57b88d0bbe9ef3d",
+    "update": 100
+  },
+  "chronos": {
+    "model": "amazon/chronos-2",
+    "revision": "29ec3766d36d6f73f0696f85560a422f50e8498c",
+    "library": "2.3.2",
+    "cross_learning": false,
+    "covariates": false
+  },
+  "scoring": {
+    "pinball": "Mean of q10/q50/q90 loss, then mean over exact matched cells",
+    "coverage": "Inclusive q10-q90 count / matched cells",
+    "failures": "Retain every failure; no implicit zero, no substitution for a failed policy; pairwise cohorts and missingness explicit",
+    "analysis_schedule": "After each registered origin fully matures, descriptive cumulative results; final analysis after eight origins; no checkpoint/configuration reselection",
+    "independence": "Weekly origins avoid overlapping target dates but share history and market regimes; cells are not independent",
+    "stopping": "Eight origins or terminal source unavailability documented; no performance-based stopping"
+  },
+  "protected_dates": {
+    "start": "2026-11-07",
+    "end": "2026-11-13",
+    "rule": "Never download these price partitions or use observations on these dates"
+  },
+  "resources": {
+    "max_containers": 2,
+    "cpu_per_container": 4,
+    "memory_mb": 8192,
+    "timeout_seconds": 1800,
+    "max_source_bytes": 300000000,
+    "max_source_objects": 750,
+    "new_training": false,
+    "provider_cost_usd": null
+  },
+  "publication": "Only independently licensed derived observations, forecasts, scores and provenance; raw source objects retained privately",
+  "existing_commitments": "Unchanged; baseline and Chronos November16/18/22 remain locked in prospective_control_v3.py"
+}

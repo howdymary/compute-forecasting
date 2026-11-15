@@ -1,0 +1,90 @@
+{
+  "schema_version": 4,
+  "classification": "Registered successor protocols; retrospective diagnostics explicitly separate",
+  "interval": {
+    "id": "horizon-empirical-v4",
+    "base": "last_value",
+    "method": "Horizon-specific signed residual quantiles around persistence",
+    "effective_lead": "Target date minus last input date",
+    "window_calendar_days": 180,
+    "min_residuals": 30,
+    "quantile_method": "linear",
+    "quantiles": [
+      0.1,
+      0.5,
+      0.9
+    ],
+    "failure": "pending_insufficient_residuals; no unregistered fallback",
+    "guarantee": "Empirical intervals only; no exchangeability or population coverage guarantee",
+    "outside_frozen_pool": true
+  },
+  "learning": {
+    "min_training_tasks": 24,
+    "min_training_origins": 8,
+    "min_informative_tasks": 12,
+    "min_unique_contexts": 12,
+    "min_development_origins": 4,
+    "rationale": "Engineering diversity gates, not a power calculation",
+    "max_optimizer_updates": 20,
+    "max_sampling_iterations": 30,
+    "checkpoints": [
+      0,
+      5,
+      10,
+      20
+    ],
+    "batch_size": 32,
+    "seed": 17,
+    "learning_rate": 0.00003,
+    "mode": "sft",
+    "model": "Qwen/Qwen3.5-4B",
+    "rank": 16,
+    "wall_seconds": 1800,
+    "selection": "Development loss then earlier update; no evaluation-driven selection",
+    "reward": "For subsequent RL: negative matured training-only terminal pinball / frozen training scale, clipped [-5,5]; four sampled trajectories per task with a group mean baseline",
+    "constant_reward_stop_groups": 5,
+    "resume": "Exact optimizer and RNG prefix only; otherwise a new run",
+    "release_gate": "No updates until readiness passes; no automatic RL launch"
+  },
+  "evidence": {
+    "id": "feedback-factorial-v4",
+    "conditions": [
+      "feedback_only",
+      "relevant_evidence",
+      "irrelevant_evidence",
+      "relevant_criticism",
+      "neutral_text"
+    ],
+    "policies": [
+      "starting_policy",
+      "frozen_operational_sft"
+    ],
+    "trial_budget": 6,
+    "selection": "Greedy categorical decisions, no model updates",
+    "seed": 17,
+    "max_tasks": 8,
+    "max_exa_requests": 2,
+    "max_inferences": 500,
+    "wall_seconds": 1800,
+    "packet_format": "Fixed fields and character budget; numerical feedback identical",
+    "final_chooser": "True matured validation in every arm",
+    "metrics": [
+      "action_sequence",
+      "reveal_set",
+      "terminal_forecaster",
+      "pinball",
+      "runtime",
+      "provider_usage"
+    ],
+    "historical_scope": "Retrospective runs labeled as such; forward tasks use evidence retrieved before issuance",
+    "outcomes": "pending matched forward tasks; no causal accuracy claim from current open-period prompt shifts",
+    "past_dev": "Authorship, IDs, recall results and actual use required; failed recalls recorded"
+  },
+  "sources": [
+    "https://tinker-docs.thinkingmachines.ai/cookbook/recipes/decisions/",
+    "https://modal.com/docs/guide/function-invocation-methods",
+    "https://arxiv.org/abs/2507.02554",
+    "https://arxiv.org/abs/2106.00170",
+    "https://otexts.com/fpp3/tscv.html"
+  ]
+}
