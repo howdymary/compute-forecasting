@@ -40,6 +40,15 @@ async def run():
             assert await page.locator("#question").input_value()=="composition"
             assert await page.locator("#phase").input_value()=="development"
             assert await page.locator("#horizon").input_value()=="3"
+            if data.get("policy_reports"):
+                first=next(r for r in data["policy_reports"] if r["mode"]=="sft")
+                starting=next(c for c in first["comparisons"] if c["policy"]=="starting_policy")
+                refs=await page.locator("#selector-references").inner_text()
+                assert format(starting["pinball"],".8f") in refs
+                assert format(starting["baseline_pinball"],".8f") in refs
+                for key in ("stronger_static_control","complete_encoding_gp_control","training_selected_fixed_forecaster"):
+                    if data.get("analysis",{}).get(key):
+                        assert format(data["analysis"][key]["pinball"],".8f") in refs
             await page.locator("#question").focus();await page.keyboard.press("Tab")
             assert await page.evaluate("document.activeElement!==document.body")
             await page.evaluate("window.scrollTo(0,0)")
