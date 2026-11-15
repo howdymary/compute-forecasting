@@ -28,3 +28,15 @@ unique per run. No forecasting checkpoint, audience or storage is reused.
 Mochi is its own package. The only root-level addition is an additive Actions
 workflow. It references existing secrets; those values stay on the runner.
 No forecasting deployment or billing configuration is changed.
+
+## Executed verification
+
+Successful workflow: https://github.com/howdymary/compute-forecasting/actions/runs/43762703104
+Four model-driven roles, two Exa searches, eleven verified cross-role recalls,
+one passed private-canary boundary, and 188 Modal rollouts completed. The public
+replay site has its own app, `mochi-policy-studio`, with no provider secrets
+attached. Previous bootstrap attempts failed on image-layer ordering and an
+automatically uploaded package's protocol path. The successful image sets
+`MOCHI_ROOT=/app` explicitly. Failed attempts are not counted as successful
+sponsor runs. The remote default branch was reverified as `compute-observatory`;
+the active local unborn `metagame` branch was preserved.
