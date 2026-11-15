@@ -21,6 +21,12 @@ the conventional control. Under higher friction and mass it fell to **1/8**,
 versus 6/8 for conventional search. This is conditional improvement and an
 important generalization failure, not a universal win or proof of search value.
 
+## Desk humanoid design and expanded study
+
+[Design 02 preview](https://howdymary--mochi-policy-studio-web.us-east.modal.run/concept.html) gives Mochi a compact mechanical humanoid body on a full-size desk. [The design notes](docs/desk-humanoid.md) distinguish its static Blender rig and proposed desktop-bowling task from the measured supported-pushing simulator.
+
+The separately registered robustness follow-up uses eight research rounds, the same controller-family access in both search arms, fresh friction/mass mixtures, and a maximum of 2,016 Modal simulations. Execution: [workflow 43765530700](https://github.com/howdymary/compute-forecasting/actions/runs/43765530700). Do not pool its outcomes with V1.
+
 ## First visible slice
 
 - Original procedural mini humanoid and tabletop scene.
