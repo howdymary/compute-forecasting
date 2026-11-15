@@ -1,0 +1,9 @@
+# Change solver after bounded corridor stagnation
+
+Six low2goal models completed without a new226: parent0,2,3,4,5,6. Their three/four-blocker models timed out. This batch selects four source parents(0,2,3,4), both thresholds3and4, and pairs uncut CP-SAT controls with a source-scoped high-word requirement. Every model uses the exact same fixed/pool/hint/seed as its pair. Each gets150wall seconds and two workers; actual processCPU is measured.
+
+The feasibility model requires size>=226, has no optimization objective and no artificial227ceiling. Only exact known226arrays are excluded. Positive-only partial incumbent hints may be infeasible; the pinned OR-Tools9.14repair_hint mechanism is a search heuristic, not a constraint fixing hint values. Official parameter source: https://github.com/google/or-tools/blob/v9.14/ortools/sat/sat_parameters.proto .
+
+Conditional implication: any previously unknown code of size>=226 in the larger pool must select an outside word beyond the completed low2universe. Incumbent vertices fixed in that smaller model are isolated from every allowed outside word, so omitting them cannot evade that implication: they can be reinserted safely. An independent brute-force small-graph test checks this extension argument. The premise is a native local closure with no formal absence certificate. Uncut controls remain, and any valid positive violating the learned cut is retained and flagged. Acceptance never depends on the cut.
+
+Each candidate is exported plainly and checked by both unchanged verifiers. New226triggers strict augmentation. UNKNOWN/missing models stay open. INFEASIBLE concerns only the exact encoded pool; treatment conclusions additionally depend on the native premise. No global bound or trained-policy claim. Standard public GitHub runners only; no sponsor requests or budget changes.
