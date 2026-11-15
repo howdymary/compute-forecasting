@@ -5,6 +5,7 @@ from pathlib import Path
 import modal
 from .release_payload import build,validate
 from .explore_ui import HTML
+from .experimental_ui_v2 import HTML as EXPERIMENTAL_HTML
 from .pricing_contract import validate as validate_pricing
 app=modal.App("compute-forecast-observatory")
 public=modal.Volume.from_name("compute-forecast-public",create_if_missing=True,version=2)
@@ -38,6 +39,20 @@ def web():
             return file.read_bytes() if file.is_file() else None
     @api.get("/")
     def index():return HTMLResponse(HTML,headers=headers)
+    @api.get("/experimental")
+    def experimental_index():return HTMLResponse(EXPERIMENTAL_HTML,headers=headers)
+    @api.get("/api/experimental")
+    def experimental_results():
+        with lock:
+            public.reload();root=Path("/public/experimental-v2");summary=root/"summary.json"
+            payload=json.loads(summary.read_text()) if summary.is_file() else {"schema_version":2,"campaign_status":"running","policy_reports":[],"checkpoint_runs":[],"status":"awaiting_publication"}
+            payload["autonomy_runs"]=[json.loads(p.read_text()) for p in sorted((root/"autonomy").glob("*.json"))[-20:]]
+            prospective=root/"prospective-manifest.json"
+            if prospective.is_file():payload["prospective"]=json.loads(prospective.read_text())
+        encoded=json.dumps(payload,allow_nan=False)
+        if any(token in encoded for token in ("tinker://","TINKER_API_KEY","MODAL_TOKEN_SECRET","Authorization","permitted_private_method_context")):
+            return JSONResponse({"error":"Publication failed privacy validation"},status_code=503,headers=headers)
+        return Response(encoded,media_type="application/json",headers=headers)
     @api.get("/api/release")
     def results():
         raw=read("results.json")
