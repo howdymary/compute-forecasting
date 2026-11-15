@@ -34,7 +34,11 @@ def audit(source):
                         if aux!="target_only" and not panel:row["fallback"]="unsupported_auxiliary_contract";rows.append(row);continue
                         for lag in [0,*range(h,22)]:
                             at=date.fromisoformat(origin)-timedelta(days=lag);query=features_at(series,at,space,panel)
-                            if query is None:continue
+                            if query is None:
+                                if lag==0:break
+                                continue
+                            end=at+timedelta(days=h)
+                            if lag and (end not in series or series[end]<=0):continue
                             matrix=[]
                             for k in range(h,days+1):
                                 start=at-timedelta(days=k);end=start+timedelta(days=h)
@@ -43,6 +47,7 @@ def audit(source):
                             mask=missing_counts(matrix,query,aux!="target_only")
                             mask.update(as_of=at.isoformat(),fit_role="primary" if lag==0 else "prequential_calibration",used=mask["rows"]>=12,last_permitted_label=at.isoformat())
                             row["fit_masks"].append(mask)
+                            if lag==0 and mask["rows"]<12:break
                         rows.append(row)
     result={"origin":origin,"source_run_id":source["run_id"],"rows":rows,"basket_audit":baskets,"runtime_seconds":time.perf_counter()-started,"modal_call_id":modal.current_function_call_id(),"imputation":"Used fits employ the frozen train-only mean and missingness-indicator algorithm; alpha does not alter masks","scope":"Original 24 Ridge representations; auxiliary-price and strict price-free diagnostics remain separate","numerical_scores_changed":False}
     write(Path("/data/campaign-v2/feature-audit")/(source["run_id"]+".json"),result);volume.commit();shutil.rmtree(temp);return result
