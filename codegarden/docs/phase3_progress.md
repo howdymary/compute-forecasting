@@ -1,4 +1,4 @@
-# CodeGarden research status — 2026-11-15T13:35:49Z
+# CodeGarden research status — 2026-11-15T13:59:00Z
 
 **Objective open. Best found and independently verified remains226, reproduced from the arena. No227 witness or new global record is claimed.**
 
@@ -22,13 +22,15 @@ The arena comparison is current; it is not a complete global-record audit. The c
 
 Earlier randomized construction, ARW/KaMIS, Hamming mutation, weight-band, tensor, exact-repair, structural-hash, union-fusion and long Modal results remain in durable artifacts and earlier reports. No adaptive or trained-policy superiority has been established. Structural hashing itself reached202; the retained global226 score is separate.
 
-## Active hypothesis: expand an exhausted family
+## Completed strategy comparison and current hypothesis
 
-[Run43719457523](https://github.com/howdymary/compute-forecasting/actions/runs/43719457523) compares random single-word unfixing with adaptive unlock-ranked1/2/4-word unfixing, from four matched225 seeds. Each case has a600-wall-second search deadline and two CP-SAT threads; actual CPU is recorded separately.
+[Run43719457523](https://github.com/howdymary/compute-forecasting/actions/runs/43719457523) completed456 trial occurrences:287 OPTIMAL225 goal-families and169 open/gated attempts. Random one-word relaxation closed260 families; maximum-unlock adaptation closed27. Neither found a novel226 or227. These are four matched starting families, not eight independent cases per condition. Two adaptive workers stopped early after exhausting a narrow ranked proposal prefix, while other relaxations remained available. Actual wall budgets are unequal; no trained/adaptive cardinality advantage is established.
 
-The loop keeps an independently valid225 hint. Only a completed OPTIMAL225 novelty-model result closes its fixed-set family. A closed-family exclusion is carried forward **only for candidates of size>=226**, so225 hints remain feasible. It then unfixes additional core words and admits every word compatible with the enlarged family. FEASIBLE/UNKNOWN leaves the child open, restores the last completed parent and changes the relaxation. Checkpoints include source/engine hashes, explicit fixed sets, pools, statuses, witnesses, RNG state and dependency receipts. Resume requires the same engine and a225 checkpoint.
+The preserved225 checkpoints now have fixed sets153,182,154,196,118,196,116 and192. Four random checkpoints continue under the identical engine in [run43721175424](https://github.com/howdymary/compute-forecasting/actions/runs/43721175424). Its native counters are cumulative: subtract the frozen resumption-plan counts to measure new work.
 
-Any new226 passes both protected checkers, then receives unfiltered bounded augmentation toward227. A positive-energy state, timeout or solver log cannot establish success.
+A new [16-case paired comparison](https://github.com/howdymary/compute-forecasting/actions/runs/43721599974) clones all eight checkpoints into random-one and minimum-growth policies. Minimum-growth reverses the earlier unlock heuristic to seek tractable exact expansions. Both conditions use a broad proposal fallback, equal600-loop-wall/two-thread caps, explicit engine/checkpoint migration, and separate new/cumulative trials, bootstrap wall, self CPU and child-verifier CPU. Starting families have correlated ancestry. This is an untrained comparison; all-zero verified improvement labels do not justify claiming successful Tinker training.
+
+The loop keeps an independently valid225 hint. Only OPTIMAL225 closes its explicitly encoded novelty family. Its fixed-set exclusion is carried only when total>=226, so225 hints remain feasible. Exact known226 no-goods apply only at size226; all larger candidates remain eligible. UNKNOWN/FEASIBLE restores the last closed parent and leaves the child open. No formal absence certificate or global bound follows.
 
 ## Real sponsor use and credit boundaries
 
