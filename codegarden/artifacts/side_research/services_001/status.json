@@ -1,8 +1,59 @@
 {
-  "status": "running",
+  "status": "completed",
   "source_sha": "9474663bece6004216919a020a43bdf93b65b523",
   "best_verified": 226,
   "training_claim": false,
   "memory_actor_note": "Three software role identities in a single serialized controller; no independent assistant agents are claimed.",
-  "analyst_memory_reused_by_researcher": true
+  "analyst_memory_reused_by_researcher": true,
+  "collected_workers": 6,
+  "model_statuses": [
+    {
+      "pivot": 1,
+      "removed": 32,
+      "ordering": 0,
+      "status": "TIMEOUT",
+      "nodes": 9441281,
+      "seconds": 30.001
+    },
+    {
+      "pivot": 1,
+      "removed": 32,
+      "ordering": 1,
+      "status": "INFEASIBLE_ENCODED_NEIGHBORHOOD",
+      "nodes": 121235,
+      "seconds": 0.61752
+    },
+    {
+      "pivot": 2,
+      "removed": 32,
+      "ordering": 0,
+      "status": "TIMEOUT",
+      "nodes": 5864449,
+      "seconds": 30.0012
+    },
+    {
+      "pivot": 2,
+      "removed": 32,
+      "ordering": 1,
+      "status": "INFEASIBLE_ENCODED_NEIGHBORHOOD",
+      "nodes": 369255,
+      "seconds": 1.95636
+    },
+    {
+      "pivot": 4,
+      "removed": 64,
+      "ordering": 0,
+      "status": "TIMEOUT",
+      "nodes": 1858561,
+      "seconds": 30.015
+    },
+    {
+      "pivot": 4,
+      "removed": 64,
+      "ordering": 1,
+      "status": "TIMEOUT",
+      "nodes": 2054145,
+      "seconds": 30.0084
+    }
+  ]
 }
