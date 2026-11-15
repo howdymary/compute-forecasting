@@ -9,7 +9,7 @@ async def assert_policy_results(page,data,mode):
     reports=[r for r in data.get("policy_reports",[]) if r["mode"]==mode]
     if not reports:return
     table=panel.locator("table").first
-    assert ("vs SFT parent" if mode=="rl" else "vs starting") in await table.inner_text()
+    assert ("vs sft parent" if mode=="rl" else "vs starting") in (await table.inner_text()).casefold()
     for r in reports:
         label=mode.upper()+" "+r["objective"]+" · "+str(r["seed"])
         row=table.locator("tbody tr").filter(has_text=label)
