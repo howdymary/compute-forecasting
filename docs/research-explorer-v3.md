@@ -81,3 +81,15 @@ The first combined browser/stress validation exposed intermittent transport time
 PNG review confirmed the desktop charts and matched comparison display. A mobile touch check exposed immediate tooltip dismissal on pointer leave; the historical chart now keeps the selected tooltip while focused and dismisses it on blur, matching the existing forecast/scenario interaction. Historical ranges open at their latest actual observation; the margin note calculates change from the first visible observed value.
 
 A subsequent run identified two failures specifically inside TLS handshakes, before application handling, while all three baked-font probes completed in0.13–0.15s. The strict notebook and research stress harnesses now use a pooled HTTPX0.28.1 client with HTTP/2 negotiation, verified TLS, no redirects, zero automatic retries,90s timeouts and at most8 connections. The same12/21 requests and8 caller threads remain; reports additionally assert8 observed simultaneous in-flight requests and record negotiated HTTP versions. This avoids creating a fresh TLS connection for every test request without suppressing HTTP failures or changing numerical assertions. [Client pooling](https://www.python-httpx.org/advanced/clients/), [resource limits](https://www.python-httpx.org/advanced/resource-limits/), [HTTP/2](https://www.python-httpx.org/http2/).
+
+## Final validation receipts
+
+Deployed UI revision `80bf0d6af21bed45cd236d9d756d9f1b1a130983`.
+
+- [Foundation:105 passed,1 existing optional skip](https://github.com/howdymary/compute-forecasting/actions/runs/43691464727).
+- [Exact deployment, metadata, protected files and unchanged official CSV](https://github.com/howdymary/compute-forecasting/actions/runs/43691464751).
+- [Pricing UI](https://github.com/howdymary/compute-forecasting/actions/runs/43691563096) and [experimental UI](https://github.com/howdymary/compute-forecasting/actions/runs/43691563062).
+- [Notebook interactions and12-request strict stress suite](https://github.com/howdymary/compute-forecasting/actions/runs/43691563067).
+- [Research explorer, licensed context, real traces, atomic publication and21-request stress suite](https://github.com/howdymary/compute-forecasting/actions/runs/43691563100).
+
+All UI workflows passed. Actual desktop1512, mobile390 and narrow320px PNGs were inspected. History gaps and exact values, scenario reset/formulas, point pins, focus/disclosure preservation, keyboard/touch, reduced motion, delayed research loading, explicit outage/retry states and official forecast bytes passed. The two stress suites recorded8 simultaneous in-flight callers, negotiatedHTTP/2, and zero automatic retries. Axis text contrast measured5.997:1 in the notebook validation. No unexpected HTTP failures or page errors occurred in these final runs. Earlier failed transport and touch checks remain in Actions history; they were not reclassified as successes.

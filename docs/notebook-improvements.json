@@ -61,5 +61,88 @@
     "Source-bound margin note, movable time ruler and immutable session pins",
     "Study notes exposing coverage, feedback utility and separate resource ledgers"
   ],
-  "remaining_evidence": "Independent periods, more eligible contracts and matured prospective outcomes are needed for stronger forecasting/generalization claims."
+  "remaining_evidence": "Independent periods, more eligible contracts and matured prospective outcomes are needed for stronger forecasting/generalization claims.",
+  "follow_up_v3": {
+    "classification": "Separate follow-up; original post-hoc registration and its execution ledger above remain a historical record",
+    "deployed_ui_sha": "80bf0d6af21bed45cd236d9d756d9f1b1a130983",
+    "methods": "docs/research-explorer-v3.md",
+    "historical_context": {
+      "status": "published_independently_licensed_context_only",
+      "matched_benchmark_overlay_series": 0,
+      "published_series": 2,
+      "observations_per_series": 234,
+      "missing_calendar_days_per_series": 65,
+      "coverage": [
+        "2026-01-12",
+        "2026-11-06"
+      ],
+      "license": "CC BY 4.0",
+      "private_compilation_history_published": false,
+      "upstream_audit_run": 43688836187,
+      "strict_overlap_gate": "failed; tolerance not relaxed",
+      "source_api": "/api/research-assets"
+    },
+    "fixed_comparator": {
+      "status": "completed_additional_retrospective_control",
+      "model": "amazon/chronos-2",
+      "revision": "29ec3766d36d6f73f0696f85560a422f50e8498c",
+      "registration": "configs/chronos-control-v3.json",
+      "workflow_run": 43689130190,
+      "matched_cells": 12,
+      "pinball": 0.012113554233974892,
+      "outside_frozen_selector_pool": true,
+      "official_export_changed": false,
+      "source_api": "/api/chronos-control"
+    },
+    "prospective": {
+      "status": "pending_outcomes",
+      "target_dates": [
+        "2026-11-16",
+        "2026-11-18",
+        "2026-11-22"
+      ],
+      "forecast_rows": 42,
+      "series": 14,
+      "evaluator": "src/compute_forecast/prospective_control_v3.py",
+      "not_before_utc": "2026-11-23T00:00:00Z",
+      "outcomes_loaded": false
+    },
+    "canonical_campaign": {
+      "status": "completed",
+      "sft_runs": 6,
+      "sft_updates": 600,
+      "rl_runs": 3,
+      "rl_updates": 99,
+      "rl_selected_updates": [
+        0,
+        0,
+        0
+      ],
+      "incremental_rl_gain": false
+    },
+    "validation": {
+      "unit_tests_passed": 105,
+      "existing_optional_skips": 1,
+      "deploy_run": 43691464751,
+      "foundation_run": 43691464727,
+      "pricing_run": 43691563096,
+      "experimental_run": 43691563062,
+      "notebook_run": 43691563067,
+      "research_explorer_run": 43691563100,
+      "widths": [
+        1512,
+        390,
+        320
+      ],
+      "stress_requests": [
+        12,
+        21
+      ],
+      "maximum_observed_in_flight": 8,
+      "transport": "HTTP/2",
+      "automatic_retries": 0,
+      "recording": false,
+      "official_csv_sha256": "67a043255a716db6bc9b73cd28f9258c30fb299fd8671a9ee3430c0d94cadd80"
+    }
+  }
 }

@@ -19,3 +19,14 @@ The current ledger records 6 cached result reveals per selector task, 600 optimi
 The first [remote notebook validation](https://github.com/howdymary/compute-forecasting/actions/runs/43683991615) matched diagnostics to saved public results and measured a 1.0387-second HTTP roundtrip. It did not measure pure CPU latency, a zero-dollar serving cost, or new predictive performance.
 
 [Peer comparison and missing Chronos-2 baseline](notebook-peer-review.md) · [Post-hoc improvement register](notebook-improvements.json) · [Live study notes](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/#research)
+
+
+## Completed campaign and research explorer update
+
+The original snapshot above remains a dated record. The canonical campaign has now completed all six SFT runs (600 optimizer updates) and three RL runs (99 updates:41,36,22). All three development selections returned RL update0, the frozen SFT parent, with no incremental RL gain. The original frozen v1 negative result and official export remain unchanged.
+
+The [research explorer methods and source audit](research-explorer-v3.md) add independently licensed historical **context** for A10040GB and T4 (234 observed dates each, Jan12–Nov6;65 missing dates each). Strict numerical identity with the competition series was not established. Exact competition history remains unpublished; the contextual observations are never joined to the official forecast.
+
+A separately registered Chronos-2 control scored0.012113554233974892 pinball on the same12 eligible cells, versus starting selector0.014995328587716763 and operational SFT0.011569797542840439. This is an additional retrospective comparison, outside the frozen42-arm registry. The [control artifact](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/api/chronos-control) preserves the model/weights revision, exact cell keys, timings and future forecast commitment. Prospective targets Nov16/18/22 remain pending; the locked evaluator cannot run before Nov23UTC and no future outcomes were loaded.
+
+The deployed notebook adds checkpoint trajectories, matched series/horizon comparisons, coverage–width views, real paired feedback traces and separate resource units. [Research UI validation](https://github.com/howdymary/compute-forecasting/actions/runs/43691563100) and [notebook validation](https://github.com/howdymary/compute-forecasting/actions/runs/43691563067) passed at1512/390/320px with source values, touch/keyboard, immutable pins, preserved focus/disclosures, delayed research loading, no page overflow, concurrent atomic publication and strict HTTP/numerical assertions. Both stress harnesses used8 measured simultaneous callers, HTTP/2 pooling and zero retries; all12 and21 requests returned200. The remote foundation had105 passing tests and one existing optional dependency skip. PNGs were inspected; no recording jobs were run.
