@@ -39,7 +39,7 @@ def main():
     image=(modal.Image.debian_slim(python_version="3.11").pip_install("numpy==2.2.6","scipy==1.15.3")
        .add_local_file(str(HERE/"constructions.py"),"/root/boundforge/constructions.py")
        .add_local_file(str(HERE/"nondegenerate.py"),"/root/boundforge/nondegenerate.py"))
-    @app.function(image=image,cpu=2,memory=1024,timeout=75,max_containers=6)
+    @app.function(image=image,cpu=2,memory=1024,timeout=75,max_containers=6,serialized=True)
     def worker(spec,nu):
         import sys
         sys.path.insert(0,"/root/boundforge")

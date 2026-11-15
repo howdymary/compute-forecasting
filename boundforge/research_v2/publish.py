@@ -183,8 +183,8 @@ proposal scores, with collapsed solutions marked separately. Neither is a mathem
             page.goto((out/"demo.html").as_uri());page.locator("#check").click()
             assert page.locator("#checks").inner_text().startswith("PASS")
             assert page.evaluate("document.documentElement.scrollWidth <= window.innerWidth")
-            with page.expect_download() as download:page.locator("#download").click()
-            p=out/"download-check.json";download.value.save_as(p);assert json.loads(p.read_text())==best;p.unlink()
+            with page.expect_download() as download_event:page.locator("#download").click()
+            p=out/"download-check.json";download_event.value.save_as(p);assert json.loads(p.read_text())==best;p.unlink()
             assert not errors
             page.screenshot(path=str(out/f"demo-{width}.png"),full_page=True);page.close()
         browser.close()
