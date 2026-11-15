@@ -1,0 +1,68 @@
+name: Register and execute prospective signal study
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/signals-v6.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: compute-forecast-signals-v6
+  cancel-in-progress: false
+jobs:
+  execute:
+    if: github.ref == 'refs/heads/compute-observatory'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Fetch immutable registered source remotely
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/${{ github.sha }}" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate boundary contracts before capture
+        run: |
+          python -m pip install -e '.[dev]' modal==1.6.4 numpy==2.2.6 scikit-learn==1.7.1
+          python -m compileall -q src
+          python -m pytest tests/test_signals_v6.py
+      - name: Store only the necessary scheduled-service credentials
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+          EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
+          PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
+        run: |
+          python - <<'PY'
+          import modal,os
+          modal.Secret.objects.create('compute-forecast-signals-v6',{k:os.environ[k] for k in ('EXA_API_KEY','PAST_API_KEY')},allow_existing=True)
+          print('Scheduled secret available; credential values are not printed.')
+          PY
+      - name: Capture current quotes, retain signals and issue cold-start reference commitments
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: python -m compute_forecast.signals_remote_v6
+      - name: Deploy the serial daily and weekly scheduler
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: modal deploy -m compute_forecast.signals_remote_v6
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: prospective-signals-v6-${{ github.run_id }}
+          path: artifacts/signals-v6/
+          retention-days: 90
+      - name: Anchor initial commitments and source receipts on GitHub
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          from compute_forecast.publication_v6 import publish
+          root=Path('artifacts/signals-v6')
+          print('SIGNALS_V6_COMMIT:'+publish({'results/signals-v6/runs/'+os.environ['GITHUB_RUN_ID']+'/'+p.name:p.read_bytes() for p in root.glob('*.json')}),flush=True)
+          PY

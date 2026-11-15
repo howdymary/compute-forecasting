@@ -1,0 +1,207 @@
+{
+  "schema_version": 6,
+  "study_id": "prospective-signals-v6",
+  "hypothesis": "Adding origin-available news, infrastructure and BLS features lowers seven-day quantile pinball versus the identical price-only learner.",
+  "classification": "New prospective provider-quote cohort; separate from all competition targets and frozen studies",
+  "registration": "GitHub configuration committed before capture/issuance; protocol hash bound into every record",
+  "price_source": {
+    "url": "https://gpurentalprices.com/api/latest.json",
+    "health_url": "https://gpurentalprices.com/api/health.json",
+    "permission_url": "https://gpurentalprices.com/data",
+    "license": "CC BY 4.0",
+    "credit": "GPU Rental Prices. GPU rental price index [dataset]. https://gpurentalprices.com/data",
+    "unit": "USD per GPU-hour",
+    "measure": "Advertised per-provider exact-configuration offer; not transactions or guaranteed capacity",
+    "selection": "First two lexicographically ordered exact-configuration contracts per A100/H100 family, on-demand only; price-independent selection; freeze at first successful capture",
+    "known_variants": [
+      "h100-sxm",
+      "h100-pcie",
+      "a100-sxm-80",
+      "a100-pcie-80",
+      "a100-sxm-40",
+      "a100-pcie-40"
+    ],
+    "max_targets": 4,
+    "max_input_bytes": 2000000,
+    "require_same_day_provider_check": true,
+    "unknown_metadata": "Explicit null; no cross-provider/region/configuration joining"
+  },
+  "signals": {
+    "groups": [
+      "news",
+      "infrastructure",
+      "bls"
+    ],
+    "max_exa_calls_per_capture": 2,
+    "max_results": 6,
+    "max_content_chars": 10000,
+    "primary_domains": [
+      "nvidianews.nvidia.com",
+      "investor.nvidia.com",
+      "aws.amazon.com",
+      "press.aboutamazon.com",
+      "cloud.google.com",
+      "coreweave.com",
+      "lambda.ai"
+    ],
+    "bls_series": "PCU221122221122",
+    "bls_url": "https://api.bls.gov/publicAPI/v2/timeseries/data/PCU221122221122",
+    "news_features": [
+      "official_announcement_count_7d",
+      "gpu_price_announcement_count_7d",
+      "newly_observed_evidence_age_days"
+    ],
+    "infrastructure_features": [
+      "capacity_plan_count_30d",
+      "operational_capacity_confirmed_count_30d",
+      "hardware_announcement_count_30d"
+    ],
+    "bls_features": [
+      "electricity_ppi_index",
+      "latest_available_month_change",
+      "days_since_new_period_first_seen"
+    ],
+    "availability": "Content first observed by cutoff; publication date alone cannot backdate availability; date-only publication upper bound is end of its UTC day",
+    "operational_rule": "No inferred delivered capacity; requires separately verified structured source record. Missing operational evidence stays missing.",
+    "vintages": "BLS responses retained by hash. Current revisions available only at current retrieval; no retroactive edits to older feature rows."
+  },
+  "origins": [
+    "2026-11-22",
+    "2026-11-29",
+    "2026-12-06",
+    "2026-12-13",
+    "2026-12-20",
+    "2026-12-27",
+    "2027-01-03",
+    "2027-01-10",
+    "2027-01-17",
+    "2027-01-24",
+    "2027-01-31",
+    "2027-02-07",
+    "2027-02-14",
+    "2027-02-21",
+    "2027-02-28",
+    "2027-03-07",
+    "2027-03-14",
+    "2027-03-21",
+    "2027-03-28",
+    "2027-04-04",
+    "2027-04-11",
+    "2027-04-18",
+    "2027-04-25",
+    "2027-05-02",
+    "2027-05-09",
+    "2027-05-16"
+  ],
+  "origin_cutoff_utc": "18:00:00",
+  "issuance_end_utc": "20:00:00",
+  "daily_capture_cron": "30 17 * * *",
+  "weekly_cycle_cron": "15 18 * * 0",
+  "daily_scoring_cron": "45 18 * * *",
+  "schedule_end": "2027-05-25T00:00:00+00:00",
+  "horizons": [
+    1,
+    3,
+    7
+  ],
+  "quantiles": [
+    0.1,
+    0.5,
+    0.9
+  ],
+  "primary_horizon": 7,
+  "learner": {
+    "family": "Ridge on matured same-horizon log changes; empirical training-residual q10/q50/q90 shifts",
+    "alpha": 10,
+    "window_days": 180,
+    "min_price_observations": 56,
+    "min_matured_examples": 32,
+    "price_features": [
+      "log_latest",
+      "log_change_1",
+      "log_change_7",
+      "log_change_14",
+      "observation_gap_7",
+      "day_of_week"
+    ],
+    "missing": "Training-column median imputation with explicit missing flags; scale fitted on training only",
+    "quantiles": "Positive multiplicative quantiles from separate chronological calibration residuals; all arms share identical fit/calibration labels",
+    "tuning_budget": 0,
+    "feature_masks": [
+      "000",
+      "001",
+      "010",
+      "011",
+      "100",
+      "101",
+      "110",
+      "111"
+    ],
+    "mask_order": [
+      "news",
+      "infrastructure",
+      "bls"
+    ],
+    "refit": "Same deterministic refit at every eligible origin, using only labels matured by its cutoff",
+    "calibration": "Last8 matured chronological examples held out from Ridge fit; minimum24 fit examples; residual quantiles on those8; no exchangeability guarantee"
+  },
+  "references": [
+    "last_value",
+    "last_value_empirical",
+    "drift",
+    "seasonal_naive"
+  ],
+  "reference_definition": "Separate new-source adapters mirror official multiplicative log-change definitions where verified; never claim byte identity with old target exports",
+  "chronos": "Optional added fixed control only after adapter parity; not in this first signal-factorial implementation",
+  "eligibility": {
+    "primary": "Frozen target has current compatible quote at origin; >=56 retained price observations and >=28 matured same-horizon examples with actual as-of signal snapshots. Failures visible; no baseline substitution for failed factorial arms.",
+    "group_attribution": "Need actual variation: >=3 distinct BLS observation periods first-seen in retained vintages; >=8 distinct news events; >=5 distinct infrastructure events. These are identifiability screens, not a statistical power guarantee.",
+    "pilot": "One immediate cold-start last-value commitment after first registered capture; no signal-value comparison, zero-width reference quantiles explicitly uncalibrated; excluded from primary analysis"
+  },
+  "scoring": {
+    "metric": "Mean pinball over quantiles, then equal matched cell weights",
+    "cohorts": "A100 and H100 separate plus prespecified pooled result; only identical valid paired cells; report all exclusions",
+    "truth": "Earliest retained compatible snapshot of the target UTC observation date, requiring provider fetched_at date == target_date; evaluator unlocks only after end of target date. Later revisions never selected by score.",
+    "analysis": "Descriptive per-origin outcomes after full 7-day maturity; one final confirmatory analysis after all26 origins mature. No performance-based stopping.",
+    "inference": "Origin-cluster paired mean differences; four-origin moving-block bootstrap fixed seed17, 2000 replicates, only with >=16 eligible origins; dependent markets and limited power explicit.",
+    "primary_comparison": "111 versus000; separately compare111 with drift. Individual group effects are secondary paired factorial ablations with Holm correction; insufficient variation forbids group-benefit claim.",
+    "promotion": "Primary factorial configurations stay frozen through panel. Incumbent000 retained unless a separately registered challenger passes its future confirmatory block; no promotion on dev results or interim peeks."
+  },
+  "memory": {
+    "namespace": "cf-signals-v6-current",
+    "roles": [
+      "researcher",
+      "scientist",
+      "skeptic"
+    ],
+    "fallback": "Explicit canonical fallback; never counted as successful recall"
+  },
+  "training": {
+    "new_optimization": "Gated until informative chronological tasks or human-checked extraction labels exist",
+    "human_checked_extraction_labels": 0,
+    "starting_and_parent_controls_required": true,
+    "checkpoint_zero_required": true,
+    "synthetic": "Contract fixtures only, never market accuracy"
+  },
+  "resources": {
+    "modal_cpu": 2,
+    "memory_mb": 4096,
+    "timeout_seconds": 900,
+    "max_containers": 1,
+    "max_snapshots": 200,
+    "max_weekly_origins": 26,
+    "max_new_optimizer_updates": 0,
+    "max_tinker_planning_decisions": 4,
+    "provider_cost_usd": null
+  },
+  "protected_dates": {
+    "start": "2026-11-07",
+    "end": "2026-11-13",
+    "rule": "No protected competition truth downloads; collector uses current snapshot only, never historical price endpoints"
+  },
+  "publication": {
+    "current_price_rows": "Selected CC BY4 quote derivatives with attribution; source_quote fields remain private",
+    "news": "Links, metadata and authored feature counts; raw retrieval bodies private",
+    "commitments": "Append-only hash-addressed Modal artifacts with provider execution logs; initial records additionally anchored in nonforce GitHub commit. Future automatic GitHub anchoring unavailable without a long-lived publishing credential; disclose this trust boundary."
+  }
+}
