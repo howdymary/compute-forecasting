@@ -38,6 +38,10 @@ def main():
             assert page.locator(".sig-table tbody tr").count()==8
             assert page.get_by_text("No eligible primary outcomes yet.",exact=True).count()==1
             assert page.get_by_text("48 committed rows",exact=True).count()==1
+            # Explicit synthetic geometry contract only; never inserted into or published as market data.
+            fixture={"classification":"synthetic_contract_fixture","trajectory":[{"origin":"2027-02-01","matched_cells":4,"comparisons":[{"difference":-.004,"mean_interval_width":.05,"coverage_numerator":3,"coverage_denominator":4}]},{"origin":"2027-02-08","matched_cells":3,"comparisons":[{"difference":.002,"mean_interval_width":.07,"coverage_numerator":2,"coverage_denominator":3}]}]}
+            geometry=page.evaluate("""value=>{let html=sigResearchPlot(value);let doc=new DOMParser().parseFromString(html,'text/html');return {svgs:doc.querySelectorAll('svg').length,actions:doc.querySelectorAll('[data-sig-origin]').length,bad:html.includes('NaN'),synthetic:html.includes('Synthetic UI contract fixture')}}""",fixture)
+            assert geometry=={"svgs":3,"actions":4,"bad":False,"synthetic":True}
             if width in (1512,390):
                 page.evaluate("scrollTo(0,0)");page.screenshot(path=str(out/(str(width)+"-learning.png")))
             page.locator('[data-sig-tab="evidence"]').click()

@@ -57,8 +57,12 @@ function bindSignals(){
  document.querySelectorAll('[data-sig-origin]').forEach(e=>{e.onclick=()=>{GS.origin=e.dataset.sigOrigin;render()};e.onkeydown=event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();GS.origin=e.dataset.sigOrigin;render()}}});
  if($('#sig-plot'))sigPlot()
 }
-const sigPrevRender=render,sigPrevDownloads=downloads;
-render=function(){sigPrevRender();if(view==='signals')bindSignals()};
+const sigPrevRender=render,sigPrevDownloads=downloads,sigDisclosures=new Map();let sigLastTab=null;
+render=function(){
+ if(sigLastTab&&document.querySelector('.sig-intro')){const states={};document.querySelectorAll('#app details[id]').forEach(e=>states[e.id]=e.open);sigDisclosures.set(sigLastTab,states)}
+ sigPrevRender();
+ if(view==='signals'){bindSignals();const states=sigDisclosures.get(GS.tab);if(states)document.querySelectorAll('#app details[id]').forEach(e=>{if(Object.hasOwn(states,e.id))e.open=states[e.id]});sigLastTab=GS.tab}else sigLastTab=null
+};
 downloads=function(){return sigPrevDownloads()+'<section class="research-figure"><h3>Prospective signals v6</h3><p><a href="/api/signals-v6">Registration, snapshots, commitments and pending outcomes</a> · <a href="/api/signals-v6/memory">Cross-role memory proof</a></p></section>'};
 async function loadSignals(){
  SGError=null;try{const v=await fetchJson('/api/signals-v6');if(v.schema_version!==6)throw Error('Signals schema');SG=v;if(P&&view==='signals')render();if(v.ledger.length){SGCommit=await fetchJson(v.ledger[0].artifact);if(SGCommit.registration_sha256!==v.protocol_sha256)throw Error('Commitment protocol mismatch')}}catch(e){SGError=e}if(P&&view==='signals')render()
