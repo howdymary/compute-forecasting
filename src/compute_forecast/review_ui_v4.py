@@ -32,7 +32,7 @@ function bindReview(){
  document.querySelectorAll('[data-v4-group]').forEach(el=>{const select=()=>{V4S.group=el.dataset.v4Group;if(V4S.dimension==='origin'){let i=V4.mechanism.tasks.findIndex(t=>t.origin===V4S.group);if(i>=0)V4S.task=i}rerender()};el.onpointerdown=select;el.onkeydown=e=>{if(['Enter',' '].includes(e.key)){e.preventDefault();select()}}});
  document.querySelectorAll('[data-v4-cell]').forEach(el=>el.onclick=()=>{V4S.cell=+el.dataset.v4Cell;const c=v4Comparison().cells[V4S.cell],i=V4.mechanism.tasks.findIndex(t=>t.origin===c.origin&&t.series_ids.includes(c.series_id));if(i>=0)V4S.task=i;rerender()});
  $('#v4-task').onchange=e=>{V4S.task=+e.target.value;rerender()};
- function pin(kind,snapshot,label){V4S.pins.push({id:++V4S.seq,kind,label,comparison:V4S.comparison,cohort_id:v4Comparison().cohort_id,source_sha:V4.source_sha,archive_sha256:V4.archive_sha256,snapshot:JSON.parse(JSON.stringify(snapshot)))});if(V4S.pins.length>3)V4S.pins.shift();rerender()}
+ function pin(kind,snapshot,label){V4S.pins.push({id:++V4S.seq,kind,label,comparison:V4S.comparison,cohort_id:v4Comparison().cohort_id,source_sha:V4.source_sha,archive_sha256:V4.archive_sha256,snapshot:JSON.parse(JSON.stringify(snapshot))});if(V4S.pins.length>3)V4S.pins.shift();rerender()}
  $('#v4-pin-group').onclick=()=>pin('derived_group',v4Selected(),v4Names[V4S.comparison]+' · '+v4Label(v4Selected().id));
  $('#v4-pin-cell').onclick=()=>{const c=v4Comparison().cells[V4S.cell];pin('derived_cell',c,c.origin+' · '+v4Label(c.series_id)+' · '+c.horizon_days+'d')};
  document.querySelectorAll('[data-v4-remove]').forEach(el=>el.onclick=()=>{V4S.pins=V4S.pins.filter(p=>p.id!==+el.dataset.v4Remove);rerender()})
