@@ -1,0 +1,43 @@
+name: Research v2 evidence and service capabilities
+on:
+  push:
+    branches: [compute-observatory]
+    paths:
+      - .github/workflows/research-v2-evidence.yml
+      - src/compute_forecast/campaign_v2_evidence.py
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: campaign-v2-evidence
+  cancel-in-progress: false
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install hosted clients and validate syntax
+        run: |
+          python -m pip install -e . modal numpy httpx tinker
+          python -m compileall -q src
+      - name: Collect actual evidence and check account capabilities
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+          EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
+        run: python -m compute_forecast.campaign_v2_evidence
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: campaign-v2-evidence-${{ github.sha }}-${{ github.run_id }}
+          path: artifacts/
+          retention-days: 30
