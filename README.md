@@ -130,3 +130,5 @@ Dependencies include Modal, Tinker and tinker-cookbook, NumPy, FastAPI/Starlette
 
 
 The [interactive compute notebook](https://howdymary--compute-forecast-observatory-web.us-east.modal.run) adds source-bound margin notes and immutable session pins. [Notebook guide](docs/notebook-experience.md) · [15-source peer review](docs/notebook-peer-review.md) · [Descriptive audit register](docs/notebook-improvements.json). Coverage, feedback utility and resource budgets are inspected without retuning the frozen campaign. No new forecasting gain is claimed from these interface changes.
+
+[Measured notebook audit](docs/notebook-diagnostic-findings.md): observed interval coverage/width, action changes without forecast gains, and separate execution budgets. The snapshot is explicitly partial while the remaining RL seeds run.
