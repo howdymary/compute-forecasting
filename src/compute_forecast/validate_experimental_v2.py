@@ -32,7 +32,7 @@ async def run():
             await page.locator("#stage").select_option("rl");await page.locator("#stage").select_option("sft")
             await page.locator("#phase").select_option("development");await page.locator("#horizon").select_option("3")
             assert await page.locator("#phase").input_value()=="development" and await page.locator("#horizon").input_value()=="3"
-            table=page.locator("section").filter(has=page.locator("#phase")).locator("tbody tr").first()
+            table=page.locator("section").filter(has=page.locator("#phase")).locator("tbody tr").first
             expected=min(numerical,key=lambda r:r["by_horizon"]["3"]["pinball"])
             assert expected["config"]["id"] in await table.inner_text()
             assert format(expected["by_horizon"]["3"]["pinball"],".8f") in await table.inner_text()
