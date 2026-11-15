@@ -31,7 +31,7 @@ def web():
     import threading
     from fastapi import FastAPI,Request
     from fastapi.responses import HTMLResponse,JSONResponse,Response
-    api=FastAPI(docs_url=None,redoc_url=None,openapi_url=None);lock=threading.Lock()
+    api=FastAPI(docs_url=None,redoc_url=None,openapi_url=None);lock=threading.Lock();archive_cache={"sha":None,"bytes":None}
     headers={"Cache-Control":"no-store","X-Content-Type-Options":"nosniff","Referrer-Policy":"strict-origin-when-cross-origin","Content-Security-Policy":"default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'"}
     def read(name):
         with lock:
@@ -47,7 +47,7 @@ def web():
             public.reload();root=Path("/public/experimental-v2");summary=root/"summary.json"
             payload=json.loads(summary.read_text()) if summary.is_file() else {"schema_version":2,"campaign_status":"running","policy_reports":[],"checkpoint_runs":[],"status":"awaiting_publication"}
             payload["autonomy_runs"]=[json.loads(p.read_text()) for p in sorted((root/"autonomy").glob("*.json"))[-20:]]
-            for key,name in (("prospective","prospective-manifest.json"),("provider_usage","usage.json"),("price_free_ablation","price-free.json"),("analysis","analysis.json"),("matched_price_ablation","matched-price-ablation.json"),("feature_summary","feature-summary.json")):
+            for key,name in (("prospective","prospective-manifest.json"),("provider_usage","usage.json"),("price_free_ablation","price-free.json"),("analysis","analysis.json"),("matched_price_ablation","matched-price-ablation.json"),("feature_summary","feature-summary.json"),("artifact_archive","archive-manifest.json")):
                 file=root/name
                 if file.is_file():payload[key]=json.loads(file.read_text())
         payload["policy_execution_semantics"]={"numerical_feedback_cache_hit":True,"new_numerical_execution":False,"budget":"six revealed results from the registered numerical grid per task","inference":"actual Tinker sampler calls; distinct from fresh Modal autonomy executions"}
@@ -55,6 +55,23 @@ def web():
         if any(token in encoded for token in ("tinker://","TINKER_API_KEY","MODAL_TOKEN_SECRET","Authorization","permitted_private_method_context")):
             return JSONResponse({"error":"Publication failed privacy validation"},status_code=503,headers=headers)
         return Response(encoded,media_type="application/json",headers=headers)
+    @api.get("/experimental/downloads/{run_id}.zip")
+    def experimental_archive(run_id:str):
+        if run_id!="latest" and not run_id.isdigit():return Response(status_code=404,headers=headers)
+        with lock:
+            public.reload();root=Path("/public/experimental-v2")
+            meta=root/"archive-manifest.json" if run_id=="latest" else root/"archives"/run_id/"manifest.json"
+            if not meta.is_file():return Response(status_code=404,headers=headers)
+            manifest=json.loads(meta.read_text());identifier=manifest["release_run_id"]
+            if not identifier.isdigit():return Response(status_code=503,headers=headers)
+            if archive_cache["sha"]!=manifest["sha256"]:
+                file=root/"archives"/identifier/"research-bundle.zip"
+                if not file.is_file() or file.stat().st_size>20_000_000:return Response(status_code=503,headers=headers)
+                raw=file.read_bytes()
+                if hashlib.sha256(raw).hexdigest()!=manifest["sha256"]:return Response(status_code=503,headers=headers)
+                archive_cache.update(sha=manifest["sha256"],bytes=raw)
+            raw=archive_cache["bytes"]
+        return Response(raw,media_type="application/zip",headers={**headers,"ETag":manifest["sha256"],"Content-Disposition":'attachment; filename="compute-forecast-v2-'+identifier+'.zip"'})
     @api.get("/api/release")
     def results():
         raw=read("results.json")
