@@ -12,14 +12,19 @@ async def run(study,private_dir):
     from tinker_cookbook import model_info,renderers
     from tinker_cookbook.recipes.decisions import Decision,DecisionRenderer,sample_decision
     identifier=uuid.uuid4().hex;start=time.perf_counter();root=Path(private_dir);root.mkdir(parents=True,exist_ok=True)
-    actors={r:"cf-value-v5-current-"+identifier+"-"+r for r in ("researcher","scientist","skeptic")};audience="cf-value-v5-"+identifier
-    report={"schema_version":5,"study_id":"market-memory-value-v5","run_id":identifier,"source_sha":os.environ.get("GITHUB_SHA"),"created_at":now(),"namespace":"current research; never benchmark-safe historical evidence","records":[],"reads":[],"steps":[],"decisions":[],"source_requests":[],"analyses":[],"actual_tinker_decisions":0,"new_optimizer_updates":0,"provider_cost_usd":None}
+    actors={r:"cf-v5-cur-"+identifier[:16]+"-"+r for r in ("researcher","scientist","skeptic")};audience="cf-v5-current-"+identifier[:16]
+    report={"schema_version":5,"study_id":"market-memory-value-v5","run_id":identifier,"source_sha":os.environ.get("GITHUB_SHA"),"created_at":now(),"namespace":"current research; never benchmark-safe historical evidence","records":[],"reads":[],"steps":[],"decisions":[],"source_requests":[],"memory_calls":[],"analyses":[],"actual_tinker_decisions":0,"new_optimizer_updates":0,"provider_cost_usd":None}
     contents={};pairs=rental_pairs(study);options=benchmarks(study)
     if not pairs or len(options)<3:raise ValueError("No verified SXM80 rental/precision benchmark cohort")
     pair=pairs[0]
     async with httpx.AsyncClient(timeout=60) as http:
         async def past(method,path,payload=None):
-            r=await http.request(method,"https://api.past.dev/api/v1"+path,headers={"Authorization":"Bearer "+os.environ["PAST_API_KEY"]},json=payload);r.raise_for_status();return r.json()
+            r=await http.request(method,"https://api.past.dev/api/v1"+path,headers={"Authorization":"Bearer "+os.environ["PAST_API_KEY"]},json=payload);report["memory_calls"].append({"method":method,"path_kind":path.split("/")[1],"status_code":r.status_code,"at":now()})
+            if r.is_error:
+                error_text=r.text[:500].replace(os.environ["PAST_API_KEY"],"[redacted]")
+                (root/("past-error-"+str(len(report["memory_calls"]))+".json")).write_bytes(encoded({"status":r.status_code,"response":error_text}))
+                report["last_memory_error"]={"status_code":r.status_code,"path_kind":path.split("/")[1],"detail":error_text if path.startswith("/audiences/") else "Response retained privately"}
+            r.raise_for_status();return r.json()
         available=True
         try:await past("PUT","/audiences/"+audience,{"kind":"fixed","name":"Pacific GPU value current research","identities":list(actors.values())})
         except Exception as e:available=False;report["memory_setup_error"]=type(e).__name__
@@ -94,9 +99,9 @@ async def run(study,private_dir):
         writers={r["author"] for r in report["records"] if r.get("ingestion_completed")};readers={r["reader"] for r in report["reads"] if r["actual_cross_role_use"]}
         report["eligibility"]={"successful_writers":len(writers),"successful_readers":len(readers),"cross_role_use":report["verified_cross_role_reads"],"requirements_met":len(writers)>1 and len(readers)>1 and report["verified_cross_role_reads"]>0}
         report["interpretation"]="A researcher, scientist and skeptic use sourced records to choose, test and qualify a benchmark-specific GPU-value hypothesis."
-        report["outcome_claim"]="Actual memory use and interpretation changes are measured; no memory accuracy gain or new learned weights is established."
+        report["outcome_claim"]="Verified shared-memory use; no memory accuracy gain or new learned weights is established." if report["eligibility"]["requirements_met"] else "External memory requirements were not met; canonical fallback was used. No memory benefit is claimed."
         report["final"]=final_value;report["next_question"]=next_question
-    report.update(status="completed",runtime_seconds=time.perf_counter()-start,completed_at=now(),memory_source_namespace=audience,study_artifact_sha256=digest(study),retrospective=True)
+    report.update(status="completed_verified_memory" if report["eligibility"]["requirements_met"] else "completed_with_memory_failure",runtime_seconds=time.perf_counter()-start,completed_at=now(),memory_source_namespace=audience,study_artifact_sha256=digest(study),retrospective=True)
     from .public_results import private_guard
     private_guard(report);return report
 

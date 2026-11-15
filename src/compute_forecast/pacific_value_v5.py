@@ -109,6 +109,26 @@ def publish(study,notices):
         if Path(name).name!=name:raise ValueError("Notice name")
         (license_root/name).write_text(text)
     public.commit();return {"study_sha256":hashlib.sha256(raw).hexdigest(),"published_series":len(study["history"]["series"]),"artifact":version.name}
+
+@app.function(image=image,cpu=4,memory=8192,timeout=600,volumes={"/data":data})
+def reproduce_and_notices():
+    from .reproduce_pacific_v5 import reproduce
+    root=Path("/data/pacific")/PACK_NAME
+    out=Path(tempfile.mkdtemp(prefix="value-v5-reproduction-"))
+    report=reproduce(root,out)
+    notices={}
+    for name in ("licences/afhubbard_DATA_LICENSE.txt","licences/gpurentalprices_github_LICENSE.txt","hardware_fundamentals/README_epoch_ml_hardware.md"):
+        p=root/name
+        if not p.is_file():raise ValueError("Required source notice missing: "+name)
+        notices[p.name]=p.read_text()
+    return {"report":report,"notices":notices}
+@app.function(image=image,cpu=.25,memory=512,timeout=120,volumes={"/public":public})
+def publish_reproduction(value):
+    root=Path("/public/value-v5");root.mkdir(exist_ok=True)
+    (root/"reproduction.json").write_bytes(encoded(value["report"]))
+    notices=root/"notices";notices.mkdir(exist_ok=True)
+    for name,text in value["notices"].items():(notices/name).write_text(text)
+    public.commit();return {"status":"published","sha256":digest(value["report"])}
 def main():
     with app.run():
         result=derive.remote(Path("results/frozen-v1/forecasts.csv").read_bytes(),json.loads(Path("results/review-v4/findings.json").read_bytes())["comparisons"][0]["cells"])
