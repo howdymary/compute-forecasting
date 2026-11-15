@@ -1,0 +1,80 @@
+{
+  "schema_version": 2,
+  "campaign": "compute-forecast-v2",
+  "registered_at_utc": "2026-11-15T01:46:58Z",
+  "original_release_sha": "2a9eecc96d5084b7c8b6c805487628eb6981ba28",
+  "measurement": "advertised_rental_offer_rate",
+  "dataset_sha256": "f0b52af28c52545732208bcc4905facd9b941aa5779da683e1d9884c283b7c7c",
+  "evaluation_status": "retrospective reuse of previously inspected pack; not an untouched or prospective test",
+  "training_origins": [
+    "2026-06-20",
+    "2026-06-27",
+    "2026-07-04",
+    "2026-07-11",
+    "2026-07-18",
+    "2026-07-24"
+  ],
+  "development_origins": [
+    "2026-08-08",
+    "2026-08-15",
+    "2026-08-22"
+  ],
+  "evaluation_origins": [
+    "2026-08-29",
+    "2026-09-05",
+    "2026-09-12"
+  ],
+  "validation_lags_days": [
+    7,
+    14
+  ],
+  "train_last_label": "2026-07-31",
+  "primary_contrast": "trained versus starting policy on the same six-trial tasks; static and adaptive search are competitive controls",
+  "trial_budget": 6,
+  "common_initial": [
+    "last_value",
+    "last_value_empirical"
+  ],
+  "training_seeds": [
+    17,
+    29,
+    43
+  ],
+  "objectives": [
+    "hard",
+    "soft"
+  ],
+  "learning_rate": 0.00003,
+  "sft_max_updates": 100,
+  "sft_checkpoints": [
+    0,
+    20,
+    50,
+    100
+  ],
+  "rl_max_updates": 60,
+  "rl_seeds": [
+    17,
+    29,
+    43
+  ],
+  "rl_gate": "nonconstant training rewards and valid sampled-action probabilities",
+  "max_parallel_modal_containers": 6,
+  "exa_max_queries": 40,
+  "embargoed_competition_outcomes": "2026-11-07 through 2026-11-13; never loaded",
+  "protected_final_period": "2026-09-27 through 2026-10-25; not used in v2",
+  "cutoff_notes": [
+    "All training reward labels end by July31",
+    "Development labels end August29; evaluation begins August29 after matured prior labels",
+    "All partitions share a retrospective frozen pack; prior v1 development outcomes were published"
+  ],
+  "selection_rule": "Select checkpoint by development pooled official pinball; ties choose earlier checkpoint. Freeze before v2 evaluation.",
+  "available_history_limitations": "No guarantee of historical real-time accessibility or absence of foundation-model pretraining contamination",
+  "compute_policy": {
+    "topups": false,
+    "billing_changes": false,
+    "deadline": "2026-11-15T22:00:00Z",
+    "stop_new_campaigns_before": "2026-11-15T20:30:00Z",
+    "costs": "Provider receipts where available; unknown is not zero"
+  }
+}

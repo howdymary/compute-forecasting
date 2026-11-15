@@ -1,0 +1,54 @@
+name: Audit v2 data and smoke stronger forecasters
+on:
+  push:
+    branches: [compute-observatory]
+    paths:
+      - .github/workflows/research-v2-audit.yml
+      - src/compute_forecast/campaign_v2.py
+      - configs/campaign-v2.json
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: campaign-v2-audit
+  cancel-in-progress: false
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Fetch pinned source on hosted runner
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Check contracts and frozen numerical sources
+        run: |
+          python -m pip install -e '.[dev]' modal numpy
+          python -m compileall -q src
+          python -m pytest --junitxml=artifacts/v2-tests.xml
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from compute_forecast.freeze_contract import validate_freeze
+          validate_freeze(json.loads(Path('configs/release-freeze.json').read_text()))
+          PY
+      - name: Audit private data on Modal
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: modal run -m compute_forecast.campaign_v2 --mode audit
+      - name: Smoke actual stronger forecasts and official scoring
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: modal run -m compute_forecast.campaign_v2 --mode grid
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: campaign-v2-audit-${{ github.sha }}-${{ github.run_id }}
+          path: artifacts/
+          retention-days: 30
