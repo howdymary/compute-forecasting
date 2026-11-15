@@ -13,6 +13,7 @@ async def run(study,private_dir):
     from tinker_cookbook.recipes.decisions import Decision,DecisionRenderer,sample_decision
     identifier=uuid.uuid4().hex;start=time.perf_counter();root=Path(private_dir);root.mkdir(parents=True,exist_ok=True)
     actors={r:"cf-v5-cur-"+identifier[:16]+"-"+r for r in ("researcher","scientist","skeptic")};audience="cf-v5-current-"+identifier[:16]
+    if not 2<=len(audience)<=40:raise ValueError("past.dev audience slug must contain 2–40 characters")
     report={"schema_version":5,"study_id":"market-memory-value-v5","run_id":identifier,"source_sha":os.environ.get("GITHUB_SHA"),"created_at":now(),"namespace":"current research; never benchmark-safe historical evidence","records":[],"reads":[],"steps":[],"decisions":[],"source_requests":[],"memory_calls":[],"analyses":[],"actual_tinker_decisions":0,"new_optimizer_updates":0,"provider_cost_usd":None}
     contents={};pairs=rental_pairs(study);options=benchmarks(study)
     if not pairs or len(options)<3:raise ValueError("No verified SXM80 rental/precision benchmark cohort")
