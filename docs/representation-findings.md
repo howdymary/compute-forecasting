@@ -1,10 +1,10 @@
 # Frozen representation findings
 
-[Actual aggregation run](https://github.com/howdymary/compute-forecasting/actions/runs/43655725844) · [Original frozen numerical run](https://github.com/howdymary/compute-forecasting/actions/runs/43653016797)
+[Actual aggregation and metadata verification](https://github.com/howdymary/compute-forecasting/actions/runs/43656330831) · [Original frozen numerical run](https://github.com/howdymary/compute-forecasting/actions/runs/43653016797)
 
 This is **descriptive aggregation after final outcomes were opened**. It retains every registered method and does not change the selected checkpoint, official forecast method or submitted CSV. The script verifies that the four reference-method aggregates exactly agree with the original final report.
 
-Five dependent rolling origins: September 27, October 4, 11, 18 and 25, 2026. Each method has 30 scored series/horizon cells in the narrow eligible afhubbard headline daily-statistics subset. These cells and configuration comparisons are not independent replications.
+Five dependent rolling origins: September 27, October 4, 11, 18 and 25, 2026. Each method has 30 scored series/horizon cells in the narrow eligible afhubbard headline daily-statistics subset. The actual final targets are **A100 40GB and A100 SXM 80GB**; no H100 series is eligible in this subset. The separate official full-catalog export covers the required H100/A100 targets. These cells and configuration comparisons are not independent replications.
 
 ## What the representation experiment found
 
