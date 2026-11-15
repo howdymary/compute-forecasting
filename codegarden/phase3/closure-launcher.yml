@@ -1,4 +1,4 @@
-name: CodeGarden conflict endpoint closure
+name: CodeGarden conflict endpoint closure on pinned Python
 on:
   push:
     branches: [codegarden-closure-003]
@@ -48,6 +48,9 @@ jobs:
         with:
           name: codegarden-closure-preflight
           path: codegarden/artifacts/phase3/defect_closure_001/
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
       - name: Run endpoint releases and blocker-driven repair pools
         run: |
           mkdir -p codegarden/.build
