@@ -28,7 +28,9 @@ async def run():
             assert await page.locator("h1").inner_text()=="Can a researcher learn\nto research?"
             assert await page.evaluate("document.documentElement.scrollWidth<=window.innerWidth"),label+" overflow"
             if sum(r["mode"]=="sft" for r in data.get("policy_reports",[]))==6 and sum(r["mode"]=="rl" for r in data.get("policy_reports",[]))<3:
-                assert "RL results pending" in await page.locator("#app").inner_text()
+                phase_label=await page.locator("#app .meta").inner_text()
+                print("V2_PHASE_LABEL:"+json.dumps({"viewport":label,"label":phase_label,"sft_reports":6,"rl_reports":sum(r["mode"]=="rl" for r in data["policy_reports"])}),flush=True)
+                assert "RL results pending" in phase_label,phase_label
             await page.locator("#question").select_option("composition")
             assert await page.locator("#question").input_value()=="composition"
             await page.locator("#stage").select_option("rl");await page.locator("#stage").select_option("sft")
