@@ -1,18 +1,18 @@
-name: CodeGarden certified-dominance strict repairs
+name: CodeGarden learned local-certificate pruning
 on:
   push:
-    branches: [codegarden-dominance-004]
+    branches: [codegarden-learned-003]
     paths: [.github/workflows/codegarden.yml]
   workflow_dispatch:
 permissions:
   contents: write
 concurrency:
-  group: codegarden-free-dominance-004
+  group: codegarden-free-learned-003
   cancel-in-progress: false
 env:
   PYTHONDONTWRITEBYTECODE: '1'
   SOURCE_SHA: ${{ github.sha }}
-  CODEGARDEN_BATCH: dominance_native_002
+  CODEGARDEN_BATCH: learned_native_001
 jobs:
   preflight:
     runs-on: ubuntu-latest
@@ -25,17 +25,17 @@ jobs:
       - name: Compile and independently exhaust small cases
         run: |
           mkdir -p codegarden/.build
-          g++ -O3 -std=c++17 codegarden/phase3/bundle_dom.cpp -o codegarden/.build/bundle
+          g++ -O3 -std=c++17 codegarden/phase3/bundle_learned.cpp -o codegarden/.build/bundle
           codegarden/.build/bundle --synthetic-tests > codegarden/.build/synthetic.json
           python -B -u codegarden/phase3/test_connected2.py
           python -B -u codegarden/phase3/test_dominance_local.py
-          mkdir -p codegarden/artifacts/phase3/dominance_native_002
-          mv codegarden/.build/synthetic.json codegarden/artifacts/phase3/dominance_native_002/test_synthetic.json
+          mkdir -p codegarden/artifacts/phase3/learned_native_001
+          mv codegarden/.build/synthetic.json codegarden/artifacts/phase3/learned_native_001/test_synthetic.json
           python -B -u codegarden/phase3/preflight.py
       - uses: actions/upload-artifact@v4
         with:
           name: codegarden-bundle-preflight
-          path: codegarden/artifacts/phase3/dominance_native_002/
+          path: codegarden/artifacts/phase3/learned_native_001/
   probes:
     needs: preflight
     runs-on: ubuntu-latest
@@ -44,7 +44,7 @@ jobs:
       fail-fast: false
       max-parallel: 4
       matrix:
-        mode: [full8, reduced8, reduced9, reduced10]
+        mode: [learned8, base9, learned9, learned10]
     steps:
       - name: Fetch immutable source
         env:
@@ -53,17 +53,17 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: codegarden-bundle-preflight
-          path: codegarden/artifacts/phase3/dominance_native_002/
+          path: codegarden/artifacts/phase3/learned_native_001/
       - name: Compile and run bounded component
         run: |
           mkdir -p codegarden/.build
-          g++ -O3 -std=c++17 codegarden/phase3/bundle_dom.cpp -o codegarden/.build/bundle
-          python -B -u codegarden/phase3/dominance_probe2.py --mode ${{ matrix.mode }}
+          g++ -O3 -std=c++17 codegarden/phase3/bundle_learned.cpp -o codegarden/.build/bundle
+          python -B -u codegarden/phase3/learned_probe.py --mode ${{ matrix.mode }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: codegarden-bundle-${{ matrix.mode }}
-          path: codegarden/artifacts/phase3/dominance_native_002/
+          path: codegarden/artifacts/phase3/learned_native_001/
   collect:
     needs: [preflight, probes]
     if: always()
@@ -78,13 +78,13 @@ jobs:
         with:
           pattern: codegarden-bundle-*
           merge-multiple: true
-          path: codegarden/artifacts/phase3/dominance_native_002/
+          path: codegarden/artifacts/phase3/learned_native_001/
       - name: Publish leased results
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python -B -u codegarden/phase3/publish_dominance2.py
+        run: python -B -u codegarden/phase3/publish_learned.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: codegarden-bundle-collected
-          path: codegarden/artifacts/phase3/dominance_native_002/
+          path: codegarden/artifacts/phase3/learned_native_001/
