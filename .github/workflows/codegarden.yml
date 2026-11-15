@@ -1,4 +1,4 @@
-name: CodeGarden exact radius probe
+name: CodeGarden independent repair audit
 on:
   push:
     branches: [codegarden-radius34]
@@ -6,14 +6,16 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: codegarden-radius-only
+  group: codegarden-radius-probe
   cancel-in-progress: false
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
 jobs:
-  exact-radius:
+  audit:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: Fetch immutable isolated source
+      - name: Fetch immutable source
         env:
           GH_TOKEN: ${{ github.token }}
           SOURCE_SHA: ${{ github.sha }}
@@ -21,12 +23,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Independently test conflict-driven larger repairs
+      - name: Rebuild pools using protected strings and independently verify all negative repairs
+        run: python -B -u codegarden/phase2/audit_certificates.py
+      - name: Publish independent audit
         env:
           GH_TOKEN: ${{ github.token }}
           SOURCE_SHA: ${{ github.sha }}
-        run: |
-          python -B codegarden/supervisor.py codegarden/artifacts/best_code.txt
-          python -m venv codegarden/.venv
-          codegarden/.venv/bin/python -m pip install -r codegarden/requirements-exact.txt
-          codegarden/.venv/bin/python -B codegarden/phase2/conflict_repairs.py
+        run: python -B codegarden/phase2/publish_audit.py
