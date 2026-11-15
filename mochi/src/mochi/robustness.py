@@ -35,19 +35,39 @@ class ExpandedServices(Services):
             if hasattr(caps,'result'):caps=caps.result()
             rows=getattr(caps,'supported_models',[])
             names=[getattr(x,'model_name',None) or getattr(x,'model_id',None) for x in rows]
-            for preferred in ['Qwen/Qwen3.5-35B-A3B','Qwen/Qwen3-30B-A3B']:
+            self.advertised_models=names
+            for preferred in ['Qwen/Qwen3.6-35B-A3B','Qwen/Qwen3.8-27B','Qwen/Qwen3.5-9B']:
                 if preferred in names:
                     from tinker_cookbook import model_info,renderers
                     from tinker_cookbook.recipes.decisions import DecisionRenderer
-                    self.sampler=await self.service.create_sampling_client(base_model=preferred)
-                    self.renderer=DecisionRenderer(renderers.get_renderer(model_info.get_recommended_renderer_name(preferred),self.sampler.get_tokenizer()));self.model=preferred;self.model_selection='Advertised stronger model selected for follow-up';break
+                    candidate_sampler=await self.service.create_sampling_client(base_model=preferred)
+                    candidate_renderer=DecisionRenderer(renderers.get_renderer(model_info.get_recommended_renderer_name(preferred),candidate_sampler.get_tokenizer()))
+                    self.sampler=candidate_sampler;self.renderer=candidate_renderer;self.model=preferred;self.model_selection='Advertised stronger model selected for follow-up';break
         except Exception as error:self.model_selection='Verified 4B fallback; capability inspection: '+type(error).__name__
+
+    async def read(self,role,rid,allowed=True):
+        # Semantic recall is not a key/value lookup. Use the documented occurrence
+        # window to disambiguate same-topic records, retaining identity ACL checks.
+        wanted=self.records[rid];content=wanted['payload']['content'];found=False;attempts=[]
+        topic=' '.join(str(content.get(k,'')) for k in ['kind','focus','family','diagnostic'])
+        for attempt in range(5 if allowed else 1):
+            query=f'Mochi {topic}. Find the evidence authored by {wanted["role"]} in record {rid}.'
+            reply=await self.request('POST','/recall',{'identity':self.actors[role],'query':query,'level':'medium','limit':200,'occurredFrom':wanted['at'],'occurredTo':wanted['at']})
+            ids={source.get('sourceId') for result in reply.get('results',[]) for source in result.get('sources',[])}
+            found=rid in ids;attempts.append({'query':query,'returned_source_ids':sorted(x for x in ids if x),'source_id_verified':found})
+            if found or not allowed:break
+            await asyncio.sleep(2+attempt)
+        if not allowed and (found or 'MOCHI_PRIVATE_CANARY' in json.dumps(reply)):raise RuntimeError('Memory isolation test failed')
+        self.reads.append({'reader':self.actors[role],'reader_role':role,'author':wanted['author'],'record_id':rid,'source_id_verified':found,'expected_access':allowed,'cross_agent_use':found and self.actors[role]!=wanted['author'],'sha256':wanted['sha256'] if found else None,'at':now(),'occurrence_window':[wanted['at'],wanted['at']],'attempts':attempts})
+        if allowed and not found:raise RuntimeError('Source ID absent from time-scoped semantic recall; no canonical fallback')
+        return wanted['payload']['content'] if found else {'access':'denied-as-expected'}
 
 async def run(out):
     out=Path(out);out.mkdir(parents=True,exist_ok=True);s=ExpandedServices();start=time.perf_counter();count=0
     report={'run_id':s.run_id,'study':'robustness-v2','config':CONFIG,'config_sha256':digest(CONFIG),'source_sha':os.getenv('GITHUB_SHA'),'created_at':now(),'scope':'Existing supported right-arm manipulation task; separate from desk-humanoid design concept','rounds':[]}
     try:
         await s.setup();report['model']=s.model;report['model_selection']=s.model_selection
+        print('MOCHI_MODEL:'+json.dumps({'model':s.model,'selection':s.model_selection}),flush=True)
         prior_id=await s.write('critic',{'kind':'prior-result','source':'workflow 43762703104','observation':'V1 selected policy scored 8/12 on heldout but 1/8 under higher friction/mass. Its conventional control scored 6/8 under the shift.','correction':'The V1 gain was not robust. Broaden development and match controller-family access. Use fresh seeds.'})
         selected=Policy();dev=CONFIG['development_seeds'];rng=np.random.default_rng(7621);queries={
           'friction':'robot planar pushing uncertain friction robust feedback adaptive control primary research',
@@ -59,7 +79,7 @@ async def run(out):
           'curriculum':'robot manipulation domain randomization friction mass generalization curriculum research',
           'stability':'frictional contact hybrid dynamics stable pushing robot feedback controller research'}
         async with app.run():
-            incumbent=await batch(asdict(selected),dev);count+=len(incumbent)
+            incumbent=await batch(asdict(selected),dev);count+=len(incumbent);report['initial_results']=incumbent
             for iteration in range(CONFIG['rounds']):
                 prior=await s.read('researcher',prior_id);failures=dict(Counter(x['failure'] for x in incumbent))
                 focus=await s.decide('researcher','Choose the next uninvestigated mechanism for this failure pattern.',{'prior':prior,'failures':failures},list(queries),[prior_id])
