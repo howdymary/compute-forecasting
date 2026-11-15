@@ -1,18 +1,18 @@
-name: CodeGarden new orbit basins and restricted fusion
+name: CodeGarden feasible-hint CP-SAT LNS controls
 on:
   push:
-    branches: [codegarden-novel-union-003]
+    branches: [codegarden-cp-lns-003]
     paths: [.github/workflows/codegarden.yml]
   workflow_dispatch:
 permissions:
   contents: write
 concurrency:
-  group: codegarden-free-novel-union-003
+  group: codegarden-free-cp-lns-003
   cancel-in-progress: false
 env:
   PYTHONDONTWRITEBYTECODE: '1'
   SOURCE_SHA: ${{ github.sha }}
-  CODEGARDEN_BATCH: novel_union_001
+  CODEGARDEN_BATCH: cp_lns_001
 jobs:
   preflight:
     runs-on: ubuntu-latest
@@ -29,7 +29,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: codegarden-novel-preflight
-          path: codegarden/artifacts/phase3/novel_union_001/
+          path: codegarden/artifacts/phase3/cp_lns_001/
   probes:
     needs: preflight
     runs-on: ubuntu-latest
@@ -47,7 +47,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: codegarden-novel-preflight
-          path: codegarden/artifacts/phase3/novel_union_001/
+          path: codegarden/artifacts/phase3/cp_lns_001/
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -56,13 +56,13 @@ jobs:
           mkdir -p codegarden/.build
           python -m venv codegarden/.venv
           codegarden/.venv/bin/pip install -r codegarden/requirements-exact.txt
-          g++ -O3 -std=c++17 codegarden/phase3/bundle_anchor.cpp -o codegarden/.build/bundle
-          codegarden/.venv/bin/python -B -u codegarden/phase3/novel_union.py --case ${{ matrix.case }}
+          g++ -O3 -std=c++17 codegarden/phase3/bundle_connected_v2.cpp -o codegarden/.build/bundle
+          codegarden/.venv/bin/python -B -u codegarden/phase3/cp_lns.py --case ${{ matrix.case }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: codegarden-novel-${{ matrix.case }}
-          path: codegarden/artifacts/phase3/novel_union_001/
+          path: codegarden/artifacts/phase3/cp_lns_001/
   collect:
     needs: [preflight, probes]
     if: always()
@@ -77,13 +77,13 @@ jobs:
         with:
           pattern: codegarden-novel-*
           merge-multiple: true
-          path: codegarden/artifacts/phase3/novel_union_001/
+          path: codegarden/artifacts/phase3/cp_lns_001/
       - name: Publish leased results
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python -B -u codegarden/phase3/publish_novel_union.py
+        run: python -B -u codegarden/phase3/publish_cp_lns.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: codegarden-novel-collected
-          path: codegarden/artifacts/phase3/novel_union_001/
+          path: codegarden/artifacts/phase3/cp_lns_001/
