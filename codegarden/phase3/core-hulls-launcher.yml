@@ -1,0 +1,111 @@
+name: CodeGarden full compatible core-hull repairs
+on:
+  push:
+    branches: [codegarden-core-hulls-003]
+    paths: [.github/workflows/codegarden.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: codegarden-free-core-hulls-003
+  cancel-in-progress: false
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+  PIP_CACHE_DIR: ${{ github.workspace }}/codegarden/.cache/pip
+  TMPDIR: ${{ github.workspace }}/codegarden/.tmp
+  SOURCE_SHA: ${{ github.sha }}
+  CODEGARDEN_BATCH: core_hulls_001
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+          mkdir -p codegarden/.tmp codegarden/.cache/pip
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install isolated pinned solver
+        run: |
+          python -m venv codegarden/.venv
+          codegarden/.venv/bin/python -m pip install ortools==9.14.6206
+      - uses: actions/download-artifact@v4
+        with:
+          name: codegarden-quota-projections
+          run-id: 43717267612
+          github-token: ${{ github.token }}
+          path: codegarden/artifacts/phase3/quota_frontiers_001/
+      - name: Audit prerequisites and exact-size exclusions
+        run: |
+          python -B -u codegarden/phase3/core_hull_prerequisites.py
+          codegarden/.venv/bin/python -B -u codegarden/phase3/test_core_hull_goals.py
+          codegarden/.venv/bin/python -B -u codegarden/phase3/core_hulls.py --prepare
+          python -B -u codegarden/phase3/preflight.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          retention-days: 1
+          name: codegarden-core-hulls-plan
+          path: codegarden/artifacts/phase3/core_hulls_001/
+  repairs:
+    needs: prepare
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      max-parallel: 8
+      matrix:
+        case: [0, 1, 2, 3, 4, 5, 6, 7]
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+          mkdir -p codegarden/.tmp codegarden/.cache/pip
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install isolated pinned solver
+        run: |
+          python -m venv codegarden/.venv
+          codegarden/.venv/bin/python -m pip install ortools==9.14.6206
+          mkdir -p codegarden/.build
+          g++ -O3 -std=c++17 codegarden/phase3/bundle_guard.cpp -o codegarden/.build/bundle
+      - uses: actions/download-artifact@v4
+        with:
+          name: codegarden-core-hulls-plan
+          path: codegarden/artifacts/phase3/core_hulls_001/
+      - name: Reoptimize full compatible universe
+        run: codegarden/.venv/bin/python -B -u codegarden/phase3/core_hulls.py --case ${{ matrix.case }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          retention-days: 1
+          name: codegarden-core-hull-${{ matrix.case }}
+          path: codegarden/artifacts/phase3/core_hulls_001/
+  collect:
+    needs: [prepare, repairs]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+          mkdir -p codegarden/.tmp
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: codegarden-core-hull*
+          merge-multiple: true
+          path: codegarden/artifacts/phase3/core_hulls_001/
+      - name: Publish leased model and witness evidence
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -B codegarden/phase3/publish_core_hulls.py
