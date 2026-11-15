@@ -34,14 +34,14 @@ async def run():
             await page.locator("#question").select_option("composition")
             assert await page.locator("#question").input_value()=="composition"
             await page.locator("#stage").select_option("rl")
-            rl_curves={r["run_id"]:r for r in data.get("training_progress",{}).get("runs",[]) if r["mode"]=="rl" and r.get("checkpoints")}
-            for r in data.get("checkpoint_runs",[]):
-                if r["mode"]=="rl":rl_curves[r["run_id"]]=r
+            rl_curves=[r for r in data.get("training_progress",{}).get("runs",[]) if r["mode"]=="rl" and r.get("checkpoints")]
+            rl_curves += [r for r in data.get("checkpoint_runs",[]) if r["mode"]=="rl"]
             if rl_curves:
                 titles=await page.locator("svg.chart circle title").all_text_contents()
-                for r in rl_curves.values():
+                # Every actually scored active point must remain visible, even with an older published partial curve.
+                for r in rl_curves:
                     for c in r["checkpoints"]:
-                        assert any(c["checkpoint_id"] in t and format(c["development_pinball"],".8f") in t for t in titles)
+                        assert any(c["checkpoint_id"] in t and format(c["development_pinball"],".8f") in t for t in titles),c["checkpoint_id"]
             if rl_curves:
                 await page.locator("section").first.evaluate("(el)=>el.scrollIntoView({block:'start',behavior:'instant'})")
                 capture=await page.screenshot(path=str(out/(label+"-rl-learning.png")),full_page=False)
