@@ -1,5 +1,5 @@
 {
-  "observed_at": "2026-11-15T11:05:59.833552+00:00",
+  "observed_at": "2026-11-15T11:07:17.962323+00:00",
   "controller_source": "79bf6f41f1f4ead4603670982329e2f7d470ea86",
   "worker_source": "9e02d5fbec4b5bef09c05f3182dc6f7109ea1090",
   "rows": [
@@ -313,7 +313,7 @@
       "metadata_sha256": "fbb07b3acef482be135c6367456cbb3e01b8a6d9b1f08a9846cd737ec6795c16",
       "source_sha": "9e02d5fbec4b5bef09c05f3182dc6f7109ea1090",
       "completed": false,
-      "native_cpu_seconds": 3002.109999999999,
+      "native_cpu_seconds": 3602.5199999999995,
       "exports": [
         {
           "file": "784cfc8c9cc64d1f87c7422a4b5465c3_best.txt",
@@ -369,9 +369,9 @@
         }
       ],
       "progress.json": {
-        "sha256": "dbf61c73b23a8dc405dc276039d84ddb50bc8828617ef094509091315ee674e5",
-        "native_cpu_seconds": 3002.109999999999,
-        "segments": 5,
+        "sha256": "a703d27893dd4157de42c4475f1cd2ab0e4cda1ce3ccf03b771b85bbbdf36c35",
+        "native_cpu_seconds": 3602.5199999999995,
+        "segments": 6,
         "status": null,
         "allowance_reached": null
       }
@@ -679,7 +679,7 @@
     "4": 6000.32,
     "7": 6000.52,
     "0": 6000.310000000002,
-    "2": 5403.869999999999,
+    "2": 6004.279999999999,
     "1": 6000.42,
     "6": 6000.410000000001,
     "3": 6000.339999999999
@@ -693,14 +693,22 @@
     6,
     7
   ],
-  "all_logical_budgets_spent": false,
+  "all_logical_budgets_spent": true,
   "other_seven_completed": true,
   "duplicate_case2": true,
   "best_independently_verified": 226,
   "new_modal_workers": 0,
   "new_provider_reservations": 0,
   "censoring": "Case2 attempts are not independent samples. No claim of identical total compute; no exhaustion claim beyond the encoded randomized budget.",
-  "action": "none",
+  "action": "guarded_stop_requested",
   "documentation": "https://modal.com/docs/cli/latest/app#modal-app-stop",
-  "budget": "Full7.22USD reservation and all earlier holds retained; no reconciliation or release."
+  "budget": "Full7.22USD reservation and all earlier holds retained; no reconciliation or release.",
+  "guarded_app": {
+    "app_id": "ap-HDbws7Dj2lUHycmOsJCppx",
+    "description": "codegarden-phase3-long-diversification",
+    "state": "ephemeral",
+    "tasks": "1",
+    "created_at": "2026-11-15 09:18:42+00:00",
+    "stopped_at": null
+  }
 }
