@@ -1,0 +1,58 @@
+[
+  {
+    "key": "exa_billing",
+    "url": "https://exa.ai/docs/admin/billing.md",
+    "sha256": "a3558ad711eef886540ea1b01e1a194146a5e6dbe668e1bb40bdae263b173817",
+    "extracts": [
+      "o billing, and custom Enterprise plans. API usage draws from your team's credit balance, while rate limits control how quickly the team can make requests. > [card] [Billing dashboard](https://dashboard.exa.ai/billing?utm_source=docs\\&utm_medium=docs\\&utm_campaign=admin_billing) > > Add credits, configure auto recharge, and view invoices. > [card] [API keys](https://dashboard.exa.ai/api-keys?utm_source=docs\\&utm_medium=docs\\&utm_campaign=admin_billing) > > Review usage and set a lower limit for an individual key. > [card] [Pr",
+      " truth for request and response schemas. # Billing and Rate Limits > Manage Exa credits, invoices, and API rate limits. Exa offers a Free tier, pay-as-you-go billing, and custom Enterprise plans. API usage draws from your team's credit balance, while rate limits control how quickly the team can make requests. > [card] [Billing dashboard](https://dashboard.exa.ai/billing?utm_source=docs\\&utm_medium=docs\\&utm_campaign=admin_billing) > > Add credits, configure auto recharge, and view invoices. > [card] [API keys](https://dashbo"
+    ]
+  },
+  {
+    "key": "exa_search",
+    "url": "https://exa.ai/docs/reference/search.md",
+    "sha256": "50216e040935e762da0eaa3bcf234309717d9bc06aff95349aec78822eafeb52",
+    "extracts": [
+      ": 'null' type: anyOf: - type: string const: auto description: >- The default. A balanced mode that optimizes for both quality and speed and is recommended for most applications. title: auto - type: string const: lite description: >- Low-cost, low-latency search for real-time and interactive experiences such as chat, voice agents, and autocomplete. Accepts only `query` (a single string), `objective`, `userIdentifier`, `metadata`, `category`, `numResults`, `contents.highlights`, `contents.text`, `contents.snapshotAsOf`, `userL",
+      "n=get_key_card) > > Create a key in the dashboard. New accounts start with free credits. ## OpenAPI ````yaml exa-spec.yaml POST /search openapi: 3.1.0 info: title: Exa Public API version: 2.0.0 servers: - url: https://api.exa.ai security: - apiKey: [] - bearer: [] paths: /search: post: summary: Search description: >- Perform a search with an Exa prompt-engineered query and retrieve a list of relevant results. Optionally get contents. operationId: search requestBody: required: true content: application/json: schema: $ref: '#/"
+    ]
+  },
+  {
+    "key": "past_docs",
+    "url": "https://past.dev/docs",
+    "sha256": "1ffa6db096a02eab2c6841aea8ecbe42b8f87154d1c660c816e65b00406c9b30",
+    "extracts": [
+      "er\",\"price\":\"0\",\"priceCurrency\":\"USD\",\"description\":\"Pay as you go, with 50,000 credits to start, or 200,000 if you sign up with a work email. Self-serve sign-up.\"}}]} Skip to content Developers Use cases Benchmarks Enterprise Blog Pricing Log in Get API key Menu Memory API MCP Server Plugins On this page Search Ctrl K Esc Suggestions Quickstart Memory API Set up an integration Memory API Authentication Memory API POST /api/v1/ingest API reference POST /api/v1/recall API reference Access control Memory API Errors Memory API ",
+      "ory API Set up an integration Memory API Authentication Memory API POST /api/v1/ingest API reference POST /api/v1/recall API reference Access control Memory API Errors Memory API Quickstart MCP Server Overview Quickstart Setup Authentication Concepts How it works Access control Sending data Webhooks API reference Debugging Errors {\"@context\":\"https://schema.org\",\"@graph\":[{\"@type\":\"TechArticle\",\"headline\":\"What the Memory API does\",\"description\":\"Send timestamped text, wait for it to complete, then recall ranked memory with "
+    ]
+  },
+  {
+    "key": "past_llms",
+    "url": "https://past.dev/llms.txt",
+    "sha256": "2b0e61f22df5c2fd0b5bc0dd2e5714ab8cdf70f81d0b4438dc46afe21bd9c3ee",
+    "extracts": [
+      "for accounting AI](https://past.dev/industries/accounting): Accounting AI needs balances, policies and client facts as of specific dates, with supporting evidence. Learn how a temporal memory API supports these queries. - [Longitudinal memory for healthcare AI agents](https://past.dev/industries/healthcare): Healthcare AI agents need longitudinal context: what changed across visits, the source note behind every fact, and an insufficient-evidence status when the record is silent. - [AI memory for law firms: ethical walls, dat",
+      " Sign-up is self-serve: anyone can create an account, and it starts with 50,000 credits, 200,000 with a work email. No card required, and nobody approves the account. The reference documents available features. ## When to use past.dev Use past.dev when software must retrieve current or historical facts from unstructured records: - An agent that must know the current state of an account, a project or a person from emails, meeting transcripts, tickets or CRM notes, with the evidence behind each claim. - Long-running work where"
+    ]
+  },
+  {
+    "key": "tinker_llms",
+    "url": "https://tinker-docs.thinkingmachines.ai/llms.txt",
+    "sha256": "7cee004befa33129e4425446f6dbbfa6120787d04500a894c838d7128a6064c9",
+    "lines": [
+      "- [LoRA Primer](https://tinker-docs.thinkingmachines.ai/tinker/lora-primer/index.md): Tinker SDK / Core Concepts",
+      "- [tinker billing](https://tinker-docs.thinkingmachines.ai/tinker/cli/billing/index.md): Tinker SDK / CLI Reference",
+      "- [BillingUsageEvent](https://tinker-docs.thinkingmachines.ai/tinker/api-reference/types/billingusageevent/index.md): Tinker SDK / API Reference / tinker.types",
+      "- [BillingUsageResponse](https://tinker-docs.thinkingmachines.ai/tinker/api-reference/types/billingusageresponse/index.md): Tinker SDK / API Reference / tinker.types",
+      "- [BillingUsageSession](https://tinker-docs.thinkingmachines.ai/tinker/api-reference/types/billingusagesession/index.md): Tinker SDK / API Reference / tinker.types",
+      "- [CheckpointBillingEvent](https://tinker-docs.thinkingmachines.ai/tinker/api-reference/types/checkpointbillingevent/index.md): Tinker SDK / API Reference / tinker.types",
+      "- [GetBillingUsageRequest](https://tinker-docs.thinkingmachines.ai/tinker/api-reference/types/getbillingusagerequest/index.md): Tinker SDK / API Reference / tinker.types",
+      "- [LoraConfig](https://tinker-docs.thinkingmachines.ai/tinker/api-reference/types/loraconfig/index.md): Tinker SDK / API Reference / tinker.types"
+    ]
+  },
+  {
+    "key": "cpro_witness",
+    "url": "https://raw.githubusercontent.com/Constructive-Codes/CPro1/5b26b1a5ca0625a857cf6c2adcc6668e1d66a2ac/designs/deletion-code/result-16-2-208-seed49008.txt",
+    "sha256": "b430efebf674b40b2678aeaeb3f5b2981e1663f90140d09027870edb28ccc393"
+  }
+]

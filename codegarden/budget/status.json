@@ -1,38 +1,7 @@
 {
-  "schema_version": 1,
-  "project": "codegarden",
-  "mode": "fail_closed",
-  "allocation_established": false,
-  "reason": "No verified shared balances or BoundForge reservations accessible. No sponsor requests authorized by this ledger.",
-  "providers": {
-    "exa": {
-      "balance": null,
-      "pending_other_projects": null,
-      "reserved": 0,
-      "actual_codegarden_usage": 0,
-      "billable_enabled": false
-    },
-    "past.dev": {
-      "balance": null,
-      "pending_other_projects": null,
-      "reserved": 0,
-      "actual_codegarden_usage": 0,
-      "billable_enabled": false
-    },
-    "tinker": {
-      "balance": null,
-      "pending_other_projects": null,
-      "reserved": 0,
-      "actual_codegarden_usage": 0,
-      "billable_enabled": false
-    },
-    "modal": {
-      "balance": null,
-      "pending_other_projects": null,
-      "reserved": 0,
-      "actual_codegarden_usage": 0,
-      "billable_enabled": false
-    }
-  },
-  "storage": "CodeGarden ledger is not a shared allocator until every spending project participates; do not treat it as independent access to account credits."
+  "phase": "live_allocation_established",
+  "shared_allocation": "codegarden/budget/shared-allocation.json",
+  "scope": "CodeGarden serialized orchestration; full BoundForge caps and forecasting guards reserved",
+  "provider_replenishment": false,
+  "actual_usage": "pending_live_campaign_receipts"
 }

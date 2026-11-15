@@ -1,5 +1,3 @@
-# GitHub discovers workflows only at .github/workflows/*.yml.
-# Review copy: all application code/results remain under codegarden/.
 name: CodeGarden isolated research
 on:
   push:
@@ -14,9 +12,9 @@ concurrency:
 jobs:
   verify-and-search:
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 45
     steps:
-      - name: Fetch pinned CodeGarden branch
+      - name: Fetch immutable source
         env:
           GH_TOKEN: ${{ github.token }}
           SOURCE_SHA: ${{ github.sha }}
@@ -24,30 +22,41 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Verify protected code and run independent checks
+      - name: Verify all independent checks and protection
         run: |
           python -B -m unittest discover -s codegarden/tests -v
-          python -B codegarden/protected/verify_descendants.py codegarden/artifacts/baselines/arena_226_kgrey.txt
-          python -B codegarden/protected/verify_lcs.py codegarden/artifacts/baselines/arena_226_kgrey.txt
-      - name: Isolated provider clients; do not install forecasting project
+          python -B codegarden/supervisor.py codegarden/artifacts/best_code.txt
+      - name: Install only CodeGarden clients and exact solver
         run: |
           python -m venv codegarden/.venv
-          codegarden/.venv/bin/python -m pip install modal tinker httpx
-      - name: Read balances and active account usage before spending
+          codegarden/.venv/bin/python -m pip install -r codegarden/requirements-providers.txt -r codegarden/requirements-exact.txt
+      - name: Read current account usage before allocated sponsor work
         env:
           EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
-          EXA_SERVICE_KEY: ${{ secrets.EXA_SERVICE_KEY }}
           PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
           TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
           MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
         run: codegarden/.venv/bin/python -B codegarden/budget/preflight.py
-      - name: Expanded bounded CPU search without sponsor calls
+      - name: Execute bounded actual Exa memory Modal and Tinker research
+        env:
+          EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
+          PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: codegarden/.venv/bin/python -B -u codegarden/live_campaign.py
+      - name: Test sparse exact neighborhoods and full-universe target
         run: |
-          python -B codegarden/search.py --start codegarden/artifacts/baselines/arena_226_kgrey.txt --seconds 600 --cycles 5000 --seed 2027 --policy adaptive --output codegarden/artifacts/remote_run.json
-          python -B codegarden/protected/verify_descendants.py codegarden/artifacts/remote_run.txt
-          python -B codegarden/protected/verify_lcs.py codegarden/artifacts/remote_run.txt
-      - name: Commit only CodeGarden results with a branch lease
+          codegarden/.venv/bin/python -B codegarden/cp_sat.py --start codegarden/artifacts/best_code.txt --seconds 10 --seed 41 --output codegarden/artifacts/cp_bands.json
+          codegarden/.venv/bin/python -B codegarden/cp_sat.py --start codegarden/artifacts/best_code.txt --global-pool --seconds 180 --seed 71 --output codegarden/artifacts/cp_global.json
+      - name: Retain exact client versions and independently check all outputs
+        if: always()
+        run: |
+          codegarden/.venv/bin/python -m pip freeze > codegarden/artifacts/live/environment.txt
+          python -B codegarden/ci/final_check.py
+      - name: Publish only CodeGarden receipts with a branch lease
+        if: always()
         env:
           GH_TOKEN: ${{ github.token }}
           SOURCE_SHA: ${{ github.sha }}
