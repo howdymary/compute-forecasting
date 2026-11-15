@@ -51,6 +51,9 @@ def main():
             assert page.locator("[data-history-segment]").count()>1,"Missing dates were joined"
             series=assets["history_context"]["series"][0]
             close=lambda a,b:math.isclose(a,b,rel_tol=1e-10,abs_tol=1e-12)
+            assert close(float(page.locator("[data-history-value]").get_attribute("data-history-value")),series["points"][-1]["value"])
+            page.evaluate("scrollTo(0,0)");capture(page,out,str(width)+"-history-all")
+            page.locator("#time-cursor").evaluate("(el)=>{el.value='0';el.dispatchEvent(new Event('input',{bubbles:true}))}")
             assert close(float(page.locator("[data-history-value]").get_attribute("data-history-value")),series["points"][0]["value"])
             page.locator("#price-chart").focus();page.keyboard.press("ArrowRight")
             assert page.locator("#time-cursor").input_value()=="1"
