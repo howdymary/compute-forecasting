@@ -1,0 +1,106 @@
+name: Run registered v2 forecasting and policy campaign
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/research-v2-campaign.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: registered-v2-campaign
+  cancel-in-progress: false
+jobs:
+  grid:
+    runs-on: ubuntu-latest
+    timeout-minutes: 70
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate new contracts and protected numerical code
+        run: |
+          python -m pip install -e '.[dev]' modal numpy
+          python -m compileall -q src
+          python -m pytest --junitxml=artifacts/v2-tests.xml
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from compute_forecast.freeze_contract import validate_freeze
+          validate_freeze(json.loads(Path('configs/release-freeze.json').read_text()))
+          PY
+      - name: Run all preregistered origins on six Modal workers
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: modal run -m compute_forecast.campaign_v2 --mode grid --no-smoke
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: campaign-v2-grid
+          path: artifacts/
+          retention-days: 30
+  train:
+    needs: grid
+    runs-on: ubuntu-latest
+    timeout-minutes: 220
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        seed: [17, 29, 43]
+        objective: [hard, soft]
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install CPU clients and deterministic numerical controls
+        run: |
+          python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -e '.[dev]' modal numpy scipy scikit-learn tinker tinker-cookbook
+          python -m compileall -q src
+          python -m pytest tests/test_policy_v2.py tests/test_campaign_v2.py
+      - uses: actions/download-artifact@v4
+        with:
+          name: campaign-v2-grid
+          path: inputs/grid
+      - name: Download actual Exa evidence metadata
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run download 43665112830 --repo "$GITHUB_REPOSITORY" --name campaign-v2-evidence-bd267f17fa31106a05a22e3b6b4739f7bd6c0327-43665112830 --dir inputs/evidence
+      - name: Resolve and validate inputs
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          g=next(Path('inputs/grid').rglob('grid.json'));e=next(Path('inputs/evidence').rglob('evidence.json'))
+          Path('inputs/grid.json').write_text(g.read_text());Path('inputs/evidence.json').write_text(e.read_text())
+          p=json.loads(e.read_text());assert p['scope']=='current_method_research' and p['historical_market_input'] is False
+          PY
+      - name: Train finite hard or soft SFT with intermediate evaluation
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+        run: modal run -m compute_forecast.policy_v2 --grid inputs/grid.json --evidence inputs/evidence.json --mode sft --objective ${{ matrix.objective }} --seed ${{ matrix.seed }} --max-updates 100
+      - name: Save exact client versions
+        if: always()
+        run: |
+          mkdir -p artifacts
+          python -m pip freeze > artifacts/v2-policy-client-versions.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: campaign-v2-policy-${{ matrix.objective }}-${{ matrix.seed }}
+          path: artifacts/
+          retention-days: 30
