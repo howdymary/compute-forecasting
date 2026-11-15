@@ -2,7 +2,7 @@ name: Mochi isolated robot research
 on:
   push:
     branches: [mochi-hackathon]
-    paths: ['mochi/**', '.github/workflows/mochi-research.yml']
+    paths: ['mochi/src/mochi/research.py', 'mochi/src/mochi/remote.py', 'mochi/src/mochi/integrations.py', 'mochi/src/mochi/simulation.py', 'mochi/configs/**', '.github/workflows/mochi-research.yml']
   workflow_dispatch:
 permissions:
   contents: read

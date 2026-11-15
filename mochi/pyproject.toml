@@ -10,7 +10,7 @@ dependencies = ["mujoco==3.3.7", "numpy==2.3.4", "httpx==0.28.1", "fastapi==0.12
 
 [project.optional-dependencies]
 dev = ["pytest==8.4.2"]
-remote = ["modal", "tinker==0.39.0", "tinker-cookbook==0.6.1", "transformers==5.23.0"]
+remote = ["modal==1.6.4", "tinker==0.39.0", "tinker-cookbook==0.6.1", "transformers==5.23.0"]
 
 [project.scripts]
 mochi = "mochi.cli:main"

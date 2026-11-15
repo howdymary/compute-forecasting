@@ -2,7 +2,7 @@
 import modal
 from .simulation import ROOT
 
-image=modal.Image.debian_slim(python_version='3.11').apt_install('libgl1','libglib2.0-0').pip_install('mujoco==3.3.7','numpy==2.3.4').env({'PYTHONPATH':'/app/src','MUJOCO_GL':'disable'}).add_local_dir(ROOT/'src',remote_path='/app/src').add_local_dir(ROOT/'configs',remote_path='/app/configs')
+image=modal.Image.debian_slim(python_version='3.11').apt_install('libgl1','libglib2.0-0').pip_install('mujoco==3.3.7','numpy==2.3.4').env({'PYTHONPATH':'/app/src','MUJOCO_GL':'disable','MOCHI_ROOT':'/app'}).add_local_dir(ROOT/'src',remote_path='/app/src').add_local_dir(ROOT/'configs',remote_path='/app/configs')
 app=modal.App('mochi-robot-lab')
 
 @app.function(image=image,cpu=1,memory=1024,timeout=180,max_containers=8)
