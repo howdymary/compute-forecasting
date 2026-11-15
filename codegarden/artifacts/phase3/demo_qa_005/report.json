@@ -1,0 +1,207 @@
+{
+  "source_sha": "08b9756d06137cfe4ab96e5b0b2f1d3f39f0c6cb",
+  "checked_at": "2026-11-15T13:57:22.487184+00:00",
+  "data_capture_at": "2026-11-15T13:35:49Z",
+  "best_verified": 226,
+  "target_achieved": false,
+  "replay_not_live": true,
+  "playwright": "1.56.0",
+  "chromium": "141.0.7390.37",
+  "viewports": [
+    {
+      "label": "desktop",
+      "width": 1440,
+      "height": 1000,
+      "layout": {
+        "viewport": 1440,
+        "body": 1440,
+        "root": 1440
+      },
+      "download_verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6410,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+          }
+        ]
+      },
+      "screenshot": "desktop.png"
+    },
+    {
+      "label": "mobile",
+      "width": 390,
+      "height": 844,
+      "layout": {
+        "viewport": 390,
+        "body": 390,
+        "root": 390
+      },
+      "download_verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6410,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+          }
+        ]
+      },
+      "screenshot": "mobile.png"
+    }
+  ],
+  "decoding_examples": [
+    {
+      "viewport": "desktop",
+      "word": "0000000000000000",
+      "deleted_positions": [
+        2,
+        7
+      ],
+      "descendant": "00000000000000",
+      "unique_recovery": true
+    },
+    {
+      "viewport": "desktop",
+      "word": "0000000001000011",
+      "deleted_positions": [
+        0,
+        15
+      ],
+      "descendant": "00000000100001",
+      "unique_recovery": true
+    },
+    {
+      "viewport": "desktop",
+      "word": "0010100000000100",
+      "deleted_positions": [
+        4,
+        11
+      ],
+      "descendant": "00100000000100",
+      "unique_recovery": true
+    },
+    {
+      "viewport": "desktop",
+      "word": "1011001000100101",
+      "deleted_positions": [
+        1,
+        8
+      ],
+      "descendant": "11100100100101",
+      "unique_recovery": true
+    },
+    {
+      "viewport": "desktop",
+      "word": "1111111111111111",
+      "deleted_positions": [
+        5,
+        13
+      ],
+      "descendant": "11111111111111",
+      "unique_recovery": true
+    },
+    {
+      "viewport": "mobile",
+      "word": "0000000000000000",
+      "deleted_positions": [
+        2,
+        7
+      ],
+      "descendant": "00000000000000",
+      "unique_recovery": true
+    },
+    {
+      "viewport": "mobile",
+      "word": "0000000001000011",
+      "deleted_positions": [
+        0,
+        15
+      ],
+      "descendant": "00000000100001",
+      "unique_recovery": true
+    },
+    {
+      "viewport": "mobile",
+      "word": "0010100000000100",
+      "deleted_positions": [
+        4,
+        11
+      ],
+      "descendant": "00100000000100",
+      "unique_recovery": true
+    },
+    {
+      "viewport": "mobile",
+      "word": "1011001000100101",
+      "deleted_positions": [
+        1,
+        8
+      ],
+      "descendant": "11100100100101",
+      "unique_recovery": true
+    },
+    {
+      "viewport": "mobile",
+      "word": "1111111111111111",
+      "deleted_positions": [
+        5,
+        13
+      ],
+      "descendant": "11111111111111",
+      "unique_recovery": true
+    }
+  ],
+  "duplicate_deletion_positions_rejected": true,
+  "collision_example": {
+    "words": [
+      "0000000000000000",
+      "0000000000000001"
+    ],
+    "shared_descendant": "00000000000000",
+    "deletion_positions": [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        15
+      ]
+    ],
+    "rejected": true
+  },
+  "page_errors": [],
+  "screenshots": {
+    "mobile.png": "edbcda5aa5f2233c5d6bd16f3656c5d1f30ec44518e4dc32424378de7d15e644",
+    "desktop.png": "c5c25002c6a7ac580ae6b6ba1ae1843004035c75753a37ff86847a793f1ea40e"
+  },
+  "scope": "Actual browser-rendered recorded demo. Download and decoder use the reproduced226 witness, not a new construction. Headless rendering is on a free remote runner; no desktop or provider credentials are used."
+}
