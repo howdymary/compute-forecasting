@@ -4,7 +4,7 @@ An auditable autonomous search for C3c, the four-slope arithmetic Kakeya sum–d
 
 **Measured result:** a certified strict refinement of the published witness, approximately 2.21 × 10⁻²². The leading 15 digits are unchanged. This is an extremely small advance on an attributed construction, not a major new bound. See [measured report](results/REPORT.md).
 
-All project files live here. Two GitHub Actions workflow files are the necessary repository-level exception.
+All project files live here. BoundForge GitHub Actions workflow files are the necessary repository-level exception.
 No workstation checkout is required. Existing forecasting code and dependencies are independent.
 
 ## Remote reproduction
@@ -92,3 +92,12 @@ changes and complementary laws are the substantive targets. An exact positive re
 not a solution for the sharp value of C3c. No formal proof-assistant verification is claimed.
 
 [Model-policy comparison and reasoning audit](POLICY_REVIEW.md) · [Self-contained replay source](results/demo.html)
+
+## Research-led follow-up (November 14, 2026)
+
+[Comparative review](research_v2/COMPARATIVE_REVIEW.md) · [Direction and preregistration](research_v2/DIRECTION_AND_PREREGISTRATION.md) · [Final research note](research_v2/followup/FINAL_RESEARCH_NOTE.md)
+
+Nine primary-source precedents informed a new construction-program pilot and a registered optimizer correction: 174 support/start cases in total. No new certificate improved the earlier refinement. The entropy-floor correction prevented point-mass collapse in all 87 paired cases, but produced no positive separator. The model proposals did not demonstrate an advantage; no fine-tuning was justified. We stopped this representation/optimizer campaign rather than scaling a stalled strategy.
+
+[Initial pilot and actual offline replay](research_v2/output/) · [Paired cases, exact witness and usage ledger](research_v2/followup/).
+The current contribution is a reproducible technical/negative-methodology study, not a substantial mathematical advance or guaranteed publication.

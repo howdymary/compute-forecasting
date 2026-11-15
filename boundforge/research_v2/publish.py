@@ -170,7 +170,14 @@ proposal scores, with collapsed solutions marked separately. Neither is a mathem
     for name,body in [("report.json",adapted),("best.json",best),("sources.json",json.loads((out/"sources.json").read_text()))]:
         (view/name).write_text(json.dumps(body))
     (view/"trace.jsonl").write_text((out/"trace.jsonl").read_text())
-    demo.ROOT=HERE/"view";demo.build();(out/"demo.html").write_text((view/"demo.html").read_text())
+    demo.ROOT=HERE/"view";demo.build()
+    page_text=(view/"demo.html").read_text().replace("</style>", """
+*{box-sizing:border-box}main{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)}
+select{max-width:100%}h3,#checks,#lawdata{overflow-wrap:anywhere}pre{max-width:100%}
+@media(max-width:760px){main{grid-template-columns:minmax(0,1fr)}}
+</style>""")
+    page_text=page_text.replace("Incumbent reproduced","Prior certified refinement retained").replace("No new record: the strongest retained result is the attributed incumbent.","No improvement in this study. The retained witness is the earlier certified refinement of Jaswal's construction.")
+    (out/"demo.html").write_text(page_text)
     script=(out/"demo.html").read_text().rsplit("<script>",1)[1].split("</script>",1)[0]
     check=subprocess.run(["node","--check"],input=script,text=True,capture_output=True)
     if check.returncode:raise RuntimeError("demo JavaScript syntax error")

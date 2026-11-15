@@ -34,9 +34,13 @@ jobs:
           python -m pytest -q -p no:cacheprovider boundforge/research_v2/test_v2.py
       - name: Recheck and publish actual study
         run: python -u boundforge/research_v2/publish.py --run 43675810337 --publish
+      - name: Check and publish paired follow-up
+        run: python -u boundforge/research_v2/publish_followup.py --publish
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: boundforge-v2-published-study
-          path: boundforge/research_v2/output/
+          path: |
+            boundforge/research_v2/output/
+            boundforge/research_v2/followup/
           retention-days: 30
