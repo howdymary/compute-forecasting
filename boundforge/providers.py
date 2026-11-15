@@ -36,8 +36,8 @@ class Ledger:
             # Account-wide gross usage is conservatively deducted in full, including
             # pre-snapshot usage. Missing/lagged spend is covered by large headroom.
             now=dt.datetime.now(dt.timezone.utc)
-            end=(now+dt.timedelta(days=1)).date().isoformat()
-            result=subprocess.run(["tinker","billing","usage","2026-11-14",end,"--csv","-"],capture_output=True,text=True,timeout=45)
+            end=(now.replace(minute=0,second=0,microsecond=0)+dt.timedelta(hours=1)).isoformat().replace("+00:00","Z")
+            result=subprocess.run(["tinker","billing","usage","2026-11-14T00:00:00Z",end,"--csv","-"],capture_output=True,text=True,timeout=45)
             if result.returncode:raise Disabled("Tinker live usage unavailable")
             rows=list(csv.DictReader(io.StringIO(result.stdout)))
             if rows and "estimated_cost_usd" not in rows[0]:raise Disabled("Tinker cost schema unavailable")
