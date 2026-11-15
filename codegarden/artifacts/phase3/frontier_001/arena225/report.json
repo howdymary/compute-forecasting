@@ -1,0 +1,52 @@
+{
+  "source_sha": "7edaf25352fe8ffacf2460a55e042653f68c0532",
+  "lineage": "arena225",
+  "seed": 1030001,
+  "status": "completed",
+  "best_exported": 225,
+  "global_retained_best": 226,
+  "best_verification": {
+    "accepted": true,
+    "cardinality": 225,
+    "reports": [
+      {
+        "cardinality": 225,
+        "distinct_descendants": 6362,
+        "length": 16,
+        "method": "distinct_string_two_deletions",
+        "valid": true,
+        "witness_sha256": "237f20bc4812af137d9588d788b5a02860c41d7afbf97f2cde9da5bbd505b271"
+      },
+      {
+        "cardinality": 225,
+        "largest_pairwise_lcs": 13,
+        "length": 16,
+        "method": "independent_dynamic_programming_lcs",
+        "pairs_checked": 25200,
+        "valid": true,
+        "witness_sha256": "237f20bc4812af137d9588d788b5a02860c41d7afbf97f2cde9da5bbd505b271"
+      }
+    ]
+  },
+  "processed": 36,
+  "native_cpu_seconds": 0.508115,
+  "process_cpu_seconds": 0.804741,
+  "wall_seconds": 2.9619307480000003,
+  "ordinary_frontier": 0,
+  "priority_frontier": 0,
+  "partial_neighborhoods": 0,
+  "complete_neighborhoods": 36,
+  "frontier_discarded": 0,
+  "known_component_recoveries": 0,
+  "novel226_orbits_verified": 0,
+  "radius_changes": [
+    {
+      "step": 0,
+      "k": 3,
+      "reason": "unseen neutral state"
+    }
+  ],
+  "retries": 0,
+  "scope": "A dropped frontier or capped neighborhood is not exhaustion. Every mathematical score is a protected export.",
+  "provider_calls": 0
+}
