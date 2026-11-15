@@ -66,7 +66,7 @@ async def run():
             await page.unroute("**/api/experimental")
             await page.route("**/api/experimental",lambda route:route.fulfill(status=200,content_type="application/json",body=raw))
             await page.locator("#refresh-retry").click()
-            await page.wait_for_function("document.querySelector('#refresh-status').hidden")
+            await page.locator("#refresh-status").wait_for(state="hidden")
             assert await page.locator("details").first.evaluate("(el)=>el.open")
             assert await page.locator("#question").input_value()=="composition"
             assert await page.locator("#phase").input_value()=="development"
