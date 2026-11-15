@@ -1,0 +1,170 @@
+{
+  "pivot_is_forced": false,
+  "pool_below_target": 0,
+  "root_only_queries": 2975,
+  "candidate_pool_min": 37,
+  "candidate_pool_max": 310,
+  "candidate_pool_mean": 60.03850016739203,
+  "neutral_rate": 0.2,
+  "neutral_attempts": 1123114,
+  "neutral_moves": 1950,
+  "projection225_bank": [
+    {
+      "path": "projection225_0.txt",
+      "sha256": "f9dc30363da5d7a12b309ccf153db7b50c784d66d8936a331f3e1d78406a29ca",
+      "verification": {
+        "accepted": true,
+        "cardinality": 225,
+        "reports": [
+          {
+            "cardinality": 225,
+            "distinct_descendants": 6362,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "f9dc30363da5d7a12b309ccf153db7b50c784d66d8936a331f3e1d78406a29ca"
+          },
+          {
+            "cardinality": 225,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25200,
+            "valid": true,
+            "witness_sha256": "f9dc30363da5d7a12b309ccf153db7b50c784d66d8936a331f3e1d78406a29ca"
+          }
+        ]
+      }
+    },
+    {
+      "path": "projection225_1.txt",
+      "sha256": "e175db4729fd91c2b5d363e13cfe6bfff9c9c9090f21a230ff1e4505aacdf787",
+      "verification": {
+        "accepted": true,
+        "cardinality": 225,
+        "reports": [
+          {
+            "cardinality": 225,
+            "distinct_descendants": 6362,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "e175db4729fd91c2b5d363e13cfe6bfff9c9c9090f21a230ff1e4505aacdf787"
+          },
+          {
+            "cardinality": 225,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25200,
+            "valid": true,
+            "witness_sha256": "e175db4729fd91c2b5d363e13cfe6bfff9c9c9090f21a230ff1e4505aacdf787"
+          }
+        ]
+      }
+    },
+    {
+      "path": "projection225_2.txt",
+      "sha256": "904acec31882d34583ea82207df486e3a3388d72c6fa649eee2be1cfc1995c0a",
+      "verification": {
+        "accepted": true,
+        "cardinality": 225,
+        "reports": [
+          {
+            "cardinality": 225,
+            "distinct_descendants": 6357,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "904acec31882d34583ea82207df486e3a3388d72c6fa649eee2be1cfc1995c0a"
+          },
+          {
+            "cardinality": 225,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25200,
+            "valid": true,
+            "witness_sha256": "904acec31882d34583ea82207df486e3a3388d72c6fa649eee2be1cfc1995c0a"
+          }
+        ]
+      }
+    }
+  ],
+  "comparison_control": {
+    "source": "c5fa351f79f7f73e11aef7d4df91b4e68c42c264",
+    "run": 43731873426,
+    "case": 14,
+    "same_seed_start_budget_policy": true,
+    "historical_not_simultaneous_control": true
+  },
+  "compressed_logs": [
+    {
+      "path": "checkpoint_raw_invalid_unless_zero.txt.repairs.jsonl.gz",
+      "raw_sha256": "dd6542eed49338a9288753684ffd78694edc1d5a20fb72a24dee2ee706330214",
+      "gzip_sha256": "2c6d9b215ba6b9995b5b75245c02524926b3ad87af43d62cccde3ff0eb91e07e",
+      "raw_bytes": 5738386,
+      "gzip_bytes": 861980
+    },
+    {
+      "path": "repair_trials.jsonl.gz",
+      "raw_sha256": "851b78002431f0e26ee27e94572242af4ef45138f138a65d668f3b70c7f80cba",
+      "gzip_sha256": "3479111ee48b94de72e8b49ae50771cdbaa36c0d6dce4f8762e3444a16c226db",
+      "raw_bytes": 6915264,
+      "gzip_bytes": 1298951
+    }
+  ],
+  "wall_including_controller": 603.147455766,
+  "controller_self_cpu_seconds": 0.58446,
+  "all_children_cpu_seconds": 602.530007,
+  "release_histogram": {
+    "32": 2987
+  },
+  "forced_pivot_trials": 2987,
+  "repair_trials": 2987,
+  "repair_complete_no227": 2987,
+  "repair_timeouts": 0,
+  "repair_pool_gates": 0,
+  "repair_cpu_seconds": 1.58056,
+  "repair_logs_sha256": "851b78002431f0e26ee27e94572242af4ef45138f138a65d668f3b70c7f80cba",
+  "source_sha": "941d63d920a6f6658b809d2996d13c50115b9dc0",
+  "case": 7,
+  "pair": 7,
+  "mode": "neutral_clean_swaps",
+  "seed": 1501008,
+  "starting_verification": {
+    "accepted": true,
+    "cardinality": 225,
+    "reports": [
+      {
+        "cardinality": 225,
+        "distinct_descendants": 6362,
+        "length": 16,
+        "method": "distinct_string_two_deletions",
+        "valid": true,
+        "witness_sha256": "f9dc30363da5d7a12b309ccf153db7b50c784d66d8936a331f3e1d78406a29ca"
+      },
+      {
+        "cardinality": 225,
+        "largest_pairwise_lcs": 13,
+        "length": 16,
+        "method": "independent_dynamic_programming_lcs",
+        "pairs_checked": 25200,
+        "valid": true,
+        "witness_sha256": "f9dc30363da5d7a12b309ccf153db7b50c784d66d8936a331f3e1d78406a29ca"
+      }
+    ]
+  },
+  "starting_sha256": "f9dc30363da5d7a12b309ccf153db7b50c784d66d8936a331f3e1d78406a29ca",
+  "plan_sha256": "bd4d3130029d197c05c23fc7cfb91123c3640d45ca210fb8a939197ba7c4e131",
+  "target": 227,
+  "quota": 210,
+  "minimum_pair_conflicts": 2,
+  "cpu_seconds": 600.001,
+  "iterations": 5613870,
+  "edge_weight_updates": 0,
+  "best_method_independently_verified": 225,
+  "retained_global_best_verified": 226,
+  "novel": [],
+  "scope": "Eight600-native-CPU neutral-clean-swap runs, uniform pair costs, conditional corequota210, optional-pivot fixed32 repair. At most20percent iterations attempt a unique-blocker clean swap preserving pair energy exactly; reverse taboo50. Historical controls are corresponding even-numbered optional-hybrid runs, same parents/seeds/budgets, not simultaneous or independent fresh seeds. Exact repair remains bounded by300CPU total,2048candidate gate and250ms soft queries. Projections225are independently verified support artifacts; no structural novelty or227claim without separate checks. Timeouts/gates remain open. Positive pair energy is invalid."
+}
