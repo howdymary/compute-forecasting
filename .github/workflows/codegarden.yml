@@ -1,75 +1,90 @@
-name: CodeGarden infeasible-space hypotheses
+name: CodeGarden audited disjoint K9suffix repairs with greedy-color closure
 on:
   push:
-    branches: [codegarden]
+    branches: [codegarden-fresh9-resume-001]
     paths: [.github/workflows/codegarden.yml]
   workflow_dispatch:
 permissions:
   contents: write
+  actions: read
 concurrency:
-  group: codegarden-only
+  group: codegarden-free-fresh9-resume-001
   cancel-in-progress: false
 env:
   PYTHONDONTWRITEBYTECODE: '1'
   SOURCE_SHA: ${{ github.sha }}
-  CODEGARDEN_BATCH: infeasible_probe_003
+  TMPDIR: ${{ github.workspace }}/codegarden/.tmp
+  CODEGARDEN_BATCH: fresh9_resume_001
 jobs:
   preflight:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 15
     steps:
       - name: Fetch immutable source
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      - name: Compile kernel and independently test energy updates
         run: |
-          mkdir -p codegarden/.build
-          g++ -O3 -std=c++17 codegarden/phase3/infeasible.cpp -o codegarden/.build/infeasible
-          python -B codegarden/phase3/test_infeasible.py
-          python -B codegarden/phase3/preflight.py
-      - name: Retain preflight evidence
-        if: always()
-        uses: actions/upload-artifact@v4
+          set -o pipefail
+          for attempt in 1 2 3; do
+            if gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1; then break; fi
+            sleep 2
+          done
+          test -f codegarden/phase3/bundle_colored.cpp
+          mkdir -p codegarden/.tmp
+      - name: Compile and independently exhaust small cases
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -o pipefail
+          mkdir -p codegarden/.build codegarden/artifacts/phase3/fresh9_resume_001
+          g++ -O3 -std=c++17 codegarden/phase3/bundle_colored.cpp -o codegarden/.build/bundle_colored
+          g++ -O3 -std=c++17 codegarden/phase3/test_bundle_colored.cpp -o codegarden/.build/test_bundle_colored
+          codegarden/.build/bundle_colored --synthetic-tests
+          codegarden/.build/test_bundle_colored | tee codegarden/artifacts/phase3/fresh9_resume_001/colored_tests.json
+          mkdir -p codegarden/artifacts/phase3/fresh9_resume_001
+          python -B -u codegarden/phase3/prepare_fresh9.py
+          python -B -u codegarden/phase3/preflight.py
+      - uses: actions/upload-artifact@v4
         with:
-          name: codegarden-cg3-preflight
-          path: codegarden/artifacts/phase3/infeasible_probe_003/
+          retention-days: 1
+          name: codegarden-fresh9-preflight
+          path: codegarden/artifacts/phase3/fresh9_resume_001/
   probes:
     needs: preflight
     runs-on: ubuntu-latest
-    timeout-minutes: 16
+    timeout-minutes: 35
     strategy:
       fail-fast: false
-      max-parallel: 4
+      max-parallel: 8
       matrix:
-        seed: [950000, 950001, 950002, 950003]
+        case: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27]
     steps:
       - name: Fetch immutable source
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
+        run: |
+          set -o pipefail
+          for attempt in 1 2 3; do
+            if gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1; then break; fi
+            sleep 2
+          done
+          test -f codegarden/phase3/bundle_colored.cpp
+          mkdir -p codegarden/.tmp
       - uses: actions/download-artifact@v4
         with:
-          name: codegarden-cg3-preflight
-          path: codegarden/artifacts/phase3/infeasible_probe_003/
-      - name: Compile isolated native worker
+          name: codegarden-fresh9-preflight
+          path: codegarden/artifacts/phase3/fresh9_resume_001/
+      - name: Compile and run bounded component
         run: |
           mkdir -p codegarden/.build
-          g++ -O3 -std=c++17 codegarden/phase3/infeasible.cpp -o codegarden/.build/infeasible
-      - name: Test two paired 60-CPU-second hypotheses from different code families
-        run: python -B -u codegarden/phase3/probe.py --seed ${{ matrix.seed }} --seconds 60
-      - name: Retain every checkpoint and proposal, even on failure
+          g++ -O3 -std=c++17 codegarden/phase3/bundle_colored.cpp -o codegarden/.build/bundle_colored
+          python -B -u codegarden/phase3/fresh9_resume.py ${{ matrix.case }}
+      - uses: actions/upload-artifact@v4
         if: always()
-        uses: actions/upload-artifact@v4
         with:
-          name: codegarden-cg3-probe-${{ matrix.seed }}
-          path: codegarden/artifacts/phase3/infeasible_probe_003/
+          retention-days: 1
+          name: codegarden-fresh9-${{ matrix.case }}
+          path: codegarden/artifacts/phase3/fresh9_resume_001/
   collect:
     needs: [preflight, probes]
     if: always()
@@ -79,22 +94,28 @@ jobs:
       - name: Fetch immutable source
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
+        run: |
+          set -o pipefail
+          for attempt in 1 2 3; do
+            if gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1; then break; fi
+            sleep 2
+          done
+          test -f codegarden/phase3/bundle_colored.cpp
+          mkdir -p codegarden/.tmp
       - uses: actions/download-artifact@v4
         with:
-          pattern: codegarden-cg3-*
+          pattern: codegarden-fresh9-*
           merge-multiple: true
-          path: codegarden/artifacts/phase3/infeasible_probe_003/
-      - name: Independently accept proposals and publish leased checkpoint
+          path: codegarden/artifacts/phase3/fresh9_resume_001/
+      - name: Publish leased results
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python -B -u codegarden/phase3/publish.py
-      - name: Retain collected evidence
+        run: |
+          python -B -u codegarden/phase3/collect_fresh9.py
+          python -B -u codegarden/phase3/publish_fresh9.py
+      - uses: actions/upload-artifact@v4
         if: always()
-        uses: actions/upload-artifact@v4
         with:
-          name: codegarden-cg3-collected
-          path: codegarden/artifacts/phase3/infeasible_probe_003/
+          retention-days: 1
+          name: codegarden-fresh9-collected
+          path: codegarden/artifacts/phase3/fresh9_resume_001/
