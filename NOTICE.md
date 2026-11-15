@@ -10,7 +10,7 @@ Compute Forecast's project source, methods, and measured results are maintained 
 - **Amazon Chronos-2**, revision `29ec3766d36d6f73f0696f85560a422f50e8498c`, is an Apache-2.0 model used for a fixed control. Its weights are not included.
 - **Qwen/Qwen3.5-4B** is the base model used by the reported Tinker policy experiments. Access to private trained checkpoints is separate from this repository.
 
-- **Epoch AI hardware** contributes attributed form-factor and power references under CC BY 4.0. **MLCommons results repositories** underpin the pack's Apache-2.0 derived capability ladder. Derived ratios are not official verified MLCommons results; exact contexts and chain notes remain available. MLPerf is a trademark of MLCommons Association.
+- **Epoch AI hardware** contributes attributed form-factor and power references under CC BY 4.0. **MLCommons results repositories** underpin the pack's Apache-2.0 derived capability ladder. [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0) applies to the labeled upstream materials. Derived ratios are not official verified MLCommons results; exact contexts and chain notes remain available. MLPerf is a trademark of MLCommons Association.
 
 ## Software and visual dependencies
 

@@ -1,6 +1,6 @@
 # Public results
 
-This directory contains versioned public research outputs. It is sufficient for inspecting the main numerical findings without a running application or account credentials. Numerical reruns require the separately authorized source data and, for training, provider access.
+This directory contains versioned public research outputs. It is sufficient for inspecting the main numerical findings without a running application or account credentials. Numerical reruns require the separately obtained source data and, for training, provider access.
 
 Current extension: [Pacific value v5](value-v5/README.md) adds approved matching history, the exact official-control audit, conditional economics and verified shared-memory receipts. The original manifest below describes its earlier frozen snapshot and is preserved.
 

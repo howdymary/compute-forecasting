@@ -1,6 +1,6 @@
 # Documentation
 
-Current release: [Pacific value study v5](pacific-value-v5.md) · [Verified past.dev memory and setup diagnosis](past-dev-memory.md) · [Public v5 artifacts](../results/value-v5/README.md).
+Current release: [Pacific value study v5](pacific-value-v5.md) · [Verified past.dev memory and setup diagnosis](past-dev-memory.md) · [Prize evidence and live outline](pacific-past-demo.md) · [Public v5 artifacts](../results/value-v5/README.md).
 
 ## Start here
 
@@ -8,7 +8,8 @@ Current release: [Pacific value study v5](pacific-value-v5.md) · [Verified past
 | --- | --- |
 | [Project overview](../README.md) | Product, main results, and contribution boundary |
 | [Public results](../results/README.md) | Versioned artifacts, checksums, and download locations |
-| [Current methods and publication audit](research-explorer-v3.md) | Historical context, Chronos control, future commitment, and final validation |
+| [Current Pacific value methods](pacific-value-v5.md) | Matching history, official controls, conditional economics and actual shared memory |
+| [Research explorer v3 audit](research-explorer-v3.md) | Earlier independent context, Chronos control and frozen future commitment |
 | [Sources and publication rights](DATA_SOURCES.md) | What each source measures and what is permitted to be published |
 | [Expanded campaign findings](campaign-v2-findings.md) | Completed SFT/RL results, controls, limitations, and execution receipts |
 | [Remote reproduction](campaign-v2-reproduction.md) | Requirements, workflows, checkpoints, and artifact verification |

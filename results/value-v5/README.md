@@ -11,6 +11,7 @@ Versioned outputs extend the frozen v1/v2/v4 work without changing those studies
 | [Successful memory report](runs/43758970371/memory.json) | Three writers, three readers, six cross-role recalls and six actual bounded Tinker decisions |
 | [Setup diagnostic](runs/43759581339/setup-diagnostic.json) | Isolated 44-character audience failure; successful short-ID controls |
 | [Public arithmetic verification](runs/43759952952/verification.json) | Reconstructed official-baseline losses, historical hashes, cross-role use and conditional economics |
+| [UI validation](ui-validation.json) and [PNG provenance](ui-publication.json) | Actual deployed checks at desktop and 390/320px; eight concurrent reads; inspected PNGs only |
 | [Earlier failed memory attempt](runs/43758497959/memory.json) | Retained failure with no successful memory use; not prize-eligibility evidence |
 
 [Methods and economics](../../docs/pacific-value-v5.md) · [Memory proof and repair](../../docs/past-dev-memory.md) · [Data rights and definitions](../../docs/DATA_SOURCES.md).

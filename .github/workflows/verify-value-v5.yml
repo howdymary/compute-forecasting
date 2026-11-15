@@ -4,6 +4,9 @@ on:
     branches: [compute-observatory]
     paths:
       - src/compute_forecast/verify_value_v5.py
+      - results/value-v5/ui-publication.json
+      - docs/pacific-value-v5.md
+      - docs/past-dev-memory.md
       - .github/workflows/verify-value-v5.yml
   workflow_dispatch:
 permissions:

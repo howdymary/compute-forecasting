@@ -71,6 +71,17 @@ def verify():
     for c in capabilities:close(c["h100_cost_per_matched_work_relative_to_a100"],c["pair"]["rental_premium"]/c["benchmark"]["throughput_ratio"])
     return {"status":"passed","study_file_sha256":hashlib.sha256(raw).hexdigest(),"official_csv_sha256":SHA,"historical_series":36,"historical_observations":n,"baseline_reconstruction":losses,"memory":{"writers":len(writers),"readers":len(readers),"cross_role_uses":uses,"forecast_improvement_established":False},"economic_calculations":economic,"conditional_capability_ratios":[{"benchmark":c["benchmark"]["id"],"relative_h100_rental_cost":c["h100_cost_per_matched_work_relative_to_a100"]} for c in capabilities],"limitations":"Public artifacts reproduce published arithmetic. Pack acquisition, private model sampling and independent outcome maturity remain separate requirements."}
 def main():
-    report=verify();out=Path("artifacts/public-value-v5");out.mkdir(parents=True,exist_ok=True)
+    report=verify()
+    publication=Path("results/value-v5/ui-publication.json")
+    if publication.is_file():
+        manifest=json.loads(publication.read_bytes());ui=json.loads(Path(manifest["report_path"]).read_bytes())
+        assert ui["status"]=="passed" and ui["ui_revision"]==manifest["source_ui_sha"]
+        assert manifest["video_recorded"] is False and ui["video_recorded"] is False
+        for name,item in manifest["images"].items():
+            assert name.startswith("docs/images/value-v5-") and name.endswith(".png")
+            assert hashlib.sha256(Path(name).read_bytes()).hexdigest()==item["sha256"]
+        report["ui_publication"]={"validated_revision":ui["ui_revision"],"image_hashes_verified":len(manifest["images"]),"video_recorded":False}
+    report["publication_files"]={name:hashlib.sha256(Path(name).read_bytes()).hexdigest() for name in (STUDY,MEMORY,"docs/pacific-value-v5.md","docs/past-dev-memory.md","docs/DATA_SOURCES.md","configs/pacific-value-v5.json")}
+    out=Path("artifacts/public-value-v5");out.mkdir(parents=True,exist_ok=True)
     (out/"verification.json").write_text(json.dumps(report,indent=2)+"\n");print("VALUE_V5_PUBLIC_VERIFICATION:"+json.dumps(report),flush=True)
 if __name__=="__main__":main()

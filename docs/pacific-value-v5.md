@@ -134,3 +134,5 @@ A fresh numerical run still requires access to the pack; original trained sample
 The source registry, ATTRIBUTION.md and applicable licenses accompany public data. MLPerf is a trademark of MLCommons Association. Derived ladder ratios are not official or verified MLCommons results. No blanket project code license is newly granted.
 
 [Credential-free v5 reconstruction](https://github.com/howdymary/compute-forecasting/actions/runs/43759952952) verifies all 3,204 point hashes, exact CSV preservation, official-control arithmetic, capability ratios, conditional economics and cross-role memory receipts. [Immutable reconstruction report](../results/value-v5/runs/43759952952/verification.json).
+
+[Deployed v5 interaction verification](https://github.com/howdymary/compute-forecasting/actions/runs/43760739987) passed at 1512, 390 and 320 pixels, including eight simultaneous value/memory reads with zero automatic retries. [PNG and source provenance](../results/value-v5/ui-publication.json).

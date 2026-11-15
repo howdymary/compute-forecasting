@@ -63,3 +63,5 @@ python -m compute_forecast.verify_value_v5
 ~~~
 
 This verifies ingestion receipts, cross-role provenance, record hashes, decision inputs and the published arithmetic from committed permitted artifacts. Repeating provider calls requires authorized past.dev, Exa and Tinker access and a new run identity.
+
+The [deployed value/memory view validation](https://github.com/howdymary/compute-forecasting/actions/runs/43760739987) passed exact-value and interaction checks at 1512, 390 and 320 pixels, including eight concurrent data/memory requests with zero automatic retries. [Inspected PNG provenance](../results/value-v5/ui-publication.json).
