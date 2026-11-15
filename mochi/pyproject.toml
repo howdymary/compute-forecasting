@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mochi-robot-lab"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = ["mujoco==3.3.7", "numpy==2.3.4", "httpx==0.28.1", "fastapi==0.121.1", "uvicorn==0.38.0", "imageio==2.37.2", "imageio-ffmpeg==0.6.0"]
+
+[project.optional-dependencies]
+dev = ["pytest==8.4.2"]
+remote = ["modal", "tinker==0.39.0", "tinker-cookbook==0.6.1", "transformers==5.23.0"]
+
+[project.scripts]
+mochi = "mochi.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

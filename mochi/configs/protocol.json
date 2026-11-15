@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "task": "supported humanoid; state-based, right-arm puck pushing",
+  "physics_dt": 0.002,
+  "control_dt": 0.02,
+  "horizon_seconds": 6,
+  "success_radius_m": 0.028,
+  "dwell_seconds": 0.5,
+  "development_seeds": [101, 102, 103, 104, 105, 106, 107, 108],
+  "heldout_seeds": [2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012],
+  "shift_seeds": [3001, 3002, 3003, 3004, 3005, 3006, 3007, 3008],
+  "search_candidates_per_arm": 12,
+  "selection": "success count, then negative mean final distance; development only",
+  "shift": "higher friction and mass, evaluated after candidate freeze",
+  "candidate_authority": "bounded controller parameters only; verifier immutable"
+}
