@@ -1,0 +1,71 @@
+[
+  {
+    "kind": "memory_read",
+    "value": {
+      "role": "strategist",
+      "required_source": "codegarden-43674296464-researcher-plateau_repair_method-c4127054",
+      "returned_source_ids": [
+        "codegarden-43674296464-analyst-native_plateau_analysis-d110a9a4",
+        "codegarden-43674296464-researcher-plateau_repair_method-c4127054"
+      ],
+      "used_in_next_decision": true
+    },
+    "time": 1794715223.2662969
+  },
+  {
+    "kind": "memory_write",
+    "value": {
+      "role": "strategist",
+      "source_id": "codegarden-43674769064-strategist-resumed_feedback_plan-ca6b1d4b",
+      "experiment": "feedback-repair-002",
+      "parent_sources": [
+        "codegarden-43674296464-researcher-plateau_repair_method-c4127054"
+      ],
+      "estimated_credits": 12
+    },
+    "time": 1794715246.9716706
+  },
+  {
+    "kind": "memory_read",
+    "value": {
+      "role": "analyst",
+      "required_source": "codegarden-43674769064-strategist-resumed_feedback_plan-ca6b1d4b",
+      "returned_source_ids": [
+        "codegarden-43673585173-researcher-source_backed_method-36e348c0",
+        "codegarden-43673585173-strategist-experiment_plan-1dd00061",
+        "codegarden-43674296464-researcher-plateau_repair_method-c4127054",
+        "codegarden-43674769064-strategist-resumed_feedback_plan-ca6b1d4b"
+      ],
+      "used_in_next_decision": true
+    },
+    "time": 1794715279.9225707
+  },
+  {
+    "kind": "memory_write",
+    "value": {
+      "role": "analyst",
+      "source_id": "codegarden-43674769064-analyst-resumed_feedback_result-d18cd4d0",
+      "experiment": "feedback-repair-002",
+      "parent_sources": [
+        "codegarden-43674769064-strategist-resumed_feedback_plan-ca6b1d4b"
+      ],
+      "estimated_credits": 11
+    },
+    "time": 1794715303.753452
+  },
+  {
+    "kind": "memory_read",
+    "value": {
+      "role": "researcher",
+      "required_source": "codegarden-43674769064-analyst-resumed_feedback_result-d18cd4d0",
+      "returned_source_ids": [
+        "codegarden-43672598278-analyst-scoped_negative-457459ac",
+        "codegarden-43673585173-analyst-verified_result-ef116a06",
+        "codegarden-43674296464-analyst-native_plateau_analysis-d110a9a4",
+        "codegarden-43674769064-analyst-resumed_feedback_result-d18cd4d0"
+      ],
+      "used_in_next_decision": true
+    },
+    "time": 1794715304.6724536
+  }
+]

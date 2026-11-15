@@ -1,5 +1,5 @@
 {
-  "source_sha": "693dd49449f95499a72d91cbd96ef5811211c7c8",
+  "source_sha": "e2b8a3e3ef43e1cb797d39ec7680021719d3e7f6",
   "best": {
     "path": "/home/runner/work/compute-forecasting/compute-forecasting/codegarden/artifacts/baselines/arena_226_kgrey.txt",
     "verification": {
@@ -212,6 +212,32 @@
     },
     {
       "path": "/home/runner/work/compute-forecasting/compute-forecasting/codegarden/artifacts/cp_global.txt",
+      "verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6410,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+          }
+        ]
+      }
+    },
+    {
+      "path": "/home/runner/work/compute-forecasting/compute-forecasting/codegarden/artifacts/feedback/worker_feedback.txt",
       "verification": {
         "accepted": true,
         "cardinality": 226,
@@ -472,6 +498,32 @@
     },
     {
       "path": "/home/runner/work/compute-forecasting/compute-forecasting/codegarden/artifacts/native/worker_7.txt",
+      "verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6410,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+          }
+        ]
+      }
+    },
+    {
+      "path": "/home/runner/work/compute-forecasting/compute-forecasting/codegarden/artifacts/transfer/worker_trained.txt",
       "verification": {
         "accepted": true,
         "cardinality": 226,
