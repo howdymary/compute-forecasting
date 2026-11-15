@@ -6,6 +6,8 @@
 
 [Checkpoint retention and verified cleanup](docs/campaign-v2-retention.md): every reported model and nonzero SFT optimizer state remains available; only consumed rollout samplers and redundant zero-update optimizer copies were removed.
 
+[Related work and contribution boundary](docs/campaign-v2-related-work.md) reviews 14 primary sources on GPU pricing, learned experiment selection and research/forecasting evaluation. It distinguishes this small empirical study from established methods and commercial products.
+
 [Open the research observatory](https://howdymary--compute-forecast-observatory-web.us-east.modal.run) · [Two-minute demo video](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/files/demo.mp4) · [Frozen evaluation and official forecast export](https://github.com/howdymary/compute-forecasting/actions/runs/43653016797) · [Source branch](https://github.com/howdymary/compute-forecasting/tree/compute-observatory)
 
 The pricing-first Explore view puts a large interactive chart at the center of the product. Switch between the exact submitted 1/3/7-day quantiles and separate 12/24/36-month rental or resale scenarios. Adjust annual assumptions, inspect any month with mouse/touch/keyboard, and optionally supply your own rental-dollar anchor. All 37 source series have verified names and USD/GPU-hour units. Historical prices remain unpublished while redistribution permission is unresolved.
