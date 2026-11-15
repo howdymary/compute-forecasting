@@ -1,0 +1,34 @@
+{
+  "workers": [
+    {
+      "label": "fixed_schedule",
+      "betas": [
+        100000000.0,
+        10000000000.0,
+        1000000000000.0
+      ],
+      "seed": 630101,
+      "noise": 1e-08,
+      "seconds": 900
+    },
+    {
+      "label": "selected_schedule",
+      "betas": [
+        1000000.0,
+        100000000.0,
+        10000000000.0,
+        1000000000000.0
+      ],
+      "seed": 630101,
+      "noise": 1e-08,
+      "seconds": 900
+    }
+  ],
+  "source_sha": "8b5dfa41abf7025341198a5de42e9d26f23c9cf3",
+  "initial_n": 1999999,
+  "baseline": 0.9636615620620854,
+  "baseline_npy_sha256": "1bb11fbbc56069275b7c73794df45634f40fbae896d25459ff6324336da9dab4",
+  "gpu_request": "A100-40GB",
+  "cpu_fallback": "Only after definitive GPU-access denial before any call handle exists. Never on an observation timeout.",
+  "record_claim": false
+}
