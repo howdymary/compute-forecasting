@@ -1,13 +1,13 @@
 name: CodeGarden neutral-eight bridge ordering
 on:
   push:
-    branches: [codegarden-neutral8-order-003]
+    branches: [codegarden-neutral8-order-004]
     paths: [.github/workflows/codegarden.yml]
   workflow_dispatch:
 permissions:
   contents: write
 concurrency:
-  group: codegarden-free-neutral8-order-003
+  group: codegarden-free-neutral8-order-004
   cancel-in-progress: false
 env:
   PYTHONDONTWRITEBYTECODE: '1'
@@ -81,7 +81,7 @@ jobs:
       - name: Publish leased results
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python -B -u codegarden/phase3/publish_neutral8_order.py
+        run: python -B -u codegarden/phase3/publish_neutral8_order2.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:

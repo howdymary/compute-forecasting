@@ -21,7 +21,7 @@ for case in range(12):
      seen=nxt
     if len(seen)==len(added):primitive.add(A)
   for ordering in ["1","2"]:
-   r=json.loads(subprocess.run([str(ROOT/".build/bundle"),str(n),str(k),"15","100000000","100000"],input="\n".join(format(w,"0%db"%n) for w in C)+"\n",text=True,capture_output=True,check=True,env=dict(os.environ,CODEGARDEN_BLOCK_ORDER=ordering)).stdout)
+   r=json.loads(subprocess.run([str(ROOT/".build/bundle"),str(n),str(k),"15","100000000","10000"],input="\n".join(format(w,"0%db"%n) for w in C)+"\n",text=True,capture_output=True,check=True,env=dict(os.environ,CODEGARDEN_BLOCK_ORDER=ordering)).stdout)
    assert r["found"]==expected and (r["found"] or r["complete"])
    if not expected:assert {tuple(v) for v in r["neighbors"]}==primitive,(case,k,ordering,len(primitive),r)
   rows.append({"case":case,"n":n,"k":k,"strict":expected,"primitive_neutral_count":len(primitive) if not expected else None,"both_orders_passed":True})
