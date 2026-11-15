@@ -1,0 +1,5874 @@
+{
+  "schema": 1,
+  "run_id": "mochi-local-20261115T210250Z",
+  "created_at": "2026-11-15T21:02:50.420583+00:00",
+  "mode": "local-conventional-search",
+  "claims": "Deterministic parameter search only. No model, Exa, past.dev, or Modal calls occurred in this local run.",
+  "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d",
+  "candidate_count": 12,
+  "search_rollouts": 96,
+  "selection_rule": "success count, then negative mean final distance; development only",
+  "selected": {
+    "name": "random-09",
+    "speed": 0.04613252721021203,
+    "stop_distance": 0.010622921365148313,
+    "approach_offset": 0.05366097906484909,
+    "contact_height": 0.488,
+    "recovery": false
+  },
+  "selected_sha256": "3bf1f95cfd5770d02fa764df59f6020fb33b4066c441959e1dbc23cf8579cdf2",
+  "candidates": [
+    {
+      "policy": {
+        "name": "random-00",
+        "speed": 0.14835384679783487,
+        "stop_distance": 0.01546093347578489,
+        "approach_offset": 0.05717195839822765,
+        "contact_height": 0.488,
+        "recovery": false
+      },
+      "summary": {
+        "n": 8,
+        "successes": 2,
+        "success_rate": 0.25,
+        "wilson_95": [
+          0.07147768885802763,
+          0.5907301208974108
+        ],
+        "mean_final_distance_m": 0.03568584224427795,
+        "invalid": 0
+      },
+      "results": [
+        {
+          "policy": {
+            "name": "random-00",
+            "speed": 0.14835384679783487,
+            "stop_distance": 0.01546093347578489,
+            "approach_offset": 0.05717195839822765,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 101,
+            "shift": false,
+            "puck": [
+              0.031047275392738775,
+              0.025782631000247195,
+              0.48
+            ],
+            "target": [
+              0.017088324718198624,
+              -0.0652180453692647,
+              0.462
+            ],
+            "friction": 0.3324478525386177,
+            "mass": 0.07190902745691657
+          },
+          "success": false,
+          "final_distance_m": 0.036390719574176805,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 91,
+          "control_effort": 8.692409655207225,
+          "smoothness": 0.18314646470379028,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-00",
+            "speed": 0.14835384679783487,
+            "stop_distance": 0.01546093347578489,
+            "approach_offset": 0.05717195839822765,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 102,
+            "shift": false,
+            "puck": [
+              -0.023800619849698744,
+              0.03257830544520682,
+              0.48
+            ],
+            "target": [
+              0.019430206630970778,
+              -0.0725684940809926,
+              0.462
+            ],
+            "friction": 0.508204784695836,
+            "mass": 0.05355536641223932
+          },
+          "success": false,
+          "final_distance_m": 0.036744102435405074,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 163,
+          "control_effort": 9.383776172327035,
+          "smoothness": 0.18069244968410225,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-00",
+            "speed": 0.14835384679783487,
+            "stop_distance": 0.01546093347578489,
+            "approach_offset": 0.05717195839822765,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 103,
+            "shift": false,
+            "puck": [
+              -0.013112173709393675,
+              0.02172954667878143,
+              0.48
+            ],
+            "target": [
+              -0.01907941631434169,
+              -0.05849553386016419,
+              0.462
+            ],
+            "friction": 0.5858941197711663,
+            "mass": 0.03914249734321895
+          },
+          "success": true,
+          "final_distance_m": 0.020974163413361616,
+          "completion_seconds": 2.532,
+          "invalid": false,
+          "contact_steps": 122,
+          "control_effort": 8.820681372879761,
+          "smoothness": 0.18159982205158517,
+          "overshoot_m": 0.0,
+          "failure": "success",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-00",
+            "speed": 0.14835384679783487,
+            "stop_distance": 0.01546093347578489,
+            "approach_offset": 0.05717195839822765,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 104,
+            "shift": false,
+            "puck": [
+              0.023699536865867496,
+              0.03576444445882041,
+              0.48
+            ],
+            "target": [
+              -0.017034670306390522,
+              -0.07686470255147645,
+              0.462
+            ],
+            "friction": 0.36878118011996025,
+            "mass": 0.06515554072502355
+          },
+          "success": false,
+          "final_distance_m": 0.04414268250890645,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 112,
+          "control_effort": 65.21707401801486,
+          "smoothness": 6.953698223013484,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-00",
+            "speed": 0.14835384679783487,
+            "stop_distance": 0.01546093347578489,
+            "approach_offset": 0.05717195839822765,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 105,
+            "shift": false,
+            "puck": [
+              0.009673673352108121,
+              0.044743793264437746,
+              0.48
+            ],
+            "target": [
+              -0.02419623267320258,
+              -0.06733239145575615,
+              0.462
+            ],
+            "friction": 0.3783975281673299,
+            "mass": 0.0432406494418658
+          },
+          "success": false,
+          "final_distance_m": 0.05021639944026408,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 111,
+          "control_effort": 47.32763304632399,
+          "smoothness": 3.8451978662229016,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-00",
+            "speed": 0.14835384679783487,
+            "stop_distance": 0.01546093347578489,
+            "approach_offset": 0.05717195839822765,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 106,
+            "shift": false,
+            "puck": [
+              0.033768549882433496,
+              0.016212004586809714,
+              0.48
+            ],
+            "target": [
+              -0.022632798610143848,
+              -0.06839336342181337,
+              0.462
+            ],
+            "friction": 0.6339990325713871,
+            "mass": 0.04055197254976746
+          },
+          "success": true,
+          "final_distance_m": 0.0179824143183432,
+          "completion_seconds": 1.8980000000000001,
+          "invalid": false,
+          "contact_steps": 138,
+          "control_effort": 7.831742124177801,
+          "smoothness": 0.17974390362556447,
+          "overshoot_m": 0.0,
+          "failure": "success",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-00",
+            "speed": 0.14835384679783487,
+            "stop_distance": 0.01546093347578489,
+            "approach_offset": 0.05717195839822765,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 107,
+            "shift": false,
+            "puck": [
+              0.010397514358018046,
+              0.02933065707965592,
+              0.48
+            ],
+            "target": [
+              0.00016424291515479306,
+              -0.061630402865779275,
+              0.462
+            ],
+            "friction": 0.4210279757143262,
+            "mass": 0.03806131844804253
+          },
+          "success": false,
+          "final_distance_m": 0.04387943911427732,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 107,
+          "control_effort": 63.54809976567924,
+          "smoothness": 6.72530897272129,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-00",
+            "speed": 0.14835384679783487,
+            "stop_distance": 0.01546093347578489,
+            "approach_offset": 0.05717195839822765,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 108,
+            "shift": false,
+            "puck": [
+              0.024919567213001648,
+              0.033968254658086984,
+              0.48
+            ],
+            "target": [
+              -0.022925666582421553,
+              -0.0712341828455798,
+              0.462
+            ],
+            "friction": 0.30804900069243885,
+            "mass": 0.03803342046053673
+          },
+          "success": false,
+          "final_distance_m": 0.035156817149489004,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 87,
+          "control_effort": 68.13360493085513,
+          "smoothness": 7.377452935233111,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        }
+      ]
+    },
+    {
+      "policy": {
+        "name": "random-01",
+        "speed": 0.13763152406831095,
+        "stop_distance": 0.009601014914090043,
+        "approach_offset": 0.059512447032735116,
+        "contact_height": 0.488,
+        "recovery": false
+      },
+      "summary": {
+        "n": 8,
+        "successes": 2,
+        "success_rate": 0.25,
+        "wilson_95": [
+          0.07147768885802763,
+          0.5907301208974108
+        ],
+        "mean_final_distance_m": 0.036934110831250096,
+        "invalid": 0
+      },
+      "results": [
+        {
+          "policy": {
+            "name": "random-01",
+            "speed": 0.13763152406831095,
+            "stop_distance": 0.009601014914090043,
+            "approach_offset": 0.059512447032735116,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 101,
+            "shift": false,
+            "puck": [
+              0.031047275392738775,
+              0.025782631000247195,
+              0.48
+            ],
+            "target": [
+              0.017088324718198624,
+              -0.0652180453692647,
+              0.462
+            ],
+            "friction": 0.3324478525386177,
+            "mass": 0.07190902745691657
+          },
+          "success": false,
+          "final_distance_m": 0.032213617472379726,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 115,
+          "control_effort": 8.743499923679714,
+          "smoothness": 0.18387371466934307,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-01",
+            "speed": 0.13763152406831095,
+            "stop_distance": 0.009601014914090043,
+            "approach_offset": 0.059512447032735116,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 102,
+            "shift": false,
+            "puck": [
+              -0.023800619849698744,
+              0.03257830544520682,
+              0.48
+            ],
+            "target": [
+              0.019430206630970778,
+              -0.0725684940809926,
+              0.462
+            ],
+            "friction": 0.508204784695836,
+            "mass": 0.05355536641223932
+          },
+          "success": false,
+          "final_distance_m": 0.04482909419296334,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 205,
+          "control_effort": 28.076340750745995,
+          "smoothness": 2.1974512331339096,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-01",
+            "speed": 0.13763152406831095,
+            "stop_distance": 0.009601014914090043,
+            "approach_offset": 0.059512447032735116,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 103,
+            "shift": false,
+            "puck": [
+              -0.013112173709393675,
+              0.02172954667878143,
+              0.48
+            ],
+            "target": [
+              -0.01907941631434169,
+              -0.05849553386016419,
+              0.462
+            ],
+            "friction": 0.5858941197711663,
+            "mass": 0.03914249734321895
+          },
+          "success": true,
+          "final_distance_m": 0.025516277813311308,
+          "completion_seconds": 2.108,
+          "invalid": false,
+          "contact_steps": 135,
+          "control_effort": 8.915972929490946,
+          "smoothness": 0.1814408016268091,
+          "overshoot_m": 0.0,
+          "failure": "success",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-01",
+            "speed": 0.13763152406831095,
+            "stop_distance": 0.009601014914090043,
+            "approach_offset": 0.059512447032735116,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 104,
+            "shift": false,
+            "puck": [
+              0.023699536865867496,
+              0.03576444445882041,
+              0.48
+            ],
+            "target": [
+              -0.017034670306390522,
+              -0.07686470255147645,
+              0.462
+            ],
+            "friction": 0.36878118011996025,
+            "mass": 0.06515554072502355
+          },
+          "success": false,
+          "final_distance_m": 0.040753048196271145,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 122,
+          "control_effort": 55.503127270179,
+          "smoothness": 5.777144248223064,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-01",
+            "speed": 0.13763152406831095,
+            "stop_distance": 0.009601014914090043,
+            "approach_offset": 0.059512447032735116,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 105,
+            "shift": false,
+            "puck": [
+              0.009673673352108121,
+              0.044743793264437746,
+              0.48
+            ],
+            "target": [
+              -0.02419623267320258,
+              -0.06733239145575615,
+              0.462
+            ],
+            "friction": 0.3783975281673299,
+            "mass": 0.0432406494418658
+          },
+          "success": false,
+          "final_distance_m": 0.054019677928971256,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 120,
+          "control_effort": 51.0249341012934,
+          "smoothness": 5.057710383718154,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-01",
+            "speed": 0.13763152406831095,
+            "stop_distance": 0.009601014914090043,
+            "approach_offset": 0.059512447032735116,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 106,
+            "shift": false,
+            "puck": [
+              0.033768549882433496,
+              0.016212004586809714,
+              0.48
+            ],
+            "target": [
+              -0.022632798610143848,
+              -0.06839336342181337,
+              0.462
+            ],
+            "friction": 0.6339990325713871,
+            "mass": 0.04055197254976746
+          },
+          "success": true,
+          "final_distance_m": 0.013822018060397538,
+          "completion_seconds": 1.956,
+          "invalid": false,
+          "contact_steps": 155,
+          "control_effort": 7.961995935957108,
+          "smoothness": 0.18177255676803317,
+          "overshoot_m": 0.0,
+          "failure": "success",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-01",
+            "speed": 0.13763152406831095,
+            "stop_distance": 0.009601014914090043,
+            "approach_offset": 0.059512447032735116,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 107,
+            "shift": false,
+            "puck": [
+              0.010397514358018046,
+              0.02933065707965592,
+              0.48
+            ],
+            "target": [
+              0.00016424291515479306,
+              -0.061630402865779275,
+              0.462
+            ],
+            "friction": 0.4210279757143262,
+            "mass": 0.03806131844804253
+          },
+          "success": false,
+          "final_distance_m": 0.043821429424359626,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 117,
+          "control_effort": 50.73143155687524,
+          "smoothness": 5.054046153735817,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-01",
+            "speed": 0.13763152406831095,
+            "stop_distance": 0.009601014914090043,
+            "approach_offset": 0.059512447032735116,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 108,
+            "shift": false,
+            "puck": [
+              0.024919567213001648,
+              0.033968254658086984,
+              0.48
+            ],
+            "target": [
+              -0.022925666582421553,
+              -0.0712341828455798,
+              0.462
+            ],
+            "friction": 0.30804900069243885,
+            "mass": 0.03803342046053673
+          },
+          "success": false,
+          "final_distance_m": 0.04049772356134683,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 102,
+          "control_effort": 54.98547758029576,
+          "smoothness": 5.657657311367403,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        }
+      ]
+    },
+    {
+      "policy": {
+        "name": "random-02",
+        "speed": 0.14655955827864942,
+        "stop_distance": 0.021363093189708218,
+        "approach_offset": 0.04256227265351092,
+        "contact_height": 0.488,
+        "recovery": false
+      },
+      "summary": {
+        "n": 8,
+        "successes": 2,
+        "success_rate": 0.25,
+        "wilson_95": [
+          0.07147768885802763,
+          0.5907301208974108
+        ],
+        "mean_final_distance_m": 0.03534618212604162,
+        "invalid": 0
+      },
+      "results": [
+        {
+          "policy": {
+            "name": "random-02",
+            "speed": 0.14655955827864942,
+            "stop_distance": 0.021363093189708218,
+            "approach_offset": 0.04256227265351092,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 101,
+            "shift": false,
+            "puck": [
+              0.031047275392738775,
+              0.025782631000247195,
+              0.48
+            ],
+            "target": [
+              0.017088324718198624,
+              -0.0652180453692647,
+              0.462
+            ],
+            "friction": 0.3324478525386177,
+            "mass": 0.07190902745691657
+          },
+          "success": false,
+          "final_distance_m": 0.035976051407087845,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 94,
+          "control_effort": 7.956326753996544,
+          "smoothness": 0.1749295724253094,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-02",
+            "speed": 0.14655955827864942,
+            "stop_distance": 0.021363093189708218,
+            "approach_offset": 0.04256227265351092,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 102,
+            "shift": false,
+            "puck": [
+              -0.023800619849698744,
+              0.03257830544520682,
+              0.48
+            ],
+            "target": [
+              0.019430206630970778,
+              -0.0725684940809926,
+              0.462
+            ],
+            "friction": 0.508204784695836,
+            "mass": 0.05355536641223932
+          },
+          "success": false,
+          "final_distance_m": 0.03351144016162597,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 145,
+          "control_effort": 8.705513932047056,
+          "smoothness": 0.1717719257774421,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-02",
+            "speed": 0.14655955827864942,
+            "stop_distance": 0.021363093189708218,
+            "approach_offset": 0.04256227265351092,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 103,
+            "shift": false,
+            "puck": [
+              -0.013112173709393675,
+              0.02172954667878143,
+              0.48
+            ],
+            "target": [
+              -0.01907941631434169,
+              -0.05849553386016419,
+              0.462
+            ],
+            "friction": 0.5858941197711663,
+            "mass": 0.03914249734321895
+          },
+          "success": true,
+          "final_distance_m": 0.026480645378844203,
+          "completion_seconds": 1.956,
+          "invalid": false,
+          "contact_steps": 111,
+          "control_effort": 8.088481340983472,
+          "smoothness": 0.17250649673623963,
+          "overshoot_m": 0.0,
+          "failure": "success",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-02",
+            "speed": 0.14655955827864942,
+            "stop_distance": 0.021363093189708218,
+            "approach_offset": 0.04256227265351092,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 104,
+            "shift": false,
+            "puck": [
+              0.023699536865867496,
+              0.03576444445882041,
+              0.48
+            ],
+            "target": [
+              -0.017034670306390522,
+              -0.07686470255147645,
+              0.462
+            ],
+            "friction": 0.36878118011996025,
+            "mass": 0.06515554072502355
+          },
+          "success": false,
+          "final_distance_m": 0.04292459786897712,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 112,
+          "control_effort": 64.49920919366478,
+          "smoothness": 6.822218221198065,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-02",
+            "speed": 0.14655955827864942,
+            "stop_distance": 0.021363093189708218,
+            "approach_offset": 0.04256227265351092,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 105,
+            "shift": false,
+            "puck": [
+              0.009673673352108121,
+              0.044743793264437746,
+              0.48
+            ],
+            "target": [
+              -0.02419623267320258,
+              -0.06733239145575615,
+              0.462
+            ],
+            "friction": 0.3783975281673299,
+            "mass": 0.0432406494418658
+          },
+          "success": false,
+          "final_distance_m": 0.05001804511495577,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 109,
+          "control_effort": 62.91096859068676,
+          "smoothness": 6.521676930688587,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-02",
+            "speed": 0.14655955827864942,
+            "stop_distance": 0.021363093189708218,
+            "approach_offset": 0.04256227265351092,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 106,
+            "shift": false,
+            "puck": [
+              0.033768549882433496,
+              0.016212004586809714,
+              0.48
+            ],
+            "target": [
+              -0.022632798610143848,
+              -0.06839336342181337,
+              0.462
+            ],
+            "friction": 0.6339990325713871,
+            "mass": 0.04055197254976746
+          },
+          "success": true,
+          "final_distance_m": 0.02025976987969913,
+          "completion_seconds": 1.812,
+          "invalid": false,
+          "contact_steps": 127,
+          "control_effort": 7.257558035703007,
+          "smoothness": 0.1704222160684223,
+          "overshoot_m": 0.0,
+          "failure": "success",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-02",
+            "speed": 0.14655955827864942,
+            "stop_distance": 0.021363093189708218,
+            "approach_offset": 0.04256227265351092,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 107,
+            "shift": false,
+            "puck": [
+              0.010397514358018046,
+              0.02933065707965592,
+              0.48
+            ],
+            "target": [
+              0.00016424291515479306,
+              -0.061630402865779275,
+              0.462
+            ],
+            "friction": 0.4210279757143262,
+            "mass": 0.03806131844804253
+          },
+          "success": false,
+          "final_distance_m": 0.04352971549546737,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 107,
+          "control_effort": 8.560853345475039,
+          "smoothness": 0.18019772230099299,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-02",
+            "speed": 0.14655955827864942,
+            "stop_distance": 0.021363093189708218,
+            "approach_offset": 0.04256227265351092,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 108,
+            "shift": false,
+            "puck": [
+              0.024919567213001648,
+              0.033968254658086984,
+              0.48
+            ],
+            "target": [
+              -0.022925666582421553,
+              -0.0712341828455798,
+              0.462
+            ],
+            "friction": 0.30804900069243885,
+            "mass": 0.03803342046053673
+          },
+          "success": false,
+          "final_distance_m": 0.030069191701675543,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 98,
+          "control_effort": 8.608942523181563,
+          "smoothness": 0.18269427942988883,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        }
+      ]
+    },
+    {
+      "policy": {
+        "name": "random-03",
+        "speed": 0.10305403130537939,
+        "stop_distance": 0.014303566411953881,
+        "approach_offset": 0.058535299776972034,
+        "contact_height": 0.488,
+        "recovery": false
+      },
+      "summary": {
+        "n": 8,
+        "successes": 2,
+        "success_rate": 0.25,
+        "wilson_95": [
+          0.07147768885802763,
+          0.5907301208974108
+        ],
+        "mean_final_distance_m": 0.0362782506885543,
+        "invalid": 0
+      },
+      "results": [
+        {
+          "policy": {
+            "name": "random-03",
+            "speed": 0.10305403130537939,
+            "stop_distance": 0.014303566411953881,
+            "approach_offset": 0.058535299776972034,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 101,
+            "shift": false,
+            "puck": [
+              0.031047275392738775,
+              0.025782631000247195,
+              0.48
+            ],
+            "target": [
+              0.017088324718198624,
+              -0.0652180453692647,
+              0.462
+            ],
+            "friction": 0.3324478525386177,
+            "mass": 0.07190902745691657
+          },
+          "success": false,
+          "final_distance_m": 0.029545179876160163,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 142,
+          "control_effort": 7.9470995902568395,
+          "smoothness": 0.16430971027220811,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-03",
+            "speed": 0.10305403130537939,
+            "stop_distance": 0.014303566411953881,
+            "approach_offset": 0.058535299776972034,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 102,
+            "shift": false,
+            "puck": [
+              -0.023800619849698744,
+              0.03257830544520682,
+              0.48
+            ],
+            "target": [
+              0.019430206630970778,
+              -0.0725684940809926,
+              0.462
+            ],
+            "friction": 0.508204784695836,
+            "mass": 0.05355536641223932
+          },
+          "success": false,
+          "final_distance_m": 0.046687436787697316,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 247,
+          "control_effort": 9.107604004767609,
+          "smoothness": 0.17034763502881795,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-03",
+            "speed": 0.10305403130537939,
+            "stop_distance": 0.014303566411953881,
+            "approach_offset": 0.058535299776972034,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 103,
+            "shift": false,
+            "puck": [
+              -0.013112173709393675,
+              0.02172954667878143,
+              0.48
+            ],
+            "target": [
+              -0.01907941631434169,
+              -0.05849553386016419,
+              0.462
+            ],
+            "friction": 0.5858941197711663,
+            "mass": 0.03914249734321895
+          },
+          "success": true,
+          "final_distance_m": 0.019723111717075765,
+          "completion_seconds": 2.248,
+          "invalid": false,
+          "contact_steps": 175,
+          "control_effort": 8.224271660073388,
+          "smoothness": 0.1630108191937747,
+          "overshoot_m": 0.0,
+          "failure": "success",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-03",
+            "speed": 0.10305403130537939,
+            "stop_distance": 0.014303566411953881,
+            "approach_offset": 0.058535299776972034,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 104,
+            "shift": false,
+            "puck": [
+              0.023699536865867496,
+              0.03576444445882041,
+              0.48
+            ],
+            "target": [
+              -0.017034670306390522,
+              -0.07686470255147645,
+              0.462
+            ],
+            "friction": 0.36878118011996025,
+            "mass": 0.06515554072502355
+          },
+          "success": false,
+          "final_distance_m": 0.0419418767692457,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 196,
+          "control_effort": 11.899513575356368,
+          "smoothness": 0.1848298956153062,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-03",
+            "speed": 0.10305403130537939,
+            "stop_distance": 0.014303566411953881,
+            "approach_offset": 0.058535299776972034,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 105,
+            "shift": false,
+            "puck": [
+              0.009673673352108121,
+              0.044743793264437746,
+              0.48
+            ],
+            "target": [
+              -0.02419623267320258,
+              -0.06733239145575615,
+              0.462
+            ],
+            "friction": 0.3783975281673299,
+            "mass": 0.0432406494418658
+          },
+          "success": false,
+          "final_distance_m": 0.05620593063898498,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 182,
+          "control_effort": 12.135529261364608,
+          "smoothness": 0.1805902769399189,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-03",
+            "speed": 0.10305403130537939,
+            "stop_distance": 0.014303566411953881,
+            "approach_offset": 0.058535299776972034,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 106,
+            "shift": false,
+            "puck": [
+              0.033768549882433496,
+              0.016212004586809714,
+              0.48
+            ],
+            "target": [
+              -0.022632798610143848,
+              -0.06839336342181337,
+              0.462
+            ],
+            "friction": 0.6339990325713871,
+            "mass": 0.04055197254976746
+          },
+          "success": true,
+          "final_distance_m": 0.016895974986261844,
+          "completion_seconds": 2.172,
+          "invalid": false,
+          "contact_steps": 189,
+          "control_effort": 7.218849456960735,
+          "smoothness": 0.16461951009651157,
+          "overshoot_m": 0.0,
+          "failure": "success",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-03",
+            "speed": 0.10305403130537939,
+            "stop_distance": 0.014303566411953881,
+            "approach_offset": 0.058535299776972034,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 107,
+            "shift": false,
+            "puck": [
+              0.010397514358018046,
+              0.02933065707965592,
+              0.48
+            ],
+            "target": [
+              0.00016424291515479306,
+              -0.061630402865779275,
+              0.462
+            ],
+            "friction": 0.4210279757143262,
+            "mass": 0.03806131844804253
+          },
+          "success": false,
+          "final_distance_m": 0.039423335577459244,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 164,
+          "control_effort": 8.481356479573792,
+          "smoothness": 0.1685819655136344,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-03",
+            "speed": 0.10305403130537939,
+            "stop_distance": 0.014303566411953881,
+            "approach_offset": 0.058535299776972034,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 108,
+            "shift": false,
+            "puck": [
+              0.024919567213001648,
+              0.033968254658086984,
+              0.48
+            ],
+            "target": [
+              -0.022925666582421553,
+              -0.0712341828455798,
+              0.462
+            ],
+            "friction": 0.30804900069243885,
+            "mass": 0.03803342046053673
+          },
+          "success": false,
+          "final_distance_m": 0.03980315915554942,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 145,
+          "control_effort": 8.847028856215257,
+          "smoothness": 0.18604503188832805,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        }
+      ]
+    },
+    {
+      "policy": {
+        "name": "random-04",
+        "speed": 0.13014111681129303,
+        "stop_distance": 0.02198694742560411,
+        "approach_offset": 0.04886828397654662,
+        "contact_height": 0.488,
+        "recovery": false
+      },
+      "summary": {
+        "n": 8,
+        "successes": 1,
+        "success_rate": 0.125,
+        "wilson_95": [
+          0.02241690886329617,
+          0.4708948057698615
+        ],
+        "mean_final_distance_m": 0.03719292641959958,
+        "invalid": 0
+      },
+      "results": [
+        {
+          "policy": {
+            "name": "random-04",
+            "speed": 0.13014111681129303,
+            "stop_distance": 0.02198694742560411,
+            "approach_offset": 0.04886828397654662,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 101,
+            "shift": false,
+            "puck": [
+              0.031047275392738775,
+              0.025782631000247195,
+              0.48
+            ],
+            "target": [
+              0.017088324718198624,
+              -0.0652180453692647,
+              0.462
+            ],
+            "friction": 0.3324478525386177,
+            "mass": 0.07190902745691657
+          },
+          "success": false,
+          "final_distance_m": 0.033296564043899614,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 98,
+          "control_effort": 7.908523934895346,
+          "smoothness": 0.16982399474982207,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-04",
+            "speed": 0.13014111681129303,
+            "stop_distance": 0.02198694742560411,
+            "approach_offset": 0.04886828397654662,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 102,
+            "shift": false,
+            "puck": [
+              -0.023800619849698744,
+              0.03257830544520682,
+              0.48
+            ],
+            "target": [
+              0.019430206630970778,
+              -0.0725684940809926,
+              0.462
+            ],
+            "friction": 0.508204784695836,
+            "mass": 0.05355536641223932
+          },
+          "success": false,
+          "final_distance_m": 0.03352888171791361,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 177,
+          "control_effort": 8.758710927586765,
+          "smoothness": 0.16894460415094784,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-04",
+            "speed": 0.13014111681129303,
+            "stop_distance": 0.02198694742560411,
+            "approach_offset": 0.04886828397654662,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 103,
+            "shift": false,
+            "puck": [
+              -0.013112173709393675,
+              0.02172954667878143,
+              0.48
+            ],
+            "target": [
+              -0.01907941631434169,
+              -0.05849553386016419,
+              0.462
+            ],
+            "friction": 0.5858941197711663,
+            "mass": 0.03914249734321895
+          },
+          "success": false,
+          "final_distance_m": 0.03086942236898181,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 127,
+          "control_effort": 8.110412165837053,
+          "smoothness": 0.16793397703624532,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-04",
+            "speed": 0.13014111681129303,
+            "stop_distance": 0.02198694742560411,
+            "approach_offset": 0.04886828397654662,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 104,
+            "shift": false,
+            "puck": [
+              0.023699536865867496,
+              0.03576444445882041,
+              0.48
+            ],
+            "target": [
+              -0.017034670306390522,
+              -0.07686470255147645,
+              0.462
+            ],
+            "friction": 0.36878118011996025,
+            "mass": 0.06515554072502355
+          },
+          "success": false,
+          "final_distance_m": 0.04345791991165928,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 135,
+          "control_effort": 37.138740752029406,
+          "smoothness": 3.451128430409437,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-04",
+            "speed": 0.13014111681129303,
+            "stop_distance": 0.02198694742560411,
+            "approach_offset": 0.04886828397654662,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 105,
+            "shift": false,
+            "puck": [
+              0.009673673352108121,
+              0.044743793264437746,
+              0.48
+            ],
+            "target": [
+              -0.02419623267320258,
+              -0.06733239145575615,
+              0.462
+            ],
+            "friction": 0.3783975281673299,
+            "mass": 0.0432406494418658
+          },
+          "success": false,
+          "final_distance_m": 0.04982094719324336,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 129,
+          "control_effort": 44.90164029971649,
+          "smoothness": 4.331870435544126,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-04",
+            "speed": 0.13014111681129303,
+            "stop_distance": 0.02198694742560411,
+            "approach_offset": 0.04886828397654662,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 106,
+            "shift": false,
+            "puck": [
+              0.033768549882433496,
+              0.016212004586809714,
+              0.48
+            ],
+            "target": [
+              -0.022632798610143848,
+              -0.06839336342181337,
+              0.462
+            ],
+            "friction": 0.6339990325713871,
+            "mass": 0.04055197254976746
+          },
+          "success": true,
+          "final_distance_m": 0.02065360385359257,
+          "completion_seconds": 1.926,
+          "invalid": false,
+          "contact_steps": 137,
+          "control_effort": 7.229625598525564,
+          "smoothness": 0.16764542375625976,
+          "overshoot_m": 0.0,
+          "failure": "success",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-04",
+            "speed": 0.13014111681129303,
+            "stop_distance": 0.02198694742560411,
+            "approach_offset": 0.04886828397654662,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 107,
+            "shift": false,
+            "puck": [
+              0.010397514358018046,
+              0.02933065707965592,
+              0.48
+            ],
+            "target": [
+              0.00016424291515479306,
+              -0.061630402865779275,
+              0.462
+            ],
+            "friction": 0.4210279757143262,
+            "mass": 0.03806131844804253
+          },
+          "success": false,
+          "final_distance_m": 0.034449775872567326,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 107,
+          "control_effort": 8.162210315772437,
+          "smoothness": 0.16973100959410906,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-04",
+            "speed": 0.13014111681129303,
+            "stop_distance": 0.02198694742560411,
+            "approach_offset": 0.04886828397654662,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 108,
+            "shift": false,
+            "puck": [
+              0.024919567213001648,
+              0.033968254658086984,
+              0.48
+            ],
+            "target": [
+              -0.022925666582421553,
+              -0.0712341828455798,
+              0.462
+            ],
+            "friction": 0.30804900069243885,
+            "mass": 0.03803342046053673
+          },
+          "success": false,
+          "final_distance_m": 0.05146629639493905,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 103,
+          "control_effort": 8.55024927269047,
+          "smoothness": 0.18274134974551487,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        }
+      ]
+    },
+    {
+      "policy": {
+        "name": "random-05",
+        "speed": 0.07181342104986876,
+        "stop_distance": 0.01742794137926919,
+        "approach_offset": 0.04127634512208351,
+        "contact_height": 0.488,
+        "recovery": false
+      },
+      "summary": {
+        "n": 8,
+        "successes": 7,
+        "success_rate": 0.875,
+        "wilson_95": [
+          0.5291051942301386,
+          0.9775830911367038
+        ],
+        "mean_final_distance_m": 0.023684913799632237,
+        "invalid": 0
+      },
+      "results": [
+        {
+          "policy": {
+            "name": "random-05",
+            "speed": 0.07181342104986876,
+            "stop_distance": 0.01742794137926919,
+            "approach_offset": 0.04127634512208351,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 101,
+            "shift": false,
+            "puck": [
+              0.031047275392738775,
+              0.025782631000247195,
+              0.48
+            ],
+            "target": [
+              0.017088324718198624,
+              -0.0652180453692647,
+              0.462
+            ],
+            "friction": 0.3324478525386177,
+            "mass": 0.07190902745691657
+          },
+          "success": true,
+          "final_distance_m": 0.026702401888114107,
+          "completion_seconds": 2.4,
+          "invalid": false,
+          "contact_steps": 173,
+          "control_effort": 6.9621621987837425,
+          "smoothness": 0.14699640537809264,
+          "overshoot_m": 0.0,
+          "failure": "success",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-05",
+            "speed": 0.07181342104986876,
+            "stop_distance": 0.01742794137926919,
+            "approach_offset": 0.04127634512208351,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 102,
+            "shift": false,
+            "puck": [
+              -0.023800619849698744,
+              0.03257830544520682,
+              0.48
+            ],
+            "target": [
+              0.019430206630970778,
+              -0.0725684940809926,
+              0.462
+            ],
+            "friction": 0.508204784695836,
+            "mass": 0.05355536641223932
+          },
+          "success": true,
+          "final_distance_m": 0.0221346218136672,
+          "completion_seconds": 2.854,
+          "invalid": false,
+          "contact_steps": 291,
+          "control_effort": 8.008854111735555,
+          "smoothness": 0.15168625138492983,
+          "overshoot_m": 0.0,
+          "failure": "success",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-05",
+            "speed": 0.07181342104986876,
+            "stop_distance": 0.01742794137926919,
+            "approach_offset": 0.04127634512208351,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 103,
+            "shift": false,
+            "puck": [
+              -0.013112173709393675,
+              0.02172954667878143,
+              0.48
+            ],
+            "target": [
+              -0.01907941631434169,
+              -0.05849553386016419,
+              0.462
+            ],
+            "friction": 0.5858941197711663,
+            "mass": 0.03914249734321895
+          },
+          "success": true,
+          "final_distance_m": 0.016147718274797038,
+          "completion_seconds": 2.232,
+          "invalid": false,
+          "contact_steps": 232,
+          "control_effort": 7.390678144574448,
+          "smoothness": 0.148907999346544,
+          "overshoot_m": 0.0,
+          "failure": "success",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-05",
+            "speed": 0.07181342104986876,
+            "stop_distance": 0.01742794137926919,
+            "approach_offset": 0.04127634512208351,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 104,
+            "shift": false,
+            "puck": [
+              0.023699536865867496,
+              0.03576444445882041,
+              0.48
+            ],
+            "target": [
+              -0.017034670306390522,
+              -0.07686470255147645,
+              0.462
+            ],
+            "friction": 0.36878118011996025,
+            "mass": 0.06515554072502355
+          },
+          "success": true,
+          "final_distance_m": 0.017777614418946507,
+          "completion_seconds": 2.754,
+          "invalid": false,
+          "contact_steps": 232,
+          "control_effort": 7.433684521336854,
+          "smoothness": 0.1532669467576229,
+          "overshoot_m": 0.0,
+          "failure": "success",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-05",
+            "speed": 0.07181342104986876,
+            "stop_distance": 0.01742794137926919,
+            "approach_offset": 0.04127634512208351,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 105,
+            "shift": false,
+            "puck": [
+              0.009673673352108121,
+              0.044743793264437746,
+              0.48
+            ],
+            "target": [
+              -0.02419623267320258,
+              -0.06733239145575615,
+              0.462
+            ],
+            "friction": 0.3783975281673299,
+            "mass": 0.0432406494418658
+          },
+          "success": false,
+          "final_distance_m": 0.04593425576468082,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 267,
+          "control_effort": 9.91935106135228,
+          "smoothness": 0.14800980757667198,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-05",
+            "speed": 0.07181342104986876,
+            "stop_distance": 0.01742794137926919,
+            "approach_offset": 0.04127634512208351,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 106,
+            "shift": false,
+            "puck": [
+              0.033768549882433496,
+              0.016212004586809714,
+              0.48
+            ],
+            "target": [
+              -0.022632798610143848,
+              -0.06839336342181337,
+              0.462
+            ],
+            "friction": 0.6339990325713871,
+            "mass": 0.04055197254976746
+          },
+          "success": true,
+          "final_distance_m": 0.018790613919973657,
+          "completion_seconds": 2.346,
+          "invalid": false,
+          "contact_steps": 260,
+          "control_effort": 6.371986884358445,
+          "smoothness": 0.14384461785093106,
+          "overshoot_m": 0.0,
+          "failure": "success",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-05",
+            "speed": 0.07181342104986876,
+            "stop_distance": 0.01742794137926919,
+            "approach_offset": 0.04127634512208351,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 107,
+            "shift": false,
+            "puck": [
+              0.010397514358018046,
+              0.02933065707965592,
+              0.48
+            ],
+            "target": [
+              0.00016424291515479306,
+              -0.061630402865779275,
+              0.462
+            ],
+            "friction": 0.4210279757143262,
+            "mass": 0.03806131844804253
+          },
+          "success": true,
+          "final_distance_m": 0.019437827788268185,
+          "completion_seconds": 2.366,
+          "invalid": false,
+          "contact_steps": 200,
+          "control_effort": 7.256355111967253,
+          "smoothness": 0.14813114702592817,
+          "overshoot_m": 0.0,
+          "failure": "success",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-05",
+            "speed": 0.07181342104986876,
+            "stop_distance": 0.01742794137926919,
+            "approach_offset": 0.04127634512208351,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 108,
+            "shift": false,
+            "puck": [
+              0.024919567213001648,
+              0.033968254658086984,
+              0.48
+            ],
+            "target": [
+              -0.022925666582421553,
+              -0.0712341828455798,
+              0.462
+            ],
+            "friction": 0.30804900069243885,
+            "mass": 0.03803342046053673
+          },
+          "success": true,
+          "final_distance_m": 0.022554256528610393,
+          "completion_seconds": 4.816,
+          "invalid": false,
+          "contact_steps": 193,
+          "control_effort": 7.32443078244098,
+          "smoothness": 0.15356615781122607,
+          "overshoot_m": 0.0,
+          "failure": "success",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        }
+      ]
+    },
+    {
+      "policy": {
+        "name": "random-06",
+        "speed": 0.15586836407896149,
+        "stop_distance": 0.018738294785075105,
+        "approach_offset": 0.05516175480170748,
+        "contact_height": 0.488,
+        "recovery": false
+      },
+      "summary": {
+        "n": 8,
+        "successes": 2,
+        "success_rate": 0.25,
+        "wilson_95": [
+          0.07147768885802763,
+          0.5907301208974108
+        ],
+        "mean_final_distance_m": 0.03560951440527804,
+        "invalid": 0
+      },
+      "results": [
+        {
+          "policy": {
+            "name": "random-06",
+            "speed": 0.15586836407896149,
+            "stop_distance": 0.018738294785075105,
+            "approach_offset": 0.05516175480170748,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 101,
+            "shift": false,
+            "puck": [
+              0.031047275392738775,
+              0.025782631000247195,
+              0.48
+            ],
+            "target": [
+              0.017088324718198624,
+              -0.0652180453692647,
+              0.462
+            ],
+            "friction": 0.3324478525386177,
+            "mass": 0.07190902745691657
+          },
+          "success": false,
+          "final_distance_m": 0.03320979554230778,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 87,
+          "control_effort": 8.493916354260486,
+          "smoothness": 0.1809478531921196,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-06",
+            "speed": 0.15586836407896149,
+            "stop_distance": 0.018738294785075105,
+            "approach_offset": 0.05516175480170748,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 102,
+            "shift": false,
+            "puck": [
+              -0.023800619849698744,
+              0.03257830544520682,
+              0.48
+            ],
+            "target": [
+              0.019430206630970778,
+              -0.0725684940809926,
+              0.462
+            ],
+            "friction": 0.508204784695836,
+            "mass": 0.05355536641223932
+          },
+          "success": false,
+          "final_distance_m": 0.03435324060110002,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 142,
+          "control_effort": 9.300501988248495,
+          "smoothness": 0.18037022966289065,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-06",
+            "speed": 0.15586836407896149,
+            "stop_distance": 0.018738294785075105,
+            "approach_offset": 0.05516175480170748,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 103,
+            "shift": false,
+            "puck": [
+              -0.013112173709393675,
+              0.02172954667878143,
+              0.48
+            ],
+            "target": [
+              -0.01907941631434169,
+              -0.05849553386016419,
+              0.462
+            ],
+            "friction": 0.5858941197711663,
+            "mass": 0.03914249734321895
+          },
+          "success": true,
+          "final_distance_m": 0.026354067363408885,
+          "completion_seconds": 2.008,
+          "invalid": false,
+          "contact_steps": 108,
+          "control_effort": 8.685766960973357,
+          "smoothness": 0.1806590406487839,
+          "overshoot_m": 0.0,
+          "failure": "success",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-06",
+            "speed": 0.15586836407896149,
+            "stop_distance": 0.018738294785075105,
+            "approach_offset": 0.05516175480170748,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 104,
+            "shift": false,
+            "puck": [
+              0.023699536865867496,
+              0.03576444445882041,
+              0.48
+            ],
+            "target": [
+              -0.017034670306390522,
+              -0.07686470255147645,
+              0.462
+            ],
+            "friction": 0.36878118011996025,
+            "mass": 0.06515554072502355
+          },
+          "success": false,
+          "final_distance_m": 0.037969305738401626,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 100,
+          "control_effort": 72.80744978234955,
+          "smoothness": 7.852909561452876,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-06",
+            "speed": 0.15586836407896149,
+            "stop_distance": 0.018738294785075105,
+            "approach_offset": 0.05516175480170748,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 105,
+            "shift": false,
+            "puck": [
+              0.009673673352108121,
+              0.044743793264437746,
+              0.48
+            ],
+            "target": [
+              -0.02419623267320258,
+              -0.06733239145575615,
+              0.462
+            ],
+            "friction": 0.3783975281673299,
+            "mass": 0.0432406494418658
+          },
+          "success": false,
+          "final_distance_m": 0.05281994824439042,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 96,
+          "control_effort": 72.18578183382985,
+          "smoothness": 7.854784385405818,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-06",
+            "speed": 0.15586836407896149,
+            "stop_distance": 0.018738294785075105,
+            "approach_offset": 0.05516175480170748,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 106,
+            "shift": false,
+            "puck": [
+              0.033768549882433496,
+              0.016212004586809714,
+              0.48
+            ],
+            "target": [
+              -0.022632798610143848,
+              -0.06839336342181337,
+              0.462
+            ],
+            "friction": 0.6339990325713871,
+            "mass": 0.04055197254976746
+          },
+          "success": true,
+          "final_distance_m": 0.0166041261969756,
+          "completion_seconds": 1.84,
+          "invalid": false,
+          "contact_steps": 120,
+          "control_effort": 7.779402927043554,
+          "smoothness": 0.17865524396773688,
+          "overshoot_m": 0.0,
+          "failure": "success",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-06",
+            "speed": 0.15586836407896149,
+            "stop_distance": 0.018738294785075105,
+            "approach_offset": 0.05516175480170748,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 107,
+            "shift": false,
+            "puck": [
+              0.010397514358018046,
+              0.02933065707965592,
+              0.48
+            ],
+            "target": [
+              0.00016424291515479306,
+              -0.061630402865779275,
+              0.462
+            ],
+            "friction": 0.4210279757143262,
+            "mass": 0.03806131844804253
+          },
+          "success": false,
+          "final_distance_m": 0.04178942248276458,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 93,
+          "control_effort": 9.026691127902755,
+          "smoothness": 0.18473695904565024,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-06",
+            "speed": 0.15586836407896149,
+            "stop_distance": 0.018738294785075105,
+            "approach_offset": 0.05516175480170748,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 108,
+            "shift": false,
+            "puck": [
+              0.024919567213001648,
+              0.033968254658086984,
+              0.48
+            ],
+            "target": [
+              -0.022925666582421553,
+              -0.0712341828455798,
+              0.462
+            ],
+            "friction": 0.30804900069243885,
+            "mass": 0.03803342046053673
+          },
+          "success": false,
+          "final_distance_m": 0.041776209072875416,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 83,
+          "control_effort": 13.939420615027343,
+          "smoothness": 0.22602709633108606,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        }
+      ]
+    },
+    {
+      "policy": {
+        "name": "random-07",
+        "speed": 0.08963363553818157,
+        "stop_distance": 0.024501866414713358,
+        "approach_offset": 0.05786242242644395,
+        "contact_height": 0.488,
+        "recovery": false
+      },
+      "summary": {
+        "n": 8,
+        "successes": 2,
+        "success_rate": 0.25,
+        "wilson_95": [
+          0.07147768885802763,
+          0.5907301208974108
+        ],
+        "mean_final_distance_m": 0.033740982975614786,
+        "invalid": 0
+      },
+      "results": [
+        {
+          "policy": {
+            "name": "random-07",
+            "speed": 0.08963363553818157,
+            "stop_distance": 0.024501866414713358,
+            "approach_offset": 0.05786242242644395,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 101,
+            "shift": false,
+            "puck": [
+              0.031047275392738775,
+              0.025782631000247195,
+              0.48
+            ],
+            "target": [
+              0.017088324718198624,
+              -0.0652180453692647,
+              0.462
+            ],
+            "friction": 0.3324478525386177,
+            "mass": 0.07190902745691657
+          },
+          "success": false,
+          "final_distance_m": 0.030711764092279225,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 140,
+          "control_effort": 7.597409775968463,
+          "smoothness": 0.15706850526725488,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-07",
+            "speed": 0.08963363553818157,
+            "stop_distance": 0.024501866414713358,
+            "approach_offset": 0.05786242242644395,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 102,
+            "shift": false,
+            "puck": [
+              -0.023800619849698744,
+              0.03257830544520682,
+              0.48
+            ],
+            "target": [
+              0.019430206630970778,
+              -0.0725684940809926,
+              0.462
+            ],
+            "friction": 0.508204784695836,
+            "mass": 0.05355536641223932
+          },
+          "success": false,
+          "final_distance_m": 0.03749013575062104,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 237,
+          "control_effort": 8.63209017946723,
+          "smoothness": 0.15986271507887814,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-07",
+            "speed": 0.08963363553818157,
+            "stop_distance": 0.024501866414713358,
+            "approach_offset": 0.05786242242644395,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 103,
+            "shift": false,
+            "puck": [
+              -0.013112173709393675,
+              0.02172954667878143,
+              0.48
+            ],
+            "target": [
+              -0.01907941631434169,
+              -0.05849553386016419,
+              0.462
+            ],
+            "friction": 0.5858941197711663,
+            "mass": 0.03914249734321895
+          },
+          "success": true,
+          "final_distance_m": 0.02016009783803936,
+          "completion_seconds": 2.358,
+          "invalid": false,
+          "contact_steps": 165,
+          "control_effort": 7.910699876812191,
+          "smoothness": 0.1561701506889487,
+          "overshoot_m": 0.0,
+          "failure": "success",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-07",
+            "speed": 0.08963363553818157,
+            "stop_distance": 0.024501866414713358,
+            "approach_offset": 0.05786242242644395,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 104,
+            "shift": false,
+            "puck": [
+              0.023699536865867496,
+              0.03576444445882041,
+              0.48
+            ],
+            "target": [
+              -0.017034670306390522,
+              -0.07686470255147645,
+              0.462
+            ],
+            "friction": 0.36878118011996025,
+            "mass": 0.06515554072502355
+          },
+          "success": false,
+          "final_distance_m": 0.030554308771943497,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 177,
+          "control_effort": 8.126826200885995,
+          "smoothness": 0.16601813212844727,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-07",
+            "speed": 0.08963363553818157,
+            "stop_distance": 0.024501866414713358,
+            "approach_offset": 0.05786242242644395,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 105,
+            "shift": false,
+            "puck": [
+              0.009673673352108121,
+              0.044743793264437746,
+              0.48
+            ],
+            "target": [
+              -0.02419623267320258,
+              -0.06733239145575615,
+              0.462
+            ],
+            "friction": 0.3783975281673299,
+            "mass": 0.0432406494418658
+          },
+          "success": false,
+          "final_distance_m": 0.05275825024475783,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 202,
+          "control_effort": 11.173738967931618,
+          "smoothness": 0.1617780537614335,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-07",
+            "speed": 0.08963363553818157,
+            "stop_distance": 0.024501866414713358,
+            "approach_offset": 0.05786242242644395,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 106,
+            "shift": false,
+            "puck": [
+              0.033768549882433496,
+              0.016212004586809714,
+              0.48
+            ],
+            "target": [
+              -0.022632798610143848,
+              -0.06839336342181337,
+              0.462
+            ],
+            "friction": 0.6339990325713871,
+            "mass": 0.04055197254976746
+          },
+          "success": true,
+          "final_distance_m": 0.02415577835978498,
+          "completion_seconds": 2.282,
+          "invalid": false,
+          "contact_steps": 193,
+          "control_effort": 6.803244753834994,
+          "smoothness": 0.15554757234772235,
+          "overshoot_m": 0.0,
+          "failure": "success",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-07",
+            "speed": 0.08963363553818157,
+            "stop_distance": 0.024501866414713358,
+            "approach_offset": 0.05786242242644395,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 107,
+            "shift": false,
+            "puck": [
+              0.010397514358018046,
+              0.02933065707965592,
+              0.48
+            ],
+            "target": [
+              0.00016424291515479306,
+              -0.061630402865779275,
+              0.462
+            ],
+            "friction": 0.4210279757143262,
+            "mass": 0.03806131844804253
+          },
+          "success": false,
+          "final_distance_m": 0.04137790051894399,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 150,
+          "control_effort": 7.910870308875587,
+          "smoothness": 0.15753808961346877,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-07",
+            "speed": 0.08963363553818157,
+            "stop_distance": 0.024501866414713358,
+            "approach_offset": 0.05786242242644395,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 108,
+            "shift": false,
+            "puck": [
+              0.024919567213001648,
+              0.033968254658086984,
+              0.48
+            ],
+            "target": [
+              -0.022925666582421553,
+              -0.0712341828455798,
+              0.462
+            ],
+            "friction": 0.30804900069243885,
+            "mass": 0.03803342046053673
+          },
+          "success": false,
+          "final_distance_m": 0.032719628228548396,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 151,
+          "control_effort": 7.988886766788877,
+          "smoothness": 0.16649793097296006,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        }
+      ]
+    },
+    {
+      "policy": {
+        "name": "random-08",
+        "speed": 0.14897368959032664,
+        "stop_distance": 0.011308858033483448,
+        "approach_offset": 0.04933442007454068,
+        "contact_height": 0.488,
+        "recovery": false
+      },
+      "summary": {
+        "n": 8,
+        "successes": 2,
+        "success_rate": 0.25,
+        "wilson_95": [
+          0.07147768885802763,
+          0.5907301208974108
+        ],
+        "mean_final_distance_m": 0.03504165545547354,
+        "invalid": 0
+      },
+      "results": [
+        {
+          "policy": {
+            "name": "random-08",
+            "speed": 0.14897368959032664,
+            "stop_distance": 0.011308858033483448,
+            "approach_offset": 0.04933442007454068,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 101,
+            "shift": false,
+            "puck": [
+              0.031047275392738775,
+              0.025782631000247195,
+              0.48
+            ],
+            "target": [
+              0.017088324718198624,
+              -0.0652180453692647,
+              0.462
+            ],
+            "friction": 0.3324478525386177,
+            "mass": 0.07190902745691657
+          },
+          "success": false,
+          "final_distance_m": 0.03677186222756691,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 106,
+          "control_effort": 8.614640964988956,
+          "smoothness": 0.18236430121114472,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-08",
+            "speed": 0.14897368959032664,
+            "stop_distance": 0.011308858033483448,
+            "approach_offset": 0.04933442007454068,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 102,
+            "shift": false,
+            "puck": [
+              -0.023800619849698744,
+              0.03257830544520682,
+              0.48
+            ],
+            "target": [
+              0.019430206630970778,
+              -0.0725684940809926,
+              0.462
+            ],
+            "friction": 0.508204784695836,
+            "mass": 0.05355536641223932
+          },
+          "success": false,
+          "final_distance_m": 0.037892771469166,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 179,
+          "control_effort": 9.344812663556757,
+          "smoothness": 0.18377340835463196,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-08",
+            "speed": 0.14897368959032664,
+            "stop_distance": 0.011308858033483448,
+            "approach_offset": 0.04933442007454068,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 103,
+            "shift": false,
+            "puck": [
+              -0.013112173709393675,
+              0.02172954667878143,
+              0.48
+            ],
+            "target": [
+              -0.01907941631434169,
+              -0.05849553386016419,
+              0.462
+            ],
+            "friction": 0.5858941197711663,
+            "mass": 0.03914249734321895
+          },
+          "success": true,
+          "final_distance_m": 0.02445303602399942,
+          "completion_seconds": 1.972,
+          "invalid": false,
+          "contact_steps": 119,
+          "control_effort": 8.631134178971093,
+          "smoothness": 0.18013339131052983,
+          "overshoot_m": 0.0,
+          "failure": "success",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-08",
+            "speed": 0.14897368959032664,
+            "stop_distance": 0.011308858033483448,
+            "approach_offset": 0.04933442007454068,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 104,
+            "shift": false,
+            "puck": [
+              0.023699536865867496,
+              0.03576444445882041,
+              0.48
+            ],
+            "target": [
+              -0.017034670306390522,
+              -0.07686470255147645,
+              0.462
+            ],
+            "friction": 0.36878118011996025,
+            "mass": 0.06515554072502355
+          },
+          "success": false,
+          "final_distance_m": 0.042084363177366746,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 108,
+          "control_effort": 66.04635003975801,
+          "smoothness": 6.949448937671578,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-08",
+            "speed": 0.14897368959032664,
+            "stop_distance": 0.011308858033483448,
+            "approach_offset": 0.04933442007454068,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 105,
+            "shift": false,
+            "puck": [
+              0.009673673352108121,
+              0.044743793264437746,
+              0.48
+            ],
+            "target": [
+              -0.02419623267320258,
+              -0.06733239145575615,
+              0.462
+            ],
+            "friction": 0.3783975281673299,
+            "mass": 0.0432406494418658
+          },
+          "success": false,
+          "final_distance_m": 0.046481440313257016,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 111,
+          "control_effort": 63.56479405793552,
+          "smoothness": 6.685828615172836,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-08",
+            "speed": 0.14897368959032664,
+            "stop_distance": 0.011308858033483448,
+            "approach_offset": 0.04933442007454068,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 106,
+            "shift": false,
+            "puck": [
+              0.033768549882433496,
+              0.016212004586809714,
+              0.48
+            ],
+            "target": [
+              -0.022632798610143848,
+              -0.06839336342181337,
+              0.462
+            ],
+            "friction": 0.6339990325713871,
+            "mass": 0.04055197254976746
+          },
+          "success": true,
+          "final_distance_m": 0.012363180620624172,
+          "completion_seconds": 1.826,
+          "invalid": false,
+          "contact_steps": 142,
+          "control_effort": 7.77335687816369,
+          "smoothness": 0.17755049626428904,
+          "overshoot_m": 0.0,
+          "failure": "success",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-08",
+            "speed": 0.14897368959032664,
+            "stop_distance": 0.011308858033483448,
+            "approach_offset": 0.04933442007454068,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 107,
+            "shift": false,
+            "puck": [
+              0.010397514358018046,
+              0.02933065707965592,
+              0.48
+            ],
+            "target": [
+              0.00016424291515479306,
+              -0.061630402865779275,
+              0.462
+            ],
+            "friction": 0.4210279757143262,
+            "mass": 0.03806131844804253
+          },
+          "success": false,
+          "final_distance_m": 0.04211745196718112,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 104,
+          "control_effort": 65.29484482899923,
+          "smoothness": 6.983367706423231,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-08",
+            "speed": 0.14897368959032664,
+            "stop_distance": 0.011308858033483448,
+            "approach_offset": 0.04933442007454068,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 108,
+            "shift": false,
+            "puck": [
+              0.024919567213001648,
+              0.033968254658086984,
+              0.48
+            ],
+            "target": [
+              -0.022925666582421553,
+              -0.0712341828455798,
+              0.462
+            ],
+            "friction": 0.30804900069243885,
+            "mass": 0.03803342046053673
+          },
+          "success": false,
+          "final_distance_m": 0.038169137844626895,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 95,
+          "control_effort": 71.41909813747264,
+          "smoothness": 7.863920129098538,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        }
+      ]
+    },
+    {
+      "policy": {
+        "name": "random-09",
+        "speed": 0.04613252721021203,
+        "stop_distance": 0.010622921365148313,
+        "approach_offset": 0.05366097906484909,
+        "contact_height": 0.488,
+        "recovery": false
+      },
+      "summary": {
+        "n": 8,
+        "successes": 8,
+        "success_rate": 1.0,
+        "wilson_95": [
+          0.6755843804891231,
+          1.0
+        ],
+        "mean_final_distance_m": 0.017532269210126124,
+        "invalid": 0
+      },
+      "results": [
+        {
+          "policy": {
+            "name": "random-09",
+            "speed": 0.04613252721021203,
+            "stop_distance": 0.010622921365148313,
+            "approach_offset": 0.05366097906484909,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 101,
+            "shift": false,
+            "puck": [
+              0.031047275392738775,
+              0.025782631000247195,
+              0.48
+            ],
+            "target": [
+              0.017088324718198624,
+              -0.0652180453692647,
+              0.462
+            ],
+            "friction": 0.3324478525386177,
+            "mass": 0.07190902745691657
+          },
+          "success": true,
+          "final_distance_m": 0.012789636431009777,
+          "completion_seconds": 3.06,
+          "invalid": false,
+          "contact_steps": 306,
+          "control_effort": 7.016973567796076,
+          "smoothness": 0.14394673333681166,
+          "overshoot_m": 0.0,
+          "failure": "success",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-09",
+            "speed": 0.04613252721021203,
+            "stop_distance": 0.010622921365148313,
+            "approach_offset": 0.05366097906484909,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 102,
+            "shift": false,
+            "puck": [
+              -0.023800619849698744,
+              0.03257830544520682,
+              0.48
+            ],
+            "target": [
+              0.019430206630970778,
+              -0.0725684940809926,
+              0.462
+            ],
+            "friction": 0.508204784695836,
+            "mass": 0.05355536641223932
+          },
+          "success": true,
+          "final_distance_m": 0.023676838143465235,
+          "completion_seconds": 3.85,
+          "invalid": false,
+          "contact_steps": 467,
+          "control_effort": 8.143691666256611,
+          "smoothness": 0.1489194282667464,
+          "overshoot_m": 0.0,
+          "failure": "success",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-09",
+            "speed": 0.04613252721021203,
+            "stop_distance": 0.010622921365148313,
+            "approach_offset": 0.05366097906484909,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 103,
+            "shift": false,
+            "puck": [
+              -0.013112173709393675,
+              0.02172954667878143,
+              0.48
+            ],
+            "target": [
+              -0.01907941631434169,
+              -0.05849553386016419,
+              0.462
+            ],
+            "friction": 0.5858941197711663,
+            "mass": 0.03914249734321895
+          },
+          "success": true,
+          "final_distance_m": 0.011871462189076646,
+          "completion_seconds": 2.916,
+          "invalid": false,
+          "contact_steps": 363,
+          "control_effort": 7.472039163623743,
+          "smoothness": 0.14491329862673336,
+          "overshoot_m": 0.0,
+          "failure": "success",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-09",
+            "speed": 0.04613252721021203,
+            "stop_distance": 0.010622921365148313,
+            "approach_offset": 0.05366097906484909,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 104,
+            "shift": false,
+            "puck": [
+              0.023699536865867496,
+              0.03576444445882041,
+              0.48
+            ],
+            "target": [
+              -0.017034670306390522,
+              -0.07686470255147645,
+              0.462
+            ],
+            "friction": 0.36878118011996025,
+            "mass": 0.06515554072502355
+          },
+          "success": true,
+          "final_distance_m": 0.0238451301714014,
+          "completion_seconds": 3.806,
+          "invalid": false,
+          "contact_steps": 406,
+          "control_effort": 7.4091282345669125,
+          "smoothness": 0.14955065591070635,
+          "overshoot_m": 0.0,
+          "failure": "success",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-09",
+            "speed": 0.04613252721021203,
+            "stop_distance": 0.010622921365148313,
+            "approach_offset": 0.05366097906484909,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 105,
+            "shift": false,
+            "puck": [
+              0.009673673352108121,
+              0.044743793264437746,
+              0.48
+            ],
+            "target": [
+              -0.02419623267320258,
+              -0.06733239145575615,
+              0.462
+            ],
+            "friction": 0.3783975281673299,
+            "mass": 0.0432406494418658
+          },
+          "success": true,
+          "final_distance_m": 0.026574419112549864,
+          "completion_seconds": 3.856,
+          "invalid": false,
+          "contact_steps": 353,
+          "control_effort": 7.799003019601265,
+          "smoothness": 0.15053880904737998,
+          "overshoot_m": 0.0,
+          "failure": "success",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-09",
+            "speed": 0.04613252721021203,
+            "stop_distance": 0.010622921365148313,
+            "approach_offset": 0.05366097906484909,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 106,
+            "shift": false,
+            "puck": [
+              0.033768549882433496,
+              0.016212004586809714,
+              0.48
+            ],
+            "target": [
+              -0.022632798610143848,
+              -0.06839336342181337,
+              0.462
+            ],
+            "friction": 0.6339990325713871,
+            "mass": 0.04055197254976746
+          },
+          "success": true,
+          "final_distance_m": 0.01163870630945695,
+          "completion_seconds": 3.128,
+          "invalid": false,
+          "contact_steps": 422,
+          "control_effort": 6.259019351963703,
+          "smoothness": 0.1406734714962564,
+          "overshoot_m": 0.0,
+          "failure": "success",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-09",
+            "speed": 0.04613252721021203,
+            "stop_distance": 0.010622921365148313,
+            "approach_offset": 0.05366097906484909,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 107,
+            "shift": false,
+            "puck": [
+              0.010397514358018046,
+              0.02933065707965592,
+              0.48
+            ],
+            "target": [
+              0.00016424291515479306,
+              -0.061630402865779275,
+              0.462
+            ],
+            "friction": 0.4210279757143262,
+            "mass": 0.03806131844804253
+          },
+          "success": true,
+          "final_distance_m": 0.012274274711646804,
+          "completion_seconds": 3.168,
+          "invalid": false,
+          "contact_steps": 315,
+          "control_effort": 7.361214691003914,
+          "smoothness": 0.1449856991714056,
+          "overshoot_m": 0.0,
+          "failure": "success",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-09",
+            "speed": 0.04613252721021203,
+            "stop_distance": 0.010622921365148313,
+            "approach_offset": 0.05366097906484909,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 108,
+            "shift": false,
+            "puck": [
+              0.024919567213001648,
+              0.033968254658086984,
+              0.48
+            ],
+            "target": [
+              -0.022925666582421553,
+              -0.0712341828455798,
+              0.462
+            ],
+            "friction": 0.30804900069243885,
+            "mass": 0.03803342046053673
+          },
+          "success": true,
+          "final_distance_m": 0.01758768661240234,
+          "completion_seconds": 3.64,
+          "invalid": false,
+          "contact_steps": 274,
+          "control_effort": 7.140769755501448,
+          "smoothness": 0.14725628443419647,
+          "overshoot_m": 0.0,
+          "failure": "success",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        }
+      ]
+    },
+    {
+      "policy": {
+        "name": "random-10",
+        "speed": 0.1442667018270944,
+        "stop_distance": 0.02444766545138157,
+        "approach_offset": 0.04651650716276304,
+        "contact_height": 0.488,
+        "recovery": false
+      },
+      "summary": {
+        "n": 8,
+        "successes": 2,
+        "success_rate": 0.25,
+        "wilson_95": [
+          0.07147768885802763,
+          0.5907301208974108
+        ],
+        "mean_final_distance_m": 0.03639388869483105,
+        "invalid": 0
+      },
+      "results": [
+        {
+          "policy": {
+            "name": "random-10",
+            "speed": 0.1442667018270944,
+            "stop_distance": 0.02444766545138157,
+            "approach_offset": 0.04651650716276304,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 101,
+            "shift": false,
+            "puck": [
+              0.031047275392738775,
+              0.025782631000247195,
+              0.48
+            ],
+            "target": [
+              0.017088324718198624,
+              -0.0652180453692647,
+              0.462
+            ],
+            "friction": 0.3324478525386177,
+            "mass": 0.07190902745691657
+          },
+          "success": false,
+          "final_distance_m": 0.034790810099769656,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 91,
+          "control_effort": 7.8679442655416265,
+          "smoothness": 0.17177325565980456,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-10",
+            "speed": 0.1442667018270944,
+            "stop_distance": 0.02444766545138157,
+            "approach_offset": 0.04651650716276304,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 102,
+            "shift": false,
+            "puck": [
+              -0.023800619849698744,
+              0.03257830544520682,
+              0.48
+            ],
+            "target": [
+              0.019430206630970778,
+              -0.0725684940809926,
+              0.462
+            ],
+            "friction": 0.508204784695836,
+            "mass": 0.05355536641223932
+          },
+          "success": false,
+          "final_distance_m": 0.039148799669245664,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 152,
+          "control_effort": 8.794353478726915,
+          "smoothness": 0.1716925360866555,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-10",
+            "speed": 0.1442667018270944,
+            "stop_distance": 0.02444766545138157,
+            "approach_offset": 0.04651650716276304,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 103,
+            "shift": false,
+            "puck": [
+              -0.013112173709393675,
+              0.02172954667878143,
+              0.48
+            ],
+            "target": [
+              -0.01907941631434169,
+              -0.05849553386016419,
+              0.462
+            ],
+            "friction": 0.5858941197711663,
+            "mass": 0.03914249734321895
+          },
+          "success": true,
+          "final_distance_m": 0.02490010023469775,
+          "completion_seconds": 1.954,
+          "invalid": false,
+          "contact_steps": 113,
+          "control_effort": 8.06840917578437,
+          "smoothness": 0.1703307986712069,
+          "overshoot_m": 0.0,
+          "failure": "success",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-10",
+            "speed": 0.1442667018270944,
+            "stop_distance": 0.02444766545138157,
+            "approach_offset": 0.04651650716276304,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 104,
+            "shift": false,
+            "puck": [
+              0.023699536865867496,
+              0.03576444445882041,
+              0.48
+            ],
+            "target": [
+              -0.017034670306390522,
+              -0.07686470255147645,
+              0.462
+            ],
+            "friction": 0.36878118011996025,
+            "mass": 0.06515554072502355
+          },
+          "success": false,
+          "final_distance_m": 0.04537449605395857,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 114,
+          "control_effort": 64.59406858004499,
+          "smoothness": 6.900350149724384,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-10",
+            "speed": 0.1442667018270944,
+            "stop_distance": 0.02444766545138157,
+            "approach_offset": 0.04651650716276304,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 105,
+            "shift": false,
+            "puck": [
+              0.009673673352108121,
+              0.044743793264437746,
+              0.48
+            ],
+            "target": [
+              -0.02419623267320258,
+              -0.06733239145575615,
+              0.462
+            ],
+            "friction": 0.3783975281673299,
+            "mass": 0.0432406494418658
+          },
+          "success": false,
+          "final_distance_m": 0.04819192635011899,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 117,
+          "control_effort": 61.34511479291317,
+          "smoothness": 6.438704778300471,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-10",
+            "speed": 0.1442667018270944,
+            "stop_distance": 0.02444766545138157,
+            "approach_offset": 0.04651650716276304,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 106,
+            "shift": false,
+            "puck": [
+              0.033768549882433496,
+              0.016212004586809714,
+              0.48
+            ],
+            "target": [
+              -0.022632798610143848,
+              -0.06839336342181337,
+              0.462
+            ],
+            "friction": 0.6339990325713871,
+            "mass": 0.04055197254976746
+          },
+          "success": true,
+          "final_distance_m": 0.021190661324310654,
+          "completion_seconds": 1.848,
+          "invalid": false,
+          "contact_steps": 121,
+          "control_effort": 7.285677660695081,
+          "smoothness": 0.17146867101813837,
+          "overshoot_m": 0.0,
+          "failure": "success",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-10",
+            "speed": 0.1442667018270944,
+            "stop_distance": 0.02444766545138157,
+            "approach_offset": 0.04651650716276304,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 107,
+            "shift": false,
+            "puck": [
+              0.010397514358018046,
+              0.02933065707965592,
+              0.48
+            ],
+            "target": [
+              0.00016424291515479306,
+              -0.061630402865779275,
+              0.462
+            ],
+            "friction": 0.4210279757143262,
+            "mass": 0.03806131844804253
+          },
+          "success": false,
+          "final_distance_m": 0.039467577645517955,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 101,
+          "control_effort": 8.315194715605465,
+          "smoothness": 0.17565611310627738,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-10",
+            "speed": 0.1442667018270944,
+            "stop_distance": 0.02444766545138157,
+            "approach_offset": 0.04651650716276304,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 108,
+            "shift": false,
+            "puck": [
+              0.024919567213001648,
+              0.033968254658086984,
+              0.48
+            ],
+            "target": [
+              -0.022925666582421553,
+              -0.0712341828455798,
+              0.462
+            ],
+            "friction": 0.30804900069243885,
+            "mass": 0.03803342046053673
+          },
+          "success": false,
+          "final_distance_m": 0.03808673818102922,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 84,
+          "control_effort": 8.645179443194031,
+          "smoothness": 0.18338290206203034,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        }
+      ]
+    },
+    {
+      "policy": {
+        "name": "random-11",
+        "speed": 0.09186435884488164,
+        "stop_distance": 0.015982448791688735,
+        "approach_offset": 0.043789427181685714,
+        "contact_height": 0.488,
+        "recovery": false
+      },
+      "summary": {
+        "n": 8,
+        "successes": 2,
+        "success_rate": 0.25,
+        "wilson_95": [
+          0.07147768885802763,
+          0.5907301208974108
+        ],
+        "mean_final_distance_m": 0.03213477325336321,
+        "invalid": 0
+      },
+      "results": [
+        {
+          "policy": {
+            "name": "random-11",
+            "speed": 0.09186435884488164,
+            "stop_distance": 0.015982448791688735,
+            "approach_offset": 0.043789427181685714,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 101,
+            "shift": false,
+            "puck": [
+              0.031047275392738775,
+              0.025782631000247195,
+              0.48
+            ],
+            "target": [
+              0.017088324718198624,
+              -0.0652180453692647,
+              0.462
+            ],
+            "friction": 0.3324478525386177,
+            "mass": 0.07190902745691657
+          },
+          "success": false,
+          "final_distance_m": 0.03381973313677998,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 154,
+          "control_effort": 7.382956342317888,
+          "smoothness": 0.15607776855089947,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-11",
+            "speed": 0.09186435884488164,
+            "stop_distance": 0.015982448791688735,
+            "approach_offset": 0.043789427181685714,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 102,
+            "shift": false,
+            "puck": [
+              -0.023800619849698744,
+              0.03257830544520682,
+              0.48
+            ],
+            "target": [
+              0.019430206630970778,
+              -0.0725684940809926,
+              0.462
+            ],
+            "friction": 0.508204784695836,
+            "mass": 0.05355536641223932
+          },
+          "success": false,
+          "final_distance_m": 0.034312848006659444,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 253,
+          "control_effort": 8.355182960271438,
+          "smoothness": 0.1588051681737254,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-11",
+            "speed": 0.09186435884488164,
+            "stop_distance": 0.015982448791688735,
+            "approach_offset": 0.043789427181685714,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 103,
+            "shift": false,
+            "puck": [
+              -0.013112173709393675,
+              0.02172954667878143,
+              0.48
+            ],
+            "target": [
+              -0.01907941631434169,
+              -0.05849553386016419,
+              0.462
+            ],
+            "friction": 0.5858941197711663,
+            "mass": 0.03914249734321895
+          },
+          "success": true,
+          "final_distance_m": 0.011416665646256725,
+          "completion_seconds": 2.14,
+          "invalid": false,
+          "contact_steps": 189,
+          "control_effort": 7.661413100630009,
+          "smoothness": 0.1553705677878065,
+          "overshoot_m": 0.0,
+          "failure": "success",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-11",
+            "speed": 0.09186435884488164,
+            "stop_distance": 0.015982448791688735,
+            "approach_offset": 0.043789427181685714,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 104,
+            "shift": false,
+            "puck": [
+              0.023699536865867496,
+              0.03576444445882041,
+              0.48
+            ],
+            "target": [
+              -0.017034670306390522,
+              -0.07686470255147645,
+              0.462
+            ],
+            "friction": 0.36878118011996025,
+            "mass": 0.06515554072502355
+          },
+          "success": false,
+          "final_distance_m": 0.026987257128432158,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 206,
+          "control_effort": 8.244682643179011,
+          "smoothness": 0.1709045496321502,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-11",
+            "speed": 0.09186435884488164,
+            "stop_distance": 0.015982448791688735,
+            "approach_offset": 0.043789427181685714,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 105,
+            "shift": false,
+            "puck": [
+              0.009673673352108121,
+              0.044743793264437746,
+              0.48
+            ],
+            "target": [
+              -0.02419623267320258,
+              -0.06733239145575615,
+              0.462
+            ],
+            "friction": 0.3783975281673299,
+            "mass": 0.0432406494418658
+          },
+          "success": false,
+          "final_distance_m": 0.051541494387087466,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 178,
+          "control_effort": 10.840087931463671,
+          "smoothness": 0.15748403877220174,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-11",
+            "speed": 0.09186435884488164,
+            "stop_distance": 0.015982448791688735,
+            "approach_offset": 0.043789427181685714,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 106,
+            "shift": false,
+            "puck": [
+              0.033768549882433496,
+              0.016212004586809714,
+              0.48
+            ],
+            "target": [
+              -0.022632798610143848,
+              -0.06839336342181337,
+              0.462
+            ],
+            "friction": 0.6339990325713871,
+            "mass": 0.04055197254976746
+          },
+          "success": true,
+          "final_distance_m": 0.01617165366444845,
+          "completion_seconds": 2.12,
+          "invalid": false,
+          "contact_steps": 201,
+          "control_effort": 6.698541959713899,
+          "smoothness": 0.15207878735940644,
+          "overshoot_m": 0.0,
+          "failure": "success",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-11",
+            "speed": 0.09186435884488164,
+            "stop_distance": 0.015982448791688735,
+            "approach_offset": 0.043789427181685714,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 107,
+            "shift": false,
+            "puck": [
+              0.010397514358018046,
+              0.02933065707965592,
+              0.48
+            ],
+            "target": [
+              0.00016424291515479306,
+              -0.061630402865779275,
+              0.462
+            ],
+            "friction": 0.4210279757143262,
+            "mass": 0.03806131844804253
+          },
+          "success": false,
+          "final_distance_m": 0.03957471797723679,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 176,
+          "control_effort": 7.826396014187394,
+          "smoothness": 0.15936824468342234,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        },
+        {
+          "policy": {
+            "name": "random-11",
+            "speed": 0.09186435884488164,
+            "stop_distance": 0.015982448791688735,
+            "approach_offset": 0.043789427181685714,
+            "contact_height": 0.488,
+            "recovery": false
+          },
+          "scenario": {
+            "seed": 108,
+            "shift": false,
+            "puck": [
+              0.024919567213001648,
+              0.033968254658086984,
+              0.48
+            ],
+            "target": [
+              -0.022925666582421553,
+              -0.0712341828455798,
+              0.462
+            ],
+            "friction": 0.30804900069243885,
+            "mass": 0.03803342046053673
+          },
+          "success": false,
+          "final_distance_m": 0.043253816080004705,
+          "completion_seconds": null,
+          "invalid": false,
+          "contact_steps": 166,
+          "control_effort": 8.099668249807133,
+          "smoothness": 0.17106042309061448,
+          "overshoot_m": 0.0,
+          "failure": "undershoot",
+          "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+        }
+      ]
+    }
+  ],
+  "evaluation": {
+    "development": {
+      "baseline": {
+        "n": 8,
+        "successes": 1,
+        "success_rate": 0.125,
+        "wilson_95": [
+          0.02241690886329617,
+          0.4708948057698615
+        ],
+        "mean_final_distance_m": 0.04206699171237961,
+        "invalid": 0
+      },
+      "selected": {
+        "n": 8,
+        "successes": 8,
+        "success_rate": 1.0,
+        "wilson_95": [
+          0.6755843804891231,
+          1.0
+        ],
+        "mean_final_distance_m": 0.017532269210126124,
+        "invalid": 0
+      },
+      "paired_results": {
+        "baseline": [
+          {
+            "policy": {
+              "name": "starting-policy",
+              "speed": 0.2,
+              "stop_distance": -0.045,
+              "approach_offset": 0.045,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 101,
+              "shift": false,
+              "puck": [
+                0.031047275392738775,
+                0.025782631000247195,
+                0.48
+              ],
+              "target": [
+                0.017088324718198624,
+                -0.0652180453692647,
+                0.462
+              ],
+              "friction": 0.3324478525386177,
+              "mass": 0.07190902745691657
+            },
+            "success": false,
+            "final_distance_m": 0.0361058200652625,
+            "completion_seconds": null,
+            "invalid": false,
+            "contact_steps": 58,
+            "control_effort": 110.47456248660086,
+            "smoothness": 12.82023690320125,
+            "overshoot_m": 0.0,
+            "failure": "undershoot",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "starting-policy",
+              "speed": 0.2,
+              "stop_distance": -0.045,
+              "approach_offset": 0.045,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 102,
+              "shift": false,
+              "puck": [
+                -0.023800619849698744,
+                0.03257830544520682,
+                0.48
+              ],
+              "target": [
+                0.019430206630970778,
+                -0.0725684940809926,
+                0.462
+              ],
+              "friction": 0.508204784695836,
+              "mass": 0.05355536641223932
+            },
+            "success": false,
+            "final_distance_m": 0.03988055162718382,
+            "completion_seconds": null,
+            "invalid": false,
+            "contact_steps": 129,
+            "control_effort": 86.96690566860372,
+            "smoothness": 9.857658926105264,
+            "overshoot_m": 0.0,
+            "failure": "undershoot",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "starting-policy",
+              "speed": 0.2,
+              "stop_distance": -0.045,
+              "approach_offset": 0.045,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 103,
+              "shift": false,
+              "puck": [
+                -0.013112173709393675,
+                0.02172954667878143,
+                0.48
+              ],
+              "target": [
+                -0.01907941631434169,
+                -0.05849553386016419,
+                0.462
+              ],
+              "friction": 0.5858941197711663,
+              "mass": 0.03914249734321895
+            },
+            "success": true,
+            "final_distance_m": 0.021724701350315526,
+            "completion_seconds": 1.834,
+            "invalid": false,
+            "contact_steps": 81,
+            "control_effort": 105.69056529361892,
+            "smoothness": 12.234327230076225,
+            "overshoot_m": 0.0,
+            "failure": "success",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "starting-policy",
+              "speed": 0.2,
+              "stop_distance": -0.045,
+              "approach_offset": 0.045,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 104,
+              "shift": false,
+              "puck": [
+                0.023699536865867496,
+                0.03576444445882041,
+                0.48
+              ],
+              "target": [
+                -0.017034670306390522,
+                -0.07686470255147645,
+                0.462
+              ],
+              "friction": 0.36878118011996025,
+              "mass": 0.06515554072502355
+            },
+            "success": false,
+            "final_distance_m": 0.05926002363323041,
+            "completion_seconds": null,
+            "invalid": false,
+            "contact_steps": 63,
+            "control_effort": 77.05226265869906,
+            "smoothness": 6.987949473656062,
+            "overshoot_m": 0.0,
+            "failure": "undershoot",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "starting-policy",
+              "speed": 0.2,
+              "stop_distance": -0.045,
+              "approach_offset": 0.045,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 105,
+              "shift": false,
+              "puck": [
+                0.009673673352108121,
+                0.044743793264437746,
+                0.48
+              ],
+              "target": [
+                -0.02419623267320258,
+                -0.06733239145575615,
+                0.462
+              ],
+              "friction": 0.3783975281673299,
+              "mass": 0.0432406494418658
+            },
+            "success": false,
+            "final_distance_m": 0.05462488523222773,
+            "completion_seconds": null,
+            "invalid": false,
+            "contact_steps": 62,
+            "control_effort": 107.06111209754874,
+            "smoothness": 12.319208308513799,
+            "overshoot_m": 0.0,
+            "failure": "undershoot",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "starting-policy",
+              "speed": 0.2,
+              "stop_distance": -0.045,
+              "approach_offset": 0.045,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 106,
+              "shift": false,
+              "puck": [
+                0.033768549882433496,
+                0.016212004586809714,
+                0.48
+              ],
+              "target": [
+                -0.022632798610143848,
+                -0.06839336342181337,
+                0.462
+              ],
+              "friction": 0.6339990325713871,
+              "mass": 0.04055197254976746
+            },
+            "success": false,
+            "final_distance_m": 0.03518550274098849,
+            "completion_seconds": null,
+            "invalid": false,
+            "contact_steps": 71,
+            "control_effort": 117.72888700925799,
+            "smoothness": 14.032843901385329,
+            "overshoot_m": 0.0,
+            "failure": "undershoot",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "starting-policy",
+              "speed": 0.2,
+              "stop_distance": -0.045,
+              "approach_offset": 0.045,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 107,
+              "shift": false,
+              "puck": [
+                0.010397514358018046,
+                0.02933065707965592,
+                0.48
+              ],
+              "target": [
+                0.00016424291515479306,
+                -0.061630402865779275,
+                0.462
+              ],
+              "friction": 0.4210279757143262,
+              "mass": 0.03806131844804253
+            },
+            "success": false,
+            "final_distance_m": 0.04058602276669019,
+            "completion_seconds": null,
+            "invalid": false,
+            "contact_steps": 70,
+            "control_effort": 107.7444444232412,
+            "smoothness": 12.534951169772686,
+            "overshoot_m": 0.0,
+            "failure": "undershoot",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "starting-policy",
+              "speed": 0.2,
+              "stop_distance": -0.045,
+              "approach_offset": 0.045,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 108,
+              "shift": false,
+              "puck": [
+                0.024919567213001648,
+                0.033968254658086984,
+                0.48
+              ],
+              "target": [
+                -0.022925666582421553,
+                -0.0712341828455798,
+                0.462
+              ],
+              "friction": 0.30804900069243885,
+              "mass": 0.03803342046053673
+            },
+            "success": false,
+            "final_distance_m": 0.04916842628313823,
+            "completion_seconds": null,
+            "invalid": false,
+            "contact_steps": 54,
+            "control_effort": 112.01939742019509,
+            "smoothness": 13.026379725610045,
+            "overshoot_m": 0.0,
+            "failure": "undershoot",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          }
+        ],
+        "selected": [
+          {
+            "policy": {
+              "name": "random-09",
+              "speed": 0.04613252721021203,
+              "stop_distance": 0.010622921365148313,
+              "approach_offset": 0.05366097906484909,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 101,
+              "shift": false,
+              "puck": [
+                0.031047275392738775,
+                0.025782631000247195,
+                0.48
+              ],
+              "target": [
+                0.017088324718198624,
+                -0.0652180453692647,
+                0.462
+              ],
+              "friction": 0.3324478525386177,
+              "mass": 0.07190902745691657
+            },
+            "success": true,
+            "final_distance_m": 0.012789636431009777,
+            "completion_seconds": 3.06,
+            "invalid": false,
+            "contact_steps": 306,
+            "control_effort": 7.016973567796076,
+            "smoothness": 0.14394673333681166,
+            "overshoot_m": 0.0,
+            "failure": "success",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "random-09",
+              "speed": 0.04613252721021203,
+              "stop_distance": 0.010622921365148313,
+              "approach_offset": 0.05366097906484909,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 102,
+              "shift": false,
+              "puck": [
+                -0.023800619849698744,
+                0.03257830544520682,
+                0.48
+              ],
+              "target": [
+                0.019430206630970778,
+                -0.0725684940809926,
+                0.462
+              ],
+              "friction": 0.508204784695836,
+              "mass": 0.05355536641223932
+            },
+            "success": true,
+            "final_distance_m": 0.023676838143465235,
+            "completion_seconds": 3.85,
+            "invalid": false,
+            "contact_steps": 467,
+            "control_effort": 8.143691666256611,
+            "smoothness": 0.1489194282667464,
+            "overshoot_m": 0.0,
+            "failure": "success",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "random-09",
+              "speed": 0.04613252721021203,
+              "stop_distance": 0.010622921365148313,
+              "approach_offset": 0.05366097906484909,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 103,
+              "shift": false,
+              "puck": [
+                -0.013112173709393675,
+                0.02172954667878143,
+                0.48
+              ],
+              "target": [
+                -0.01907941631434169,
+                -0.05849553386016419,
+                0.462
+              ],
+              "friction": 0.5858941197711663,
+              "mass": 0.03914249734321895
+            },
+            "success": true,
+            "final_distance_m": 0.011871462189076646,
+            "completion_seconds": 2.916,
+            "invalid": false,
+            "contact_steps": 363,
+            "control_effort": 7.472039163623743,
+            "smoothness": 0.14491329862673336,
+            "overshoot_m": 0.0,
+            "failure": "success",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "random-09",
+              "speed": 0.04613252721021203,
+              "stop_distance": 0.010622921365148313,
+              "approach_offset": 0.05366097906484909,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 104,
+              "shift": false,
+              "puck": [
+                0.023699536865867496,
+                0.03576444445882041,
+                0.48
+              ],
+              "target": [
+                -0.017034670306390522,
+                -0.07686470255147645,
+                0.462
+              ],
+              "friction": 0.36878118011996025,
+              "mass": 0.06515554072502355
+            },
+            "success": true,
+            "final_distance_m": 0.0238451301714014,
+            "completion_seconds": 3.806,
+            "invalid": false,
+            "contact_steps": 406,
+            "control_effort": 7.4091282345669125,
+            "smoothness": 0.14955065591070635,
+            "overshoot_m": 0.0,
+            "failure": "success",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "random-09",
+              "speed": 0.04613252721021203,
+              "stop_distance": 0.010622921365148313,
+              "approach_offset": 0.05366097906484909,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 105,
+              "shift": false,
+              "puck": [
+                0.009673673352108121,
+                0.044743793264437746,
+                0.48
+              ],
+              "target": [
+                -0.02419623267320258,
+                -0.06733239145575615,
+                0.462
+              ],
+              "friction": 0.3783975281673299,
+              "mass": 0.0432406494418658
+            },
+            "success": true,
+            "final_distance_m": 0.026574419112549864,
+            "completion_seconds": 3.856,
+            "invalid": false,
+            "contact_steps": 353,
+            "control_effort": 7.799003019601265,
+            "smoothness": 0.15053880904737998,
+            "overshoot_m": 0.0,
+            "failure": "success",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "random-09",
+              "speed": 0.04613252721021203,
+              "stop_distance": 0.010622921365148313,
+              "approach_offset": 0.05366097906484909,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 106,
+              "shift": false,
+              "puck": [
+                0.033768549882433496,
+                0.016212004586809714,
+                0.48
+              ],
+              "target": [
+                -0.022632798610143848,
+                -0.06839336342181337,
+                0.462
+              ],
+              "friction": 0.6339990325713871,
+              "mass": 0.04055197254976746
+            },
+            "success": true,
+            "final_distance_m": 0.01163870630945695,
+            "completion_seconds": 3.128,
+            "invalid": false,
+            "contact_steps": 422,
+            "control_effort": 6.259019351963703,
+            "smoothness": 0.1406734714962564,
+            "overshoot_m": 0.0,
+            "failure": "success",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "random-09",
+              "speed": 0.04613252721021203,
+              "stop_distance": 0.010622921365148313,
+              "approach_offset": 0.05366097906484909,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 107,
+              "shift": false,
+              "puck": [
+                0.010397514358018046,
+                0.02933065707965592,
+                0.48
+              ],
+              "target": [
+                0.00016424291515479306,
+                -0.061630402865779275,
+                0.462
+              ],
+              "friction": 0.4210279757143262,
+              "mass": 0.03806131844804253
+            },
+            "success": true,
+            "final_distance_m": 0.012274274711646804,
+            "completion_seconds": 3.168,
+            "invalid": false,
+            "contact_steps": 315,
+            "control_effort": 7.361214691003914,
+            "smoothness": 0.1449856991714056,
+            "overshoot_m": 0.0,
+            "failure": "success",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "random-09",
+              "speed": 0.04613252721021203,
+              "stop_distance": 0.010622921365148313,
+              "approach_offset": 0.05366097906484909,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 108,
+              "shift": false,
+              "puck": [
+                0.024919567213001648,
+                0.033968254658086984,
+                0.48
+              ],
+              "target": [
+                -0.022925666582421553,
+                -0.0712341828455798,
+                0.462
+              ],
+              "friction": 0.30804900069243885,
+              "mass": 0.03803342046053673
+            },
+            "success": true,
+            "final_distance_m": 0.01758768661240234,
+            "completion_seconds": 3.64,
+            "invalid": false,
+            "contact_steps": 274,
+            "control_effort": 7.140769755501448,
+            "smoothness": 0.14725628443419647,
+            "overshoot_m": 0.0,
+            "failure": "success",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          }
+        ]
+      }
+    },
+    "heldout": {
+      "baseline": {
+        "n": 12,
+        "successes": 3,
+        "success_rate": 0.25,
+        "wilson_95": [
+          0.08894003962896138,
+          0.53231033912066
+        ],
+        "mean_final_distance_m": 0.03848130158553909,
+        "invalid": 0
+      },
+      "selected": {
+        "n": 12,
+        "successes": 9,
+        "success_rate": 0.75,
+        "wilson_95": [
+          0.46768966087934005,
+          0.9110599603710386
+        ],
+        "mean_final_distance_m": 0.01945014015768524,
+        "invalid": 0
+      },
+      "paired_results": {
+        "baseline": [
+          {
+            "policy": {
+              "name": "starting-policy",
+              "speed": 0.2,
+              "stop_distance": -0.045,
+              "approach_offset": 0.045,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 2001,
+              "shift": false,
+              "puck": [
+                -0.005343113825324971,
+                0.021111735428375564,
+                0.48
+              ],
+              "target": [
+                -0.0014939846869551432,
+                -0.055946288736174674,
+                0.462
+              ],
+              "friction": 0.3943905230489548,
+              "mass": 0.04849548001804361
+            },
+            "success": true,
+            "final_distance_m": 0.015002418909620332,
+            "completion_seconds": 1.768,
+            "invalid": false,
+            "contact_steps": 78,
+            "control_effort": 103.7664697407717,
+            "smoothness": 11.991229271000948,
+            "overshoot_m": 0.0016980874964457326,
+            "failure": "success",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "starting-policy",
+              "speed": 0.2,
+              "stop_distance": -0.045,
+              "approach_offset": 0.045,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 2002,
+              "shift": false,
+              "puck": [
+                0.027213155014711256,
+                0.04382133682591727,
+                0.48
+              ],
+              "target": [
+                0.009486756682267904,
+                -0.0762185876076186,
+                0.462
+              ],
+              "friction": 0.5116349056417749,
+              "mass": 0.04108489923281907
+            },
+            "success": false,
+            "final_distance_m": 0.05934016794975076,
+            "completion_seconds": null,
+            "invalid": false,
+            "contact_steps": 77,
+            "control_effort": 105.29113662809613,
+            "smoothness": 12.073783870061382,
+            "overshoot_m": 0.0,
+            "failure": "undershoot",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "starting-policy",
+              "speed": 0.2,
+              "stop_distance": -0.045,
+              "approach_offset": 0.045,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 2003,
+              "shift": false,
+              "puck": [
+                -0.014375917530671757,
+                0.04143476766264496,
+                0.48
+              ],
+              "target": [
+                0.009080746982757428,
+                -0.05503964056050659,
+                0.462
+              ],
+              "friction": 0.64195727643605,
+              "mass": 0.04067911291370748
+            },
+            "success": false,
+            "final_distance_m": 0.04088844268850441,
+            "completion_seconds": null,
+            "invalid": false,
+            "contact_steps": 121,
+            "control_effort": 90.73311963572078,
+            "smoothness": 10.21213696403786,
+            "overshoot_m": 0.0,
+            "failure": "undershoot",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "starting-policy",
+              "speed": 0.2,
+              "stop_distance": -0.045,
+              "approach_offset": 0.045,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 2004,
+              "shift": false,
+              "puck": [
+                0.009814211155688103,
+                0.023727188369918075,
+                0.48
+              ],
+              "target": [
+                0.024976372436065892,
+                -0.06343031148564522,
+                0.462
+              ],
+              "friction": 0.44709116752763706,
+              "mass": 0.0371093601547457
+            },
+            "success": false,
+            "final_distance_m": 0.031178512501022757,
+            "completion_seconds": null,
+            "invalid": false,
+            "contact_steps": 86,
+            "control_effort": 100.02065655873267,
+            "smoothness": 11.514644183132424,
+            "overshoot_m": 0.0,
+            "failure": "undershoot",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "starting-policy",
+              "speed": 0.2,
+              "stop_distance": -0.045,
+              "approach_offset": 0.045,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 2005,
+              "shift": false,
+              "puck": [
+                0.015242290154976341,
+                0.029516126934135755,
+                0.48
+              ],
+              "target": [
+                0.018304617949351763,
+                -0.057568412243228013,
+                0.462
+              ],
+              "friction": 0.20755543371611312,
+              "mass": 0.05866765933119662
+            },
+            "success": true,
+            "final_distance_m": 0.014998956338788373,
+            "completion_seconds": 1.786,
+            "invalid": false,
+            "contact_steps": 61,
+            "control_effort": 103.84938760347383,
+            "smoothness": 11.930528767654762,
+            "overshoot_m": 0.0002712195386874311,
+            "failure": "success",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "starting-policy",
+              "speed": 0.2,
+              "stop_distance": -0.045,
+              "approach_offset": 0.045,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 2006,
+              "shift": false,
+              "puck": [
+                0.0260383456085536,
+                0.03177214863223152,
+                0.48
+              ],
+              "target": [
+                -0.01184035280586174,
+                -0.07104505411029427,
+                0.462
+              ],
+              "friction": 0.33282230288122594,
+              "mass": 0.07339099105145984
+            },
+            "success": false,
+            "final_distance_m": 0.047283378565972894,
+            "completion_seconds": null,
+            "invalid": false,
+            "contact_steps": 53,
+            "control_effort": 110.76439457433234,
+            "smoothness": 12.775441806294126,
+            "overshoot_m": 0.0,
+            "failure": "undershoot",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "starting-policy",
+              "speed": 0.2,
+              "stop_distance": -0.045,
+              "approach_offset": 0.045,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 2007,
+              "shift": false,
+              "puck": [
+                0.0181910317245668,
+                0.029468839082487326,
+                0.48
+              ],
+              "target": [
+                -0.016994049661692937,
+                -0.06349016676176836,
+                0.462
+              ],
+              "friction": 0.3313501843459795,
+              "mass": 0.059336091357228664
+            },
+            "success": false,
+            "final_distance_m": 0.040023402043117266,
+            "completion_seconds": null,
+            "invalid": false,
+            "contact_steps": 51,
+            "control_effort": 112.84514527338189,
+            "smoothness": 13.25279043400823,
+            "overshoot_m": 0.0,
+            "failure": "undershoot",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "starting-policy",
+              "speed": 0.2,
+              "stop_distance": -0.045,
+              "approach_offset": 0.045,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 2008,
+              "shift": false,
+              "puck": [
+                0.02766102572370743,
+                0.03557856086704406,
+                0.48
+              ],
+              "target": [
+                0.0208096926994817,
+                -0.07964015660198072,
+                0.462
+              ],
+              "friction": 0.3146047216667396,
+              "mass": 0.06577985332656784
+            },
+            "success": false,
+            "final_distance_m": 0.056942960022653276,
+            "completion_seconds": null,
+            "invalid": false,
+            "contact_steps": 64,
+            "control_effort": 109.21995083255955,
+            "smoothness": 12.699349620059229,
+            "overshoot_m": 0.0,
+            "failure": "undershoot",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "starting-policy",
+              "speed": 0.2,
+              "stop_distance": -0.045,
+              "approach_offset": 0.045,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 2009,
+              "shift": false,
+              "puck": [
+                -0.02016295710035617,
+                0.03304368871301791,
+                0.48
+              ],
+              "target": [
+                0.029148702576479387,
+                -0.06931321087240669,
+                0.462
+              ],
+              "friction": 0.35081451999722424,
+              "mass": 0.04230897185523295
+            },
+            "success": false,
+            "final_distance_m": 0.05303302486489635,
+            "completion_seconds": null,
+            "invalid": false,
+            "contact_steps": 110,
+            "control_effort": 83.04537084491075,
+            "smoothness": 9.288496578223176,
+            "overshoot_m": 0.02338280137994833,
+            "failure": "undershoot",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "starting-policy",
+              "speed": 0.2,
+              "stop_distance": -0.045,
+              "approach_offset": 0.045,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 2010,
+              "shift": false,
+              "puck": [
+                -0.01795561282341682,
+                0.032529581653121684,
+                0.48
+              ],
+              "target": [
+                -0.010733021467167253,
+                -0.07398014671215021,
+                0.462
+              ],
+              "friction": 0.5857659405611231,
+              "mass": 0.054931167153394835
+            },
+            "success": false,
+            "final_distance_m": 0.03502001040270067,
+            "completion_seconds": null,
+            "invalid": false,
+            "contact_steps": 105,
+            "control_effort": 99.5118841603825,
+            "smoothness": 11.471816680449887,
+            "overshoot_m": 0.0,
+            "failure": "undershoot",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "starting-policy",
+              "speed": 0.2,
+              "stop_distance": -0.045,
+              "approach_offset": 0.045,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 2011,
+              "shift": false,
+              "puck": [
+                0.017325000064333743,
+                0.02255693945304158,
+                0.48
+              ],
+              "target": [
+                0.010965674401331504,
+                -0.07407062731418476,
+                0.462
+              ],
+              "friction": 0.49455631197518507,
+              "mass": 0.050435921798258045
+            },
+            "success": false,
+            "final_distance_m": 0.042254710335290664,
+            "completion_seconds": null,
+            "invalid": false,
+            "contact_steps": 71,
+            "control_effort": 108.45268305299258,
+            "smoothness": 12.687617540915499,
+            "overshoot_m": 0.0,
+            "failure": "undershoot",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "starting-policy",
+              "speed": 0.2,
+              "stop_distance": -0.045,
+              "approach_offset": 0.045,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 2012,
+              "shift": false,
+              "puck": [
+                -0.0183526843994622,
+                0.01719670570305781,
+                0.48
+              ],
+              "target": [
+                -0.008562382169419054,
+                -0.07285303688693102,
+                0.462
+              ],
+              "friction": 0.5781722004219723,
+              "mass": 0.06671068877686327
+            },
+            "success": true,
+            "final_distance_m": 0.025809634404151374,
+            "completion_seconds": 4.0920000000000005,
+            "invalid": false,
+            "contact_steps": 94,
+            "control_effort": 99.11818609948448,
+            "smoothness": 11.32087929001886,
+            "overshoot_m": 0.0,
+            "failure": "success",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          }
+        ],
+        "selected": [
+          {
+            "policy": {
+              "name": "random-09",
+              "speed": 0.04613252721021203,
+              "stop_distance": 0.010622921365148313,
+              "approach_offset": 0.05366097906484909,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 2001,
+              "shift": false,
+              "puck": [
+                -0.005343113825324971,
+                0.021111735428375564,
+                0.48
+              ],
+              "target": [
+                -0.0014939846869551432,
+                -0.055946288736174674,
+                0.462
+              ],
+              "friction": 0.3943905230489548,
+              "mass": 0.04849548001804361
+            },
+            "success": true,
+            "final_distance_m": 0.00898540199682823,
+            "completion_seconds": 2.846,
+            "invalid": false,
+            "contact_steps": 264,
+            "control_effort": 7.394771553960542,
+            "smoothness": 0.14429673877729005,
+            "overshoot_m": 0.0,
+            "failure": "success",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "random-09",
+              "speed": 0.04613252721021203,
+              "stop_distance": 0.010622921365148313,
+              "approach_offset": 0.05366097906484909,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 2002,
+              "shift": false,
+              "puck": [
+                0.027213155014711256,
+                0.04382133682591727,
+                0.48
+              ],
+              "target": [
+                0.009486756682267904,
+                -0.0762185876076186,
+                0.462
+              ],
+              "friction": 0.5116349056417749,
+              "mass": 0.04108489923281907
+            },
+            "success": false,
+            "final_distance_m": 0.043448143561000234,
+            "completion_seconds": null,
+            "invalid": false,
+            "contact_steps": 548,
+            "control_effort": 8.821165141939565,
+            "smoothness": 0.13829204667996867,
+            "overshoot_m": 0.0,
+            "failure": "undershoot",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "random-09",
+              "speed": 0.04613252721021203,
+              "stop_distance": 0.010622921365148313,
+              "approach_offset": 0.05366097906484909,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 2003,
+              "shift": false,
+              "puck": [
+                -0.014375917530671757,
+                0.04143476766264496,
+                0.48
+              ],
+              "target": [
+                0.009080746982757428,
+                -0.05503964056050659,
+                0.462
+              ],
+              "friction": 0.64195727643605,
+              "mass": 0.04067911291370748
+            },
+            "success": true,
+            "final_distance_m": 0.012944648828431967,
+            "completion_seconds": 3.448,
+            "invalid": false,
+            "contact_steps": 469,
+            "control_effort": 8.126284964327773,
+            "smoothness": 0.14924255230844055,
+            "overshoot_m": 0.0,
+            "failure": "success",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "random-09",
+              "speed": 0.04613252721021203,
+              "stop_distance": 0.010622921365148313,
+              "approach_offset": 0.05366097906484909,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 2004,
+              "shift": false,
+              "puck": [
+                0.009814211155688103,
+                0.023727188369918075,
+                0.48
+              ],
+              "target": [
+                0.024976372436065892,
+                -0.06343031148564522,
+                0.462
+              ],
+              "friction": 0.44709116752763706,
+              "mass": 0.0371093601547457
+            },
+            "success": true,
+            "final_distance_m": 0.010528102260856428,
+            "completion_seconds": 3.076,
+            "invalid": false,
+            "contact_steps": 339,
+            "control_effort": 7.323485584166516,
+            "smoothness": 0.14328335042480714,
+            "overshoot_m": 0.0,
+            "failure": "success",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "random-09",
+              "speed": 0.04613252721021203,
+              "stop_distance": 0.010622921365148313,
+              "approach_offset": 0.05366097906484909,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 2005,
+              "shift": false,
+              "puck": [
+                0.015242290154976341,
+                0.029516126934135755,
+                0.48
+              ],
+              "target": [
+                0.018304617949351763,
+                -0.057568412243228013,
+                0.462
+              ],
+              "friction": 0.20755543371611312,
+              "mass": 0.05866765933119662
+            },
+            "success": true,
+            "final_distance_m": 0.025139227014320815,
+            "completion_seconds": 3.028,
+            "invalid": false,
+            "contact_steps": 184,
+            "control_effort": 7.337240262712561,
+            "smoothness": 0.14445887389106307,
+            "overshoot_m": 0.023601758859377264,
+            "failure": "success",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "random-09",
+              "speed": 0.04613252721021203,
+              "stop_distance": 0.010622921365148313,
+              "approach_offset": 0.05366097906484909,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 2006,
+              "shift": false,
+              "puck": [
+                0.0260383456085536,
+                0.03177214863223152,
+                0.48
+              ],
+              "target": [
+                -0.01184035280586174,
+                -0.07104505411029427,
+                0.462
+              ],
+              "friction": 0.33282230288122594,
+              "mass": 0.07339099105145984
+            },
+            "success": false,
+            "final_distance_m": 0.028069229398853524,
+            "completion_seconds": null,
+            "invalid": false,
+            "contact_steps": 305,
+            "control_effort": 7.200224480712193,
+            "smoothness": 0.14742507217493495,
+            "overshoot_m": 0.0,
+            "failure": "undershoot",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "random-09",
+              "speed": 0.04613252721021203,
+              "stop_distance": 0.010622921365148313,
+              "approach_offset": 0.05366097906484909,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 2007,
+              "shift": false,
+              "puck": [
+                0.0181910317245668,
+                0.029468839082487326,
+                0.48
+              ],
+              "target": [
+                -0.016994049661692937,
+                -0.06349016676176836,
+                0.462
+              ],
+              "friction": 0.3313501843459795,
+              "mass": 0.059336091357228664
+            },
+            "success": true,
+            "final_distance_m": 0.010407560782946646,
+            "completion_seconds": 3.196,
+            "invalid": false,
+            "contact_steps": 265,
+            "control_effort": 7.0759121580930495,
+            "smoothness": 0.14455912184155742,
+            "overshoot_m": 0.0,
+            "failure": "success",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "random-09",
+              "speed": 0.04613252721021203,
+              "stop_distance": 0.010622921365148313,
+              "approach_offset": 0.05366097906484909,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 2008,
+              "shift": false,
+              "puck": [
+                0.02766102572370743,
+                0.03557856086704406,
+                0.48
+              ],
+              "target": [
+                0.0208096926994817,
+                -0.07964015660198072,
+                0.462
+              ],
+              "friction": 0.3146047216667396,
+              "mass": 0.06577985332656784
+            },
+            "success": false,
+            "final_distance_m": 0.039648155269277514,
+            "completion_seconds": null,
+            "invalid": false,
+            "contact_steps": 347,
+            "control_effort": 7.702649655098555,
+            "smoothness": 0.15109930735605126,
+            "overshoot_m": 0.0,
+            "failure": "undershoot",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "random-09",
+              "speed": 0.04613252721021203,
+              "stop_distance": 0.010622921365148313,
+              "approach_offset": 0.05366097906484909,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 2009,
+              "shift": false,
+              "puck": [
+                -0.02016295710035617,
+                0.03304368871301791,
+                0.48
+              ],
+              "target": [
+                0.029148702576479387,
+                -0.06931321087240669,
+                0.462
+              ],
+              "friction": 0.35081451999722424,
+              "mass": 0.04230897185523295
+            },
+            "success": true,
+            "final_distance_m": 0.009295585309339036,
+            "completion_seconds": 3.7520000000000002,
+            "invalid": false,
+            "contact_steps": 328,
+            "control_effort": 8.086059803870063,
+            "smoothness": 0.14861931176655974,
+            "overshoot_m": 0.0,
+            "failure": "success",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "random-09",
+              "speed": 0.04613252721021203,
+              "stop_distance": 0.010622921365148313,
+              "approach_offset": 0.05366097906484909,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 2010,
+              "shift": false,
+              "puck": [
+                -0.01795561282341682,
+                0.032529581653121684,
+                0.48
+              ],
+              "target": [
+                -0.010733021467167253,
+                -0.07398014671215021,
+                0.462
+              ],
+              "friction": 0.5857659405611231,
+              "mass": 0.054931167153394835
+            },
+            "success": true,
+            "final_distance_m": 0.019305724718263476,
+            "completion_seconds": 3.638,
+            "invalid": false,
+            "contact_steps": 517,
+            "control_effort": 8.046283988534073,
+            "smoothness": 0.14943612120910307,
+            "overshoot_m": 0.0,
+            "failure": "success",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "random-09",
+              "speed": 0.04613252721021203,
+              "stop_distance": 0.010622921365148313,
+              "approach_offset": 0.05366097906484909,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 2011,
+              "shift": false,
+              "puck": [
+                0.017325000064333743,
+                0.02255693945304158,
+                0.48
+              ],
+              "target": [
+                0.010965674401331504,
+                -0.07407062731418476,
+                0.462
+              ],
+              "friction": 0.49455631197518507,
+              "mass": 0.050435921798258045
+            },
+            "success": true,
+            "final_distance_m": 0.015788145570933002,
+            "completion_seconds": 3.238,
+            "invalid": false,
+            "contact_steps": 395,
+            "control_effort": 7.16282643228205,
+            "smoothness": 0.14306650163309084,
+            "overshoot_m": 0.0,
+            "failure": "success",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "random-09",
+              "speed": 0.04613252721021203,
+              "stop_distance": 0.010622921365148313,
+              "approach_offset": 0.05366097906484909,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 2012,
+              "shift": false,
+              "puck": [
+                -0.0183526843994622,
+                0.01719670570305781,
+                0.48
+              ],
+              "target": [
+                -0.008562382169419054,
+                -0.07285303688693102,
+                0.462
+              ],
+              "friction": 0.5781722004219723,
+              "mass": 0.06671068877686327
+            },
+            "success": true,
+            "final_distance_m": 0.009841757181172008,
+            "completion_seconds": 3.182,
+            "invalid": false,
+            "contact_steps": 436,
+            "control_effort": 7.719848535458396,
+            "smoothness": 0.14642369316282974,
+            "overshoot_m": 0.0,
+            "failure": "success",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          }
+        ]
+      }
+    },
+    "changed_conditions": {
+      "baseline": {
+        "n": 8,
+        "successes": 1,
+        "success_rate": 0.125,
+        "wilson_95": [
+          0.02241690886329617,
+          0.4708948057698615
+        ],
+        "mean_final_distance_m": 0.03184457900375434,
+        "invalid": 0
+      },
+      "selected": {
+        "n": 8,
+        "successes": 8,
+        "success_rate": 1.0,
+        "wilson_95": [
+          0.6755843804891231,
+          1.0
+        ],
+        "mean_final_distance_m": 0.015585387905186132,
+        "invalid": 0
+      },
+      "paired_results": {
+        "baseline": [
+          {
+            "policy": {
+              "name": "starting-policy",
+              "speed": 0.2,
+              "stop_distance": -0.045,
+              "approach_offset": 0.045,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 3001,
+              "shift": true,
+              "puck": [
+                0.02923910643978799,
+                0.03989795576354142,
+                0.48
+              ],
+              "target": [
+                0.01764293571017895,
+                -0.062009638063616875,
+                0.462
+              ],
+              "friction": 0.6765416356708213,
+              "mass": 0.0989047738909516
+            },
+            "success": false,
+            "final_distance_m": 0.030132084058333272,
+            "completion_seconds": null,
+            "invalid": false,
+            "contact_steps": 134,
+            "control_effort": 107.34508239793199,
+            "smoothness": 12.381843940662241,
+            "overshoot_m": 0.0,
+            "failure": "undershoot",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "starting-policy",
+              "speed": 0.2,
+              "stop_distance": -0.045,
+              "approach_offset": 0.045,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 3002,
+              "shift": true,
+              "puck": [
+                -0.024611864420095577,
+                0.030938794585372797,
+                0.48
+              ],
+              "target": [
+                0.007101314466781052,
+                -0.06957895213525277,
+                0.462
+              ],
+              "friction": 0.714162012502579,
+              "mass": 0.10642047997421993
+            },
+            "success": false,
+            "final_distance_m": 0.03259947013099118,
+            "completion_seconds": null,
+            "invalid": false,
+            "contact_steps": 156,
+            "control_effort": 91.03405737352837,
+            "smoothness": 10.315194476153764,
+            "overshoot_m": 0.0,
+            "failure": "undershoot",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "starting-policy",
+              "speed": 0.2,
+              "stop_distance": -0.045,
+              "approach_offset": 0.045,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 3003,
+              "shift": true,
+              "puck": [
+                -0.03064119799374687,
+                0.041594311253298585,
+                0.48
+              ],
+              "target": [
+                0.004522750517130531,
+                -0.06275204529433251,
+                0.462
+              ],
+              "friction": 0.7120215725432596,
+              "mass": 0.10015304559397996
+            },
+            "success": false,
+            "final_distance_m": 0.03355318988530817,
+            "completion_seconds": null,
+            "invalid": false,
+            "contact_steps": 174,
+            "control_effort": 86.999758295747,
+            "smoothness": 9.742097762005557,
+            "overshoot_m": 0.0,
+            "failure": "undershoot",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "starting-policy",
+              "speed": 0.2,
+              "stop_distance": -0.045,
+              "approach_offset": 0.045,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 3004,
+              "shift": true,
+              "puck": [
+                0.024604417875618005,
+                0.04473776819388262,
+                0.48
+              ],
+              "target": [
+                -0.0020139829628631764,
+                -0.06508540210763887,
+                0.462
+              ],
+              "friction": 0.7526660693584191,
+              "mass": 0.08086064552832402
+            },
+            "success": false,
+            "final_distance_m": 0.04256626017126998,
+            "completion_seconds": null,
+            "invalid": false,
+            "contact_steps": 119,
+            "control_effort": 109.32468833727768,
+            "smoothness": 12.603252509223333,
+            "overshoot_m": 0.0,
+            "failure": "undershoot",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "starting-policy",
+              "speed": 0.2,
+              "stop_distance": -0.045,
+              "approach_offset": 0.045,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 3005,
+              "shift": true,
+              "puck": [
+                -0.028291179367731074,
+                0.04380576702695006,
+                0.48
+              ],
+              "target": [
+                -0.006345416153058167,
+                -0.06212685033082681,
+                0.462
+              ],
+              "friction": 0.9788872853106061,
+              "mass": 0.10428517564127941
+            },
+            "success": true,
+            "final_distance_m": 0.011912004627640124,
+            "completion_seconds": 2.072,
+            "invalid": false,
+            "contact_steps": 278,
+            "control_effort": 92.48317011184297,
+            "smoothness": 10.340342501176803,
+            "overshoot_m": 0.005774406145410596,
+            "failure": "success",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "starting-policy",
+              "speed": 0.2,
+              "stop_distance": -0.045,
+              "approach_offset": 0.045,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 3006,
+              "shift": true,
+              "puck": [
+                -0.032632997818186,
+                0.02393354235820524,
+                0.48
+              ],
+              "target": [
+                0.009830633082011098,
+                -0.07140853490257658,
+                0.462
+              ],
+              "friction": 0.6900417727025202,
+              "mass": 0.08974479793614622
+            },
+            "success": false,
+            "final_distance_m": 0.029235888106566497,
+            "completion_seconds": null,
+            "invalid": false,
+            "contact_steps": 158,
+            "control_effort": 84.02212625018001,
+            "smoothness": 9.372829767460107,
+            "overshoot_m": 0.010730103396626514,
+            "failure": "undershoot",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "starting-policy",
+              "speed": 0.2,
+              "stop_distance": -0.045,
+              "approach_offset": 0.045,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 3007,
+              "shift": true,
+              "puck": [
+                -0.003772562994384038,
+                0.04346882161791308,
+                0.48
+              ],
+              "target": [
+                0.025698066058358917,
+                -0.06355839106277421,
+                0.462
+              ],
+              "friction": 0.7989409748491872,
+              "mass": 0.09998505394927538
+            },
+            "success": false,
+            "final_distance_m": 0.034009094147742225,
+            "completion_seconds": null,
+            "invalid": false,
+            "contact_steps": 203,
+            "control_effort": 88.59103138383838,
+            "smoothness": 9.71226237437467,
+            "overshoot_m": 0.0,
+            "failure": "undershoot",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "starting-policy",
+              "speed": 0.2,
+              "stop_distance": -0.045,
+              "approach_offset": 0.045,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 3008,
+              "shift": true,
+              "puck": [
+                0.023326872642013295,
+                0.04357126099084563,
+                0.48
+              ],
+              "target": [
+                -0.009647727492060689,
+                -0.06088448789484286,
+                0.462
+              ],
+              "friction": 0.6758109133324625,
+              "mass": 0.10116204241992685
+            },
+            "success": false,
+            "final_distance_m": 0.04074864090218327,
+            "completion_seconds": null,
+            "invalid": false,
+            "contact_steps": 106,
+            "control_effort": 109.5878414907977,
+            "smoothness": 12.653021079035101,
+            "overshoot_m": 0.0,
+            "failure": "undershoot",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          }
+        ],
+        "selected": [
+          {
+            "policy": {
+              "name": "random-09",
+              "speed": 0.04613252721021203,
+              "stop_distance": 0.010622921365148313,
+              "approach_offset": 0.05366097906484909,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 3001,
+              "shift": true,
+              "puck": [
+                0.02923910643978799,
+                0.03989795576354142,
+                0.48
+              ],
+              "target": [
+                0.01764293571017895,
+                -0.062009638063616875,
+                0.462
+              ],
+              "friction": 0.6765416356708213,
+              "mass": 0.0989047738909516
+            },
+            "success": true,
+            "final_distance_m": 0.024312910898212713,
+            "completion_seconds": 3.478,
+            "invalid": false,
+            "contact_steps": 600,
+            "control_effort": 7.635079073000983,
+            "smoothness": 0.14837880575919307,
+            "overshoot_m": 0.0,
+            "failure": "success",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "random-09",
+              "speed": 0.04613252721021203,
+              "stop_distance": 0.010622921365148313,
+              "approach_offset": 0.05366097906484909,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 3002,
+              "shift": true,
+              "puck": [
+                -0.024611864420095577,
+                0.030938794585372797,
+                0.48
+              ],
+              "target": [
+                0.007101314466781052,
+                -0.06957895213525277,
+                0.462
+              ],
+              "friction": 0.714162012502579,
+              "mass": 0.10642047997421993
+            },
+            "success": true,
+            "final_distance_m": 0.01905437139251557,
+            "completion_seconds": 3.674,
+            "invalid": false,
+            "contact_steps": 607,
+            "control_effort": 8.27223548396699,
+            "smoothness": 0.1495294457092052,
+            "overshoot_m": 0.0,
+            "failure": "success",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "random-09",
+              "speed": 0.04613252721021203,
+              "stop_distance": 0.010622921365148313,
+              "approach_offset": 0.05366097906484909,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 3003,
+              "shift": true,
+              "puck": [
+                -0.03064119799374687,
+                0.041594311253298585,
+                0.48
+              ],
+              "target": [
+                0.004522750517130531,
+                -0.06275204529433251,
+                0.462
+              ],
+              "friction": 0.7120215725432596,
+              "mass": 0.10015304559397996
+            },
+            "success": true,
+            "final_distance_m": 0.012460585351593495,
+            "completion_seconds": 3.732,
+            "invalid": false,
+            "contact_steps": 666,
+            "control_effort": 8.605895020909553,
+            "smoothness": 0.15172395846404568,
+            "overshoot_m": 0.0,
+            "failure": "success",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "random-09",
+              "speed": 0.04613252721021203,
+              "stop_distance": 0.010622921365148313,
+              "approach_offset": 0.05366097906484909,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 3004,
+              "shift": true,
+              "puck": [
+                0.024604417875618005,
+                0.04473776819388262,
+                0.48
+              ],
+              "target": [
+                -0.0020139829628631764,
+                -0.06508540210763887,
+                0.462
+              ],
+              "friction": 0.7526660693584191,
+              "mass": 0.08086064552832402
+            },
+            "success": true,
+            "final_distance_m": 0.012106321801397644,
+            "completion_seconds": 3.5380000000000003,
+            "invalid": false,
+            "contact_steps": 689,
+            "control_effort": 7.723220530067148,
+            "smoothness": 0.1496617982383933,
+            "overshoot_m": 0.0,
+            "failure": "success",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "random-09",
+              "speed": 0.04613252721021203,
+              "stop_distance": 0.010622921365148313,
+              "approach_offset": 0.05366097906484909,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 3005,
+              "shift": true,
+              "puck": [
+                -0.028291179367731074,
+                0.04380576702695006,
+                0.48
+              ],
+              "target": [
+                -0.006345416153058167,
+                -0.06212685033082681,
+                0.462
+              ],
+              "friction": 0.9788872853106061,
+              "mass": 0.10428517564127941
+            },
+            "success": true,
+            "final_distance_m": 0.01039367651520567,
+            "completion_seconds": 3.666,
+            "invalid": false,
+            "contact_steps": 1069,
+            "control_effort": 8.74805105139572,
+            "smoothness": 0.1518021880806235,
+            "overshoot_m": 0.0,
+            "failure": "success",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "random-09",
+              "speed": 0.04613252721021203,
+              "stop_distance": 0.010622921365148313,
+              "approach_offset": 0.05366097906484909,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 3006,
+              "shift": true,
+              "puck": [
+                -0.032632997818186,
+                0.02393354235820524,
+                0.48
+              ],
+              "target": [
+                0.009830633082011098,
+                -0.07140853490257658,
+                0.462
+              ],
+              "friction": 0.6900417727025202,
+              "mass": 0.08974479793614622
+            },
+            "success": true,
+            "final_distance_m": 0.02042853262808309,
+            "completion_seconds": 3.602,
+            "invalid": false,
+            "contact_steps": 610,
+            "control_effort": 8.313323341257723,
+            "smoothness": 0.1495937698840826,
+            "overshoot_m": 0.0,
+            "failure": "success",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "random-09",
+              "speed": 0.04613252721021203,
+              "stop_distance": 0.010622921365148313,
+              "approach_offset": 0.05366097906484909,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 3007,
+              "shift": true,
+              "puck": [
+                -0.003772562994384038,
+                0.04346882161791308,
+                0.48
+              ],
+              "target": [
+                0.025698066058358917,
+                -0.06355839106277421,
+                0.462
+              ],
+              "friction": 0.7989409748491872,
+              "mass": 0.09998505394927538
+            },
+            "success": true,
+            "final_distance_m": 0.009872678638668253,
+            "completion_seconds": 3.666,
+            "invalid": false,
+            "contact_steps": 784,
+            "control_effort": 8.285306342681535,
+            "smoothness": 0.1490647403679837,
+            "overshoot_m": 0.0,
+            "failure": "success",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          },
+          {
+            "policy": {
+              "name": "random-09",
+              "speed": 0.04613252721021203,
+              "stop_distance": 0.010622921365148313,
+              "approach_offset": 0.05366097906484909,
+              "contact_height": 0.488,
+              "recovery": false
+            },
+            "scenario": {
+              "seed": 3008,
+              "shift": true,
+              "puck": [
+                0.023326872642013295,
+                0.04357126099084563,
+                0.48
+              ],
+              "target": [
+                -0.009647727492060689,
+                -0.06088448789484286,
+                0.462
+              ],
+              "friction": 0.6758109133324625,
+              "mass": 0.10116204241992685
+            },
+            "success": true,
+            "final_distance_m": 0.016054026015812607,
+            "completion_seconds": 3.494,
+            "invalid": false,
+            "contact_steps": 583,
+            "control_effort": 7.644153039406054,
+            "smoothness": 0.14984722973536557,
+            "overshoot_m": 0.0,
+            "failure": "success",
+            "protocol_sha256": "72904ed1af0a9c8bb50c3e80ba49cf422e7c5418b7faead75c544bfa3d3a4a4d"
+          }
+        ]
+      }
+    }
+  },
+  "demo_seed": 101,
+  "demo_scope": "Development illustration selected for a visible baseline failure; see all paired trials for evaluation.",
+  "services": {
+    "exa": "not executed",
+    "past": "not executed",
+    "modal": "not executed",
+    "model": "not executed"
+  },
+  "seconds": 9.390600332990289,
+  "sources": [],
+  "memory": [],
+  "render_note": "Blender movies in this folder replay this local conventional search. Sponsor-connected numerical studies, if available, are separate."
+}

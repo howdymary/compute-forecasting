@@ -1,0 +1,24 @@
+name: Publish isolated Mochi replay studio
+on:
+  push:
+    branches: [mochi-hackathon]
+    paths: ['mochi/web/**', 'mochi/scripts/deploy.py', '.github/workflows/mochi-studio.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  studio:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install Modal client
+        run: python -m pip install modal==1.6.4
+      - name: Deploy credential-free replay site
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: modal deploy mochi/scripts/deploy.py
