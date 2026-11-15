@@ -1,10 +1,10 @@
 # Compute Forecast
 
-**A GPU pricing notebook with reproducible forecasting experiments.**
+**A GPU-value research notebook: rental history, archived forecasts and conditional capital economics.**
 
 Explore advertised rental prices, inspect an archived forecast, and see how explicit assumptions change longer-term pricing paths. The research atlas connects saved model checkpoints, forecast scores, uncertainty, and actual experiment-selection decisions.
 
-[Explore the notebook](https://howdymary--compute-forecast-observatory-web.us-east.modal.run) · [Research atlas](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/#research) · [Results and downloads](results/README.md) · [Methods](docs/README.md)
+[GPU value and shared research memory](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/#value) · [Explore the notebook](https://howdymary--compute-forecast-observatory-web.us-east.modal.run) · [Research atlas](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/#research) · [Results and downloads](results/README.md) · [Methods](docs/README.md)
 
 ![Interactive GPU rental-price scenarios in the Compute Forecast notebook](docs/images/pricing-scenarios.png)
 
@@ -12,12 +12,25 @@ Explore advertised rental prices, inspect an archived forecast, and see how expl
 
 ## What you can explore
 
-- **Historical context.** Independently licensed A100 40GB and T4 hyperscaler-spot series: 234 observed dates each, January 12–November 6, 2026, with 65 missing calendar dates. Gaps remain visible. This context failed the strict numerical-identity check against competition targets and is never stitched to their forecasts.
+- **Matching benchmark history.** 3,204 permitted observations across 36 of the 37 exact submitted target series, with the November 6 cutoff and unchanged forecast points. The remaining marketplace-ask history stays withheld under a source-specific caveat. [Publication decision](docs/DATA_SOURCES.md).
+- **Independent historical context.** Independently licensed A100 40GB and T4 hyperscaler-spot series: 234 observed dates each, January 12–November 6, 2026, with 65 missing calendar dates. Gaps remain visible. This context failed the strict numerical-identity check against competition targets and is never stitched to their forecasts.
 - **Archived benchmark forecasts.** The exact November 6, 2026 submission: 37 headline series, 111 rows, 1/3/7-day horizons, and q10/q50/q90. This is an archived forecast, not a live quote.
-- **Long-term scenarios.** Separate 12/24/36-month rental and resale assumptions, explicit compounding, a time ruler, and immutable session pins. Dollar anchors are user-supplied assumptions.
+- **Long-term economics.** Archived H100/A100 rental anchors, 24/36-month operating cashflows, operating break-even utilization and an income-based residual proxy. Adjustable assumptions and explicit discounting keep this separate from observed resale prices. The original index-100 rental/resale scenarios remain available.
 - **Research results.** Actual checkpoint curves, matched controls, coverage versus interval width, paired action traces, and separate accounting for cached reveals, fresh executions, optimizer updates, time, and partial provider receipts.
 
 ![Saved checkpoint trajectories and uncertainty comparisons in the research atlas](docs/images/research-atlas.png)
+
+## Pacific value study and shared memory
+
+The [GPU value notebook](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/#value) now joins permitted **matching** history to actual submitted forecast points. It keeps independent historical context separate.
+
+The unchanged official starter was rerun on the same 12-cell retrospective A100 cohort. Empirical persistence and drift both score **0.01326771**, versus **0.01590833** for last value. These are matched integrity checks, not new untouched test results or the full competition leaderboard.
+
+The long-term explorer makes the economic mechanism inspectable: advertised rate → realized revenue assumption → utilization and operating costs → discounted operating income and a separate tail-income residual proxy. The annual paths are assumptions, not estimates inferred from news. [Equations, source evidence and conditional results](docs/pacific-value-v5.md).
+
+**past.dev is verified:** three distinct roles wrote, three read, and six cross-role recalls supplied records used in actual research tasks. A scientist tested a workload-specific rental/throughput ratio; a skeptic flagged unmatched provider populations. The final publication action did not change. No forecasting gain from memory is claimed. [Authorship, actual recall receipts, setup diagnosis and storage map](docs/past-dev-memory.md).
+
+The first v5 setup failed because a 44-character audience ID exceeded past.dev's 40-character limit. The ID is now 30 characters, errors retain sanitized receipts, and a failed memory gate fails the workflow. [Successful execution](https://github.com/howdymary/compute-forecasting/actions/runs/43758970371) · [Isolated API regression check](results/value-v5/runs/43759581339/setup-diagnostic.json).
 
 ## What the research found
 
@@ -67,14 +80,22 @@ A separate **14-series / 42-row prospective commitment** targets November 16, 18
 
 ## Reproduce and validate
 
-The interface uses HTML, CSS, JavaScript, and SVG, served by FastAPI on Modal. Numerical tools score forecasts deterministically; a Tinker-trained Qwen policy selects bounded experiment configurations. Exa and past.dev support a separate evidence-and-criticism loop.
+The interface uses HTML, CSS, JavaScript, and SVG, served by FastAPI on Modal. Numerical tools score forecasts deterministically; a Tinker-trained Qwen policy selects bounded experiment configurations. Exa retrieves dated primary evidence; past.dev connects evidence, deterministic experiments, criticism and next decisions. This current-research loop is separate from historical benchmark inputs.
+
+A credential-free pack-based command reproduced the official CSV byte for byte in [remote run 43758970357](https://github.com/howdymary/compute-forecasting/actions/runs/43758970357):
+
+~~~sh
+python -m compute_forecast.reproduce_pacific_v5 --pack /path/to/gpu-price-pack-v0.1.1-handover --out /path/outside-pack/reproduction
+~~~
+
+After installing this package and the pack's starter requirements, this command checks all 672 manifest entries and preserves the source pack. To verify published arithmetic without the pack or provider accounts, run `python -m compute_forecast.verify_value_v5`. [Passed public reconstruction](https://github.com/howdymary/compute-forecasting/actions/runs/43759952952).
 
 1. Start with the [reproduction guide](docs/campaign-v2-reproduction.md) and [frozen v1 protocol](docs/protocol.md).
 2. Numerical reruns require authorized access to the source pack. Training additionally requires Tinker access; saved private checkpoints are not bundled here.
 3. Configure the documented GitHub Actions secrets and use the remote workflows on `compute-observatory`. The workflows verify source hashes, archive manifests, cutoffs, and output contracts.
 4. Audit the committed snapshots without accounts, or reproduce recorded decisions from the [derived research archive](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/experimental/downloads/43677783872.zip). New training is stochastic and should receive its own run identity.
 
-The current contract suite passed **123 tests**, with one optional dependency skip. [Pricing](https://github.com/howdymary/compute-forecasting/actions/runs/43755238685), [Findings](https://github.com/howdymary/compute-forecasting/actions/runs/43755238539), [notebook](https://github.com/howdymary/compute-forecasting/actions/runs/43755238564), [experimental](https://github.com/howdymary/compute-forecasting/actions/runs/43755238561), and [research-explorer](https://github.com/howdymary/compute-forecasting/actions/runs/43755238565) checks passed. Desktop and mobile PNGs were inspected; layout and interaction checks passed at 1512, 390 and 320 pixels. The stress check retains eight simultaneous callers, exact numerical assertions and zero automatic retries. [Image and validation provenance](results/review-v4/ui-publication.json).
+The v4 contract suite passed **123 tests**, with one optional dependency skip; subsequent v5 runs add economic and capability contracts. [Pricing](https://github.com/howdymary/compute-forecasting/actions/runs/43755238685), [Findings](https://github.com/howdymary/compute-forecasting/actions/runs/43755238539), [notebook](https://github.com/howdymary/compute-forecasting/actions/runs/43755238564), [experimental](https://github.com/howdymary/compute-forecasting/actions/runs/43755238561), and [research-explorer](https://github.com/howdymary/compute-forecasting/actions/runs/43755238565) checks passed. Desktop and mobile PNGs were inspected; layout and interaction checks passed at 1512, 390 and 320 pixels. The stress check retains eight simultaneous callers, exact numerical assertions and zero automatic retries. [Image and validation provenance](results/review-v4/ui-publication.json).
 
 ## Repository guide
 

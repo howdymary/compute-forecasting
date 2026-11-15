@@ -1,5 +1,7 @@
 # Documentation
 
+Current release: [Pacific value study v5](pacific-value-v5.md) · [Verified past.dev memory and setup diagnosis](past-dev-memory.md) · [Public v5 artifacts](../results/value-v5/README.md).
+
 ## Start here
 
 | Document | Purpose |
