@@ -1,0 +1,96 @@
+{
+  "status": "passed",
+  "actual_retained_vintage_metadata": [
+    {
+      "snapshot_sha256": "1bbef25ce33e68666671294c0c21a88129a41ed11def0d37a8ced01348283007",
+      "retrieved_at": "2026-11-15T19:10:32.902267+00:00",
+      "requested_cutoff": "2026-11-06",
+      "source_objects": 0,
+      "source_bytes": 0,
+      "actual_coverage": [
+        {
+          "series_id": "hubbard-independent-a100-40",
+          "observations": 234,
+          "first_observation": "2026-01-12",
+          "last_observation": "2026-11-06",
+          "quote_freshness_verified": false
+        },
+        {
+          "series_id": "hubbard-independent-t4",
+          "observations": 234,
+          "first_observation": "2026-01-12",
+          "last_observation": "2026-11-06",
+          "quote_freshness_verified": false
+        }
+      ]
+    },
+    {
+      "snapshot_sha256": "463b62b713f36fd83cdd2f67a40ca4ec25cf98df75322b142c022120995d8ea8",
+      "retrieved_at": "2026-11-15T19:47:35.438041+00:00",
+      "requested_cutoff": "2026-11-14",
+      "source_objects": 436,
+      "source_bytes": 93886733,
+      "actual_coverage": [
+        {
+          "series_id": "hubbard-independent-a100-40",
+          "observations": 234,
+          "first_observation": "2026-01-12",
+          "last_observation": "2026-11-06",
+          "quote_freshness_verified": false
+        },
+        {
+          "series_id": "hubbard-independent-t4",
+          "observations": 234,
+          "first_observation": "2026-01-12",
+          "last_observation": "2026-11-06",
+          "quote_freshness_verified": false
+        }
+      ]
+    },
+    {
+      "snapshot_sha256": "bcb30d6de3e94649c662bf4efb492cad8b34b6a148ef04c3ec9002726e943125",
+      "retrieved_at": "2026-11-15T19:41:21.696028+00:00",
+      "requested_cutoff": "2026-11-14",
+      "source_objects": 436,
+      "source_bytes": 93886733,
+      "actual_coverage": [
+        {
+          "series_id": "hubbard-independent-a100-40",
+          "observations": 234,
+          "first_observation": "2026-01-12",
+          "last_observation": "2026-11-06",
+          "quote_freshness_verified": false
+        },
+        {
+          "series_id": "hubbard-independent-t4",
+          "observations": 234,
+          "first_observation": "2026-01-12",
+          "last_observation": "2026-11-06",
+          "quote_freshness_verified": false
+        }
+      ]
+    }
+  ],
+  "synthetic_numerical_candidates": 42,
+  "synthetic_numerical_rows": 126,
+  "fallbacks": 56,
+  "fixture": "Explicitly synthetic increasing sequence; no historical prices or accuracy result",
+  "chronos_revision": "29ec3766d36d6f73f0696f85560a422f50e8498c",
+  "prediction_shape": [
+    8,
+    3
+  ],
+  "native_prediction_shape": [
+    1,
+    8,
+    3
+  ],
+  "versions": {
+    "tinker": "0.39.0",
+    "tinker-cookbook": "0.6.1",
+    "torch": "2.15.0+cpu",
+    "transformers": "5.23.0",
+    "chronos-forecasting": "2.3.2"
+  },
+  "new_training_updates": 0
+}
