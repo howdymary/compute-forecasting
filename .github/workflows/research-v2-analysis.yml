@@ -1,6 +1,9 @@
 name: Analyze paired policy results and strong static control
 run-name: V2 policy analysis · RL ${{ inputs.rl_run_id }}
 on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/research-v2-analysis.yml]
   workflow_dispatch:
     inputs:
       rl_run_id:
@@ -15,7 +18,7 @@ jobs:
     timeout-minutes: 360
     env:
       GH_TOKEN: ${{ github.token }}
-      RL_RUN_ID: ${{ inputs.rl_run_id }}
+      RL_RUN_ID: ${{ inputs.rl_run_id || '43677499284' }}
       MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
       MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
     steps:

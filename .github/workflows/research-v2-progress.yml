@@ -34,7 +34,7 @@ jobs:
           import json,os,subprocess,time
           for _ in range(180):
               subprocess.run(['modal','run','-m','compute_forecast.progress_v2'],check=True)
-              r=json.loads(subprocess.check_output(['gh','api','repos/'+os.environ['GITHUB_REPOSITORY']+'/actions/runs/43671941385'],text=True))
+              r=json.loads(subprocess.check_output(['gh','api','repos/'+os.environ['GITHUB_REPOSITORY']+'/actions/runs/43677499284'],text=True))
               if r['status']=='completed':break
               time.sleep(45)
           PY
