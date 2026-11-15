@@ -71,12 +71,14 @@ def main():
         points=next(s for s in p["series"] if s["id"]==selected)["forecasts"]
         close(values(),[points[2][q] for q in ("q10","q50","q90")])
         assert "Historical dates retain their gaps" in page.locator("#chart-note").inner_text()
-        page.wait_for_function("V5 !== null")
+        page.wait_for_function("() => V5 !== null")
         assert page.evaluate("t7History() !== null"), "Selected benchmark must expose its approved matching history"
         options=page.locator("#compare option").evaluate_all("(es)=>es.map(e=>e.value)")
         current=next(s for s in p["series"] if s["id"]==selected)
         assert set(options[1:])=={s["id"] for s in p["series"] if s["id"]!=selected and s["comparison_key"]==current["comparison_key"]}
-        if len(options)>1:page.locator("#compare").select_option(options[1])
+        if len(options)>1:
+            page.locator("#timeline-comparison").evaluate("(el)=>el.open=true")
+            page.locator("#compare").select_option(options[1])
         page.screenshot(path=str(out/"benchmark-desktop.png"),full_page=True)
         page.get_by_role("button",name="3 days",exact=True).click()
         close(values(),[points[1][q] for q in ("q10","q50","q90")])
