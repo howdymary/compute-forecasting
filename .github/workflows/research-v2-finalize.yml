@@ -45,7 +45,7 @@ jobs:
           python - <<'PY'
           import json,os,subprocess
           from pathlib import Path
-          ids=[43665821333,43671941385,43671951167,43670267628,43669746825,43669865616,43669981910,43670397299]
+          ids=[43665821333,43677499284,43677650007,43670267628,43669746825,43669865616,43669981910,43670397299]
           receipts=[]
           Path('artifacts').mkdir(exist_ok=True)
           for rid in ids:
@@ -58,7 +58,7 @@ jobs:
       - name: Collect immutable results without raw input data
         run: |
           gh run download 43665821333 --repo "$GITHUB_REPOSITORY" --pattern 'campaign-v2-*' --dir inputs/campaign
-          gh run download 43671941385 --repo "$GITHUB_REPOSITORY" --pattern 'campaign-v2-rl-*' --dir inputs/rl
+          gh run download 43677499284 --repo "$GITHUB_REPOSITORY" --pattern 'campaign-v2-rl-*' --dir inputs/rl
           gh run download 43665112830 --repo "$GITHUB_REPOSITORY" --name campaign-v2-evidence-bd267f17fa31106a05a22e3b6b4739f7bd6c0327-43665112830 --dir inputs/evidence
           python - <<'PY'
           import json
