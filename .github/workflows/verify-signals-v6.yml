@@ -2,7 +2,7 @@ name: Verify registered signal study and future commitments publicly
 on:
   push:
     branches: [compute-observatory]
-    paths: [.github/workflows/verify-signals-v6.yml, src/compute_forecast/verify_signals_v6.py]
+    paths: [.github/workflows/verify-signals-v6.yml, src/compute_forecast/verify_signals_v6.py, results/signals-v6/ui-publication.json, 'docs/images/signals-v6-*.png']
   workflow_dispatch:
 permissions:
   contents: write

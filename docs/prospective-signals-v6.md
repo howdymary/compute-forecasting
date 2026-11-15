@@ -111,3 +111,7 @@ The researcher selected informative signal history as its focus. The scientist e
 These are four bounded Tinker decisions and actual executed checks. The change followed criticism; this single sequence is not a controlled causal estimate of memory value. No learned weights or forecasting accuracy improved in this run.
 
 [Immutable authorship, recall and task receipts](../results/signals-v6/runs/43764698758/memory.json).
+
+## Published visual validation
+
+[Inspected PNGs, hashes and exact UI report](../results/signals-v6/ui-publication.json) retain desktop and mobile evidence from the deployed notebook. [Remote UI run](https://github.com/howdymary/compute-forecasting/actions/runs/43765786824) passed three viewport widths, exact forecast agreement, loading/error states, touch/keyboard controls, immutable pins, tab disclosures and concurrent reads. Published images show actual pending results, not invented learning curves.

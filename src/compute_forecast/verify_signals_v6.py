@@ -28,5 +28,12 @@ def main():
     assert score["status"]=="pending" and not score["cells"]
     assert readiness(snapshots)["new_optimizer_updates"]==0
     report={"status":"passed","source_sha":__import__("os").environ.get("GITHUB_SHA"),"protocol_sha256":digest(config()),"engine_sha256":registration["engine_sha256"],"official_csv_sha256":SHA,"actual_quote_contracts":4,"quote_date":"2026-11-15","pilot_forecast_rows":48,"pilot_forecasters":4,"pilot_horizons":[1,3,7],"target_dates":sorted({r["target_date"] for r in record["rows"]}),"primary_signal_forecasts_issued":0,"prospective_improvement_established":False,"registered_weekly_origins":len(config()["origins"]),"hashes":{str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in root.glob("*.json")},"interpretation":"Actual future pilot commitments verified; primary signal-value test awaits retained history and mature outcomes."}
+    visual=Path("results/signals-v6/ui-publication.json")
+    if visual.exists():
+        publication=json.loads(visual.read_bytes())
+        assert publication["report"]["status"]=="passed" and publication["report"]["video_recorded"] is False
+        for image in publication["screenshots"]:
+            assert hashlib.sha256(Path(image["path"]).read_bytes()).hexdigest()==image["sha256"], image["path"]
+        report["published_pngs_verified"]=len(publication["screenshots"])
     out=Path("artifacts/signals-public-v6");out.mkdir(parents=True,exist_ok=True);(out/"verification.json").write_text(json.dumps(report,indent=2)+"\n");print("V6_PUBLIC_VERIFICATION:"+json.dumps(report),flush=True)
 if __name__=="__main__":main()
