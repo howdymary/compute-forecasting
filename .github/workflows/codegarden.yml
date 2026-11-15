@@ -8,7 +8,7 @@ on:
       mode:
         description: Bounded CodeGarden stage; paid modes require a fresh explicit shared allocation
         type: choice
-        options: [verify, resume, research_cycle, native, full]
+        options: [verify, resume, transfer, research_cycle, native, full]
         default: verify
 permissions:
   contents: write
@@ -16,7 +16,7 @@ concurrency:
   group: codegarden-only
   cancel-in-progress: false
 env:
-  CODEGARDEN_MODE: ${{ inputs.mode || 'resume' }}
+  CODEGARDEN_MODE: ${{ inputs.mode || 'transfer' }}
 jobs:
   verify-and-search:
     runs-on: ubuntu-latest
@@ -45,7 +45,7 @@ jobs:
           python -m venv codegarden/.venv
           codegarden/.venv/bin/python -m pip install -r codegarden/requirements-providers.txt -r codegarden/requirements-exact.txt
       - name: Read provider state for the separately allocated stage
-        if: env.CODEGARDEN_MODE != 'verify'
+        if: env.CODEGARDEN_MODE != 'verify' && env.CODEGARDEN_MODE != 'resume'
         env:
           EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
           PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
@@ -76,10 +76,15 @@ jobs:
           MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
         run: codegarden/.venv/bin/python -B -u codegarden/live_campaign.py
       - name: Resume only the saved feedback experiment
-        if: env.CODEGARDEN_MODE == 'resume'
+        if: env.CODEGARDEN_MODE == 'resume' || env.CODEGARDEN_MODE == 'transfer'
         env:
           PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
         run: python -B codegarden/feedback_resume.py
+      - name: Test the existing trained checkpoint on the same length-16 context
+        if: env.CODEGARDEN_MODE == 'transfer'
+        env:
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+        run: codegarden/.venv/bin/python -B -u codegarden/trained_transfer.py
       - name: Replay frozen choices with matched search CPU budgets
         run: python -B codegarden/policy_budget_eval.py
       - name: Reverify every exported witness
