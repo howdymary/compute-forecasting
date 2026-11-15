@@ -1,0 +1,2249 @@
+{
+  "schema_version": 4,
+  "study_id": "compute-forecast-review-v4",
+  "source_sha": "822683d97cbded8d4642914c14e14483beac8946",
+  "generated_at": "2026-11-15T18:40:41.407802+00:00",
+  "classification": "Post-hoc descriptive reconstruction; frozen studies unchanged",
+  "source_manifest_sha256": "285f53d74dee9662601fd2a405c3c52aff690e52e94efb7b781fa8505f969378",
+  "archive_sha256": "5ec7ef997571dd925ef521895f9b950373f87d85cf8111bfe52adf5937e8c3e5",
+  "source_artifacts": {
+    "trained-evaluation": {
+      "bytes": 42777,
+      "sha256": "b186c29192c322b72df237fcb8ff34a4967c77fb050100357074cbcfff95d10e",
+      "path": "runs/campaign/campaign-v2-policy-soft-17/v2-policy/trained-evaluation.json"
+    },
+    "starting-evaluation": {
+      "bytes": 62923,
+      "sha256": "da1ac9bc55206c4761168cc6e3f0a2a255c938f33b81b2b88b5ba7c04b8e290a",
+      "path": "runs/campaign/campaign-v2-policy-soft-17/v2-policy/starting-evaluation.json"
+    },
+    "no-observation": {
+      "bytes": 32105,
+      "sha256": "0cd0355129d0e071aa0e5451c88f91d373fa03fa28d9920a67d68c06123c4630",
+      "path": "runs/campaign/campaign-v2-policy-soft-17/v2-policy/no-observation.json"
+    },
+    "controls": {
+      "bytes": 52540,
+      "sha256": "70db46fcfeaeed6194c587d56137519e7d1e69d3bfdc5a64a11e8808865ce3be",
+      "path": "runs/campaign/campaign-v2-policy-soft-17/v2-policy/controls.json"
+    }
+  },
+  "official_csv_sha256": "67a043255a716db6bc9b73cd28f9258c30fb299fd8671a9ee3430c0d94cadd80",
+  "mechanism": {
+    "classification": "posthoc_descriptive_portfolio_selected_after_evaluation",
+    "run_id": "c24ee0b5943f48c2bfa17032598f42f4",
+    "tree_portfolio": [
+      "tree_56_3",
+      "tree_56_7",
+      "tree_28_3",
+      "tree_28_7"
+    ],
+    "n_tasks": 4,
+    "n_cells": 12,
+    "same_reveal_sets": 4,
+    "same_terminal_choices": 4,
+    "changed_orders": 4,
+    "compressed_choice_matches": 4,
+    "compressed_loss_matches": 4,
+    "raw_prediction_equality": null,
+    "tasks": [
+      {
+        "task_id": "2fea1425e87cd93e557d",
+        "origin": "2026-08-29",
+        "series_ids": [
+          "afhubbard.hyperscaler_spot.A100_40GB.spot.median"
+        ],
+        "n_cells": 3,
+        "feedback_order": [
+          "last_value",
+          "last_value_empirical",
+          "tree_56_3",
+          "tree_56_7",
+          "tree_28_3",
+          "tree_28_7"
+        ],
+        "hidden_order": [
+          "last_value",
+          "last_value_empirical",
+          "tree_56_3",
+          "tree_28_3",
+          "tree_28_7",
+          "tree_56_7"
+        ],
+        "same_order": false,
+        "same_reveal_set": true,
+        "matches_tree_portfolio": true,
+        "feedback_choice": "tree_56_3",
+        "hidden_choice": "tree_56_3",
+        "same_terminal_choice": true,
+        "ties": [
+          {
+            "selected_config_id": "tree_56_3",
+            "tied_minima": [
+              "tree_56_3",
+              "tree_56_7"
+            ]
+          },
+          {
+            "selected_config_id": "tree_56_3",
+            "tied_minima": [
+              "tree_56_3",
+              "tree_56_7"
+            ]
+          }
+        ],
+        "feedback_pinball": 0.002907876163995284,
+        "hidden_pinball": 0.002907876163995284,
+        "same_forecast_loss": true,
+        "prediction_equivalence": null,
+        "prediction_evidence": "Raw quantile rows not retained in these public evaluations; equal losses alone are insufficient",
+        "compressed_choice": "tree_56_3",
+        "compressed_pinball": 0.002907876163995284,
+        "compressed_choice_matches": true,
+        "compressed_loss_matches": true,
+        "revealed_validation": [
+          {
+            "config_id": "last_value",
+            "loss": 0.021183333333333332,
+            "n_cells": 6,
+            "last_label_date": "2026-08-29"
+          },
+          {
+            "config_id": "last_value_empirical",
+            "loss": 0.012250867522222236,
+            "n_cells": 6,
+            "last_label_date": "2026-08-29"
+          },
+          {
+            "config_id": "tree_56_3",
+            "loss": 0.010544562110166118,
+            "n_cells": 6,
+            "last_label_date": "2026-08-29"
+          },
+          {
+            "config_id": "tree_56_7",
+            "loss": 0.010544562110166118,
+            "n_cells": 6,
+            "last_label_date": "2026-08-29"
+          },
+          {
+            "config_id": "tree_28_3",
+            "loss": 0.013105799843309819,
+            "n_cells": 6,
+            "last_label_date": "2026-08-29"
+          },
+          {
+            "config_id": "tree_28_7",
+            "loss": 0.013105799843309819,
+            "n_cells": 6,
+            "last_label_date": "2026-08-29"
+          }
+        ]
+      },
+      {
+        "task_id": "0ab5397c9d9cc02f61e3",
+        "origin": "2026-08-29",
+        "series_ids": [
+          "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median"
+        ],
+        "n_cells": 3,
+        "feedback_order": [
+          "last_value",
+          "last_value_empirical",
+          "tree_56_3",
+          "tree_56_7",
+          "tree_28_3",
+          "tree_28_7"
+        ],
+        "hidden_order": [
+          "last_value",
+          "last_value_empirical",
+          "tree_56_3",
+          "tree_28_3",
+          "tree_28_7",
+          "tree_56_7"
+        ],
+        "same_order": false,
+        "same_reveal_set": true,
+        "matches_tree_portfolio": true,
+        "feedback_choice": "tree_56_3",
+        "hidden_choice": "tree_56_3",
+        "same_terminal_choice": true,
+        "ties": [
+          {
+            "selected_config_id": "tree_56_3",
+            "tied_minima": [
+              "tree_56_3",
+              "tree_56_7"
+            ]
+          },
+          {
+            "selected_config_id": "tree_56_3",
+            "tied_minima": [
+              "tree_56_3",
+              "tree_56_7"
+            ]
+          }
+        ],
+        "feedback_pinball": 0.00355171032350596,
+        "hidden_pinball": 0.00355171032350596,
+        "same_forecast_loss": true,
+        "prediction_equivalence": null,
+        "prediction_evidence": "Raw quantile rows not retained in these public evaluations; equal losses alone are insufficient",
+        "compressed_choice": "tree_56_3",
+        "compressed_pinball": 0.00355171032350596,
+        "compressed_choice_matches": true,
+        "compressed_loss_matches": true,
+        "revealed_validation": [
+          {
+            "config_id": "last_value",
+            "loss": 0.01801666666666668,
+            "n_cells": 6,
+            "last_label_date": "2026-08-29"
+          },
+          {
+            "config_id": "last_value_empirical",
+            "loss": 0.013733345661111123,
+            "n_cells": 6,
+            "last_label_date": "2026-08-29"
+          },
+          {
+            "config_id": "tree_56_3",
+            "loss": 0.013363825265351582,
+            "n_cells": 6,
+            "last_label_date": "2026-08-29"
+          },
+          {
+            "config_id": "tree_56_7",
+            "loss": 0.013363825265351582,
+            "n_cells": 6,
+            "last_label_date": "2026-08-29"
+          },
+          {
+            "config_id": "tree_28_3",
+            "loss": 0.013546394856753831,
+            "n_cells": 6,
+            "last_label_date": "2026-08-29"
+          },
+          {
+            "config_id": "tree_28_7",
+            "loss": 0.013546394856753831,
+            "n_cells": 6,
+            "last_label_date": "2026-08-29"
+          }
+        ]
+      },
+      {
+        "task_id": "ab11e1d2259108a329d3",
+        "origin": "2026-09-05",
+        "series_ids": [
+          "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median"
+        ],
+        "n_cells": 3,
+        "feedback_order": [
+          "last_value",
+          "last_value_empirical",
+          "tree_56_7",
+          "tree_56_3",
+          "tree_28_3",
+          "tree_28_7"
+        ],
+        "hidden_order": [
+          "last_value",
+          "last_value_empirical",
+          "tree_56_3",
+          "tree_28_3",
+          "tree_28_7",
+          "tree_56_7"
+        ],
+        "same_order": false,
+        "same_reveal_set": true,
+        "matches_tree_portfolio": true,
+        "feedback_choice": "tree_28_3",
+        "hidden_choice": "tree_28_3",
+        "same_terminal_choice": true,
+        "ties": [
+          {
+            "selected_config_id": "tree_28_3",
+            "tied_minima": [
+              "tree_28_3",
+              "tree_28_7"
+            ]
+          },
+          {
+            "selected_config_id": "tree_28_3",
+            "tied_minima": [
+              "tree_28_3",
+              "tree_28_7"
+            ]
+          }
+        ],
+        "feedback_pinball": 0.02587194798497405,
+        "hidden_pinball": 0.02587194798497405,
+        "same_forecast_loss": true,
+        "prediction_equivalence": null,
+        "prediction_evidence": "Raw quantile rows not retained in these public evaluations; equal losses alone are insufficient",
+        "compressed_choice": "tree_28_3",
+        "compressed_pinball": 0.02587194798497405,
+        "compressed_choice_matches": true,
+        "compressed_loss_matches": true,
+        "revealed_validation": [
+          {
+            "config_id": "last_value",
+            "loss": 0.004683333333333335,
+            "n_cells": 6,
+            "last_label_date": "2026-09-05"
+          },
+          {
+            "config_id": "last_value_empirical",
+            "loss": 0.004277381916666666,
+            "n_cells": 6,
+            "last_label_date": "2026-09-05"
+          },
+          {
+            "config_id": "tree_56_7",
+            "loss": 0.0040566758197706715,
+            "n_cells": 6,
+            "last_label_date": "2026-09-05"
+          },
+          {
+            "config_id": "tree_56_3",
+            "loss": 0.004056263145649123,
+            "n_cells": 6,
+            "last_label_date": "2026-09-05"
+          },
+          {
+            "config_id": "tree_28_3",
+            "loss": 0.0037272395895402524,
+            "n_cells": 6,
+            "last_label_date": "2026-09-05"
+          },
+          {
+            "config_id": "tree_28_7",
+            "loss": 0.0037272395895402524,
+            "n_cells": 6,
+            "last_label_date": "2026-09-05"
+          }
+        ]
+      },
+      {
+        "task_id": "1f70ed1f973ce1b1d4e1",
+        "origin": "2026-09-12",
+        "series_ids": [
+          "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median"
+        ],
+        "n_cells": 3,
+        "feedback_order": [
+          "last_value",
+          "last_value_empirical",
+          "tree_56_3",
+          "tree_56_7",
+          "tree_28_3",
+          "tree_28_7"
+        ],
+        "hidden_order": [
+          "last_value",
+          "last_value_empirical",
+          "tree_56_3",
+          "tree_28_3",
+          "tree_28_7",
+          "tree_56_7"
+        ],
+        "same_order": false,
+        "same_reveal_set": true,
+        "matches_tree_portfolio": true,
+        "feedback_choice": "tree_28_3",
+        "hidden_choice": "tree_28_3",
+        "same_terminal_choice": true,
+        "ties": [
+          {
+            "selected_config_id": "tree_28_3",
+            "tied_minima": [
+              "tree_28_3",
+              "tree_28_7"
+            ]
+          },
+          {
+            "selected_config_id": "tree_28_3",
+            "tied_minima": [
+              "tree_28_3",
+              "tree_28_7"
+            ]
+          }
+        ],
+        "feedback_pinball": 0.01394765569888646,
+        "hidden_pinball": 0.01394765569888646,
+        "same_forecast_loss": true,
+        "prediction_equivalence": null,
+        "prediction_evidence": "Raw quantile rows not retained in these public evaluations; equal losses alone are insufficient",
+        "compressed_choice": "tree_28_3",
+        "compressed_pinball": 0.01394765569888646,
+        "compressed_choice_matches": true,
+        "compressed_loss_matches": true,
+        "revealed_validation": [
+          {
+            "config_id": "last_value",
+            "loss": 0.017100000000000004,
+            "n_cells": 6,
+            "last_label_date": "2026-09-12"
+          },
+          {
+            "config_id": "last_value_empirical",
+            "loss": 0.014571139066666653,
+            "n_cells": 6,
+            "last_label_date": "2026-09-12"
+          },
+          {
+            "config_id": "tree_56_3",
+            "loss": 0.01451602148717858,
+            "n_cells": 6,
+            "last_label_date": "2026-09-12"
+          },
+          {
+            "config_id": "tree_56_7",
+            "loss": 0.014410900864925046,
+            "n_cells": 6,
+            "last_label_date": "2026-09-12"
+          },
+          {
+            "config_id": "tree_28_3",
+            "loss": 0.014362204371731723,
+            "n_cells": 6,
+            "last_label_date": "2026-09-12"
+          },
+          {
+            "config_id": "tree_28_7",
+            "loss": 0.014362204371731723,
+            "n_cells": 6,
+            "last_label_date": "2026-09-12"
+          }
+        ]
+      }
+    ],
+    "claim": "The observed portfolio and recorded terminal choices can be compressed on these four tasks. This is not a preregistered baseline or proof of equivalence on unfamiliar tasks."
+  },
+  "comparisons": [
+    {
+      "id": "starting",
+      "cohort_id": "v2_selector_12",
+      "classification": "retrospective_previously_inspected",
+      "candidate": "selected_sft_soft",
+      "reference": "starting_policy",
+      "candidate_pinball": 0.011569797542840439,
+      "reference_pinball": 0.014995328587716763,
+      "delta": -0.003425531044876324,
+      "relative_change": -0.22843987878213654,
+      "n_cells": 12,
+      "n_origins": 3,
+      "groups": {
+        "series": [
+          {
+            "id": "afhubbard.hyperscaler_spot.A100_40GB.spot.median",
+            "candidate_pinball": 0.002907876163995284,
+            "reference_pinball": 0.002548286033333334,
+            "delta": 0.00035959013066195035,
+            "weighted_contribution": 8.989753266548759e-05,
+            "n_cells": 3,
+            "candidate_coverage": 1.0,
+            "reference_coverage": 1.0,
+            "candidate_width": 0.08723628491985853,
+            "reference_width": 0.07644858100000003,
+            "baseline_pinball": 0.0,
+            "relative_skill": null
+          },
+          {
+            "id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+            "candidate_pinball": 0.014457104669122157,
+            "reference_pinball": 0.01914434277251124,
+            "delta": -0.004687238103389084,
+            "weighted_contribution": -0.0035154285775418127,
+            "n_cells": 9,
+            "candidate_coverage": 0.6666666666666666,
+            "reference_coverage": 0.4444444444444444,
+            "candidate_width": 0.07906952752296882,
+            "reference_width": 0.07709207331046126,
+            "baseline_pinball": 0.021211111111111118,
+            "relative_skill": 0.3184183236139373
+          }
+        ],
+        "origin": [
+          {
+            "id": "2026-08-29",
+            "candidate_pinball": 0.003229793243750622,
+            "reference_pinball": 0.0061135629809890915,
+            "delta": -0.0028837697372384695,
+            "weighted_contribution": -0.0014418848686192347,
+            "n_cells": 6,
+            "candidate_coverage": 1.0,
+            "reference_coverage": 0.8333333333333334,
+            "candidate_width": 0.08267781874277158,
+            "reference_width": 0.10290226629902517,
+            "baseline_pinball": 0.0016166666666666736,
+            "relative_skill": -0.9978102538663556
+          },
+          {
+            "id": "2026-09-05",
+            "candidate_pinball": 0.02587194798497405,
+            "reference_pinball": 0.026373917544444413,
+            "delta": -0.0005019695594703638,
+            "weighted_contribution": -0.00012549238986759095,
+            "n_cells": 3,
+            "candidate_coverage": 0.3333333333333333,
+            "reference_coverage": 0.3333333333333333,
+            "candidate_width": 0.05139805476240844,
+            "reference_width": 0.04965626300000007,
+            "baseline_pinball": 0.03096666666666666,
+            "relative_skill": 0.1645226700223663
+          },
+          {
+            "id": "2026-09-12",
+            "candidate_pinball": 0.013947655698886462,
+            "reference_pinball": 0.021380270844444455,
+            "delta": -0.007432615145557993,
+            "weighted_contribution": -0.0018581537863894982,
+            "n_cells": 3,
+            "candidate_coverage": 0.6666666666666666,
+            "reference_coverage": 0.3333333333333333,
+            "candidate_width": 0.1076911752408134,
+            "reference_width": 0.05226400533333342,
+            "baseline_pinball": 0.02943333333333335,
+            "relative_skill": 0.5261272129483651
+          }
+        ],
+        "horizon": [
+          {
+            "id": "1",
+            "candidate_pinball": 0.00011588606984367922,
+            "reference_pinball": 0.0009329134065923098,
+            "delta": -0.0008170273367486306,
+            "weighted_contribution": -0.00027234244558287687,
+            "n_cells": 4,
+            "candidate_coverage": 1.0,
+            "reference_coverage": 0.75,
+            "candidate_width": 0.0034765820953103765,
+            "reference_width": 0.005696777437039391,
+            "baseline_pinball": 0.0,
+            "relative_skill": null
+          },
+          {
+            "id": "3",
+            "candidate_pinball": 0.018427259285152833,
+            "reference_pinball": 0.024973334370392432,
+            "delta": -0.0065460750852395985,
+            "weighted_contribution": -0.0021820250284131995,
+            "n_cells": 4,
+            "candidate_coverage": 0.75,
+            "reference_coverage": 0.5,
+            "candidate_width": 0.10831319847779253,
+            "reference_width": 0.0638674434460792,
+            "baseline_pinball": 0.02386250000000001,
+            "relative_skill": 0.22777331439904336
+          },
+          {
+            "id": "7",
+            "candidate_pinball": 0.016166247273524805,
+            "reference_pinball": 0.01907973798616555,
+            "delta": -0.0029134907126407462,
+            "weighted_contribution": -0.0009711635708802487,
+            "n_cells": 4,
+            "candidate_coverage": 0.5,
+            "reference_coverage": 0.5,
+            "candidate_width": 0.13154387004347085,
+            "reference_width": 0.1612293798154193,
+            "baseline_pinball": 0.02386250000000001,
+            "relative_skill": 0.32252499639497956
+          }
+        ]
+      },
+      "cells": [
+        {
+          "origin": "2026-08-29",
+          "series_id": "afhubbard.hyperscaler_spot.A100_40GB.spot.median",
+          "horizon_days": 1,
+          "candidate_loss": 0.0,
+          "reference_loss": 0.0,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-08-29",
+          "series_id": "afhubbard.hyperscaler_spot.A100_40GB.spot.median",
+          "horizon_days": 3,
+          "candidate_loss": 0.004454591691677448,
+          "reference_loss": 0.003484028966666663,
+          "delta": 0.0009705627250107848,
+          "weighted_contribution": 8.088022708423207e-05,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-08-29",
+          "series_id": "afhubbard.hyperscaler_spot.A100_40GB.spot.median",
+          "horizon_days": 7,
+          "candidate_loss": 0.004269036800308404,
+          "reference_loss": 0.004160829133333339,
+          "delta": 0.00010820766697506538,
+          "weighted_contribution": 9.017305581255448e-06,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-08-29",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 1,
+          "candidate_loss": 0.0003151414771333331,
+          "reference_loss": 0.003731653626369239,
+          "delta": -0.003416512149235906,
+          "weighted_contribution": -0.00028470934576965885,
+          "candidate_covered": true,
+          "reference_covered": false
+        },
+        {
+          "origin": "2026-08-29",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 3,
+          "candidate_loss": 0.005005420499593701,
+          "reference_loss": 0.008208126648236417,
+          "delta": -0.0032027061486427167,
+          "weighted_contribution": -0.0002668921790535597,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-08-29",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 7,
+          "candidate_loss": 0.005334568993790847,
+          "reference_loss": 0.017096739511328892,
+          "delta": -0.011762170517538046,
+          "weighted_contribution": -0.0009801808764615038,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-09-05",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 1,
+          "candidate_loss": 0.00014613640019036644,
+          "reference_loss": 0.0,
+          "delta": 0.00014613640019036644,
+          "weighted_contribution": 1.2178033349197203e-05,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-09-05",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 3,
+          "candidate_loss": 0.04190288502139849,
+          "reference_loss": 0.04355493009999995,
+          "delta": -0.0016520450786014634,
+          "weighted_contribution": -0.00013767042321678863,
+          "candidate_covered": false,
+          "reference_covered": false
+        },
+        {
+          "origin": "2026-09-05",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 7,
+          "candidate_loss": 0.03556682253333329,
+          "reference_loss": 0.03556682253333329,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": false,
+          "reference_covered": false
+        },
+        {
+          "origin": "2026-09-12",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 1,
+          "candidate_loss": 2.266402051017321e-06,
+          "reference_loss": 0.0,
+          "delta": 2.266402051017321e-06,
+          "weighted_contribution": 1.8886683758477673e-07,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-09-12",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 3,
+          "candidate_loss": 0.022346139927941693,
+          "reference_loss": 0.04464625176666669,
+          "delta": -0.022300111838725,
+          "weighted_contribution": -0.0018583426532270833,
+          "candidate_covered": true,
+          "reference_covered": false
+        },
+        {
+          "origin": "2026-09-12",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 7,
+          "candidate_loss": 0.019494560766666676,
+          "reference_loss": 0.019494560766666676,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": false,
+          "reference_covered": false
+        }
+      ]
+    },
+    {
+      "id": "static",
+      "cohort_id": "v2_selector_12",
+      "classification": "retrospective_previously_inspected",
+      "candidate": "selected_sft_soft",
+      "reference": "training_selected_static",
+      "candidate_pinball": 0.011569797542840439,
+      "reference_pinball": 0.01213653754659247,
+      "delta": -0.0005667400037520313,
+      "relative_change": -0.046697009058498135,
+      "n_cells": 12,
+      "n_origins": 3,
+      "groups": {
+        "series": [
+          {
+            "id": "afhubbard.hyperscaler_spot.A100_40GB.spot.median",
+            "candidate_pinball": 0.002907876163995284,
+            "reference_pinball": 0.005284119971407013,
+            "delta": -0.002376243807411729,
+            "weighted_contribution": -0.0005940609518529323,
+            "n_cells": 3,
+            "candidate_coverage": 1.0,
+            "reference_coverage": 0.3333333333333333,
+            "candidate_width": 0.08723628491985853,
+            "reference_width": 0.07887931627071436,
+            "baseline_pinball": 0.0,
+            "relative_skill": null
+          },
+          {
+            "id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+            "candidate_pinball": 0.014457104669122157,
+            "reference_pinball": 0.014420676738320955,
+            "delta": 3.6427930801202074e-05,
+            "weighted_contribution": 2.7320948100901556e-05,
+            "n_cells": 9,
+            "candidate_coverage": 0.6666666666666666,
+            "reference_coverage": 0.6666666666666666,
+            "candidate_width": 0.07906952752296882,
+            "reference_width": 0.07367502891702753,
+            "baseline_pinball": 0.021211111111111118,
+            "relative_skill": 0.3184183236139373
+          }
+        ],
+        "origin": [
+          {
+            "id": "2026-08-29",
+            "candidate_pinball": 0.003229793243750622,
+            "reference_pinball": 0.004363273251254684,
+            "delta": -0.0011334800075040617,
+            "weighted_contribution": -0.0005667400037520308,
+            "n_cells": 6,
+            "candidate_coverage": 1.0,
+            "reference_coverage": 0.6666666666666666,
+            "candidate_width": 0.08267781874277158,
+            "reference_width": 0.07040758650928754,
+            "baseline_pinball": 0.0016166666666666736,
+            "relative_skill": -0.9978102538663556
+          },
+          {
+            "id": "2026-09-05",
+            "candidate_pinball": 0.02587194798497405,
+            "reference_pinball": 0.02587194798497405,
+            "delta": 0.0,
+            "weighted_contribution": 0.0,
+            "n_cells": 3,
+            "candidate_coverage": 0.3333333333333333,
+            "reference_coverage": 0.3333333333333333,
+            "candidate_width": 0.05139805476240844,
+            "reference_width": 0.05139805476240844,
+            "baseline_pinball": 0.03096666666666666,
+            "relative_skill": 0.1645226700223663
+          },
+          {
+            "id": "2026-09-12",
+            "candidate_pinball": 0.013947655698886462,
+            "reference_pinball": 0.013947655698886462,
+            "delta": 0.0,
+            "weighted_contribution": 0.0,
+            "n_cells": 3,
+            "candidate_coverage": 0.6666666666666666,
+            "reference_coverage": 0.6666666666666666,
+            "candidate_width": 0.1076911752408134,
+            "reference_width": 0.1076911752408134,
+            "baseline_pinball": 0.02943333333333335,
+            "relative_skill": 0.5261272129483651
+          }
+        ],
+        "horizon": [
+          {
+            "id": "1",
+            "candidate_pinball": 0.00011588606984367922,
+            "reference_pinball": 0.000127261599834196,
+            "delta": -1.1375529990516784e-05,
+            "weighted_contribution": -3.791843330172261e-06,
+            "n_cells": 4,
+            "candidate_coverage": 1.0,
+            "reference_coverage": 1.0,
+            "candidate_width": 0.0034765820953103765,
+            "reference_width": 0.002186313853285049,
+            "baseline_pinball": 0.0,
+            "relative_skill": null
+          },
+          {
+            "id": "3",
+            "candidate_pinball": 0.018427259285152833,
+            "reference_pinball": 0.018125141986174344,
+            "delta": 0.00030211729897848885,
+            "weighted_contribution": 0.00010070576632616295,
+            "n_cells": 4,
+            "candidate_coverage": 0.75,
+            "reference_coverage": 0.5,
+            "candidate_width": 0.10831319847779253,
+            "reference_width": 0.08490028303223224,
+            "baseline_pinball": 0.02386250000000001,
+            "relative_skill": 0.22777331439904336
+          },
+          {
+            "id": "7",
+            "candidate_pinball": 0.016166247273524805,
+            "reference_pinball": 0.01815720905376887,
+            "delta": -0.0019909617802440632,
+            "weighted_contribution": -0.000663653926748021,
+            "n_cells": 4,
+            "candidate_coverage": 0.5,
+            "reference_coverage": 0.25,
+            "candidate_width": 0.13154387004347085,
+            "reference_width": 0.1378417053808304,
+            "baseline_pinball": 0.02386250000000001,
+            "relative_skill": 0.32252499639497956
+          }
+        ]
+      },
+      "cells": [
+        {
+          "origin": "2026-08-29",
+          "series_id": "afhubbard.hyperscaler_spot.A100_40GB.spot.median",
+          "horizon_days": 1,
+          "candidate_loss": 0.0,
+          "reference_loss": 0.00021319684959754482,
+          "delta": -0.00021319684959754482,
+          "weighted_contribution": -1.7766404133128735e-05,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-08-29",
+          "series_id": "afhubbard.hyperscaler_spot.A100_40GB.spot.median",
+          "horizon_days": 3,
+          "candidate_loss": 0.004454591691677448,
+          "reference_loss": 0.005104052602666827,
+          "delta": -0.0006494609109893787,
+          "weighted_contribution": -5.412174258244822e-05,
+          "candidate_covered": true,
+          "reference_covered": false
+        },
+        {
+          "origin": "2026-08-29",
+          "series_id": "afhubbard.hyperscaler_spot.A100_40GB.spot.median",
+          "horizon_days": 7,
+          "candidate_loss": 0.004269036800308404,
+          "reference_loss": 0.010535110461956668,
+          "delta": -0.0062660736616482636,
+          "weighted_contribution": -0.0005221728051373553,
+          "candidate_covered": true,
+          "reference_covered": false
+        },
+        {
+          "origin": "2026-08-29",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 1,
+          "candidate_loss": 0.0003151414771333331,
+          "reference_loss": 0.00014744674749785544,
+          "delta": 0.00016769472963547768,
+          "weighted_contribution": 1.3974560802956474e-05,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-08-29",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 3,
+          "candidate_loss": 0.005005420499593701,
+          "reference_loss": 0.0031474903926903696,
+          "delta": 0.001857930106903331,
+          "weighted_contribution": 0.00015482750890861093,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-08-29",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 7,
+          "candidate_loss": 0.005334568993790847,
+          "reference_loss": 0.007032342453118841,
+          "delta": -0.0016977734593279937,
+          "weighted_contribution": -0.00014148112161066614,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-09-05",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 1,
+          "candidate_loss": 0.00014613640019036644,
+          "reference_loss": 0.00014613640019036644,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-09-05",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 3,
+          "candidate_loss": 0.04190288502139849,
+          "reference_loss": 0.04190288502139849,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": false,
+          "reference_covered": false
+        },
+        {
+          "origin": "2026-09-05",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 7,
+          "candidate_loss": 0.03556682253333329,
+          "reference_loss": 0.03556682253333329,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": false,
+          "reference_covered": false
+        },
+        {
+          "origin": "2026-09-12",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 1,
+          "candidate_loss": 2.266402051017321e-06,
+          "reference_loss": 2.266402051017321e-06,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-09-12",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 3,
+          "candidate_loss": 0.022346139927941693,
+          "reference_loss": 0.022346139927941693,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-09-12",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 7,
+          "candidate_loss": 0.019494560766666676,
+          "reference_loss": 0.019494560766666676,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": false,
+          "reference_covered": false
+        }
+      ]
+    },
+    {
+      "id": "hidden",
+      "cohort_id": "v2_selector_12",
+      "classification": "retrospective_previously_inspected",
+      "candidate": "selected_sft_soft",
+      "reference": "selected_no_observation",
+      "candidate_pinball": 0.011569797542840439,
+      "reference_pinball": 0.011569797542840439,
+      "delta": 0.0,
+      "relative_change": 0.0,
+      "n_cells": 12,
+      "n_origins": 3,
+      "groups": {
+        "series": [
+          {
+            "id": "afhubbard.hyperscaler_spot.A100_40GB.spot.median",
+            "candidate_pinball": 0.002907876163995284,
+            "reference_pinball": 0.002907876163995284,
+            "delta": 0.0,
+            "weighted_contribution": 0.0,
+            "n_cells": 3,
+            "candidate_coverage": 1.0,
+            "reference_coverage": 1.0,
+            "candidate_width": 0.08723628491985853,
+            "reference_width": 0.08723628491985853,
+            "baseline_pinball": 0.0,
+            "relative_skill": null
+          },
+          {
+            "id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+            "candidate_pinball": 0.014457104669122157,
+            "reference_pinball": 0.014457104669122157,
+            "delta": 0.0,
+            "weighted_contribution": 0.0,
+            "n_cells": 9,
+            "candidate_coverage": 0.6666666666666666,
+            "reference_coverage": 0.6666666666666666,
+            "candidate_width": 0.07906952752296882,
+            "reference_width": 0.07906952752296882,
+            "baseline_pinball": 0.021211111111111118,
+            "relative_skill": 0.3184183236139373
+          }
+        ],
+        "origin": [
+          {
+            "id": "2026-08-29",
+            "candidate_pinball": 0.003229793243750622,
+            "reference_pinball": 0.003229793243750622,
+            "delta": 0.0,
+            "weighted_contribution": 0.0,
+            "n_cells": 6,
+            "candidate_coverage": 1.0,
+            "reference_coverage": 1.0,
+            "candidate_width": 0.08267781874277158,
+            "reference_width": 0.08267781874277158,
+            "baseline_pinball": 0.0016166666666666736,
+            "relative_skill": -0.9978102538663556
+          },
+          {
+            "id": "2026-09-05",
+            "candidate_pinball": 0.02587194798497405,
+            "reference_pinball": 0.02587194798497405,
+            "delta": 0.0,
+            "weighted_contribution": 0.0,
+            "n_cells": 3,
+            "candidate_coverage": 0.3333333333333333,
+            "reference_coverage": 0.3333333333333333,
+            "candidate_width": 0.05139805476240844,
+            "reference_width": 0.05139805476240844,
+            "baseline_pinball": 0.03096666666666666,
+            "relative_skill": 0.1645226700223663
+          },
+          {
+            "id": "2026-09-12",
+            "candidate_pinball": 0.013947655698886462,
+            "reference_pinball": 0.013947655698886462,
+            "delta": 0.0,
+            "weighted_contribution": 0.0,
+            "n_cells": 3,
+            "candidate_coverage": 0.6666666666666666,
+            "reference_coverage": 0.6666666666666666,
+            "candidate_width": 0.1076911752408134,
+            "reference_width": 0.1076911752408134,
+            "baseline_pinball": 0.02943333333333335,
+            "relative_skill": 0.5261272129483651
+          }
+        ],
+        "horizon": [
+          {
+            "id": "1",
+            "candidate_pinball": 0.00011588606984367922,
+            "reference_pinball": 0.00011588606984367922,
+            "delta": 0.0,
+            "weighted_contribution": 0.0,
+            "n_cells": 4,
+            "candidate_coverage": 1.0,
+            "reference_coverage": 1.0,
+            "candidate_width": 0.0034765820953103765,
+            "reference_width": 0.0034765820953103765,
+            "baseline_pinball": 0.0,
+            "relative_skill": null
+          },
+          {
+            "id": "3",
+            "candidate_pinball": 0.018427259285152833,
+            "reference_pinball": 0.018427259285152833,
+            "delta": 0.0,
+            "weighted_contribution": 0.0,
+            "n_cells": 4,
+            "candidate_coverage": 0.75,
+            "reference_coverage": 0.75,
+            "candidate_width": 0.10831319847779253,
+            "reference_width": 0.10831319847779253,
+            "baseline_pinball": 0.02386250000000001,
+            "relative_skill": 0.22777331439904336
+          },
+          {
+            "id": "7",
+            "candidate_pinball": 0.016166247273524805,
+            "reference_pinball": 0.016166247273524805,
+            "delta": 0.0,
+            "weighted_contribution": 0.0,
+            "n_cells": 4,
+            "candidate_coverage": 0.5,
+            "reference_coverage": 0.5,
+            "candidate_width": 0.13154387004347085,
+            "reference_width": 0.13154387004347085,
+            "baseline_pinball": 0.02386250000000001,
+            "relative_skill": 0.32252499639497956
+          }
+        ]
+      },
+      "cells": [
+        {
+          "origin": "2026-08-29",
+          "series_id": "afhubbard.hyperscaler_spot.A100_40GB.spot.median",
+          "horizon_days": 1,
+          "candidate_loss": 0.0,
+          "reference_loss": 0.0,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-08-29",
+          "series_id": "afhubbard.hyperscaler_spot.A100_40GB.spot.median",
+          "horizon_days": 3,
+          "candidate_loss": 0.004454591691677448,
+          "reference_loss": 0.004454591691677448,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-08-29",
+          "series_id": "afhubbard.hyperscaler_spot.A100_40GB.spot.median",
+          "horizon_days": 7,
+          "candidate_loss": 0.004269036800308404,
+          "reference_loss": 0.004269036800308404,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-08-29",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 1,
+          "candidate_loss": 0.0003151414771333331,
+          "reference_loss": 0.0003151414771333331,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-08-29",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 3,
+          "candidate_loss": 0.005005420499593701,
+          "reference_loss": 0.005005420499593701,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-08-29",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 7,
+          "candidate_loss": 0.005334568993790847,
+          "reference_loss": 0.005334568993790847,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-09-05",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 1,
+          "candidate_loss": 0.00014613640019036644,
+          "reference_loss": 0.00014613640019036644,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-09-05",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 3,
+          "candidate_loss": 0.04190288502139849,
+          "reference_loss": 0.04190288502139849,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": false,
+          "reference_covered": false
+        },
+        {
+          "origin": "2026-09-05",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 7,
+          "candidate_loss": 0.03556682253333329,
+          "reference_loss": 0.03556682253333329,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": false,
+          "reference_covered": false
+        },
+        {
+          "origin": "2026-09-12",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 1,
+          "candidate_loss": 2.266402051017321e-06,
+          "reference_loss": 2.266402051017321e-06,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-09-12",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 3,
+          "candidate_loss": 0.022346139927941693,
+          "reference_loss": 0.022346139927941693,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-09-12",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 7,
+          "candidate_loss": 0.019494560766666676,
+          "reference_loss": 0.019494560766666676,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": false,
+          "reference_covered": false
+        }
+      ]
+    },
+    {
+      "id": "rl_parent_17",
+      "cohort_id": "v2_selector_12",
+      "classification": "retrospective_previously_inspected",
+      "candidate": "selected_rl_soft",
+      "reference": "sft_parent",
+      "candidate_pinball": 0.011569797542840439,
+      "reference_pinball": 0.011569797542840439,
+      "delta": 0.0,
+      "relative_change": 0.0,
+      "n_cells": 12,
+      "n_origins": 3,
+      "groups": {
+        "series": [
+          {
+            "id": "afhubbard.hyperscaler_spot.A100_40GB.spot.median",
+            "candidate_pinball": 0.002907876163995284,
+            "reference_pinball": 0.002907876163995284,
+            "delta": 0.0,
+            "weighted_contribution": 0.0,
+            "n_cells": 3,
+            "candidate_coverage": 1.0,
+            "reference_coverage": 1.0,
+            "candidate_width": 0.08723628491985853,
+            "reference_width": 0.08723628491985853,
+            "baseline_pinball": 0.0,
+            "relative_skill": null
+          },
+          {
+            "id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+            "candidate_pinball": 0.014457104669122157,
+            "reference_pinball": 0.014457104669122157,
+            "delta": 0.0,
+            "weighted_contribution": 0.0,
+            "n_cells": 9,
+            "candidate_coverage": 0.6666666666666666,
+            "reference_coverage": 0.6666666666666666,
+            "candidate_width": 0.07906952752296882,
+            "reference_width": 0.07906952752296882,
+            "baseline_pinball": 0.021211111111111118,
+            "relative_skill": 0.3184183236139373
+          }
+        ],
+        "origin": [
+          {
+            "id": "2026-08-29",
+            "candidate_pinball": 0.003229793243750622,
+            "reference_pinball": 0.003229793243750622,
+            "delta": 0.0,
+            "weighted_contribution": 0.0,
+            "n_cells": 6,
+            "candidate_coverage": 1.0,
+            "reference_coverage": 1.0,
+            "candidate_width": 0.08267781874277158,
+            "reference_width": 0.08267781874277158,
+            "baseline_pinball": 0.0016166666666666736,
+            "relative_skill": -0.9978102538663556
+          },
+          {
+            "id": "2026-09-05",
+            "candidate_pinball": 0.02587194798497405,
+            "reference_pinball": 0.02587194798497405,
+            "delta": 0.0,
+            "weighted_contribution": 0.0,
+            "n_cells": 3,
+            "candidate_coverage": 0.3333333333333333,
+            "reference_coverage": 0.3333333333333333,
+            "candidate_width": 0.05139805476240844,
+            "reference_width": 0.05139805476240844,
+            "baseline_pinball": 0.03096666666666666,
+            "relative_skill": 0.1645226700223663
+          },
+          {
+            "id": "2026-09-12",
+            "candidate_pinball": 0.013947655698886462,
+            "reference_pinball": 0.013947655698886462,
+            "delta": 0.0,
+            "weighted_contribution": 0.0,
+            "n_cells": 3,
+            "candidate_coverage": 0.6666666666666666,
+            "reference_coverage": 0.6666666666666666,
+            "candidate_width": 0.1076911752408134,
+            "reference_width": 0.1076911752408134,
+            "baseline_pinball": 0.02943333333333335,
+            "relative_skill": 0.5261272129483651
+          }
+        ],
+        "horizon": [
+          {
+            "id": "1",
+            "candidate_pinball": 0.00011588606984367922,
+            "reference_pinball": 0.00011588606984367922,
+            "delta": 0.0,
+            "weighted_contribution": 0.0,
+            "n_cells": 4,
+            "candidate_coverage": 1.0,
+            "reference_coverage": 1.0,
+            "candidate_width": 0.0034765820953103765,
+            "reference_width": 0.0034765820953103765,
+            "baseline_pinball": 0.0,
+            "relative_skill": null
+          },
+          {
+            "id": "3",
+            "candidate_pinball": 0.018427259285152833,
+            "reference_pinball": 0.018427259285152833,
+            "delta": 0.0,
+            "weighted_contribution": 0.0,
+            "n_cells": 4,
+            "candidate_coverage": 0.75,
+            "reference_coverage": 0.75,
+            "candidate_width": 0.10831319847779253,
+            "reference_width": 0.10831319847779253,
+            "baseline_pinball": 0.02386250000000001,
+            "relative_skill": 0.22777331439904336
+          },
+          {
+            "id": "7",
+            "candidate_pinball": 0.016166247273524805,
+            "reference_pinball": 0.016166247273524805,
+            "delta": 0.0,
+            "weighted_contribution": 0.0,
+            "n_cells": 4,
+            "candidate_coverage": 0.5,
+            "reference_coverage": 0.5,
+            "candidate_width": 0.13154387004347085,
+            "reference_width": 0.13154387004347085,
+            "baseline_pinball": 0.02386250000000001,
+            "relative_skill": 0.32252499639497956
+          }
+        ]
+      },
+      "cells": [
+        {
+          "origin": "2026-08-29",
+          "series_id": "afhubbard.hyperscaler_spot.A100_40GB.spot.median",
+          "horizon_days": 1,
+          "candidate_loss": 0.0,
+          "reference_loss": 0.0,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-08-29",
+          "series_id": "afhubbard.hyperscaler_spot.A100_40GB.spot.median",
+          "horizon_days": 3,
+          "candidate_loss": 0.004454591691677448,
+          "reference_loss": 0.004454591691677448,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-08-29",
+          "series_id": "afhubbard.hyperscaler_spot.A100_40GB.spot.median",
+          "horizon_days": 7,
+          "candidate_loss": 0.004269036800308404,
+          "reference_loss": 0.004269036800308404,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-08-29",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 1,
+          "candidate_loss": 0.0003151414771333331,
+          "reference_loss": 0.0003151414771333331,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-08-29",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 3,
+          "candidate_loss": 0.005005420499593701,
+          "reference_loss": 0.005005420499593701,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-08-29",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 7,
+          "candidate_loss": 0.005334568993790847,
+          "reference_loss": 0.005334568993790847,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-09-05",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 1,
+          "candidate_loss": 0.00014613640019036644,
+          "reference_loss": 0.00014613640019036644,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-09-05",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 3,
+          "candidate_loss": 0.04190288502139849,
+          "reference_loss": 0.04190288502139849,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": false,
+          "reference_covered": false
+        },
+        {
+          "origin": "2026-09-05",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 7,
+          "candidate_loss": 0.03556682253333329,
+          "reference_loss": 0.03556682253333329,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": false,
+          "reference_covered": false
+        },
+        {
+          "origin": "2026-09-12",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 1,
+          "candidate_loss": 2.266402051017321e-06,
+          "reference_loss": 2.266402051017321e-06,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-09-12",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 3,
+          "candidate_loss": 0.022346139927941693,
+          "reference_loss": 0.022346139927941693,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-09-12",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 7,
+          "candidate_loss": 0.019494560766666676,
+          "reference_loss": 0.019494560766666676,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": false,
+          "reference_covered": false
+        }
+      ]
+    },
+    {
+      "id": "rl_parent_29",
+      "cohort_id": "v2_selector_12",
+      "classification": "retrospective_previously_inspected",
+      "candidate": "selected_rl_soft",
+      "reference": "sft_parent",
+      "candidate_pinball": 0.010276242341726964,
+      "reference_pinball": 0.010276242341726964,
+      "delta": 0.0,
+      "relative_change": 0.0,
+      "n_cells": 12,
+      "n_origins": 3,
+      "groups": {
+        "series": [
+          {
+            "id": "afhubbard.hyperscaler_spot.A100_40GB.spot.median",
+            "candidate_pinball": 0.002907876163995284,
+            "reference_pinball": 0.002907876163995284,
+            "delta": 0.0,
+            "weighted_contribution": 0.0,
+            "n_cells": 3,
+            "candidate_coverage": 1.0,
+            "reference_coverage": 1.0,
+            "candidate_width": 0.08723628491985853,
+            "reference_width": 0.08723628491985853,
+            "baseline_pinball": 0.0,
+            "relative_skill": null
+          },
+          {
+            "id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+            "candidate_pinball": 0.012732364400970858,
+            "reference_pinball": 0.012732364400970858,
+            "delta": 0.0,
+            "weighted_contribution": 0.0,
+            "n_cells": 9,
+            "candidate_coverage": 0.7777777777777778,
+            "reference_coverage": 0.7777777777777778,
+            "candidate_width": 0.07970179713979324,
+            "reference_width": 0.07970179713979324,
+            "baseline_pinball": 0.021211111111111118,
+            "relative_skill": 0.39973137973421846
+          }
+        ],
+        "origin": [
+          {
+            "id": "2026-08-29",
+            "candidate_pinball": 0.003229793243750622,
+            "reference_pinball": 0.003229793243750622,
+            "delta": 0.0,
+            "weighted_contribution": 0.0,
+            "n_cells": 6,
+            "candidate_coverage": 1.0,
+            "reference_coverage": 1.0,
+            "candidate_width": 0.08267781874277158,
+            "reference_width": 0.08267781874277158,
+            "baseline_pinball": 0.0016166666666666736,
+            "relative_skill": -0.9978102538663556
+          },
+          {
+            "id": "2026-09-05",
+            "candidate_pinball": 0.02587194798497405,
+            "reference_pinball": 0.02587194798497405,
+            "delta": 0.0,
+            "weighted_contribution": 0.0,
+            "n_cells": 3,
+            "candidate_coverage": 0.3333333333333333,
+            "reference_coverage": 0.3333333333333333,
+            "candidate_width": 0.05139805476240844,
+            "reference_width": 0.05139805476240844,
+            "baseline_pinball": 0.03096666666666666,
+            "relative_skill": 0.1645226700223663
+          },
+          {
+            "id": "2026-09-12",
+            "candidate_pinball": 0.008773434894432565,
+            "reference_pinball": 0.008773434894432565,
+            "delta": 0.0,
+            "weighted_contribution": 0.0,
+            "n_cells": 3,
+            "candidate_coverage": 1.0,
+            "reference_coverage": 1.0,
+            "candidate_width": 0.10958798409128663,
+            "reference_width": 0.10958798409128663,
+            "baseline_pinball": 0.02943333333333335,
+            "relative_skill": 0.7019218042661645
+          }
+        ],
+        "horizon": [
+          {
+            "id": "1",
+            "candidate_pinball": 0.00011589012638496543,
+            "reference_pinball": 0.00011589012638496543,
+            "delta": 0.0,
+            "weighted_contribution": 0.0,
+            "n_cells": 4,
+            "candidate_coverage": 1.0,
+            "reference_coverage": 1.0,
+            "candidate_width": 0.003476703791548963,
+            "reference_width": 0.003476703791548963,
+            "baseline_pinball": 0.0,
+            "relative_skill": null
+          },
+          {
+            "id": "3",
+            "candidate_pinball": 0.017656313171168572,
+            "reference_pinball": 0.017656313171168572,
+            "delta": 0.0,
+            "weighted_contribution": 0.0,
+            "n_cells": 4,
+            "candidate_coverage": 0.75,
+            "reference_coverage": 0.75,
+            "candidate_width": 0.0971305968526,
+            "reference_width": 0.0971305968526,
+            "baseline_pinball": 0.02386250000000001,
+            "relative_skill": 0.26008116621608945
+          },
+          {
+            "id": "7",
+            "candidate_pinball": 0.013056523727627355,
+            "reference_pinball": 0.013056523727627355,
+            "delta": 0.0,
+            "weighted_contribution": 0.0,
+            "n_cells": 4,
+            "candidate_coverage": 0.75,
+            "reference_coverage": 0.75,
+            "candidate_width": 0.1441489566102797,
+            "reference_width": 0.1441489566102797,
+            "baseline_pinball": 0.02386250000000001,
+            "relative_skill": 0.4528434268149879
+          }
+        ]
+      },
+      "cells": [
+        {
+          "origin": "2026-08-29",
+          "series_id": "afhubbard.hyperscaler_spot.A100_40GB.spot.median",
+          "horizon_days": 1,
+          "candidate_loss": 0.0,
+          "reference_loss": 0.0,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-08-29",
+          "series_id": "afhubbard.hyperscaler_spot.A100_40GB.spot.median",
+          "horizon_days": 3,
+          "candidate_loss": 0.004454591691677448,
+          "reference_loss": 0.004454591691677448,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-08-29",
+          "series_id": "afhubbard.hyperscaler_spot.A100_40GB.spot.median",
+          "horizon_days": 7,
+          "candidate_loss": 0.004269036800308404,
+          "reference_loss": 0.004269036800308404,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-08-29",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 1,
+          "candidate_loss": 0.0003151414771333331,
+          "reference_loss": 0.0003151414771333331,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-08-29",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 3,
+          "candidate_loss": 0.005005420499593701,
+          "reference_loss": 0.005005420499593701,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-08-29",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 7,
+          "candidate_loss": 0.005334568993790847,
+          "reference_loss": 0.005334568993790847,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-09-05",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 1,
+          "candidate_loss": 0.00014613640019036644,
+          "reference_loss": 0.00014613640019036644,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-09-05",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 3,
+          "candidate_loss": 0.04190288502139849,
+          "reference_loss": 0.04190288502139849,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": false,
+          "reference_covered": false
+        },
+        {
+          "origin": "2026-09-05",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 7,
+          "candidate_loss": 0.03556682253333329,
+          "reference_loss": 0.03556682253333329,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": false,
+          "reference_covered": false
+        },
+        {
+          "origin": "2026-09-12",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 1,
+          "candidate_loss": 2.282628216162171e-06,
+          "reference_loss": 2.282628216162171e-06,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-09-12",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 3,
+          "candidate_loss": 0.019262355472004656,
+          "reference_loss": 0.019262355472004656,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-09-12",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 7,
+          "candidate_loss": 0.007055666583076874,
+          "reference_loss": 0.007055666583076874,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": true,
+          "reference_covered": true
+        }
+      ]
+    },
+    {
+      "id": "rl_parent_43",
+      "cohort_id": "v2_selector_12",
+      "classification": "retrospective_previously_inspected",
+      "candidate": "selected_rl_hard",
+      "reference": "sft_parent",
+      "candidate_pinball": 0.011569797542840439,
+      "reference_pinball": 0.011569797542840439,
+      "delta": 0.0,
+      "relative_change": 0.0,
+      "n_cells": 12,
+      "n_origins": 3,
+      "groups": {
+        "series": [
+          {
+            "id": "afhubbard.hyperscaler_spot.A100_40GB.spot.median",
+            "candidate_pinball": 0.002907876163995284,
+            "reference_pinball": 0.002907876163995284,
+            "delta": 0.0,
+            "weighted_contribution": 0.0,
+            "n_cells": 3,
+            "candidate_coverage": 1.0,
+            "reference_coverage": 1.0,
+            "candidate_width": 0.08723628491985853,
+            "reference_width": 0.08723628491985853,
+            "baseline_pinball": 0.0,
+            "relative_skill": null
+          },
+          {
+            "id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+            "candidate_pinball": 0.014457104669122157,
+            "reference_pinball": 0.014457104669122157,
+            "delta": 0.0,
+            "weighted_contribution": 0.0,
+            "n_cells": 9,
+            "candidate_coverage": 0.6666666666666666,
+            "reference_coverage": 0.6666666666666666,
+            "candidate_width": 0.07906952752296882,
+            "reference_width": 0.07906952752296882,
+            "baseline_pinball": 0.021211111111111118,
+            "relative_skill": 0.3184183236139373
+          }
+        ],
+        "origin": [
+          {
+            "id": "2026-08-29",
+            "candidate_pinball": 0.003229793243750622,
+            "reference_pinball": 0.003229793243750622,
+            "delta": 0.0,
+            "weighted_contribution": 0.0,
+            "n_cells": 6,
+            "candidate_coverage": 1.0,
+            "reference_coverage": 1.0,
+            "candidate_width": 0.08267781874277158,
+            "reference_width": 0.08267781874277158,
+            "baseline_pinball": 0.0016166666666666736,
+            "relative_skill": -0.9978102538663556
+          },
+          {
+            "id": "2026-09-05",
+            "candidate_pinball": 0.02587194798497405,
+            "reference_pinball": 0.02587194798497405,
+            "delta": 0.0,
+            "weighted_contribution": 0.0,
+            "n_cells": 3,
+            "candidate_coverage": 0.3333333333333333,
+            "reference_coverage": 0.3333333333333333,
+            "candidate_width": 0.05139805476240844,
+            "reference_width": 0.05139805476240844,
+            "baseline_pinball": 0.03096666666666666,
+            "relative_skill": 0.1645226700223663
+          },
+          {
+            "id": "2026-09-12",
+            "candidate_pinball": 0.013947655698886462,
+            "reference_pinball": 0.013947655698886462,
+            "delta": 0.0,
+            "weighted_contribution": 0.0,
+            "n_cells": 3,
+            "candidate_coverage": 0.6666666666666666,
+            "reference_coverage": 0.6666666666666666,
+            "candidate_width": 0.1076911752408134,
+            "reference_width": 0.1076911752408134,
+            "baseline_pinball": 0.02943333333333335,
+            "relative_skill": 0.5261272129483651
+          }
+        ],
+        "horizon": [
+          {
+            "id": "1",
+            "candidate_pinball": 0.00011588606984367922,
+            "reference_pinball": 0.00011588606984367922,
+            "delta": 0.0,
+            "weighted_contribution": 0.0,
+            "n_cells": 4,
+            "candidate_coverage": 1.0,
+            "reference_coverage": 1.0,
+            "candidate_width": 0.0034765820953103765,
+            "reference_width": 0.0034765820953103765,
+            "baseline_pinball": 0.0,
+            "relative_skill": null
+          },
+          {
+            "id": "3",
+            "candidate_pinball": 0.018427259285152833,
+            "reference_pinball": 0.018427259285152833,
+            "delta": 0.0,
+            "weighted_contribution": 0.0,
+            "n_cells": 4,
+            "candidate_coverage": 0.75,
+            "reference_coverage": 0.75,
+            "candidate_width": 0.10831319847779253,
+            "reference_width": 0.10831319847779253,
+            "baseline_pinball": 0.02386250000000001,
+            "relative_skill": 0.22777331439904336
+          },
+          {
+            "id": "7",
+            "candidate_pinball": 0.016166247273524805,
+            "reference_pinball": 0.016166247273524805,
+            "delta": 0.0,
+            "weighted_contribution": 0.0,
+            "n_cells": 4,
+            "candidate_coverage": 0.5,
+            "reference_coverage": 0.5,
+            "candidate_width": 0.13154387004347085,
+            "reference_width": 0.13154387004347085,
+            "baseline_pinball": 0.02386250000000001,
+            "relative_skill": 0.32252499639497956
+          }
+        ]
+      },
+      "cells": [
+        {
+          "origin": "2026-08-29",
+          "series_id": "afhubbard.hyperscaler_spot.A100_40GB.spot.median",
+          "horizon_days": 1,
+          "candidate_loss": 0.0,
+          "reference_loss": 0.0,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-08-29",
+          "series_id": "afhubbard.hyperscaler_spot.A100_40GB.spot.median",
+          "horizon_days": 3,
+          "candidate_loss": 0.004454591691677448,
+          "reference_loss": 0.004454591691677448,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-08-29",
+          "series_id": "afhubbard.hyperscaler_spot.A100_40GB.spot.median",
+          "horizon_days": 7,
+          "candidate_loss": 0.004269036800308404,
+          "reference_loss": 0.004269036800308404,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-08-29",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 1,
+          "candidate_loss": 0.0003151414771333331,
+          "reference_loss": 0.0003151414771333331,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-08-29",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 3,
+          "candidate_loss": 0.005005420499593701,
+          "reference_loss": 0.005005420499593701,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-08-29",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 7,
+          "candidate_loss": 0.005334568993790847,
+          "reference_loss": 0.005334568993790847,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-09-05",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 1,
+          "candidate_loss": 0.00014613640019036644,
+          "reference_loss": 0.00014613640019036644,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-09-05",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 3,
+          "candidate_loss": 0.04190288502139849,
+          "reference_loss": 0.04190288502139849,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": false,
+          "reference_covered": false
+        },
+        {
+          "origin": "2026-09-05",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 7,
+          "candidate_loss": 0.03556682253333329,
+          "reference_loss": 0.03556682253333329,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": false,
+          "reference_covered": false
+        },
+        {
+          "origin": "2026-09-12",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 1,
+          "candidate_loss": 2.266402051017321e-06,
+          "reference_loss": 2.266402051017321e-06,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-09-12",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 3,
+          "candidate_loss": 0.022346139927941693,
+          "reference_loss": 0.022346139927941693,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": true,
+          "reference_covered": true
+        },
+        {
+          "origin": "2026-09-12",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "horizon_days": 7,
+          "candidate_loss": 0.019494560766666676,
+          "reference_loss": 0.019494560766666676,
+          "delta": 0.0,
+          "weighted_contribution": 0.0,
+          "candidate_covered": false,
+          "reference_covered": false
+        }
+      ]
+    }
+  ],
+  "readiness": {
+    "status": "gated_pending_broader_training_data",
+    "criteria": {
+      "distinct_training_tasks": {
+        "actual": 9,
+        "minimum": 24
+      },
+      "training_origins": {
+        "actual": 6,
+        "minimum": 8
+      },
+      "informative_training_tasks": {
+        "actual": 4,
+        "minimum": 12
+      },
+      "development_origins": {
+        "actual": 3,
+        "minimum": 4
+      },
+      "unique_contexts": {
+        "actual": 9,
+        "minimum": 12
+      }
+    },
+    "rationale": "Conservative engineering diversity gates, fixed before any new optimization; not a statistical power or generalization guarantee. Repeats and prompt augmentation do not increase independent task counts.",
+    "training_tasks": 9,
+    "training_origins": [
+      "2026-06-20",
+      "2026-06-27",
+      "2026-07-04",
+      "2026-07-11",
+      "2026-07-18",
+      "2026-07-24"
+    ],
+    "development_origins": [
+      "2026-08-08",
+      "2026-08-15",
+      "2026-08-22"
+    ],
+    "zero_reward_variation_tasks": 5,
+    "reward_audit": [
+      {
+        "task_id": "f20861a660bf0e5bbef8",
+        "possible_terminal_reward_range": 0.7383217084720388,
+        "possible_winners": 11,
+        "reward_is_clipped": true
+      },
+      {
+        "task_id": "5e5faa1ce8eb9d8930b9",
+        "possible_terminal_reward_range": 0.12486555870898647,
+        "possible_winners": 3,
+        "reward_is_clipped": true
+      },
+      {
+        "task_id": "c95a43e87374f33a1187",
+        "possible_terminal_reward_range": 1.0522866927217278,
+        "possible_winners": 3,
+        "reward_is_clipped": true
+      },
+      {
+        "task_id": "688743110392e1b3ea33",
+        "possible_terminal_reward_range": 0.0,
+        "possible_winners": 1,
+        "reward_is_clipped": true
+      },
+      {
+        "task_id": "feb6b7f17a1e889d83bd",
+        "possible_terminal_reward_range": 0.0,
+        "possible_winners": 1,
+        "reward_is_clipped": true
+      },
+      {
+        "task_id": "4a18b54ed7f5b19d5fdf",
+        "possible_terminal_reward_range": 0.0,
+        "possible_winners": 1,
+        "reward_is_clipped": true
+      },
+      {
+        "task_id": "cdb1b5abca86abcf002b",
+        "possible_terminal_reward_range": 0.0,
+        "possible_winners": 1,
+        "reward_is_clipped": true
+      },
+      {
+        "task_id": "6f8a76816082af649e94",
+        "possible_terminal_reward_range": 0.0,
+        "possible_winners": 1,
+        "reward_is_clipped": true
+      },
+      {
+        "task_id": "e3f1cdee2cd0a258bb83",
+        "possible_terminal_reward_range": 2.4057056412160294,
+        "possible_winners": 3,
+        "reward_is_clipped": true
+      }
+    ],
+    "near_duplicate_definition": "Exact observation plus validation-loss fingerprint rounded to 10 decimals; this is a diagnostic, not an independence estimator",
+    "unique_context_fingerprints": 9,
+    "optimizer_updates_launched": 0
+  },
+  "teacher_alignment": [
+    {
+      "task_id": "f20861a660bf0e5bbef8",
+      "origin": "2026-06-20",
+      "validation_future_rank_correlation": -0.2908560311284047,
+      "validation_oracle_future_loss": 0.01385908501805076,
+      "starting_reference_future_loss": 0.0305333333333333
+    },
+    {
+      "task_id": "5e5faa1ce8eb9d8930b9",
+      "origin": "2026-06-27",
+      "validation_future_rank_correlation": 0.5147535667963683,
+      "validation_oracle_future_loss": 0.002829492429934053,
+      "starting_reference_future_loss": 0.0
+    },
+    {
+      "task_id": "c95a43e87374f33a1187",
+      "origin": "2026-07-04",
+      "validation_future_rank_correlation": 0.5880111867999873,
+      "validation_oracle_future_loss": 0.007592511474276792,
+      "starting_reference_future_loss": 0.0
+    },
+    {
+      "task_id": "688743110392e1b3ea33",
+      "origin": "2026-07-11",
+      "validation_future_rank_correlation": 0.7479127826862284,
+      "validation_oracle_future_loss": 0.0,
+      "starting_reference_future_loss": 0.0
+    },
+    {
+      "task_id": "feb6b7f17a1e889d83bd",
+      "origin": "2026-07-11",
+      "validation_future_rank_correlation": 0.6121671467760551,
+      "validation_oracle_future_loss": 0.0,
+      "starting_reference_future_loss": 0.0
+    },
+    {
+      "task_id": "4a18b54ed7f5b19d5fdf",
+      "origin": "2026-07-18",
+      "validation_future_rank_correlation": 0.7096015893640872,
+      "validation_oracle_future_loss": 0.0,
+      "starting_reference_future_loss": 0.0
+    },
+    {
+      "task_id": "cdb1b5abca86abcf002b",
+      "origin": "2026-07-18",
+      "validation_future_rank_correlation": -0.18562801458119257,
+      "validation_oracle_future_loss": 0.016683333333333345,
+      "starting_reference_future_loss": 0.016683333333333345
+    },
+    {
+      "task_id": "6f8a76816082af649e94",
+      "origin": "2026-07-24",
+      "validation_future_rank_correlation": 0.2717140195965753,
+      "validation_oracle_future_loss": 0.0,
+      "starting_reference_future_loss": 0.0
+    },
+    {
+      "task_id": "e3f1cdee2cd0a258bb83",
+      "origin": "2026-07-24",
+      "validation_future_rank_correlation": 0.17947470817120623,
+      "validation_oracle_future_loss": 0.013601271979433978,
+      "starting_reference_future_loss": 0.0
+    }
+  ],
+  "experiment_status": {
+    "prospective": "registered_pending_first_eligible_issuance",
+    "interval": "registered_pending_vintage_correct_residuals",
+    "learning": "gated_pending_broader_training_data",
+    "evidence": "registered_pending_matched_forward_tasks"
+  },
+  "existing_prospective": {
+    "schema_version": 2,
+    "run_id": "49d50c839b724100890658ab456f3fc4",
+    "issued_at": "2026-11-15T02:55:42.100513+00:00",
+    "forecast_origin_timezone": "UTC",
+    "target_calendar": "UTC calendar dates; horizon1 is the next UTC date, which starts strictly after issuance",
+    "calendar_revision": 2,
+    "code_sha": "3fc5f834b843ee4f401bf93f4e77a8d28076d613",
+    "dataset_sha256": "f0b52af28c52545732208bcc4905facd9b941aa5779da683e1d9884c283b7c7c",
+    "data_cutoff": "2026-11-06",
+    "method": "last observed level plus empirical matured differences at the effective calendar lead; last 180 calendar days",
+    "forecast_origin": "2026-11-15",
+    "outcome_status": "pending; future outcomes never loaded",
+    "market_freshness": "stale archived snapshot, no current quote access",
+    "calibration_claim": "empirical quantiles, no guaranteed nominal future coverage",
+    "licensing": "Numerical forecasts retained privately pending separate publication review",
+    "forecast_hash_basis": "SHA256 of UTF-8 json.dumps(private_record, sort_keys=True, allow_nan=False), with default separators and ensure_ascii=True; manifest-only fields are excluded",
+    "forecast_count": 42,
+    "series_count": 14,
+    "forecast_sha256": "428296e044ca0a5c362ee5b96d9488c6fe47cd59be6a3d70000ac2c51cbf29d2",
+    "target_dates": [
+      "2026-11-16",
+      "2026-11-18",
+      "2026-11-22"
+    ],
+    "horizons": [
+      1,
+      3,
+      7
+    ],
+    "history_age_days": 9,
+    "contains_h100": true,
+    "runtime_seconds": 8.128309961000001,
+    "modal_call_id": "fc-01M7EJ3DPRFYS4AVZB3CX4YJ91",
+    "private_forecasts_retained": true
+  },
+  "accounting": {
+    "new_optimizer_updates": 0,
+    "new_model_inferences": 0,
+    "new_numerical_trials": 0,
+    "analysis_compute": "Hosted CPU reconstruction of saved results",
+    "cost_usd": null
+  },
+  "limitations": [
+    "Three dependent reused evaluation dates; 12 cells are not independent cases",
+    "Compressed portfolio is identified post hoc",
+    "Raw quantile prediction equality is unavailable and not inferred from equal loss",
+    "Independent context is not joined to official forecasts"
+  ]
+}
