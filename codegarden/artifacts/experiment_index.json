@@ -1,0 +1,5028 @@
+{
+  "coverage": "All 360 small-case teacher action experiments and 12 original before/after selected-action evaluations. Native/CP/hosted batches have separate seed/source manifests; CPU replay trials are grouped in their replay receipt.",
+  "records": 372,
+  "unique_configurations": 360,
+  "duplicate_configurations": 12,
+  "intentional_duplicate_reexecutions": 12,
+  "duplicates": [
+    {
+      "configuration": {
+        "case_id": "2000",
+        "length": 10,
+        "action": "random8greedy",
+        "seed": 200000,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "experiment_ids": [
+        "teacher-2000-0",
+        "before-2000"
+      ],
+      "classification": "Intentional fixed-seed re-execution for teacher-versus-policy evaluation, not an independent new search sample."
+    },
+    {
+      "configuration": {
+        "case_id": "2000",
+        "length": 10,
+        "action": "opportunity12exact",
+        "seed": 200003,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "experiment_ids": [
+        "teacher-2000-3",
+        "after-2000"
+      ],
+      "classification": "Intentional fixed-seed re-execution for teacher-versus-policy evaluation, not an independent new search sample."
+    },
+    {
+      "configuration": {
+        "case_id": "2001",
+        "length": 11,
+        "action": "random8greedy",
+        "seed": 200100,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "experiment_ids": [
+        "teacher-2001-0",
+        "before-2001"
+      ],
+      "classification": "Intentional fixed-seed re-execution for teacher-versus-policy evaluation, not an independent new search sample."
+    },
+    {
+      "configuration": {
+        "case_id": "2001",
+        "length": 11,
+        "action": "opportunity12exact",
+        "seed": 200103,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "experiment_ids": [
+        "teacher-2001-3",
+        "after-2001"
+      ],
+      "classification": "Intentional fixed-seed re-execution for teacher-versus-policy evaluation, not an independent new search sample."
+    },
+    {
+      "configuration": {
+        "case_id": "2002",
+        "length": 12,
+        "action": "random8greedy",
+        "seed": 200200,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "experiment_ids": [
+        "teacher-2002-0",
+        "before-2002"
+      ],
+      "classification": "Intentional fixed-seed re-execution for teacher-versus-policy evaluation, not an independent new search sample."
+    },
+    {
+      "configuration": {
+        "case_id": "2002",
+        "length": 12,
+        "action": "opportunity12exact",
+        "seed": 200203,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "experiment_ids": [
+        "teacher-2002-3",
+        "after-2002"
+      ],
+      "classification": "Intentional fixed-seed re-execution for teacher-versus-policy evaluation, not an independent new search sample."
+    },
+    {
+      "configuration": {
+        "case_id": "2003",
+        "length": 10,
+        "action": "random8greedy",
+        "seed": 200300,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "experiment_ids": [
+        "teacher-2003-0",
+        "before-2003"
+      ],
+      "classification": "Intentional fixed-seed re-execution for teacher-versus-policy evaluation, not an independent new search sample."
+    },
+    {
+      "configuration": {
+        "case_id": "2003",
+        "length": 10,
+        "action": "opportunity12exact",
+        "seed": 200303,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "experiment_ids": [
+        "teacher-2003-3",
+        "after-2003"
+      ],
+      "classification": "Intentional fixed-seed re-execution for teacher-versus-policy evaluation, not an independent new search sample."
+    },
+    {
+      "configuration": {
+        "case_id": "2004",
+        "length": 11,
+        "action": "random8greedy",
+        "seed": 200400,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "experiment_ids": [
+        "teacher-2004-0",
+        "before-2004"
+      ],
+      "classification": "Intentional fixed-seed re-execution for teacher-versus-policy evaluation, not an independent new search sample."
+    },
+    {
+      "configuration": {
+        "case_id": "2004",
+        "length": 11,
+        "action": "opportunity12exact",
+        "seed": 200403,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "experiment_ids": [
+        "teacher-2004-3",
+        "after-2004"
+      ],
+      "classification": "Intentional fixed-seed re-execution for teacher-versus-policy evaluation, not an independent new search sample."
+    },
+    {
+      "configuration": {
+        "case_id": "2005",
+        "length": 12,
+        "action": "random8greedy",
+        "seed": 200500,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "experiment_ids": [
+        "teacher-2005-0",
+        "before-2005"
+      ],
+      "classification": "Intentional fixed-seed re-execution for teacher-versus-policy evaluation, not an independent new search sample."
+    },
+    {
+      "configuration": {
+        "case_id": "2005",
+        "length": 12,
+        "action": "opportunity12exact",
+        "seed": 200503,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "experiment_ids": [
+        "teacher-2005-3",
+        "after-2005"
+      ],
+      "classification": "Intentional fixed-seed re-execution for teacher-versus-policy evaluation, not an independent new search sample."
+    }
+  ],
+  "experiments": [
+    {
+      "id": "teacher-1000-0",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1000",
+        "length": 10,
+        "action": "random8greedy",
+        "seed": 100000,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1000-1",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1000",
+        "length": 10,
+        "action": "random16greedy",
+        "seed": 100001,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1000-2",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1000",
+        "length": 10,
+        "action": "structural24greedy",
+        "seed": 100002,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1000-3",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1000",
+        "length": 10,
+        "action": "opportunity12exact",
+        "seed": 100003,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1000-4",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1000",
+        "length": 10,
+        "action": "random24exact",
+        "seed": 100004,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1000-5",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1000",
+        "length": 10,
+        "action": "conflict8exact",
+        "seed": 100005,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1000-6",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1000",
+        "length": 10,
+        "action": "random40greedy",
+        "seed": 100006,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1000-7",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1000",
+        "length": 10,
+        "action": "structural48exact",
+        "seed": 100007,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1000-8",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1000",
+        "length": 10,
+        "action": "opportunity6ejection",
+        "seed": 100008,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1001-0",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1001",
+        "length": 11,
+        "action": "random8greedy",
+        "seed": 100100,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1001-1",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1001",
+        "length": 11,
+        "action": "random16greedy",
+        "seed": 100101,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1001-2",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1001",
+        "length": 11,
+        "action": "structural24greedy",
+        "seed": 100102,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1001-3",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1001",
+        "length": 11,
+        "action": "opportunity12exact",
+        "seed": 100103,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1001-4",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1001",
+        "length": 11,
+        "action": "random24exact",
+        "seed": 100104,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1001-5",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1001",
+        "length": 11,
+        "action": "conflict8exact",
+        "seed": 100105,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1001-6",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1001",
+        "length": 11,
+        "action": "random40greedy",
+        "seed": 100106,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1001-7",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1001",
+        "length": 11,
+        "action": "structural48exact",
+        "seed": 100107,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1001-8",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1001",
+        "length": 11,
+        "action": "opportunity6ejection",
+        "seed": 100108,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1002-0",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1002",
+        "length": 12,
+        "action": "random8greedy",
+        "seed": 100200,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1002-1",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1002",
+        "length": 12,
+        "action": "random16greedy",
+        "seed": 100201,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1002-2",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1002",
+        "length": 12,
+        "action": "structural24greedy",
+        "seed": 100202,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1002-3",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1002",
+        "length": 12,
+        "action": "opportunity12exact",
+        "seed": 100203,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1002-4",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1002",
+        "length": 12,
+        "action": "random24exact",
+        "seed": 100204,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1002-5",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1002",
+        "length": 12,
+        "action": "conflict8exact",
+        "seed": 100205,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1002-6",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1002",
+        "length": 12,
+        "action": "random40greedy",
+        "seed": 100206,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1002-7",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1002",
+        "length": 12,
+        "action": "structural48exact",
+        "seed": 100207,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1002-8",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1002",
+        "length": 12,
+        "action": "opportunity6ejection",
+        "seed": 100208,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1003-0",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1003",
+        "length": 10,
+        "action": "random8greedy",
+        "seed": 100300,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1003-1",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1003",
+        "length": 10,
+        "action": "random16greedy",
+        "seed": 100301,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1003-2",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1003",
+        "length": 10,
+        "action": "structural24greedy",
+        "seed": 100302,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1003-3",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1003",
+        "length": 10,
+        "action": "opportunity12exact",
+        "seed": 100303,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1003-4",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1003",
+        "length": 10,
+        "action": "random24exact",
+        "seed": 100304,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1003-5",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1003",
+        "length": 10,
+        "action": "conflict8exact",
+        "seed": 100305,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1003-6",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1003",
+        "length": 10,
+        "action": "random40greedy",
+        "seed": 100306,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1003-7",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1003",
+        "length": 10,
+        "action": "structural48exact",
+        "seed": 100307,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1003-8",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1003",
+        "length": 10,
+        "action": "opportunity6ejection",
+        "seed": 100308,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1004-0",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1004",
+        "length": 11,
+        "action": "random8greedy",
+        "seed": 100400,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1004-1",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1004",
+        "length": 11,
+        "action": "random16greedy",
+        "seed": 100401,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1004-2",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1004",
+        "length": 11,
+        "action": "structural24greedy",
+        "seed": 100402,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1004-3",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1004",
+        "length": 11,
+        "action": "opportunity12exact",
+        "seed": 100403,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1004-4",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1004",
+        "length": 11,
+        "action": "random24exact",
+        "seed": 100404,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1004-5",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1004",
+        "length": 11,
+        "action": "conflict8exact",
+        "seed": 100405,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1004-6",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1004",
+        "length": 11,
+        "action": "random40greedy",
+        "seed": 100406,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1004-7",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1004",
+        "length": 11,
+        "action": "structural48exact",
+        "seed": 100407,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1004-8",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1004",
+        "length": 11,
+        "action": "opportunity6ejection",
+        "seed": 100408,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1005-0",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1005",
+        "length": 12,
+        "action": "random8greedy",
+        "seed": 100500,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1005-1",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1005",
+        "length": 12,
+        "action": "random16greedy",
+        "seed": 100501,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1005-2",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1005",
+        "length": 12,
+        "action": "structural24greedy",
+        "seed": 100502,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1005-3",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1005",
+        "length": 12,
+        "action": "opportunity12exact",
+        "seed": 100503,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1005-4",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1005",
+        "length": 12,
+        "action": "random24exact",
+        "seed": 100504,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1005-5",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1005",
+        "length": 12,
+        "action": "conflict8exact",
+        "seed": 100505,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1005-6",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1005",
+        "length": 12,
+        "action": "random40greedy",
+        "seed": 100506,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1005-7",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1005",
+        "length": 12,
+        "action": "structural48exact",
+        "seed": 100507,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1005-8",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1005",
+        "length": 12,
+        "action": "opportunity6ejection",
+        "seed": 100508,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1006-0",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1006",
+        "length": 10,
+        "action": "random8greedy",
+        "seed": 100600,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1006-1",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1006",
+        "length": 10,
+        "action": "random16greedy",
+        "seed": 100601,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1006-2",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1006",
+        "length": 10,
+        "action": "structural24greedy",
+        "seed": 100602,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1006-3",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1006",
+        "length": 10,
+        "action": "opportunity12exact",
+        "seed": 100603,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1006-4",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1006",
+        "length": 10,
+        "action": "random24exact",
+        "seed": 100604,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1006-5",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1006",
+        "length": 10,
+        "action": "conflict8exact",
+        "seed": 100605,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1006-6",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1006",
+        "length": 10,
+        "action": "random40greedy",
+        "seed": 100606,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1006-7",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1006",
+        "length": 10,
+        "action": "structural48exact",
+        "seed": 100607,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1006-8",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1006",
+        "length": 10,
+        "action": "opportunity6ejection",
+        "seed": 100608,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1007-0",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1007",
+        "length": 11,
+        "action": "random8greedy",
+        "seed": 100700,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1007-1",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1007",
+        "length": 11,
+        "action": "random16greedy",
+        "seed": 100701,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1007-2",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1007",
+        "length": 11,
+        "action": "structural24greedy",
+        "seed": 100702,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1007-3",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1007",
+        "length": 11,
+        "action": "opportunity12exact",
+        "seed": 100703,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1007-4",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1007",
+        "length": 11,
+        "action": "random24exact",
+        "seed": 100704,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1007-5",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1007",
+        "length": 11,
+        "action": "conflict8exact",
+        "seed": 100705,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1007-6",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1007",
+        "length": 11,
+        "action": "random40greedy",
+        "seed": 100706,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1007-7",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1007",
+        "length": 11,
+        "action": "structural48exact",
+        "seed": 100707,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1007-8",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1007",
+        "length": 11,
+        "action": "opportunity6ejection",
+        "seed": 100708,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1008-0",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1008",
+        "length": 12,
+        "action": "random8greedy",
+        "seed": 100800,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1008-1",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1008",
+        "length": 12,
+        "action": "random16greedy",
+        "seed": 100801,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1008-2",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1008",
+        "length": 12,
+        "action": "structural24greedy",
+        "seed": 100802,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1008-3",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1008",
+        "length": 12,
+        "action": "opportunity12exact",
+        "seed": 100803,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1008-4",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1008",
+        "length": 12,
+        "action": "random24exact",
+        "seed": 100804,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1008-5",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1008",
+        "length": 12,
+        "action": "conflict8exact",
+        "seed": 100805,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1008-6",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1008",
+        "length": 12,
+        "action": "random40greedy",
+        "seed": 100806,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1008-7",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1008",
+        "length": 12,
+        "action": "structural48exact",
+        "seed": 100807,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1008-8",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1008",
+        "length": 12,
+        "action": "opportunity6ejection",
+        "seed": 100808,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1009-0",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1009",
+        "length": 10,
+        "action": "random8greedy",
+        "seed": 100900,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1009-1",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1009",
+        "length": 10,
+        "action": "random16greedy",
+        "seed": 100901,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1009-2",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1009",
+        "length": 10,
+        "action": "structural24greedy",
+        "seed": 100902,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1009-3",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1009",
+        "length": 10,
+        "action": "opportunity12exact",
+        "seed": 100903,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1009-4",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1009",
+        "length": 10,
+        "action": "random24exact",
+        "seed": 100904,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1009-5",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1009",
+        "length": 10,
+        "action": "conflict8exact",
+        "seed": 100905,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1009-6",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1009",
+        "length": 10,
+        "action": "random40greedy",
+        "seed": 100906,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1009-7",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1009",
+        "length": 10,
+        "action": "structural48exact",
+        "seed": 100907,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1009-8",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1009",
+        "length": 10,
+        "action": "opportunity6ejection",
+        "seed": 100908,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1010-0",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1010",
+        "length": 11,
+        "action": "random8greedy",
+        "seed": 101000,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1010-1",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1010",
+        "length": 11,
+        "action": "random16greedy",
+        "seed": 101001,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1010-2",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1010",
+        "length": 11,
+        "action": "structural24greedy",
+        "seed": 101002,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1010-3",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1010",
+        "length": 11,
+        "action": "opportunity12exact",
+        "seed": 101003,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1010-4",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1010",
+        "length": 11,
+        "action": "random24exact",
+        "seed": 101004,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1010-5",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1010",
+        "length": 11,
+        "action": "conflict8exact",
+        "seed": 101005,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1010-6",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1010",
+        "length": 11,
+        "action": "random40greedy",
+        "seed": 101006,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1010-7",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1010",
+        "length": 11,
+        "action": "structural48exact",
+        "seed": 101007,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1010-8",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1010",
+        "length": 11,
+        "action": "opportunity6ejection",
+        "seed": 101008,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1011-0",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1011",
+        "length": 12,
+        "action": "random8greedy",
+        "seed": 101100,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1011-1",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1011",
+        "length": 12,
+        "action": "random16greedy",
+        "seed": 101101,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1011-2",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1011",
+        "length": 12,
+        "action": "structural24greedy",
+        "seed": 101102,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1011-3",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1011",
+        "length": 12,
+        "action": "opportunity12exact",
+        "seed": 101103,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1011-4",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1011",
+        "length": 12,
+        "action": "random24exact",
+        "seed": 101104,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1011-5",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1011",
+        "length": 12,
+        "action": "conflict8exact",
+        "seed": 101105,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1011-6",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1011",
+        "length": 12,
+        "action": "random40greedy",
+        "seed": 101106,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1011-7",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1011",
+        "length": 12,
+        "action": "structural48exact",
+        "seed": 101107,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1011-8",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1011",
+        "length": 12,
+        "action": "opportunity6ejection",
+        "seed": 101108,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1012-0",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1012",
+        "length": 10,
+        "action": "random8greedy",
+        "seed": 101200,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1012-1",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1012",
+        "length": 10,
+        "action": "random16greedy",
+        "seed": 101201,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1012-2",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1012",
+        "length": 10,
+        "action": "structural24greedy",
+        "seed": 101202,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1012-3",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1012",
+        "length": 10,
+        "action": "opportunity12exact",
+        "seed": 101203,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1012-4",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1012",
+        "length": 10,
+        "action": "random24exact",
+        "seed": 101204,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1012-5",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1012",
+        "length": 10,
+        "action": "conflict8exact",
+        "seed": 101205,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1012-6",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1012",
+        "length": 10,
+        "action": "random40greedy",
+        "seed": 101206,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1012-7",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1012",
+        "length": 10,
+        "action": "structural48exact",
+        "seed": 101207,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1012-8",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1012",
+        "length": 10,
+        "action": "opportunity6ejection",
+        "seed": 101208,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1013-0",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1013",
+        "length": 11,
+        "action": "random8greedy",
+        "seed": 101300,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1013-1",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1013",
+        "length": 11,
+        "action": "random16greedy",
+        "seed": 101301,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1013-2",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1013",
+        "length": 11,
+        "action": "structural24greedy",
+        "seed": 101302,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1013-3",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1013",
+        "length": 11,
+        "action": "opportunity12exact",
+        "seed": 101303,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1013-4",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1013",
+        "length": 11,
+        "action": "random24exact",
+        "seed": 101304,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1013-5",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1013",
+        "length": 11,
+        "action": "conflict8exact",
+        "seed": 101305,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1013-6",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1013",
+        "length": 11,
+        "action": "random40greedy",
+        "seed": 101306,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1013-7",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1013",
+        "length": 11,
+        "action": "structural48exact",
+        "seed": 101307,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1013-8",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1013",
+        "length": 11,
+        "action": "opportunity6ejection",
+        "seed": 101308,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1014-0",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1014",
+        "length": 12,
+        "action": "random8greedy",
+        "seed": 101400,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1014-1",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1014",
+        "length": 12,
+        "action": "random16greedy",
+        "seed": 101401,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1014-2",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1014",
+        "length": 12,
+        "action": "structural24greedy",
+        "seed": 101402,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1014-3",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1014",
+        "length": 12,
+        "action": "opportunity12exact",
+        "seed": 101403,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1014-4",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1014",
+        "length": 12,
+        "action": "random24exact",
+        "seed": 101404,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1014-5",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1014",
+        "length": 12,
+        "action": "conflict8exact",
+        "seed": 101405,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1014-6",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1014",
+        "length": 12,
+        "action": "random40greedy",
+        "seed": 101406,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1014-7",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1014",
+        "length": 12,
+        "action": "structural48exact",
+        "seed": 101407,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1014-8",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1014",
+        "length": 12,
+        "action": "opportunity6ejection",
+        "seed": 101408,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1015-0",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1015",
+        "length": 10,
+        "action": "random8greedy",
+        "seed": 101500,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1015-1",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1015",
+        "length": 10,
+        "action": "random16greedy",
+        "seed": 101501,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1015-2",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1015",
+        "length": 10,
+        "action": "structural24greedy",
+        "seed": 101502,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1015-3",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1015",
+        "length": 10,
+        "action": "opportunity12exact",
+        "seed": 101503,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1015-4",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1015",
+        "length": 10,
+        "action": "random24exact",
+        "seed": 101504,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1015-5",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1015",
+        "length": 10,
+        "action": "conflict8exact",
+        "seed": 101505,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1015-6",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1015",
+        "length": 10,
+        "action": "random40greedy",
+        "seed": 101506,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1015-7",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1015",
+        "length": 10,
+        "action": "structural48exact",
+        "seed": 101507,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1015-8",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1015",
+        "length": 10,
+        "action": "opportunity6ejection",
+        "seed": 101508,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1016-0",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1016",
+        "length": 11,
+        "action": "random8greedy",
+        "seed": 101600,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1016-1",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1016",
+        "length": 11,
+        "action": "random16greedy",
+        "seed": 101601,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1016-2",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1016",
+        "length": 11,
+        "action": "structural24greedy",
+        "seed": 101602,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1016-3",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1016",
+        "length": 11,
+        "action": "opportunity12exact",
+        "seed": 101603,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1016-4",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1016",
+        "length": 11,
+        "action": "random24exact",
+        "seed": 101604,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1016-5",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1016",
+        "length": 11,
+        "action": "conflict8exact",
+        "seed": 101605,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1016-6",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1016",
+        "length": 11,
+        "action": "random40greedy",
+        "seed": 101606,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1016-7",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1016",
+        "length": 11,
+        "action": "structural48exact",
+        "seed": 101607,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1016-8",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1016",
+        "length": 11,
+        "action": "opportunity6ejection",
+        "seed": 101608,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1017-0",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1017",
+        "length": 12,
+        "action": "random8greedy",
+        "seed": 101700,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1017-1",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1017",
+        "length": 12,
+        "action": "random16greedy",
+        "seed": 101701,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1017-2",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1017",
+        "length": 12,
+        "action": "structural24greedy",
+        "seed": 101702,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1017-3",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1017",
+        "length": 12,
+        "action": "opportunity12exact",
+        "seed": 101703,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1017-4",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1017",
+        "length": 12,
+        "action": "random24exact",
+        "seed": 101704,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1017-5",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1017",
+        "length": 12,
+        "action": "conflict8exact",
+        "seed": 101705,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1017-6",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1017",
+        "length": 12,
+        "action": "random40greedy",
+        "seed": 101706,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1017-7",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1017",
+        "length": 12,
+        "action": "structural48exact",
+        "seed": 101707,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1017-8",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1017",
+        "length": 12,
+        "action": "opportunity6ejection",
+        "seed": 101708,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1018-0",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1018",
+        "length": 10,
+        "action": "random8greedy",
+        "seed": 101800,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1018-1",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1018",
+        "length": 10,
+        "action": "random16greedy",
+        "seed": 101801,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1018-2",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1018",
+        "length": 10,
+        "action": "structural24greedy",
+        "seed": 101802,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1018-3",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1018",
+        "length": 10,
+        "action": "opportunity12exact",
+        "seed": 101803,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1018-4",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1018",
+        "length": 10,
+        "action": "random24exact",
+        "seed": 101804,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1018-5",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1018",
+        "length": 10,
+        "action": "conflict8exact",
+        "seed": 101805,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1018-6",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1018",
+        "length": 10,
+        "action": "random40greedy",
+        "seed": 101806,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1018-7",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1018",
+        "length": 10,
+        "action": "structural48exact",
+        "seed": 101807,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1018-8",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1018",
+        "length": 10,
+        "action": "opportunity6ejection",
+        "seed": 101808,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1019-0",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1019",
+        "length": 11,
+        "action": "random8greedy",
+        "seed": 101900,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1019-1",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1019",
+        "length": 11,
+        "action": "random16greedy",
+        "seed": 101901,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1019-2",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1019",
+        "length": 11,
+        "action": "structural24greedy",
+        "seed": 101902,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1019-3",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1019",
+        "length": 11,
+        "action": "opportunity12exact",
+        "seed": 101903,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1019-4",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1019",
+        "length": 11,
+        "action": "random24exact",
+        "seed": 101904,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1019-5",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1019",
+        "length": 11,
+        "action": "conflict8exact",
+        "seed": 101905,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1019-6",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1019",
+        "length": 11,
+        "action": "random40greedy",
+        "seed": 101906,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1019-7",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1019",
+        "length": 11,
+        "action": "structural48exact",
+        "seed": 101907,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1019-8",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1019",
+        "length": 11,
+        "action": "opportunity6ejection",
+        "seed": 101908,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1020-0",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1020",
+        "length": 12,
+        "action": "random8greedy",
+        "seed": 102000,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1020-1",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1020",
+        "length": 12,
+        "action": "random16greedy",
+        "seed": 102001,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1020-2",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1020",
+        "length": 12,
+        "action": "structural24greedy",
+        "seed": 102002,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1020-3",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1020",
+        "length": 12,
+        "action": "opportunity12exact",
+        "seed": 102003,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1020-4",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1020",
+        "length": 12,
+        "action": "random24exact",
+        "seed": 102004,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1020-5",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1020",
+        "length": 12,
+        "action": "conflict8exact",
+        "seed": 102005,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1020-6",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1020",
+        "length": 12,
+        "action": "random40greedy",
+        "seed": 102006,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1020-7",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1020",
+        "length": 12,
+        "action": "structural48exact",
+        "seed": 102007,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1020-8",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1020",
+        "length": 12,
+        "action": "opportunity6ejection",
+        "seed": 102008,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1021-0",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1021",
+        "length": 10,
+        "action": "random8greedy",
+        "seed": 102100,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1021-1",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1021",
+        "length": 10,
+        "action": "random16greedy",
+        "seed": 102101,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1021-2",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1021",
+        "length": 10,
+        "action": "structural24greedy",
+        "seed": 102102,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1021-3",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1021",
+        "length": 10,
+        "action": "opportunity12exact",
+        "seed": 102103,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1021-4",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1021",
+        "length": 10,
+        "action": "random24exact",
+        "seed": 102104,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1021-5",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1021",
+        "length": 10,
+        "action": "conflict8exact",
+        "seed": 102105,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1021-6",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1021",
+        "length": 10,
+        "action": "random40greedy",
+        "seed": 102106,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1021-7",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1021",
+        "length": 10,
+        "action": "structural48exact",
+        "seed": 102107,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1021-8",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1021",
+        "length": 10,
+        "action": "opportunity6ejection",
+        "seed": 102108,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1022-0",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1022",
+        "length": 11,
+        "action": "random8greedy",
+        "seed": 102200,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1022-1",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1022",
+        "length": 11,
+        "action": "random16greedy",
+        "seed": 102201,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1022-2",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1022",
+        "length": 11,
+        "action": "structural24greedy",
+        "seed": 102202,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1022-3",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1022",
+        "length": 11,
+        "action": "opportunity12exact",
+        "seed": 102203,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1022-4",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1022",
+        "length": 11,
+        "action": "random24exact",
+        "seed": 102204,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1022-5",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1022",
+        "length": 11,
+        "action": "conflict8exact",
+        "seed": 102205,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1022-6",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1022",
+        "length": 11,
+        "action": "random40greedy",
+        "seed": 102206,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1022-7",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1022",
+        "length": 11,
+        "action": "structural48exact",
+        "seed": 102207,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1022-8",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1022",
+        "length": 11,
+        "action": "opportunity6ejection",
+        "seed": 102208,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1023-0",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1023",
+        "length": 12,
+        "action": "random8greedy",
+        "seed": 102300,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1023-1",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1023",
+        "length": 12,
+        "action": "random16greedy",
+        "seed": 102301,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1023-2",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1023",
+        "length": 12,
+        "action": "structural24greedy",
+        "seed": 102302,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1023-3",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1023",
+        "length": 12,
+        "action": "opportunity12exact",
+        "seed": 102303,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1023-4",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1023",
+        "length": 12,
+        "action": "random24exact",
+        "seed": 102304,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1023-5",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1023",
+        "length": 12,
+        "action": "conflict8exact",
+        "seed": 102305,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1023-6",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1023",
+        "length": 12,
+        "action": "random40greedy",
+        "seed": 102306,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1023-7",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1023",
+        "length": 12,
+        "action": "structural48exact",
+        "seed": 102307,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1023-8",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1023",
+        "length": 12,
+        "action": "opportunity6ejection",
+        "seed": 102308,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1024-0",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1024",
+        "length": 10,
+        "action": "random8greedy",
+        "seed": 102400,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1024-1",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1024",
+        "length": 10,
+        "action": "random16greedy",
+        "seed": 102401,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1024-2",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1024",
+        "length": 10,
+        "action": "structural24greedy",
+        "seed": 102402,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1024-3",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1024",
+        "length": 10,
+        "action": "opportunity12exact",
+        "seed": 102403,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1024-4",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1024",
+        "length": 10,
+        "action": "random24exact",
+        "seed": 102404,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1024-5",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1024",
+        "length": 10,
+        "action": "conflict8exact",
+        "seed": 102405,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1024-6",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1024",
+        "length": 10,
+        "action": "random40greedy",
+        "seed": 102406,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1024-7",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1024",
+        "length": 10,
+        "action": "structural48exact",
+        "seed": 102407,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1024-8",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1024",
+        "length": 10,
+        "action": "opportunity6ejection",
+        "seed": 102408,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1025-0",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1025",
+        "length": 11,
+        "action": "random8greedy",
+        "seed": 102500,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1025-1",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1025",
+        "length": 11,
+        "action": "random16greedy",
+        "seed": 102501,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1025-2",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1025",
+        "length": 11,
+        "action": "structural24greedy",
+        "seed": 102502,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1025-3",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1025",
+        "length": 11,
+        "action": "opportunity12exact",
+        "seed": 102503,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1025-4",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1025",
+        "length": 11,
+        "action": "random24exact",
+        "seed": 102504,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1025-5",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1025",
+        "length": 11,
+        "action": "conflict8exact",
+        "seed": 102505,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1025-6",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1025",
+        "length": 11,
+        "action": "random40greedy",
+        "seed": 102506,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1025-7",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1025",
+        "length": 11,
+        "action": "structural48exact",
+        "seed": 102507,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1025-8",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1025",
+        "length": 11,
+        "action": "opportunity6ejection",
+        "seed": 102508,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1026-0",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1026",
+        "length": 12,
+        "action": "random8greedy",
+        "seed": 102600,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1026-1",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1026",
+        "length": 12,
+        "action": "random16greedy",
+        "seed": 102601,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1026-2",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1026",
+        "length": 12,
+        "action": "structural24greedy",
+        "seed": 102602,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1026-3",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1026",
+        "length": 12,
+        "action": "opportunity12exact",
+        "seed": 102603,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1026-4",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1026",
+        "length": 12,
+        "action": "random24exact",
+        "seed": 102604,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1026-5",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1026",
+        "length": 12,
+        "action": "conflict8exact",
+        "seed": 102605,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1026-6",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1026",
+        "length": 12,
+        "action": "random40greedy",
+        "seed": 102606,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1026-7",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1026",
+        "length": 12,
+        "action": "structural48exact",
+        "seed": 102607,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1026-8",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1026",
+        "length": 12,
+        "action": "opportunity6ejection",
+        "seed": 102608,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1027-0",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1027",
+        "length": 10,
+        "action": "random8greedy",
+        "seed": 102700,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1027-1",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1027",
+        "length": 10,
+        "action": "random16greedy",
+        "seed": 102701,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1027-2",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1027",
+        "length": 10,
+        "action": "structural24greedy",
+        "seed": 102702,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1027-3",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1027",
+        "length": 10,
+        "action": "opportunity12exact",
+        "seed": 102703,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1027-4",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1027",
+        "length": 10,
+        "action": "random24exact",
+        "seed": 102704,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1027-5",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1027",
+        "length": 10,
+        "action": "conflict8exact",
+        "seed": 102705,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1027-6",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1027",
+        "length": 10,
+        "action": "random40greedy",
+        "seed": 102706,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1027-7",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1027",
+        "length": 10,
+        "action": "structural48exact",
+        "seed": 102707,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1027-8",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1027",
+        "length": 10,
+        "action": "opportunity6ejection",
+        "seed": 102708,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1028-0",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1028",
+        "length": 11,
+        "action": "random8greedy",
+        "seed": 102800,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1028-1",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1028",
+        "length": 11,
+        "action": "random16greedy",
+        "seed": 102801,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1028-2",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1028",
+        "length": 11,
+        "action": "structural24greedy",
+        "seed": 102802,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1028-3",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1028",
+        "length": 11,
+        "action": "opportunity12exact",
+        "seed": 102803,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1028-4",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1028",
+        "length": 11,
+        "action": "random24exact",
+        "seed": 102804,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1028-5",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1028",
+        "length": 11,
+        "action": "conflict8exact",
+        "seed": 102805,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1028-6",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1028",
+        "length": 11,
+        "action": "random40greedy",
+        "seed": 102806,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1028-7",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1028",
+        "length": 11,
+        "action": "structural48exact",
+        "seed": 102807,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1028-8",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1028",
+        "length": 11,
+        "action": "opportunity6ejection",
+        "seed": 102808,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1029-0",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1029",
+        "length": 12,
+        "action": "random8greedy",
+        "seed": 102900,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1029-1",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1029",
+        "length": 12,
+        "action": "random16greedy",
+        "seed": 102901,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1029-2",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1029",
+        "length": 12,
+        "action": "structural24greedy",
+        "seed": 102902,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1029-3",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1029",
+        "length": 12,
+        "action": "opportunity12exact",
+        "seed": 102903,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1029-4",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1029",
+        "length": 12,
+        "action": "random24exact",
+        "seed": 102904,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1029-5",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1029",
+        "length": 12,
+        "action": "conflict8exact",
+        "seed": 102905,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1029-6",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1029",
+        "length": 12,
+        "action": "random40greedy",
+        "seed": 102906,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1029-7",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1029",
+        "length": 12,
+        "action": "structural48exact",
+        "seed": 102907,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1029-8",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1029",
+        "length": 12,
+        "action": "opportunity6ejection",
+        "seed": 102908,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1030-0",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1030",
+        "length": 10,
+        "action": "random8greedy",
+        "seed": 103000,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1030-1",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1030",
+        "length": 10,
+        "action": "random16greedy",
+        "seed": 103001,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1030-2",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1030",
+        "length": 10,
+        "action": "structural24greedy",
+        "seed": 103002,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1030-3",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1030",
+        "length": 10,
+        "action": "opportunity12exact",
+        "seed": 103003,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1030-4",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1030",
+        "length": 10,
+        "action": "random24exact",
+        "seed": 103004,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1030-5",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1030",
+        "length": 10,
+        "action": "conflict8exact",
+        "seed": 103005,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1030-6",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1030",
+        "length": 10,
+        "action": "random40greedy",
+        "seed": 103006,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1030-7",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1030",
+        "length": 10,
+        "action": "structural48exact",
+        "seed": 103007,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1030-8",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1030",
+        "length": 10,
+        "action": "opportunity6ejection",
+        "seed": 103008,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1031-0",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1031",
+        "length": 11,
+        "action": "random8greedy",
+        "seed": 103100,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1031-1",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1031",
+        "length": 11,
+        "action": "random16greedy",
+        "seed": 103101,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1031-2",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1031",
+        "length": 11,
+        "action": "structural24greedy",
+        "seed": 103102,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1031-3",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1031",
+        "length": 11,
+        "action": "opportunity12exact",
+        "seed": 103103,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1031-4",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1031",
+        "length": 11,
+        "action": "random24exact",
+        "seed": 103104,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1031-5",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1031",
+        "length": 11,
+        "action": "conflict8exact",
+        "seed": 103105,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1031-6",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1031",
+        "length": 11,
+        "action": "random40greedy",
+        "seed": 103106,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1031-7",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1031",
+        "length": 11,
+        "action": "structural48exact",
+        "seed": 103107,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-1031-8",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "1031",
+        "length": 11,
+        "action": "opportunity6ejection",
+        "seed": 103108,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2000-0",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2000",
+        "length": 10,
+        "action": "random8greedy",
+        "seed": 200000,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2000-1",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2000",
+        "length": 10,
+        "action": "random16greedy",
+        "seed": 200001,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2000-2",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2000",
+        "length": 10,
+        "action": "structural24greedy",
+        "seed": 200002,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2000-3",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2000",
+        "length": 10,
+        "action": "opportunity12exact",
+        "seed": 200003,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2000-4",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2000",
+        "length": 10,
+        "action": "random24exact",
+        "seed": 200004,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2000-5",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2000",
+        "length": 10,
+        "action": "conflict8exact",
+        "seed": 200005,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2000-6",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2000",
+        "length": 10,
+        "action": "random40greedy",
+        "seed": 200006,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2000-7",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2000",
+        "length": 10,
+        "action": "structural48exact",
+        "seed": 200007,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2000-8",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2000",
+        "length": 10,
+        "action": "opportunity6ejection",
+        "seed": 200008,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2001-0",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2001",
+        "length": 11,
+        "action": "random8greedy",
+        "seed": 200100,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2001-1",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2001",
+        "length": 11,
+        "action": "random16greedy",
+        "seed": 200101,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2001-2",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2001",
+        "length": 11,
+        "action": "structural24greedy",
+        "seed": 200102,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2001-3",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2001",
+        "length": 11,
+        "action": "opportunity12exact",
+        "seed": 200103,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2001-4",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2001",
+        "length": 11,
+        "action": "random24exact",
+        "seed": 200104,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2001-5",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2001",
+        "length": 11,
+        "action": "conflict8exact",
+        "seed": 200105,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2001-6",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2001",
+        "length": 11,
+        "action": "random40greedy",
+        "seed": 200106,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2001-7",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2001",
+        "length": 11,
+        "action": "structural48exact",
+        "seed": 200107,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2001-8",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2001",
+        "length": 11,
+        "action": "opportunity6ejection",
+        "seed": 200108,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2002-0",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2002",
+        "length": 12,
+        "action": "random8greedy",
+        "seed": 200200,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2002-1",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2002",
+        "length": 12,
+        "action": "random16greedy",
+        "seed": 200201,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2002-2",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2002",
+        "length": 12,
+        "action": "structural24greedy",
+        "seed": 200202,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2002-3",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2002",
+        "length": 12,
+        "action": "opportunity12exact",
+        "seed": 200203,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2002-4",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2002",
+        "length": 12,
+        "action": "random24exact",
+        "seed": 200204,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2002-5",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2002",
+        "length": 12,
+        "action": "conflict8exact",
+        "seed": 200205,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2002-6",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2002",
+        "length": 12,
+        "action": "random40greedy",
+        "seed": 200206,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2002-7",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2002",
+        "length": 12,
+        "action": "structural48exact",
+        "seed": 200207,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2002-8",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2002",
+        "length": 12,
+        "action": "opportunity6ejection",
+        "seed": 200208,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2003-0",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2003",
+        "length": 10,
+        "action": "random8greedy",
+        "seed": 200300,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2003-1",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2003",
+        "length": 10,
+        "action": "random16greedy",
+        "seed": 200301,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2003-2",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2003",
+        "length": 10,
+        "action": "structural24greedy",
+        "seed": 200302,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2003-3",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2003",
+        "length": 10,
+        "action": "opportunity12exact",
+        "seed": 200303,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2003-4",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2003",
+        "length": 10,
+        "action": "random24exact",
+        "seed": 200304,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2003-5",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2003",
+        "length": 10,
+        "action": "conflict8exact",
+        "seed": 200305,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2003-6",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2003",
+        "length": 10,
+        "action": "random40greedy",
+        "seed": 200306,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2003-7",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2003",
+        "length": 10,
+        "action": "structural48exact",
+        "seed": 200307,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2003-8",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2003",
+        "length": 10,
+        "action": "opportunity6ejection",
+        "seed": 200308,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2004-0",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2004",
+        "length": 11,
+        "action": "random8greedy",
+        "seed": 200400,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2004-1",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2004",
+        "length": 11,
+        "action": "random16greedy",
+        "seed": 200401,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2004-2",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2004",
+        "length": 11,
+        "action": "structural24greedy",
+        "seed": 200402,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2004-3",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2004",
+        "length": 11,
+        "action": "opportunity12exact",
+        "seed": 200403,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2004-4",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2004",
+        "length": 11,
+        "action": "random24exact",
+        "seed": 200404,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2004-5",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2004",
+        "length": 11,
+        "action": "conflict8exact",
+        "seed": 200405,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2004-6",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2004",
+        "length": 11,
+        "action": "random40greedy",
+        "seed": 200406,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2004-7",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2004",
+        "length": 11,
+        "action": "structural48exact",
+        "seed": 200407,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2004-8",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2004",
+        "length": 11,
+        "action": "opportunity6ejection",
+        "seed": 200408,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2005-0",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2005",
+        "length": 12,
+        "action": "random8greedy",
+        "seed": 200500,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2005-1",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2005",
+        "length": 12,
+        "action": "random16greedy",
+        "seed": 200501,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2005-2",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2005",
+        "length": 12,
+        "action": "structural24greedy",
+        "seed": 200502,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2005-3",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2005",
+        "length": 12,
+        "action": "opportunity12exact",
+        "seed": 200503,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2005-4",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2005",
+        "length": 12,
+        "action": "random24exact",
+        "seed": 200504,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2005-5",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2005",
+        "length": 12,
+        "action": "conflict8exact",
+        "seed": 200505,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2005-6",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2005",
+        "length": 12,
+        "action": "random40greedy",
+        "seed": 200506,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2005-7",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2005",
+        "length": 12,
+        "action": "structural48exact",
+        "seed": 200507,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2005-8",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2005",
+        "length": 12,
+        "action": "opportunity6ejection",
+        "seed": 200508,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2006-0",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2006",
+        "length": 10,
+        "action": "random8greedy",
+        "seed": 200600,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2006-1",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2006",
+        "length": 10,
+        "action": "random16greedy",
+        "seed": 200601,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2006-2",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2006",
+        "length": 10,
+        "action": "structural24greedy",
+        "seed": 200602,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2006-3",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2006",
+        "length": 10,
+        "action": "opportunity12exact",
+        "seed": 200603,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2006-4",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2006",
+        "length": 10,
+        "action": "random24exact",
+        "seed": 200604,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2006-5",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2006",
+        "length": 10,
+        "action": "conflict8exact",
+        "seed": 200605,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2006-6",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2006",
+        "length": 10,
+        "action": "random40greedy",
+        "seed": 200606,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2006-7",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2006",
+        "length": 10,
+        "action": "structural48exact",
+        "seed": 200607,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2006-8",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2006",
+        "length": 10,
+        "action": "opportunity6ejection",
+        "seed": 200608,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2007-0",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2007",
+        "length": 11,
+        "action": "random8greedy",
+        "seed": 200700,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2007-1",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2007",
+        "length": 11,
+        "action": "random16greedy",
+        "seed": 200701,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2007-2",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2007",
+        "length": 11,
+        "action": "structural24greedy",
+        "seed": 200702,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2007-3",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2007",
+        "length": 11,
+        "action": "opportunity12exact",
+        "seed": 200703,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2007-4",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2007",
+        "length": 11,
+        "action": "random24exact",
+        "seed": 200704,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2007-5",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2007",
+        "length": 11,
+        "action": "conflict8exact",
+        "seed": 200705,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2007-6",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2007",
+        "length": 11,
+        "action": "random40greedy",
+        "seed": 200706,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2007-7",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2007",
+        "length": 11,
+        "action": "structural48exact",
+        "seed": 200707,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "teacher-2007-8",
+      "phase": "teacher",
+      "configuration": {
+        "case_id": "2007",
+        "length": 11,
+        "action": "opportunity6ejection",
+        "seed": 200708,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/training_cases.json"
+    },
+    {
+      "id": "before-2000",
+      "phase": "before",
+      "configuration": {
+        "case_id": "2000",
+        "length": 10,
+        "action": "random8greedy",
+        "seed": 200000,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/tinker_evaluation.json"
+    },
+    {
+      "id": "before-2001",
+      "phase": "before",
+      "configuration": {
+        "case_id": "2001",
+        "length": 11,
+        "action": "random8greedy",
+        "seed": 200100,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/tinker_evaluation.json"
+    },
+    {
+      "id": "before-2002",
+      "phase": "before",
+      "configuration": {
+        "case_id": "2002",
+        "length": 12,
+        "action": "random8greedy",
+        "seed": 200200,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/tinker_evaluation.json"
+    },
+    {
+      "id": "before-2003",
+      "phase": "before",
+      "configuration": {
+        "case_id": "2003",
+        "length": 10,
+        "action": "random8greedy",
+        "seed": 200300,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/tinker_evaluation.json"
+    },
+    {
+      "id": "before-2004",
+      "phase": "before",
+      "configuration": {
+        "case_id": "2004",
+        "length": 11,
+        "action": "random8greedy",
+        "seed": 200400,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/tinker_evaluation.json"
+    },
+    {
+      "id": "before-2005",
+      "phase": "before",
+      "configuration": {
+        "case_id": "2005",
+        "length": 12,
+        "action": "random8greedy",
+        "seed": 200500,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/tinker_evaluation.json"
+    },
+    {
+      "id": "after-2000",
+      "phase": "after",
+      "configuration": {
+        "case_id": "2000",
+        "length": 10,
+        "action": "opportunity12exact",
+        "seed": 200003,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/tinker_evaluation.json"
+    },
+    {
+      "id": "after-2001",
+      "phase": "after",
+      "configuration": {
+        "case_id": "2001",
+        "length": 11,
+        "action": "opportunity12exact",
+        "seed": 200103,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/tinker_evaluation.json"
+    },
+    {
+      "id": "after-2002",
+      "phase": "after",
+      "configuration": {
+        "case_id": "2002",
+        "length": 12,
+        "action": "opportunity12exact",
+        "seed": 200203,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/tinker_evaluation.json"
+    },
+    {
+      "id": "after-2003",
+      "phase": "after",
+      "configuration": {
+        "case_id": "2003",
+        "length": 10,
+        "action": "opportunity12exact",
+        "seed": 200303,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/tinker_evaluation.json"
+    },
+    {
+      "id": "after-2004",
+      "phase": "after",
+      "configuration": {
+        "case_id": "2004",
+        "length": 11,
+        "action": "opportunity12exact",
+        "seed": 200403,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/tinker_evaluation.json"
+    },
+    {
+      "id": "after-2005",
+      "phase": "after",
+      "configuration": {
+        "case_id": "2005",
+        "length": 12,
+        "action": "opportunity12exact",
+        "seed": 200503,
+        "pool_cap": 120,
+        "exact_seconds_cap": 0.025
+      },
+      "artifact": "codegarden/artifacts/live/tinker_evaluation.json"
+    }
+  ],
+  "scope_limit": "This is a scoped audit, not a claim to have deduplicated every internal randomized mutation or every framework setup attempt."
+}

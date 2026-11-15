@@ -189,7 +189,7 @@ codegarden/: only the new launcher is added. Existing default-branch forecasting
 and BoundForge jobs were neither cancelled nor modified.
 
 ## Demo and independent reproduction
-[Open the recorded dashboard and live decoder](https://raw.githack.com/howdymary/compute-forecasting/codegarden/codegarden/demo/index.html).
+[Open the recorded dashboard and live decoder](https://raw.githack.com/howdymary/compute-forecasting/186ed67fc18fa7509889205fd41d284ab6b43355/codegarden/demo/index.html).
 The static proxy can show an external-content notice first; it requires no account
 or credentials. The repository contains the complete demo source and data.
 
@@ -205,6 +205,20 @@ needed for either verification command:
 python -B codegarden/protected/verify_descendants.py codegarden/artifacts/best_code.txt
 python -B codegarden/protected/verify_lcs.py codegarden/artifacts/best_code.txt
 ~~~
+
+## Final checks and scoped duplicate audit
+[Final verification run](https://github.com/howdymary/compute-forecasting/actions/runs/43675549312)
+passed all 21 tests, compiled-kernel checks and both independent verifiers for
+25 explicit exported length-16 witnesses. It also reverified the recorded
+small-code replay witnesses without overwriting timing receipts. Its default
+mode was verify and made no paid provider calls.
+
+artifacts/experiment_index.json inventories 360 teacher action experiments and
+12 initial before/after evaluations. The 12 policy-selected evaluations
+intentionally repeat fixed-seed teacher configurations; they are not independent
+additional samples. Duplicate tracking is scoped to that inventory, not every
+inner-loop mutation. No strict-improvement operator or time/cost to improvement
+is reported, because no length-16 improvement occurred.
 
 ## What changed and what remains unknown
 Correctness no longer depends on a proposer score. Independent witnesses, source

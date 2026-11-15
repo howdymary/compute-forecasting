@@ -86,6 +86,9 @@ No timeout is promoted to an optimality claim.
 
 ## Demo
 
+[Open the verified recorded dashboard and interactive decoder](https://raw.githack.com/howdymary/compute-forecasting/186ed67fc18fa7509889205fd41d284ab6b43355/codegarden/demo/index.html).
+
+
 The commit-pinned browser preview is linked in docs/research_report.md. The
 third-party static proxy may show an external-content notice first; it hosts only
 public repository files and asks for no credentials.
