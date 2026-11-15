@@ -1,18 +1,18 @@
-name: CodeGarden direct blocker bundles
+name: CodeGarden new orbit basins and restricted fusion
 on:
   push:
-    branches: [codegarden-bundle-006]
+    branches: [codegarden-novel-union-003]
     paths: [.github/workflows/codegarden.yml]
   workflow_dispatch:
 permissions:
   contents: write
 concurrency:
-  group: codegarden-free-bundle-006
+  group: codegarden-free-novel-union-003
   cancel-in-progress: false
 env:
   PYTHONDONTWRITEBYTECODE: '1'
   SOURCE_SHA: ${{ github.sha }}
-  CODEGARDEN_BATCH: bundle_004
+  CODEGARDEN_BATCH: novel_union_001
 jobs:
   preflight:
     runs-on: ubuntu-latest
@@ -22,25 +22,23 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
-      - name: Compile and independently exhaust small cases
+      - name: Check protected verifier and current incumbent
         run: |
           mkdir -p codegarden/.build
-          g++ -O3 -std=c++17 codegarden/phase3/bundle_fast.cpp -o codegarden/.build/bundle
-          python -B -u codegarden/phase3/test_bundle_fast.py
           python -B -u codegarden/phase3/preflight.py
       - uses: actions/upload-artifact@v4
         with:
-          name: codegarden-bundle-preflight
-          path: codegarden/artifacts/phase3/bundle_004/
+          name: codegarden-novel-preflight
+          path: codegarden/artifacts/phase3/novel_union_001/
   probes:
     needs: preflight
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 24
     strategy:
       fail-fast: false
       max-parallel: 4
       matrix:
-        mode: [component5, newroot6]
+        case: [0, 1, 2, 3]
     steps:
       - name: Fetch immutable source
         env:
@@ -48,18 +46,23 @@ jobs:
         run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
       - uses: actions/download-artifact@v4
         with:
-          name: codegarden-bundle-preflight
-          path: codegarden/artifacts/phase3/bundle_004/
-      - name: Compile and run bounded component
+          name: codegarden-novel-preflight
+          path: codegarden/artifacts/phase3/novel_union_001/
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run endpoint releases and blocker-driven repair pools
         run: |
           mkdir -p codegarden/.build
-          g++ -O3 -std=c++17 codegarden/phase3/bundle_fast.cpp -o codegarden/.build/bundle
-          python -B -u codegarden/phase3/bundle_continue.py --mode ${{ matrix.mode }}
+          python -m venv codegarden/.venv
+          codegarden/.venv/bin/pip install -r codegarden/requirements-exact.txt
+          g++ -O3 -std=c++17 codegarden/phase3/bundle_anchor.cpp -o codegarden/.build/bundle
+          codegarden/.venv/bin/python -B -u codegarden/phase3/novel_union.py --case ${{ matrix.case }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: codegarden-bundle-${{ matrix.mode }}
-          path: codegarden/artifacts/phase3/bundle_004/
+          name: codegarden-novel-${{ matrix.case }}
+          path: codegarden/artifacts/phase3/novel_union_001/
   collect:
     needs: [preflight, probes]
     if: always()
@@ -72,15 +75,15 @@ jobs:
         run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
       - uses: actions/download-artifact@v4
         with:
-          pattern: codegarden-bundle-*
+          pattern: codegarden-novel-*
           merge-multiple: true
-          path: codegarden/artifacts/phase3/bundle_004/
+          path: codegarden/artifacts/phase3/novel_union_001/
       - name: Publish leased results
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python -B -u codegarden/phase3/publish_bundle_continue.py
+        run: python -B -u codegarden/phase3/publish_novel_union.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: codegarden-bundle-collected
-          path: codegarden/artifacts/phase3/bundle_004/
+          name: codegarden-novel-collected
+          path: codegarden/artifacts/phase3/novel_union_001/
