@@ -1,0 +1,78 @@
+{
+  "timestamp": "2026-11-15T04:02:54.384443+00:00",
+  "source_sha": "5a22c95d6c2c97fd545f1193d74f54f47c15f73f",
+  "phase": "literature discovery only",
+  "providers": {
+    "exa": {
+      "initial_cap": 119.52,
+      "unit": "USD prepaid",
+      "verified": "Authenticated dashboard, 2026-11-15 around 04:00 UTC",
+      "prior_unresolved_allowance": 0.232,
+      "phase1_cap": 2,
+      "phase3_proposed_cap": 8,
+      "billing_boundary": "Free tier; no payment method; no automatic top-up",
+      "expiration": "not exposed"
+    },
+    "modal": {
+      "initial_cap": 249.24,
+      "unit": "USD compute credit",
+      "verified": "Authenticated dashboard",
+      "prior_unresolved_allowance": 22,
+      "phase1_cap": 0,
+      "phase3_proposed_cap": 60,
+      "expiration": "grant expires 2027-11-30",
+      "billing_boundary": "Starter no-payment usage cap; no settings changed",
+      "read_only_probe": {
+        "metered_cost": "1.76006695",
+        "billed_cost": "0E-8",
+        "adjustments": {
+          "free_storage": "-0E-8",
+          "reservation_adjustment": "-0E-8",
+          "plan_cost": "0E-8",
+          "credits": "-1.76000000",
+          "network_egress_allowance": "-0.00006695"
+        },
+        "metered_cost_breakdown": {
+          "ephemeral_apps": "1.73128501",
+          "volumes": "0E-8",
+          "llm_tokens": "0E-8",
+          "network_egress": "0.00006695",
+          "deployed_apps": "0.02805483"
+        }
+      }
+    },
+    "tinker": {
+      "initial_cap": 281.71,
+      "unit": "USD prepaid",
+      "verified": "Authenticated dashboard; auto-reload off; free checkpoint storage 20GB, 71/100 checkpoints",
+      "prior_unresolved_allowance": 1.2,
+      "phase1_cap": 0,
+      "phase3_proposed_cap": 20,
+      "expiration": "not exposed"
+    },
+    "past": {
+      "initial_cap": 699443,
+      "unit": "credits",
+      "verified": "GET /usage before paid work",
+      "prior_unresolved_allowance": 20,
+      "phase1_cap": 0,
+      "phase3_proposed_cap": 400,
+      "read_only_probe": {
+        "month": {
+          "from": "2026-11-01T00:00:00Z",
+          "to": "2026-11-15T04:02:54.6107481Z",
+          "resetsAt": null
+        },
+        "balance": {
+          "left": 699443,
+          "included": 200000,
+          "bought": 499443,
+          "rolledOver": 0,
+          "spent": 557
+        },
+        "metered": true
+      }
+    }
+  },
+  "policy": "No purchases, upgrades, auto-reload, or unverified billing. Phase 3 requires completed evidence-backed review."
+}

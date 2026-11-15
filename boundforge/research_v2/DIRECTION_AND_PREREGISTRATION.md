@@ -71,3 +71,9 @@ Initial balances are immutable caps; new deposits cannot expand them.
 Proposed new campaign upper allowances: Exa 8 USD, Modal 60 USD, Tinker 20 USD, past.dev 400 credits.
 These are allowances, not spending targets. Begin with the smaller pilot above. Reserve independent
 final certification on GitHub Actions, which needs no paid provider calls.
+
+## Executed phase-one diagnostic
+
+Official FunSearch priority replay: 512 verified cap-set vectors at dimension 8, constant priority 256, ten random priorities 256–262; independent exact pair checks passed. Source pinned at cc53f274237d7ab05c19df939edbc1f9616a7c19; run 43675332783. This completes the bounded method-replay gate, not the original AI discovery experiment.
+
+The executable pilot has six fixed, six random and at most six valid model construction programs. Each is evaluated on starts 101/202/303 (at most 54 cases), followed by 36 separate incumbent-basin mutation cases. Each case gets up to three L-BFGS restarts, 160 iterations per restart and 25 seconds. Invalid model proposals consume their slots. Program selection uses start 101 only; programs are frozen before 202/303. This fixes the concrete pilot budget before execution.
