@@ -22,7 +22,7 @@ The adapter checks that exact hash, complete 37×3 coverage, origin, finite posi
 
 Choose **Submitted forecast**. This is an archived November 6, 2026 forecast, not a current quote. The only generated points are horizons 1, 3 and 7 days; connecting lines are visual guides. The band spans submitted q10–q90 values and is not advertised as calibrated at this origin.
 
-Hover, touch or use arrow keys on the chart to inspect an actual point. The separate slider provides the same keyboard-accessible control. Three-/seven-day view controls change the displayed range without creating additional forecasts. Inspector values retain exact data behind the formatted currency display.
+Hover, touch or use arrow keys on the chart to inspect an actual point. A floating readout keeps date, values, units and source/data type beside the cursor. The separate slider provides the same keyboard-accessible control. Three-/seven-day view controls change the displayed range without creating additional forecasts. Inspector values retain exact data behind the formatted currency display.
 
 A comparison overlay is offered only when GPU, instrument class, tier, statistic and available configuration fields match. It draws a separately labeled median, not a combined price or an average. Source populations can still differ, so these are source-series comparisons, not matched individual provider offers. Incompatible series never enter the comparison selector.
 

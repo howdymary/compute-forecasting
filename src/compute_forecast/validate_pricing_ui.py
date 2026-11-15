@@ -35,6 +35,11 @@ def main():
         close(values(),[42.25,72.25,110.25])
         page.locator("#price-chart").focus();page.keyboard.press("ArrowLeft")
         assert page.locator("#time-cursor").input_value()=="23"
+        expect(page.locator("#chart-tooltip")).to_be_visible()
+        assert "Assumption calculation" in page.locator("#chart-tooltip").inner_text()
+        assert "Index" in page.locator("#chart-tooltip").inner_text()
+        tip=page.locator("#chart-tooltip").bounding_box();plot=page.locator("#price-chart").bounding_box()
+        assert tip["x"]>=plot["x"]-1 and tip["x"]+tip["width"]<=plot["x"]+plot["width"]+1
         page.locator("#instrument").select_option("resale")
         close(values(),[100*.6**(23/12),100*.75**(23/12),100*.9**(23/12)])
         assert page.locator("#anchor").count()==0
@@ -85,6 +90,7 @@ def main():
         phone.locator("#price-chart").scroll_into_view_if_needed()
         box=phone.locator("#price-chart").bounding_box();phone.touchscreen.tap(box["x"]+box["width"]*.6,box["y"]+100)
         assert int(phone.locator("#time-cursor").input_value())<36
+        expect(phone.locator("#chart-tooltip")).to_be_visible()
         phone.screenshot(path=str(out/"explore-mobile.png"),full_page=True)
         phone.get_by_role("button",name="Submitted forecast",exact=True).click()
         assert phone.evaluate("document.documentElement.scrollWidth<=innerWidth+2")
