@@ -1,8 +1,12 @@
 # Compute Forecast
 
-**A reproducible GPU rental forecasting experiment, with a trained policy that chooses what to test next.**
+**Explore archived GPU rental forecasts and test explicit long-term pricing scenarios.**
 
 [Open the research observatory](https://howdymary--compute-forecast-observatory-web.us-east.modal.run) · [Two-minute demo video](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/files/demo.mp4) · [Frozen evaluation and official forecast export](https://github.com/howdymary/compute-forecasting/actions/runs/43653016797) · [Source branch](https://github.com/howdymary/compute-forecasting/tree/compute-observatory)
+
+The pricing-first Explore view puts a large interactive chart at the center of the product. Switch between the exact submitted 1/3/7-day quantiles and separate 12/24/36-month rental or resale scenarios. Adjust annual assumptions, inspect any month with mouse/touch/keyboard, and optionally supply your own rental-dollar anchor. All 37 source series have verified names and USD/GPU-hour units. Historical prices remain unpublished while redistribution permission is unresolved.
+
+[Pricing controls, formulas and data contract](docs/pricing-observatory.md). Research, Methods and Downloads keep the evidence and limitations accessible without crowding the chart.
 
 We compare data representations for forecasting **advertised GPU rental offers**, then ask whether a Tinker-trained experiment-selection policy outperforms starting, fixed and random search under the same six-trial budget. The numerical forecasts and scores come from deterministic tools and the Pacific starter kit. The language model selects experiments; it does not invent prices or scores.
 

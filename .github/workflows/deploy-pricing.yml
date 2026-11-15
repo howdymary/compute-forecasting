@@ -68,17 +68,27 @@ jobs:
         env:
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
           MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
-        run: modal deploy -m compute_forecast.release_web 2>&1 | tee artifacts/pricing-deployment.txt
+        run: |
+          set -o pipefail
+          modal deploy -m compute_forecast.release_web 2>&1 | tee artifacts/pricing-deployment.txt
       - name: Verify deployed interface and unchanged official forecast
         run: |
           python - <<'PY'
-          import hashlib,json,os,urllib.request
+          import hashlib,json,os,time,urllib.request
           from pathlib import Path
           from compute_forecast.pricing_contract import validate,FORECAST_SHA
           url='https://howdymary--compute-forecast-observatory-web.us-east.modal.run'
           def get(path):return urllib.request.urlopen(url+path,timeout=90).read()
           receipt=json.loads(Path('artifacts/pricing-publication.json').read_text())
-          raw=get('/api/pricing');payload=validate(json.loads(raw));health=json.loads(get('/health'))
+          for attempt in range(30):
+              try:
+                  health=json.loads(get('/health'))
+                  if health.get('ui_revision')==os.environ['GITHUB_SHA']:
+                      raw=get('/api/pricing');payload=validate(json.loads(raw));break
+              except urllib.error.HTTPError as error:
+                  if error.code not in (404,502,503,504):raise
+              time.sleep(3)
+          else:raise RuntimeError('New deployment did not become ready within the bounded readiness window')
           assert hashlib.sha256(raw).hexdigest()==receipt['pricing_sha256']
           assert health['ui_revision']==os.environ['GITHUB_SHA'] and payload['code_sha']==os.environ['GITHUB_SHA']
           assert hashlib.sha256(get('/files/forecasts.csv')).hexdigest()==FORECAST_SHA
