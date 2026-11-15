@@ -1,0 +1,111 @@
+name: CodeGarden memory-profiled induced evolutionary and ILS search
+on:
+  push:
+    branches: [codegarden-induced-kamis-001]
+    paths: [.github/workflows/codegarden.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: codegarden-free-kamis-003
+  cancel-in-progress: false
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+  SOURCE_SHA: ${{ github.sha }}
+  CODEGARDEN_BATCH: induced_kamis_001
+  OMP_NUM_THREADS: '1'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - name: Verify current arena and build profiled sparse graph generator
+        run: |
+          mkdir -p codegarden/.build codegarden/vendor codegarden/.tmp
+          g++ -O3 -std=c++17 codegarden/phase3/induced_graph.cpp -o codegarden/.build/induced_graph
+          python -B -u codegarden/phase3/prepare_induced_kamis.py
+          python -B -u codegarden/phase3/preflight.py
+      - name: Build pinned attributed solver adaptation
+        run: python -B -u codegarden/phase3/build_induced_kamis.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          retention-days: 1
+          name: codegarden-induced-kamis-build
+          path: |
+            codegarden/.build/induced_graph
+            codegarden/.build/kamis-upstream/redumis
+            codegarden/.build/kamis-upstream/codegarden_pool_warm
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          retention-days: 1
+          name: codegarden-induced-kamis-preflight
+          path: codegarden/artifacts/phase3/induced_kamis_001/
+  probes:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        case: [0, 1, 2, 3, 4, 5, 6, 7]
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/download-artifact@v4
+        with:
+          retention-days: 1
+          name: codegarden-induced-kamis-build
+          path: codegarden/.build/
+      - uses: actions/download-artifact@v4
+        with:
+          retention-days: 1
+          name: codegarden-induced-kamis-preflight
+          path: codegarden/artifacts/phase3/induced_kamis_001/
+      - name: Apply executable permissions and run bounded solver
+        run: |
+          chmod +x codegarden/.build/induced_graph codegarden/.build/kamis-upstream/redumis codegarden/.build/kamis-upstream/codegarden_pool_warm
+          mkdir -p codegarden/.tmp
+          g++ -O3 -std=c++17 codegarden/phase3/bundle_colored.cpp -o codegarden/.build/bundle_colored
+          python -B -u codegarden/phase3/induced_kamis.py ${{ matrix.case }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          retention-days: 1
+          name: codegarden-induced-kamis-${{ matrix.case }}
+          path: codegarden/artifacts/phase3/induced_kamis_001/
+  collect:
+    needs: [build, probes]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: codegarden-induced-kamis-*
+          merge-multiple: true
+          path: codegarden/artifacts/phase3/induced_kamis_001/
+      - name: Collect verified records and publish only batch evidence
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python -B -u codegarden/phase3/collect_induced_kamis.py
+          python -B -u codegarden/phase3/publish_induced_kamis.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          retention-days: 1
+          name: codegarden-induced-kamis-collected
+          path: codegarden/artifacts/phase3/induced_kamis_001/
