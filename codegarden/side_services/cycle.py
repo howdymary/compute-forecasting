@@ -53,13 +53,17 @@ def write_memory(role,kind,content,parents=()):
   "label":"CodeGarden side "+kind,"content":json.dumps({"project":"codegarden","author":actors[role],"kind":kind,"experiment_id":"services_001","parents":list(parents),"content":content})}
  ledger.reserve("past","codegarden",30)
  result=http("https://api.past.dev/api/v1/ingest",os.environ["PAST_API_KEY"],{**item,"idempotencyKey":sid})
+ pending={"role":role,"source_id":sid,"ingestion_id":result["ingestionId"],"status":"accepted_pending","parent_source_ids":list(parents)}
+ save("memory_pending/"+sid+".json",pending);log("past_ingest_handle",pending);publish()
  for _ in range(60):
   status=http("https://api.past.dev/api/v1/ingest/"+result["ingestionId"],os.environ["PAST_API_KEY"])
   if status["status"]=="completed":
+   pending.update(status="completed",readiness=status.get("readiness"));save("memory_pending/"+sid+".json",pending)
    log("past_write",{"role":role,"source_id":sid,"parent_source_ids":list(parents)});publish();return sid
   if status["status"]=="failed":raise RuntimeError("Memory ingestion failed")
   time.sleep(1)
- raise TimeoutError("Memory ingestion remains pending")
+ pending.update(status="still_pending_after_observation_window");save("memory_pending/"+sid+".json",pending);publish()
+ raise TimeoutError("Memory ingestion remains pending; resumable handle saved for "+sid)
 def recall(role,query,required):
  for _ in range(4):
   ledger.reserve("past","codegarden",1)
