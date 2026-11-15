@@ -72,7 +72,31 @@ def main():
   rows.append({"id":row["id"],"candidate_pool_sha256":row["candidate_pool_sha256"],
    "complete_full_universe_pool":True,"matching_certificate_verified":nodes is None,
    "independent_exact_nodes":nodes,"no_target_repair":True})
- result={"status":"passed","source_sha":os.environ.get("GITHUB_SHA"),"incumbent_witness_sha256":accepted["witness_sha256"],
+ component_path=ROOT/"artifacts/phase2/plateau_component/report.json";component_check=None
+ if component_path.exists():
+  component=json.loads(component_path.read_text());assert component["complete_component"]
+  ids={r["id"]:r["witness_sha256"] for r in component["states"]}
+  for r in component["states"]:
+   ww=(component_path.parent/("worker_state_"+str(r["id"])+".txt")).read_text().splitlines()
+   accepted_state=D.verify(ww);assert accepted_state["witness_sha256"]==r["witness_sha256"]
+   selected={int(w,2) for w in ww};owners={}
+   for w in selected:
+    for d in descendants[w]:owners[d]=w
+   expected=set();free=[]
+   for w in range(65536):
+    if w in selected:continue
+    blocked={owners[d] for d in descendants[w] if d in owners}
+    if not blocked:free.append(w)
+    elif len(blocked)==1:expected.add((next(iter(blocked)),w))
+   actual={(e["remove"],e["add"]) for e in r["all_neutral_neighbors"]}
+   assert actual==expected and free==r["compatible_new_words_without_removal"]
+   for edge in r["all_neutral_neighbors"]:
+    next_words=[format(w,"016b") for w in sorted(selected-{edge["remove"]}|{edge["add"]})]
+    checked=D.verify(next_words)
+    assert checked["witness_sha256"]==edge["neighbor_witness_sha256"]==ids[edge["neighbor_id"]]
+  component_check={"complete":True,"states":len(ids),"all_65536_candidates_checked_per_state":True,
+   "method":"Independent protected string descendant enumeration; every recorded one-for-one neighbor reconstructed"}
+ result={"neutral_component_independent_check":component_check,"status":"passed","source_sha":os.environ.get("GITHUB_SHA"),"incumbent_witness_sha256":accepted["witness_sha256"],
   "independent_descendant_generator":"protected string verifier, unchanged",
   "search_code_imported":False,"cp_sat_imported":False,"full_universe_words":65536,
   "complete_pools_reconstructed":len(rows),"matching_certificates_verified":certificates,

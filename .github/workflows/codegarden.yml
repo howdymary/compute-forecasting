@@ -1,4 +1,4 @@
-name: CodeGarden closed plateau component
+name: CodeGarden final independent scope audit
 on:
   push:
     branches: [codegarden-radius34]
@@ -11,9 +11,9 @@ concurrency:
 env:
   PYTHONDONTWRITEBYTECODE: '1'
 jobs:
-  plateau-component:
+  independent-scope-audit:
     runs-on: ubuntu-latest
-    timeout-minutes: 6
+    timeout-minutes: 5
     steps:
       - name: Fetch immutable source
         env:
@@ -23,12 +23,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Build exact sparse enumerator
-        run: |
-          mkdir -p codegarden/.build
-          g++ -O3 -std=c++17 codegarden/phase2/radius_sweep.cpp -o codegarden/.build/radius_sweep
-      - name: Enumerate plateau component and check the next reached state
+      - name: Independently reconstruct full repair pools and both plateau states
+        run: python -B -u codegarden/phase2/audit_certificates.py
+      - name: Publish scope audit
         env:
           GH_TOKEN: ${{ github.token }}
           SOURCE_SHA: ${{ github.sha }}
-        run: python -B -u codegarden/phase2/plateau_component.py
+        run: python -B codegarden/phase2/publish_audit.py
