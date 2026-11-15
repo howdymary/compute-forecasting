@@ -1,62 +1,87 @@
-name: CodeGarden memory-guided profiled tensor experiment
+name: CodeGarden breakout tabu search and verified projections
 on:
   push:
-    branches: [codegarden-research-gpu-003]
+    branches: [codegarden-breakout-003]
     paths: [.github/workflows/codegarden.yml]
+  workflow_dispatch:
 permissions:
   contents: write
 concurrency:
-  group: codegarden-provider-serial
+  group: codegarden-free-exact-lns-003
   cancel-in-progress: false
 env:
-  SOURCE_SHA: ${{ github.sha }}
-  HF_HOME: ${{ github.workspace }}/codegarden/.cache/huggingface
-  XDG_CACHE_HOME: ${{ github.workspace }}/codegarden/.cache
   PYTHONDONTWRITEBYTECODE: '1'
+  SOURCE_SHA: ${{ github.sha }}
+  CODEGARDEN_BATCH: breakout_001
 jobs:
-  research:
+  preflight:
     runs-on: ubuntu-latest
-    timeout-minutes: 75
+    timeout-minutes: 8
     steps:
       - name: Fetch immutable source
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      - name: Install isolated authenticated clients
+      - name: Compile and independently exhaust small cases
         run: |
-          python -m venv codegarden/.venv
-          codegarden/.venv/bin/python -m pip install -r codegarden/requirements-providers.txt
-      - name: Validate tensor math and compiled repair before provider calls
-        run: |
-          codegarden/.venv/bin/python -m pip install torch==2.8.0 --index-url https://download.pytorch.org/whl/cpu
           mkdir -p codegarden/.build
-          g++ -O3 -std=c++17 codegarden/phase3/bundle_guard.cpp -o codegarden/.build/bundle
+          g++ -O3 -std=c++17 codegarden/phase3/breakout.cpp -o codegarden/.build/breakout
+          python -B -u codegarden/phase3/test_breakout.py
           python -B -u codegarden/phase3/preflight.py
-          codegarden/.venv/bin/python -B -u codegarden/phase3/tensor_search4.py --action test
-      - name: Research through Exa and memory, then execute the Tinker-selected experiment
-        env:
-          GH_TOKEN: ${{ github.token }}
-          EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
-          PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
-          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
-          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
-          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
-        run: codegarden/.venv/bin/python -B -u codegarden/phase3/research_gpu.py
-      - name: Publish evidence and unresolved accounting
-        if: always()
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: python -B codegarden/phase3/publish_research_gpu.py
-      - name: Retain all evidence even if a publisher fails
-        if: always()
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
-          name: codegarden-phase3-research
-          path: |
-            codegarden/artifacts/phase3/research_gpu_001/
-            codegarden/artifacts/shared-budget.sqlite
-            codegarden/budget/shared-allocation.json
-            codegarden/budget/historical-usage.json
+          name: codegarden-bundle-preflight
+          path: codegarden/artifacts/phase3/breakout_001/
+  probes:
+    needs: preflight
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        case: [0, 1, 2, 3, 4, 5, 6, 7]
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/download-artifact@v4
+        with:
+          name: codegarden-bundle-preflight
+          path: codegarden/artifacts/phase3/breakout_001/
+      - name: Compile and run bounded component
+        run: |
+          mkdir -p codegarden/.build
+          g++ -O3 -std=c++17 codegarden/phase3/breakout.cpp -o codegarden/.build/breakout
+          g++ -O3 -std=c++17 codegarden/phase3/bundle_guard.cpp -o codegarden/.build/bundle
+          python -B -u codegarden/phase3/breakout_probe.py --case ${{ matrix.case }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: codegarden-bundle-${{ matrix.case }}
+          path: codegarden/artifacts/phase3/breakout_001/
+  collect:
+    needs: [preflight, probes]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: codegarden-bundle-*
+          merge-multiple: true
+          path: codegarden/artifacts/phase3/breakout_001/
+      - name: Publish leased results
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -B -u codegarden/phase3/publish_breakout.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: codegarden-bundle-collected
+          path: codegarden/artifacts/phase3/breakout_001/
