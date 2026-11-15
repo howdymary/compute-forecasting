@@ -55,7 +55,19 @@ async def run():
             expected=min(numerical,key=lambda r:r["by_horizon"]["3"]["pinball"])
             assert expected["config"]["id"] in await table.inner_text()
             assert format(expected["by_horizon"]["3"]["pinball"],".8f") in await table.inner_text()
+            await page.locator("details").first.evaluate("(el)=>el.open=true")
             await page.evaluate("load()")
+            assert await page.locator("details").first.evaluate("(el)=>el.open")
+            await page.unroute("**/api/experimental")
+            await page.route("**/api/experimental",lambda route:route.fulfill(status=503,content_type="application/json",body='{"error":"validation outage"}'))
+            await page.evaluate("load()")
+            assert await page.locator("#refresh-status").is_visible()
+            assert await page.locator("#question").input_value()=="composition"
+            await page.unroute("**/api/experimental")
+            await page.route("**/api/experimental",lambda route:route.fulfill(status=200,content_type="application/json",body=raw))
+            await page.locator("#refresh-retry").click()
+            await page.wait_for_function("document.querySelector('#refresh-status').hidden")
+            assert await page.locator("details").first.evaluate("(el)=>el.open")
             assert await page.locator("#question").input_value()=="composition"
             assert await page.locator("#phase").input_value()=="development"
             assert await page.locator("#horizon").input_value()=="3"
@@ -91,7 +103,7 @@ async def run():
         await page.unroute("**/api/experimental")
         await page.route("**/api/experimental",lambda route:route.fulfill(status=200,content_type="application/json",body=raw))
         await page.locator("#retry").click();await page.locator("#question").wait_for()
-        await failure.close();checks.append({"error_retry_recovery":True,"real_response_frozen_for_assertions":True,"numerical_rows_match_api":True,"selection_preserved_on_refresh":True})
+        await failure.close();checks.append({"error_retry_recovery":True,"real_response_frozen_for_assertions":True,"numerical_rows_match_api":True,"selection_preserved_on_refresh":True,"details_preserved_on_refresh":True,"mid_session_outage_recovery":True})
         await browser.close()
     assert not errors,errors
     report={"status":"passed","checks":checks,"page_errors":errors,"forecast_sha256":hashlib.sha256(get("/files/forecasts.csv")).hexdigest(),"experimental_source_sha":data.get("source_sha"),"validated_at_source":os.environ.get("GITHUB_SHA"),"recording":False}
