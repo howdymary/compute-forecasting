@@ -1,0 +1,467 @@
+{
+  "schema_version": 6,
+  "study_id": "signals-memory-v6",
+  "created_at": "2026-11-15T21:38:20.252072+00:00",
+  "source_sha": "fe9f24d8b23fe324272d13f1ed19a1fd1a287cce",
+  "namespace": "cf-sig6-144b39dc5a574a1d",
+  "records": [
+    {
+      "record_id": "cf-sig6-144b39dc5a574a1d96739665eaff5395-0",
+      "role": "researcher",
+      "author": "cf-sig6-144b39dc5a574a1d-researcher",
+      "content_sha256": "fc266306df7a97624945a6ba1509daf6a2a93719446c34dcf601984660233d13",
+      "ingestion_id": "968e92e2-3a2c-4dc8-ae63-c6a879820018",
+      "ingestion_completed": true
+    },
+    {
+      "record_id": "cf-sig6-144b39dc5a574a1d96739665eaff5395-1",
+      "role": "scientist",
+      "author": "cf-sig6-144b39dc5a574a1d-scientist",
+      "content_sha256": "3c33fe91f031f8df14f451ed26089fe7323ee7bc7f7ad1af64081cc950e1b54e",
+      "ingestion_id": "c4e15abb-bdce-4315-a780-4b40f8822cb6",
+      "ingestion_completed": true
+    },
+    {
+      "record_id": "cf-sig6-144b39dc5a574a1d96739665eaff5395-2",
+      "role": "skeptic",
+      "author": "cf-sig6-144b39dc5a574a1d-skeptic",
+      "content_sha256": "50fb1d87f298de9339a8c418a98111e9ed3e51f4877e108af44d72535736e550",
+      "ingestion_id": "513db80a-a6cb-4cd3-97a5-e9801f4aedce",
+      "ingestion_completed": true
+    },
+    {
+      "record_id": "cf-sig6-144b39dc5a574a1d96739665eaff5395-3",
+      "role": "scientist",
+      "author": "cf-sig6-144b39dc5a574a1d-scientist",
+      "content_sha256": "f19e01fd880945e9071262a9f9e2b7c00b611e7a7e5c523e8a78270fb079fd5e",
+      "ingestion_id": "223e066e-7dfa-4107-8544-d1c0ecb22ffc",
+      "ingestion_completed": true
+    },
+    {
+      "record_id": "cf-sig6-144b39dc5a574a1d96739665eaff5395-4",
+      "role": "researcher",
+      "author": "cf-sig6-144b39dc5a574a1d-researcher",
+      "content_sha256": "d9a45b1b3ede5fb5466435c7d94dedc093c1b5d6c5ceca06ee09d58a3f87578d",
+      "ingestion_id": "c6169a45-b6cd-4255-99aa-bdd6b2514d9f",
+      "ingestion_completed": true
+    }
+  ],
+  "reads": [
+    {
+      "reader": "cf-sig6-144b39dc5a574a1d-scientist",
+      "reader_role": "scientist",
+      "writer_role": "researcher",
+      "required_source_id": "cf-sig6-144b39dc5a574a1d96739665eaff5395-0",
+      "returned_required_source_id": "cf-sig6-144b39dc5a574a1d96739665eaff5395-0",
+      "verified_cross_role_use": true,
+      "canonical_fallback": false,
+      "consumed_content_sha256": "fc266306df7a97624945a6ba1509daf6a2a93719446c34dcf601984660233d13"
+    },
+    {
+      "reader": "cf-sig6-144b39dc5a574a1d-skeptic",
+      "reader_role": "skeptic",
+      "writer_role": "scientist",
+      "required_source_id": "cf-sig6-144b39dc5a574a1d96739665eaff5395-1",
+      "returned_required_source_id": "cf-sig6-144b39dc5a574a1d96739665eaff5395-1",
+      "verified_cross_role_use": true,
+      "canonical_fallback": false,
+      "consumed_content_sha256": "3c33fe91f031f8df14f451ed26089fe7323ee7bc7f7ad1af64081cc950e1b54e"
+    },
+    {
+      "reader": "cf-sig6-144b39dc5a574a1d-skeptic",
+      "reader_role": "skeptic",
+      "writer_role": "researcher",
+      "required_source_id": "cf-sig6-144b39dc5a574a1d96739665eaff5395-0",
+      "returned_required_source_id": "cf-sig6-144b39dc5a574a1d96739665eaff5395-0",
+      "verified_cross_role_use": true,
+      "canonical_fallback": false,
+      "consumed_content_sha256": "fc266306df7a97624945a6ba1509daf6a2a93719446c34dcf601984660233d13"
+    },
+    {
+      "reader": "cf-sig6-144b39dc5a574a1d-scientist",
+      "reader_role": "scientist",
+      "writer_role": "skeptic",
+      "required_source_id": "cf-sig6-144b39dc5a574a1d96739665eaff5395-2",
+      "returned_required_source_id": "cf-sig6-144b39dc5a574a1d96739665eaff5395-2",
+      "verified_cross_role_use": true,
+      "canonical_fallback": false,
+      "consumed_content_sha256": "50fb1d87f298de9339a8c418a98111e9ed3e51f4877e108af44d72535736e550"
+    },
+    {
+      "reader": "cf-sig6-144b39dc5a574a1d-researcher",
+      "reader_role": "researcher",
+      "writer_role": "scientist",
+      "required_source_id": "cf-sig6-144b39dc5a574a1d96739665eaff5395-3",
+      "returned_required_source_id": "cf-sig6-144b39dc5a574a1d96739665eaff5395-3",
+      "verified_cross_role_use": true,
+      "canonical_fallback": false,
+      "consumed_content_sha256": "f19e01fd880945e9071262a9f9e2b7c00b611e7a7e5c523e8a78270fb079fd5e"
+    }
+  ],
+  "decisions": [
+    {
+      "role": "researcher",
+      "selected": "informative_signal_history",
+      "distribution": {
+        "quote_freshness": 0.18985703587532043,
+        "economic_release_vintages": 0.35469961166381836,
+        "informative_signal_history": 0.4554433524608612
+      },
+      "used_record_ids": [],
+      "context_sha256": "e0af2916779d1fb9c3c79ff69754f48310b4620d843043cdc26464d52123510b",
+      "at": "2026-11-15T21:38:28.542496+00:00"
+    },
+    {
+      "role": "scientist",
+      "selected": "audit_informative_variation",
+      "distribution": {
+        "audit_contract_freshness": 0.14202310144901276,
+        "audit_revision_capture": 0.04069029912352562,
+        "audit_informative_variation": 0.8172865509986877
+      },
+      "used_record_ids": [
+        "cf-sig6-144b39dc5a574a1d96739665eaff5395-0"
+      ],
+      "context_sha256": "fc266306df7a97624945a6ba1509daf6a2a93719446c34dcf601984660233d13",
+      "at": "2026-11-15T21:38:49.092358+00:00"
+    },
+    {
+      "role": "skeptic",
+      "selected": "advertised_not_available_capacity",
+      "distribution": {
+        "insufficient_matured_labels": 0.23721684515476227,
+        "insufficient_monthly_release_variation": 0.03210381045937538,
+        "advertised_not_available_capacity": 0.7306793332099915
+      },
+      "used_record_ids": [
+        "cf-sig6-144b39dc5a574a1d96739665eaff5395-1",
+        "cf-sig6-144b39dc5a574a1d96739665eaff5395-0"
+      ],
+      "context_sha256": "a5dcba50c84b0b002bf620d96c41fdc1d014d48d834706d8d37ec67f116d894d",
+      "at": "2026-11-15T21:39:03.455728+00:00"
+    },
+    {
+      "role": "scientist",
+      "selected": "audit_revision_capture",
+      "distribution": {
+        "audit_contract_freshness": 0.299389511346817,
+        "audit_revision_capture": 0.6338075995445251,
+        "audit_informative_variation": 0.06680282950401306
+      },
+      "used_record_ids": [
+        "cf-sig6-144b39dc5a574a1d96739665eaff5395-1",
+        "cf-sig6-144b39dc5a574a1d96739665eaff5395-2"
+      ],
+      "context_sha256": "d0b70fe4fde6332b43850727e83058880df455f8bca4470ed2fbb427e9ea917e",
+      "at": "2026-11-15T21:39:14.853373+00:00"
+    }
+  ],
+  "steps": [
+    {
+      "role": "researcher",
+      "summary": "Selected evidence focus: informative_signal_history",
+      "record_id": "cf-sig6-144b39dc5a574a1d96739665eaff5395-0"
+    },
+    {
+      "role": "scientist",
+      "summary": "Executed audit_informative_variation",
+      "record_id": "cf-sig6-144b39dc5a574a1d96739665eaff5395-1",
+      "result": {
+        "check": "audit_informative_variation",
+        "retained_days": 1,
+        "required_days": 56,
+        "required_matured_pairs": 32,
+        "prospective_primary_scores": 0,
+        "training": "gated"
+      }
+    },
+    {
+      "role": "skeptic",
+      "summary": "Identified advertised_not_available_capacity",
+      "record_id": "cf-sig6-144b39dc5a574a1d96739665eaff5395-2"
+    },
+    {
+      "role": "scientist",
+      "summary": "Executed next check: audit_revision_capture",
+      "record_id": "cf-sig6-144b39dc5a574a1d96739665eaff5395-3",
+      "result": {
+        "check": "audit_revision_capture",
+        "latest_bls_period": "2026-10",
+        "revision_warnings": [
+          {
+            "code": "P",
+            "text": "Preliminary. All indexes are subject to monthly revisions up to four months after original publication."
+          },
+          {
+            "code": "P",
+            "text": "Preliminary. All indexes are subject to monthly revisions up to four months after original publication."
+          }
+        ],
+        "retained_vintages": 1
+      }
+    }
+  ],
+  "calls": [
+    {
+      "method": "PUT",
+      "kind": "audiences",
+      "status": 201,
+      "at": "2026-11-15T21:38:21.262436+00:00"
+    },
+    {
+      "method": "POST",
+      "kind": "ingest",
+      "status": 202,
+      "at": "2026-11-15T21:38:29.258225+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-15T21:38:29.347400+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-15T21:38:31.462202+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-15T21:38:33.628040+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-15T21:38:35.708246+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-15T21:38:37.789655+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-15T21:38:39.867935+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-15T21:38:41.960768+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-15T21:38:44.036903+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-15T21:38:46.122784+00:00"
+    },
+    {
+      "method": "POST",
+      "kind": "recall",
+      "status": 200,
+      "at": "2026-11-15T21:38:46.700279+00:00"
+    },
+    {
+      "method": "POST",
+      "kind": "ingest",
+      "status": 202,
+      "at": "2026-11-15T21:38:49.397686+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-15T21:38:49.464499+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-15T21:38:51.587532+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-15T21:38:53.667621+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-15T21:38:55.799754+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-15T21:38:57.882312+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-15T21:38:59.953538+00:00"
+    },
+    {
+      "method": "POST",
+      "kind": "recall",
+      "status": 200,
+      "at": "2026-11-15T21:39:00.462736+00:00"
+    },
+    {
+      "method": "POST",
+      "kind": "recall",
+      "status": 200,
+      "at": "2026-11-15T21:39:00.904834+00:00"
+    },
+    {
+      "method": "POST",
+      "kind": "ingest",
+      "status": 202,
+      "at": "2026-11-15T21:39:03.665429+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-15T21:39:03.802938+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-15T21:39:05.867753+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-15T21:39:07.947278+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-15T21:39:10.023403+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-15T21:39:12.092786+00:00"
+    },
+    {
+      "method": "POST",
+      "kind": "recall",
+      "status": 200,
+      "at": "2026-11-15T21:39:12.483951+00:00"
+    },
+    {
+      "method": "POST",
+      "kind": "ingest",
+      "status": 202,
+      "at": "2026-11-15T21:39:14.962862+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-15T21:39:15.032193+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-15T21:39:17.118498+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-15T21:39:19.219997+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-15T21:39:21.373593+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-15T21:39:23.450166+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-15T21:39:25.522887+00:00"
+    },
+    {
+      "method": "POST",
+      "kind": "recall",
+      "status": 200,
+      "at": "2026-11-15T21:39:25.983270+00:00"
+    },
+    {
+      "method": "POST",
+      "kind": "ingest",
+      "status": 202,
+      "at": "2026-11-15T21:39:26.212229+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-15T21:39:26.298715+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-15T21:39:28.378503+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-15T21:39:30.495365+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-15T21:39:32.565678+00:00"
+    }
+  ],
+  "source_snapshot_sha256": "edc1d84541789626673b225736d10f113ab7187bf1a71d1bfc4bf763a9da22d6",
+  "protocol_sha256": "ea2aa4e1198cec0465b4b7262e0bbb3cdfe9fab6babf96c46d21cc956db8e992",
+  "new_optimizer_updates": 0,
+  "accuracy_improvement": null,
+  "changed_after_criticism": true,
+  "eligibility": {
+    "writers": 3,
+    "readers": 3,
+    "cross_role_uses": 5,
+    "requirements_met": true
+  },
+  "actual_tinker_decisions": 4,
+  "status": "verified",
+  "completed_at": "2026-11-15T21:39:32.565867+00:00",
+  "provider_cost_usd": null
+}
