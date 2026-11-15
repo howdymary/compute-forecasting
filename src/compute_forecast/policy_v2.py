@@ -234,8 +234,11 @@ async def run(grid_path,output,objective,seed,mode="sft",parent=None,max_updates
     rl_trajectories=[];gate=None;constant_streak=0;skipped_constant_groups=0;recovery_checkpoints=[]
     private["rollout_snapshots"]=[];private["recovery_states"]=[]
     variation=[reachable_training_rewards(t) for t in train]
+    informative_ids={v["task_id"] for v in variation if v["possible_terminal_reward_range"]>1e-8}
+    rl_train=[t for t in train if t["task_id"] in informative_ids]
+    private["rl_curriculum"]={"rule":"Sample only registered training cases with reachable clipped reward variation","task_ids":[t["task_id"] for t in rl_train],"origins":sorted({t["origin"] for t in rl_train}),"selection_uses_evaluation":False}
     write(out/"reward-audit.json",variation)
-    if mode=="rl" and max(v["possible_terminal_reward_range"] for v in variation)<1e-8:
+    if mode=="rl" and not rl_train:
         gate="All reachable training terminal rewards are constant; RL skipped"
         limit=0
     if mode=="sft":
@@ -257,7 +260,7 @@ async def run(grid_path,output,objective,seed,mode="sft",parent=None,max_updates
             rollout_checkpoint_id=hashlib.sha256(weights.path.encode()).hexdigest()[:20]
             private["rollout_snapshots"].append({"iteration":step,"checkpoint_id":rollout_checkpoint_id,"sampler_path":weights.path,"ttl_seconds":3600})
             sampler=await service.create_sampling_client(model_path=weights.path)
-            task=train[rng.randrange(len(train))]
+            task=rl_train[rng.randrange(len(rl_train))]
             batch_tasks=[task]*4  # Same task, four genuinely sampled trajectories.
             rollouts=await asyncio.gather(*(episode(t,sampler,renderer,random.Random(seed*100000+step*10+i)) for i,t in enumerate(batch_tasks)))
             rewards=[max(-5,min(5,-r[0]["pinball"]/t["scale"])) for r,t in zip(rollouts,batch_tasks)]
@@ -319,7 +322,7 @@ async def run(grid_path,output,objective,seed,mode="sft",parent=None,max_updates
       "training_tasks":len(train),"training_temporal_origins":len({t["origin"] for t in train}),"development_tasks":len(dev),"evaluation_tasks":len(test),
       "evaluation_status":protocol()["evaluation_status"],"future_competition_truth_loaded":False,"v1_final_used":False,
       "comparisons":[public_score(x) for x in [initial,trained,*([parent_evaluation] if parent_evaluation else []),noobs,critic,*([evidence_report] if evidence_report else []),*refs]],"static_portfolio":fixed,
-      "parent_checkpoint_id":private.get("parent_checkpoint_id"),"rl_delta_vs_sft_parent":trained["pinball"]-parent_evaluation["pinball"] if parent_evaluation else None,"rl_gate":gate,"rl_gate_revision":2 if mode=="rl" else None,"skipped_constant_groups":skipped_constant_groups,"sampled_training_episodes":len(rl_trajectories),"recovery_checkpoints":recovery_checkpoints,"numerical_feedback_cache_hit":True,"new_rollout_numerical_executions":0,"reward_audit":variation,"evidence_packet":packet,"critic_behavior":"fixed deterministic, sees revealed validation only","runtime_seconds":time.perf_counter()-started,"cost_status":"unavailable","cost":None,
+      "rl_curriculum":private["rl_curriculum"] if mode=="rl" else None,"parent_checkpoint_id":private.get("parent_checkpoint_id"),"rl_delta_vs_sft_parent":trained["pinball"]-parent_evaluation["pinball"] if parent_evaluation else None,"rl_gate":gate,"rl_gate_revision":2 if mode=="rl" else None,"skipped_constant_groups":skipped_constant_groups,"sampled_training_episodes":len(rl_trajectories),"recovery_checkpoints":recovery_checkpoints,"numerical_feedback_cache_hit":True,"new_rollout_numerical_executions":0,"reward_audit":variation,"evidence_packet":packet,"critic_behavior":"fixed deterministic, sees revealed validation only","runtime_seconds":time.perf_counter()-started,"cost_status":"unavailable","cost":None,
       "limitations":["Retrospective evaluation reuses previously published v1 development dates","Series and horizons share observations; tasks are dependent","Pretrained knowledge and true historical vintage cannot be excluded"]}
     write(out/"policy-report.json",result);print("V2_POLICY_REPORT:"+json.dumps(result),flush=True)
     with open(os.environ["GITHUB_STEP_SUMMARY"],"a") as f:f.write("# V2 policy "+mode+" "+objective+" seed"+str(seed)+"\n\n~~~json\n"+json.dumps(result,indent=2)+"\n~~~\n")

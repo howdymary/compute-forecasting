@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "registered_at_utc": "2026-11-15T03:05:57Z",
+  "registered_at_utc": "2026-11-15T03:20:22Z",
   "applies_to": "RL before its first optimizer update; six SFT runs and the official release unchanged",
   "changes": [
     "Reachability accounts for the four additional trial slots",
@@ -10,7 +10,9 @@
     "Save a final development-evaluated checkpoint after early stopping; save optimizer recovery states every ten useful updates",
     "Rollout sampler snapshots expire after one hour; persistent evaluated states remain",
     "Measure RL's incremental effect against its frozen SFT parent, retaining the original starting-policy comparison",
-    "Report ablation action-sequence changes separately from forecast-loss changes"
+    "Report ablation action-sequence changes separately from forecast-loss changes",
+    "Use a training-only curriculum of registered cases with reachable clipped reward variation; evaluate every original eligible case",
+    "Add training-selected individual forecaster references on the exact selector evaluation scope"
   ],
   "seeds": [
     17,
@@ -20,5 +22,8 @@
   "maximum_sampling_iterations": 60,
   "evaluation_selection": "unchanged development-only selection",
   "source_grid_sha": "a147797ec4557a337e2157ac60857d575e121630",
-  "parent_comparison_added_before_rl_training": true
+  "parent_comparison_added_before_rl_training": true,
+  "revision": 3,
+  "known_exposure": "Two seed17 SFT evaluations already observed. RL amendments use training-only reward structure and are fixed before any RL optimizer updates. The primary SFT protocol remains unchanged.",
+  "rl_comparison_status": "exploratory retrospective extension"
 }

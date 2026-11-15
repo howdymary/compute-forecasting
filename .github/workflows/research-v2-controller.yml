@@ -33,7 +33,7 @@ jobs:
               out=subprocess.check_output(cmd,input=json.dumps(payload).encode() if payload is not None else None)
               return json.loads(out) if out.strip() else None
           cancelled=[]
-          targets=[(43671212402,'V2 reward learning · 43671178180','0a6d71a9c690c62fb057a914a4f50505032c1617','Test reachable reward variation then sample actual trajectories'),(43671220889,'Analyze paired policy results and strong static control','0a6d71a9c690c62fb057a914a4f50505032c1617','Evaluate the training-selected control and paired sensitivities')]
+          targets=[(43671484254,'V2 reward learning · 43671460138','938795b118ffdc40e1a84abeb7361b8f41721adb','Test reachable reward variation then sample actual trajectories'),(43671494837,'Analyze paired policy results and strong static control','938795b118ffdc40e1a84abeb7361b8f41721adb','Evaluate the training-selected control and paired sensitivities')]
           for rid,name,sha,expensive in targets:
               run=api('actions/runs/'+str(rid))
               assert run['name']==name and run['head_branch']=='compute-observatory' and run['head_sha']==sha
@@ -50,7 +50,7 @@ jobs:
               time.sleep(5)
           assert new is not None,'Dispatch accepted but new run receipt not yet visible'
           api('actions/workflows/research-v2-analysis.yml/dispatches','POST',{'ref':'compute-observatory','inputs':{'rl_run_id':str(new['id'])}})
-          receipt={'controller_run_id':controller,'source_sha':os.environ['GITHUB_SHA'],'cancelled_pending_run_ids':cancelled,'replacement_rl_run_id':new['id'],'replacement_rl_source_sha':new['head_sha'],'reason':'Add the explicit SFT-parent RL control before training starts; SFT and numerical results preserved'}
+          receipt={'controller_run_id':controller,'source_sha':os.environ['GITHUB_SHA'],'cancelled_pending_run_ids':cancelled,'replacement_rl_run_id':new['id'],'replacement_rl_source_sha':new['head_sha'],'reason':'Freeze the training-only reward-variation curriculum and same-scope controls before RL starts; SFT and numerical results preserved'}
           Path('artifacts').mkdir(exist_ok=True);Path('artifacts/rl-controller.json').write_text(json.dumps(receipt,indent=2))
           print('V2_RL_CONTROLLER:'+json.dumps(receipt),flush=True)
           PY
