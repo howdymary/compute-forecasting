@@ -26,17 +26,12 @@ jobs:
         run: |
           python -B -m unittest discover -s codegarden/tests -v
           python -B codegarden/supervisor.py codegarden/artifacts/best_code.txt
-      - name: Install isolated pinned provider clients
+      - name: Compile and check exact exchanges against brute force
         run: |
-          python -m venv codegarden/.venv
-          codegarden/.venv/bin/python -m pip install -r codegarden/requirements-providers.txt -r codegarden/requirements-exact.txt
-      - name: Refresh accounts and independently reproduce current arena
-        env:
-          PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
-          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
-          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
-          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
-        run: codegarden/.venv/bin/python -B -u codegarden/phase2/preflight.py
+          mkdir -p codegarden/.build
+          g++ -O3 -std=c++17 codegarden/phase2/kernel_v2.cpp -o codegarden/.build/kernel_v2
+          python -B codegarden/phase2/test_exchange.py
+          python -B codegarden/phase2/sweep.py
       - name: Publish only CodeGarden receipts
         if: always()
         env:
