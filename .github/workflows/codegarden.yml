@@ -1,18 +1,18 @@
 name: CodeGarden direct blocker bundles
 on:
   push:
-    branches: [codegarden-bundle-005]
+    branches: [codegarden-bundle-006]
     paths: [.github/workflows/codegarden.yml]
   workflow_dispatch:
 permissions:
   contents: write
 concurrency:
-  group: codegarden-free-bundle-005
+  group: codegarden-free-bundle-006
   cancel-in-progress: false
 env:
   PYTHONDONTWRITEBYTECODE: '1'
   SOURCE_SHA: ${{ github.sha }}
-  CODEGARDEN_BATCH: bundle_003
+  CODEGARDEN_BATCH: bundle_004
 jobs:
   preflight:
     runs-on: ubuntu-latest
@@ -31,16 +31,16 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: codegarden-bundle-preflight
-          path: codegarden/artifacts/phase3/bundle_003/
+          path: codegarden/artifacts/phase3/bundle_004/
   probes:
     needs: preflight
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 35
     strategy:
       fail-fast: false
       max-parallel: 4
       matrix:
-        mode: [strict5, strict6, neutral4, neutral5]
+        mode: [component5, newroot6]
     steps:
       - name: Fetch immutable source
         env:
@@ -49,17 +49,17 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: codegarden-bundle-preflight
-          path: codegarden/artifacts/phase3/bundle_003/
+          path: codegarden/artifacts/phase3/bundle_004/
       - name: Compile and run bounded component
         run: |
           mkdir -p codegarden/.build
           g++ -O3 -std=c++17 codegarden/phase3/bundle_fast.cpp -o codegarden/.build/bundle
-          python -B -u codegarden/phase3/bundle_fast_probe.py --mode ${{ matrix.mode }}
+          python -B -u codegarden/phase3/bundle_continue.py --mode ${{ matrix.mode }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: codegarden-bundle-${{ matrix.mode }}
-          path: codegarden/artifacts/phase3/bundle_003/
+          path: codegarden/artifacts/phase3/bundle_004/
   collect:
     needs: [preflight, probes]
     if: always()
@@ -74,13 +74,13 @@ jobs:
         with:
           pattern: codegarden-bundle-*
           merge-multiple: true
-          path: codegarden/artifacts/phase3/bundle_003/
+          path: codegarden/artifacts/phase3/bundle_004/
       - name: Publish leased results
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python -B -u codegarden/phase3/publish_bundle_fast.py
+        run: python -B -u codegarden/phase3/publish_bundle_continue.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: codegarden-bundle-collected
-          path: codegarden/artifacts/phase3/bundle_003/
+          path: codegarden/artifacts/phase3/bundle_004/
