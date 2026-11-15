@@ -1,0 +1,94 @@
+{
+  "research_date": "2026-11-15T03:01:56.750785+00:00",
+  "result": "incumbent reproduced; no improvement",
+  "strict_improvement": false,
+  "baseline": {
+    "valid": true,
+    "claim_certified": true,
+    "ratio_interval_arb": [
+      "[1.6748942113071162287643437370609571677794403908112552525751752060 +/- 3.72e-65]",
+      "[1.6748942113071162287643437370609571677794403908112552525751752060 +/- 3.72e-65]"
+    ],
+    "entropies": {
+      "x-y": "[1.901440925560701110457484265407281972200396234221106319 +/- 3.17e-55]",
+      "x": "[1.135260312397153687844396449540066594354571308487826799 +/- 1.90e-55]",
+      "y": "[1.135260312397153687844592888597243878964664846190204647 +/- 4.53e-55]",
+      "x+y": "[1.135260312397153687844257617360514392569734230957698211 +/- 4.41e-55]",
+      "x+2y": "[1.135260312397153687844610788463418675851397207977017478 +/- 3.01e-55]"
+    }
+  },
+  "best": {
+    "valid": true,
+    "claim_certified": true,
+    "ratio_interval_arb": [
+      "[1.6748942113071162287643437370609571677794403908112552525751752060 +/- 3.72e-65]",
+      "[1.6748942113071162287643437370609571677794403908112552525751752060 +/- 3.72e-65]"
+    ],
+    "entropies": {
+      "x-y": "[1.901440925560701110457484265407281972200396234221106319 +/- 3.17e-55]",
+      "x": "[1.135260312397153687844396449540066594354571308487826799 +/- 1.90e-55]",
+      "y": "[1.135260312397153687844592888597243878964664846190204647 +/- 4.53e-55]",
+      "x+y": "[1.135260312397153687844257617360514392569734230957698211 +/- 4.41e-55]",
+      "x+2y": "[1.135260312397153687844610788463418675851397207977017478 +/- 3.01e-55]"
+    }
+  },
+  "trials": 16,
+  "seed": 20261115,
+  "search_wall_seconds": 56.84191219799999,
+  "providers": {
+    "exa": {
+      "initial_cap": 119.58,
+      "units": "USD prepaid credits",
+      "enabled": true,
+      "operational_cap": 5,
+      "reserved_or_actual": 0.008
+    },
+    "past": {
+      "initial_cap": 699579,
+      "units": "credits",
+      "enabled": true,
+      "operational_cap": 200,
+      "reserved_or_actual": 7.0
+    },
+    "tinker": {
+      "initial_cap": null,
+      "units": null,
+      "enabled": false,
+      "operational_cap": null,
+      "reserved_or_actual": 0
+    },
+    "modal": {
+      "initial_cap": 249.36,
+      "units": "USD compute credits",
+      "enabled": true,
+      "operational_cap": 15,
+      "reserved_or_actual": 5.2
+    }
+  },
+  "protected_sha256": {
+    "verify.py": "3c5cd73bf3d50eea098d3253e46e9e5ea9812ec3c2fa2711ea16b349f586ef30",
+    "verify_independent.py": "7ab5378bda9ec6e6e8914d5fa038239e3837798a82d34c262b83777858524722"
+  },
+  "source_commit": "c84a656a0a20d4035e8caeea3714643e7b14f4cb",
+  "workflow_run": "43670325538",
+  "exa_calls": 2,
+  "cross_role_reuse": true,
+  "operators": {
+    "weights": {
+      "trials": 4,
+      "accepted": 0
+    },
+    "augment": {
+      "trials": 4,
+      "accepted": 0
+    },
+    "exchange": {
+      "trials": 4,
+      "accepted": 0
+    },
+    "new-law": {
+      "trials": 4,
+      "accepted": 0
+    }
+  }
+}
