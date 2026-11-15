@@ -105,6 +105,7 @@ def main():
             axis_contrast=contrast_ratio(axis_color,plot_background)
             assert axis_contrast>=4.5,axis_contrast
             def values():return [float(v) for v in page.locator("[data-point-value]").evaluate_all("(es)=>es.map(e=>e.dataset.value)")]
+            page.get_by_role("button",name="Long-term scenarios",exact=True).click()
             original=values()
             page.locator("#pin-point").click()
             assert page.locator(".pinned-note").count()==1
@@ -147,9 +148,9 @@ def main():
             assert saved["forecast_csv_sha256"]=="67a043255a716db6bc9b73cd28f9258c30fb299fd8671a9ee3430c0d94cadd80"
             close(saved["values"],values())
             page.locator("#price-chart").focus();page.keyboard.press("ArrowLeft")
-            assert page.locator("#time-cursor").input_value()=="1"
+            assert page.evaluate("T7.points[T7.index].horizon_days")==3
             page.keyboard.press("ArrowLeft")
-            assert page.locator("#time-cursor").input_value()=="0"
+            assert page.evaluate("T7.points[T7.index].horizon_days")==1
             assert "day 1" in page.locator("#notebook-note").inner_text().casefold()
             if mobile:
                 page.locator("#price-chart").scroll_into_view_if_needed()

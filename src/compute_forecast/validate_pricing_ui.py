@@ -25,6 +25,7 @@ def main():
         page.locator("#price-chart").wait_for(timeout=90000)
         page.get_by_role("heading",name="See what compute could cost.",exact=True).wait_for()
         assert page.locator("#series-select option").count()==37
+        page.get_by_role("button",name="Long-term scenarios",exact=True).click()
         def values():return [float(v) for v in page.locator("[data-point-value]").evaluate_all("(els)=>els.map(e=>e.dataset.value)")]
         def close(a,b):assert all(math.isclose(x,y,rel_tol=1e-10) for x,y in zip(a,b)),(a,b)
         close(values(),[27.4625,61.4125,115.7625])
@@ -69,7 +70,9 @@ def main():
         page.get_by_role("button",name="Submitted forecast",exact=True).click()
         points=next(s for s in p["series"] if s["id"]==selected)["forecasts"]
         close(values(),[points[2][q] for q in ("q10","q50","q90")])
-        assert "History before the cutoff is not published" in page.locator("#chart-note").inner_text()
+        assert "Historical dates retain their gaps" in page.locator("#chart-note").inner_text()
+        page.wait_for_function("V5 !== null")
+        assert page.evaluate("t7History() !== null"), "Selected benchmark must expose its approved matching history"
         options=page.locator("#compare option").evaluate_all("(es)=>es.map(e=>e.value)")
         current=next(s for s in p["series"] if s["id"]==selected)
         assert set(options[1:])=={s["id"] for s in p["series"] if s["id"]!=selected and s["comparison_key"]==current["comparison_key"]}
@@ -90,6 +93,7 @@ def main():
         phone.goto(URL,wait_until="domcontentloaded",timeout=90000)
         phone.locator("#price-chart").wait_for(timeout=90000)
         phone.get_by_role("heading",name="See what compute could cost.",exact=True).wait_for()
+        phone.get_by_role("button",name="Long-term scenarios",exact=True).click()
         assert phone.evaluate("document.documentElement.scrollWidth<=innerWidth+2"),"Mobile overflow"
         phone.locator("#price-chart").scroll_into_view_if_needed()
         box=phone.locator("#price-chart").bounding_box();phone.touchscreen.tap(box["x"]+box["width"]*.6,box["y"]+100)
@@ -102,7 +106,7 @@ def main():
         mobile.close();context.close();browser.close()
     assert not errors,errors
     assert not failures,failures
-    report={"status":"passed","ui_revision":health["ui_revision"],"pricing_sha":p["code_sha"],"series_verified":37,"forecast_points_verified":111,"official_csv_sha256":p["forecast_csv_sha256"],"history_published":False,"scenario_endpoints_match":True,"validated_views":["Explore scenarios","Archived forecast","Research results","Representations","Recorded policy traces","Evidence and memory","Methods","Downloads"],"mobile_width":390,"touch_and_keyboard_checked":True,"page_errors":errors,"failed_public_requests":failures,"media_recording":False}
+    report={"status":"passed","ui_revision":health["ui_revision"],"pricing_sha":p["code_sha"],"series_verified":37,"forecast_points_verified":111,"official_csv_sha256":p["forecast_csv_sha256"],"history_published":True,"scenario_endpoints_match":True,"validated_views":["Explore scenarios","Archived forecast","Research results","Representations","Recorded policy traces","Evidence and memory","Methods","Downloads"],"mobile_width":390,"touch_and_keyboard_checked":True,"page_errors":errors,"failed_public_requests":failures,"media_recording":False}
     (out/"pricing-ui-validation.json").write_text(json.dumps(report,indent=2)+"\n")
     with open(os.environ["GITHUB_STEP_SUMMARY"],"a") as f:f.write("# Pricing UI validation passed\n\n~~~json\n"+json.dumps(report,indent=2)+"\n~~~\n")
 if __name__=="__main__":main()

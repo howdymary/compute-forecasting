@@ -10,6 +10,10 @@ Explore advertised rental prices, inspect an archived forecast, and see how expl
 
 *Actual permitted history and the unchanged November 6 submission. Missing dates remain missing; the forecast contains only the submitted 1/3/7-day points. Screenshots come from the verified deployed application.*
 
+## Historical prices and the archived forecast
+
+Explore now opens on a source-matched timeline: licensed daily history in ink, the unchanged submitted quantiles in cobalt, a marked November6 cutoff, and a full-history overview. Inspect2-week,1-month,3-month or all-history windows; hover, touch or use the keyboard to pin exact source-bound points.36 of37 histories are approved for publication; the remaining forecast is shown with its history withheld. [Controls, provenance and limitations](docs/timeline-v7.md).
+
 ## What you can explore
 
 - **Matching benchmark history.** 3,204 permitted observations across 36 of the 37 exact submitted target series, with the November 6 cutoff and unchanged forecast points. The remaining marketplace-ask history stays withheld under a source-specific caveat. [Publication decision](docs/DATA_SOURCES.md).

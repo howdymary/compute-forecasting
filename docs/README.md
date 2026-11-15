@@ -6,6 +6,9 @@ Current prospective extension: [Signals v6](prospective-signals-v6.md) · [Versi
 
 ## Start here
 
+[Historical-price timeline v7](timeline-v7.md): matching licensed history and actual archived forecast points in the main Explore view.
+
+
 | Document | Purpose |
 | --- | --- |
 | [Project overview](../README.md) | Product, main results, and contribution boundary |

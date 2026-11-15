@@ -43,7 +43,7 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible{ou
 
 </style></head><body><header><div class="brand"><span class="mark" aria-hidden="true">↗</span><div><b>Compute Forecast</b><small>AN OPEN COMPUTE NOTEBOOK</small></div></div><a href="https://github.com/howdymary/compute-forecasting/tree/compute-observatory" target="_blank" rel="noopener">Source & methodology ↗</a></header><nav aria-label="Main navigation"><button data-view="explore" aria-current="true">Explore</button><button data-view="research">Research</button><a href="/experimental">Experimental Research ↗</a><button data-view="methods">Methods</button><button data-view="downloads">Downloads</button></nav><main id="app"><div class="eyebrow">CONNECTING TO VERIFIED ARTIFACTS</div><h1>See what compute could cost.</h1><p class="sub">Loading the archived forecasts and published scenario assumptions…</p><div class="loading-chart" aria-hidden="true"></div></main><footer><span>Advertised rental offers · Pacific Machines (2026) · No live quotes</span><span id="revision"></span></footer><script>
 'use strict';let P,D,N,view='explore',researchTab='visual',frameDate='',replayDate='',step=0,playing=false,timer=null,plotGeom=null,researchError=null,notebookError=null;
-const S={mode:'scenario',instrument:'rental',months:36,cursor:36,forecastHorizon:7,point:2,series:'',compare:'',rates:{rental:[],resale:[]},basis:'index',anchor:'',hours:1000,pins:[],pinSeq:0};
+const S={mode:'benchmark',instrument:'rental',months:36,cursor:36,forecastHorizon:7,point:2,series:'',compare:'',rates:{rental:[],resale:[]},basis:'index',anchor:'',hours:1000,pins:[],pinSeq:0};
 const colors=['#17806d','#355cdb','#b77928'],titles={supply_expansion:'Supply expansion',moderate_decline:'Moderate decline',persistent_constraints:'Persistent constraints'};
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])),fmt=(n,d=6)=>n==null?'—':Number(n).toFixed(d),pct=n=>n==null?'undefined':(n*100).toFixed(2)+'%',name=s=>({'starting_policy':'Starting policy','frozen_trained_policy':'Frozen SFT · epoch 1','fixed_search':'Fixed search','last_value':'Last value','last_value_empirical':'Empirical intervals','drift':'Drift','seasonal_naive':'Seasonal naive'}[s]||s.replaceAll('_',' ')),link=(url,label)=>/^https?:\/\//.test(url)?'<a target="_blank" rel="noopener" href="'+esc(url)+'">'+esc(label)+' ↗</a>':esc(label),chip=(s,c='')=>'<span class="chip '+c+'">'+esc(s)+'</span>';
 function series(){return P.series.find(s=>s.id===S.series)||P.series[0]}
@@ -223,3 +223,6 @@ HTML=enhance_value_v5(HTML)
 
 from .signals_ui_v6 import enhance as enhance_signals_v6
 HTML = enhance_signals_v6(HTML)
+
+from .timeline_ui_v7 import enhance as enhance_timeline_v7
+HTML = enhance_timeline_v7(HTML)
