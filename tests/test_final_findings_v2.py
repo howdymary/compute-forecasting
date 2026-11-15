@@ -49,3 +49,11 @@ def test_renderer_reports_improving_tied_and_worsening_rl_without_api_calls():
     assert "1 lower loss versus their SFT parent, 1 tie and 1 increase loss" in text
     assert "1 improve, 1 tie, 1 worsen" in intro
     assert "tinker://" not in str(registry)
+
+
+def test_duplicate_rl_seeds_cannot_satisfy_three_run_requirement():
+    # Identity validation happens before scores, archive access or publication.
+    sft=[{"mode":"sft","seed":s,"objective":o,"actual_optimizer_updates":100} for s in (17,29,43) for o in ("hard","soft")]
+    rl=[{"mode":"rl","seed":s} for s in (17,17,29)]
+    with pytest.raises(ValueError,match="Wrong RL seed identities"):
+        report.validate({"policy_reports":sft+rl})
