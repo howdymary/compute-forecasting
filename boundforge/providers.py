@@ -2,7 +2,7 @@
 Never purchase credits or change plans. Unknown cost stays reserved after failures.
 Single orchestration process owns this ledger; Modal workers receive no API keys.
 """
-import datetime as dt, hashlib, json, os, pathlib, sqlite3, time, urllib.request
+import datetime as dt, hashlib, json, os, pathlib, sqlite3, time, urllib.request, subprocess, csv, io
 ROOT=pathlib.Path(__file__).resolve().parent
 class Disabled(RuntimeError): pass
 def http(url,key,payload=None,header="Authorization"):
@@ -20,12 +20,32 @@ class Ledger:
             history=json.loads(old.read_text())
             for provider,amount in history["usage"].items():
                 self.db.execute("insert or ignore into reservations values(?,?,?,?,?)",("historical-"+history["source_run"]+"-"+provider,provider,amount,amount,"historical conservative accounting"))
+        self.db.execute("create table if not exists freezes(provider text primary key, reason text)")
         self.db.commit()
     def reserve(self,provider,amount,observed=None):
         p=self.snapshot["providers"][provider]
         if not p.get("enabled") or p.get("initial_cap") is None: raise Disabled(provider+": unverified balance")
         cap=min(float(p["initial_cap"]),float(p.get("operational_cap",0)))
+        if provider=="modal":
+            from preflight import cli
+            billing=cli("modal","billing","summary","--json")
+            if billing.get("status")!=200:raise Disabled("Modal live usage unavailable")
+            cost=float(billing["data"]["metered_cost"])
+            observed=max(0,float(p["initial_cap"])-max(0,cost-1.64005948))
+        if provider=="tinker":
+            # Account-wide gross usage is conservatively deducted in full, including
+            # pre-snapshot usage. Missing/lagged spend is covered by large headroom.
+            now=dt.datetime.now(dt.timezone.utc)
+            end=(now+dt.timedelta(days=1)).date().isoformat()
+            result=subprocess.run(["tinker","billing","usage","2026-11-14",end,"--csv","-"],capture_output=True,text=True,timeout=45)
+            if result.returncode:raise Disabled("Tinker live usage unavailable")
+            rows=list(csv.DictReader(io.StringIO(result.stdout)))
+            if rows and "estimated_cost_usd" not in rows[0]:raise Disabled("Tinker cost schema unavailable")
+            total_cost=sum(float(r.get("estimated_cost_usd") or 0) for r in rows)
+            observed=max(0,float(p["initial_cap"])-total_cost-20) # guard for pending/lagged jobs
         self.db.execute("begin immediate")
+        if self.db.execute("select reason from freezes where provider=?",(provider,)).fetchone():
+            self.db.rollback();raise Disabled(provider+": frozen after accounting failure")
         total=self.db.execute("select coalesce(sum(coalesce(actual,reserved)),0) from reservations where provider=?",(provider,)).fetchone()[0]
         if amount<0 or total+amount>cap or (observed is not None and amount+10>observed):
             self.db.rollback();raise Disabled(provider+": budget reservation refused")
@@ -35,7 +55,11 @@ class Ledger:
     def settle(self,ident,actual):
         row=self.db.execute("select reserved from reservations where id=?",(ident,)).fetchone()
         if actual is None:return # unknown remains fully reserved; no automatic retry
-        if actual<0 or actual>row[0]: raise Disabled("actual cost exceeds reservation; freeze provider")
+        if actual<0 or actual>row[0]:
+            provider=self.db.execute("select provider from reservations where id=?",(ident,)).fetchone()[0]
+            self.db.execute("insert or replace into freezes values(?,?)",(provider,"cost exceeded reservation"))
+            self.db.commit()
+            raise Disabled("actual cost exceeds reservation; provider frozen")
         self.db.execute("update reservations set actual=?,status='settled' where id=?",(actual,ident));self.db.commit()
     def summary(self):
         return {p:{"initial_cap":d.get("initial_cap"),"units":d.get("unit"),"enabled":d.get("enabled"),"operational_cap":d.get("operational_cap"),"reserved_or_actual":self.db.execute("select coalesce(sum(coalesce(actual,reserved)),0) from reservations where provider=?",(p,)).fetchone()[0]} for p,d in self.snapshot["providers"].items()}
@@ -88,8 +112,10 @@ class Providers:
         r=http("https://api.past.dev/api/v1/recall",os.environ["PAST_API_KEY"],{"query":query,"identity":"boundforge-"+role,"maxTokens":2000,"limit":12})
         self.ledger.settle(token,1) # conservative even when included recall is free
         body=json.dumps(r)
-        present=required is not None and required in body
+        ids={s.get("sourceId") for doc in r.get("results",[]) for s in doc.get("sources",[])}
+        present=required is not None and required in ids
         # Only BoundForge result documents are retained; unrelated project memory is not published.
         documents=[x for x in r.get("results",[]) if "boundforge" in json.dumps(x).lower()]
-        self.log("memory_read",{"role":role,"required_source":required,"cross_role_source_present":present,"documents":documents})
+        safe=[{"id":doc.get("id"),"content_sha256":hashlib.sha256(doc.get("content","").encode()).hexdigest(),"source_ids":[s.get("sourceId") for s in doc.get("sources",[]) if str(s.get("sourceId","")).startswith("boundforge-")]} for doc in documents]
+        self.log("memory_read",{"role":role,"required_source":required,"cross_role_source_present":present,"documents":safe})
         return documents,present

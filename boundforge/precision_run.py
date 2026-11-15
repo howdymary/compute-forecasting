@@ -5,7 +5,7 @@ import verify,precision
 from providers import Providers
 ROOT=pathlib.Path(__file__).resolve().parent
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument("--structural-trials",type=int,default=6);a=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument("--structural-trials",type=int,default=6);ap.add_argument("--start");a=ap.parse_args()
     if not os.environ.get("GITHUB_ACTIONS"):raise SystemExit("Remote GitHub Actions only")
     if not 0<=a.structural_trials<=20:raise SystemExit("bounded trial limit")
     out=ROOT/"results";out.mkdir(exist_ok=True)
@@ -17,6 +17,10 @@ def main():
     protected={n:hashlib.sha256((ROOT/n).read_bytes()).hexdigest() for n in ("verify.py","verify_independent.py")}
     baseline=json.loads((ROOT/"certificates/incumbent.json").read_text())
     verify.report(baseline);best=copy.deepcopy(baseline)
+    if a.start:
+        seed=json.loads(pathlib.Path(a.start).read_text())
+        verify.report(seed)
+        if verify.improves(seed,best):best=seed
     providers=Providers(out,log)
     log("baseline",verify.report(baseline))
     try:sources.append(providers.exa("Manvir Jaswal C3c four slope sum difference independent laws Newton multipliers certificate"))
@@ -31,7 +35,7 @@ def main():
         (out/"best.json").write_text(json.dumps(best,indent=2))
         (out/"precision-checkpoint.json").write_text(json.dumps({"history":history,"best":best}))
         log("precision_experiment",row)
-    refined,stats=precision.refine_composition(baseline)
+    refined,stats=precision.refine_composition(best)
     accept(refined,stats,"high precision digit counts; original laws unchanged")
     scientist=None
     try:
@@ -55,7 +59,7 @@ def main():
             selected=0
             if scientist:
                 try:selected=scientist.choose(options,history,sources)
-                except Exception as e:log("tinker_invalid_action",{"reason":type(e).__name__,"fallback":"top exact-formula heuristic"})
+                except Exception as e:log("tinker_invalid_action",{"reason":type(e).__name__+": "+str(e)[:500],"fallback":"top exact-formula heuristic"})
             proposal=options[selected];used.add((proposal["law"],tuple(proposal["point"])))
             try:
                 sid,ready=providers.write("proposer","precision-plan-"+str(trial),"BoundForge high precision proposal "+json.dumps(proposal)+". Derived from stationary free-energy insertion score, requiring independent certification.",{"trial":trial})
@@ -89,7 +93,7 @@ def main():
     log("independent_final",independent)
     for n,h in protected.items():
         if hashlib.sha256((ROOT/n).read_bytes()).hexdigest()!=h:raise RuntimeError("protected verifier changed")
-    summary={"result":"strict certified improvement to incumbent witness" if verify.improves(best,baseline) else "no certified improvement","strict_improvement":verify.improves(best,baseline),"independent":independent,"best":result,"baseline":verify.report(baseline),"experiments":history,"providers":providers.ledger.summary(),"elapsed_seconds":time.monotonic()-start,"source_commit":os.environ.get("GITHUB_SHA"),"workflow_run":os.environ.get("GITHUB_RUN_ID"),"protected_sha256":protected,"tinker_training":"Not run: early verified outcomes insufficient to support a useful held-out training comparison. Base model used for experiment selection.","claim_scope":"A stricter exact certificate than the published witness, if checks pass. Literature-priority and meaningful display-digit change require separate assessment; no sharp-constant claim."}
+    summary={"result":"strict certified improvement to incumbent witness" if verify.improves(best,baseline) else "no certified improvement","strict_improvement":verify.improves(best,baseline),"independent":independent,"best":result,"baseline":verify.report(baseline),"experiments":history,"providers":providers.ledger.summary(),"elapsed_seconds":time.monotonic()-start,"source_commit":os.environ.get("GITHUB_SHA"),"workflow_run":os.environ.get("GITHUB_RUN_ID"),"protected_sha256":protected,"tinker_training":"Not run: early verified outcomes insufficient to support a useful held-out training comparison. Actual model decisions, if any, are counted from tinker_decision trace events.","claim_scope":"A stricter exact certificate than the published witness, if checks pass. Literature-priority and meaningful display-digit change require separate assessment; no sharp-constant claim."}
     (out/"report.json").write_text(json.dumps(summary,indent=2))
     (out/"sources.json").write_text(json.dumps(sources,indent=2))
     print("BOUNDFORGE_FINAL "+json.dumps(summary),flush=True)
