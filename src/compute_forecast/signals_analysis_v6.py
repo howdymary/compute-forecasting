@@ -18,6 +18,24 @@ def holm(pvalues):
     for i,(value,key) in enumerate(ranked):
         running=max(running,(len(ranked)-i)*value);out[key]=min(1,running) if pvalues[key] is not None else None
     return out
+
+def scoped_comparisons(scores):
+    output=[]
+    for family in ("A100","H100","pooled"):
+        for h in (1,3,7):
+            joined=[];origins=set()
+            for report in scores:
+                if report.get("classification")!="primary_factorial":continue
+                rows=[c for c in report["cells"] if c["horizon_days"]==h and (family=="pooled" or c["family"]==family)]
+                sets=[{(c["series_id"],c["target_date"],h) for c in rows if c["forecaster"]=="signals_"+m} for m in config()["learner"]["feature_masks"]]
+                common=set.intersection(*sets) if sets else set()
+                common&={(c["series_id"],c["target_date"],h) for c in rows if c["forecaster"]=="drift"}
+                joined.extend(c for c in rows if (c["series_id"],c["target_date"],h) in common)
+                if common:origins.add(report["origin_date"])
+            for reference in ("signals_000","drift"):
+                output.append({"family":family,"horizon_days":h,"origins":len(origins),**paired(joined,"signals_111",reference,h)})
+    return output
+
 def summarize(scores,snapshots,at):
     p=config();last=(date.fromisoformat(p["origins"][-1])+timedelta(days=8)).isoformat()+"T00:00:00+00:00";final=utc(at)>=utc(last)
     comparisons=[("signals_111","signals_000"),("signals_111","drift"),("signals_111","signals_011"),("signals_111","signals_101"),("signals_111","signals_110")]
@@ -47,4 +65,4 @@ def summarize(scores,snapshots,at):
         t=totals[i+2];interval=t.get("uncertainty",{}).get("interval")
         support[g]={"variation_screen_passed":variation[g],"holm_adjusted_p":adjusted[g],"improvement_established":bool(final and variation[g] and adjusted[g] is not None and adjusted[g]<.05 and interval and interval[1]<0 and t["weighted_difference"]<0)}
     primary=totals[0];interval=primary.get("uncertainty",{}).get("interval");established=bool(final and interval and interval[1]<0 and primary["weighted_difference"]<0)
-    return {"analysis_at":at,"final_analysis_after":last,"final_gate_open":final,"primary_horizon":7,"trajectory":trajectory,"comparisons":totals,"exclusions":exclusions,"group_effects":support,"prospective_improvement_established":established,"promotion":"No automatic promotion during registered panel; successor deployment requires separately registered future comparison","claim":"Registered-panel evidence supports an all-signals gain on the matched cohort." if established else "The experiment is running; prospective improvement is not yet established.","independence":"Weekly origins and GPU series can remain correlated. Cells are not independent market samples."}
+    return {"analysis_at":at,"final_analysis_after":last,"final_gate_open":final,"primary_horizon":7,"trajectory":trajectory,"comparisons":totals,"cohort_horizon_comparisons":scoped_comparisons(scores),"exclusions":exclusions,"group_effects":support,"prospective_improvement_established":established,"promotion":"No automatic promotion during registered panel; successor deployment requires separately registered future comparison","claim":"Registered-panel evidence supports an all-signals gain on the matched cohort." if established else "The experiment is running; prospective improvement is not yet established.","independence":"Weekly origins and GPU series can remain correlated. Cells are not independent market samples."}

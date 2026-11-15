@@ -42,3 +42,9 @@ The AWS spot archive is a different instrument. Its March–June 2026 coverage h
 - Existing November commitments and the November 23 UTC evaluator gate remain unchanged; compatible outcomes are additionally required.
 - Rental cashflow scenarios are calculations conditional on assumptions. Income-based residual proxies are not observed resale transactions or calibrated long-term intervals.
 - A component license is not a blanket license over repository code, other sources or model resources.
+
+## Prospective signals v6 source extension
+
+The new [v6 cohort](prospective-signals-v6.md) uses the source’s explicitly licensed current JSON and health endpoints. Four exact provider configurations were retained on November15: Lambda A100 PCIe40GB (one/two-GPU nodes), Lambda H100 PCIe80GB, and HyperAI H100 PCIe80GB. The new IDs are not competition series IDs. Provider timestamps, null region/node metadata, quote availability limits and CC BY4 attribution remain attached. No historical-price endpoint was downloaded.
+
+BLS PCU221122221122 is retained as an index with its actual retrieval vintage and preliminary footnotes. Primary news bodies remain private; public metadata and features preserve source hashes and first-observed timestamps. No source is backdated into the benchmark.

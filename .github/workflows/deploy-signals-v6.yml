@@ -2,7 +2,7 @@ name: Deploy registered signal scheduler without reissuing forecasts
 on:
   push:
     branches: [compute-observatory]
-    paths: [.github/workflows/deploy-signals-v6.yml, src/compute_forecast/signals_analysis_v6.py]
+    paths: [.github/workflows/deploy-signals-v6.yml, src/compute_forecast/signals_analysis_v6.py, src/compute_forecast/signals_remote_v6.py]
   workflow_dispatch:
 permissions:
   contents: read

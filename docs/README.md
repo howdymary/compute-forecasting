@@ -2,6 +2,8 @@
 
 Current release: [Pacific value study v5](pacific-value-v5.md) · [Verified past.dev memory and setup diagnosis](past-dev-memory.md) · [Prize evidence and live outline](pacific-past-demo.md) · [Public v5 artifacts](../results/value-v5/README.md).
 
+Current prospective extension: [Signals v6](prospective-signals-v6.md) · [Versioned artifacts](../results/signals-v6/README.md). This adds fresh provider quotes and signal vintages without altering earlier studies.
+
 ## Start here
 
 | Document | Purpose |

@@ -100,3 +100,14 @@ This verifies the registration, unchanged official CSV, four current quote ident
 Numerical reference reruns require the unchanged Pacific pack. Scheduled capture needs authorized Exa/past.dev access. Model planning requires Tinker. All future outcomes are genuinely pending.
 
 The live Signals view separates actual commitments, the registered learning comparison and evidence/memory. It draws no improvement curve before eligible paired outcomes exist.
+
+
+## Completed cross-role research sequence
+
+[Run43764698758](https://github.com/howdymary/compute-forecasting/actions/runs/43764698758) completed three ingested writers, three verified readers and five cross-role uses.
+
+The researcher selected informative signal history as its focus. The scientist executed a readiness check: one retained day,56 required days,32 required matured pairs and zero primary scores. The skeptic emphasized that an advertised quote does not establish available capacity. The scientist then changed its next check to revision capture and inspected the actual BLS preliminary/revision warnings.
+
+These are four bounded Tinker decisions and actual executed checks. The change followed criticism; this single sequence is not a controlled causal estimate of memory value. No learned weights or forecasting accuracy improved in this run.
+
+[Immutable authorship, recall and task receipts](../results/signals-v6/runs/43764698758/memory.json).

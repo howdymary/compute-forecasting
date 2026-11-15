@@ -4,7 +4,7 @@
 
 Explore advertised rental prices, inspect an archived forecast, and see how explicit assumptions change longer-term pricing paths. The research atlas connects saved model checkpoints, forecast scores, uncertainty, and actual experiment-selection decisions.
 
-[GPU value and shared research memory](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/#value) · [Explore the notebook](https://howdymary--compute-forecast-observatory-web.us-east.modal.run) · [Research atlas](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/#research) · [Results and downloads](results/README.md) · [Methods](docs/README.md)
+[Prospective signals](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/#signals) · [GPU value and shared research memory](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/#value) · [Explore the notebook](https://howdymary--compute-forecast-observatory-web.us-east.modal.run) · [Research atlas](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/#research) · [Results and downloads](results/README.md) · [Methods](docs/README.md)
 
 ![Matching licensed GPU rental history and actual archived forecast points](docs/images/value-v5-history.png)
 
@@ -33,6 +33,20 @@ The long-term explorer makes the economic mechanism inspectable: advertised rate
 The first v5 setup failed because a 44-character audience ID exceeded past.dev's 40-character limit. The ID is now 30 characters, errors retain sanitized receipts, and a failed memory gate fails the workflow. [Successful execution](https://github.com/howdymary/compute-forecasting/actions/runs/43758970371) · [Isolated API regression check](results/value-v5/runs/43759581339/setup-diagnostic.json).
 
 ![Verified multi-agent memory used in the GPU-value research loop](docs/images/value-v5-memory.png)
+
+## Prospective signals: now collecting real future evidence
+
+A separate [registered signals study](docs/prospective-signals-v6.md) captures fresh provider quotes, dated primary announcements and BLS vintages. The November15 source check succeeded for four exact A100/H100 contracts. These are separate from competition medians and independently licensed Hubbard context.
+
+At21:30UTC on November15, the system issued **48 cold-start reference forecasts** for November16/18/22 and anchored them on GitHub. They are excluded from the signal-value test. All outcomes remain pending.
+
+Eight fixed feature combinations compare news, infrastructure and BLS against an identical price-only learner. The26 weekly origins, maturity gates, failed-data behavior, uncertainty analysis and incumbent rule are registered. A deployed Modal scheduler collects and evaluates; primary models wait for56 actual retained price days and32 matured examples.
+
+The new memory run completed three writers, three readers and five cross-role uses. After criticism, the scientist changed its next executed check from informative-history coverage to BLS revision capture. Four actual Tinker planning decisions were made; no new optimization or accuracy gain is claimed.
+
+**The experiment is running; prospective improvement is not yet established.**
+
+[Initial commitments and source receipts](results/signals-v6/runs/43763941660/index.json) · [Actual memory sequence](results/signals-v6/runs/43764698758/memory.json) · [Registered protocol](configs/prospective-signals-v6.json).
 
 ## What the research found
 

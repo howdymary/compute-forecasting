@@ -155,9 +155,14 @@ def tick(mode="auto"):
                 except Exception as e:
                     failure={"at":now(),"phase":"issuance","error_type":type(e).__name__,"detail":str(e)[:1000]};retain(root,"failures",failure);errors.append(failure)
     # Re-evaluation adds a new immutable score vintage. Never rewrite an earlier report.
-    scores=[]
+    scores=[];previous_scores=load_records(root,"evaluations")
     for record in commitments:
-        score=evaluate(record,snapshots,now(),digest(record));retain(root,"evaluations",score);scores.append(score)
+        score=evaluate(record,snapshots,now(),digest(record))
+        signature=lambda value:digest({k:v for k,v in value.items() if k!="evaluated_at"})
+        same=next((s for s in previous_scores if signature(s)==signature(score)),None)
+        if same is not None:score=same
+        else:retain(root,"evaluations",score)
+        scores.append(score)
     data.commit();index=publication(root,snapshots,commitments,scores);index["execution_errors"]=errors;index["runtime_seconds"]=time.perf_counter()-begin
     return {"index":index,"registration":reg,"snapshots":snapshots[-1:],"commitments":commitments,"scores":scores,"errors":errors}
 def main():
