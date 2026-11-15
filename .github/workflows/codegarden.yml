@@ -1,7 +1,7 @@
 name: CodeGarden read-only live snapshot verification
 on:
   push:
-    branches: [codegarden-observer-003]
+    branches: [codegarden-observer-004]
     paths: [.github/workflows/codegarden.yml]
 permissions:
   contents: write
@@ -33,19 +33,19 @@ jobs:
         env:
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
           MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
-        run: codegarden/.venv/bin/python -B -u codegarden/phase3/observe_long.py
+        run: codegarden/.venv/bin/python -B -u codegarden/phase3/observe_long2.py
       - name: Publish evidence and unresolved accounting
         if: always()
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python -B codegarden/phase3/publish_observer.py
+        run: python -B codegarden/phase3/publish_observer2.py
       - name: Retain all evidence even if a publisher fails
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: codegarden-phase3-research
           path: |
-            codegarden/artifacts/phase3/long_snapshot_001/
+            codegarden/artifacts/phase3/long_snapshot_002/
             codegarden/artifacts/shared-budget.sqlite
             codegarden/budget/shared-allocation.json
             codegarden/budget/historical-usage.json
