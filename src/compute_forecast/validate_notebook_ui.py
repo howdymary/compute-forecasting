@@ -2,6 +2,7 @@
 from __future__ import annotations
 import base64,hashlib,json,math,os,re,time
 from pathlib import Path
+from concurrent.futures import ThreadPoolExecutor
 from urllib.request import urlopen
 from .notebook_diagnostics import build
 from .validate_pricing_ui import main as validate_existing_pricing
@@ -41,6 +42,16 @@ def main():
     assert b"SIL OPEN FONT LICENSE" in get("/notebook-assets/OFL.txt")
     font=get("/notebook-assets/caveat-f84acf2c.ttf")
     assert hashlib.sha1(b"blob "+str(len(font)).encode()+b"\0"+font).hexdigest()=="f84acf2ce2d1b3329b194749530dbaec047e6df6"
+    concurrent_paths=["/notebook-assets/caveat-f84acf2c.ttf","/files/forecasts.csv","/api/pricing","/api/notebook"]*3
+    with ThreadPoolExecutor(max_workers=8) as executor:
+        concurrent_results=list(executor.map(lambda path:(path,get(path)),concurrent_paths))
+    for path,raw in concurrent_results:
+        assert raw
+        if path.endswith(".csv"):
+            assert hashlib.sha256(raw).hexdigest()=="67a043255a716db6bc9b73cd28f9258c30fb299fd8671a9ee3430c0d94cadd80"
+        elif path.endswith(".ttf"):assert raw==font
+        elif path=="/api/notebook":assert json.loads(raw)["kind"]=="descriptive_audit_of_saved_results"
+        else:assert json.loads(raw)["schema_version"]==1
     errors=[];checks=[]
     with sync_playwright() as pw:
         browser=pw.chromium.launch()
@@ -138,7 +149,7 @@ def main():
         page.locator("#price-chart").wait_for()
         context.close();browser.close()
     assert not errors,errors
-    report={"status":"passed","checks":checks,"source_sha":os.environ.get("SOURCE_SHA"),"font_license_and_blob_verified":True,"explicit_loaded_font_faces":loaded_faces,"peer_sources":15,"diagnostic_report_count":len(notes["calibration"]),"diagnostic_api_roundtrip_seconds":round(elapsed,4),"diagnostics_match_public_saved_results":True,"pricing_outage_retry":True,"page_errors":errors,"reduced_motion":True,"recording":False}
+    report={"status":"passed","checks":checks,"source_sha":os.environ.get("SOURCE_SHA"),"font_license_and_blob_verified":True,"explicit_loaded_font_faces":loaded_faces,"concurrent_asset_and_data_requests":len(concurrent_results),"peer_sources":15,"diagnostic_report_count":len(notes["calibration"]),"diagnostic_api_roundtrip_seconds":round(elapsed,4),"diagnostics_match_public_saved_results":True,"pricing_outage_retry":True,"page_errors":errors,"reduced_motion":True,"recording":False}
     (out/"validation.json").write_text(json.dumps(report,indent=2)+"\n")
     (out/"diagnostic-snapshot.json").write_text(json.dumps(notes,indent=2)+"\n")
     print("NOTEBOOK_UI_REPORT:"+json.dumps(report),flush=True)

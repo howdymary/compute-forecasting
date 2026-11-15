@@ -31,7 +31,7 @@ def web():
     import threading
     from fastapi import FastAPI,Request
     from fastapi.responses import HTMLResponse,JSONResponse,Response
-    api=FastAPI(docs_url=None,redoc_url=None,openapi_url=None);lock=threading.Lock();archive_cache={"sha":None,"bytes":None}
+    api=FastAPI(docs_url=None,redoc_url=None,openapi_url=None);lock=threading.Lock();archive_cache={"sha":None,"bytes":None};asset_cache={}
     headers={"Cache-Control":"no-store","X-Content-Type-Options":"nosniff","Referrer-Policy":"strict-origin-when-cross-origin","Content-Security-Policy":"default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'"}
     def read(name):
         with lock:
@@ -87,10 +87,14 @@ def web():
     def notebook_asset(name:str):
         allowed={"caveat-f84acf2c.ttf":"font/ttf","OFL.txt":"text/plain","peer-studies.json":"application/json"}
         if name not in allowed:return Response(status_code=404,headers=headers)
-        public.reload();path=Path("/public/notebook")/name
-        if not path.is_file():return Response(status_code=404,headers=headers)
-        raw=path.read_bytes()
-        if len(raw)>1_000_000:return Response(status_code=503,headers=headers)
+        with lock:
+            raw=asset_cache.get(name) if name!="peer-studies.json" else None
+            if raw is None:
+                public.reload();path=Path("/public/notebook")/name
+                if not path.is_file():return Response(status_code=404,headers=headers)
+                raw=path.read_bytes()
+                if len(raw)>1_000_000:return Response(status_code=503,headers=headers)
+                if name!="peer-studies.json":asset_cache[name]=raw
         return Response(raw,media_type=allowed[name],headers={**headers,"Cache-Control":"public, max-age=31536000, immutable" if name.endswith(".ttf") else "no-store","ETag":hashlib.sha256(raw).hexdigest()})
 
     @api.get("/api/release")
