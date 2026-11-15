@@ -1,13 +1,13 @@
-name: CodeGarden Hadamard row-block search
+name: CodeGarden Hadamard joint row-column search
 on:
   push:
-    branches: [codegarden-hadamard-block-001]
+    branches: [codegarden-hadamard-mixed-001]
     paths: [.github/workflows/codegarden.yml]
   workflow_dispatch:
 permissions:
   contents: write
 concurrency:
-  group: codegarden-hadamard-block-001
+  group: codegarden-hadamard-mixed-001
   cancel-in-progress: false
 env:
   SOURCE_SHA: ${{ github.sha }}
@@ -23,7 +23,7 @@ jobs:
         run: |
           python3 -B - <<'PY'
           import pathlib,urllib.request,os
-          paths=["codegarden/hadamard/"+n for n in ["scan.py","block_scan.py","official.py","independent.py","manifest.json"]]+["codegarden/side_services/cycle.py","codegarden/supervisor.py","codegarden/protected/manifest.json","codegarden/protected/verify_descendants.py","codegarden/protected/verify_lcs.py"]
+          paths=["codegarden/hadamard/"+n for n in ["scan.py","mixed_scan.py","official.py","independent.py","manifest.json"]]+["codegarden/side_services/cycle.py","codegarden/supervisor.py","codegarden/protected/manifest.json","codegarden/protected/verify_descendants.py","codegarden/protected/verify_lcs.py"]
           for name in paths:
               p=pathlib.Path(name);p.parent.mkdir(parents=True,exist_ok=True)
               p.write_bytes(urllib.request.urlopen("https://raw.githubusercontent.com/howdymary/compute-forecasting/"+os.environ["SOURCE_SHA"]+"/"+name,timeout=45).read())
@@ -38,10 +38,10 @@ jobs:
       - name: Lemma fixtures and bounded exact-gated scan
         env:
           GH_TOKEN: ${{ github.token }}
-        run: codegarden/.venv-hadamard/bin/python -B -u codegarden/hadamard/block_scan.py
+        run: codegarden/.venv-hadamard/bin/python -B -u codegarden/hadamard/mixed_scan.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: codegarden-hadamard-block
+          name: codegarden-hadamard-mixed
           retention-days: 30
-          path: codegarden/artifacts/hadamard/block_001/
+          path: codegarden/artifacts/hadamard/mixed_001/
