@@ -1,0 +1,85 @@
+name: CodeGarden conflict endpoint closure
+on:
+  push:
+    branches: [codegarden-closure-003]
+    paths: [.github/workflows/codegarden.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: codegarden-free-closure-003
+  cancel-in-progress: false
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+  SOURCE_SHA: ${{ github.sha }}
+  CODEGARDEN_BATCH: defect_closure_001
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - name: Check protected verifier and current incumbent
+        run: |
+          mkdir -p codegarden/.build
+          python -B -u codegarden/phase3/preflight.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: codegarden-closure-preflight
+          path: codegarden/artifacts/phase3/defect_closure_001/
+  probes:
+    needs: preflight
+    runs-on: ubuntu-latest
+    timeout-minutes: 24
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        seed: [980001, 980002, 980003, 980004]
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/download-artifact@v4
+        with:
+          name: codegarden-closure-preflight
+          path: codegarden/artifacts/phase3/defect_closure_001/
+      - name: Run endpoint releases and blocker-driven repair pools
+        run: |
+          mkdir -p codegarden/.build
+          python -m venv codegarden/.venv
+          codegarden/.venv/bin/pip install -r codegarden/requirements-exact.txt
+          codegarden/.venv/bin/python -B -u codegarden/phase3/defect_closure.py --seed ${{ matrix.seed }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: codegarden-closure-${{ matrix.seed }}
+          path: codegarden/artifacts/phase3/defect_closure_001/
+  collect:
+    needs: [preflight, probes]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: codegarden-closure-*
+          merge-multiple: true
+          path: codegarden/artifacts/phase3/defect_closure_001/
+      - name: Publish leased results
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -B -u codegarden/phase3/publish_closure.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: codegarden-closure-collected
+          path: codegarden/artifacts/phase3/defect_closure_001/
