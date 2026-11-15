@@ -99,6 +99,9 @@ def main():
         assert page.request.get(URL+"/value-notices/ATTRIBUTION.md").ok
         assert page.request.get(URL+"/value-notices/afhubbard_DATA_LICENSE.txt").ok
         response=page.request.get(URL+"/api/value-v5/memory");assert response.ok and response.json()["status"]=="completed_verified_memory"
+        requests=page.evaluate("""async()=>await Promise.all(Array.from({length:8},async(_,i)=>{const path=i%2?'/api/value-v5/memory':'/api/value-v5';const r=await fetch(path,{cache:'no-store'});const x=await r.json();return {status:r.status,valid:i%2?x.eligibility?.requirements_met===true:x.history?.series?.length===36}}))""")
+        assert all(r["status"]==200 and r["valid"] for r in requests),requests
+        report["concurrent_value_and_memory_reads"]={"callers":8,"passed":True,"automatic_retries":0}
         report["independent_loading_and_retry"]=True
         context.close();browser.close()
     report["status"]="passed";(out/"report.json").write_text(json.dumps(report,indent=2)+"\n")
