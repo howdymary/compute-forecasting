@@ -1,4 +1,4 @@
-name: CodeGarden neutral plateau search
+name: CodeGarden closed plateau component
 on:
   push:
     branches: [codegarden-radius34]
@@ -11,7 +11,7 @@ concurrency:
 env:
   PYTHONDONTWRITEBYTECODE: '1'
 jobs:
-  neutral-walk:
+  plateau-component:
     runs-on: ubuntu-latest
     timeout-minutes: 6
     steps:
@@ -23,12 +23,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Build isolated plateau kernel
+      - name: Build exact sparse enumerator
         run: |
           mkdir -p codegarden/.build
-          g++ -O3 -std=c++17 codegarden/phase2/neutral_kernel.cpp -o codegarden/.build/neutral_kernel
-      - name: Run four bounded plateau walks and independently verify exports
+          g++ -O3 -std=c++17 codegarden/phase2/radius_sweep.cpp -o codegarden/.build/radius_sweep
+      - name: Enumerate plateau component and check the next reached state
         env:
           GH_TOKEN: ${{ github.token }}
           SOURCE_SHA: ${{ github.sha }}
-        run: python -B -u codegarden/phase2/neutral_probe.py
+        run: python -B -u codegarden/phase2/plateau_component.py
