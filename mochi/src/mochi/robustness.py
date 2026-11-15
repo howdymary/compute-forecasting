@@ -8,7 +8,7 @@ import modal
 from .simulation import ROOT,Policy,summarize,rollout
 from .integrations import Services,now,digest
 from .campaign import write,rank
-from .remote import image
+image=modal.Image.debian_slim(python_version='3.11').apt_install('libgl1','libglib2.0-0').pip_install('mujoco==3.3.7','numpy==2.3.4','httpx==0.28.1').env({'PYTHONPATH':'/app/src','MUJOCO_GL':'disable','MOCHI_ROOT':'/app'}).add_local_dir(ROOT/'src',remote_path='/app/src').add_local_dir(ROOT/'configs',remote_path='/app/configs')
 
 CONFIG=json.loads((ROOT/'configs/robustness-v2.json').read_text());FAMILIES=['open_loop','object_feedback','slow_open_loop','earlier_stop']
 app=modal.App('mochi-robustness-lab')
