@@ -1,0 +1,137 @@
+{
+  "source_sha": "8096b4c1f78b048453e22aa03de9bc4cb326f710",
+  "problem": "kakeya128",
+  "workers": [
+    {
+      "policy": "coordinate",
+      "seed": 260101,
+      "seconds": 300,
+      "widths": [
+        4,
+        8,
+        16,
+        32,
+        64
+      ],
+      "amplitudes": [
+        0.0001,
+        0.001,
+        0.01,
+        0.03
+      ],
+      "temperature": 0.0001,
+      "arena_incumbent": 0.10675138995168142
+    },
+    {
+      "policy": "structural",
+      "seed": 260101,
+      "seconds": 300,
+      "widths": [
+        4,
+        8,
+        16,
+        32,
+        64
+      ],
+      "amplitudes": [
+        0.0001,
+        0.001,
+        0.01,
+        0.03
+      ],
+      "temperature": 0.0001,
+      "arena_incumbent": 0.10675138995168142
+    },
+    {
+      "policy": "coordinate",
+      "seed": 260102,
+      "seconds": 300,
+      "widths": [
+        4,
+        8,
+        16,
+        32,
+        64
+      ],
+      "amplitudes": [
+        0.0001,
+        0.001,
+        0.01,
+        0.03
+      ],
+      "temperature": 0.0001,
+      "arena_incumbent": 0.10675138995168142
+    },
+    {
+      "policy": "structural",
+      "seed": 260102,
+      "seconds": 300,
+      "widths": [
+        4,
+        8,
+        16,
+        32,
+        64
+      ],
+      "amplitudes": [
+        0.0001,
+        0.001,
+        0.01,
+        0.03
+      ],
+      "temperature": 0.0001,
+      "arena_incumbent": 0.10675138995168142
+    },
+    {
+      "policy": "coordinate",
+      "seed": 260103,
+      "seconds": 300,
+      "widths": [
+        4,
+        8,
+        16,
+        32,
+        64
+      ],
+      "amplitudes": [
+        0.0001,
+        0.001,
+        0.01,
+        0.03
+      ],
+      "temperature": 0.0001,
+      "arena_incumbent": 0.10675138995168142
+    },
+    {
+      "policy": "structural",
+      "seed": 260103,
+      "seconds": 300,
+      "widths": [
+        4,
+        8,
+        16,
+        32,
+        64
+      ],
+      "amplitudes": [
+        0.0001,
+        0.001,
+        0.01,
+        0.03
+      ],
+      "temperature": 0.0001,
+      "arena_incumbent": 0.10675138995168142
+    }
+  ],
+  "resources": {
+    "cpu_each": 2,
+    "memory_mb": 2048
+  },
+  "pilot_deadline_utc": "2026-11-15T22:35:18+00:00",
+  "same_starting_witness": "18d5368754ea71ebb263aef53c38b48b7be775b93980acb223fa2bddc1217c1e",
+  "bounds": [
+    -3,
+    3
+  ],
+  "heuristic_scope": "Bounded local and basin hopping search; no global optimality claim."
+}
