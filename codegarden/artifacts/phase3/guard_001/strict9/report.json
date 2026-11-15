@@ -1,0 +1,61 @@
+{
+  "source_sha": "7f821170ebc3f5bef89fd1eb185110ace7442235",
+  "mode": "strict9",
+  "starting_verification": {
+    "accepted": true,
+    "cardinality": 226,
+    "reports": [
+      {
+        "cardinality": 226,
+        "distinct_descendants": 6410,
+        "length": 16,
+        "method": "distinct_string_two_deletions",
+        "valid": true,
+        "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+      },
+      {
+        "cardinality": 226,
+        "largest_pairwise_lcs": 13,
+        "length": 16,
+        "method": "independent_dynamic_programming_lcs",
+        "pairs_checked": 25425,
+        "valid": true,
+        "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+      }
+    ]
+  },
+  "rows": [
+    {
+      "found": false,
+      "complete": false,
+      "cpu_seconds": 600.007,
+      "nodes": 11222646784,
+      "closed_blocker_sets": 80134635,
+      "cache_hits": 27403008,
+      "retained_closed_keys": 942460,
+      "cache_evictions": 79192175,
+      "k": 9,
+      "n": 16,
+      "memory_limited": false,
+      "budget_limited": true,
+      "neutral_cap_reached": false,
+      "root_shard": 0,
+      "root_shards": 1,
+      "completed_roots": 53691,
+      "active_root": 53691,
+      "last_finished_root": 53690,
+      "learned_groups": 0,
+      "learned_prunes": 0,
+      "candidate_count": 56396,
+      "profiled_bitset_bytes": 513535680,
+      "removed": [],
+      "added": [],
+      "neighbors": [],
+      "scope": "All outside words with at most k incumbent blockers; connected improving bundles suffice by the disjoint-blocker-component lemma. Complete is false on every time/node/memory/neighbor cap.",
+      "pool_order_sha256": "f5cb9922238127de30aa4e7df61e4ff9eec81bf8150a5db7ef7d3d7ff8a95ce2",
+      "binary": "bundle"
+    }
+  ],
+  "best_verified": 226,
+  "scope": "The early union-size guard is semantically identical. Sequential old/new benchmark on one runner; one case only, no broad speed claim. Larger timeouts remain open."
+}
