@@ -76,11 +76,26 @@ int main(int argc,char**argv){
    cout<<",\"weights\":";arrayjson(s.weight);cout<<",\"incremental_check\":true}\n";return 0;
   }
   if(s.energy)throw runtime_error("baseline must be independently valid");double budget=stod(argv[1]);string mode=argc>3?argv[3]:"tabu",cp=argc>4?argv[4]:"";
-  if(mode!="tabu"&&mode!="breakout"&&mode!="anneal"&&mode!="hybrid")throw runtime_error("mode");
+  if(mode!="tabu"&&mode!="breakout"&&mode!="anneal"&&mode!="hybrid"&&mode!="persist"&&mode!="novel")throw runtime_error("mode");
   int extra=-1;int64_t minimum=INT64_MAX;uint64_t ties=0;
   for(int w=0;w<s.N;++w)if(s.position[w]<0){if(s.score[w]<minimum){minimum=s.score[w];extra=w;ties=1;}else if(s.score[w]==minimum&&rng()%++ties==0)extra=w;}
-  s.add(extra);int target=s.code.size(),bestEnergy=s.energy;vector<int>closest=s.code;vector<vector<int>>archive{closest};vector<uint64_t>tabu(s.N,0);
+  s.add(extra);vector<uint8_t>isOriginal(s.N,0);for(int w:original)isOriginal[w]=1;
+  int target=s.code.size(),bestEnergy=s.energy;vector<int>closest=s.code;vector<vector<int>>archive{closest};vector<uint64_t>tabu(s.N,0);
   uint64_t steps=0,penalties=0,restarts=0,checks=0;double start=cpu(),lastGain=0,lastCheckpoint=0,lastRestart=0;vector<pair<double,int>>progress{{0,bestEnergy}};
+  vector<vector<int>>nearArchive;vector<int>nearEnergy,nearDistance;set<string>nearSeen;int bestDistance=0;
+  auto observe=[&](){
+   if(s.energy>bestEnergy+1)return;auto sorted=s.code;sort(sorted.begin(),sorted.end());string key;int distance=0;
+   for(int w:sorted){key.push_back(char(w>>8));key.push_back(char(w&255));distance+=!isOriginal[w];}
+   if(s.energy==bestEnergy&&(distance>bestDistance||(distance==bestDistance&&rnd(32)==0))){closest=s.code;bestDistance=distance;}
+   if(!nearSeen.insert(key).second)return;
+   if(nearArchive.size()<48){nearArchive.push_back(s.code);nearEnergy.push_back(s.energy);nearDistance.push_back(distance);}
+   else{
+    int worst=0;for(int i=1;i<int(nearArchive.size());++i)
+     if(nearEnergy[i]>nearEnergy[worst]||(nearEnergy[i]==nearEnergy[worst]&&nearDistance[i]<nearDistance[worst]))worst=i;
+    if(s.energy<nearEnergy[worst]||(s.energy==nearEnergy[worst]&&(distance>nearDistance[worst]||rnd(20)==0))){
+     nearArchive[worst]=s.code;nearEnergy[worst]=s.energy;nearDistance[worst]=distance;}
+   }
+  };observe();
   auto wall=chrono::steady_clock::now();checkpoint(cp,s,closest,bestEnergy,steps,seed,mode);
   while(s.energy>0&&cpu()-start<budget&&chrono::duration<double>(chrono::steady_clock::now()-wall).count()<budget*1.8+20){
    double stale=cpu()-start-lastGain;int old=-1;int64_t worst=-1;int sampled=rnd(100);
@@ -98,30 +113,33 @@ int main(int argc,char**argv){
    double noise=(mode=="anneal"||mode=="hybrid")?min(8.,.25+stale/2):0;
    for(int w=0;w<s.N;++w)if(w!=old&&s.position[w]<0){
     if(tabu[w]>steps&&s.energy+s.score[w]>=bestEnergy)continue;
-    int64_t cost=s.weighted[w];
+    int64_t cost=mode=="novel"?s.weighted[w]*16-(isOriginal[w]?0:3):s.weighted[w];
     if(noise>0)cost=cost*1024+int64_t(unit()*noise*1024);
     if(cost<value){value=cost;chosen=w;equal=1;}
     else if(cost==value&&rng()%++equal==0)chosen=w;
    }
    if(chosen<0){chosen=old;}s.add(chosen);++steps;tabu[old]=steps+7+rnd(20)+uint64_t(min(100.,stale*2));
-   if(s.energy<bestEnergy){bestEnergy=s.energy;closest=s.code;lastGain=cpu()-start;progress.push_back({lastGain,bestEnergy});checkpoint(cp,s,closest,bestEnergy,steps,seed,mode);}
-   if((mode=="breakout"||mode=="hybrid")&&steps%257==0){s.penalize();++penalties;}
+   if(s.energy<bestEnergy){bestEnergy=s.energy;closest=s.code;bestDistance=0;lastGain=cpu()-start;progress.push_back({lastGain,bestEnergy});checkpoint(cp,s,closest,bestEnergy,steps,seed,mode);}
+   if((mode=="breakout"||mode=="hybrid"||mode=="persist"||mode=="novel")&&steps%257==0){s.penalize();++penalties;}
+   if(steps%64==0)observe();
    if(steps%2048==0){s.check();++checks;}
    if(steps%4096==0&&s.energy<=bestEnergy+3){archive.push_back(s.code);if(archive.size()>24)archive.erase(archive.begin()+1);}
-   if(stale>4&&cpu()-start-lastRestart>5){
-    auto restart=mode=="tabu"?closest:archive[rnd(archive.size())];s.reset(restart);fill(tabu.begin(),tabu.end(),0);
-    int destroy=2+rnd(mode=="hybrid"?17:6);
+   if(stale>4&&cpu()-start-lastRestart>((mode=="persist"||mode=="novel")?12:5)){
+    auto restart=mode=="tabu"?closest:(!nearArchive.empty()?nearArchive[rnd(nearArchive.size())]:archive[rnd(archive.size())]);s.reset(restart,mode!="persist"&&mode!="novel");fill(tabu.begin(),tabu.end(),0);
+    int destroy=2+rnd((mode=="hybrid"||mode=="novel")?25:6);
     for(int i=0;i<destroy;++i){int a=s.code[rnd(s.code.size())];s.remove(a);int b;do{b=rnd(s.N);}while(s.position[b]>=0);s.add(b);}
     ++restarts;lastRestart=cpu()-start;
    }
    if(cpu()-start-lastCheckpoint>5){checkpoint(cp,s,closest,bestEnergy,steps,seed,mode);lastCheckpoint=cpu()-start;}
   }
-  if(s.energy==0){bestEnergy=0;closest=s.code;}s.check();checkpoint(cp,s,closest,bestEnergy,steps,seed,mode);
+  if(s.energy==0){bestEnergy=0;closest=s.code;}observe();s.check();checkpoint(cp,s,closest,bestEnergy,steps,seed,mode);
   cout<<"{\"mode\":\""<<mode<<"\",\"seed\":"<<seed<<",\"target_cardinality\":"<<target<<",\"proposed_zero_conflict\":"<<(bestEnergy==0?"true":"false")
    <<",\"minimum_pair_energy\":"<<bestEnergy<<",\"initial_pair_energy\":"<<initial+minimum<<",\"search_cpu_seconds\":"<<cpu()-start
    <<",\"wall_seconds\":"<<chrono::duration<double>(chrono::steady_clock::now()-wall).count()<<",\"iterations\":"<<steps<<",\"penalty_updates\":"<<penalties<<",\"restarts\":"<<restarts
    <<",\"incremental_checks\":"<<checks<<",\"closest_state\":";arrayjson(closest);cout<<",\"baseline_valid_words\":";arrayjson(original);cout<<",\"energy_progress\":[";
-  for(size_t i=0;i<progress.size();++i){if(i)cout<<",";cout<<"["<<progress[i].first<<","<<progress[i].second<<"]";}cout<<"],\"warning\":\"Closest state is not an accepted code unless independently verified; energy improvements alone are not cardinality gains.\"}\n";
+  for(size_t i=0;i<progress.size();++i){if(i)cout<<",";cout<<"["<<progress[i].first<<","<<progress[i].second<<"]";}cout<<"],\"distinct_near_states\":"<<nearSeen.size()<<",\"maximum_outside_original_at_best\":"<<bestDistance<<",\"near_archive\":[";
+  for(size_t i=0;i<nearArchive.size();++i){if(i)cout<<",";cout<<"{\"energy\":"<<nearEnergy[i]<<",\"outside_original\":"<<nearDistance[i]<<",\"words\":";arrayjson(nearArchive[i]);cout<<"}";}
+  cout<<"],\"warning\":\"Closest state is not an accepted code unless independently verified; energy improvements alone are not cardinality gains.\"}\n";
   return 0;
  }catch(const exception&e){cerr<<e.what()<<"\n";return 2;}
 }

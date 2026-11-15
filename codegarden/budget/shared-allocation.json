@@ -3,21 +3,21 @@
   "project": "codegarden",
   "source_commit": "938795b118ffdc40e1a84abeb7361b8f41721adb",
   "source_url": "https://github.com/howdymary/compute-forecasting/blob/938795b118ffdc40e1a84abeb7361b8f41721adb/boundforge/budget-snapshot.json",
-  "source_observed_at": "2026-11-15T04:23:10Z",
-  "expires_at": "2026-11-15T05:48:09Z",
-  "coordination": "Cumulative CodeGarden caps include all phase-one holds. Full BoundForge caps plus forecasting guards and verification reserves are deducted. BoundForge structural run 43675810337 is active and is not cancelled; CodeGarden orchestration is serialized. No independent double allocation of the same account credits.",
+  "source_observed_at": "2026-11-15 05:55:58 UTC",
+  "expires_at": "2026-11-15T08:00:00Z",
+  "coordination": "One serialized CodeGarden provider coordinator. Prior Exa .028 USD, past 165 credits, Modal 23.56 USD and Tinker22.65 USD holds remain imported. Other projects retain their full allocations/guards. Free public GitHub workers make zero provider calls.",
   "providers": {
     "exa": {
-      "balance_at_snapshot": 119.44,
+      "balance_at_snapshot": 119.28,
       "boundforge_reserved": 5,
       "forecasting_pending_guard": 10,
       "verification_reserve": 5,
       "codegarden_cap": 5,
-      "billing_boundary": "Free tier; dashboard says no payment method and purchases/automatic top-ups require one.",
-      "source": "Authenticated Exa dashboard /billing"
+      "billing_boundary": "Free tier, no payment method; purchases/topups require adding one",
+      "source": "Authenticated Safari billing snapshot 2026-11-15 05:55:58 UTC"
     },
     "past": {
-      "balance_at_snapshot": 699336.0,
+      "balance_at_snapshot": 699250,
       "boundforge_reserved": 200,
       "forecasting_pending_guard": 10000,
       "verification_reserve": 5000,
@@ -26,26 +26,26 @@
       "source": "past.dev authenticated /usage"
     },
     "modal": {
-      "balance_at_snapshot": 249.21,
+      "balance_at_snapshot": 248.87,
       "boundforge_reserved": 25,
       "forecasting_pending_guard": 50,
       "verification_reserve": 20,
       "codegarden_cap": 50,
-      "billing_boundary": "Authenticated dashboard: Starter, $249.21 grant remaining; $251 usage limit set by Modal; payment method required to raise it; no setting changed.",
-      "source": "Authenticated Modal Usage & billing"
+      "billing_boundary": "Starter, provider limit $251, payment method required to raise it; no changes",
+      "source": "Authenticated Safari billing snapshot 2026-11-15 05:55:58 UTC"
     },
     "tinker": {
-      "balance_at_snapshot": 280.43,
+      "balance_at_snapshot": 277.94,
       "boundforge_reserved": 40,
       "forecasting_pending_guard": 100,
       "verification_reserve": 10,
       "codegarden_cap": 70,
-      "billing_boundary": "Authenticated dashboard: $280.43 prepaid, auto-reload disabled, free checkpoint storage 24GB/100GB and 85/100 checkpoints. Reserve remaining slots for other projects; at most one new CodeGarden sampler checkpoint.",
-      "source": "Authenticated Tinker Billing > Balance"
+      "billing_boundary": "Auto-reload disabled, free storage 23GB/100GB, 82/100 checkpoints; no changes",
+      "source": "Authenticated Safari billing snapshot 2026-11-15 05:55:58 UTC"
     }
   },
-  "source_note": "Recorded immediately after authenticated dashboard observations. past.dev is refreshed by remote preflight. Account-wide gross usage is deducted again conservatively before reservations.",
-  "campaign_start": "2026-11-15T04:18:09Z",
-  "no_new_billable_after": "2026-11-15T05:33:09Z",
-  "authenticated_preflight_at": "2026-11-15T04:24:21.829403+00:00"
+  "source_note": "Renewed on the user's explicit continuation request; provider caps are cumulative, unchanged, and include all earlier holds. Fresh dashboard balances plus account-wide usage checks, full BoundForge caps and forecasting guards remain deducted. past.dev refreshed remotely before any calls.",
+  "campaign_start": "2026-11-15T05:44:30Z",
+  "no_new_billable_after": "2026-11-15T07:45:00Z",
+  "authenticated_preflight_at": "2026-11-15 05:55:58 UTC"
 }

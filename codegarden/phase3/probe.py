@@ -3,10 +3,10 @@ import argparse,datetime as dt,hashlib,importlib.util,json,os,pathlib,subprocess
 ROOT=pathlib.Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
 from supervisor import verify
 def main():
- parser=argparse.ArgumentParser();parser.add_argument("--seed",type=int,required=True);parser.add_argument("--seconds",type=float,default=60);a=parser.parse_args()
+ parser=argparse.ArgumentParser();parser.add_argument("--seed",type=int,required=True);parser.add_argument("--seconds",type=float,default=180);a=parser.parse_args()
  out=ROOT/"artifacts/phase3"/os.environ.get("CODEGARDEN_BATCH","infeasible_probe_001")/("probe_"+str(a.seed));out.mkdir(parents=True,exist_ok=True)
  baseline=ROOT/"artifacts/phase3"/os.environ.get("CODEGARDEN_BATCH","infeasible_probe_001")/"preflight/baseline.txt";accepted=verify(baseline);target=accepted["cardinality"]+1
- modes=["tabu","breakout","anneal","hybrid"];shift=a.seed%4;modes=modes[shift:]+modes[:shift]
+ modes=["persist","novel"];shift=a.seed%2;modes=modes[shift:]+modes[:shift]
  rows=[];best=accepted["cardinality"]
  metadata={"source_sha":os.environ["GITHUB_SHA"],"starting_witness_sha256":accepted["reports"][0]["witness_sha256"],"seed":a.seed,
   "seconds_per_mode":a.seconds,"modes":modes,"target":target,"funding":"Free standard public GitHub CPU runner; no sponsor provider calls"}

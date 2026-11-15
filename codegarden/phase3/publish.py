@@ -18,7 +18,7 @@ def main():
   "modes":{mode:{"cases":sum(r["mode"]==mode for q in reports for r in q["experiments"]),
    "min_pair_energy":min((r["minimum_pair_energy"] for q in reports for r in q["experiments"] if r["mode"]==mode),default=None),
    "iterations":sum(r["iterations"] for q in reports for r in q["experiments"] if r["mode"]==mode),
-   "search_cpu_seconds":sum(r["search_cpu_seconds"] for q in reports for r in q["experiments"] if r["mode"]==mode)} for mode in ["tabu","breakout","anneal","hybrid"]},
+   "search_cpu_seconds":sum(r["search_cpu_seconds"] for q in reports for r in q["experiments"] if r["mode"]==mode)} for mode in sorted({r["mode"] for q in reports for r in q["experiments"]})},
   "warning":"Positive pair energy describes an invalid target-size state, never a code cardinality. No global record claim without a separate current-source comparison.",
   "provider_cost":0,"provider_calls":0}
  (out/"probe_summary.json").write_text(json.dumps(summary,indent=2))
