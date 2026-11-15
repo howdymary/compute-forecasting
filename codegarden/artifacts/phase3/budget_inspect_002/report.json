@@ -1,0 +1,211 @@
+{
+  "observed_at": "2026-11-15T13:05:20.245348+00:00",
+  "source_sha": "fb151394e67a03f15d42b61e040555e8fda9875b",
+  "billable_work_started": false,
+  "historical_holds_unchanged": true,
+  "allocation_renewed": false,
+  "credit_purchases_or_setting_changes": false,
+  "desktop_balance_refresh": "Unavailable: native surface reported locked Mac.",
+  "providers": {
+    "modal": {
+      "financial_scalars": {
+        "metered_cost": 3.49103696,
+        "billed_cost": 0.0,
+        "adjustments.plan_cost": 0.0,
+        "adjustments.credits": -3.48
+      },
+      "response_schema": {
+        "metered_cost": "str",
+        "billed_cost": "str",
+        "adjustments": {
+          "plan_cost": "str",
+          "network_egress_allowance": "str",
+          "free_storage": "str",
+          "reservation_adjustment": "str",
+          "credits": "str"
+        },
+        "metered_cost_breakdown": {
+          "deployed_apps": "str",
+          "llm_tokens": "str",
+          "ephemeral_apps": "str",
+          "network_egress": "str",
+          "volumes": "str"
+        }
+      },
+      "response_sha256": "b0998f8837421ca0f9cc3df187d4a5303fef471f5504bcaf4e1df78089b3debf",
+      "scope": "Account-wide gross usage, not attributed CodeGarden spend. No release of unresolved holds or new worker."
+    },
+    "past": {
+      "balance_left": 699096.0,
+      "source": "Authenticated GET /api/v1/usage; no recall/ingest request."
+    },
+    "tinker": {
+      "begin": "2026-11-15T00:00:00+00:00",
+      "ending_before": "2026-11-15T13:00:00+00:00",
+      "event_rows": 0,
+      "event_field_names": [],
+      "usage_response_schema": {
+        "data": {
+          "list_length": 150,
+          "element_schema": {
+            "bucket_start": "str",
+            "bucket_end": "str",
+            "base_model": "str",
+            "user_id": "str",
+            "user_name": "str",
+            "session_id": "str",
+            "project_id": "NoneType",
+            "estimated_cost_usd": "float",
+            "effective_rate_usd_per_million_tokens": "float",
+            "effective_rate_usd_per_gigabyte_month": "NoneType",
+            "event_info": {
+              "type": "str",
+              "token_count": "int"
+            }
+          }
+        },
+        "sessions": {
+          "9aeb2aef-0a90-5de9-92f5-e075f2aab905": {
+            "user_metadata": "NoneType"
+          },
+          "41ed782d-1fe9-5a81-a86c-8d7530e2af9f": {
+            "user_metadata": "NoneType"
+          },
+          "06f66dc1-0b5f-53ff-bea6-2d937f7bbae4": {
+            "user_metadata": "NoneType"
+          },
+          "02e8e2d5-e29b-52e2-8065-910fc76cc833": {
+            "user_metadata": "NoneType"
+          },
+          "4a8f1228-3d47-5a3c-959d-40de1c70e394": {
+            "user_metadata": "NoneType"
+          },
+          "edf466eb-ff43-5783-96cb-48fdbfd943c4": {
+            "user_metadata": "NoneType"
+          },
+          "903c0b59-0e50-5182-bc8c-56e1ae44b9f7": {
+            "user_metadata": "NoneType"
+          },
+          "4745a4af-8fc5-58af-aad6-961969c8ce34": {
+            "user_metadata": "NoneType"
+          },
+          "7ed7fcef-2aa9-5441-a3dc-57d705dba308": {
+            "user_metadata": "NoneType"
+          },
+          "9f003a77-597c-58e0-ac11-f73e964ba684": {
+            "user_metadata": "NoneType"
+          },
+          "b9fa5c6b-8092-580d-a985-fcbd821557b2": {
+            "user_metadata": "NoneType"
+          },
+          "3d206ac0-5f06-5129-84f5-5a4a8f204b7b": {
+            "user_metadata": "NoneType"
+          },
+          "9c771c3a-735f-5da1-8dc1-b29932469c31": {
+            "user_metadata": "NoneType"
+          },
+          "ea5f1b51-41e8-5d72-a45f-1fbccdc67e46": {
+            "user_metadata": "NoneType"
+          },
+          "067c84d0-939b-5837-964a-ef9e362f3d91": {
+            "user_metadata": "NoneType"
+          },
+          "3decd47d-97cb-50b2-a66b-e5fb8f3b8aaa": {
+            "user_metadata": "NoneType"
+          },
+          "cf5fcf3c-a6ba-54d4-a0e4-fe418a293935": {
+            "user_metadata": "NoneType"
+          },
+          "869630d2-2c28-5211-b844-de30fd1dd841": {
+            "user_metadata": "NoneType"
+          },
+          "f0a5e431-9d62-5db5-86ba-6a30b4a7c1fc": {
+            "user_metadata": "NoneType"
+          },
+          "0361cb20-f2c9-5ca5-9d3b-7b7a3e9a358c": {
+            "user_metadata": "NoneType"
+          },
+          "dd98b0b1-f8d7-5803-8b2e-8e0655c89686": {
+            "user_metadata": "NoneType"
+          },
+          "c854a395-95c4-586f-8196-af4f2fa21065": {
+            "user_metadata": "NoneType"
+          },
+          "4108f3b3-cbc0-53cd-ab47-d0d67f9a8a1b": {
+            "user_metadata": "NoneType"
+          },
+          "539245e9-1eb0-5cfb-bbbc-1e3fe85dfe42": {
+            "user_metadata": "NoneType"
+          },
+          "6f66dd34-2245-5c03-a276-a5ea3604217f": {
+            "user_metadata": "NoneType"
+          },
+          "d8c9b177-81aa-50f5-adc2-f82b42cd2a6a": {
+            "user_metadata": "NoneType"
+          },
+          "74123a47-b665-5944-87e4-45370063dd32": {
+            "user_metadata": "NoneType"
+          },
+          "2d838430-d688-53db-95f4-2078ae7639a2": {
+            "user_metadata": "NoneType"
+          },
+          "1b959985-4986-5120-bff9-d55173abdb22": {
+            "user_metadata": "NoneType"
+          },
+          "f1c5b6e0-83e5-5069-9a33-a38aaeaea2d6": {
+            "user_metadata": "NoneType"
+          },
+          "b747ddb3-92fa-5b50-aa97-8c0886597a63": {
+            "user_metadata": "NoneType"
+          },
+          "9da824ed-d5a9-5283-940c-b01823caedc7": {
+            "user_metadata": "NoneType"
+          },
+          "82cd8d45-44cf-51f2-b106-8a9f58569325": {
+            "user_metadata": "NoneType"
+          },
+          "a2f7cb82-f9f4-5719-9940-057826574341": {
+            "user_metadata": "NoneType"
+          }
+        },
+        "cost_data_through": "NoneType"
+      },
+      "interpretation": "Zero extracted rows is not evidence of zero spend; absent event fields or reporting lag remain explicit.",
+      "estimated_gross_cost_usd": 0,
+      "unpriced_rows": 0,
+      "cost_data_through": null,
+      "storage_financial_scalars": {
+        "data[0].estimated_monthly_cost_usd": 0.0
+      },
+      "storage_response_schema": {
+        "effective_rate_usd_per_gigabyte_month": "float",
+        "data": {
+          "list_length": 1,
+          "element_schema": {
+            "project_id": "NoneType",
+            "org_user_urn": "str",
+            "user_email": "str",
+            "user_name": "str",
+            "checkpoint_count": "int",
+            "size_bytes": "int",
+            "size_gigabytes": "float",
+            "estimated_monthly_cost_usd": "float"
+          }
+        }
+      },
+      "usage_response_sha256": "b7f2e61f2071b6455ae290857645bdc4fbe935b5f475c9b8e90de54b41ed3b2a",
+      "balance_unknown": true,
+      "scope": "Read-only RestClient billing/storage metadata; no ServiceClient, sampler, training client or checkpoint creation. Usage can lag hours and is not prepaid balance."
+    },
+    "exa": {
+      "balance_unknown": true,
+      "read_status": "No documented regular-key prepaid-balance endpoint available; separate admin service credentials not assumed. No billable search started."
+    }
+  },
+  "official_docs": [
+    "https://modal.com/docs/guide/billing",
+    "https://modal.com/docs/sdk/py/releases",
+    "https://tinker-docs.thinkingmachines.ai/tinker/api-reference/restclient/",
+    "https://tinker-docs.thinkingmachines.ai/tinker/cli/billing/"
+  ]
+}
