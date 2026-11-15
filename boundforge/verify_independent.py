@@ -16,7 +16,7 @@ def series(t,n):
         power*=z
     return s,s+2*power/((2*n+1)*(1-z))
 @lru_cache(maxsize=4096)
-def logarithm(q,n=48):
+def logarithm(q,n=96):
     if q<=0: raise ValueError("log domain")
     if q==1: return Q(),Q()
     # q=2^k r, with 1 <= r < 2; integer comparisons only.
@@ -28,7 +28,7 @@ def logarithm(q,n=48):
     a,b=series(Q(1,3),n)
     lo,hi=(l+k*a,u+k*b) if k>=0 else (l+k*b,u+k*a)
     # Outward dyadic rounding prevents huge coprime denominators in entropy sums.
-    scale=1<<192
+    scale=1<<384
     low=(lo.numerator*scale)//lo.denominator
     high=-((-hi.numerator*scale)//hi.denominator)
     return Q(low,scale),Q(high,scale)
@@ -70,4 +70,8 @@ def check(c):
     return lo,hi
 if __name__=="__main__":
     lo,hi=check(json.load(open(sys.argv[1])))
-    print(json.dumps({"valid":True,"method":"exact rational series and explicit tail bound","ratio_interval":[decimal(lo),decimal(hi,True)]}))
+    output={"valid":True,"method":"exact rational series and explicit tail bound","ratio_interval":[decimal(lo),decimal(hi,True)]}
+    if len(sys.argv)>2:
+        baseline_lo,baseline_hi=check(json.load(open(sys.argv[2])))
+        output["strict_improvement"]=lo>baseline_hi
+    print(json.dumps(output))

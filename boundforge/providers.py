@@ -15,6 +15,11 @@ class Ledger:
         self.snapshot=json.loads((ROOT/"budget-snapshot.json").read_text())
         self.db=sqlite3.connect(str(out/"budget.sqlite"),timeout=30)
         self.db.execute("create table if not exists reservations(id text primary key, provider text, reserved real, actual real, status text)")
+        old=ROOT/"historical-usage.json"
+        if old.exists():
+            history=json.loads(old.read_text())
+            for provider,amount in history["usage"].items():
+                self.db.execute("insert or ignore into reservations values(?,?,?,?,?)",("historical-"+history["source_run"]+"-"+provider,provider,amount,amount,"historical conservative accounting"))
         self.db.commit()
     def reserve(self,provider,amount,observed=None):
         p=self.snapshot["providers"][provider]

@@ -16,9 +16,10 @@
       "reason": "Balance, expiration and no-overage boundary require verification; no paid operations were launched.",
       "unit": "USD prepaid credits",
       "verified_via": "Authenticated Exa dashboard /billing",
-      "timestamp": "2026-11-15T02:56:00Z",
+      "timestamp": "2026-11-15T03:00:31Z",
       "billing_boundary": "Free tier; dashboard says no payment method and purchases/automatic top-ups require one.",
-      "operational_cap": 5
+      "operational_cap": 5,
+      "timestamp_note": "Evidence transcribed at this time from immediately preceding dashboard inspection."
     },
     "past": {
       "credential_present": true,
@@ -59,12 +60,17 @@
     },
     "tinker": {
       "credential_present": true,
-      "enabled": false,
-      "initial_cap": null,
+      "enabled": true,
+      "initial_cap": 292.05,
       "reserved": 0,
       "actual": 0,
-      "expiration": null,
-      "reason": "Official CLI exposes gross usage, not remaining prepaid balance. No training/sampling enabled."
+      "expiration": "Credit-grants page did not expose expiration; balance recorded, no expiration assumed.",
+      "reason": "Verified through authenticated dashboard after CLI could not expose balance.",
+      "unit": "USD prepaid credits",
+      "verified_via": "Authenticated Tinker Billing > Balance",
+      "timestamp": "2026-11-15T03:00:31Z",
+      "billing_boundary": "Auto-reload disabled. Free checkpoint plan, 13 GB/100 GB and 44/100 checkpoints at snapshot.",
+      "operational_cap": 40
     },
     "modal": {
       "credential_present": true,
@@ -97,10 +103,11 @@
       "reason": "Balance, expiration and no-overage boundary require verification; no paid operations were launched.",
       "unit": "USD compute credits",
       "verified_via": "Authenticated Modal Usage & billing",
-      "timestamp": "2026-11-15T02:56:00Z",
+      "timestamp": "2026-11-15T03:00:31Z",
       "billing_boundary": "Starter; no payment method; provider-set $251 monthly usage limit. $1.64 already used at snapshot.",
       "operational_cap": 15,
-      "current_verified_remaining": 249.33
+      "current_verified_remaining": 249.33,
+      "timestamp_note": "Evidence transcribed at this time from immediately preceding dashboard inspection."
     }
   }
 }
