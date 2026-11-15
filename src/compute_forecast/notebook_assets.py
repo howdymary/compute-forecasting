@@ -25,7 +25,7 @@ def publish(files):
     public.reload();root=Path("/public/notebook");root.mkdir(exist_ok=True)
     receipt={}
     for name,raw in files.items():
-        (root/name).write_bytes(raw)
+        temporary=root/(name+".pending");temporary.write_bytes(raw);temporary.replace(root/name)
         receipt[name]={"bytes":len(raw),"sha256":hashlib.sha256(raw).hexdigest()}
     public.commit()
     return {"font_upstream_commit":FONT_COMMIT,"assets":receipt,"private_inputs_used":False}

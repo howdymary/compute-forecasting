@@ -31,7 +31,7 @@ def web():
     import threading
     from fastapi import FastAPI,Request
     from fastapi.responses import HTMLResponse,JSONResponse,Response
-    api=FastAPI(docs_url=None,redoc_url=None,openapi_url=None);lock=threading.Lock();archive_cache={"sha":None,"bytes":None};asset_cache={};release_cache={}
+    api=FastAPI(docs_url=None,redoc_url=None,openapi_url=None);lock=threading.Lock();archive_cache={"sha":None,"bytes":None};asset_cache={};release_cache={};notebook_cache={};notebook_lock=threading.Lock()
     headers={"Cache-Control":"no-store","X-Content-Type-Options":"nosniff","Referrer-Policy":"strict-origin-when-cross-origin","Content-Security-Policy":"default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'"}
     def read(name):
         with lock:
@@ -47,13 +47,19 @@ def web():
     def experimental_index():return HTMLResponse(EXPERIMENTAL_HTML,headers=headers)
     @api.get("/api/experimental")
     def experimental_results():
-        with lock:
-            public.reload();root=Path("/public/experimental-v2");summary=root/"summary.json"
-            payload=json.loads(summary.read_text()) if summary.is_file() else {"schema_version":2,"campaign_status":"running","policy_reports":[],"checkpoint_runs":[],"status":"awaiting_publication"}
-            payload["autonomy_runs"]=[json.loads(p.read_text()) for p in sorted((root/"autonomy").glob("*.json"))[-20:]]
-            for key,name in (("prospective","prospective-manifest.json"),("provider_usage","usage.json"),("price_free_ablation","price-free.json"),("analysis","analysis.json"),("matched_price_ablation","matched-price-ablation.json"),("feature_summary","feature-summary.json"),("artifact_archive","archive-manifest.json"),("training_progress","training-progress.json")):
-                file=root/name
-                if file.is_file():payload[key]=json.loads(file.read_text())
+        for attempt in range(3):
+            try:
+                with lock:
+                    public.reload();root=Path("/public/experimental-v2");summary=root/"summary.json"
+                    payload=json.loads(summary.read_text()) if summary.is_file() else {"schema_version":2,"campaign_status":"running","policy_reports":[],"checkpoint_runs":[],"status":"awaiting_publication"}
+                    payload["autonomy_runs"]=[json.loads(p.read_text()) for p in sorted((root/"autonomy").glob("*.json"))[-20:]]
+                    for key,name in (("prospective","prospective-manifest.json"),("provider_usage","usage.json"),("price_free_ablation","price-free.json"),("analysis","analysis.json"),("matched_price_ablation","matched-price-ablation.json"),("feature_summary","feature-summary.json"),("artifact_archive","archive-manifest.json"),("training_progress","training-progress.json")):
+                        file=root/name
+                        if file.is_file():payload[key]=json.loads(file.read_text())
+                break
+            except json.JSONDecodeError:
+                if attempt==2:return JSONResponse({"error":"Experimental publication is updating; retry shortly"},status_code=503,headers={**headers,"Retry-After":"1"})
+                time.sleep(.1)
         payload["policy_execution_semantics"]={"numerical_feedback_cache_hit":True,"new_numerical_execution":False,"budget":"six revealed results from the registered numerical grid per task","inference":"actual Tinker sampler calls; distinct from fresh Modal autonomy executions"}
         encoded=json.dumps(payload,allow_nan=False)
         if any(token in encoded for token in ("tinker://","TINKER_API_KEY","MODAL_TOKEN_SECRET","Authorization","permitted_private_method_context")):
@@ -79,13 +85,17 @@ def web():
     @api.get("/api/notebook")
     def notebook_diagnostics():
         from .notebook_diagnostics import build as build_diagnostics
-        response=experimental_results()
-        if response.status_code!=200:return response
-        try:
-            payload=build_diagnostics(json.loads(response.body))
-            return JSONResponse(payload,headers=headers)
-        except (ValueError,KeyError,TypeError):
-            return JSONResponse({"error":"Notebook diagnostics await verified artifacts"},status_code=503,headers=headers)
+        with notebook_lock:
+            if notebook_cache and time.monotonic()-notebook_cache["at"]<5:
+                return JSONResponse(notebook_cache["payload"],headers=headers)
+            response=experimental_results()
+            if response.status_code!=200:return response
+            try:
+                payload=build_diagnostics(json.loads(response.body))
+                notebook_cache.update(at=time.monotonic(),payload=payload)
+                return JSONResponse(payload,headers=headers)
+            except (ValueError,KeyError,TypeError):
+                return JSONResponse({"error":"Notebook diagnostics await verified artifacts"},status_code=503,headers=headers)
 
     @api.get("/notebook-assets/{name}")
     def notebook_asset(name:str):

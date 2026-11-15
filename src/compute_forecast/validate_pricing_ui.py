@@ -2,7 +2,8 @@
 import csv,hashlib,io,json,math,os,urllib.request
 from pathlib import Path
 URL="https://howdymary--compute-forecast-observatory-web.us-east.modal.run"
-def get(path):return urllib.request.urlopen(URL+path,timeout=90).read()
+def get(path):
+    with urllib.request.urlopen(URL+path,timeout=90) as response:return response.read()
 def main():
     from playwright.sync_api import sync_playwright,expect
     out=Path("artifacts");out.mkdir(exist_ok=True)

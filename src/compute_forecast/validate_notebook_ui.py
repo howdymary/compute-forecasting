@@ -2,12 +2,13 @@
 from __future__ import annotations
 import base64,hashlib,json,math,os,re,time
 from pathlib import Path
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor,as_completed
 from urllib.request import urlopen
 from .notebook_diagnostics import build
 from .validate_pricing_ui import main as validate_existing_pricing
 URL="https://howdymary--compute-forecast-observatory-web.us-east.modal.run"
-def get(path):return urlopen(URL+path,timeout=90).read()
+def get(path):
+    with urlopen(URL+path,timeout=90) as response:return response.read()
 def close(a,b):
     assert len(a)==len(b) and all(math.isclose(x,y,rel_tol=1e-10,abs_tol=1e-12) for x,y in zip(a,b)),(a,b)
 def contrast_ratio(foreground,background):
@@ -43,8 +44,20 @@ def main():
     font=get("/notebook-assets/caveat-f84acf2c.ttf")
     assert hashlib.sha1(b"blob "+str(len(font)).encode()+b"\0"+font).hexdigest()=="f84acf2ce2d1b3329b194749530dbaec047e6df6"
     concurrent_paths=["/notebook-assets/caveat-f84acf2c.ttf","/files/forecasts.csv","/api/pricing","/api/notebook"]*3
+    def concurrent_probe(path):
+        started=time.monotonic()
+        try:
+            raw=get(path);row={"path":path,"status":200,"bytes":len(raw),"seconds":round(time.monotonic()-started,4)}
+        except Exception as error:
+            raw=None;row={"path":path,"error":type(error).__name__+": "+str(error),"seconds":round(time.monotonic()-started,4)}
+        print("NOTEBOOK_CONCURRENT_HTTP:"+json.dumps(row),flush=True)
+        return path,raw,row
+    concurrent_results=[];concurrent_observations=[]
     with ThreadPoolExecutor(max_workers=8) as executor:
-        concurrent_results=list(executor.map(lambda path:(path,get(path)),concurrent_paths))
+        futures=[executor.submit(concurrent_probe,path) for path in concurrent_paths]
+        for future in as_completed(futures):
+            path,raw,row=future.result();concurrent_results.append((path,raw));concurrent_observations.append(row)
+    assert all(raw is not None for _,raw in concurrent_results),concurrent_observations
     for path,raw in concurrent_results:
         assert raw
         if path.endswith(".csv"):
@@ -168,7 +181,7 @@ def main():
         page.locator("#price-chart").wait_for()
         context.close();browser.close()
     assert not errors,errors
-    report={"status":"passed","checks":checks,"source_sha":os.environ.get("SOURCE_SHA"),"font_license_and_blob_verified":True,"explicit_loaded_font_faces":loaded_faces,"concurrent_asset_and_data_requests":len(concurrent_results),"peer_sources":15,"diagnostic_report_count":len(notes["calibration"]),"diagnostic_api_roundtrip_seconds":round(elapsed,4),"diagnostics_match_public_saved_results":True,"pricing_outage_retry":True,"primary_chart_independent_of_research_requests":True,"page_errors":errors,"reduced_motion":True,"recording":False}
+    report={"status":"passed","checks":checks,"source_sha":os.environ.get("SOURCE_SHA"),"font_license_and_blob_verified":True,"explicit_loaded_font_faces":loaded_faces,"concurrent_asset_and_data_requests":len(concurrent_results),"concurrent_request_observations":concurrent_observations,"peer_sources":15,"diagnostic_report_count":len(notes["calibration"]),"diagnostic_api_roundtrip_seconds":round(elapsed,4),"diagnostics_match_public_saved_results":True,"pricing_outage_retry":True,"primary_chart_independent_of_research_requests":True,"page_errors":errors,"reduced_motion":True,"recording":False}
     (out/"validation.json").write_text(json.dumps(report,indent=2)+"\n")
     (out/"diagnostic-snapshot.json").write_text(json.dumps(notes,indent=2)+"\n")
     print("NOTEBOOK_UI_REPORT:"+json.dumps(report),flush=True)
