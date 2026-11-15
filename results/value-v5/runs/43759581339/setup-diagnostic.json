@@ -1,0 +1,42 @@
+{
+  "source_sha": "81f9c6716bfe110a3751a96371f88cc954b41e8f",
+  "checked_at": "2026-11-15T20:42:48.075234+00:00",
+  "records_ingested": 0,
+  "model_calls": 0,
+  "cases": [
+    {
+      "case": "legacy_audience_short_actors",
+      "audience_length": 44,
+      "actor_lengths": [
+        37,
+        36,
+        34
+      ],
+      "status_code": 400,
+      "response_sha256": "336c9f6e28f4b08572952a0a059077c461e74f416eed9554945b4461457151ee",
+      "error_detail": "{\"code\":\"audience-slug-invalid\",\"status\":400,\"debugMessage\":\"A slug is 2 to 40 characters of a-z, 0-9 and dashes, starting and ending on a letter or digit\",\"data\":null}"
+    },
+    {
+      "case": "short_audience_legacy_actors",
+      "audience_length": 28,
+      "actor_lengths": [
+        63,
+        62,
+        60
+      ],
+      "status_code": 201,
+      "response_sha256": "2f11d8e9ead258642accf848297e4d4fba6481695081905406340faf072d0d5a"
+    },
+    {
+      "case": "short_control",
+      "audience_length": 25,
+      "actor_lengths": [
+        37,
+        36,
+        34
+      ],
+      "status_code": 201,
+      "response_sha256": "8522aa36e885c12c9c3470933b471ce9cb3dbcd3cf4c2bb911bdf092084b65d6"
+    }
+  ]
+}
