@@ -1,0 +1,45 @@
+{
+  "source_sha": "90c1faf3f824097cfe9adc0fc49381a8c8c4819c",
+  "case": 0,
+  "native": {
+    "case": 0,
+    "seed": 1361001,
+    "planned": 5859,
+    "processed": 5859,
+    "primary_complete_no227": 5859,
+    "primary_timeouts": 0,
+    "secondary_complete_no226_excluding_removed": 5859,
+    "secondary_timeouts": 0,
+    "pool_cap_skips": 0,
+    "all_planned_neighborhoods_processed": true,
+    "cpu_seconds": 1.05129,
+    "best_size_unverified": 226
+  },
+  "new226": [],
+  "polish": [],
+  "best_verified": 226,
+  "winner_verification": {
+    "accepted": true,
+    "cardinality": 226,
+    "reports": [
+      {
+        "cardinality": 226,
+        "distinct_descendants": 6410,
+        "length": 16,
+        "method": "distinct_string_two_deletions",
+        "valid": true,
+        "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+      },
+      {
+        "cardinality": 226,
+        "largest_pairwise_lcs": 13,
+        "length": 16,
+        "method": "independent_dynamic_programming_lcs",
+        "pairs_checked": 25425,
+        "valid": true,
+        "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+      }
+    ]
+  },
+  "scope": "Only explicit fixed-core repair families. Primary227 query allows the FULL compatible universe. Secondary226 query explicitly excludes all removed core words; its infeasibility does not by itself exclude every226 code. Timeouts/caps are not proofs."
+}
