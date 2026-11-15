@@ -1,7 +1,7 @@
-name: CodeGarden read-only shared budget renewal
+name: CodeGarden source-backed connected strategy cycle
 on:
   push:
-    branches: [codegarden-budget-004]
+    branches: [codegarden-research-005]
     paths: [.github/workflows/codegarden.yml]
 permissions:
   contents: write
@@ -30,8 +30,15 @@ jobs:
           python -m venv codegarden/.venv
           codegarden/.venv/bin/python -m pip install -r codegarden/requirements-providers.txt
       - name: Check cross-phase imports before any provider calls
-        run: python -B -c 'import sys; sys.path.insert(0, "codegarden/phase3"); import renew_budget'
-      - name: Refresh live account receipts, then research within the unchanged cumulative caps
+        run: python -B -c 'import sys; sys.path.insert(0, "codegarden/phase3"); import research3'
+      - name: Compile reviewed bounded operators before provider calls
+        run: |
+          mkdir -p codegarden/.build
+          g++ -O3 -std=c++17 codegarden/phase3/bundle_connected_v2.cpp -o codegarden/.build/connected
+          g++ -O3 -std=c++17 codegarden/phase3/bundle_primitive.cpp -o codegarden/.build/primitive
+          codegarden/.build/connected --synthetic-tests
+          codegarden/.build/primitive --synthetic-tests
+      - name: Research through Exa and memory, then execute the Tinker-selected experiment
         env:
           GH_TOKEN: ${{ github.token }}
           EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
@@ -39,19 +46,19 @@ jobs:
           TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
           MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
-        run: codegarden/.venv/bin/python -B -u codegarden/phase3/renew_budget.py
+        run: codegarden/.venv/bin/python -B -u codegarden/phase3/research3.py
       - name: Publish evidence and unresolved accounting
         if: always()
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python -B codegarden/phase3/publish_renewal.py
+        run: python -B codegarden/phase3/publish_research3.py
       - name: Retain all evidence even if a publisher fails
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: codegarden-phase3-research
           path: |
-            codegarden/artifacts/phase3/budget_renewal_002/
+            codegarden/artifacts/phase3/research_003/
             codegarden/artifacts/shared-budget.sqlite
             codegarden/budget/shared-allocation.json
             codegarden/budget/historical-usage.json
