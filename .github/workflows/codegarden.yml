@@ -1,75 +1,79 @@
-name: CodeGarden infeasible-space hypotheses
+name: CodeGarden matched sparse edge-weight breakout versus uniform conflicts
 on:
   push:
-    branches: [codegarden]
+    branches: [codegarden-weighted-breakout-004]
     paths: [.github/workflows/codegarden.yml]
   workflow_dispatch:
 permissions:
   contents: write
 concurrency:
-  group: codegarden-only
+  group: codegarden-free-weighted-breakout-004
   cancel-in-progress: false
 env:
   PYTHONDONTWRITEBYTECODE: '1'
   SOURCE_SHA: ${{ github.sha }}
-  CODEGARDEN_BATCH: infeasible_probe_003
+  CODEGARDEN_BATCH: weighted_breakout_001
 jobs:
   preflight:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 15
     steps:
       - name: Fetch immutable source
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      - name: Compile kernel and independently test energy updates
+        run: |
+          set -o pipefail
+          for attempt in 1 2 3; do
+            if gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1; then break; fi
+            sleep 2
+          done
+          test -f codegarden/phase3/weighted_breakout.cpp
+      - name: Compile and independently exhaust small cases
         run: |
           mkdir -p codegarden/.build
-          g++ -O3 -std=c++17 codegarden/phase3/infeasible.cpp -o codegarden/.build/infeasible
-          python -B codegarden/phase3/test_infeasible.py
-          python -B codegarden/phase3/preflight.py
-      - name: Retain preflight evidence
-        if: always()
-        uses: actions/upload-artifact@v4
+          g++ -O3 -std=c++17 codegarden/phase3/weighted_breakout.cpp -o codegarden/.build/weighted_breakout
+          python -B -u codegarden/phase3/test_weighted_breakout.py
+          python -B -u codegarden/phase3/weighted_prerequisites.py
+          python -B -u codegarden/phase3/preflight.py
+      - uses: actions/upload-artifact@v4
         with:
-          name: codegarden-cg3-preflight
-          path: codegarden/artifacts/phase3/infeasible_probe_003/
+          name: codegarden-weighted-preflight
+          path: codegarden/artifacts/phase3/weighted_breakout_001/
   probes:
     needs: preflight
     runs-on: ubuntu-latest
-    timeout-minutes: 16
+    timeout-minutes: 35
     strategy:
       fail-fast: false
-      max-parallel: 4
+      max-parallel: 8
       matrix:
-        seed: [950000, 950001, 950002, 950003]
+        case: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
     steps:
       - name: Fetch immutable source
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
+        run: |
+          set -o pipefail
+          for attempt in 1 2 3; do
+            if gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1; then break; fi
+            sleep 2
+          done
+          test -f codegarden/phase3/weighted_breakout.cpp
       - uses: actions/download-artifact@v4
         with:
-          name: codegarden-cg3-preflight
-          path: codegarden/artifacts/phase3/infeasible_probe_003/
-      - name: Compile isolated native worker
+          name: codegarden-weighted-preflight
+          path: codegarden/artifacts/phase3/weighted_breakout_001/
+      - name: Compile and run bounded component
         run: |
           mkdir -p codegarden/.build
-          g++ -O3 -std=c++17 codegarden/phase3/infeasible.cpp -o codegarden/.build/infeasible
-      - name: Test two paired 60-CPU-second hypotheses from different code families
-        run: python -B -u codegarden/phase3/probe.py --seed ${{ matrix.seed }} --seconds 60
-      - name: Retain every checkpoint and proposal, even on failure
+          g++ -O3 -std=c++17 codegarden/phase3/weighted_breakout.cpp -o codegarden/.build/weighted_breakout
+          python -B -u codegarden/phase3/weighted_breakout.py ${{ matrix.case }}
+      - uses: actions/upload-artifact@v4
         if: always()
-        uses: actions/upload-artifact@v4
         with:
-          name: codegarden-cg3-probe-${{ matrix.seed }}
-          path: codegarden/artifacts/phase3/infeasible_probe_003/
+          retention-days: 1
+          name: codegarden-weighted-${{ matrix.case }}
+          path: codegarden/artifacts/phase3/weighted_breakout_001/
   collect:
     needs: [preflight, probes]
     if: always()
@@ -79,22 +83,25 @@ jobs:
       - name: Fetch immutable source
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
+        run: |
+          set -o pipefail
+          for attempt in 1 2 3; do
+            if gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1; then break; fi
+            sleep 2
+          done
+          test -f codegarden/phase3/weighted_breakout.cpp
       - uses: actions/download-artifact@v4
         with:
-          pattern: codegarden-cg3-*
+          pattern: codegarden-weighted-*
           merge-multiple: true
-          path: codegarden/artifacts/phase3/infeasible_probe_003/
-      - name: Independently accept proposals and publish leased checkpoint
+          path: codegarden/artifacts/phase3/weighted_breakout_001/
+      - name: Publish leased results
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python -B -u codegarden/phase3/publish.py
-      - name: Retain collected evidence
+        run: python -B -u codegarden/phase3/publish_weighted_breakout.py
+      - uses: actions/upload-artifact@v4
         if: always()
-        uses: actions/upload-artifact@v4
         with:
-          name: codegarden-cg3-collected
-          path: codegarden/artifacts/phase3/infeasible_probe_003/
+          retention-days: 1
+          name: codegarden-weighted-collected
+          path: codegarden/artifacts/phase3/weighted_breakout_001/
