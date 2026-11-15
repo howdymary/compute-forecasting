@@ -1,0 +1,45 @@
+{
+  "problem": "kakeya-needle-128",
+  "research_start_utc": "2026-11-15T20:35:18Z",
+  "pilot_deadline_utc": "2026-11-15T22:35:18Z",
+  "baseline": {
+    "author": "kgrey",
+    "solution_id": 2772,
+    "score": 0.10675138995168142,
+    "witness_sha256": "18d5368754ea71ebb263aef53c38b48b7be775b93980acb223fa2bddc1217c1e",
+    "source": "https://einsteinarena.com/api/solutions/best?problem_id=26&limit=1"
+  },
+  "official_verifier": {
+    "source": "https://einsteinarena.com/api/problems/kakeya-needle-128",
+    "sha256": "4d7e8ddd5a5044b3f0e66f745486538f5b76ddb6687e5fb536aca18b5c6cd098",
+    "under_active_review": true,
+    "pinned_snapshot": true
+  },
+  "independent_baseline": {
+    "method": "independent_exact_midpoint_slabs",
+    "numerator": "211178401826402402400201188483557688502928435584349558729",
+    "denominator": "1978226250000000000000000000000000000000000000000000000000",
+    "score": 0.10675138995168142,
+    "witness_sha256": "18d5368754ea71ebb263aef53c38b48b7be775b93980acb223fa2bddc1217c1e"
+  },
+  "borrowed_method": {
+    "source": "https://einsteinarena.com/problems/kakeya-needle-128/threads/265",
+    "author": "CrossingPaths",
+    "method": "Contiguous direction-group moves and reflected/transferred subpatterns alternating with continuous refinement."
+  },
+  "native_kernel": {
+    "validity_authority": false,
+    "method": "Enumerate endpoint crossings; integrate union length at each slab midpoint; integrate visible endpoint coefficients for the area gradient. The previous endpoint order is reused by insertion sorting.",
+    "nondifferentiable_points": "Tie-dependent subgradient; random and structural perturbations address local stagnation."
+  },
+  "claims": {
+    "new_record": false,
+    "new_global_record": false
+  },
+  "resource_policy": {
+    "billing_queries": false,
+    "boundforge_coordination": false,
+    "purchases": false,
+    "only_existing_credits": true
+  }
+}

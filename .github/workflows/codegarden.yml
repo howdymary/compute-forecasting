@@ -1,13 +1,13 @@
-name: CodeGarden seeded evolutionary population
+name: CodeGarden Kakeya two-hour pilot
 on:
   push:
-    branches: [codegarden-side-seeded-evo-001]
+    branches: [codegarden-kakeya-pilot-001]
     paths: [.github/workflows/codegarden.yml]
   workflow_dispatch:
 permissions:
   contents: write
 concurrency:
-  group: codegarden-side-seeded-evo-001
+  group: codegarden-kakeya-pilot-001
   cancel-in-progress: false
 env:
   SOURCE_SHA: ${{ github.sha }}
@@ -15,41 +15,39 @@ env:
   HF_HOME: ${{ github.workspace }}/codegarden/.cache/huggingface
   XDG_CACHE_HOME: ${{ github.workspace }}/codegarden/.cache
   TMPDIR: ${{ github.workspace }}/codegarden/.tmp
+  OPENBLAS_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
 jobs:
   research:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     outputs:
-      has_candidate: ${{ steps.cycle.outputs.has_candidate }}
+      has_candidate: ${{ steps.pilot.outputs.has_candidate }}
     steps:
-      - name: Fetch minimal isolated source
+      - name: Fetch isolated source and frozen witnesses
         run: |
           python3 -B - <<'PY'
-          import os,pathlib,urllib.request
+          import pathlib,urllib.request,os
           pathlib.Path("codegarden/.tmp").mkdir(parents=True,exist_ok=True)
-          for name in ["codegarden/side_seeded_evo/build.py","codegarden/side_seeded_evo/smoke.py","codegarden/side_seeded_evo/experiment.py","codegarden/side_global/graph.cpp","codegarden/side_global/warm.cpp","codegarden/side_global/known226.txt","codegarden/side_global/requirements.txt","codegarden/phase3/bundle_colored.cpp","codegarden/side_services/cycle.py","codegarden/supervisor.py","codegarden/protected/manifest.json","codegarden/protected/verify_descendants.py","codegarden/protected/verify_lcs.py","codegarden/artifacts/best_code.txt"]:
+          names=["area.cpp","search.py","tests.py","verify.py","pilot.py","requirements.txt","baseline.json","protected/manifest.json","protected/official.py","protected/independent.py","protected/__init__.py"]
+          for name in ["codegarden/kakeya/"+n for n in names]+["codegarden/side_services/cycle.py"]:
               p=pathlib.Path(name);p.parent.mkdir(parents=True,exist_ok=True)
               p.write_bytes(urllib.request.urlopen("https://raw.githubusercontent.com/howdymary/compute-forecasting/"+os.environ["SOURCE_SHA"]+"/"+name,timeout=45).read())
           PY
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Build graph generator and strict augmentation kernel
+      - name: Install isolated clients and numeric dependencies
         run: |
-          mkdir -p codegarden/.build
-          g++ -O3 -std=c++17 -static -march=x86-64 -mtune=generic codegarden/side_global/graph.cpp -o codegarden/.build/global_graph
-          g++ -O3 -std=c++17 -static -march=x86-64 -mtune=generic codegarden/phase3/bundle_colored.cpp -o codegarden/.build/global_bundle
-          codegarden/.build/global_bundle --synthetic-tests
-      - name: Build pinned portable KaMIS before provider calls
-        run: python3 -B -u codegarden/side_seeded_evo/build.py
-      - name: Independently test graph incidence and native binaries
-        run: python3 -B -u codegarden/side_seeded_evo/smoke.py
-      - name: Install isolated service clients
+          python3 -m venv codegarden/.venv-kakeya
+          codegarden/.venv-kakeya/bin/python -m pip install --disable-pip-version-check -r codegarden/kakeya/requirements.txt
+      - name: Compile and independently check proposal kernel before remote work
         run: |
-          python3 -m venv codegarden/.venv
-          codegarden/.venv/bin/python -m pip install --disable-pip-version-check -r codegarden/side_global/requirements.txt
-      - name: Research and run three bounded whole-universe workers
-        id: cycle
+          mkdir -p codegarden/kakeya/.build codegarden/artifacts/kakeya/pilot_001
+          g++ -O3 -std=c++17 -shared -fPIC -march=x86-64 -mtune=generic codegarden/kakeya/area.cpp -o codegarden/kakeya/.build/area.so
+          codegarden/.venv-kakeya/bin/python -B codegarden/kakeya/tests.py > codegarden/artifacts/kakeya/pilot_001/preflight.json
+      - name: Run bounded structural-versus-coordinate pilot
+        id: pilot
         env:
           GH_TOKEN: ${{ github.token }}
           EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
@@ -57,51 +55,49 @@ jobs:
           TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
           MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
-        run: codegarden/.venv/bin/python -B -u codegarden/side_seeded_evo/experiment.py
+        run: codegarden/.venv-kakeya/bin/python -B -u codegarden/kakeya/pilot.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: codegarden-seeded-evo-research
+          name: codegarden-kakeya-pilot
           retention-days: 30
-          path: codegarden/artifacts/side_research/seeded_evo_001/
+          path: codegarden/artifacts/kakeya/pilot_001/
       - uses: actions/upload-artifact@v4
-        if: steps.cycle.outputs.has_candidate == 'true'
+        if: steps.pilot.outputs.has_candidate == 'true'
         with:
-          name: codegarden-seeded-evo-227-candidate
+          name: codegarden-kakeya-candidate
           retention-days: 30
-          path: codegarden/artifacts/side_research/seeded_evo_001/candidate.txt
+          path: codegarden/artifacts/kakeya/pilot_001/candidate.json
   accept:
     needs: research
     if: needs.research.outputs.has_candidate == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 6
     steps:
-      - name: Fetch frozen independent checker sources
+      - name: Fetch only frozen independent acceptance sources
         run: |
           python3 -B - <<'PY'
-          import pathlib,urllib.request
-          for name in ["supervisor.py","protected/manifest.json","protected/verify_descendants.py","protected/verify_lcs.py"]:
-              p=pathlib.Path("codegarden")/name;p.parent.mkdir(parents=True,exist_ok=True)
-              p.write_bytes(urllib.request.urlopen("https://raw.githubusercontent.com/howdymary/compute-forecasting/ce5eab1859c271686876ee5c2d21c0e0a5316d67/codegarden/"+name,timeout=30).read())
+          import os,pathlib,urllib.request
+          for name in ["verify.py","protected/manifest.json","protected/official.py","protected/independent.py"]:
+              p=pathlib.Path("codegarden/kakeya")/name;p.parent.mkdir(parents=True,exist_ok=True)
+              p.write_bytes(urllib.request.urlopen("https://raw.githubusercontent.com/howdymary/compute-forecasting/"+os.environ["SOURCE_SHA"]+"/codegarden/kakeya/"+name,timeout=30).read())
           PY
       - uses: actions/download-artifact@v4
         with:
-          name: codegarden-seeded-evo-227-candidate
-          path: codegarden/.verify-input/
-      - name: Accept candidate without proposer or service credentials
+          name: codegarden-kakeya-candidate
+          path: codegarden/kakeya/.verify-input/
+      - name: Exact acceptance without optimizer or provider credentials
         run: |
+          python3 -B codegarden/kakeya/verify.py codegarden/kakeya/.verify-input/candidate.json > codegarden/kakeya/isolated_acceptance.json
           python3 -B - <<'PY'
-          import pathlib,json,sys
-          sys.path.insert(0,"codegarden")
-          from supervisor import verify
-          result=verify(pathlib.Path("codegarden/.verify-input/candidate.txt"))
-          assert result["cardinality"]>=227
-          pathlib.Path("codegarden/isolated_acceptance.json").write_text(json.dumps(result,indent=2))
-          print(json.dumps(result))
+          import json
+          r=json.load(open("codegarden/kakeya/isolated_acceptance.json"))
+          assert r["accepted"] and r["score"] < 0.10675138995168142-1e-9
+          print(json.dumps(r))
           PY
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: codegarden-seeded-evo-isolated-acceptance
+          name: codegarden-kakeya-isolated-acceptance
           retention-days: 30
-          path: codegarden/isolated_acceptance.json
+          path: codegarden/kakeya/isolated_acceptance.json
