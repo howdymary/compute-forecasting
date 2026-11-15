@@ -139,7 +139,7 @@ def main():
             assert page.locator(".pinned-note").count()==2
             assert page.locator("#time-cursor").input_value()=="24"
             assert page.locator(".settings details").evaluate("(el)=>el.open")
-            page.get_by_role("button",name="Submitted forecast",exact=True).click()
+            page.get_by_role("button",name="History + forecast",exact=True).click()
             page.get_by_role("button",name="7 days",exact=True).click()
             page.locator("#pin-point").click()
             assert page.locator(".pinned-note").count()==3

@@ -67,7 +67,7 @@ def main():
         page.get_by_role("button",name="Explore",exact=True).click()
         assert page.locator("#series-select").input_value()==selected
         assert page.locator("#anchor").input_value()=="2.5"
-        page.get_by_role("button",name="Submitted forecast",exact=True).click()
+        page.get_by_role("button",name="History + forecast",exact=True).click()
         points=next(s for s in p["series"] if s["id"]==selected)["forecasts"]
         close(values(),[points[2][q] for q in ("q10","q50","q90")])
         assert "Historical dates retain their gaps" in page.locator("#chart-note").inner_text()
@@ -102,7 +102,7 @@ def main():
         assert int(phone.locator("#time-cursor").input_value())<36
         expect(phone.locator("#chart-tooltip")).to_be_visible()
         phone.screenshot(path=str(out/"explore-mobile.png"),full_page=True)
-        phone.get_by_role("button",name="Submitted forecast",exact=True).click()
+        phone.get_by_role("button",name="History + forecast",exact=True).click()
         assert phone.evaluate("document.documentElement.scrollWidth<=innerWidth+2")
         phone.screenshot(path=str(out/"benchmark-mobile.png"),full_page=True)
         mobile.close();context.close();browser.close()

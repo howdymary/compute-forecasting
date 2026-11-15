@@ -30,6 +30,8 @@ def main():
             joins=page.evaluate("""()=>{const selected=S.series;const result=P.series.map(s=>{S.series=s.id;const h=t7History();return {id:s.id,joined:!!h,error:T7.historyError}});S.series=selected;return result}""")
             assert sum(r["joined"] for r in joins)==36 and not any(r["error"] for r in joins)
             assert page.locator("[data-timeline-forecast]").count()==3
+            first_mark=page.locator('[data-timeline-forecast="1"]').bounding_box()
+            assert first_mark["y"]+first_mark["height"]<height-24, "Price line must be visible in the opening viewport"
             chosen=page.evaluate("series().id");current=next(s for s in p["series"] if s["id"]==chosen)
             for fc in current["forecasts"]:
                 mark=page.locator('[data-timeline-forecast="'+str(fc["horizon_days"])+'"]')

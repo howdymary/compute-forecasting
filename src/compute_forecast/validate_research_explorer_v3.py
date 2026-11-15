@@ -47,7 +47,7 @@ def main():
             page=context.new_page();page.on("pageerror",lambda e:errors.append(str(e)))
             page.on("response",lambda r:failed.append({"status":r.status,"url":r.url}) if r.url.startswith(URL) and r.status>=400 and not r.url.endswith("/favicon.ico") else None)
             page.goto(URL,wait_until="domcontentloaded",timeout=90000);page.locator("#price-chart").wait_for(timeout=90000)
-            page.get_by_role("button",name="Historical context",exact=True).click();page.locator("[data-history-value]").wait_for(timeout=90000)
+            page.get_by_role("button",name="Independent context",exact=True).click();page.locator("[data-history-value]").wait_for(timeout=90000)
             assert page.locator("#history-select option").count()==2
             assert page.locator("[data-history-segment]").count()>1,"Missing dates were joined"
             series=assets["history_context"]["series"][0]
@@ -108,7 +108,7 @@ def main():
             assert page.evaluate("matchMedia('(prefers-reduced-motion: reduce)').matches")
             checks.append({"width":width,"history_points_exact":True,"gaps":True,"matched_scopes":True,"paired_trace":True,"pin_immutable":True,"focus_and_disclosures":True,"overflow":False})
             context.close()
-        # All research responses can be delayed without blocking the primary scenario chart.
+        # All research responses can be delayed without blocking the primary pricing chart.
         context=browser.new_context(viewport={"width":390,"height":844});page=context.new_page();held=[]
         for path in ("release","notebook","experimental","chronos-control"):page.route("**/api/"+path,lambda route:held.append(route))
         page.goto(URL,wait_until="domcontentloaded",timeout=90000);page.locator("#price-chart").wait_for(timeout=15000)
@@ -123,7 +123,7 @@ def main():
             else:route.fulfill(status=200,content_type="application/json",body=json.dumps(assets))
         page.route("**/api/research-assets",history_route)
         page.goto(URL,wait_until="domcontentloaded",timeout=90000);page.locator("#price-chart").wait_for(timeout=90000)
-        page.get_by_role("button",name="Historical context",exact=True).click()
+        page.get_by_role("button",name="Independent context",exact=True).click()
         page.get_by_role("button",name="Retry historical context",exact=True).click()
         page.locator("[data-history-value]").wait_for(timeout=90000)
         assert attempts[0]==2
