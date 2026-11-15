@@ -1,0 +1,227 @@
+{
+  "controller_self_cpu_seconds": 0.030255999999999998,
+  "all_children_cpu_seconds": 304.23074,
+  "controller_wall_including_parents_and_verification": 304.281379031,
+  "source_sha": "17ca60b4fed7eb631e8f32da011005d6e8e57f30",
+  "case": 8,
+  "pair": 4,
+  "seed": 1517005,
+  "mode": "fixed_outside8",
+  "plan_sha256": "4a64a73d70e32ea6c216b37f079da5e84eb59ab099b171c7a78ae2116afe6a61",
+  "parent_sha256": [
+    "f5068f339819ec2bdf800ed4cba759a00ebdf5ce822d6ff7fb51c740e1ae8b1a",
+    "fd6fc6baff0f36e9e59df3e1ce4f9457ce966df52cfe458d63ba3f7dbaa30f5f"
+  ],
+  "parent_verifications": [
+    {
+      "accepted": true,
+      "cardinality": 225,
+      "reports": [
+        {
+          "cardinality": 225,
+          "distinct_descendants": 6360,
+          "length": 16,
+          "method": "distinct_string_two_deletions",
+          "valid": true,
+          "witness_sha256": "f5068f339819ec2bdf800ed4cba759a00ebdf5ce822d6ff7fb51c740e1ae8b1a"
+        },
+        {
+          "cardinality": 225,
+          "largest_pairwise_lcs": 13,
+          "length": 16,
+          "method": "independent_dynamic_programming_lcs",
+          "pairs_checked": 25200,
+          "valid": true,
+          "witness_sha256": "f5068f339819ec2bdf800ed4cba759a00ebdf5ce822d6ff7fb51c740e1ae8b1a"
+        }
+      ]
+    },
+    {
+      "accepted": true,
+      "cardinality": 225,
+      "reports": [
+        {
+          "cardinality": 225,
+          "distinct_descendants": 6360,
+          "length": 16,
+          "method": "distinct_string_two_deletions",
+          "valid": true,
+          "witness_sha256": "fd6fc6baff0f36e9e59df3e1ce4f9457ce966df52cfe458d63ba3f7dbaa30f5f"
+        },
+        {
+          "cardinality": 225,
+          "largest_pairwise_lcs": 13,
+          "length": 16,
+          "method": "independent_dynamic_programming_lcs",
+          "pairs_checked": 25200,
+          "valid": true,
+          "witness_sha256": "fd6fc6baff0f36e9e59df3e1ce4f9457ce966df52cfe458d63ba3f7dbaa30f5f"
+        }
+      ]
+    }
+  ],
+  "union_pool_sha256": "64457830ae63bdccac1d1556a29f77ea7866c2de09340c0e9666263c184a04d1",
+  "best_method_independently_verified": 225,
+  "best_verification": {
+    "accepted": true,
+    "cardinality": 225,
+    "reports": [
+      {
+        "cardinality": 225,
+        "distinct_descendants": 6360,
+        "length": 16,
+        "method": "distinct_string_two_deletions",
+        "valid": true,
+        "witness_sha256": "fd6fc6baff0f36e9e59df3e1ce4f9457ce966df52cfe458d63ba3f7dbaa30f5f"
+      },
+      {
+        "cardinality": 225,
+        "largest_pairwise_lcs": 13,
+        "length": 16,
+        "method": "independent_dynamic_programming_lcs",
+        "pairs_checked": 25200,
+        "valid": true,
+        "witness_sha256": "fd6fc6baff0f36e9e59df3e1ce4f9457ce966df52cfe458d63ba3f7dbaa30f5f"
+      }
+    ]
+  },
+  "retained_global_best_verified": 226,
+  "novel226_orbits": 0,
+  "positive_verifications": [],
+  "bank225": [
+    {
+      "path": "projection225_0.txt",
+      "sha256": "fd6fc6baff0f36e9e59df3e1ce4f9457ce966df52cfe458d63ba3f7dbaa30f5f",
+      "verification": {
+        "accepted": true,
+        "cardinality": 225,
+        "reports": [
+          {
+            "cardinality": 225,
+            "distinct_descendants": 6360,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "fd6fc6baff0f36e9e59df3e1ce4f9457ce966df52cfe458d63ba3f7dbaa30f5f"
+          },
+          {
+            "cardinality": 225,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25200,
+            "valid": true,
+            "witness_sha256": "fd6fc6baff0f36e9e59df3e1ce4f9457ce966df52cfe458d63ba3f7dbaa30f5f"
+          }
+        ]
+      },
+      "new_orbit_against_plan_parents": false
+    },
+    {
+      "path": "projection225_1.txt",
+      "sha256": "d788d4e3b01e99ffee5afdafbecda6903b325e9eb36666298b9390ef6a43a60d",
+      "verification": {
+        "accepted": true,
+        "cardinality": 225,
+        "reports": [
+          {
+            "cardinality": 225,
+            "distinct_descendants": 6350,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "d788d4e3b01e99ffee5afdafbecda6903b325e9eb36666298b9390ef6a43a60d"
+          },
+          {
+            "cardinality": 225,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25200,
+            "valid": true,
+            "witness_sha256": "d788d4e3b01e99ffee5afdafbecda6903b325e9eb36666298b9390ef6a43a60d"
+          }
+        ]
+      },
+      "new_orbit_against_plan_parents": true
+    },
+    {
+      "path": "projection225_2.txt",
+      "sha256": "0793ae3933e6351a79ca4678454cc025e1f8ff0515ba49f00c91b517c3d14ea0",
+      "verification": {
+        "accepted": true,
+        "cardinality": 225,
+        "reports": [
+          {
+            "cardinality": 225,
+            "distinct_descendants": 6378,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "0793ae3933e6351a79ca4678454cc025e1f8ff0515ba49f00c91b517c3d14ea0"
+          },
+          {
+            "cardinality": 225,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25200,
+            "valid": true,
+            "witness_sha256": "0793ae3933e6351a79ca4678454cc025e1f8ff0515ba49f00c91b517c3d14ea0"
+          }
+        ]
+      },
+      "new_orbit_against_plan_parents": true
+    },
+    {
+      "path": "projection225_3.txt",
+      "sha256": "ba4f64c83a6c7ab7bc317cb11b3fea64c561c355221ca7ee86068c1708f88cdb",
+      "verification": {
+        "accepted": true,
+        "cardinality": 225,
+        "reports": [
+          {
+            "cardinality": 225,
+            "distinct_descendants": 6381,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "ba4f64c83a6c7ab7bc317cb11b3fea64c561c355221ca7ee86068c1708f88cdb"
+          },
+          {
+            "cardinality": 225,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25200,
+            "valid": true,
+            "witness_sha256": "ba4f64c83a6c7ab7bc317cb11b3fea64c561c355221ca7ee86068c1708f88cdb"
+          }
+        ]
+      },
+      "new_orbit_against_plan_parents": true
+    }
+  ],
+  "neighborhood_switches": [],
+  "wall_including_verification": 303.14347037000005,
+  "native_status": {
+    "seed": 1517005,
+    "adaptive": false,
+    "nominal_cpu_seconds": 300,
+    "native_cpu_including_initialization": 300.28,
+    "search_cpu_seconds": 300,
+    "cycles": 196378,
+    "matching_evaluations": 32638235,
+    "matching_calls": 33457710,
+    "memo_hits": 67396,
+    "memo_clears": 65,
+    "sample_occurrences": 353531461,
+    "duplicate_sample_occurrences": 1976130,
+    "utility_prunes": 278114557,
+    "active_outside_limit": 8,
+    "best_size_unverified": 225,
+    "best_outside": [],
+    "scope": "Heuristic outside-set ruin/recreate with exact bipartite completion. No exhaustion or global absence claim. The alternating core-upper-count penalty is a heuristic, not a necessary cut. Every exported positive still requires independent verification."
+  },
+  "scope": "Eight paired fixed8 versus empirical-stagnation8..16 outside-word policies, same parent pair/seed and300nativeCPU nominal limits. Every completion is a valid code from the residual two-parent union plus mutually compatible outside words. Alternating core-availability upper-count penalty is heuristic only and is not enforced by either acceptance verifier. No mathematical exhaustion/global absence claim. Fresh verifier-only job required before goal promotion. Supporting bank/orbit metrics are not a cardinality improvement."
+}
