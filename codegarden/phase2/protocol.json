@@ -1,0 +1,29 @@
+{
+  "start": "2026-11-15T04:18:09Z",
+  "search_cutoff": "2026-11-15T05:33:09Z",
+  "deadline": "2026-11-15T05:48:09Z",
+  "test_cases": 8,
+  "conditions": [
+    "fixed",
+    "adaptive_no_external",
+    "adaptive_with_research",
+    "trained"
+  ],
+  "cpu_seconds_per_case": 120,
+  "chunks": 4,
+  "seed_rule": "case.seed*10+round_id; equal across conditions",
+  "family_split": "train: non-kgrey arena lineages; heldout: kgrey archive lineage; exact starting-code complement/reversal orbits disjoint",
+  "training_gate": "at least eight real score-differential cases and at least two uniquely winning operator classes",
+  "trained_condition_if_gate_fails": "not run; report incomplete comparison instead of training on degenerate labels",
+  "monetary_caps_per_condition": {
+    "modal_usd": 2.5,
+    "tinker_usd": 2,
+    "past_credits": 400
+  },
+  "modal_concurrency": 4,
+  "population_periods": 2,
+  "long_workers": 8,
+  "cpu_seconds_per_population_period": 240,
+  "matching_limitations": "search CPU is matched; actual wall time, completion overshoot, controller/retrieval costs and queueing are reported separately; training cost is separate",
+  "goal": "verified length16 cardinality is primary; no global-record claim from beating an older arena capture"
+}
