@@ -1,7 +1,7 @@
-name: CodeGarden bounded Modal radius-nine partitions
+name: CodeGarden bounded Modal radius-ten partitions
 on:
   push:
-    branches: [codegarden-modal-007]
+    branches: [codegarden-modal-008]
     paths: [.github/workflows/codegarden.yml]
 permissions:
   contents: write
@@ -13,7 +13,7 @@ env:
   HF_HOME: ${{ github.workspace }}/codegarden/.cache/huggingface
   XDG_CACHE_HOME: ${{ github.workspace }}/codegarden/.cache
   PYTHONDONTWRITEBYTECODE: '1'
-  CODEGARDEN_BATCH: sharded9_001
+  CODEGARDEN_BATCH: sharded10_001
 jobs:
   modal:
     runs-on: ubuntu-latest
@@ -46,19 +46,19 @@ jobs:
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
           MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
           TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
-        run: codegarden/.venv/bin/python -B -u codegarden/phase3/modal_sharded9.py
+        run: codegarden/.venv/bin/python -B -u codegarden/phase3/modal_sharded10.py
       - name: Publish final checkpoint
         if: always()
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python -B -u codegarden/phase3/publish_sharded9.py
+        run: python -B -u codegarden/phase3/publish_sharded10.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: codegarden-sharded9
+          name: codegarden-sharded10
           path: |
-            codegarden/artifacts/phase3/sharded9_001/
-            codegarden/artifacts/phase3/budget_renewal_003/
+            codegarden/artifacts/phase3/sharded10_001/
+            codegarden/artifacts/phase3/budget_renewal_004/
             codegarden/artifacts/shared-budget.sqlite
             codegarden/budget/shared-allocation.json
             codegarden/budget/historical-usage.json
