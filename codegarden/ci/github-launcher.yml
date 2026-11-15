@@ -12,7 +12,7 @@ concurrency:
 env:
   PYTHONDONTWRITEBYTECODE: '1'
   SOURCE_SHA: ${{ github.sha }}
-  CODEGARDEN_BATCH: infeasible_probe_002
+  CODEGARDEN_BATCH: infeasible_probe_003
 jobs:
   preflight:
     runs-on: ubuntu-latest
@@ -36,7 +36,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: codegarden-cg3-preflight
-          path: codegarden/artifacts/phase3/infeasible_probe_002/
+          path: codegarden/artifacts/phase3/infeasible_probe_003/
   probes:
     needs: preflight
     runs-on: ubuntu-latest
@@ -45,7 +45,7 @@ jobs:
       fail-fast: false
       max-parallel: 4
       matrix:
-        seed: [940001, 940002, 940003, 940004]
+        seed: [950000, 950001, 950002, 950003]
     steps:
       - name: Fetch immutable source
         env:
@@ -57,19 +57,19 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: codegarden-cg3-preflight
-          path: codegarden/artifacts/phase3/infeasible_probe_002/
+          path: codegarden/artifacts/phase3/infeasible_probe_003/
       - name: Compile isolated native worker
         run: |
           mkdir -p codegarden/.build
           g++ -O3 -std=c++17 codegarden/phase3/infeasible.cpp -o codegarden/.build/infeasible
-      - name: Test two paired 180-CPU-second hypotheses
-        run: python -B -u codegarden/phase3/probe.py --seed ${{ matrix.seed }} --seconds 180
+      - name: Test two paired 60-CPU-second hypotheses from different code families
+        run: python -B -u codegarden/phase3/probe.py --seed ${{ matrix.seed }} --seconds 60
       - name: Retain every checkpoint and proposal, even on failure
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: codegarden-cg3-probe-${{ matrix.seed }}
-          path: codegarden/artifacts/phase3/infeasible_probe_002/
+          path: codegarden/artifacts/phase3/infeasible_probe_003/
   collect:
     needs: [preflight, probes]
     if: always()
@@ -87,7 +87,7 @@ jobs:
         with:
           pattern: codegarden-cg3-*
           merge-multiple: true
-          path: codegarden/artifacts/phase3/infeasible_probe_002/
+          path: codegarden/artifacts/phase3/infeasible_probe_003/
       - name: Independently accept proposals and publish leased checkpoint
         env:
           GH_TOKEN: ${{ github.token }}
@@ -97,4 +97,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: codegarden-cg3-collected
-          path: codegarden/artifacts/phase3/infeasible_probe_002/
+          path: codegarden/artifacts/phase3/infeasible_probe_003/
