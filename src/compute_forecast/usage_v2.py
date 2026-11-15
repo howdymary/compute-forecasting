@@ -1,6 +1,6 @@
 """Read provider receipts; retain account details privately and publish attributed aggregates."""
 from __future__ import annotations
-import csv,io,json,os,subprocess,time,uuid
+import csv,io,json,math,os,subprocess,time,uuid
 from datetime import datetime,timedelta,timezone
 from pathlib import Path
 from urllib.request import urlopen
@@ -35,7 +35,7 @@ def collect():
         rows=list(csv.DictReader(io.StringIO(p.stdout)));private["tinker_billing_rows"]=rows
         own=[r for r in rows if r.get("session_id") in identifiers]
         numeric=[float(r["estimated_cost_usd"]) for r in own if r.get("estimated_cost_usd") not in ("",None)]
-        result["tinker"]={"status":"provider_receipt_partial" if numeric else "pending_or_no_attributed_usage_rows","attributed_sessions":len(identifiers),"billing_rows":len(own),"gross_reported_cost_usd":sum(numeric) if numeric else None,"reported_token_count":sum(int(float(r.get("token_count") or 0)) for r in own),"period_start":start,"period_end":end,"data_lag":True}
+        result["tinker"]={"status":"provider_receipt_partial" if numeric else "pending_or_no_attributed_usage_rows","attributed_sessions":len(identifiers),"billing_rows":len(own),"gross_reported_cost_usd":sum(numeric) if numeric else None,"reported_token_count":sum(int(float(r.get("token_count") or 0)) for r in own) if own else None,"period_start":start,"period_end":end,"data_lag":True}
     except Exception as error:result["tinker"]={"status":"unavailable","error_type":type(error).__name__,"gross_reported_cost_usd":None}
     def cli(args):
         p=subprocess.run(args,capture_output=True,text=True,timeout=90)
@@ -47,6 +47,23 @@ def collect():
             meta,body=cli(args);private[key]=body;result[key]=meta
         except Exception as error:result[key]={"available":False,"error_type":type(error).__name__}
     result["modal"]={"status":"schema_requires_verified_attribution" if result["modal_report"].get("available") else "billing_report_unavailable","gross_reported_cost_usd":None}
+    modal_rows=private.get("modal_report")
+    if isinstance(modal_rows,list):
+        own=[r for r in modal_rows if "compute-forecast-v2" in str(r.get("description",""))]
+        costs={}
+        for r in own:
+            try:cost=float(r["cost"])
+            except (ValueError,TypeError,KeyError):continue
+            if math.isfinite(cost):costs[r["description"]]=costs.get(r["description"],0)+cost
+        if costs:result["modal"]={"status":"provider_receipt_partial","gross_reported_cost_usd":sum(costs.values()),"by_app":[{"app":k,"gross_reported_cost_usd":v} for k,v in sorted(costs.items())],"billing_rows":len(own),"data_lag":True}
+    evidence=list(Path("inputs").rglob("evidence.json"))
+    if evidence:
+        ev=json.loads(evidence[0].read_text());private["exa_search_receipts"]=ev["requests"]
+        amounts=[]
+        for r in ev["requests"]:
+            c=r.get("cost_dollars");v=c.get("total") if isinstance(c,dict) else c
+            if isinstance(v,(int,float)) and math.isfinite(v):amounts.append(v)
+        result["exa"]={"status":"search_receipts_only","search_requests":len(ev["requests"]),"distinct_queries":len({r.get("query") for r in ev["requests"]}),"gross_reported_cost_usd":sum(amounts) if amounts else None,"costed_search_receipts":len(amounts),"additional_contents_and_autonomy_calls_excluded":True}
     receipt=retain.remote(run_id,private,result);result["receipt"]=receipt
     write(Path("artifacts/v2-usage/usage.json"),result);print("V2_USAGE:"+json.dumps(result),flush=True)
     try:

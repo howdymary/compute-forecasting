@@ -47,7 +47,7 @@ def web():
             public.reload();root=Path("/public/experimental-v2");summary=root/"summary.json"
             payload=json.loads(summary.read_text()) if summary.is_file() else {"schema_version":2,"campaign_status":"running","policy_reports":[],"checkpoint_runs":[],"status":"awaiting_publication"}
             payload["autonomy_runs"]=[json.loads(p.read_text()) for p in sorted((root/"autonomy").glob("*.json"))[-20:]]
-            for key,name in (("prospective","prospective-manifest.json"),("provider_usage","usage.json"),("price_free_ablation","price-free.json")):
+            for key,name in (("prospective","prospective-manifest.json"),("provider_usage","usage.json"),("price_free_ablation","price-free.json"),("analysis","analysis.json")):
                 file=root/name
                 if file.is_file():payload[key]=json.loads(file.read_text())
         encoded=json.dumps(payload,allow_nan=False)
