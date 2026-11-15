@@ -27,7 +27,7 @@ jobs:
           from pathlib import Path
           root=Path('artifacts');root.mkdir(exist_ok=True)
           base='https://howdymary--compute-forecast-observatory-web.us-east.modal.run'
-          paths=['/health','/api/research-assets','/api/chronos-control','/notebook-assets/caveat-f84acf2c.ttf','/files/forecasts.csv','/api/pricing','/api/notebook']*2
+          paths=['/health','/api/value-v5','/api/signals-v6','/notebook-assets/caveat-f84acf2c.ttf','/files/forecasts.csv','/api/pricing','/api/notebook']*2
           def request(path):
               start=time.monotonic()
               try:
@@ -63,4 +63,4 @@ jobs:
           path: artifacts/
           retention-days: 30
 
-# Inspect the new revision under concurrent publication and asset requests.
+# Inspect historical-timeline deployment startup and concurrent public API requests.
