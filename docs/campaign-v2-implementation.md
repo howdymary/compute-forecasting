@@ -18,7 +18,7 @@ Four official references; 24 original Ridge configurations; four direct regulari
 
 Gradient boosting uses quantile loss, deterministic seeds and disabled automatic early stopping. Preprocessing and residuals mature at each numerical origin. Official per-cell scoring, original targets and units remain authoritative. Fallbacks, crossing repairs and missing observations are reported rather than hidden.
 
-The `coverage_level/log` arms remove auxiliary price indices and changes while retaining target price history. A **separate strict diagnostic** removes target level/returns and all auxiliary price predictors, retaining only availability and coverage. Historical target labels necessarily remain prices. It is outside the frozen 42-arm selector pool and cannot retroactively change policy scores.
+The `coverage_level/log` arms remove auxiliary price indices and changes while retaining target price history. A separate exploratory diagnostic initially removed target level/returns and all auxiliary price predictors while changing the target formulation. Its historical result remains retained. The canonical **matched price-value ablation** now uses identical absolute-level or log-level targets, 56-day windows, alpha 100, train-only mean imputation and identical original missingness flags. Only nine price-value predictor columns are removed after imputation; availability/coverage remains. Historical target labels necessarily remain prices. Both diagnostics are outside the frozen 42-arm selector pool and cannot retroactively change policy scores.
 
 ## Training and reward
 
@@ -30,7 +30,11 @@ Checkpoints are selected by development official pinball with earlier-update tie
 
 The RL workflow selects the development-best SFT objective within each seed; alphabetic objective breaks ties. It records that choice before reward training. RL is gated by reachable training terminal-reward variation and valid action probabilities. The actor samples actual bounded actions and records their normalized propensities. Four trajectories share a task; the reward baseline is their mean. Reward is negative subsequent training-period forecast loss divided by a training-only scale, clipped to [-5,5]. A clipped conditional categorical policy-gradient loss is implemented through Tinker's supported custom-loss API. Soft-label SFT is not RL.
 
-RL has at most 60 rollout-update iterations per seed. Constant sampled reward groups do not update weights; five initial constant groups stop the run. An audit of all reachable final selections can rule out RL before rollouts. A gated run with zero optimizer updates must be reported as such.
+RL has at most 60 sampling iterations per seed; this is a ceiling on rollout groups, not a promise of 60 optimizer updates. Constant sampled reward groups do not update weights; five consecutive constant groups stop the run even after earlier useful updates. Reachability respects the four remaining trial slots and actual reward clipping. A training-only curriculum uses registered cases with reachable clipped-reward variation; evaluation still covers every original eligible case. A gated run with zero optimizer updates must be reported as such.
+
+The [RL amendment](../configs/campaign-v2-rl-gate-amendment.json) was fixed before any RL optimizer update, after the two seed-17 SFT evaluation results had been seen. This is an exploratory retrospective extension. RL is compared with its own frozen SFT parent, separately from the original model. Parent selection uses development loss only. Evaluated checkpoints are persistent; intermediate sampler snapshots expire after one hour. Optimizer recovery states and RNG state are retained privately every ten useful updates. Reported training curves distinguish actual optimizer updates from sampling iterations.
+
+Two additional controls preserve the original results: an exact training-selected static portfolio enumerates all 91,390 possible four-additional-arm portfolios under the same final validation chooser; and a [complete-encoding GP control](../configs/campaign-v2-additional-controls.json) distinguishes family, auxiliary representation, target space and reference identity while preserving the original kernel/acquisition/budget. A training-selected individual forecaster is scored on the same 12 selector cells. The numerical grid's 15-cell comparison is separate and must not be mixed with selector scores.
 
 ## Evidence and operational autonomy
 
@@ -48,7 +52,7 @@ past.dev records maintain authorship, ingestion IDs, parent records and actual r
 
 The existing pricing-first Explore screen and official export stay available. Experimental curves are development-selection metrics; evaluation tables use excluded new-training dates but remain retrospective.
 
-A prospective log is issued using the verified November 6 snapshot. Its actual issuance date, later target dates, input age, effective lead, source hash and outcome-pending status are explicit. It uses empirical matured differences at the effective calendar lead. It is not a current quote feed or a calibrated guarantee. Numerical rows remain private pending publication review; a timestamped manifest and hash are public.
+The canonical prospective log uses a UTC calendar origin of November 15, with target dates November 16, 18 and 22. Its first target day begins strictly after issuance. An earlier Pacific/UTC-misaligned manifest is preserved as superseded; it is not silently deleted. The log is issued using the verified November 6 snapshot. Its actual issuance date, later target dates, input age, effective lead, source hash and outcome-pending status are explicit. It uses empirical matured differences at the effective calendar lead. It is not a current quote feed or a calibrated guarantee. Numerical rows remain private pending publication review; a timestamped manifest and hash are public.
 
 Provider receipts are read without billing mutations. Tinker attributed gross estimates and any verifiable Modal usage are separate from credits, invoices and remaining balances. Unknown values remain null. Public usage omits session identifiers and account-level raw reports.
 
@@ -56,7 +60,7 @@ Provider receipts are read without billing mutations. Tinker attributed gross es
 
 All archives, dependencies, tests and artifacts are created on hosted GitHub runners or Modal, never on the workstation. Source commits are immutable; branch updates use leases. Full grid concurrency is six; the separate diagnostic is capped at four. Each workflow has a finite timeout and explicit run links for cancellation. Modal run contexts clean up ephemeral applications; private results and checkpoints persist.
 
-Relevant workflows: `research-v2-audit.yml`, `research-v2-evidence.yml`, `research-v2-campaign.yml`, `research-v2-autonomy.yml`, `research-v2-rl.yml`, `research-v2-price-free.yml`, `research-v2-prospective.yml`, `research-v2-publish.yml`, `research-v2-usage.yml`, and `validate-experimental-v2.yml`.
+Operational commands, canonical run IDs and recovery steps are in the [remote runbook and artifact index](campaign-v2-reproduction.md). The finalizer waits for six SFT reports, three RL reports, the trained live cycle, matched price diagnostic, feature audit, corrected prospective log and saved-sampler probe before publishing the final analysis. The archive then retains allowlisted derived traces, comparisons and the unchanged official CSV beyond GitHub artifact expiry. It excludes raw inputs, private checkpoint resource paths and restricted excerpts. Each ZIP member and the ZIP itself have SHA-256 checksums.
 
 The browser check creates PNGs only. It asserts desktop/mobile overflow, real selectors, keyboard focus, reduced motion, API privacy and the unchanged official forecast SHA. Existing foundation and pricing checks remain required.
 
