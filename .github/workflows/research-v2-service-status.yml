@@ -1,0 +1,49 @@
+name: Inspect v2 service activity without training or billing changes
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/research-v2-service-status.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Read session activity and sanitized checkpoint counts
+        run: |
+          python -m pip install tinker
+          python - <<'PY'
+          import hashlib,json
+          from datetime import datetime,timezone
+          from pathlib import Path
+          import tinker
+          from tinker.types import OwnSearchOwner,SessionSearchRequest
+          client=tinker.RestClient()
+          sessions=client.search_sessions(SessionSearchRequest(display_name='Compute Forecast v2 rl',owner=OwnSearchOwner())).result().sessions
+          result={'observed_at':datetime.now(timezone.utc).isoformat(),'scope':'Read-only owned RL session metadata, no model calls or billing changes','sessions':[]}
+          for s in sessions[:5]:
+              if not str(s.display_name).startswith('Compute Forecast v2 rl'):continue
+              row={'display_name':s.display_name,'created_at':s.created_at.isoformat(),'status_type':type(s.status).__name__,'checkpoint_count':s.checkpoints_count,'training_runs':[]}
+              info=client.get_session(s.session_id).result()
+              for run_id in info.training_run_ids:
+                  r=client.get_training_run(run_id).result()
+                  row['training_runs'].append({'base_model':r.base_model,'corrupted':r.corrupted,'last_request_time':r.last_request_time.isoformat(),'has_training_checkpoint':bool(r.last_checkpoint),'has_sampler_checkpoint':bool(r.last_sampler_checkpoint)})
+              result['sessions'].append(row)
+          page=client.list_user_checkpoints(limit=1).result()
+          result['owned_checkpoint_count']=getattr(page.cursor,'total_count',None)
+          Path('artifacts').mkdir(exist_ok=True);Path('artifacts/service-status.json').write_text(json.dumps(result,indent=2))
+          print('V2_SERVICE_STATUS:'+json.dumps(result),flush=True)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: v2-service-status-${{ github.run_id }}
+          path: artifacts/
+          retention-days: 30
