@@ -1,0 +1,43 @@
+name: Deploy registered signal scheduler without reissuing forecasts
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/deploy-signals-v6.yml, src/compute_forecast/signals_analysis_v6.py]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: compute-forecast-signals-v6
+  cancel-in-progress: false
+jobs:
+  deploy:
+    if: github.ref == 'refs/heads/compute-observatory'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/${{ github.sha }}" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: |
+          python -m pip install -e '.[dev]' modal==1.6.4 numpy==2.2.6 scikit-learn==1.7.1
+          python -m pytest tests/test_signals_v6.py
+      - name: Deploy fixed analysis and existing registered issuer
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: modal deploy -m compute_forecast.signals_remote_v6
+      - name: Refresh public analysis without issuing another forecast
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: |
+          python - <<'PY'
+          from compute_forecast.signals_remote_v6 import app,tick
+          with app.run():result=tick.remote('refresh')
+          assert result['index']['snapshot_count']>=1
+          assert result['index']['ledger'][0]['rows']==48
+          print('SIGNALS_V6_REFRESH:'+str({'ledger':len(result['index']['ledger']),'primary_cells':result['index']['primary_scored_cells'],'analysis':result['index']['analysis']['claim']}),flush=True)
+          PY

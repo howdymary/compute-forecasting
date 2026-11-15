@@ -217,6 +217,38 @@ def web():
             raw=path.read_bytes()
         return Response(raw,media_type="text/plain",headers=headers)
 
+    @api.get("/api/signals-v6")
+    def signals_v6_index():
+        with lock:
+            public.reload();path=Path("/public/signals-v6/index.json")
+            if not path.is_file():return JSONResponse({"error":"Registered signals study awaits publication"},status_code=503,headers=headers)
+            raw=path.read_bytes()
+        from .public_results import private_guard
+        value=json.loads(raw);private_guard(value)
+        if value.get("schema_version")!=6:return Response(status_code=503,headers=headers)
+        return Response(raw,media_type="application/json",headers=headers)
+    @api.get("/api/signals-v6/memory")
+    def signals_v6_memory():
+        with lock:
+            public.reload();path=Path("/public/signals-v6/memory.json")
+            if not path.is_file():return JSONResponse({"schema_version":6,"status":"pending","eligibility":None},headers=headers)
+            raw=path.read_bytes()
+        from .public_results import private_guard
+        private_guard(json.loads(raw));return Response(raw,media_type="application/json",headers=headers)
+    @api.get("/api/signals-v6/artifacts/{name}")
+    def signals_v6_artifact(name:str):
+        import re
+        if not re.fullmatch(r"[0-9a-f]{64}\.json",name):return Response(status_code=404,headers=headers)
+        with lock:
+            public.reload();path=Path("/public/signals-v6/artifacts")/name
+            if not path.is_file():return Response(status_code=404,headers=headers)
+            raw=path.read_bytes()
+        from .review_v4 import digest
+        from .public_results import private_guard
+        value=json.loads(raw);private_guard(value)
+        if digest(value)!=name[:-5]:return Response(status_code=503,headers=headers)
+        return Response(raw,media_type="application/json",headers={**headers,"ETag":hashlib.sha256(raw).hexdigest()})
+
     @api.get("/health")
     def health():
         raw=read("results.json");r=json.loads(raw) if raw else None

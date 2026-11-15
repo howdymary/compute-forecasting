@@ -68,3 +68,16 @@ def test_sparse_learners_are_not_fabricated():
     pytest.importorskip("sklearn")
     qs,error=predict_arm([snapshot()],"unknown","2026-11-15T18:00:00Z",7,"111")
     assert qs is None and error["reason"]=="insufficient_retained_price_days"
+
+def test_final_analysis_gate_and_empty_outcomes():
+    from compute_forecast.signals_analysis_v6 import summarize
+    r=summarize([],[],"2026-11-15T22:00:00Z")
+    assert not r["final_gate_open"] and not r["prospective_improvement_established"]
+    assert not any(g["improvement_established"] for g in r["group_effects"].values())
+def test_block_interval_requires_origins():
+    from compute_forecast.signals_analysis_v6 import block_interval
+    assert block_interval([-.1]*15)["interval"] is None
+def test_holm_retains_registered_three_test_family():
+    from compute_forecast.signals_analysis_v6 import holm
+    p=holm({"news":.01,"infrastructure":None,"bls":None})
+    assert p["news"]==.03 and p["bls"] is None

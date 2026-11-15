@@ -220,3 +220,6 @@ HTML=enhance_review_v4(HTML)
 
 from .value_ui_v5 import enhance as enhance_value_v5
 HTML=enhance_value_v5(HTML)
+
+from .signals_ui_v6 import enhance as enhance_signals_v6
+HTML = enhance_signals_v6(HTML)
