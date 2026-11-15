@@ -1,4 +1,4 @@
-name: CodeGarden symmetry packing probes
+name: CodeGarden neutral plateau search
 on:
   push:
     branches: [codegarden-radius34]
@@ -11,9 +11,9 @@ concurrency:
 env:
   PYTHONDONTWRITEBYTECODE: '1'
 jobs:
-  orbit-probes:
+  neutral-walk:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 6
     steps:
       - name: Fetch immutable source
         env:
@@ -23,12 +23,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Install isolated exact solver
+      - name: Build isolated plateau kernel
         run: |
-          python -m venv codegarden/.venv
-          codegarden/.venv/bin/python -m pip install -r codegarden/requirements-exact.txt
-      - name: Check all symmetries then run two bounded invariant-family probes
+          mkdir -p codegarden/.build
+          g++ -O3 -std=c++17 codegarden/phase2/neutral_kernel.cpp -o codegarden/.build/neutral_kernel
+      - name: Run four bounded plateau walks and independently verify exports
         env:
           GH_TOKEN: ${{ github.token }}
           SOURCE_SHA: ${{ github.sha }}
-        run: codegarden/.venv/bin/python -B -u codegarden/phase2/orbit_search.py
+        run: python -B -u codegarden/phase2/neutral_probe.py
