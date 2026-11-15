@@ -1,22 +1,23 @@
-name: CodeGarden infeasible-space hypotheses
+name: CodeGarden bounded Modal radius-nine partitions
 on:
   push:
-    branches: [codegarden]
+    branches: [codegarden-modal-007]
     paths: [.github/workflows/codegarden.yml]
-  workflow_dispatch:
 permissions:
   contents: write
 concurrency:
-  group: codegarden-only
+  group: codegarden-provider-serial
   cancel-in-progress: false
 env:
-  PYTHONDONTWRITEBYTECODE: '1'
   SOURCE_SHA: ${{ github.sha }}
-  CODEGARDEN_BATCH: infeasible_probe_003
+  HF_HOME: ${{ github.workspace }}/codegarden/.cache/huggingface
+  XDG_CACHE_HOME: ${{ github.workspace }}/codegarden/.cache
+  PYTHONDONTWRITEBYTECODE: '1'
+  CODEGARDEN_BATCH: sharded9_001
 jobs:
-  preflight:
+  modal:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 48
     steps:
       - name: Fetch immutable source
         env:
@@ -25,76 +26,39 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Compile kernel and independently test energy updates
+      - name: Install isolated clients
+        run: |
+          python -m venv codegarden/.venv
+          codegarden/.venv/bin/python -m pip install -r codegarden/requirements-providers.txt
+      - name: Validate exact root partition and both verifiers before spending
         run: |
           mkdir -p codegarden/.build
-          g++ -O3 -std=c++17 codegarden/phase3/infeasible.cpp -o codegarden/.build/infeasible
-          python -B codegarden/phase3/test_infeasible.py
-          python -B codegarden/phase3/preflight.py
-      - name: Retain preflight evidence
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: codegarden-cg3-preflight
-          path: codegarden/artifacts/phase3/infeasible_probe_003/
-  probes:
-    needs: preflight
-    runs-on: ubuntu-latest
-    timeout-minutes: 16
-    strategy:
-      fail-fast: false
-      max-parallel: 4
-      matrix:
-        seed: [950000, 950001, 950002, 950003]
-    steps:
-      - name: Fetch immutable source
+          g++ -O3 -std=c++17 codegarden/phase3/bundle_sharded.cpp -o codegarden/.build/bundle
+          codegarden/.build/bundle --synthetic-tests
+          python -B -u codegarden/phase3/test_connected2.py
+          python -B -u codegarden/phase3/test_dominance_local.py
+          python -B -u codegarden/phase3/test_shards.py
+          python -B -u codegarden/phase3/preflight.py
+      - name: Refresh credit floor, preserve shared guards, then run bounded Modal workers
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      - uses: actions/download-artifact@v4
-        with:
-          name: codegarden-cg3-preflight
-          path: codegarden/artifacts/phase3/infeasible_probe_003/
-      - name: Compile isolated native worker
-        run: |
-          mkdir -p codegarden/.build
-          g++ -O3 -std=c++17 codegarden/phase3/infeasible.cpp -o codegarden/.build/infeasible
-      - name: Test two paired 60-CPU-second hypotheses from different code families
-        run: python -B -u codegarden/phase3/probe.py --seed ${{ matrix.seed }} --seconds 60
-      - name: Retain every checkpoint and proposal, even on failure
+          PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+        run: codegarden/.venv/bin/python -B -u codegarden/phase3/modal_sharded9.py
+      - name: Publish final checkpoint
         if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: codegarden-cg3-probe-${{ matrix.seed }}
-          path: codegarden/artifacts/phase3/infeasible_probe_003/
-  collect:
-    needs: [preflight, probes]
-    if: always()
-    runs-on: ubuntu-latest
-    timeout-minutes: 8
-    steps:
-      - name: Fetch immutable source
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      - uses: actions/download-artifact@v4
-        with:
-          pattern: codegarden-cg3-*
-          merge-multiple: true
-          path: codegarden/artifacts/phase3/infeasible_probe_003/
-      - name: Independently accept proposals and publish leased checkpoint
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: python -B -u codegarden/phase3/publish.py
-      - name: Retain collected evidence
+        run: python -B -u codegarden/phase3/publish_sharded9.py
+      - uses: actions/upload-artifact@v4
         if: always()
-        uses: actions/upload-artifact@v4
         with:
-          name: codegarden-cg3-collected
-          path: codegarden/artifacts/phase3/infeasible_probe_003/
+          name: codegarden-sharded9
+          path: |
+            codegarden/artifacts/phase3/sharded9_001/
+            codegarden/artifacts/phase3/budget_renewal_003/
+            codegarden/artifacts/shared-budget.sqlite
+            codegarden/budget/shared-allocation.json
+            codegarden/budget/historical-usage.json
