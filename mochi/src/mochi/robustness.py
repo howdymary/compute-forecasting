@@ -85,13 +85,20 @@ class ExpandedServices(Services):
         if allowed and not found:raise RuntimeError('Source ID absent from time-scoped semantic recall; no canonical fallback')
         return wanted['payload']['content'] if found else {'access':'denied-as-expected'}
 
-async def run(out):
+async def run(out,resume=None):
     out=Path(out);out.mkdir(parents=True,exist_ok=True);s=ExpandedServices();start=time.perf_counter();count=0
     report={'run_id':s.run_id,'study':'robustness-v2','config':CONFIG,'config_sha256':digest(CONFIG),'source_sha':os.getenv('GITHUB_SHA'),'created_at':now(),'scope':'Existing supported right-arm manipulation task; separate from desk-humanoid design concept','rounds':[]}
+    recovery=None
+    if resume:
+        path=Path(resume);checkpoint=json.loads((path/'progress.json').read_text());stopped=json.loads((path/'incomplete.json').read_text());memory=stopped['services']
+        assert stopped['run_id']==checkpoint['run_id'] and stopped['rollouts']==checkpoint['rollouts']
+        s.run_id=stopped['run_id'];s.actors=memory['actors'];s.audience=memory['audiences']['shared'];s.private=memory['audiences']['critic_private'];s.records={x['id']:x for x in memory['records']};s.reads=memory['reads'];s.decisions=memory['decisions'];s.calls=memory['calls'];s.sources=memory['sources']
+        report.update(run_id=s.run_id,rounds=checkpoint['rounds'],created_at=memory['records'][0]['at'],resumed_at=now(),resumed_from='workflow 43767839726',recovery_extra_rollouts=24,recovery_extra_memory_reads=1)
+        recovery=checkpoint;count=checkpoint['rollouts']
     try:
         await s.setup();report['model']=s.model;report['model_selection']=s.model_selection
         print('MOCHI_MODEL:'+json.dumps({'model':s.model,'selection':s.model_selection}),flush=True)
-        prior_id=await s.write('critic',{'kind':'prior-result','source':'workflow 43762703104','observation':'V1 selected policy scored 8/12 on heldout but 1/8 under higher friction/mass. Its conventional control scored 6/8 under the shift.','correction':'The V1 gain was not robust. Broaden development and match controller-family access. Use fresh seeds.'})
+        prior_id=report['rounds'][-1]['critic_record'] if recovery else await s.write('critic',{'kind':'prior-result','source':'workflow 43762703104','observation':'V1 selected policy scored 8/12 on heldout but 1/8 under higher friction/mass. Its conventional control scored 6/8 under the shift.','correction':'The V1 gain was not robust. Broaden development and match controller-family access. Use fresh seeds.'})
         selected=Policy();dev=CONFIG['development_seeds'];rng=np.random.default_rng(7621);queries={
           'friction':'robot planar pushing uncertain friction robust feedback adaptive control primary research',
           'contact':'pusher slider closed loop contact loss recovery control paper',
@@ -102,11 +109,24 @@ async def run(out):
           'curriculum':'robot manipulation domain randomization friction mass generalization curriculum research',
           'stability':'frictional contact hybrid dynamics stable pushing robot feedback controller research'}
         async with app.run():
-            incumbent=await batch(asdict(selected),dev);count+=len(incumbent);report['initial_results']=incumbent
-            for iteration in range(CONFIG['rounds']):
+            incumbent=await batch(asdict(selected),dev);report['initial_results']=incumbent
+            if not recovery:count+=len(incumbent)
+            else:
+                for completed in report['rounds']:
+                    queries.pop(completed['focus'])
+                    replayed=[asdict(propose(completed['family'],rng,completed['iteration']*4+i)) for i in range(4)]
+                    assert replayed==[x['policy'] for x in completed['candidates']]
+                    if completed['accepted']:
+                        best=max(completed['candidates'],key=rank);selected=Policy(**best['policy']);incumbent=best['results']
+                print('MOCHI_RESUMED:'+json.dumps({'rounds':len(report['rounds']),'protocol_rollouts':count,'extra_initial_recovery_rollouts':24}),flush=True)
+            for iteration in range(len(report['rounds']),CONFIG['rounds']):
                 prior=await s.read('researcher',prior_id);failures=dict(Counter(x['failure'] for x in incumbent))
-                focus=await s.decide('researcher','Choose the next uninvestigated mechanism for this failure pattern.',{'prior':prior,'failures':failures},list(queries),[prior_id])
-                evidence=await s.search(queries.pop(focus));eid=await s.write('researcher',{'kind':'hypothesis','focus':focus,'failure_counts':failures,'evidence':evidence,'limits':'Sources motivate bounded choices, not guaranteed improvement.'})
+                context={'prior':prior,'failures':failures}
+                if len(queries)>1:
+                    focus=await s.decide('researcher','Choose the next uninvestigated mechanism for this failure pattern.',context,list(queries),[prior_id]);query=queries.pop(focus)
+                else:
+                    focus=next(iter(queries));stance=await s.decide('researcher','For the last registered mechanism, choose whether to investigate the mechanism or seek counterevidence.',context,['mechanism','counterevidence'],[prior_id]);query=queries.pop(focus)+(' counterexamples failure limitations' if stance=='counterevidence' else '')
+                evidence=await s.search(query);eid=await s.write('researcher',{'kind':'hypothesis','focus':focus,'failure_counts':failures,'evidence':evidence,'limits':'Sources motivate bounded choices, not guaranteed improvement.'})
                 context=await s.read('designer',eid);family=await s.decide('designer','Choose the registered controller family suggested by these sources and failures.',context,FAMILIES,[eid])
                 policies=[propose(family,rng,iteration*4+i) for i in range(4)]
                 pid=await s.write('designer',{'kind':'proposal','family':family,'predicted_effect':{'open_loop':'Test direct trajectory parameters','object_feedback':'Test object-pose corrective feedback','slow_open_loop':'Reduce impulsive contact while risking stall','earlier_stop':'Increase braking margin while risking undershoot'}[family],'policies':[asdict(x) for x in policies],'source_record':eid})
@@ -137,7 +157,7 @@ async def run(out):
                     rs=await batch(policy,seeds,stress);count+=len(rs);scope[name]=summarize(rs);pairs[name]=rs
                 scope['paired_results']=pairs;sections[label]=scope
             report['evaluation']=sections
-        report.update(status='completed',remote_rollouts=count,services=s.report(),seconds=time.perf_counter()-start,completed_at=now(),claims='Expanded service use on a registered fresh-seed study; no causal search/memory benefit inferred.')
+        report.update(status='completed',remote_rollouts=count,actual_remote_rollouts=count+report.get('recovery_extra_rollouts',0),services=s.report(),seconds=time.perf_counter()-start,completed_at=now(),claims='Expanded service use on a registered fresh-seed study; no causal search/memory benefit inferred. Recovery reruns are counted separately from protocol trials.')
         assert count==CONFIG['maximum_total_simulations']
         write(out/'report.json',report);return report
     finally:
@@ -146,6 +166,6 @@ async def run(out):
 
 if __name__=='__main__':
     import argparse
-    p=argparse.ArgumentParser();p.add_argument('--out',default='mochi/artifacts/robustness-v2');a=p.parse_args()
-    with modal.enable_output():r=asyncio.run(run(a.out))
+    p=argparse.ArgumentParser();p.add_argument('--out',default='mochi/artifacts/robustness-v2');p.add_argument('--resume');a=p.parse_args()
+    with modal.enable_output():r=asyncio.run(run(a.out,a.resume))
     print('MOCHI_ROBUSTNESS_COMPLETE:'+json.dumps({'run_id':r['run_id'],'rollouts':r['remote_rollouts'],'model':r['model'],'evaluation':{k:{n:v for n,v in x.items() if n!='paired_results'} for k,x in r['evaluation'].items()}}),flush=True)

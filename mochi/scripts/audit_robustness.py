@@ -63,7 +63,8 @@ for read in cross:
     assert read['source_id_verified'] and read['record_id'] in used
     assert read['author'] == record['author'] != read['reader']
     assert digest(record['payload']) == record['sha256'] == read['sha256']
-assert len(cross) == 41
+assert len(cross) == 41 + r.get('recovery_extra_memory_reads', 0)
+assert r['actual_remote_rollouts'] == r['remote_rollouts'] + r.get('recovery_extra_rollouts', 0)
 assert service['eligibility']['writers'] == service['eligibility']['readers'] == 4
 assert all(x['status'] in range(200, 300) for x in service['calls'])
 print(json.dumps({'status': 'passed', 'run_id': r['run_id'], 'rollouts_counted': r['remote_rollouts'], 'archived_per_rollout_receipts': archived, 'exa_searches': len(service['sources']), 'tinker_decisions': len(service['decisions']), 'model': r['model'], 'memory_records': len(records), 'verified_cross_agent_reads': len(cross)}))
