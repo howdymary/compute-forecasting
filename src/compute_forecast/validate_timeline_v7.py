@@ -30,8 +30,13 @@ def main():
             joins=page.evaluate("""()=>{const selected=S.series;const result=P.series.map(s=>{S.series=s.id;const h=t7History();return {id:s.id,joined:!!h,error:T7.historyError}});S.series=selected;return result}""")
             assert sum(r["joined"] for r in joins)==36 and not any(r["error"] for r in joins)
             assert page.locator("[data-timeline-forecast]").count()==3
+            page.screenshot(path=str(out/(str(width)+"-opening-viewport.png")))
+            raw=(out/(str(width)+"-opening-viewport.png")).read_bytes();encoded=base64.b64encode(raw).decode()
+            print("V7_PNG_META:"+json.dumps({"name":str(width)+"-opening-viewport.png","sha256":hashlib.sha256(raw).hexdigest(),"chunks":(len(encoded)+11999)//12000}),flush=True)
+            for chunk in range(0,len(encoded),12000):print("V7_PNG:"+json.dumps({"name":str(width)+"-opening-viewport.png","index":chunk//12000,"base64":encoded[chunk:chunk+12000]}),flush=True)
             first_mark=page.locator('[data-timeline-forecast="1"]').bounding_box()
-            assert first_mark["y"]+first_mark["height"]<height-24, "Price line must be visible in the opening viewport"
+            print("V7_OPENING_GEOMETRY:"+json.dumps({"width":width,"height":height,"first_forecast_mark":first_mark}),flush=True)
+            assert first_mark["y"]+first_mark["height"]<height-24, ("Price line must be visible in the opening viewport",width,height,first_mark)
             chosen=page.evaluate("series().id");current=next(s for s in p["series"] if s["id"]==chosen)
             for fc in current["forecasts"]:
                 mark=page.locator('[data-timeline-forecast="'+str(fc["horizon_days"])+'"]')
