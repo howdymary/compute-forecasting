@@ -1,0 +1,9 @@
+# Whole low-blocker corridors
+
+The RAM profile found only185outside words with one or two incumbent blockers around the226root, but a stub-reachable mate component with95incumbent vertices. The seven fresh225families have stub-reachable components of77–107vertices. These are topology measurements, not evidence of any feasible long path or larger code.
+
+Primary literature: Dong et al., [MetaMIS](https://mauricio.resende.info/doc/metaMIS.pdf), sections3.2–3.4, uses one-tight and two-tight neighbors and an interstate graph for alternating augmenting paths. Our exact-pool adaptation optimizes all such candidate words together, allowing arbitrary exchange size within this pool. It then widens the blocker threshold to3and4. This is an adaptation, not a reproduction of the full MetaMIS algorithm or a newly discovered general method.
+
+Each model includes the entire incumbent and every outside word whose distinct incumbent blockers number at most2,3or4. Incumbent words untouched by every eligible outside word can be fixed safely. The remaining entire pool is solved with the separately tested goal-filtered clique kernel for60nativeCPU seconds. A completed negative concerns this exact goal model; a timeout is open. The controller records exact closure versus bounded stagnation separately before widening. Known226arrays are exact goal exclusions; larger supersets remain eligible. All positives use both protected verifiers, and any new226is polished for227. No formal absence certificate or global bound is claimed.
+
+Provenance: web query → primary author-hosted paper → one/two-tight graph method → RAM profile → explicit source-pinned corridor models → protected witness checks. This research refresh uses the web tool; it is not an Exa API call. No new sponsor requests, purchases, or reservations are made.
