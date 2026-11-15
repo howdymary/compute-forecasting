@@ -2,7 +2,7 @@
 
 **Explore archived GPU rental forecasts and test explicit long-term pricing scenarios.**
 
-[Experimental Research v2](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/experimental) adds a separate, measured campaign: 42 numerical configurations, hard/soft Tinker SFT across three seeds, reward-gated RL, Exa-guided fresh Modal executions, a strict price-predictor ablation and a timestamped prospective log. Runs and negative results appear as they complete. [Implementation, cutoffs and interpretation](docs/campaign-v2-implementation.md). This does not replace the frozen submission or establish H100 policy performance.
+[Experimental Research v2](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/experimental) adds 42 forecasters, six completed Tinker SFT runs (**600 optimizer updates**), real Modal research cycles and Exa/past.dev provenance. The development-selected SFT checkpoint lowers loss by **22.84%** versus starting weights on three reused, dependent A100 dates; five of six feedback-hidden controls tie their trained counterpart. Three reward-learning continuations and final controls are running after an exact checkpoint-storage recovery. [Measured findings and current limits](docs/campaign-v2-findings.md) · [All 24 SFT checkpoints](docs/campaign-v2-checkpoints.json) · [Remote runbook](docs/campaign-v2-reproduction.md). This does not replace the frozen submission or establish H100 policy performance.
 
 [Open the research observatory](https://howdymary--compute-forecast-observatory-web.us-east.modal.run) · [Two-minute demo video](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/files/demo.mp4) · [Frozen evaluation and official forecast export](https://github.com/howdymary/compute-forecasting/actions/runs/43653016797) · [Source branch](https://github.com/howdymary/compute-forecasting/tree/compute-observatory)
 
@@ -12,7 +12,7 @@ The pricing-first Explore view puts a large interactive chart at the center of t
 
 We compare data representations for forecasting **advertised GPU rental offers**, then ask whether a Tinker-trained experiment-selection policy outperforms starting, fixed and random search under the same six-trial budget. The numerical forecasts and scores come from deterministic tools and the Pacific starter kit. The language model selects experiments; it does not invent prices or scores.
 
-## Measured result
+## Frozen v1 result
 
 The main result is negative: supervised fine-tuning did not improve experiment selection over the starting model on this small frozen evaluation.
 
@@ -41,7 +41,7 @@ Across the same five frozen dates, the best individual candidate was level-targe
 - An official November 6 submission with **111 rows across 37 headline series**, 1/3/7-day horizons, q10/q50/q90. Full-catalog development selection chose the unmodified official **last_value_empirical** method. Export schema, positivity, quantile ordering and full coverage passed. The exporter never loads November 7–13 competition truth.
 - A separate 2–3-year rental and resale scenario note. Assumptions are explicit; scenario ranges are not calibrated confidence intervals, and resale has no observed dollar-price anchor.
 
-An earlier 15-update Tinker integration warmup is retained separately. It is not the main study. This project uses **supervised fine-tuning, not reinforcement learning**.
+An earlier 15-update Tinker integration warmup is retained separately. It is not the main study. The frozen v1 study uses **supervised fine-tuning**. Separate v2 reward-learning runs and their current status are reported in the [v2 findings](docs/campaign-v2-findings.md).
 
 ## What the data measures
 
@@ -120,6 +120,6 @@ Dependencies include Modal, Tinker and tinker-cookbook, NumPy, FastAPI/Starlette
 
 [Live demo guide](docs/demo.md) · [Sponsor evidence and remaining event actions](docs/submission-and-prizes.md) · [Measured status](docs/measured-status.md)
 
-## Public claim
+## Frozen v1 public claim
 
 **Compute Forecast is an auditable GPU rental forecasting experiment. We trained a small policy with Tinker to choose experiments, compared it with fixed and random search under equal budgets, and found no improvement over the starting policy on five frozen rolling dates. Every score and decision has a reproducible trail.**

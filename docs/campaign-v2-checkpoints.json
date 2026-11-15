@@ -1,0 +1,207 @@
+{
+  "schema_version": 2,
+  "status": "SFT complete; three RL continuation reports pending",
+  "compiled_at": "2026-11-15 04:45:41 UTC",
+  "checkpoint_id_basis": "SHA256 prefix of the private sampler resource path; not a hash of weight bytes",
+  "private_resource_paths_included": false,
+  "runs": [
+    {
+      "mode": "sft",
+      "objective": "hard",
+      "seed": 17,
+      "model": "Qwen/Qwen3.5-4B",
+      "source_sha": "a147797ec4557a337e2157ac60857d575e121630",
+      "grid_source_sha": "a147797ec4557a337e2157ac60857d575e121630",
+      "actual_optimizer_updates": 100,
+      "selected_update": 20,
+      "checkpoints": [
+        {
+          "update": 0,
+          "checkpoint_id": "dedb227b22f44acdf9fa",
+          "development_pinball": 0.01482266973639115
+        },
+        {
+          "update": 20,
+          "checkpoint_id": "5de00ed83fdbf34ac693",
+          "development_pinball": 0.011253870422938421
+        },
+        {
+          "update": 50,
+          "checkpoint_id": "58c6182193be8a562583",
+          "development_pinball": 0.011253870422938421
+        },
+        {
+          "update": 100,
+          "checkpoint_id": "b063f4e32dd732ffb4a6",
+          "development_pinball": 0.011253870422938421
+        }
+      ],
+      "artifact_url": "https://github.com/howdymary/compute-forecasting/actions/runs/43665821333/artifacts/14143675681"
+    },
+    {
+      "mode": "sft",
+      "objective": "soft",
+      "seed": 17,
+      "model": "Qwen/Qwen3.5-4B",
+      "source_sha": "a147797ec4557a337e2157ac60857d575e121630",
+      "grid_source_sha": "a147797ec4557a337e2157ac60857d575e121630",
+      "actual_optimizer_updates": 100,
+      "selected_update": 100,
+      "checkpoints": [
+        {
+          "update": 0,
+          "checkpoint_id": "ce871ad00d7b34114e32",
+          "development_pinball": 0.01482266973639115
+        },
+        {
+          "update": 20,
+          "checkpoint_id": "fc12d8e8afba49869a60",
+          "development_pinball": 0.018112047819066727
+        },
+        {
+          "update": 50,
+          "checkpoint_id": "5d945d63ee653960b70d",
+          "development_pinball": 0.011253870422938421
+        },
+        {
+          "update": 100,
+          "checkpoint_id": "ef9cf57b88d0bbe9ef3d",
+          "development_pinball": 0.009050336633428241
+        }
+      ],
+      "artifact_url": "https://github.com/howdymary/compute-forecasting/actions/runs/43665821333/artifacts/14143559167"
+    },
+    {
+      "mode": "sft",
+      "objective": "hard",
+      "seed": 29,
+      "model": "Qwen/Qwen3.5-4B",
+      "source_sha": "a147797ec4557a337e2157ac60857d575e121630",
+      "grid_source_sha": "a147797ec4557a337e2157ac60857d575e121630",
+      "actual_optimizer_updates": 100,
+      "selected_update": 20,
+      "checkpoints": [
+        {
+          "update": 0,
+          "checkpoint_id": "4da183bf265cba1cacb6",
+          "development_pinball": 0.01482266973639115
+        },
+        {
+          "update": 20,
+          "checkpoint_id": "60c1c9db094cb4cace9d",
+          "development_pinball": 0.011253870422938421
+        },
+        {
+          "update": 50,
+          "checkpoint_id": "d2c7357b88fbf9d7d5b9",
+          "development_pinball": 0.011253870422938421
+        },
+        {
+          "update": 100,
+          "checkpoint_id": "70f3f7dbd96f54d774f7",
+          "development_pinball": 0.011253870422938421
+        }
+      ],
+      "artifact_url": "https://github.com/howdymary/compute-forecasting/actions/runs/43665821333/artifacts/14144533218"
+    },
+    {
+      "mode": "sft",
+      "objective": "soft",
+      "seed": 29,
+      "model": "Qwen/Qwen3.5-4B",
+      "source_sha": "a147797ec4557a337e2157ac60857d575e121630",
+      "grid_source_sha": "a147797ec4557a337e2157ac60857d575e121630",
+      "actual_optimizer_updates": 100,
+      "selected_update": 20,
+      "checkpoints": [
+        {
+          "update": 0,
+          "checkpoint_id": "af14b10a060f0249b04f",
+          "development_pinball": 0.01482266973639115
+        },
+        {
+          "update": 20,
+          "checkpoint_id": "de79d0b85209a44d31b7",
+          "development_pinball": 0.010926291265415443
+        },
+        {
+          "update": 50,
+          "checkpoint_id": "a211ccb2faf8371eb57e",
+          "development_pinball": 0.011253870422938421
+        },
+        {
+          "update": 100,
+          "checkpoint_id": "05380ca11f1d900dcbfc",
+          "development_pinball": 0.011253870422938421
+        }
+      ],
+      "artifact_url": "https://github.com/howdymary/compute-forecasting/actions/runs/43665821333/artifacts/14143689784"
+    },
+    {
+      "mode": "sft",
+      "objective": "hard",
+      "seed": 43,
+      "model": "Qwen/Qwen3.5-4B",
+      "source_sha": "a147797ec4557a337e2157ac60857d575e121630",
+      "grid_source_sha": "a147797ec4557a337e2157ac60857d575e121630",
+      "actual_optimizer_updates": 100,
+      "selected_update": 20,
+      "checkpoints": [
+        {
+          "update": 0,
+          "checkpoint_id": "9199b3aa82b4e5631028",
+          "development_pinball": 0.01482266973639115
+        },
+        {
+          "update": 20,
+          "checkpoint_id": "b86ba5c5b019f17c5e1e",
+          "development_pinball": 0.011253870422938421
+        },
+        {
+          "update": 50,
+          "checkpoint_id": "ea9951f61b51b9d83310",
+          "development_pinball": 0.011253870422938421
+        },
+        {
+          "update": 100,
+          "checkpoint_id": "c1b484629efbc71c8f8a",
+          "development_pinball": 0.011253870422938421
+        }
+      ],
+      "artifact_url": "https://github.com/howdymary/compute-forecasting/actions/runs/43665821333/artifacts/14146400876"
+    },
+    {
+      "mode": "sft",
+      "objective": "soft",
+      "seed": 43,
+      "model": "Qwen/Qwen3.5-4B",
+      "source_sha": "a147797ec4557a337e2157ac60857d575e121630",
+      "grid_source_sha": "a147797ec4557a337e2157ac60857d575e121630",
+      "actual_optimizer_updates": 100,
+      "selected_update": 50,
+      "checkpoints": [
+        {
+          "update": 0,
+          "checkpoint_id": "3debe18fdb74032d315d",
+          "development_pinball": 0.01482266973639115
+        },
+        {
+          "update": 20,
+          "checkpoint_id": "f5b5b688e92aa3d71893",
+          "development_pinball": 0.018112047819066727
+        },
+        {
+          "update": 50,
+          "checkpoint_id": "ce5b868406ad68ba647c",
+          "development_pinball": 0.011253870422938421
+        },
+        {
+          "update": 100,
+          "checkpoint_id": "ea2a859b3790233441ca",
+          "development_pinball": 0.011253870422938421
+        }
+      ],
+      "artifact_url": "https://github.com/howdymary/compute-forecasting/actions/runs/43665821333/artifacts/14146362450"
+    }
+  ]
+}
