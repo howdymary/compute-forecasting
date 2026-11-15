@@ -1,7 +1,7 @@
-name: CodeGarden multi-family Modal repairs
+name: CodeGarden distant neutral bundles on Modal
 on:
   push:
-    branches: [codegarden-modal-003]
+    branches: [codegarden-modal-004]
     paths: [.github/workflows/codegarden.yml]
 permissions:
   contents: write
@@ -14,9 +14,9 @@ env:
   XDG_CACHE_HOME: ${{ github.workspace }}/codegarden/.cache
   PYTHONDONTWRITEBYTECODE: '1'
 jobs:
-  modal-repair:
+  research:
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 30
     steps:
       - name: Fetch immutable source
         env:
@@ -25,28 +25,32 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Compile and independently check native pair-energy updates
-        run: |
-          mkdir -p codegarden/.build
-          g++ -O3 -std=c++17 codegarden/phase3/infeasible.cpp -o codegarden/.build/infeasible
-          python -B codegarden/phase3/test_infeasible.py
-          python -B codegarden/supervisor.py codegarden/artifacts/best_code.txt
-      - name: Install isolated pinned provider SDK
+      - name: Install isolated authenticated clients
         run: |
           python -m venv codegarden/.venv
           codegarden/.venv/bin/python -m pip install -r codegarden/requirements-providers.txt
-      - name: Run bounded multi-family target search and exact refinements
+      - name: Check cross-phase imports before any provider calls
+        run: python -B -c 'import sys; sys.path.insert(0, "codegarden/phase3"); import modal_bundle'
+      - name: Refresh live account receipts, then research within the unchanged cumulative caps
         env:
-          GH_TOKEN: ${{ github.token }}
+          EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
+          PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
           MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
-        run: codegarden/.venv/bin/python -B -u codegarden/phase3/modal_batch.py
-      - name: Retain accounting and checkpoints even on failure
+        run: codegarden/.venv/bin/python -B -u codegarden/phase3/modal_bundle.py
+      - name: Publish evidence and unresolved accounting
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -B codegarden/phase3/publish_modal_bundle.py
+      - name: Retain all evidence even if a publisher fails
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: codegarden-modal-pair-001
+          name: codegarden-phase3-research
           path: |
-            codegarden/artifacts/phase3/modal_pair_001/
+            codegarden/artifacts/phase3/modal_bundle_001/
             codegarden/artifacts/shared-budget.sqlite
+            codegarden/budget/shared-allocation.json
             codegarden/budget/historical-usage.json
