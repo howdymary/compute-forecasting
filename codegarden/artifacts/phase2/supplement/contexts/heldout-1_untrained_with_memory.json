@@ -1,0 +1,104 @@
+{
+  "state": {
+    "length": 16,
+    "starting_cardinality": 216,
+    "weight_histogram": [
+      1,
+      0,
+      0,
+      4,
+      4,
+      19,
+      29,
+      25,
+      41,
+      31,
+      29,
+      16,
+      8,
+      8,
+      0,
+      0,
+      1
+    ],
+    "stagnation_cpu_seconds": 0.084,
+    "recent_verified_results": [
+      {
+        "action": "weight_band",
+        "gain": 0,
+        "cpu_seconds": 0.084271
+      }
+    ],
+    "remaining_search_cpu_seconds": 20,
+    "incumbent_sha256": "2b48014d2c53355f3d16dcbc7edf49d085b7a0d1151ec54c6486a2396dc20aa8",
+    "compiled_backend_mapping": {
+      "random8greedy": 1,
+      "random16greedy": 0,
+      "structural24greedy": 3,
+      "opportunity12exact": 4,
+      "random24exact": 4,
+      "conflict8exact": 2,
+      "random40greedy": 5,
+      "structural48exact": 3,
+      "opportunity6ejection": 2
+    },
+    "actual_recalled_finding": {
+      "actual_memory_source": "codegarden-43679442742-analyst-dominant_operator_finding-c71fcded",
+      "recalled_content_sha256": "8549ad8838446df1c0690e75d7dc4feb492f5ded617655d713e063651d47b6fe",
+      "actual_recalled_content": {
+        "selected_fixed_operator": "exchange23",
+        "training_scores_by_operator": {
+          "ruin32": 5203,
+          "ruin8": 5227,
+          "ejection3": 5188,
+          "weight_band": 5198,
+          "exchange23": 5240,
+          "ruin64": 5171
+        },
+        "selection_cases": 24,
+        "excluded_related_lineage": "arena_225_lobster-boy",
+        "training_gate": {
+          "differential_cases": 19,
+          "distinct_unique_winning_actions": 1,
+          "meaningful": false,
+          "rule": "At least eight genuine score-differential cases and two different uniquely winning actions; arbitrary ties do not satisfy the diversity gate."
+        },
+        "interpretation": "One fixed operator is supported; do not fabricate a state-dependent fine-tuning target.",
+        "root_exchanges": [
+          {
+            "k": 1,
+            "status": "EXHAUSTED_EXACT_K_NEW_WORD_EXCHANGES",
+            "complete": true,
+            "incumbent_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa",
+            "candidate_universe_sha256": "91facb724b2bc1cd49df010cfbd1207d107f0c6b9c3935b5ecef8ba87cd015f9",
+            "restrictions": "Remove exactly k incumbents and add k+1 distinct words outside the original incumbent; full 65536-word universe"
+          },
+          {
+            "k": 2,
+            "status": "EXHAUSTED_EXACT_K_NEW_WORD_EXCHANGES",
+            "complete": true,
+            "incumbent_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa",
+            "candidate_universe_sha256": "91facb724b2bc1cd49df010cfbd1207d107f0c6b9c3935b5ecef8ba87cd015f9",
+            "restrictions": "Remove exactly k incumbents and add k+1 distinct words outside the original incumbent; full 65536-word universe"
+          }
+        ],
+        "global_cp": {
+          "status": "UNKNOWN",
+          "target": 227,
+          "meaning": "No impossibility conclusion"
+        }
+      }
+    }
+  },
+  "decision": {
+    "action": "structural48exact",
+    "valid_action": true,
+    "strict_format": true,
+    "output_tokens": 5,
+    "raw_reply_sha256": "61ebae55808e690b15af871118f22bcb60e84a58e0d685316df4f57cacccea37",
+    "state_sha256": "a5236854e70a96914a6c8a73bf2bb410c6c47a39837fa0b6b4dea062d8390239",
+    "reservation": "3e9d35869a8f46d7866936f7aef756d6",
+    "model": "Qwen/Qwen3.5-4B",
+    "prompt_tokens": 1136
+  }
+}

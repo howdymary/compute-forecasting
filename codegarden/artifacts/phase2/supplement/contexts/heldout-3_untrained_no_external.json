@@ -1,0 +1,57 @@
+{
+  "state": {
+    "length": 16,
+    "starting_cardinality": 209,
+    "weight_histogram": [
+      0,
+      1,
+      0,
+      4,
+      5,
+      16,
+      28,
+      25,
+      40,
+      30,
+      28,
+      15,
+      9,
+      7,
+      0,
+      0,
+      1
+    ],
+    "stagnation_cpu_seconds": 0.075,
+    "recent_verified_results": [
+      {
+        "action": "ruin64",
+        "gain": 1,
+        "cpu_seconds": 0.083642
+      }
+    ],
+    "remaining_search_cpu_seconds": 20,
+    "incumbent_sha256": "91cd0f42eb07ded37bd0f5bdbd4d0720cb0fb5f64cd8fef0e73df6a27f26a5c6",
+    "compiled_backend_mapping": {
+      "random8greedy": 1,
+      "random16greedy": 0,
+      "structural24greedy": 3,
+      "opportunity12exact": 4,
+      "random24exact": 4,
+      "conflict8exact": 2,
+      "random40greedy": 5,
+      "structural48exact": 3,
+      "opportunity6ejection": 2
+    }
+  },
+  "decision": {
+    "action": "random40greedy",
+    "valid_action": true,
+    "strict_format": true,
+    "output_tokens": 6,
+    "raw_reply_sha256": "8930e4707578124110d8c8b447d39667153bb00d11990134384cff476d30c377",
+    "state_sha256": "625e52a2d71f98e178f75e92c7c2fecf3b45be3a258ee0271115cc89dfd9fae8",
+    "reservation": "b425895ac615493eb0da4639c3fa02ee",
+    "model": "Qwen/Qwen3.5-4B",
+    "prompt_tokens": 409
+  }
+}
