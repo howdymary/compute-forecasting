@@ -13,7 +13,7 @@ def publish(identifier,payload,private_response=None):
     write(Path("/public/experimental-v2/autonomy")/(identifier+".json"),payload)
     volume.commit();public_volume.commit()
     return {"public_digest":digest(payload),"run_id":identifier}
-async def run(output,question="calibration",origin="2026-07-24",plan=None):
+async def run(output,question="calibration",origin="2026-07-24",plan=None,policy_manifest=None):
     import httpx,tinker
     from tinker_cookbook import model_info,renderers
     if question not in QUESTIONS:raise ValueError("Unregistered research question")
@@ -29,7 +29,17 @@ async def run(output,question="calibration",origin="2026-07-24",plan=None):
         write(out/"autonomy.json",report);publish.remote(run_id,report,raw_responses)
     flush()
     service=tinker.ServiceClient(display_name="Compute Forecast v2 fresh autonomous research")
-    sampler=await service.create_sampling_client(base_model=MODEL)
+    if policy_manifest:
+        selection=json.loads(Path(policy_manifest).read_text())
+        from .policy_v2 import app as private_policy_app,load_private
+        with private_policy_app.run():
+            private=load_private.remote(selection["private_manifest_id"])
+        if private["selected"]["checkpoint_id"]!=selection["checkpoint_id"]:raise ValueError("Checkpoint selection receipt mismatch")
+        sampler=await service.create_sampling_client(model_path=private["selected"]["sampler_path"])
+        report["decision_policy"]={k:v for k,v in selection.items() if k!="private_manifest_id"}
+    else:
+        sampler=await service.create_sampling_client(base_model=MODEL)
+        report["decision_policy"]={"kind":"starting_policy","checkpoint_id":None}
     from tinker_cookbook.recipes.decisions import DecisionRenderer
     renderer=DecisionRenderer(renderers.get_renderer(model_info.get_recommended_renderer_name(MODEL),sampler.get_tokenizer()))
     task={"task_id":run_id,"origin":origin,"phase":"current_training_research","group":"eligible_A100_daily","scale":.01,"observation":{"measurement":"advertised daily rental offers","matured_labels_through":label_end},"validation":{}}
@@ -128,6 +138,6 @@ async def run(output,question="calibration",origin="2026-07-24",plan=None):
             report.update(status="failed",error_type=type(error).__name__,failed_at=now(),runtime_seconds=time.perf_counter()-started);flush();raise
     return report
 if __name__=="__main__":
-    parser=argparse.ArgumentParser();parser.add_argument("--question",choices=list(QUESTIONS),default="calibration");parser.add_argument("--output",default="artifacts/v2-autonomy");parser.add_argument("--origin",default="2026-07-24");parser.add_argument("--plan")
+    parser=argparse.ArgumentParser();parser.add_argument("--question",choices=list(QUESTIONS),default="calibration");parser.add_argument("--output",default="artifacts/v2-autonomy");parser.add_argument("--origin",default="2026-07-24");parser.add_argument("--plan");parser.add_argument("--policy-manifest")
     args=parser.parse_args()
-    with app.run():asyncio.run(run(args.output,args.question,args.origin,args.plan))
+    with app.run():asyncio.run(run(args.output,args.question,args.origin,args.plan,args.policy_manifest))
