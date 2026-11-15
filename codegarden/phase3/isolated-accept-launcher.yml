@@ -1,0 +1,44 @@
+name: CodeGarden fresh frozen-source independent acceptance
+on:
+  push:
+    branches: [codegarden-isolated-accept-003]
+    paths: [.github/workflows/codegarden.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: codegarden-free-isolated-accept-003
+  cancel-in-progress: false
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+  SOURCE_SHA: ${{ github.sha }}
+  TMPDIR: ${{ github.workspace }}/codegarden/.tmp
+  PIP_CACHE_DIR: ${{ github.workspace }}/codegarden/.cache/pip
+  PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/codegarden/.cache/playwright
+jobs:
+  acceptance:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+          mkdir -p codegarden/.tmp codegarden/.cache/pip codegarden/.cache/playwright
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Replay both frozen verifiers without executing search
+        run: python -I -B -u codegarden/phase3/isolated_accept.py
+      - name: Publish immutable-source acceptance evidence
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -B codegarden/phase3/publish_isolated_accept.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: codegarden-isolated-accept
+          retention-days: 1
+          path: codegarden/artifacts/phase3/isolated_acceptance_001/

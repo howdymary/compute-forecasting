@@ -1,0 +1,42 @@
+{
+  "source_sha": "e4f02ad198b582d0a4c973f460fbe638aa6f27f9",
+  "case": 1,
+  "pair": 0,
+  "mode": "weighted",
+  "seed": 1501001,
+  "starting_verification": {
+    "accepted": true,
+    "cardinality": 225,
+    "reports": [
+      {
+        "cardinality": 225,
+        "distinct_descendants": 6357,
+        "length": 16,
+        "method": "distinct_string_two_deletions",
+        "valid": true,
+        "witness_sha256": "4b162596f58ed789c7ad79fdb40e2c6dc2c3cce3f2ec50cf52159a5e3bea582c"
+      },
+      {
+        "cardinality": 225,
+        "largest_pairwise_lcs": 13,
+        "length": 16,
+        "method": "independent_dynamic_programming_lcs",
+        "pairs_checked": 25200,
+        "valid": true,
+        "witness_sha256": "4b162596f58ed789c7ad79fdb40e2c6dc2c3cce3f2ec50cf52159a5e3bea582c"
+      }
+    ]
+  },
+  "starting_sha256": "4b162596f58ed789c7ad79fdb40e2c6dc2c3cce3f2ec50cf52159a5e3bea582c",
+  "plan_sha256": "bd4d3130029d197c05c23fc7cfb91123c3640d45ca210fb8a939197ba7c4e131",
+  "target": 227,
+  "quota": 210,
+  "minimum_pair_conflicts": 2,
+  "cpu_seconds": 600.067,
+  "iterations": 2594234,
+  "edge_weight_updates": 2658336,
+  "best_method_independently_verified": 225,
+  "retained_global_best_verified": 226,
+  "novel": [],
+  "scope": "Eight matched pairs with equal600nativeCPU deadlines and the same conditional core quota. Dynamic sparse edge penalties and forgetting versus uniform pair costs; strongest-removal strategy shared. Positive-energy227 states remain invalid. No absence proof or trained-policy claim. Positive candidates pass both protected verifiers; any later polishing is a separate experiment."
+}

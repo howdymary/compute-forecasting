@@ -1,0 +1,106 @@
+name: CodeGarden exact two-parent union plus external words
+on:
+  push:
+    branches: [codegarden-union-external-006]
+    paths: [.github/workflows/codegarden.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: codegarden-free-union-external-006
+  cancel-in-progress: false
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+  PIP_CACHE_DIR: ${{ github.workspace }}/codegarden/.cache/pip
+  TMPDIR: ${{ github.workspace }}/codegarden/.tmp
+  SOURCE_SHA: ${{ github.sha }}
+  CODEGARDEN_BATCH: union_external_004
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+          mkdir -p codegarden/.tmp codegarden/.build codegarden/artifacts/phase3/union_external_004
+      - name: Exhaust small matching and deletion-bound fixtures
+        run: |
+          g++ -O3 -std=c++17 codegarden/phase3/union_external4.cpp -o codegarden/.build/union_external4
+          g++ -O3 -std=c++17 codegarden/phase3/union_external3.cpp -o codegarden/.build/union_external3
+          python -B -u codegarden/phase3/bench_union_filter.py
+          codegarden/.build/union_external4 --test > codegarden/artifacts/phase3/union_external_004/bound_tests.json
+          codegarden/.build/union_external4 --filter-test > codegarden/artifacts/phase3/union_external_004/color_tests.json
+      - name: Wait for original bounded cases to finish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -B -u codegarden/phase3/wait_union3.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: codegarden-union-external4-plan
+          retention-days: 1
+          path: codegarden/artifacts/phase3/union_external_004/
+  repairs:
+    needs: prepare
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      max-parallel: 8
+      matrix:
+        case: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+          mkdir -p codegarden/.tmp codegarden/.cache/pip
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Build isolated exact implication kernel
+        run: |
+          mkdir -p codegarden/.build
+          g++ -O3 -std=c++17 codegarden/phase3/union_external4.cpp -o codegarden/.build/union_external4
+      - uses: actions/download-artifact@v4
+        with:
+          name: codegarden-union-external3-${{ matrix.case }}
+          run-id: 43725457546
+          github-token: ${{ github.token }}
+          path: codegarden/artifacts/phase3/union_external_003/
+      - uses: actions/download-artifact@v4
+        with:
+          name: codegarden-union-external4-plan
+          path: codegarden/artifacts/phase3/union_external_004/
+      - name: Solve coordinate variants and arbitrary extra word
+        run: python -B -u codegarden/phase3/union_external4.py ${{ matrix.case }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          retention-days: 1
+          name: codegarden-union-external4-${{ matrix.case }}
+          path: codegarden/artifacts/phase3/union_external_004/
+  collect:
+    needs: [prepare, repairs]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+          mkdir -p codegarden/.tmp
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: codegarden-union-external4-*
+          merge-multiple: true
+          path: codegarden/artifacts/phase3/union_external_004/
+      - name: Publish leased model and witness evidence
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -B codegarden/phase3/publish_union_external4.py
