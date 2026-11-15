@@ -242,3 +242,18 @@ Remaining gaps: no 227 construction; no global optimality or complete global-rec
 limited family independence; no new informative Tinker training set; small memory benchmark;
 unresolved provider attribution; and no demonstrated general learned advantage. Sponsor
 integrations and a working replay demo do not establish hackathon victory.
+
+## Final closeout receipt
+
+The final verification run [43681661930](https://github.com/howdymary/compute-forecasting/actions/runs/43681661930) passed: **189 exported files, 117 distinct byte sequences**, every accepted exported witness valid under both protected checks. The existing 21-test suite passed. The separate final scope audit also independently reconstructed every neutral neighbor in both plateau states and all 512 full repair pools. Its source is pinned in the audit artifact.
+
+The arena still led at 226 in the final 05:35 UTC capture. Both CodeGarden Modal apps were stopped in the final inventory. No additional paid experiment is pending.
+
+| Provider | Cumulative conservative hold | CodeGarden cap | Unreserved allocation |
+|---|---:|---:|---:|
+| Exa | $0.028 | $5 | $4.972 |
+| past.dev | 165 credits | 2,000 credits | 1,835 credits |
+| Modal | $23.56 | $50 | $26.44 |
+| Tinker | $22.65 | $70 | $47.35 |
+
+These holds include historical and failed-run uncertainty and are **not actual charges**. Four unique Exa provider receipts report $0.028 gross. The final account-wide Modal meter was $2.13016283, offset by credits/allowances; it is not all CodeGarden spending. Tinker account-wide gross estimates were $0.808107828, with no reliable metadata match to CodeGarden and possible hourly lag. Past.dev's live account balance was 699,250 credits. Other-project reserves remain separate. No unknown hold was released.
