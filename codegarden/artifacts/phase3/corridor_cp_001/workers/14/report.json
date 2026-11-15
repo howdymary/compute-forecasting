@@ -1,0 +1,61 @@
+{
+  "source_sha": "6aa34b56b22ab67e8acb29a96adb7ff6dd2ddbbd",
+  "case": 14,
+  "pair": 7,
+  "source_parent": 4,
+  "blocker_threshold": 4,
+  "condition": "uncut_control",
+  "fixed_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "pool_sha256": "7b169d61dd362fc8b5275704bb211da249d4dadf25db22ada9601ac9ce786136",
+  "fixed_count": 0,
+  "pool_count": 4723,
+  "hint_verification": {
+    "accepted": true,
+    "cardinality": 225,
+    "reports": [
+      {
+        "cardinality": 225,
+        "distinct_descendants": 6380,
+        "length": 16,
+        "method": "distinct_string_two_deletions",
+        "valid": true,
+        "witness_sha256": "76f2e3a65951db9668bc758bdc1b2cded75a1ae127317669de37134f55167df4"
+      },
+      {
+        "cardinality": 225,
+        "largest_pairwise_lcs": 13,
+        "length": 16,
+        "method": "independent_dynamic_programming_lcs",
+        "pairs_checked": 25200,
+        "valid": true,
+        "witness_sha256": "76f2e3a65951db9668bc758bdc1b2cded75a1ae127317669de37134f55167df4"
+      }
+    ]
+  },
+  "partial_positive_hint_only": true,
+  "hint_can_be_infeasible": true,
+  "outside_high_sha256": "d68b85e4d984bf796302b5771bbf0caf92d1529fd9f7242252edda6daf10dcd0",
+  "conditional_cut_applied": false,
+  "known_exact226_exclusions": 38,
+  "target_minimum_total": 226,
+  "objective": null,
+  "artificial_upper_bound": null,
+  "model_sha256": "904b5eab9043653db4b4b6d2cdc077f410bd7d6702c7d630d91b8c371a3c73c3",
+  "model_text_sha256": "92f3cbede525172cd272c7f64f029dd85225a2ec70546b16ff75545d0ced407a",
+  "model_gzip_sha256": "2608d1f2f2ae0efa390ab55040ba15e0cc7730b513d385c77fb47e7848c9722e",
+  "solver_seed": 1540008,
+  "solver_wall_limit_seconds": 150,
+  "solver_workers": 2,
+  "solutions": [],
+  "best_seed_verified": 225,
+  "best_method_independently_verified": 225,
+  "retained_global_best_verified": 226,
+  "proof_artifact": null,
+  "scope": "Eight finite corridor pools, four parent codes at blocker thresholds3and4. Same fixed/pool/hint/seed per paired150-wall/two-worker CP-SAT solve, no objective or artificial227ceiling; seek any valid unknown code of size>=226. Control exact known226goal exclusions only; treatment additionally requires at least one outside word beyond the completed low2universe. This cut is conditional on native local closure; control positives violating it are retained and flagged. No global upper bound or formal absence certificate.",
+  "status": "UNKNOWN",
+  "solver_wall_seconds": 150.031302773,
+  "solver_process_cpu_seconds": 298.485669,
+  "response_stats": "CpSolverResponse summary:\nstatus: UNKNOWN\nobjective: 0\nbest_bound: 0\nintegers: 3551\nbooleans: 4610\nconflicts: 768\nbranches: 297846\npropagations: 10638367\ninteger_propagations: 12151477\nrestarts: 59324\nlp_iterations: 707504\nwalltime: 150.011\nusertime: 150.011\ndeterministic_time: 435.452\ngap_integral: 0\n",
+  "conclusion": "No result within budget; model open",
+  "strict_followups": []
+}

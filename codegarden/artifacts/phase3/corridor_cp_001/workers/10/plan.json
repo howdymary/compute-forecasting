@@ -1,0 +1,55 @@
+{
+  "source_sha": "6aa34b56b22ab67e8acb29a96adb7ff6dd2ddbbd",
+  "case": 10,
+  "pair": 5,
+  "source_parent": 3,
+  "blocker_threshold": 4,
+  "condition": "uncut_control",
+  "fixed_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "pool_sha256": "9421d3176cbd52e263a266b0844d2f4897dd81867d50aa6f40ee2b17abd72422",
+  "fixed_count": 0,
+  "pool_count": 4693,
+  "hint_verification": {
+    "accepted": true,
+    "cardinality": 225,
+    "reports": [
+      {
+        "cardinality": 225,
+        "distinct_descendants": 6354,
+        "length": 16,
+        "method": "distinct_string_two_deletions",
+        "valid": true,
+        "witness_sha256": "8b4b50f187f06cbecd53ee6c8338f516b54063a83a9d463d0954f08fdc6f766b"
+      },
+      {
+        "cardinality": 225,
+        "largest_pairwise_lcs": 13,
+        "length": 16,
+        "method": "independent_dynamic_programming_lcs",
+        "pairs_checked": 25200,
+        "valid": true,
+        "witness_sha256": "8b4b50f187f06cbecd53ee6c8338f516b54063a83a9d463d0954f08fdc6f766b"
+      }
+    ]
+  },
+  "partial_positive_hint_only": true,
+  "hint_can_be_infeasible": true,
+  "outside_high_sha256": "f10c0a0f6a2a9cf8fc704fe836719919560713d5c18444e4bf91739ccbbfd852",
+  "conditional_cut_applied": false,
+  "known_exact226_exclusions": 0,
+  "target_minimum_total": 226,
+  "objective": null,
+  "artificial_upper_bound": null,
+  "model_sha256": "44c109994d4a026b737e5ffff21869e9d56727a4c13eb5a3a56e7cf2d974e369",
+  "model_text_sha256": "38e11bb92b70e6bb9bd01e262ccee1932c105d2632fe599b6e7083c5d610a489",
+  "model_gzip_sha256": "42dbfda1be26827a99412ef315c717c5a48ab28a3105d33ffd7a89bb079267eb",
+  "solver_seed": 1540006,
+  "solver_wall_limit_seconds": 150,
+  "solver_workers": 2,
+  "solutions": [],
+  "best_seed_verified": 225,
+  "best_method_independently_verified": 225,
+  "retained_global_best_verified": 226,
+  "proof_artifact": null,
+  "scope": "Eight finite corridor pools, four parent codes at blocker thresholds3and4. Same fixed/pool/hint/seed per paired150-wall/two-worker CP-SAT solve, no objective or artificial227ceiling; seek any valid unknown code of size>=226. Control exact known226goal exclusions only; treatment additionally requires at least one outside word beyond the completed low2universe. This cut is conditional on native local closure; control positives violating it are retained and flagged. No global upper bound or formal absence certificate."
+}
