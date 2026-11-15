@@ -3,7 +3,9 @@ import hashlib,json,os,pathlib,subprocess,sys
 ROOT=pathlib.Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
 from search import canonical,digest_words,pool_hash
 from supervisor import verify,check_integrity
-from phase3.core_hulls import symmetries
+def symmetries(C):
+ rev=lambda w:int(format(w,'016b')[::-1],2)
+ return [sorted(C),sorted(65535^w for w in C),sorted(rev(w) for w in C),sorted(65535^rev(w) for w in C)]
 check_integrity();OUT=ROOT/"artifacts/phase3/neutral9_goal_001";OUT.mkdir(parents=True,exist_ok=True)
 info=json.loads((ROOT/"phase3/learned_certificates_input.json").read_text());C=info["codes"][0]
 p=OUT/"starting.txt";p.write_text(canonical(C));v=verify(p);assert v["cardinality"]==226
