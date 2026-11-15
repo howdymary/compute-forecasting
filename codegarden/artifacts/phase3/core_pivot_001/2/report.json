@@ -1,0 +1,32 @@
+{
+  "source_sha": "a2287504878cda38863fa15a43e77516f5dda1e1",
+  "case": 2,
+  "best_verified": 226,
+  "new226": [],
+  "polish": [],
+  "native": {
+    "case": 2,
+    "planned": 3223,
+    "processed": 3223,
+    "all_pivots_processed": true,
+    "primary_complete_no227": 3223,
+    "primary_timeouts": 0,
+    "secondary_complete_no226": 3223,
+    "secondary_timeouts": 0,
+    "found226": 0,
+    "pool_cap_skips": 0,
+    "cpu_seconds": 6.18995,
+    "blocker_size_histogram": {
+      "6": 681,
+      "7": 780,
+      "8": 738,
+      "9": 522,
+      "10": 297,
+      "11": 143,
+      "12": 47,
+      "13": 12,
+      "14": 3
+    }
+  },
+  "scope": "Pivots sorted by (core blocker cardinality,word), strided modulo16, core blocker count6..18. Fixed outside core minus blockers plus forced pivot. Pool=all65536 words compatible with fixed code. Each query capped at.04nativeCPU/300000nodes and768words. Complete only within explicit pivot hull, not all removal sets of that size, not global optimality. Stops on a novel226 candidate for independent verification and polish; timeouts/caps are unknown."
+}
