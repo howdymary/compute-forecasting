@@ -1,0 +1,28 @@
+{
+  "plan": {
+    "mode": "cold_evolution",
+    "seed": 2271138,
+    "seconds": 180,
+    "memory_mb": 32768,
+    "as_limit_gib": 28,
+    "force_cand": null
+  },
+  "source_sha": "9f31a85bfe50d8b9f0dc480b5b8584021e3a1537",
+  "status": "failed_or_unresolved",
+  "starting_witness_sha256": null,
+  "resources": {
+    "cpu": 2,
+    "memory_mb": 32768,
+    "hard_timeout": 540
+  },
+  "durable_path": "/codegarden/results/1a7c22609f7743c0847b62f6ea50766f",
+  "native_returncode": null,
+  "native_status": "OBSERVATION_TIMEOUT",
+  "solver_wall_seconds": 360.027902247,
+  "cross_host_smoke_passed": true,
+  "max_child_rss_kib": 18346880,
+  "native_log_tail": "\t\tGraph\n==========================================\nIO time:\t\t\t7.6461\nFilename:\t\t\tfull.graph\n|-Nodes:\t\t\t65536\n|-Edges:\t\t\t161928698\n\n\t\tConfiguration\n==========================================\nPopulation size:\t\t50\nRepetitions:\t\t\t50\nTime limit:\t\t\t180\n---\nKaHIP mode:\t\t\t0\n---\nSeed:\t\t\t\t2271138\nBase imbalance:\t\t\t0.03\nRandom imbalance:\t\t1\n---\nTournament size:\t\t2\n---\nMutation rate:\t\t\t1\n---\nUse Multiway-VC:\t\t0\nMultiway blocks:\t\t64\n---\nApply all reductions:\t\t1\nReductions threshold:\t\t350\n---\nInsert threshold:\t\t150\nPool threshold:\t\t\t250\n---\nILS iterations:\t\t\t15000\n---\nNo. of partitions:\t\t10\nNo. of separators:\t\t10\nNo. of k-partitions:\t\t10\nNo. of k-separators:\t\t10\n\n==========================================\n\t\tReduction\n==========================================\nOffset:\t\t\t\t2\nKernel size:\t\t\t65090\n\n\t\tPartitioning\n==========================================\nblock weight upper bound 40376\nPartition [Seed: 1336, K: 2]\nblock weight upper bound 56227\nPartition [Seed: 7153, K: 2]\nblock weight upper bound 38739\nPartition [Seed: 3642, K: 2]\nblock weight upper bound 46822\nPartition [Seed: 2718, K: 2]\nblock weight upper bound 51252\nPartition [Seed: 44, K: 2]\nblock weight upper bound 55533\nPartition [Seed: 3605, K: 2]\nblock weight upper bound 54998\nPartition [Seed: 9706, K: 2]\nblock weight upper bound 34639\nPartition [Seed: 8985, K: 2]\nblock weight upper bound 48689\nPartition [Seed: 818, K: 2]\nblock weight upper bound 38265\nPartition [Seed: 6223, K: 2]\nblock weight upper bound 56629\nSeparator [Seed: 639, K: 2, Size: 10324]\nblock weight upper bound 53770\nSeparator [Seed: 9318, K: 2, Size: 9185]\nblock weight upper bound 42191\nSeparator [Seed: 128, K: 2, Size: 19754]\nblock weight upper bound 50299\nSeparator [Seed: 415, K: 2, Size: 11230]\nblock weight upper bound 52678\nSeparator [Seed: 1710, K: 2, Size: 9013]\nblock weight upper bound 46323\nSeparator [Seed: 275, K: 2, Size: 13870]\nblock weight upper bound 35288\nSeparator [Seed: 9292, K: 2, Size: 27866]\nblock weight upper bound 40989\nSeparator [Seed: 7186, K: 2, Size: 21215]\nblock weight upper bound 36709\nSeparator [Seed: 9980, K: 2, Size: 26326]\nblock weight upper bound 47613\nSeparator [Seed: 8176, K: 2, Size: 13224]\nblock weight upper bound 3658\nSeparator [Seed: 9045, K: 19, Size: 59692]\nblock weight upper bound 6864\nSeparator [Seed: 2635, K: 12, Size: 61768]\nblock weight upper bound 2386\n",
+  "native_log_sha256": "c0a0d82df7b8a4583f0f7ed5b3662e406c2e8140e4147f2e9788437357e34ac4",
+  "failure_scope": "Process failure or timeout, not a mathematical negative or optimality statement.",
+  "runtime_seconds": 361.53561427700004
+}
