@@ -52,11 +52,21 @@ def main(inputs:str="inputs"):
     policies=[]
     for path in root.rglob("policy-report.json"):
         report=json.loads(path.read_text());folder=path.parent;a=json.loads((folder/"trained-evaluation.json").read_text());b=json.loads((folder/"starting-evaluation.json").read_text())
-        policies.append({"run_id":report["run_id"],"seed":report["seed"],"objective":report["objective"],"mode":report["mode"],"actual_optimizer_updates":report["actual_optimizer_updates"],"selected_update":report["selected_update"],"paired":paired(a,b),"candidate_pinball":a["pinball"],"starting_pinball":b["pinball"],"delta":a["pinball"]-b["pinball"],"relative_delta":a["pinball"]/b["pinball"]-1 if b["pinball"] else None,"checkpoints":report["checkpoints"],"rl_gate":report.get("rl_gate")})
+        parent_file=folder/"sft-parent-evaluation.json"
+        reference=json.loads(parent_file.read_text()) if report["mode"]=="rl" and parent_file.is_file() else b
+        ablations=[]
+        for name,filename in (("no_observation","no-observation.json"),("with_criticism","with-criticism.json"),("with_evidence","with-evidence.json")):
+            file=folder/filename
+            if not file.is_file():continue
+            variant=json.loads(file.read_text());indexed={t["task_id"]:t for t in variant["traces"]}
+            pairs=[(t,indexed[t["task_id"]]) for t in a["traces"] if t["task_id"] in indexed]
+            ablations.append({"condition":name,"pinball":variant["pinball"],"delta_vs_primary_condition":variant["pinball"]-a["pinball"],"tasks":len(pairs),"tasks_with_changed_action_sequence":sum(x["revealed"]!=y["revealed"] for x,y in pairs),"tasks_with_changed_selected_forecaster":sum(x["selected_config_id"]!=y["selected_config_id"] for x,y in pairs),"interpretation":"Descriptive action and outcome changes on the same small retrospective cases"})
+        policies.append({"run_id":report["run_id"],"seed":report["seed"],"objective":report["objective"],"mode":report["mode"],"actual_optimizer_updates":report["actual_optimizer_updates"],"selected_update":report["selected_update"],"paired":paired(a,reference),"reference_policy":"sft_parent" if report["mode"]=="rl" and parent_file.is_file() else "starting_policy","reference_pinball":reference["pinball"],"candidate_pinball":a["pinball"],"starting_pinball":b["pinball"],"delta":a["pinball"]-reference["pinball"],"delta_vs_starting":a["pinball"]-b["pinball"],"relative_delta":a["pinball"]/reference["pinball"]-1 if reference["pinball"] else None,"checkpoints":report["checkpoints"],"rl_gate":report.get("rl_gate"),"ablations":ablations})
+
     grouped=[]
     for kind,objective in sorted({(p["mode"],p["objective"]) for p in policies}):
         ps=[p for p in policies if p["mode"]==kind and p["objective"]==objective];d=[p["delta"] for p in ps]
-        grouped.append({"mode":kind,"objective":objective,"seeds":[p["seed"] for p in ps],"mean_candidate_pinball":statistics.mean(p["candidate_pinball"] for p in ps),"mean_paired_delta":statistics.mean(d),"min_paired_delta":min(d),"max_paired_delta":max(d),"interpretation":"Training-seed variation on the same market dates; not additional independent forecast cases"})
+        grouped.append({"mode":kind,"objective":objective,"reference_policy":ps[0]["reference_policy"],"seeds":[p["seed"] for p in ps],"mean_candidate_pinball":statistics.mean(p["candidate_pinball"] for p in ps),"mean_paired_delta":statistics.mean(d),"min_paired_delta":min(d),"max_paired_delta":max(d),"interpretation":"Training-seed variation on the same market dates; not additional independent forecast cases"})
     result={"schema_version":2,"created_at":now(),"code_sha":os.environ["GITHUB_SHA"],"grid_sha":grid["code_sha"],"static_portfolio":portfolio,"static_selection":selection,"stronger_static_control":control,"teacher_alignment_training_only":alignment,"policies":policies,"seed_summaries":grouped,"evaluation_temporal_origins":sorted({t["origin"] for t in evaluation}),"evaluation_tasks":len(evaluation),"excluded_tasks":excluded,"limitations":["Retrospective reused data","Three dependent evaluation dates","No confidence interval for a market population is justified by these dates","Exhaustive static control is an additional training-only comparison, not a replacement official submission"]}
     write(Path("artifacts/v2-analysis/analysis.json"),result);result["receipt"]=publish.remote(result)
     print("V2_ANALYSIS:"+json.dumps({k:v for k,v in result.items() if k not in ("stronger_static_control","teacher_alignment_training_only")}),flush=True)

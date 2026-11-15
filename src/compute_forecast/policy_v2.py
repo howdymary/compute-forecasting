@@ -213,7 +213,7 @@ async def run(grid_path,output,objective,seed,mode="sft",parent=None,max_updates
     trainer=await service.create_lora_training_client(base_model=MODEL,rank=16,seed=seed)
     tokenizer=trainer.get_tokenizer();renderer=DecisionRenderer(renderers.get_renderer(model_info.get_recommended_renderer_name(MODEL),tokenizer))
     if parent:
-        private_parent=load_private.remote(parent);chosen=private_parent["selected"]
+        private_parent=load_private.remote(parent);chosen=private_parent["selected"];private["parent_checkpoint_id"]=chosen["checkpoint_id"]
         await trainer.load_state(chosen["state_path"])
     base=await service.create_sampling_client(base_model=MODEL)
     starting=await evaluate(dev,base,renderer,"starting_policy_development");write(out/"starting-development.json",starting)
@@ -301,6 +301,11 @@ async def run(grid_path,output,objective,seed,mode="sft",parent=None,max_updates
     write(out/"selection-freeze.json",freeze)
     sampler=await service.create_sampling_client(model_path=best["sampler_path"])
     trained=await evaluate(test,sampler,renderer,"selected_"+mode+"_"+objective);initial=await evaluate(test,base,renderer,"starting_policy")
+    parent_evaluation=None
+    if mode=="rl":
+        parent_sampler=await service.create_sampling_client(model_path=private["checkpoints"][0]["sampler_path"])
+        parent_evaluation=await evaluate(test,parent_sampler,renderer,"sft_parent")
+        write(out/"sft-parent-evaluation.json",parent_evaluation)
     noobs=await evaluate(test,sampler,renderer,"selected_no_observation",ablation="no_observation")
     critic=await evaluate(test,sampler,renderer,"selected_with_criticism",ablation="with_criticism")
     evidence_report=await evaluate(test,sampler,renderer,"selected_with_method_evidence",evidence=packet) if packet else None
@@ -313,8 +318,8 @@ async def run(grid_path,output,objective,seed,mode="sft",parent=None,max_updates
       "actual_optimizer_updates":len(updates),"checkpoints":checkpoints,"selected_update":best["update"],"private_manifest_id":run_id,
       "training_tasks":len(train),"training_temporal_origins":len({t["origin"] for t in train}),"development_tasks":len(dev),"evaluation_tasks":len(test),
       "evaluation_status":protocol()["evaluation_status"],"future_competition_truth_loaded":False,"v1_final_used":False,
-      "comparisons":[public_score(x) for x in [initial,trained,noobs,critic,*([evidence_report] if evidence_report else []),*refs]],"static_portfolio":fixed,
-      "rl_gate":gate,"rl_gate_revision":2 if mode=="rl" else None,"skipped_constant_groups":skipped_constant_groups,"sampled_training_episodes":len(rl_trajectories),"recovery_checkpoints":recovery_checkpoints,"numerical_feedback_cache_hit":True,"new_rollout_numerical_executions":0,"reward_audit":variation,"evidence_packet":packet,"critic_behavior":"fixed deterministic, sees revealed validation only","runtime_seconds":time.perf_counter()-started,"cost_status":"unavailable","cost":None,
+      "comparisons":[public_score(x) for x in [initial,trained,*([parent_evaluation] if parent_evaluation else []),noobs,critic,*([evidence_report] if evidence_report else []),*refs]],"static_portfolio":fixed,
+      "parent_checkpoint_id":private.get("parent_checkpoint_id"),"rl_delta_vs_sft_parent":trained["pinball"]-parent_evaluation["pinball"] if parent_evaluation else None,"rl_gate":gate,"rl_gate_revision":2 if mode=="rl" else None,"skipped_constant_groups":skipped_constant_groups,"sampled_training_episodes":len(rl_trajectories),"recovery_checkpoints":recovery_checkpoints,"numerical_feedback_cache_hit":True,"new_rollout_numerical_executions":0,"reward_audit":variation,"evidence_packet":packet,"critic_behavior":"fixed deterministic, sees revealed validation only","runtime_seconds":time.perf_counter()-started,"cost_status":"unavailable","cost":None,
       "limitations":["Retrospective evaluation reuses previously published v1 development dates","Series and horizons share observations; tasks are dependent","Pretrained knowledge and true historical vintage cannot be excluded"]}
     write(out/"policy-report.json",result);print("V2_POLICY_REPORT:"+json.dumps(result),flush=True)
     with open(os.environ["GITHUB_STEP_SUMMARY"],"a") as f:f.write("# V2 policy "+mode+" "+objective+" seed"+str(seed)+"\n\n~~~json\n"+json.dumps(result,indent=2)+"\n~~~\n")

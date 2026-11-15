@@ -8,7 +8,9 @@
     "Stop after five consecutive constant-reward groups, including after earlier useful updates",
     "Plot actual optimizer updates separately from rollout iterations",
     "Save a final development-evaluated checkpoint after early stopping; save optimizer recovery states every ten useful updates",
-    "Rollout sampler snapshots expire after one hour; persistent evaluated states remain"
+    "Rollout sampler snapshots expire after one hour; persistent evaluated states remain",
+    "Measure RL's incremental effect against its frozen SFT parent, retaining the original starting-policy comparison",
+    "Report ablation action-sequence changes separately from forecast-loss changes"
   ],
   "seeds": [
     17,
@@ -17,5 +19,6 @@
   ],
   "maximum_sampling_iterations": 60,
   "evaluation_selection": "unchanged development-only selection",
-  "source_grid_sha": "a147797ec4557a337e2157ac60857d575e121630"
+  "source_grid_sha": "a147797ec4557a337e2157ac60857d575e121630",
+  "parent_comparison_added_before_rl_training": true
 }
