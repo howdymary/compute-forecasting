@@ -1,0 +1,433 @@
+{
+  "schema_version": 5,
+  "study_id": "market-memory-value-v5",
+  "run_id": "e536b98b0e544fc2b403d3bcd5f10cfe",
+  "source_sha": "7e6490f1186f89a3180558813580b9c98c77447c",
+  "created_at": "2026-11-15T20:31:48.536519+00:00",
+  "namespace": "current research; never benchmark-safe historical evidence",
+  "records": [
+    {
+      "record_id": "cf-value-v5-e536b98b0e544fc2b403d3bcd5f10cfe-0",
+      "author": "cf-value-v5-current-e536b98b0e544fc2b403d3bcd5f10cfe-skeptic",
+      "role": "skeptic",
+      "created_at": "2026-11-15T20:31:52.863906+00:00",
+      "content_sha256": "e743859bc4a0908745b5fd6d28f5db78087ad23fe125def764f713893f01486c",
+      "kind": "current_research"
+    },
+    {
+      "record_id": "cf-value-v5-e536b98b0e544fc2b403d3bcd5f10cfe-1",
+      "author": "cf-value-v5-current-e536b98b0e544fc2b403d3bcd5f10cfe-researcher",
+      "role": "researcher",
+      "created_at": "2026-11-15T20:31:57.869859+00:00",
+      "content_sha256": "e760c6cbcc62915c8899ce20ee319f772c58c990f008f75fef92f99fba4b9a46",
+      "kind": "current_research"
+    },
+    {
+      "record_id": "cf-value-v5-e536b98b0e544fc2b403d3bcd5f10cfe-2",
+      "author": "cf-value-v5-current-e536b98b0e544fc2b403d3bcd5f10cfe-scientist",
+      "role": "scientist",
+      "created_at": "2026-11-15T20:32:02.702686+00:00",
+      "content_sha256": "36d60f01f90210494943c1acde2eacfeb22d211f252ae084ea08387dd57b4e73",
+      "kind": "current_research"
+    },
+    {
+      "record_id": "cf-value-v5-e536b98b0e544fc2b403d3bcd5f10cfe-3",
+      "author": "cf-value-v5-current-e536b98b0e544fc2b403d3bcd5f10cfe-skeptic",
+      "role": "skeptic",
+      "created_at": "2026-11-15T20:32:05.233750+00:00",
+      "content_sha256": "2f42e42ea82d478d17c551e7b6ea024e82e58c9588f5058839b4fec24beb5df2",
+      "kind": "current_research"
+    },
+    {
+      "record_id": "cf-value-v5-e536b98b0e544fc2b403d3bcd5f10cfe-4",
+      "author": "cf-value-v5-current-e536b98b0e544fc2b403d3bcd5f10cfe-scientist",
+      "role": "scientist",
+      "created_at": "2026-11-15T20:32:07.616500+00:00",
+      "content_sha256": "550c9d0b43498cf6cef8fce94d30018a064b4ca16b721667617cc3766016a364",
+      "kind": "current_research"
+    },
+    {
+      "record_id": "cf-value-v5-e536b98b0e544fc2b403d3bcd5f10cfe-5",
+      "author": "cf-value-v5-current-e536b98b0e544fc2b403d3bcd5f10cfe-researcher",
+      "role": "researcher",
+      "created_at": "2026-11-15T20:32:10.066692+00:00",
+      "content_sha256": "844baf26495123d819cc70930750e5996a486855e00274e4f2ece6f8a344cf9e",
+      "kind": "current_research"
+    }
+  ],
+  "reads": [
+    {
+      "reader": "cf-value-v5-current-e536b98b0e544fc2b403d3bcd5f10cfe-researcher",
+      "reader_role": "researcher",
+      "required_source_id": "cf-value-v5-e536b98b0e544fc2b403d3bcd5f10cfe-0",
+      "writer_role": "skeptic",
+      "actual_cross_role_use": false,
+      "delivery": "Canonical-text fallback; not counted as successful memory recall",
+      "consumed_content_sha256": "e743859bc4a0908745b5fd6d28f5db78087ad23fe125def764f713893f01486c"
+    },
+    {
+      "reader": "cf-value-v5-current-e536b98b0e544fc2b403d3bcd5f10cfe-scientist",
+      "reader_role": "scientist",
+      "required_source_id": "cf-value-v5-e536b98b0e544fc2b403d3bcd5f10cfe-1",
+      "writer_role": "researcher",
+      "actual_cross_role_use": false,
+      "delivery": "Canonical-text fallback; not counted as successful memory recall",
+      "consumed_content_sha256": "e760c6cbcc62915c8899ce20ee319f772c58c990f008f75fef92f99fba4b9a46"
+    },
+    {
+      "reader": "cf-value-v5-current-e536b98b0e544fc2b403d3bcd5f10cfe-skeptic",
+      "reader_role": "skeptic",
+      "required_source_id": "cf-value-v5-e536b98b0e544fc2b403d3bcd5f10cfe-2",
+      "writer_role": "scientist",
+      "actual_cross_role_use": false,
+      "delivery": "Canonical-text fallback; not counted as successful memory recall",
+      "consumed_content_sha256": "36d60f01f90210494943c1acde2eacfeb22d211f252ae084ea08387dd57b4e73"
+    },
+    {
+      "reader": "cf-value-v5-current-e536b98b0e544fc2b403d3bcd5f10cfe-skeptic",
+      "reader_role": "skeptic",
+      "required_source_id": "cf-value-v5-e536b98b0e544fc2b403d3bcd5f10cfe-1",
+      "writer_role": "researcher",
+      "actual_cross_role_use": false,
+      "delivery": "Canonical-text fallback; not counted as successful memory recall",
+      "consumed_content_sha256": "e760c6cbcc62915c8899ce20ee319f772c58c990f008f75fef92f99fba4b9a46"
+    },
+    {
+      "reader": "cf-value-v5-current-e536b98b0e544fc2b403d3bcd5f10cfe-scientist",
+      "reader_role": "scientist",
+      "required_source_id": "cf-value-v5-e536b98b0e544fc2b403d3bcd5f10cfe-3",
+      "writer_role": "skeptic",
+      "actual_cross_role_use": false,
+      "delivery": "Canonical-text fallback; not counted as successful memory recall",
+      "consumed_content_sha256": "2f42e42ea82d478d17c551e7b6ea024e82e58c9588f5058839b4fec24beb5df2"
+    },
+    {
+      "reader": "cf-value-v5-current-e536b98b0e544fc2b403d3bcd5f10cfe-researcher",
+      "reader_role": "researcher",
+      "required_source_id": "cf-value-v5-e536b98b0e544fc2b403d3bcd5f10cfe-4",
+      "writer_role": "scientist",
+      "actual_cross_role_use": false,
+      "delivery": "Canonical-text fallback; not counted as successful memory recall",
+      "consumed_content_sha256": "550c9d0b43498cf6cef8fce94d30018a064b4ca16b721667617cc3766016a364"
+    }
+  ],
+  "steps": [
+    {
+      "role": "researcher",
+      "action": "hypothesis and sourced evidence",
+      "summary": "Research focus: energy costs. Verified same-collector SXM80 rates and workload-specific capability variants were written to shared memory.",
+      "record_id": "cf-value-v5-e536b98b0e544fc2b403d3bcd5f10cfe-1",
+      "used_record_ids": [
+        "cf-value-v5-e536b98b0e544fc2b403d3bcd5f10cfe-0"
+      ]
+    },
+    {
+      "role": "scientist",
+      "action": "deterministic experiment",
+      "summary": "Selected llm server. The tool computed rental-premium / throughput = 0.3787. Draft action: withhold economic preference.",
+      "record_id": "cf-value-v5-e536b98b0e544fc2b403d3bcd5f10cfe-2",
+      "used_record_ids": [
+        "cf-value-v5-e536b98b0e544fc2b403d3bcd5f10cfe-1"
+      ]
+    },
+    {
+      "role": "skeptic",
+      "action": "criticism",
+      "summary": "Primary objection: provider composition not matched. The result must retain cohort, workload and retrospective limits.",
+      "record_id": "cf-value-v5-e536b98b0e544fc2b403d3bcd5f10cfe-3",
+      "used_record_ids": [
+        "cf-value-v5-e536b98b0e544fc2b403d3bcd5f10cfe-2",
+        "cf-value-v5-e536b98b0e544fc2b403d3bcd5f10cfe-1"
+      ]
+    },
+    {
+      "role": "scientist",
+      "action": "next decision",
+      "summary": "Final action: withhold economic preference. The action did not change after criticism. No forecasting improvement is inferred.",
+      "record_id": "cf-value-v5-e536b98b0e544fc2b403d3bcd5f10cfe-4",
+      "used_record_ids": [
+        "cf-value-v5-e536b98b0e544fc2b403d3bcd5f10cfe-3",
+        "cf-value-v5-e536b98b0e544fc2b403d3bcd5f10cfe-2"
+      ]
+    },
+    {
+      "role": "researcher",
+      "action": "next hypothesis",
+      "summary": "Next missing evidence: workload profile.",
+      "record_id": "cf-value-v5-e536b98b0e544fc2b403d3bcd5f10cfe-5",
+      "used_record_ids": [
+        "cf-value-v5-e536b98b0e544fc2b403d3bcd5f10cfe-4"
+      ]
+    }
+  ],
+  "decisions": [
+    {
+      "role": "researcher",
+      "question": "Which mechanism deserves the first economic check?",
+      "selected": "energy_costs",
+      "distribution": {
+        "workload_mix": 0.1679239571094513,
+        "provider_composition": 0.1679239571094513,
+        "energy_costs": 0.6641521453857422
+      },
+      "input_record_ids": [
+        "cf-value-v5-e536b98b0e544fc2b403d3bcd5f10cfe-0"
+      ],
+      "context_sha256": "e5c7800db10fb90b255feba03266d123fe0f712c295a04122ae987dd86e0f1c6",
+      "at": "2026-11-15T20:31:57.869840+00:00"
+    },
+    {
+      "role": "scientist",
+      "question": "Select one registered precision-matched benchmark context for the rental-premium diagnostic.",
+      "selected": "llm_server",
+      "distribution": {
+        "llm_offline": 0.1933012306690216,
+        "llm_server": 0.5254471898078918,
+        "cross_benchmark": 0.2812516391277313
+      },
+      "input_record_ids": [
+        "cf-value-v5-e536b98b0e544fc2b403d3bcd5f10cfe-1"
+      ],
+      "context_sha256": "e760c6cbcc62915c8899ce20ee319f772c58c990f008f75fef92f99fba4b9a46",
+      "at": "2026-11-15T20:32:00.305521+00:00"
+    },
+    {
+      "role": "scientist",
+      "question": "Choose the draft publication action before criticism.",
+      "selected": "withhold_economic_preference",
+      "distribution": {
+        "publish_workload_specific": 0.1679239571094513,
+        "add_sensitivity_range": 0.1679239571094513,
+        "withhold_economic_preference": 0.6641521453857422
+      },
+      "input_record_ids": [
+        "cf-value-v5-e536b98b0e544fc2b403d3bcd5f10cfe-1"
+      ],
+      "context_sha256": "0ae54fcaa4f4ee0e0075bff9e1b93c9c67f46a801d3e0a9f0199c1b4adf143eb",
+      "at": "2026-11-15T20:32:02.702666+00:00"
+    },
+    {
+      "role": "skeptic",
+      "question": "Which limitation is most consequential for interpreting this result?",
+      "selected": "provider_composition_not_matched",
+      "distribution": {
+        "provider_composition_not_matched": 0.7491059899330139,
+        "benchmark_not_universal": 0.18940365314483643,
+        "historical_not_future_accuracy": 0.061490364372730255
+      },
+      "input_record_ids": [
+        "cf-value-v5-e536b98b0e544fc2b403d3bcd5f10cfe-2",
+        "cf-value-v5-e536b98b0e544fc2b403d3bcd5f10cfe-1"
+      ],
+      "context_sha256": "755b411eec3272283a002b8a96b34410b73cd06c68fe9d1dd6406a451e1824e5",
+      "at": "2026-11-15T20:32:05.233731+00:00"
+    },
+    {
+      "role": "scientist",
+      "question": "Reconsider the same publication actions using the critic's recalled record.",
+      "selected": "withhold_economic_preference",
+      "distribution": {
+        "publish_workload_specific": 0.0019028277602046728,
+        "add_sensitivity_range": 0.012407995760440826,
+        "withhold_economic_preference": 0.9856891632080078
+      },
+      "input_record_ids": [
+        "cf-value-v5-e536b98b0e544fc2b403d3bcd5f10cfe-2",
+        "cf-value-v5-e536b98b0e544fc2b403d3bcd5f10cfe-3"
+      ],
+      "context_sha256": "719aef20a6090c87981d4025fa43f21b98b946ee43fde946ff1580d6a5ecb70f",
+      "at": "2026-11-15T20:32:07.616481+00:00"
+    },
+    {
+      "role": "researcher",
+      "question": "Which missing input should the next registered research cycle seek?",
+      "selected": "workload_profile",
+      "distribution": {
+        "matched_provider_quotes": 0.0413808710873127,
+        "workload_profile": 0.8311570286750793,
+        "verified_power_measurements": 0.12746205925941467
+      },
+      "input_record_ids": [
+        "cf-value-v5-e536b98b0e544fc2b403d3bcd5f10cfe-4"
+      ],
+      "context_sha256": "550c9d0b43498cf6cef8fce94d30018a064b4ca16b721667617cc3766016a364",
+      "at": "2026-11-15T20:32:10.066673+00:00"
+    }
+  ],
+  "source_requests": [
+    {
+      "query": "Official NVIDIA MLCommons H100 A100 inference throughput varies with workload memory bandwidth precision system configuration",
+      "request_id": "73f01fefbb735583f0159c71c6fecd1b",
+      "cost_dollars": {
+        "total": 0.007,
+        "search": {
+          "neural": 0.007
+        }
+      },
+      "source_metadata": [
+        {
+          "url": "https://developer.nvidia.com/blog/full-stack-innovation-fuels-highest-mlperf-inference-2-1-results-for-nvidia",
+          "title": "Full-Stack Innovation Fuels Highest MLPerf Inference 2.1 Results for NVIDIA",
+          "retrieved_at": "2026-11-15T20:31:55.223819+00:00",
+          "content_sha256": "6192ad87a118d7c05e7206db2608b7ef44c0b591f5663caec20de4e7032a6030"
+        },
+        {
+          "url": "https://mlcommons.org/wp-content/uploads/2026/09/Supplemental-MLCommons-MLPerf-Inference-v6.1.pdf",
+          "title": "Supplemental - MLCommons MLPerf Inference v6.1",
+          "retrieved_at": "2026-11-15T20:31:55.223856+00:00",
+          "content_sha256": "7e998239239b8caca39acf9b2c85d1e53d0165c16640eb3f643a0fbd3721a5f4"
+        },
+        {
+          "url": "https://developer.nvidia.com/blog/nvidia-blackwell-delivers-massive-performance-leaps-in-mlperf-inference-v5-0/",
+          "title": "NVIDIA Blackwell Delivers Massive Performance Leaps in MLPerf Inference v5.0 | NVIDIA Technical Blog",
+          "retrieved_at": "2026-11-15T20:31:55.223867+00:00",
+          "content_sha256": "7fef65506682e77917be7e749da5871a8109d23481f302d41769271e10ccfb20"
+        },
+        {
+          "url": "https://developer.nvidia.com/blog/setting-new-records-in-mlperf-inference-v3-0-with-full-stack-optimizations-for-ai/",
+          "title": "Setting New Records in MLPerf Inference v3.0 with Full-Stack Optimizations for AI | NVIDIA Technical Blog",
+          "retrieved_at": "2026-11-15T20:31:55.223874+00:00",
+          "content_sha256": "51899705583799c2f7e81856e0092073d12d87e4029b378c1eb50b1455ca0000"
+        }
+      ],
+      "response_sha256": "848eb497aefceec0c053c5f9ecf5929b9a9b72d38988044b9727812b1bd52327"
+    }
+  ],
+  "analyses": [
+    {
+      "study": "capability-premium-v5",
+      "classification": "Retrospective descriptive current research; not a causal price effect or future accuracy claim",
+      "pair": {
+        "id": "8fc3466a58fd3449",
+        "a100_series_id": "gpurentalprices.neocloud_rate_card.A100_SXM_80GB.on_demand.median",
+        "h100_series_id": "gpurentalprices.neocloud_rate_card.H100_SXM_80GB.on_demand.median",
+        "date": "2026-11-06",
+        "a100_rate": 1.95,
+        "h100_rate": 3.5539,
+        "rental_premium": 1.8225128205128205,
+        "source_id": "gpurentalprices",
+        "instrument_class": "neocloud_rate_card",
+        "pricing_tier": "on_demand",
+        "matched_dates": 89,
+        "limitation": "Same collector/instrument/tier; provider populations are not matched"
+      },
+      "benchmark": {
+        "id": "ship_only_inf_llm_server_a100ref_sxm80_precmatch",
+        "throughput_ratio": 4.812622162742785,
+        "rounds": "v3.1",
+        "kind": "measured_ship_sxm",
+        "scope": "SXM 80GB, shipped repository results, precision-matched; llm_server",
+        "raw": {
+          "ladder_version": "capability_ladder_a100_link_v0.1_2026-11-08",
+          "benchmark_set_id": "ship_only_inf_llm_server_a100ref_sxm80_precmatch",
+          "kind": "measured_ship_sxm",
+          "reference_generation": "A100",
+          "gpu_generation": "H100",
+          "reference_model": "",
+          "capability_units_per_accelerator": "4.812622162742785",
+          "chain_via": "A100->H100 x4.813 via inference_datacenter/gptj-99.9/Server (n_pairs=11, rounds v3.1)",
+          "n_pairs_min_along_chain": "11",
+          "rounds_used": "v3.1",
+          "precision_note": "",
+          "instrument_class": "benchmark_measured",
+          "redistribution_class": "SHIP",
+          "licence_id": "APACHE-2.0",
+          "source_id": "capability_ladder_a100_link.csv; capability_ladder.csv",
+          "note": "measured A100 to H100 link (older rounds) joined to the shipped H100-anchored chain; the A100 link uses gptj-99.9 because no A100 result exists on the chain benchmark (llama2-70b-99.9): a splice of benchmark families, labelled in chain_via"
+        }
+      },
+      "h100_cost_per_matched_work_relative_to_a100": 0.3786943497501045,
+      "conditional_h100_cost_reduction": 0.6213056502498955,
+      "formula": "(H100 advertised rate / A100 advertised rate) / benchmark throughput ratio",
+      "limitations": [
+        "Different provider populations can confound source-level median comparisons",
+        "Benchmark throughput is not a universal workload conversion",
+        "Host, network, availability, software and energy are outside this rental-only ratio",
+        "Derived capability composites are not verified MLCommons results"
+      ],
+      "source_pack_sha256": "f0b52af28c52545732208bcc4905facd9b941aa5779da683e1d9884c283b7c7c",
+      "study_artifact_sha256": "c9c9c69a34be3c0d7684d3c0620064ad67873a3a0694acc5b745a9abd2a3305a"
+    }
+  ],
+  "actual_tinker_decisions": 6,
+  "new_optimizer_updates": 0,
+  "provider_cost_usd": null,
+  "memory_setup_error": "HTTPStatusError",
+  "verified_cross_role_reads": 0,
+  "eligibility": {
+    "successful_writers": 0,
+    "successful_readers": 0,
+    "cross_role_use": 0,
+    "requirements_met": false
+  },
+  "interpretation": "A researcher, scientist and skeptic use sourced records to choose, test and qualify a benchmark-specific GPU-value hypothesis.",
+  "outcome_claim": "Actual memory use and interpretation changes are measured; no memory accuracy gain or new learned weights is established.",
+  "final": {
+    "action": "withhold_economic_preference",
+    "draft_action": "withhold_economic_preference",
+    "changed_after_criticism": false,
+    "analysis": {
+      "study": "capability-premium-v5",
+      "classification": "Retrospective descriptive current research; not a causal price effect or future accuracy claim",
+      "pair": {
+        "id": "8fc3466a58fd3449",
+        "a100_series_id": "gpurentalprices.neocloud_rate_card.A100_SXM_80GB.on_demand.median",
+        "h100_series_id": "gpurentalprices.neocloud_rate_card.H100_SXM_80GB.on_demand.median",
+        "date": "2026-11-06",
+        "a100_rate": 1.95,
+        "h100_rate": 3.5539,
+        "rental_premium": 1.8225128205128205,
+        "source_id": "gpurentalprices",
+        "instrument_class": "neocloud_rate_card",
+        "pricing_tier": "on_demand",
+        "matched_dates": 89,
+        "limitation": "Same collector/instrument/tier; provider populations are not matched"
+      },
+      "benchmark": {
+        "id": "ship_only_inf_llm_server_a100ref_sxm80_precmatch",
+        "throughput_ratio": 4.812622162742785,
+        "rounds": "v3.1",
+        "kind": "measured_ship_sxm",
+        "scope": "SXM 80GB, shipped repository results, precision-matched; llm_server",
+        "raw": {
+          "ladder_version": "capability_ladder_a100_link_v0.1_2026-11-08",
+          "benchmark_set_id": "ship_only_inf_llm_server_a100ref_sxm80_precmatch",
+          "kind": "measured_ship_sxm",
+          "reference_generation": "A100",
+          "gpu_generation": "H100",
+          "reference_model": "",
+          "capability_units_per_accelerator": "4.812622162742785",
+          "chain_via": "A100->H100 x4.813 via inference_datacenter/gptj-99.9/Server (n_pairs=11, rounds v3.1)",
+          "n_pairs_min_along_chain": "11",
+          "rounds_used": "v3.1",
+          "precision_note": "",
+          "instrument_class": "benchmark_measured",
+          "redistribution_class": "SHIP",
+          "licence_id": "APACHE-2.0",
+          "source_id": "capability_ladder_a100_link.csv; capability_ladder.csv",
+          "note": "measured A100 to H100 link (older rounds) joined to the shipped H100-anchored chain; the A100 link uses gptj-99.9 because no A100 result exists on the chain benchmark (llama2-70b-99.9): a splice of benchmark families, labelled in chain_via"
+        }
+      },
+      "h100_cost_per_matched_work_relative_to_a100": 0.3786943497501045,
+      "conditional_h100_cost_reduction": 0.6213056502498955,
+      "formula": "(H100 advertised rate / A100 advertised rate) / benchmark throughput ratio",
+      "limitations": [
+        "Different provider populations can confound source-level median comparisons",
+        "Benchmark throughput is not a universal workload conversion",
+        "Host, network, availability, software and energy are outside this rental-only ratio",
+        "Derived capability composites are not verified MLCommons results"
+      ],
+      "source_pack_sha256": "f0b52af28c52545732208bcc4905facd9b941aa5779da683e1d9884c283b7c7c",
+      "study_artifact_sha256": "c9c9c69a34be3c0d7684d3c0620064ad67873a3a0694acc5b745a9abd2a3305a"
+    },
+    "sensitivity": [],
+    "accuracy_improvement": null
+  },
+  "next_question": "workload_profile",
+  "status": "completed",
+  "runtime_seconds": 21.530374476999995,
+  "completed_at": "2026-11-15T20:32:10.066849+00:00",
+  "memory_source_namespace": "cf-value-v5-e536b98b0e544fc2b403d3bcd5f10cfe",
+  "study_artifact_sha256": "c9c9c69a34be3c0d7684d3c0620064ad67873a3a0694acc5b745a9abd2a3305a",
+  "retrospective": true
+}
