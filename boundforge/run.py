@@ -2,7 +2,7 @@
 import argparse, copy, datetime as dt, hashlib, json, os, pathlib, subprocess, sys, time
 import numpy as np
 import search,verify
-from providers import Providers,Disabled
+from providers import Providers,Disabled,prepare_output
 ROOT=pathlib.Path(__file__).resolve().parent
 def digest(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def main():
@@ -16,6 +16,7 @@ def main():
     if not os.environ.get("GITHUB_ACTIONS") and not os.environ.get("BOUNDFORGE_ALLOW_LOCAL"):raise SystemExit("Run this project on GitHub Actions; no workstation execution authorised.")
     if not 1<=a.trials<=240 or not 1<=a.seconds<=60:raise SystemExit("batch outside bounded limits")
     out=ROOT/"results";out.mkdir(exist_ok=True)
+    if not a.resume:prepare_output(out)
     path=out/"trace.jsonl"
     def log(kind,payload):
         row={"timestamp":dt.datetime.now(dt.timezone.utc).isoformat(),"kind":kind,**payload}
@@ -78,7 +79,10 @@ def main():
         trial_start=time.monotonic()
         if a.remote:
             from modal_worker import remote_optimize
-            token=providers.ledger.reserve("modal",0.20)
+            try:token=providers.ledger.reserve("modal",0.20)
+            except Disabled as error:
+                log("stop",{"reason":str(error),"policy":"preserve strongest certified witness"})
+                break
             # Failure keeps full reservation; never retry a billable job automatically.
             candidate,stats=remote_optimize(initial,a.seconds)
             providers.ledger.settle(token,None)

@@ -119,3 +119,12 @@ class Providers:
         safe=[{"id":doc.get("id"),"content_sha256":hashlib.sha256(doc.get("content","").encode()).hexdigest(),"source_ids":[s.get("sourceId") for s in doc.get("sources",[]) if str(s.get("sourceId","")).startswith("boundforge-")]} for doc in documents]
         self.log("memory_read",{"role":role,"required_source":required,"cross_role_source_present":present,"documents":safe})
         return documents,present
+
+def prepare_output(out):
+    """Keep a fresh campaign separate from evidence committed by earlier runs."""
+    out.mkdir(parents=True,exist_ok=True)
+    previous=[p for p in out.iterdir() if p.is_file() and p.name!=".gitkeep"]
+    if previous:
+        archive=out/"previous-source"/os.environ.get("GITHUB_RUN_ID",str(time.time_ns()))
+        archive.mkdir(parents=True,exist_ok=True)
+        for p in previous:p.rename(archive/p.name)

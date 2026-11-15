@@ -27,7 +27,7 @@ def collect(rid,out):
     for entry in z.infolist():
         p=pathlib.PurePosixPath(entry.filename)
         if p.is_absolute() or ".." in p.parts or entry.file_size>10_000_000:raise ValueError("unsafe archive path")
-        if not entry.filename.startswith("results/") or entry.is_dir():continue
+        if not entry.filename.startswith("results/") or len(p.parts)!=2 or entry.is_dir():continue
         name=p.name;data=z.read(entry)
         if name=="budget.sqlite":
             temp=target/"ledger.sqlite";temp.write_bytes(data)

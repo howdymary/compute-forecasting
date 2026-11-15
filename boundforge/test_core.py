@@ -47,3 +47,26 @@ def test_tensorisation_not_mixture():
 def test_rounding_exact():
     c=toy();r=search.certificate(c["laws"],[np.array([0.123,0.877])],[1])
     verify.validate(r)
+
+def test_old_evidence_is_archived_not_appended(tmp_path,monkeypatch):
+    from providers import prepare_output
+    monkeypatch.setenv("GITHUB_RUN_ID","isolated-check")
+    (tmp_path/"trace.jsonl").write_text("prior-source\n")
+    (tmp_path/".gitkeep").write_text("")
+    prepare_output(tmp_path)
+    assert not (tmp_path/"trace.jsonl").exists()
+    assert (tmp_path/"previous-source/isolated-check/trace.jsonl").read_text()=="prior-source\n"
+    assert (tmp_path/".gitkeep").exists()
+def test_unknown_cost_stays_reserved_and_shared_workers_cannot_exceed_cap(tmp_path):
+    from providers import Ledger,Disabled
+    first=Ledger(tmp_path)
+    second=Ledger(tmp_path)
+    # Conservative historical past usage is 69; cap is 200.
+    token=first.reserve("past",100,observed=1000)
+    first.settle(token,None)
+    with pytest.raises(Disabled):second.reserve("past",40,observed=1000)
+    assert first.db.execute("select actual from reservations where id=?",(token,)).fetchone()[0] is None
+def test_new_credits_do_not_increase_initial_allowance(tmp_path):
+    from providers import Ledger,Disabled
+    ledger=Ledger(tmp_path)
+    with pytest.raises(Disabled):ledger.reserve("past",1000000,observed=1000000000)

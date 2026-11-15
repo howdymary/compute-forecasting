@@ -2,13 +2,14 @@
 import argparse,copy,datetime as dt,hashlib,json,os,pathlib,subprocess,sys,time
 from decimal import Decimal,localcontext,ROUND_FLOOR
 import verify,precision
-from providers import Providers
+from providers import Providers,Disabled,prepare_output
 ROOT=pathlib.Path(__file__).resolve().parent
 def main():
     ap=argparse.ArgumentParser();ap.add_argument("--structural-trials",type=int,default=6);ap.add_argument("--start");a=ap.parse_args()
     if not os.environ.get("GITHUB_ACTIONS"):raise SystemExit("Remote GitHub Actions only")
     if not 0<=a.structural_trials<=20:raise SystemExit("bounded trial limit")
     out=ROOT/"results";out.mkdir(exist_ok=True)
+    prepare_output(out)
     history=[];sources=[];start=time.monotonic()
     def log(kind,payload):
         row={"timestamp":dt.datetime.now(dt.timezone.utc).isoformat(),"kind":kind,**payload}
@@ -68,7 +69,10 @@ def main():
                     log("skeptic_review",{"source_id":sid,"cross_role_recall_verified":present,"decision":"Run bounded numerical solve; no acceptance without exact check."})
             except Exception as e:log("memory_unavailable",{"reason":type(e).__name__})
             log("precision_decision",{"trial":trial,"proposal":proposal,"dual_estimate":nu,"source_urls":[r.get("url") for e in sources for r in e.get("results",[])]})
-            providers.ledger.reserve("modal",0.40)
+            try:providers.ledger.reserve("modal",0.40)
+            except Disabled as error:
+                log("stop",{"reason":str(error),"policy":"preserve strongest certified witness"})
+                break
             try:
                 candidate,stats=precision_worker.remote(best,proposal)
                 accept(candidate,stats,"structural insertion "+str(proposal))
