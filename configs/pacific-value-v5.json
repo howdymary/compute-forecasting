@@ -1,0 +1,97 @@
+{
+  "schema_version": 5,
+  "study_id": "pacific-value-v5",
+  "position": "Pacific Direction B; past.dev cross-role memory",
+  "registered_before_execution": true,
+  "official_cutoff": "2026-11-06",
+  "baseline_audit": {
+    "purpose": "Additional retrospective integrity/control audit; no new model selection",
+    "origins": [
+      "2026-08-29",
+      "2026-09-05",
+      "2026-09-12"
+    ],
+    "cohort": "Exact 12 cells in committed review-v4 starting comparison",
+    "methods": [
+      "last_value",
+      "last_value_empirical",
+      "drift",
+      "seasonal_naive"
+    ],
+    "new_weight_training": false
+  },
+  "capability_diagnostic": {
+    "purpose": "Descriptive benchmark-specific rental premium; no universal conversion or causal price claim",
+    "price_date": "2026-11-06",
+    "pair": [
+      "A100_SXM_80GB",
+      "H100_SXM_80GB"
+    ],
+    "match_fields": [
+      "source_id",
+      "instrument_class",
+      "pricing_tier"
+    ],
+    "exclude_instruments": [
+      "marketplace_ask"
+    ],
+    "max_agent_cohorts": 2,
+    "universal_performance_claim": false
+  },
+  "publication": {
+    "official_brief": "https://drive.google.com/file/d/1r-dIO5Ol6RYLmcHXRwEUFr1vIBpi5CiZ/view",
+    "compilation_license": "CC BY 4.0 confirmed by official event brief; older DATA.md default-pending wording retained in audit",
+    "allowed_sources": [
+      "afhubbard",
+      "gpurentalprices",
+      "fastgpu_daily"
+    ],
+    "excluded_instruments": [
+      "marketplace_ask"
+    ],
+    "rule": "Only shipped filtered daily-statistics targets with CC-BY-4.0 source registry grants; preserve all source attribution. No pointer values or third-party aggregate values."
+  },
+  "economic_model": {
+    "kind": "Conditional income-based scenarios, not estimated resale prices or confidence intervals",
+    "remaining_life_months": 48,
+    "annual_discount": 0.12,
+    "utilization": 0.6,
+    "revenue_realization": 0.85,
+    "fees": 0.1,
+    "active_gpu_w": 700,
+    "idle_gpu_w": 100,
+    "allocated_host_w": 100,
+    "pue": 1.2,
+    "electricity_usd_kwh": 0.12,
+    "monthly_other_opex": 20,
+    "terminal_haircut": 0.7,
+    "scenarios": [
+      {
+        "id": "supply_expansion",
+        "label": "Supply expansion",
+        "annual_change": -0.35
+      },
+      {
+        "id": "moderate_decline",
+        "label": "Moderate decline",
+        "annual_change": -0.15
+      },
+      {
+        "id": "persistent_constraints",
+        "label": "Persistent constraints",
+        "annual_change": 0.05
+      }
+    ],
+    "assumption_status": "Annual paths preserved from published outlook; utilization/cost/discount/life/haircut are explicit user-adjustable assumptions, not fitted estimates"
+  },
+  "limits": {
+    "modal_cpu": 4,
+    "modal_memory_mb": 8192,
+    "timeout_seconds": 1200,
+    "max_exa_calls": 2,
+    "max_tinker_decisions": 8,
+    "max_selected_cohorts": 2,
+    "max_new_optimizer_updates": 0
+  },
+  "future_outcomes": "pending compatible later observations; v1/v2/v4 commitments unchanged"
+}

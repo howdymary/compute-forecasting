@@ -1,0 +1,51 @@
+name: Build Pacific value evidence and official controls
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/pacific-value-v5.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: pacific-value-v5
+  cancel-in-progress: false
+jobs:
+  derive:
+    if: github.ref == 'refs/heads/compute-observatory'
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - name: Fetch exact source remotely
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/${{ github.sha }}" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: |
+          python -m pip install -e '.[dev]' modal
+          python -m compileall -q src
+          python -m pytest tests/test_economics_v5.py
+      - name: Build matching licensed history and audit unmodified starter baselines
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: python -m compute_forecast.pacific_value_v5
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pacific-value-v5-${{ github.run_id }}
+          path: artifacts/value-v5/
+          retention-days: 90
+      - name: Publish immutable study and required notices
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          from compute_forecast.publication_v5 import publish
+          root=Path('artifacts/value-v5')
+          files={'results/value-v5/runs/'+os.environ['GITHUB_RUN_ID']+'/'+str(p.relative_to(root)):p.read_bytes() for p in root.rglob('*') if p.is_file()}
+          print('PACIFIC_V5_COMMIT:'+publish(files),flush=True)
+          PY
