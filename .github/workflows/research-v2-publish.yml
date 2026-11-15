@@ -1,0 +1,64 @@
+name: Publish measured v2 campaign progress
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/research-v2-publish.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: publish-v2-campaign
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 250
+    env:
+      CAMPAIGN_RUN_ID: '43665821333'
+      GH_TOKEN: ${{ github.token }}
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+    steps:
+      - name: Fetch immutable source
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate publication code
+        run: |
+          python -m pip install -e '.[dev]' modal numpy
+          python -m compileall -q src
+          python -m pytest tests/test_experimental_v2.py tests/test_policy_v2.py
+      - name: Get genuine Exa source receipts
+        run: gh run download 43665112830 --repo "$GITHUB_REPOSITORY" --name campaign-v2-evidence-bd267f17fa31106a05a22e3b6b4739f7bd6c0327-43665112830 --dir inputs/evidence
+      - name: Publish bounded progress snapshots and completed comparisons
+        run: |
+          python - <<'PY'
+          import json,os,subprocess,time
+          from pathlib import Path
+          repo=os.environ['GITHUB_REPOSITORY'];run=os.environ['CAMPAIGN_RUN_ID']
+          def api(path):return json.loads(subprocess.check_output(['gh','api','repos/'+repo+'/'+path],text=True))
+          for tick in range(150):
+              state=api('actions/runs/'+run)
+              assert state['head_branch']=='compute-observatory' and state['head_sha']=='a147797ec4557a337e2157ac60857d575e121630'
+              for a in api('actions/runs/'+run+'/artifacts')['artifacts']:
+                  name=a['name'];dest=Path('inputs/campaign')/name
+                  if (name=='campaign-v2-grid' or name.startswith('campaign-v2-policy-')) and not dest.exists():
+                      subprocess.run(['gh','run','download',run,'--repo',repo,'--name',name,'--dir',str(dest)],check=True)
+              env=dict(os.environ,CAMPAIGN_STATUS=state['status'],CAMPAIGN_CONCLUSION=state.get('conclusion') or '')
+              subprocess.run(['modal','run','-m','compute_forecast.experimental_v2','--inputs','inputs'],env=env,check=True)
+              if state['status']=='completed':
+                  Path('artifacts/campaign-run.json').write_text(json.dumps(state,indent=2))
+                  break
+              time.sleep(90)
+          else:raise RuntimeError('Bounded publication polling expired; numerical and training jobs remain separately managed')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: campaign-v2-publication-${{ github.run_id }}
+          path: artifacts/
+          retention-days: 30
