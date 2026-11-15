@@ -1,0 +1,73 @@
+{
+  "status": "failed_or_partial",
+  "scope": "codegarden",
+  "source_sha": "2a4eac4ccaac46389ca60782c5c49395548b2429",
+  "events": [
+    {
+      "kind": "memory_write",
+      "value": {
+        "role": "analyst",
+        "source_id": "codegarden-43672967716-analyst-scoped_negative-21c40fba",
+        "experiment": "negative-001",
+        "parent_sources": [],
+        "estimated_credits": 3
+      },
+      "time": 1794713737.3466234
+    },
+    {
+      "kind": "memory_read",
+      "value": {
+        "role": "researcher",
+        "required_source": "codegarden-43672967716-analyst-scoped_negative-21c40fba",
+        "returned_source_ids": [
+          "codegarden-43672598278-analyst-scoped_negative-457459ac",
+          "codegarden-43672967716-analyst-scoped_negative-21c40fba"
+        ],
+        "used_in_next_decision": true
+      },
+      "time": 1794713738.2861984
+    },
+    {
+      "kind": "exa_reuse",
+      "value": {
+        "source_run": "43671948159",
+        "request_id": "f1430a04e1611934dad997956c2528af",
+        "query": "binary two deletion correcting codes length 16 maximum independent set variable neighborhood exact set packing CP-SAT",
+        "influenced_experiment": "modal-repair-001"
+      },
+      "time": 1794713738.286689
+    }
+  ],
+  "error_type": "ValueError",
+  "error": "Untrained strategist returned an invalid bounded action",
+  "budget": {
+    "exa": {
+      "cap": 2,
+      "other_project_reserves": 15,
+      "verification_reserve": 5,
+      "reserved": 0.007,
+      "provider_reported_or_estimated": 0
+    },
+    "past": {
+      "cap": 500,
+      "other_project_reserves": 10200,
+      "verification_reserve": 5000,
+      "reserved": 8,
+      "provider_reported_or_estimated": 4
+    },
+    "modal": {
+      "cap": 10,
+      "other_project_reserves": 75,
+      "verification_reserve": 20,
+      "reserved": 2.92,
+      "provider_reported_or_estimated": 0
+    },
+    "tinker": {
+      "cap": 20,
+      "other_project_reserves": 140,
+      "verification_reserve": 10,
+      "reserved": 3,
+      "provider_reported_or_estimated": 0
+    }
+  }
+}

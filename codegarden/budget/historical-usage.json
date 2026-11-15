@@ -1,11 +1,11 @@
 {
-  "source_run": "43672598278-cumulative",
-  "source_commit": "1588ab7568da3a5fbc8dc53ab78a3ae4cb42e719",
+  "source_run": "43672967716-cumulative",
+  "source_commit": "1f7b657b58d0cb088100485b2c4f40b5e62f8954",
   "conservative_totals": {
     "exa": 0.007,
-    "past": 8,
-    "modal": 2.92,
-    "tinker": 2
+    "past": 12,
+    "modal": 5.84,
+    "tinker": 3
   },
-  "reason": "Cumulative prior calls, estimated memory credits and unresolved reservations; includes native reservations made before decorator failure. No duplicate caps across runners."
+  "reason": "Cumulative earlier actual/estimated costs and pending reservations, including all eight completed Modal workers and previous integration failures; fresh runner cannot reset allocation."
 }

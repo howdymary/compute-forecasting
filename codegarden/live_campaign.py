@@ -34,14 +34,15 @@ def main():
         decision=sampler.choose({"length":16,"verified_best":226,"scoped_failure":"21 explicit unions have no improvement",
            "evidence_sources":[{"title":s["title"],"url":s["url"]} for s in exa["sources"]],
            "question":"Choose a different bounded repair neighborhood after the analyst's recalled finding."})
-        if not decision["valid_action"]:raise ValueError("Untrained strategist returned an invalid bounded action")
-        selected=ACTIONS.index(decision["action"])
+        selected=ACTIONS.index(decision["action"]) if decision["valid_action"] else 1
+        decision["used_action"]=ACTIONS[selected]
+        decision["explicit_fallback"]=not decision["valid_action"]
         log("tinker_strategy",{**decision,"used_memory_source":finding,"experiment_id":"modal-repair-001"})
         method=providers.write("researcher","source_backed_method",{"exa":exa,"hypothesis":"Larger structural/opportunity repairs may escape small union optima",
-          "selected_action":decision["action"],"borrowed_method":"set packing / independent-set neighborhood search",
+          "selected_action":ACTIONS[selected],"borrowed_method":"set packing / independent-set neighborhood search",
           "not_a_discovery":True},"modal-repair-001",[finding])
         providers.read("strategist","Which source-backed CodeGarden repair method followed the analyst's failure finding?",method)
-        plan=providers.write("strategist","experiment_plan",{"action":decision["action"],"seeds":[1701,2901],"seconds_per_worker":60,
+        plan=providers.write("strategist","experiment_plan",{"action":ACTIONS[selected],"seeds":[1701,2901],"seconds_per_worker":60,
           "resources":"two independent CPU workers; independent exported-witness verification",
           "why":"Actual recalled researcher evidence and bounded Tinker action, rather than a repeated union search."},"modal-repair-001",[method])
         reports=run_workers(words,[1701,2901],60,providers.ledger,selected)

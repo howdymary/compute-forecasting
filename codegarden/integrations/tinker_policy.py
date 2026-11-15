@@ -1,5 +1,5 @@
 """Bounded strategy proposals and verifier-grounded SFT; no model access to verifiers."""
-import hashlib,json,os
+import hashlib,json,os,re
 MODEL="Qwen/Qwen3.5-4B"
 ACTIONS=["random8greedy","random16greedy","structural24greedy","opportunity12exact",
          "random24exact","conflict8exact","random40greedy","structural48exact","opportunity6ejection"]
@@ -25,10 +25,11 @@ class Policy:
         result=self.sampler.sample(prompt=self.tinker.ModelInput.from_ints(tokens),
           sampling_params=self.tinker.types.SamplingParams(max_tokens=64,temperature=0),
           num_samples=1).result()
-        reply=self.tokenizer.decode(result.sequences[0].tokens).strip()
-        selected=next((a for a in ACTIONS if reply==a),None)
+        reply=self.tokenizer.decode(result.sequences[0].tokens,skip_special_tokens=True).strip()
+        found={a for a in ACTIONS if re.search(r"(?<![A-Za-z0-9_])"+re.escape(a)+r"(?![A-Za-z0-9_])",reply)}
+        selected=next(iter(found)) if len(found)==1 else None
         self.ledger.settle(rid,None)
-        return {"action":selected,"valid_action":selected is not None,"raw_reply_sha256":hashlib.sha256(reply.encode()).hexdigest(),
+        return {"action":selected,"valid_action":selected is not None,"strict_format":reply in ACTIONS,"output_tokens":len(result.sequences[0].tokens),"raw_reply_sha256":hashlib.sha256(reply.encode()).hexdigest(),
           "state_sha256":hashlib.sha256(text.encode()).hexdigest(),"reservation":rid,"model":MODEL}
 def train(examples,ledger,updates=8):
     import numpy as np,tinker

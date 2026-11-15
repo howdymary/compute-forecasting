@@ -51,11 +51,13 @@ jobs:
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
           MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
         run: codegarden/.venv/bin/python -B -u codegarden/live_campaign.py
-      - name: Run eight paired compiled CPU experiments on Modal
+      - name: Collect read-only attributed billing receipts
+        if: always()
         env:
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
           MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
-        run: codegarden/.venv/bin/python -B -u codegarden/native_campaign.py
+        run: codegarden/.venv/bin/python -B codegarden/ci/cost_receipts.py
       - name: Retain exact client versions and independently check all outputs
         if: always()
         run: |
@@ -68,3 +70,4 @@ jobs:
           SOURCE_SHA: ${{ github.sha }}
         run: python -B codegarden/ci/publish_results.py
 # Normalize Transformers template output and serialize isolated Modal closures.
+# Resume only the unfinished live research and policy evaluation; native paired batch is complete.
