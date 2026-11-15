@@ -1,0 +1,106 @@
+[
+  {
+    "kind": "memory_write",
+    "value": {
+      "role": "analyst",
+      "source_id": "codegarden-43707956052-analyst-tensor_escape_diagnosis_v2-aef84a22",
+      "experiment": "research-gpu-v2",
+      "parent_sources": [],
+      "estimated_credits": 11
+    }
+  },
+  {
+    "kind": "memory_read",
+    "value": {
+      "role": "researcher",
+      "required_source": "codegarden-43707956052-analyst-tensor_escape_diagnosis_v2-aef84a22",
+      "returned_source_ids": [
+        "codegarden-43674296464-analyst-native_plateau_analysis-d110a9a4",
+        "codegarden-43674769064-strategist-resumed_feedback_plan-ca6b1d4b",
+        "codegarden-43688024783-researcher-phase3_deeper_method_research-114c2b2c",
+        "codegarden-43707956052-analyst-tensor_escape_diagnosis_v2-aef84a22"
+      ],
+      "used_in_next_decision": true
+    }
+  },
+  {
+    "kind": "exa_search",
+    "value": {
+      "query": "maximum independent set diverse solutions incumbent overlap constraints local search",
+      "request_id": "dc2132aa1f4cfb021abcd5b38ba8971c",
+      "cost_dollars": {
+        "total": 0.007,
+        "search": {
+          "neural": 0.007
+        }
+      },
+      "sources": [
+        {
+          "title": "Accelerating Local Search for the Maximum Independent Set Problem",
+          "url": "https://arxiv.org/pdf/1602.01659.pdf",
+          "published": null,
+          "content_sha256": "bf317bc4a8f5eb3094fb3ea3c96fb80614b5776deadd099a2b5a1bb7123312b0"
+        },
+        {
+          "title": "General swap-based multiple neighborhood tabu search for the maximum independent set problem",
+          "url": "https://leria-info.univ-angers.fr/~jinkao.hao/papers/JinHaoEAAI2014.pdf",
+          "published": null,
+          "content_sha256": "49cf4d5e383ba57b5fb471f9ff1831609ed2d96a506e352a06428c9754e567d5"
+        },
+        {
+          "title": "An efficient local search algorithm with large neighborhoods for the maximum weighted independent set problem\u2020",
+          "url": "https://doi.org/10.1111/itor.12619",
+          "published": "2018-12-07T00:00:00.000Z",
+          "content_sha256": "3c49177d96552636a97928cf6e46b59750c52c0bddefd34ab98d4a2b6c13a6c9"
+        },
+        {
+          "title": "FAST LOCAL SEARCH FOR THE MAXIMUM ...",
+          "url": "https://renatowerneck.wordpress.com/wp-content/uploads/2016/06/arw10-mis-journal.pdf",
+          "published": null,
+          "content_sha256": "6d7b12ab4e95e314a9314ca8279eff569460324c71dea3ee5b276aa5d1e01869"
+        }
+      ],
+      "influenced_experiment": "profiled-core-quota-tensor"
+    }
+  },
+  {
+    "kind": "exa_search",
+    "value": {
+      "query": "binary two deletion correcting codes length16 226 227 explicit construction 2026",
+      "request_id": "13906922cc9a3522c4fadc37770232fe",
+      "cost_dollars": {
+        "total": 0.007,
+        "search": {
+          "neural": 0.007
+        }
+      },
+      "sources": [
+        {
+          "title": "[2609.19493] Polynomially larger deletion codes by linear hashing of substring counts",
+          "url": "https://arxiv.org/abs/2609.19493",
+          "published": "2026-09-16T23:24:08.000Z",
+          "content_sha256": "5e878f374efddb31ce8af5c31678bcfaef383ccc748971a82ae385578eabc4a4"
+        },
+        {
+          "title": "Codes Correcting Two Deletions",
+          "url": "https://arxiv.org/abs/1712.07222",
+          "published": "2017-12-19T21:26:52.000Z",
+          "content_sha256": "f041592069e1b4fa1b3ef4f2cc2fa285e21c40873561f85f51da8b2e2cdb1f1a"
+        },
+        {
+          "title": "Two Deletion Correcting Codesfrom Indicator Vectors",
+          "url": "https://arxiv.org/html/1806.09240",
+          "published": "2018-06-25T00:00:00.000Z",
+          "content_sha256": "b377f20c4f637442b3531fd13bcdf9b2fb16f5eb053103082351ff1748283353"
+        },
+        {
+          "title": "[2007.10592] Explicit two-deletion codes with redundancy matching the existential bound",
+          "url": "https://ar5iv.labs.arxiv.org/html/2007.10592",
+          "published": null,
+          "content_sha256": "9556ac17b989332bbf16a6d290595d3ffd485e1197a115bb5ee2b87b8db63f7c"
+        }
+      ],
+      "influenced_experiment": "profiled-core-quota-tensor"
+    }
+  }
+]
