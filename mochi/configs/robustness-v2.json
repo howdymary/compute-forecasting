@@ -1,0 +1,18 @@
+{
+  "study": "V1 contact-policy robustness follow-up; not a test of the new humanoid visual rig",
+  "rounds": 8,
+  "candidates_per_round": 4,
+  "development_seeds": [41000,41001,41002,41003,41004,41005,41006,41007,41008,41009,41010,41011,41012,41013,41014,41015,41016,41017,41018,41019,41020,41021,41022,41023],
+  "heldout_start": 51000,
+  "heldout_count": 64,
+  "stress_start": 61000,
+  "stress_count": 64,
+  "development_distribution": "Equal low/high friction-and-mass mixture using seed parity",
+  "heldout_distribution": "Same registered mixture on fresh disjoint seeds",
+  "stress_distribution": "High friction and mass only, fresh disjoint seeds",
+  "control": "32 random candidates drawn uniformly from the same four policy families",
+  "candidate_simulations_each_arm": 768,
+  "maximum_total_simulations": 2016,
+  "selection": "development success count, then lower mean final distance; deterministic veto on non-improvement",
+  "claims": "No new neural weights, no causal no-memory/no-search ablation; new held-out outcomes assessed only after freeze"
+}
