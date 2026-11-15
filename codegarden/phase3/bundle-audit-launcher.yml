@@ -1,0 +1,88 @@
+name: CodeGarden direct blocker bundles
+on:
+  push:
+    branches: [codegarden-bundle-audit-003]
+    paths: [.github/workflows/codegarden.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: codegarden-free-bundle-audit-003
+  cancel-in-progress: false
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+  SOURCE_SHA: ${{ github.sha }}
+  CODEGARDEN_BATCH: bundle_audit_001
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - name: Compile and independently exhaust small cases
+        run: |
+          mkdir -p codegarden/.build
+          python -B -u codegarden/phase3/preflight.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: codegarden-bundleaudit-preflight
+          path: codegarden/artifacts/phase3/bundle_audit_001/
+  probes:
+    needs: preflight
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        mode: [component2, root5]
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/download-artifact@v4
+        with:
+          name: codegarden-bundleaudit-preflight
+          path: codegarden/artifacts/phase3/bundle_audit_001/
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Independently audit native scoped results
+        run: |
+          mkdir -p codegarden/.build
+          python -m venv codegarden/.venv
+          codegarden/.venv/bin/pip install -r codegarden/requirements-exact.txt
+          codegarden/.venv/bin/python -B -u codegarden/phase3/audit_bundles.py --mode ${{ matrix.mode }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: codegarden-bundleaudit-${{ matrix.mode }}
+          path: codegarden/artifacts/phase3/bundle_audit_001/
+  collect:
+    needs: [preflight, probes]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: codegarden-bundleaudit-*
+          merge-multiple: true
+          path: codegarden/artifacts/phase3/bundle_audit_001/
+      - name: Publish leased results
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -B -u codegarden/phase3/publish_bundle_audit.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: codegarden-bundleaudit-collected
+          path: codegarden/artifacts/phase3/bundle_audit_001/
