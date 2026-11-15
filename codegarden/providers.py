@@ -21,8 +21,14 @@ class Ledger:
         self.spec=json.loads((ROOT/"budget/shared-allocation.json").read_text())
         expiry=dt.datetime.fromisoformat(self.spec["expires_at"].replace("Z","+00:00"))
         if dt.datetime.now(dt.timezone.utc)>expiry:raise Disabled("Allocation snapshot expired; obtain a fresh shared allocation")
-        self.db=sqlite3.connect(str(out/"live-budget.sqlite"),isolation_level=None)
+        self.db=sqlite3.connect(str(ROOT/"artifacts/shared-budget.sqlite"),isolation_level=None)
         self.db.execute("CREATE TABLE IF NOT EXISTS reservations(id TEXT PRIMARY KEY,provider TEXT,reserved REAL,actual REAL,status TEXT)")
+        previous=ROOT/"budget/historical-usage.json"
+        if previous.exists():
+            history=json.loads(previous.read_text())
+            for provider,amount in history["conservative_totals"].items():
+                if amount>0:self.db.execute("INSERT OR IGNORE INTO reservations VALUES(?,?,?,NULL,'historical_pending')",
+                  ("history-"+history["source_run"]+"-"+provider,provider,amount))
     def reserve(self,provider,project,amount):
         provider="past" if provider=="past.dev" else provider
         p=self.spec["providers"][provider];remaining=float(p["balance_at_snapshot"])
@@ -65,8 +71,8 @@ class Providers:
     def __init__(self,out,log):
         self.out=out;self.log=log;self.ledger=Ledger(out)
         self.run_id="codegarden-"+os.environ.get("GITHUB_RUN_ID",uuid.uuid4().hex)
-        self.actors={r:self.run_id+"-"+r for r in ["analyst","researcher","strategist"]}
-        self.audience=self.run_id
+        self.actors={r:"codegarden-"+r for r in ["analyst","researcher","strategist"]}
+        self.audience="codegarden-research-v1"
     def setup_memory(self):
         return http("https://api.past.dev/api/v1/audiences/"+self.audience,os.environ["PAST_API_KEY"],
           {"kind":"fixed","name":self.run_id,"identities":list(self.actors.values())},method="PUT")
@@ -113,7 +119,7 @@ class Providers:
             ids={s["sourceId"] for r in result.get("results",[]) for s in r.get("sources",[])}
             if required_source in ids:
                 self.log("memory_read",{"role":role,"required_source":required_source,
-                  "returned_source_ids":sorted(x for x in ids if x.startswith(self.run_id)),"used_in_next_decision":True})
+                  "returned_source_ids":sorted(x for x in ids if x.startswith("codegarden-")),"used_in_next_decision":True})
                 return result
             time.sleep(2)
         raise Disabled("Required other-role source not present in real recall")

@@ -11,6 +11,9 @@ if ref["object"]["sha"]!=HEAD:raise RuntimeError("CodeGarden branch advanced; re
 parent=api("repos/"+REPO+"/git/commits/"+HEAD);entries=[]
 allowed=list(pathlib.Path("codegarden/artifacts/live").glob("*.json"))
 allowed+=list(pathlib.Path("codegarden/artifacts/live").glob("*.txt"))
+allowed+=list(pathlib.Path("codegarden/artifacts/native").glob("*.json"))
+allowed+=list(pathlib.Path("codegarden/artifacts/native").glob("*.txt"))
+allowed+=list(pathlib.Path("codegarden/artifacts").glob("kernel_test.json"))
 allowed+=list(pathlib.Path("codegarden/artifacts").glob("cp_*.json"))
 allowed+=list(pathlib.Path("codegarden/artifacts").glob("cp_*.txt"))
 allowed+=list(pathlib.Path("codegarden/artifacts").glob("provider_preflight*.json"))

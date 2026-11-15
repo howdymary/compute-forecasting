@@ -30,6 +30,11 @@ jobs:
         run: |
           python -m venv codegarden/.venv
           codegarden/.venv/bin/python -m pip install -r codegarden/requirements-providers.txt -r codegarden/requirements-exact.txt
+      - name: Compile and independently test the native incidence kernel
+        run: |
+          mkdir -p codegarden/.build
+          g++ -O3 -std=c++17 codegarden/kernel.cpp -o codegarden/.build/kernel
+          python -B codegarden/test_kernel.py
       - name: Read current account usage before allocated sponsor work
         env:
           EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
@@ -46,10 +51,11 @@ jobs:
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
           MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
         run: codegarden/.venv/bin/python -B -u codegarden/live_campaign.py
-      - name: Test sparse exact neighborhoods and full-universe target
-        run: |
-          codegarden/.venv/bin/python -B codegarden/cp_sat.py --start codegarden/artifacts/best_code.txt --seconds 10 --seed 41 --output codegarden/artifacts/cp_bands.json
-          codegarden/.venv/bin/python -B codegarden/cp_sat.py --start codegarden/artifacts/best_code.txt --global-pool --seconds 180 --seed 71 --output codegarden/artifacts/cp_global.json
+      - name: Run eight paired compiled CPU experiments on Modal
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: codegarden/.venv/bin/python -B -u codegarden/native_campaign.py
       - name: Retain exact client versions and independently check all outputs
         if: always()
         run: |

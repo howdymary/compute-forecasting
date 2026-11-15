@@ -18,9 +18,9 @@ class Policy:
         self.sampler=self.service.create_sampling_client(model_path=sampler_path) if sampler_path else self.service.create_sampling_client(base_model=MODEL)
         self.tokenizer=self.sampler.get_tokenizer()
     def choose(self,state):
-        rid=self.ledger.reserve("tinker","codegarden",1.0)
         text=prompt(state);tokens=encode_prompt(self.tokenizer,state)
         if len(tokens)>2048:raise ValueError("bounded strategy context exceeded")
+        rid=self.ledger.reserve("tinker","codegarden",1.0)
         result=self.sampler.sample(prompt=self.tinker.ModelInput.from_ints(tokens),
           sampling_params=self.tinker.types.SamplingParams(max_tokens=64,temperature=0),
           num_samples=1).result()

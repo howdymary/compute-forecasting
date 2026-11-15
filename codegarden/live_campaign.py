@@ -22,7 +22,14 @@ def main():
           "incumbent":baseline_report,"finding":"Twenty-one exact explicit-union repairs did not improve their better input; 6200 hosted local cycles retained 226.",
           "scope":"Only logged unions/neighborhoods; no global impossibility claim.","next_question":"Test larger sparse set-packing repairs rather than repeating exhausted small unions."},"negative-001")
         providers.read("researcher","What did the CodeGarden analyst learn about exhausted union repairs and the 226-word incumbent?",finding)
-        exa=providers.exa("binary two deletion correcting codes length 16 maximum independent set variable neighborhood exact set packing CP-SAT","modal-repair-001")
+        cached=ROOT/"artifacts/live_attempt1/trace.json"
+        old=json.loads(cached.read_text()) if cached.exists() else []
+        prior=next((e["value"] for e in old if e["kind"]=="exa_search"),None)
+        if prior:
+            exa=prior;log("exa_reuse",{"source_run":"43671948159","request_id":prior["request_id"],
+              "query":prior["query"],"influenced_experiment":"modal-repair-001"})
+        else:
+            exa=providers.exa("binary two deletion correcting codes length 16 maximum independent set variable neighborhood exact set packing CP-SAT","modal-repair-001")
         sampler=Policy(providers.ledger)
         decision=sampler.choose({"length":16,"verified_best":226,"scoped_failure":"21 explicit unions have no improvement",
            "evidence_sources":[{"title":s["title"],"url":s["url"]} for s in exa["sources"]],

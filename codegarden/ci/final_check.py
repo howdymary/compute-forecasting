@@ -4,7 +4,7 @@ from supervisor import verify
 reports=[]
 for path in sorted((ROOT/"artifacts").rglob("*.txt")):
     if path.name=="environment.txt":continue
-    if path.name.startswith("arena_") or path.name.startswith("best_") or path.name.startswith("cp_") or path.name.startswith("modal_"):
+    if path.name.startswith("arena_") or path.name.startswith("best_") or path.name.startswith("cp_") or path.name.startswith("modal_") or path.name.startswith("worker_"):
         try:reports.append({"path":str(path),"verification":verify(path)})
         except Exception as e:reports.append({"path":str(path),"error":str(e)})
 best=max((r for r in reports if "verification" in r),key=lambda r:r["verification"]["cardinality"])
