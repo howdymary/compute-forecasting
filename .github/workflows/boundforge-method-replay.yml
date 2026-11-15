@@ -1,0 +1,29 @@
+name: BoundForge primary-method diagnostic
+on:
+  workflow_dispatch:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/boundforge-method-replay.yml]
+permissions:
+  contents: read
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install numpy==2.2.6
+      - run: python boundforge/research_v2/reproduce.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: boundforge-primary-method-replay
+          path: boundforge/research_v2/evidence/
+          retention-days: 30
