@@ -1,6 +1,6 @@
 """Remote notebook interaction, provenance and accessibility checks. PNGs only."""
 from __future__ import annotations
-import base64,hashlib,json,math,os,time
+import base64,hashlib,json,math,os,re,time
 from pathlib import Path
 from urllib.request import urlopen
 from .notebook_diagnostics import build
@@ -9,6 +9,14 @@ URL="https://howdymary--compute-forecast-observatory-web.us-east.modal.run"
 def get(path):return urlopen(URL+path,timeout=90).read()
 def close(a,b):
     assert len(a)==len(b) and all(math.isclose(x,y,rel_tol=1e-10,abs_tol=1e-12) for x,y in zip(a,b)),(a,b)
+def contrast_ratio(foreground,background):
+    def luminance(color):
+        channels=[float(n)/255 for n in re.findall(r"[0-9.]+",color)[:3]]
+        if len(channels)!=3:raise ValueError("Unexpected computed color")
+        linear=[v/12.92 if v<=.04045 else ((v+.055)/1.055)**2.4 for v in channels]
+        return sum(v*w for v,w in zip(linear,(.2126,.7152,.0722)))
+    a,b=sorted((luminance(foreground),luminance(background)))
+    return (b+.05)/(a+.05)
 def capture(page,out,label):
     raw=page.screenshot(path=str(out/(label+".png")),full_page=False)
     encoded=base64.b64encode(raw).decode()
@@ -46,6 +54,10 @@ def main():
             assert loaded_faces>=1, "The self-hosted handwriting face did not load"
             assert page.evaluate("document.fonts.check('24px Caveat')")
             assert page.evaluate("document.documentElement.scrollWidth<=innerWidth+1"),label
+            axis_color=page.locator("#price-chart text").first.evaluate("(el)=>getComputedStyle(el).fill")
+            plot_background=page.locator(".plotpanel").evaluate("(el)=>getComputedStyle(el).backgroundColor")
+            axis_contrast=contrast_ratio(axis_color,plot_background)
+            assert axis_contrast>=4.5,axis_contrast
             def values():return [float(v) for v in page.locator("[data-point-value]").evaluate_all("(es)=>es.map(e=>e.dataset.value)")]
             original=values()
             page.locator("#pin-point").click()
@@ -115,7 +127,7 @@ def main():
                     page.get_by_role("button",name="Research",exact=True).click()
                     page.get_by_role("button",name="Study notes",exact=True).click()
                     page.evaluate("scrollTo(0,0)");capture(page,out,"desktop-diagnostics")
-            checks.append({"viewport":label,"width":width,"no_overflow":True,"touch":mobile,"keyboard":True,"pin_snapshot_immutable":True,"pin_cap_and_remove":True,"selection_and_disclosures_preserved":True})
+            checks.append({"viewport":label,"width":width,"no_overflow":True,"axis_text_contrast":round(axis_contrast,3),"touch":mobile,"keyboard":True,"pin_snapshot_immutable":True,"pin_cap_and_remove":True,"selection_and_disclosures_preserved":True})
             context.close()
         context=browser.new_context(viewport={"width":390,"height":844},reduced_motion="reduce")
         page=context.new_page()
