@@ -1,7 +1,179 @@
 {
-  "status": "running",
   "source_sha": "8096b4c1f78b048453e22aa03de9bc4cb326f710",
-  "problem": "kakeya-needle-128",
+  "problem": "kakeya128",
+  "status": "completed_batch",
   "baseline": 0.10675138995168142,
+  "best_certified": 0.10675138995168142,
+  "workers": [
+    {
+      "spec": {
+        "policy": "coordinate",
+        "seed": 260101,
+        "seconds": 300,
+        "widths": [
+          4,
+          8,
+          16,
+          32,
+          64
+        ],
+        "amplitudes": [
+          0.0001,
+          0.001,
+          0.01,
+          0.03
+        ],
+        "temperature": 0.0001,
+        "arena_incumbent": 0.10675138995168142
+      },
+      "best_native_area": 0.10675138995168142,
+      "certified_score": null,
+      "certified_arena_improvement": false,
+      "evaluations": 7762,
+      "trials": 70,
+      "wall_seconds": 300.026462911
+    },
+    {
+      "spec": {
+        "policy": "structural",
+        "seed": 260101,
+        "seconds": 300,
+        "widths": [
+          4,
+          8,
+          16,
+          32,
+          64
+        ],
+        "amplitudes": [
+          0.0001,
+          0.001,
+          0.01,
+          0.03
+        ],
+        "temperature": 0.0001,
+        "arena_incumbent": 0.10675138995168142
+      },
+      "best_native_area": 0.10675138995168142,
+      "certified_score": null,
+      "certified_arena_improvement": false,
+      "evaluations": 7723,
+      "trials": 71,
+      "wall_seconds": 300.015841312
+    },
+    {
+      "spec": {
+        "policy": "coordinate",
+        "seed": 260102,
+        "seconds": 300,
+        "widths": [
+          4,
+          8,
+          16,
+          32,
+          64
+        ],
+        "amplitudes": [
+          0.0001,
+          0.001,
+          0.01,
+          0.03
+        ],
+        "temperature": 0.0001,
+        "arena_incumbent": 0.10675138995168142
+      },
+      "best_native_area": 0.10675138995168142,
+      "certified_score": null,
+      "certified_arena_improvement": false,
+      "evaluations": 4768,
+      "trials": 43,
+      "wall_seconds": 300.011806358
+    },
+    {
+      "spec": {
+        "policy": "structural",
+        "seed": 260102,
+        "seconds": 300,
+        "widths": [
+          4,
+          8,
+          16,
+          32,
+          64
+        ],
+        "amplitudes": [
+          0.0001,
+          0.001,
+          0.01,
+          0.03
+        ],
+        "temperature": 0.0001,
+        "arena_incumbent": 0.10675138995168142
+      },
+      "best_native_area": 0.10675138995168142,
+      "certified_score": null,
+      "certified_arena_improvement": false,
+      "evaluations": 7381,
+      "trials": 68,
+      "wall_seconds": 300.01016723000004
+    },
+    {
+      "spec": {
+        "policy": "structural",
+        "seed": 260103,
+        "seconds": 300,
+        "widths": [
+          4,
+          8,
+          16,
+          32,
+          64
+        ],
+        "amplitudes": [
+          0.0001,
+          0.001,
+          0.01,
+          0.03
+        ],
+        "temperature": 0.0001,
+        "arena_incumbent": 0.10675138995168142
+      },
+      "best_native_area": 0.10675138995168142,
+      "certified_score": null,
+      "certified_arena_improvement": false,
+      "evaluations": 4636,
+      "trials": 43,
+      "wall_seconds": 300.016088384
+    },
+    {
+      "spec": {
+        "policy": "coordinate",
+        "seed": 260103,
+        "seconds": 300,
+        "widths": [
+          4,
+          8,
+          16,
+          32,
+          64
+        ],
+        "amplitudes": [
+          0.0001,
+          0.001,
+          0.01,
+          0.03
+        ],
+        "temperature": 0.0001,
+        "arena_incumbent": 0.10675138995168142
+      },
+      "best_native_area": 0.10675138995168142,
+      "certified_score": null,
+      "certified_arena_improvement": false,
+      "evaluations": 4636,
+      "trials": 42,
+      "wall_seconds": 300.013231301
+    }
+  ],
+  "global_record_claim": false,
   "pilot_deadline_utc": "2026-11-15T22:35:18+00:00"
 }
