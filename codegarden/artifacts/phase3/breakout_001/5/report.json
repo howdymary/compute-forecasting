@@ -1,0 +1,37 @@
+{
+  "source_sha": "e735ac81161b7abef89428919a343633790d5d3f",
+  "case": 5,
+  "mode": "adaptive",
+  "quota": 206,
+  "seed": 1271003,
+  "starting_verification": {
+    "accepted": true,
+    "cardinality": 225,
+    "reports": [
+      {
+        "cardinality": 225,
+        "distinct_descendants": 6362,
+        "length": 16,
+        "method": "distinct_string_two_deletions",
+        "valid": true,
+        "witness_sha256": "237f20bc4812af137d9588d788b5a02860c41d7afbf97f2cde9da5bbd505b271"
+      },
+      {
+        "cardinality": 225,
+        "largest_pairwise_lcs": 13,
+        "length": 16,
+        "method": "independent_dynamic_programming_lcs",
+        "pairs_checked": 25200,
+        "valid": true,
+        "witness_sha256": "237f20bc4812af137d9588d788b5a02860c41d7afbf97f2cde9da5bbd505b271"
+      }
+    ]
+  },
+  "cpu_seconds": 300.01,
+  "iterations": 3864962,
+  "minimum_raw_energy": 5,
+  "verified_target": null,
+  "best_verified": 226,
+  "novel226": 0,
+  "scope": "Raw227-word states with positive energy are invalid. Only projected codes passing both protected verifiers count. Paired runs have equal native CPU budgets; quota restrictions are reported explicitly."
+}

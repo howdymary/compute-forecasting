@@ -1,3 +1,29 @@
+# CodeGarden research status — 15 November, 11:06 UTC
+
+**Target remains open. Best found and independently verified is the reproduced226-word code. No227 witness and no new global-record claim.**
+
+## Latest completed comparisons
+
+- Eight300-CPU-second descendant-penalty tabu trials found no novel226 or valid227 code.
+- Eight matched300-CPU-second distinct-conflicting-pair trials also found no novel226 or227. All four fixed/adaptive pairs tied on best pair-conflict score. These results do **not** show an adaptive-policy advantage.
+- Event-driven capture checked one-edge collision states after ordinary swaps for a new226 projection in a further eight trials. It found no new226 family. All positives would pass the two protected verifiers before use.
+- Larger exact exchanges from32 structurally diverse225-word incumbents produced no augmentation: **six completed local neighborhoods;26 timeouts**. A timeout establishes no impossibility.
+- Seven long Modal cases finished at approximately6000nativeCPU seconds each, remaining at225. Logical case2 has multiple platform-attempt directories; its committed CPU totals are summed across attempts and the affected pair is censored from matched total-compute conclusions.
+
+## Current research decisions
+
+The remaining exact radius-ten root partitions are running after24 successful small disjoint-interval tests. Several partitions have completed, but full coverage is still pending. No radius-ten exhaustion claim is made yet.
+
+A new search aims first for a **different valid226 basin**. For each225-word start, its explicit forbidden set hits the shared216-word core of every known complement/reversal family. This excludes all known38×4 recoveries while keeping nearly all65536 words eligible. The native objective is distinct conflicting pairs at cardinality226. Any zero-conflict code is independently checked and receives full-universe bounded exact augmentation attempts toward227. These are search restrictions, not changes to validity.
+
+The long-run control job starts no workers. It preserves committed best/live snapshots and may stop only the exact CodeGarden long app once every logical6000-CPU allowance has been reached across attempts and the other seven cases have completed. Its first attempt stopped before any mutation because a subprocess publisher lacked a repository token; the corrected run supplies it. Full credit holds remain unchanged. This allows a new hypothesis without treating a retried attempt as a new independent case. The action must be evidenced by its final receipt.
+
+The queued Exa/past/Tinker/Modal coordinator remains serialized behind the current paid batch and retains all live credit, deadline, memory, verification and measured-GPU-advantage gates. The maximum conditional Modal hold remains149.848USD under the150cap; current account-wide metering is not attributed project spend.
+
+The main protected verifiers, main launcher and files outside `codegarden/` remain unchanged. Source pins and exact result scopes are in the adjacent JSON. The dated earlier reports follow for continuity; their active-run lists are superseded here.
+
+---
+
 # CodeGarden research status — 15 November, 10:42 UTC
 
 **Best found and independently verified: 226 distinct words. The 227-word objective remains open. No new global record is claimed.**

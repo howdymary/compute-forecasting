@@ -1,0 +1,109 @@
+{
+  "source_file": "artifacts/phase3/breakout_001/5/search.json",
+  "source_file_sha256": "89f338bb8a456b3ecd54f116744c2e4498797a61c9367de6f95b405f5bde0a9a",
+  "rows": [
+    {
+      "archive_index": 0,
+      "minimum_covers_enumerated": 2,
+      "projections_exported": 2,
+      "lower_cardinality_export_cap": 8,
+      "raw_energy": 5,
+      "edges": [
+        [
+          255,
+          2559
+        ],
+        [
+          1967,
+          2559
+        ],
+        [
+          10240,
+          17412
+        ],
+        [
+          29752,
+          59452
+        ],
+        [
+          57589,
+          59452
+        ]
+      ],
+      "minimum_cover_size": 3,
+      "best_feasible_cover_size": 3,
+      "cover_enumeration_complete": true,
+      "enumeration_nodes": 27,
+      "projections": [
+        {
+          "verification": {
+            "accepted": true,
+            "cardinality": 224,
+            "reports": [
+              {
+                "cardinality": 224,
+                "distinct_descendants": 6361,
+                "length": 16,
+                "method": "distinct_string_two_deletions",
+                "valid": true,
+                "witness_sha256": "2783eb4078cbe76483668ed3f2da1a48c2b34e2d0ed0b2348e7bba980d3736af"
+              },
+              {
+                "cardinality": 224,
+                "largest_pairwise_lcs": 13,
+                "length": 16,
+                "method": "independent_dynamic_programming_lcs",
+                "pairs_checked": 24976,
+                "valid": true,
+                "witness_sha256": "2783eb4078cbe76483668ed3f2da1a48c2b34e2d0ed0b2348e7bba980d3736af"
+              }
+            ]
+          },
+          "witness": "projection_2783eb4078cbe764.txt",
+          "removed_words": [
+            2559,
+            10240,
+            59452
+          ],
+          "known226_orbit": false
+        },
+        {
+          "verification": {
+            "accepted": true,
+            "cardinality": 224,
+            "reports": [
+              {
+                "cardinality": 224,
+                "distinct_descendants": 6349,
+                "length": 16,
+                "method": "distinct_string_two_deletions",
+                "valid": true,
+                "witness_sha256": "38cfaecbd947312862e704a94c729f659cd74ecc51a92bc1c7b9b513f93e71ca"
+              },
+              {
+                "cardinality": 224,
+                "largest_pairwise_lcs": 13,
+                "length": 16,
+                "method": "independent_dynamic_programming_lcs",
+                "pairs_checked": 24976,
+                "valid": true,
+                "witness_sha256": "38cfaecbd947312862e704a94c729f659cd74ecc51a92bc1c7b9b513f93e71ca"
+              }
+            ]
+          },
+          "witness": "projection_38cfaecbd9473128.txt",
+          "removed_words": [
+            2559,
+            17412,
+            59452
+          ],
+          "known226_orbit": false
+        }
+      ]
+    }
+  ],
+  "unique_projections_verified": 2,
+  "novel226_orbits": [],
+  "best_independently_verified": 226,
+  "scope": "Only this finite archived state list. Positive-energy states are invalid; projected explicit codes are accepted only by both protected verifiers. Recovery of known226 is not a new result."
+}
