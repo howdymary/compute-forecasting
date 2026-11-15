@@ -1,0 +1,128 @@
+{
+  "union_size": 259,
+  "left": 34,
+  "right": 34,
+  "common": 191,
+  "union_alpha": 225,
+  "levels": [
+    {
+      "outside_limit": 2,
+      "required_union_size": 225,
+      "filter_complete": true,
+      "filter_matching_queries": 74,
+      "candidate_pool": [],
+      "search_order": [],
+      "completed_roots": 0,
+      "active_root": -1,
+      "complete": true,
+      "cpu_seconds_cumulative": 0.034918,
+      "candidate_pool_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "search_order_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "proof_artifact": null
+    },
+    {
+      "outside_limit": 3,
+      "required_union_size": 224,
+      "filter_complete": true,
+      "filter_matching_queries": 631,
+      "candidate_pool": [
+        69,
+        3512,
+        5848,
+        57360,
+        57376,
+        65472,
+        65535
+      ],
+      "search_order": [
+        69,
+        3512,
+        5848,
+        57360,
+        57376,
+        65472,
+        65535
+      ],
+      "completed_roots": 7,
+      "active_root": 6,
+      "complete": true,
+      "cpu_seconds_cumulative": 0.05402,
+      "candidate_pool_sha256": "138f3caa12516276072ccec44fbb7ec9f6d2ea59811ac170767dfe8f99b5f2ff",
+      "search_order_sha256": "138f3caa12516276072ccec44fbb7ec9f6d2ea59811ac170767dfe8f99b5f2ff",
+      "proof_artifact": null
+    }
+  ],
+  "matching_calls": 598,
+  "memo_hits": 154,
+  "nodes": 7,
+  "found227_unverified": false,
+  "timed_out": false,
+  "cpu_seconds": 0.054025,
+  "scope": "Full two-parent union with at most2 or3 arbitrary outside words for each completed level; exact bipartite matching after outside conflicts. Interrupted roots/filters remain open. Not all codes or global optimality.",
+  "source_sha": "f54584e7088915cc9e8cd8863a155dcb984bb6fd",
+  "case": 4,
+  "plan_sha256": "4a64a73d70e32ea6c216b37f079da5e84eb59ab099b171c7a78ae2116afe6a61",
+  "parent_sha256": [
+    "f5068f339819ec2bdf800ed4cba759a00ebdf5ce822d6ff7fb51c740e1ae8b1a",
+    "fd6fc6baff0f36e9e59df3e1ce4f9457ce966df52cfe458d63ba3f7dbaa30f5f"
+  ],
+  "parent_verifications": [
+    {
+      "accepted": true,
+      "cardinality": 225,
+      "reports": [
+        {
+          "cardinality": 225,
+          "distinct_descendants": 6360,
+          "length": 16,
+          "method": "distinct_string_two_deletions",
+          "valid": true,
+          "witness_sha256": "f5068f339819ec2bdf800ed4cba759a00ebdf5ce822d6ff7fb51c740e1ae8b1a"
+        },
+        {
+          "cardinality": 225,
+          "largest_pairwise_lcs": 13,
+          "length": 16,
+          "method": "independent_dynamic_programming_lcs",
+          "pairs_checked": 25200,
+          "valid": true,
+          "witness_sha256": "f5068f339819ec2bdf800ed4cba759a00ebdf5ce822d6ff7fb51c740e1ae8b1a"
+        }
+      ]
+    },
+    {
+      "accepted": true,
+      "cardinality": 225,
+      "reports": [
+        {
+          "cardinality": 225,
+          "distinct_descendants": 6360,
+          "length": 16,
+          "method": "distinct_string_two_deletions",
+          "valid": true,
+          "witness_sha256": "fd6fc6baff0f36e9e59df3e1ce4f9457ce966df52cfe458d63ba3f7dbaa30f5f"
+        },
+        {
+          "cardinality": 225,
+          "largest_pairwise_lcs": 13,
+          "length": 16,
+          "method": "independent_dynamic_programming_lcs",
+          "pairs_checked": 25200,
+          "valid": true,
+          "witness_sha256": "fd6fc6baff0f36e9e59df3e1ce4f9457ce966df52cfe458d63ba3f7dbaa30f5f"
+        }
+      ]
+    }
+  ],
+  "union_pool_sha256": "64457830ae63bdccac1d1556a29f77ea7866c2de09340c0e9666263c184a04d1",
+  "initial_extra_universe_sha256": "237e06687e0830ebd5841b18f63542dbead1b82a5cde4cc0ba97c9be622e10f5",
+  "tests": {
+    "brute_force_bipartite_deletion_cases": 1440,
+    "passed": true
+  },
+  "solutions": [],
+  "best_independently_verified": 226,
+  "wall_including_verification": 0.40266066800001,
+  "formal_absence_certificate": false,
+  "novel226_sampling": "Witnesses at non-goal nodes are sampled every17nodes, cap16. Every reachable227 target is checked; no exhaustive novelty claim."
+}
