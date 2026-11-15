@@ -1,75 +1,84 @@
-name: CodeGarden infeasible-space hypotheses
+name: CodeGarden neutral clean-word swaps and verified diverse225bank
 on:
   push:
-    branches: [codegarden]
+    branches: [codegarden-neutral-hybrid-001]
     paths: [.github/workflows/codegarden.yml]
   workflow_dispatch:
 permissions:
   contents: write
 concurrency:
-  group: codegarden-only
+  group: codegarden-free-neutral-hybrid-001
   cancel-in-progress: false
 env:
   PYTHONDONTWRITEBYTECODE: '1'
   SOURCE_SHA: ${{ github.sha }}
-  CODEGARDEN_BATCH: infeasible_probe_003
+  TMPDIR: ${{ github.workspace }}/codegarden/.tmp
+  CODEGARDEN_BATCH: neutral_hybrid_001
 jobs:
   preflight:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 15
     steps:
       - name: Fetch immutable source
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      - name: Compile kernel and independently test energy updates
+        run: |
+          set -o pipefail
+          for attempt in 1 2 3; do
+            if gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1; then break; fi
+            sleep 2
+          done
+          test -f codegarden/phase3/neutral_hybrid.cpp
+          mkdir -p codegarden/.tmp
+      - name: Compile and independently exhaust small cases
         run: |
           mkdir -p codegarden/.build
-          g++ -O3 -std=c++17 codegarden/phase3/infeasible.cpp -o codegarden/.build/infeasible
-          python -B codegarden/phase3/test_infeasible.py
-          python -B codegarden/phase3/preflight.py
-      - name: Retain preflight evidence
-        if: always()
-        uses: actions/upload-artifact@v4
+          g++ -O3 -std=c++17 codegarden/phase3/neutral_hybrid.cpp -o codegarden/.build/neutral_hybrid
+          python -B -u codegarden/phase3/test_neutral_hybrid.py
+          python -B -u codegarden/phase3/neutral_prerequisites.py
+          python -B -u codegarden/phase3/smoke_neutral_hybrid.py
+          python -B -u codegarden/phase3/preflight.py
+      - uses: actions/upload-artifact@v4
         with:
-          name: codegarden-cg3-preflight
-          path: codegarden/artifacts/phase3/infeasible_probe_003/
+          retention-days: 1
+          name: codegarden-neutral-preflight
+          path: codegarden/artifacts/phase3/neutral_hybrid_001/
   probes:
     needs: preflight
     runs-on: ubuntu-latest
-    timeout-minutes: 16
+    timeout-minutes: 35
     strategy:
       fail-fast: false
       max-parallel: 4
       matrix:
-        seed: [950000, 950001, 950002, 950003]
+        case: [0, 1, 2, 3, 4, 5, 6, 7]
     steps:
       - name: Fetch immutable source
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
+        run: |
+          set -o pipefail
+          for attempt in 1 2 3; do
+            if gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1; then break; fi
+            sleep 2
+          done
+          test -f codegarden/phase3/neutral_hybrid.cpp
+          mkdir -p codegarden/.tmp
       - uses: actions/download-artifact@v4
         with:
-          name: codegarden-cg3-preflight
-          path: codegarden/artifacts/phase3/infeasible_probe_003/
-      - name: Compile isolated native worker
+          name: codegarden-neutral-preflight
+          path: codegarden/artifacts/phase3/neutral_hybrid_001/
+      - name: Compile and run bounded component
         run: |
           mkdir -p codegarden/.build
-          g++ -O3 -std=c++17 codegarden/phase3/infeasible.cpp -o codegarden/.build/infeasible
-      - name: Test two paired 60-CPU-second hypotheses from different code families
-        run: python -B -u codegarden/phase3/probe.py --seed ${{ matrix.seed }} --seconds 60
-      - name: Retain every checkpoint and proposal, even on failure
+          g++ -O3 -std=c++17 codegarden/phase3/neutral_hybrid.cpp -o codegarden/.build/neutral_hybrid
+          python -B -u codegarden/phase3/neutral_hybrid.py ${{ matrix.case }}
+      - uses: actions/upload-artifact@v4
         if: always()
-        uses: actions/upload-artifact@v4
         with:
-          name: codegarden-cg3-probe-${{ matrix.seed }}
-          path: codegarden/artifacts/phase3/infeasible_probe_003/
+          retention-days: 1
+          name: codegarden-neutral-${{ matrix.case }}
+          path: codegarden/artifacts/phase3/neutral_hybrid_001/
   collect:
     needs: [preflight, probes]
     if: always()
@@ -79,22 +88,26 @@ jobs:
       - name: Fetch immutable source
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
+        run: |
+          set -o pipefail
+          for attempt in 1 2 3; do
+            if gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1; then break; fi
+            sleep 2
+          done
+          test -f codegarden/phase3/neutral_hybrid.cpp
+          mkdir -p codegarden/.tmp
       - uses: actions/download-artifact@v4
         with:
-          pattern: codegarden-cg3-*
+          pattern: codegarden-neutral-*
           merge-multiple: true
-          path: codegarden/artifacts/phase3/infeasible_probe_003/
-      - name: Independently accept proposals and publish leased checkpoint
+          path: codegarden/artifacts/phase3/neutral_hybrid_001/
+      - name: Publish leased results
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python -B -u codegarden/phase3/publish.py
-      - name: Retain collected evidence
+        run: python -B -u codegarden/phase3/publish_neutral_hybrid.py
+      - uses: actions/upload-artifact@v4
         if: always()
-        uses: actions/upload-artifact@v4
         with:
-          name: codegarden-cg3-collected
-          path: codegarden/artifacts/phase3/infeasible_probe_003/
+          retention-days: 1
+          name: codegarden-neutral-collected
+          path: codegarden/artifacts/phase3/neutral_hybrid_001/
