@@ -1,22 +1,22 @@
-name: CodeGarden exact three-core full-universe repairs
+name: CodeGarden blocker-supported exact four-core repairs
 on:
   push:
-    branches: [codegarden-core3-repair-004]
+    branches: [codegarden-core4-repair-003]
     paths: [.github/workflows/codegarden.yml]
   workflow_dispatch:
 permissions:
   contents: write
 concurrency:
-  group: codegarden-free-core3-repair-003
+  group: codegarden-free-core4-repair-003
   cancel-in-progress: false
 env:
   PYTHONDONTWRITEBYTECODE: '1'
   SOURCE_SHA: ${{ github.sha }}
-  CODEGARDEN_BATCH: core3_repair_001
+  CODEGARDEN_BATCH: core4_repair_001
 jobs:
   preflight:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 15
     steps:
       - name: Fetch immutable source
         env:
@@ -25,16 +25,16 @@ jobs:
       - name: Compile and independently exhaust small cases
         run: |
           mkdir -p codegarden/.build
-          g++ -O3 -std=c++17 codegarden/phase3/core3_repair.cpp -o codegarden/.build/core3_repair
-          python -B -u codegarden/phase3/test_core3_repair.py
-          python -B -u codegarden/phase3/core3_pool_check.py
-          python -B -u codegarden/phase3/core3_cli_test.py
+          g++ -O3 -std=c++17 codegarden/phase3/core4_repair.cpp -o codegarden/.build/core4_repair
+          python -B -u codegarden/phase3/test_core4_repair.py
+          python -B -u codegarden/phase3/core4_prepare.py
+          python -B -u codegarden/phase3/core4_cli_test.py
           python -B -u codegarden/phase3/preflight.py
       - uses: actions/upload-artifact@v4
         with:
           retention-days: 1
           name: codegarden-bundle-preflight
-          path: codegarden/artifacts/phase3/core3_repair_001/
+          path: codegarden/artifacts/phase3/core4_repair_001/
   probes:
     needs: preflight
     runs-on: ubuntu-latest
@@ -53,19 +53,19 @@ jobs:
         with:
           retention-days: 1
           name: codegarden-bundle-preflight
-          path: codegarden/artifacts/phase3/core3_repair_001/
+          path: codegarden/artifacts/phase3/core4_repair_001/
       - name: Compile and run bounded component
         run: |
           mkdir -p codegarden/.build
-          g++ -O3 -std=c++17 codegarden/phase3/core3_repair.cpp -o codegarden/.build/core3_repair
+          g++ -O3 -std=c++17 codegarden/phase3/core4_repair.cpp -o codegarden/.build/core4_repair
           g++ -O3 -std=c++17 codegarden/phase3/bundle_guard.cpp -o codegarden/.build/bundle
-          python -B -u codegarden/phase3/core3_repair_probe.py --case ${{ matrix.case }}
+          python -B -u codegarden/phase3/core4_repair_probe.py --case ${{ matrix.case }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           retention-days: 1
           name: codegarden-bundle-${{ matrix.case }}
-          path: codegarden/artifacts/phase3/core3_repair_001/
+          path: codegarden/artifacts/phase3/core4_repair_001/
   collect:
     needs: [preflight, probes]
     if: always()
@@ -80,14 +80,14 @@ jobs:
         with:
           pattern: codegarden-bundle-*
           merge-multiple: true
-          path: codegarden/artifacts/phase3/core3_repair_001/
+          path: codegarden/artifacts/phase3/core4_repair_001/
       - name: Publish leased results
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python -B -u codegarden/phase3/publish_core3_repair4.py
+        run: python -B -u codegarden/phase3/publish_core4_repair.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           retention-days: 1
           name: codegarden-bundle-collected
-          path: codegarden/artifacts/phase3/core3_repair_001/
+          path: codegarden/artifacts/phase3/core4_repair_001/
