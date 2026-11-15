@@ -2,7 +2,7 @@
 
 **A reproducible GPU rental forecasting experiment, with a trained policy that chooses what to test next.**
 
-[Open the research observatory](https://howdymary--compute-forecast-observatory-web.us-east.modal.run) · [Frozen evaluation and official forecast export](https://github.com/howdymary/compute-forecasting/actions/runs/43653016797) · [Source branch](https://github.com/howdymary/compute-forecasting/tree/compute-observatory)
+[Open the research observatory](https://howdymary--compute-forecast-observatory-web.us-east.modal.run) · [Two-minute demo video](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/files/demo.mp4) · [Frozen evaluation and official forecast export](https://github.com/howdymary/compute-forecasting/actions/runs/43653016797) · [Source branch](https://github.com/howdymary/compute-forecasting/tree/compute-observatory)
 
 We compare data representations for forecasting **advertised GPU rental offers**, then ask whether a Tinker-trained experiment-selection policy outperforms starting, fixed and random search under the same six-trial budget. The numerical forecasts and scores come from deterministic tools and the Pacific starter kit. The language model selects experiments; it does not invent prices or scores.
 
@@ -100,6 +100,8 @@ Grid execution took 10m13s, main training 18m13s and frozen evaluation plus expo
 - release_payload.py / release_web.py / release_ui.py: allowlisted results, private publication and credential-free public UI.
 - configs/release-freeze.json: actual checkpoint and numerical source hashes selected before final results.
 - docs/: research protocol, scope amendments and demo / sponsor evidence notes.
+
+The captioned silent [two-minute demo](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/files/demo.mp4) records actual public results and saved policy traces. [Desktop/mobile browser validation and the video publication receipt](https://github.com/howdymary/compute-forecasting/actions/runs/43655823254) passed with zero page errors or failed public requests. The event requires uploading the reviewed video to YouTube, Drive or Loom; generating this MP4 does not submit the entry.
 
 The public UI is plain HTML/CSS/JavaScript and SVG. FastAPI serves it on Modal. JSON artifacts and two Volumes provide sufficient storage; there is no database or agent framework. Model inference, deterministic experiment execution and UI replay are distinct components. Replay animates actual saved traces and is labeled as recorded.
 
