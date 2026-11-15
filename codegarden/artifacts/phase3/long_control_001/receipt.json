@@ -700,7 +700,7 @@
   "new_modal_workers": 0,
   "new_provider_reservations": 0,
   "censoring": "Case2 attempts are not independent samples. No claim of identical total compute; no exhaustion claim beyond the encoded randomized budget.",
-  "action": "guarded_stop_requested",
+  "action": "stopped_only_owned_long_app",
   "documentation": "https://modal.com/docs/cli/latest/app#modal-app-stop",
   "budget": "Full7.22USD reservation and all earlier holds retained; no reconciliation or release.",
   "guarded_app": {
@@ -710,5 +710,6 @@
     "tasks": "1",
     "created_at": "2026-11-15 09:18:42+00:00",
     "stopped_at": null
-  }
+  },
+  "reason": "All logical6000native-CPU allowances reached across recorded attempts; other seven completed; switch hypothesis"
 }
