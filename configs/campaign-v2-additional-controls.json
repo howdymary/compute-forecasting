@@ -1,0 +1,25 @@
+{
+  "schema_version": 2,
+  "registered_at_utc": "2026-11-15T03:33:42Z",
+  "status": "Additional retrospective controls; not replacement primary results",
+  "reason": "The original GP vector aliases auxiliary representations and reference methods. Preserve it and add a complete-metadata control.",
+  "new_gp_encoding": [
+    "family",
+    "auxiliary mode",
+    "target space",
+    "reference identity",
+    "normalized days/alpha/leaves/weight/smoothing"
+  ],
+  "unchanged": [
+    "kernel",
+    "expected-improvement acquisition",
+    "two common starts",
+    "candidate iteration order",
+    "six-trial budget",
+    "official scorer",
+    "selector case eligibility"
+  ],
+  "fixed_forecaster": "Select an individual method on training-period outcome loss; score it on the exact selector evaluation cells",
+  "selection_uses_evaluation": false,
+  "policy_or_official_export_changed": false
+}

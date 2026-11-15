@@ -13,6 +13,24 @@ image=modal.Image.debian_slim(python_version="3.11").add_local_python_source("co
 @app.function(image=image,cpu=.25,memory=512,timeout=120,volumes={"/data":volume,"/public":public})
 def retain(identifier,private,summary):
     write(Path("/data/campaign-v2/usage")/(identifier+".json"),private);volume.commit()
+    volume.reload()
+    exa_receipts=[]
+    for r in private.get("exa_search_receipts",[]):
+        exa_receipts.append({"kind":"search","cost":r.get("cost_dollars")})
+    for p in Path("/data/campaign-v2/evidence").glob("*.json"):
+        body=json.loads(p.read_text())
+        for r in body.get("responses",[]):
+            if r.get("kind")=="recovered_contents":exa_receipts.append({"kind":"contents","cost":r.get("response",{}).get("costDollars")})
+    for p in Path("/data/campaign-v2/autonomy").glob("*.json"):
+        body=json.loads(p.read_text())
+        for r in body.get("private_response",[]):
+            exa_receipts.append({"kind":"autonomy_search","cost":r.get("response",{}).get("costDollars")})
+    if exa_receipts:
+        known=[]
+        for r in exa_receipts:
+            value=r["cost"].get("total") if isinstance(r["cost"],dict) else r["cost"]
+            if isinstance(value,(int,float)) and math.isfinite(value):known.append(value)
+        summary["exa"]={"status":"retained_request_receipts","observed_requests":len(exa_receipts),"known_cost_receipts":len(known),"unreported_cost_receipts":len(exa_receipts)-len(known),"gross_reported_cost_usd":sum(known) if known else None,"request_kinds":{kind:sum(r["kind"]==kind for r in exa_receipts) for kind in ("search","contents","autonomy_search")},"scope":"Initial search metadata, retained contents retrieval and retained autonomy responses; not an account invoice or remaining balance"}
     public.reload();write(Path("/public/experimental-v2/usage.json"),summary);public.commit()
     return {"private_receipt_sha256":digest(private),"public_receipt_sha256":digest(summary)}
 def collect():

@@ -1,0 +1,108 @@
+name: Finalize measured forecasting research and verify the live product
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/research-v2-finalize.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: finalize-v2-research
+  cancel-in-progress: false
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    env:
+      GH_TOKEN: ${{ github.token }}
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+      TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+      CAMPAIGN_STATUS: completed
+      CAMPAIGN_RUN_ID: '43665821333'
+    steps:
+      - name: Fetch immutable source
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate complete configuration encoding and source contracts
+        run: |
+          python -m pip install -e '.[dev]' modal numpy scipy scikit-learn tinker playwright
+          python -m compileall -q src
+          python -m pytest --junitxml=artifacts/final-foundation.xml
+          python - <<'PY'
+          from pathlib import Path
+          from compute_forecast.experimental_ui_v2 import HTML
+          Path('artifacts/final-browser.js').write_text(HTML.split('<script>',1)[1].split('</script>',1)[0])
+          PY
+          node --check artifacts/final-browser.js
+      - name: Wait for the six-seed/objective runs and canonical RL extension
+        run: |
+          python - <<'PY'
+          import json,os,subprocess
+          from pathlib import Path
+          ids=[43665821333,43671941385,43671951167,43670267628,43669746825,43669865616,43669981910,43670397299]
+          receipts=[]
+          Path('artifacts').mkdir(exist_ok=True)
+          for rid in ids:
+              subprocess.run(['gh','run','watch',str(rid),'--repo',os.environ['GITHUB_REPOSITORY'],'--exit-status','--interval','30'],check=True)
+              run=json.loads(subprocess.check_output(['gh','api','repos/'+os.environ['GITHUB_REPOSITORY']+'/actions/runs/'+str(rid)],text=True))
+              assert run['head_branch']=='compute-observatory' and run['conclusion']=='success'
+              receipts.append({k:run[k] for k in ('id','name','head_sha','conclusion','html_url')})
+              Path('artifacts/final-source-runs.json').write_text(json.dumps(receipts,indent=2))
+          PY
+      - name: Collect immutable results without raw input data
+        run: |
+          gh run download 43665821333 --repo "$GITHUB_REPOSITORY" --pattern 'campaign-v2-*' --dir inputs/campaign
+          gh run download 43671941385 --repo "$GITHUB_REPOSITORY" --pattern 'campaign-v2-rl-*' --dir inputs/rl
+          gh run download 43665112830 --repo "$GITHUB_REPOSITORY" --name campaign-v2-evidence-bd267f17fa31106a05a22e3b6b4739f7bd6c0327-43665112830 --dir inputs/evidence
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          reports=[json.loads(p.read_text()) for p in Path('inputs').rglob('policy-report.json')]
+          sft=[r for r in reports if r['mode']=='sft'];rl=[r for r in reports if r['mode']=='rl']
+          assert len(sft)==6 and len(rl)==3
+          assert {(r['seed'],r['objective']) for r in sft}=={(s,o) for s in (17,29,43) for o in ('hard','soft')}
+          assert sum(r['actual_optimizer_updates'] for r in sft)==600
+          assert all(not r['future_competition_truth_loaded'] and not r['v1_final_used'] for r in reports)
+          assert all(r['actual_optimizer_updates']>0 or r['rl_gate'] for r in rl)
+          PY
+      - name: Publish complete results, exact-scope controls and attributed usage
+        run: |
+          modal run -m compute_forecast.experimental_v2 --inputs inputs
+          modal run -m compute_forecast.analysis_v2 --inputs inputs
+          modal run -m compute_forecast.usage_v2
+      - name: Verify preserved frozen sources and official forecast bytes
+        run: |
+          python - <<'PY'
+          import hashlib,json,os,subprocess,urllib.request
+          from pathlib import Path
+          repo=os.environ['GITHUB_REPOSITORY'];base='2a9eecc96d5084b7c8b6c805487628eb6981ba28'
+          paths=['src/compute_forecast/'+n for n in ('starter_probe.py','representation_study.py','search_policy.py','select_baseline.py','freeze_contract.py','final_evaluation.py','export_submission.py')]
+          paths+=['configs/release-freeze.json','src/compute_forecast/record_demo.py','.github/workflows/record-demo.yml']
+          def api(p):return json.loads(subprocess.check_output(['gh','api','repos/'+repo+'/'+p],text=True))
+          for path in paths:assert api('contents/'+path+'?ref='+base)['sha']==api('contents/'+path+'?ref='+os.environ['GITHUB_SHA'])['sha'],'Protected source changed: '+path
+          url='https://howdymary--compute-forecast-observatory-web.us-east.modal.run'
+          raw=urllib.request.urlopen(url+'/files/forecasts.csv',timeout=90).read()
+          assert hashlib.sha256(raw).hexdigest()=='67a043255a716db6bc9b73cd28f9258c30fb299fd8671a9ee3430c0d94cadd80'
+          data=json.loads(urllib.request.urlopen(url+'/api/experimental',timeout=90).read())
+          assert len(data['policy_reports'])==9 and 'complete_encoding_gp_control' in data['analysis']
+          assert data['prospective']['forecast_origin_timezone']=='UTC' and data['feature_summary']['origins']==18
+          assert 'tinker://' not in json.dumps(data)
+          Path('artifacts/final-live-summary.json').write_text(json.dumps({'source_sha':data['source_sha'],'policy_runs':len(data['policy_reports']),'analysis':data['analysis'],'provider_usage':data.get('provider_usage'),'prospective':data['prospective']},indent=2))
+          print('V2_FINAL_COUNTS:'+json.dumps({'sft_runs':6,'sft_optimizer_updates':600,'rl_runs':3,'rl_optimizer_updates':sum(p['actual_optimizer_updates'] for p in data['policy_reports'] if p['mode']=='rl'),'official_forecast_unchanged':True}),flush=True)
+          PY
+      - name: Validate desktop, mobile and outage recovery without recording
+        run: |
+          python -m playwright install --with-deps chromium
+          python -m compute_forecast.validate_experimental_v2
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: campaign-v2-final-${{ github.run_id }}
+          path: artifacts/
+          retention-days: 30

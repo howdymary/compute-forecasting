@@ -39,6 +39,7 @@ def publish(result):
 @app.local_entrypoint()
 def main(inputs:str="inputs"):
     from scipy.stats import spearmanr
+    from .controls_v2 import evaluate as evaluate_complete_gp
     root=Path(inputs);grid=json.loads(next(root.rglob("grid.json")).read_text());tasks,excluded=make_tasks(grid)
     training=[t for t in tasks if t["phase"]=="training"];evaluation=[t for t in tasks if t["phase"]=="evaluation"]
     portfolio,selection=select_static(training)
@@ -50,6 +51,7 @@ def main(inputs:str="inputs"):
         training_n=sum(t["future_evaluator_only"][c]["cells"] for t in training)
         reference_methods.append({"config_id":c,"pinball":sum(t["future_evaluator_only"][c]["loss"]*t["future_evaluator_only"][c]["cells"] for t in evaluation)/n,"n_cells":n,"training_pinball":sum(t["future_evaluator_only"][c]["loss"]*t["future_evaluator_only"][c]["cells"] for t in training)/training_n})
     fixed_forecaster=min(reference_methods,key=lambda x:(x["training_pinball"],x["config_id"]))
+    complete_gp=evaluate_complete_gp(evaluation)
     alignment=[]
     for t in training:
         ids=[c["id"] for c in REGISTRY];x=[t["validation"][c]["loss"] for c in ids];y=[t["future_evaluator_only"][c]["loss"] for c in ids]
@@ -76,6 +78,6 @@ def main(inputs:str="inputs"):
     for kind,objective in sorted({(p["mode"],p["objective"]) for p in policies}):
         ps=[p for p in policies if p["mode"]==kind and p["objective"]==objective];d=[p["delta"] for p in ps]
         grouped.append({"mode":kind,"objective":objective,"reference_policy":ps[0]["reference_policy"],"seeds":[p["seed"] for p in ps],"mean_candidate_pinball":statistics.mean(p["candidate_pinball"] for p in ps),"mean_paired_delta":statistics.mean(d),"min_paired_delta":min(d),"max_paired_delta":max(d),"interpretation":"Training-seed variation on the same market dates; not additional independent forecast cases"})
-    result={"schema_version":2,"created_at":now(),"code_sha":os.environ["GITHUB_SHA"],"grid_sha":grid["code_sha"],"static_portfolio":portfolio,"static_selection":selection,"stronger_static_control":control,"same_scope_forecaster_references":reference_methods,"training_selected_fixed_forecaster":fixed_forecaster,"fixed_forecaster_selection_uses_evaluation":False,"teacher_alignment_training_only":alignment,"policies":policies,"seed_summaries":grouped,"evaluation_temporal_origins":sorted({t["origin"] for t in evaluation}),"evaluation_tasks":len(evaluation),"excluded_tasks":excluded,"limitations":["Retrospective reused data","Three dependent evaluation dates","No confidence interval for a market population is justified by these dates","Exhaustive static control is an additional training-only comparison, not a replacement official submission"]}
+    result={"schema_version":2,"created_at":now(),"code_sha":os.environ["GITHUB_SHA"],"grid_sha":grid["code_sha"],"static_portfolio":portfolio,"static_selection":selection,"stronger_static_control":control,"complete_encoding_gp_control":complete_gp,"same_scope_forecaster_references":reference_methods,"training_selected_fixed_forecaster":fixed_forecaster,"fixed_forecaster_selection_uses_evaluation":False,"teacher_alignment_training_only":alignment,"policies":policies,"seed_summaries":grouped,"evaluation_temporal_origins":sorted({t["origin"] for t in evaluation}),"evaluation_tasks":len(evaluation),"excluded_tasks":excluded,"limitations":["Retrospective reused data","Three dependent evaluation dates","No confidence interval for a market population is justified by these dates","Exhaustive static control is an additional training-only comparison, not a replacement official submission"]}
     write(Path("artifacts/v2-analysis/analysis.json"),result);result["receipt"]=publish.remote(result)
     print("V2_ANALYSIS:"+json.dumps({k:v for k,v in result.items() if k not in ("stronger_static_control","teacher_alignment_training_only")}),flush=True)
