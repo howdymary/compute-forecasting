@@ -1,0 +1,166 @@
+{
+  "source_sha": "df1fb3f8648ebcb8fe524f3c948042825796bb99",
+  "run_id": "43676577601",
+  "cases": 87,
+  "strict_improvement": false,
+  "best": {
+    "valid": true,
+    "claim_certified": true,
+    "ratio_interval_arb": [
+      "[1.6748942113071162287645651731628015389078200425658263583947935815 +/- 4.16e-65]",
+      "[1.6748942113071162287645651731628015389078200425658263583947935815 +/- 4.16e-65]"
+    ],
+    "entropies": {
+      "x-y": "[1.901440925560701110457490379654798113503036871413343472 +/- 1.11e-55]",
+      "x": "[1.135260312397153687844464347351506125953372518247593571 +/- 3.02e-56]",
+      "y": "[1.135260312397153687844464347351506125953372518247593571 +/- 3.02e-56]",
+      "x+y": "[1.135260312397153687844464347351506125953372518247593571 +/- 3.02e-56]",
+      "x+2y": "[1.135260312397153687844464347351506125953372518247593571 +/- 3.02e-56]"
+    }
+  },
+  "independent_interval": [
+    "1.674894211307116228764565173162801538907820042565826358394793581",
+    "1.674894211307116228764565173162801538907820042565826358394793582"
+  ],
+  "arms": {
+    "structured": {
+      "cases": 18,
+      "nondegenerate": 18,
+      "positive_oracles": 0,
+      "best_F": -3.1961463904384146e-06,
+      "cpu_seconds": 15.280000000000001,
+      "wall_worker_seconds": 15.548768119999998
+    },
+    "random": {
+      "cases": 18,
+      "nondegenerate": 18,
+      "positive_oracles": 0,
+      "best_F": -0.006997406108089299,
+      "cpu_seconds": 6.530000000000001,
+      "wall_worker_seconds": 6.657241652000012
+    },
+    "model": {
+      "cases": 15,
+      "nondegenerate": 15,
+      "positive_oracles": 0,
+      "best_F": -0.06522738689177321,
+      "cpu_seconds": 5.529999999999999,
+      "wall_worker_seconds": 5.63253055700002
+    },
+    "basin-mutation": {
+      "cases": 36,
+      "nondegenerate": 36,
+      "positive_oracles": 0,
+      "best_F": -0.0007703941937253767,
+      "cpu_seconds": 34.050000000000004,
+      "wall_worker_seconds": 34.555012868000055
+    }
+  },
+  "elapsed_seconds": 129.47356442899996,
+  "providers": {
+    "exa": {
+      "initial_cap": 119.52,
+      "units": "USD prepaid",
+      "enabled": true,
+      "operational_cap": 8,
+      "reserved_or_actual": 0.31
+    },
+    "past": {
+      "initial_cap": 699443,
+      "units": "credits",
+      "enabled": true,
+      "operational_cap": 400,
+      "reserved_or_actual": 78.0
+    },
+    "tinker": {
+      "initial_cap": 281.71,
+      "units": "USD prepaid",
+      "enabled": true,
+      "operational_cap": 20,
+      "reserved_or_actual": 2.4
+    },
+    "modal": {
+      "initial_cap": 249.24,
+      "units": "USD compute credit",
+      "enabled": true,
+      "operational_cap": 60,
+      "reserved_or_actual": 52.1
+    }
+  },
+  "protected_sha256": {
+    "verify.py": "3c5cd73bf3d50eea098d3253e46e9e5ea9812ec3c2fa2711ea16b349f586ef30",
+    "verify_independent.py": "49e1cbbc9d287a227d8f790b2f7a678972a88f53d3c2e88592f6c1424dda0774"
+  },
+  "scope": "Exploratory paired optimizer correction on saved supports; entropy floor restricts search, not mathematical validity.",
+  "publication_exact_check": {
+    "valid": true,
+    "claim_certified": true,
+    "ratio_interval_arb": [
+      "[1.6748942113071162287645651731628015389078200425658263583947935815 +/- 4.16e-65]",
+      "[1.6748942113071162287645651731628015389078200425658263583947935815 +/- 4.16e-65]"
+    ],
+    "entropies": {
+      "x-y": "[1.901440925560701110457490379654798113503036871413343472 +/- 1.11e-55]",
+      "x": "[1.135260312397153687844464347351506125953372518247593571 +/- 3.02e-56]",
+      "y": "[1.135260312397153687844464347351506125953372518247593571 +/- 3.02e-56]",
+      "x+y": "[1.135260312397153687844464347351506125953372518247593571 +/- 3.02e-56]",
+      "x+2y": "[1.135260312397153687844464347351506125953372518247593571 +/- 3.02e-56]"
+    }
+  },
+  "publication_independent_interval": [
+    "1.674894211307116228764565173162801538907820042565826358394793581",
+    "1.674894211307116228764565173162801538907820042565826358394793582"
+  ],
+  "publication_provenance": {
+    "run_id": "43676577601",
+    "source_sha": "df1fb3f8648ebcb8fe524f3c948042825796bb99",
+    "artifact_sha256": "01df6621e4cf29b3f9c5d0c17649968bfec034dfe7e02142541eb75b9edd2d2d",
+    "url": "https://github.com/howdymary/compute-forecasting/actions/runs/43676577601"
+  },
+  "usage": {
+    "campaign_exa_response_usd": 0.07800000000000001,
+    "tinker_token_estimate_usd": 0.0460587,
+    "past_estimated_credits": 9,
+    "unreconciled_or_held_by_provider": {
+      "exa": 0,
+      "modal": 15.050000000000024,
+      "tinker": 1.2,
+      "past": 0
+    },
+    "note": "Preserved prior allowances are separate. Gross token estimates and held allowances are not invoices. No purchases/upgrades/reloads.",
+    "cumulative_ledger": {
+      "exa": {
+        "initial_cap": 119.52,
+        "units": "USD prepaid",
+        "enabled": true,
+        "operational_cap": 8,
+        "reserved_or_actual": 0.31
+      },
+      "past": {
+        "initial_cap": 699443,
+        "units": "credits",
+        "enabled": true,
+        "operational_cap": 400,
+        "reserved_or_actual": 78.0
+      },
+      "tinker": {
+        "initial_cap": 281.71,
+        "units": "USD prepaid",
+        "enabled": true,
+        "operational_cap": 20,
+        "reserved_or_actual": 2.4
+      },
+      "modal": {
+        "initial_cap": 249.24,
+        "units": "USD compute credit",
+        "enabled": true,
+        "operational_cap": 60,
+        "reserved_or_actual": 52.1
+      }
+    },
+    "followup_modal_allowance_usd": 15.05,
+    "modality": "No new Exa, Tinker or past.dev paid calls in the paired follow-up.",
+    "unresolved": "Modal actual billed charge unavailable: retain cumulative USD52.10 allowance including prior USD22. Tinker token estimate is not an invoice; retain USD2.40 cumulative allowance including prior USD1.20. Exa cumulative USD0.31 includes prior USD0.232; new receipts USD0.078. past.dev cumulative 78 credits includes prior69 and new9 estimated. No active jobs remain; holds await provider reconciliation.",
+    "cpu_measurement": "First pilot reports worker wall time and evaluations; actual process CPU was not captured there. Follow-up records process CPU separately. CPU time is not allocated vCPU-seconds or an invoice."
+  }
+}
