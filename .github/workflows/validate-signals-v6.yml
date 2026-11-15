@@ -1,0 +1,32 @@
+name: Validate prospective signal notebook without recording
+on:
+  workflow_run:
+    workflows: ["Deploy pricing observatory"]
+    types: [completed]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    if: (github.event_name != 'workflow_run' && github.ref == 'refs/heads/compute-observatory') || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'compute-observatory')
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      SOURCE_SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
+    steps:
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: |
+          python -m pip install -e . playwright
+          python -m playwright install --with-deps chromium
+          python -m compute_forecast.validate_signals_ui_v6
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: signals-ui-v6-${{ github.run_id }}
+          path: artifacts/signals-ui-v6/
+          retention-days: 90

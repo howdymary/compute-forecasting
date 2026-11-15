@@ -81,3 +81,20 @@ def test_holm_retains_registered_three_test_family():
     from compute_forecast.signals_analysis_v6 import holm
     p=holm({"news":.01,"infrastructure":None,"bls":None})
     assert p["news"]==.03 and p["bls"] is None
+
+def test_all_factorial_models_execute_with_matched_labels_and_no_future_input():
+    pytest.importorskip("sklearn")
+    from datetime import date,timedelta
+    start=date(2027,1,1);records=[]
+    for i in range(90):
+        day=(start+timedelta(days=i)).isoformat();s=snapshot(day,2+.003*i+.02*(i%5))
+        for j,key in enumerate(s["features"]):s["features"][key]=float((i+j)%7)
+        records.append(s)
+    sid=records[0]["prices"]["rows"][0]["id"];cutoff=records[-1]["prices"]["date"]+"T18:00:00Z";outputs=[];sizes=[]
+    for mask in config()["learner"]["feature_masks"]:
+        qs,meta=predict_arm(records,sid,cutoff,7,mask)
+        assert qs and qs==sorted(qs) and all(v>0 for v in qs)
+        outputs.append(qs);sizes.append((meta["fit_pairs"],meta["calibration_pairs"]))
+    assert len(set(sizes))==1 and sizes[0][1]==8
+    future=snapshot((start+timedelta(days=90)).isoformat(),10000)
+    assert predict_arm(records+[future],sid,cutoff,7,"111")[0]==outputs[-1]

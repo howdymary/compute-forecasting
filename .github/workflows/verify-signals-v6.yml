@@ -1,0 +1,39 @@
+name: Verify registered signal study and future commitments publicly
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/verify-signals-v6.yml, src/compute_forecast/verify_signals_v6.py]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  verify:
+    if: github.ref == 'refs/heads/compute-observatory'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/${{ github.sha }}" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: |
+          python -m pip install -e '.[dev]' numpy==2.2.6 scikit-learn==1.7.1
+          python -m pytest tests/test_signals_v6.py
+          python -m compute_forecast.verify_signals_v6
+      - uses: actions/upload-artifact@v4
+        with:
+          name: signals-public-v6-${{ github.run_id }}
+          path: artifacts/signals-public-v6/
+          retention-days: 90
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          from compute_forecast.publication_v6 import publish
+          p=Path('artifacts/signals-public-v6/verification.json')
+          print(publish({'results/signals-v6/runs/'+os.environ['GITHUB_RUN_ID']+'/'+p.name:p.read_bytes()}),flush=True)
+          PY

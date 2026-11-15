@@ -1,7 +1,7 @@
 """Fixed final-panel analysis; no interim significance claims or automatic promotion."""
 import random,statistics
 from datetime import date,timedelta
-from .signals_v6 import config,utc,paired
+from .signals_v6 import config,utc,paired,digest
 def block_interval(values,weights=None):
     weights=weights or [1]*len(values)
     if len(values)<16:return {"status":"insufficient_origins","interval":None,"p_one_sided":None}
@@ -30,7 +30,7 @@ def summarize(scores,snapshots,at):
         common&={(c["series_id"],c["target_date"],c["horizon_days"]) for c in rows if c["forecaster"]=="drift"}
         matched=[c for c in rows if (c["series_id"],c["target_date"],c["horizon_days"]) in common]
         if not common:exclusions.append({"origin":report["origin_date"],"reason":"No complete matched eight-arm plus drift cells"});continue
-        point={"origin":report["origin_date"],"matched_cells":len(common),"comparisons":[]}
+        point={"origin":report["origin_date"],"matched_cells":len(common),"score_sha256":digest(report),"comparisons":[]}
         for a,b in comparisons:
             result=paired(matched,a,b);point["comparisons"].append(result);collected[a+"__"+b].append(result)
         trajectory.append(point)
