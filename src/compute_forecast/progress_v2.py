@@ -17,6 +17,7 @@ def snapshot(source_sha,github_run_id):
           "saved_optimizer_updates":p.get("completed_optimizer_updates",0),
           "saved_rollout_sampler_count":len(p.get("rollout_snapshots",[])),
           "development_evaluated_checkpoints":len(p.get("checkpoints",[])),
+          "checkpoints":[{k:c[k] for k in ("update","rollout_iteration","checkpoint_id","development_pinball") if k in c} for c in p.get("checkpoints",[])],
           "checkpoint_selection_recorded":bool(p.get("selected")),
           "manifest_updated_at":datetime.fromtimestamp(path.stat().st_mtime,timezone.utc).isoformat()})
     result={"schema_version":2,"observed_at":datetime.now(timezone.utc).isoformat(),"source_sha":source_sha,"github_run_id":github_run_id,

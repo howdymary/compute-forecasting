@@ -33,7 +33,16 @@ async def run():
                 assert "rl results pending" in phase_label.casefold(),phase_label
             await page.locator("#question").select_option("composition")
             assert await page.locator("#question").input_value()=="composition"
-            await page.locator("#stage").select_option("rl");await page.locator("#stage").select_option("sft")
+            await page.locator("#stage").select_option("rl")
+            rl_curves={r["run_id"]:r for r in data.get("training_progress",{}).get("runs",[]) if r["mode"]=="rl" and r.get("checkpoints")}
+            for r in data.get("checkpoint_runs",[]):
+                if r["mode"]=="rl":rl_curves[r["run_id"]]=r
+            if rl_curves:
+                titles=await page.locator("svg.chart circle title").all_text_contents()
+                for r in rl_curves.values():
+                    for c in r["checkpoints"]:
+                        assert any(c["checkpoint_id"] in t and format(c["development_pinball"],".8f") in t for t in titles)
+            await page.locator("#stage").select_option("sft")
             await page.locator("#phase").select_option("development");await page.locator("#horizon").select_option("3")
             assert await page.locator("#phase").input_value()=="development" and await page.locator("#horizon").input_value()=="3"
             table=page.locator("section").filter(has=page.locator("#phase")).locator("tbody tr").first
