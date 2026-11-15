@@ -45,10 +45,17 @@ def check(root="."):
     for path in sorted((base/"market").glob("*.json")):
         value=json.loads(path.read_bytes())
         for decision in value["plans"]:
-            close(sum(decision["distribution"].values()),1.)
+            probabilities=list(decision["distribution"].values())
+            if any(not math.isfinite(p) or not 0<=p<=1 for p in probabilities) or abs(sum(probabilities)-1)>1e-6:raise ValueError("Invalid float32 planning probabilities")
             if decision["selected_question"]!=max(decision["distribution"],key=decision["distribution"].get):raise ValueError("Planning choice mismatch")
         if value["actual_tinker_decisions"]!=len(value["plans"]):raise ValueError("Planning count mismatch")
         report["market_reports"].append({"path":str(path.relative_to(root)),"sha256":hashlib.sha256(path.read_bytes()).hexdigest(),"decisions":len(value["plans"]),"accuracy_claim":None})
+    for path in sorted((base/"runtime").glob("*.json")):
+        value=json.loads(path.read_bytes())
+        if value.get("status")!="passed" or value.get("prediction_shape")!=[8,3] or value.get("new_training_updates")!=0:raise ValueError("Runtime contract receipt differs")
+        if value.get("synthetic_numerical_candidates")!=42 or value.get("synthetic_numerical_rows")!=126:raise ValueError("Synthetic numerical scope differs")
+        if "synthetic" not in value.get("fixture","").lower():raise ValueError("Synthetic fixture label missing")
+        report.setdefault("runtime_reports",[]).append({"path":str(path.relative_to(root)),"sha256":hashlib.sha256(path.read_bytes()).hexdigest(),"classification":"Contract verification, not forecasting accuracy"})
     return report
 def main():
     out=Path("artifacts/public-reproduction-v4");out.mkdir(parents=True,exist_ok=True)

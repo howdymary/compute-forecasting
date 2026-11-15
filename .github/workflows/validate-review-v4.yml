@@ -4,11 +4,14 @@ on:
     workflows: ["Deploy pricing observatory"]
     types: [completed]
   workflow_dispatch:
+  push:
+    branches: [compute-observatory]
+    paths: [src/compute_forecast/validate_review_v4.py, .github/workflows/validate-review-v4.yml]
 permissions:
   contents: read
 jobs:
   validate:
-    if: (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/compute-observatory') || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'compute-observatory')
+    if: (github.event_name != 'workflow_run' && github.ref == 'refs/heads/compute-observatory') || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'compute-observatory')
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:

@@ -79,12 +79,30 @@ The full Pacific pack was reverified privately:284,917,807 bytes and672 manifest
 
 ## Validation notes
 
-The credential-free verifier reconstructed all committed operation hashes, the18-cell interval arithmetic, 48 intervention episodes and 519 sampler calls. Source-to-screen checks retain exact values and the unchanged official CSV. A repeated HTTP/2 stress failure affected all eight streams after an idle client pool; a five-second idle expiry, HTTPX's documented default, is being validated without changing concurrency, retries or response assertions. This diagnostic status must not be reported as a server-side fix before the rerun completes.
+The credential-free verifier reconstructed all committed operation hashes, the18-cell interval arithmetic, 48 intervention episodes and 519 sampler calls. Source-to-screen checks retain exact values and the unchanged official CSV. A repeated HTTP/2 stress failure affected all eight streams after an idle client pool; restoring HTTPX's documented five-second idle expiry passed the full eight-caller stress and publication check without changing retries or response assertions. This is a validated client-transport adjustment, not a claim to have changed Modal's HTTP/2 implementation.
  
-The prompt-intervention sampler phase took396.85 seconds; that duration excludes earlier evidence retrieval, memory ingestion and environment setup. It is not an end-to-end cost estimate. Modal/Tinker/past.dev monetary costs remain unknown where no provider receipt is available.
+The prompt-intervention sampler phase took 396.85 seconds; that duration excludes earlier evidence retrieval, memory ingestion and environment setup. It is not an end-to-end cost estimate. Modal/Tinker/past.dev monetary costs remain unknown where no provider receipt is available.
 
 Daily capture revalidates source ETags and byte counts, reuses hash-verified unchanged objects, and preserves the first retained content vintage. Cache reuse does not imply that a provider quote was refreshed. An ETag or input-hash mismatch fails collection visibly.
 
-The first new source capture completed successfully on November15. Its initial downstream Chronos runtime check failed because a univariate axis was not removed. The correction is confined to the new adapter; the archived comparator and commitments are unchanged. The rerun retains this failure as execution evidence.
+The first new source capture completed successfully on November 15. Its initial downstream Chronos runtime check failed because a univariate axis was not removed. The correction is confined to the new adapter; the archived comparator and commitments are unchanged. The rerun retains this failure as execution evidence.
 
-The synthetic runtime test also checks the registered short-window fallback: a28-day tree lacks the required24 matured labels at the eight-day effective lead and must use the declared empirical fallback. The56-day tree must execute natively. Market-news collection and numerical-runtime validation run independently; a numerical adapter check must not suppress evidence collection.
+The synthetic runtime test also checks the registered short-window fallback: a 28-day tree lacks the required 24 matured labels at the eight-day effective lead and must use the declared empirical fallback. The 56-day tree must execute natively. Market-news collection and numerical-runtime validation run independently; a numerical adapter check must not suppress evidence collection.
+
+## Actual new-source coverage and runtime validation
+
+[Remote runtime receipt](../results/review-v4/runtime/43754381644.json), [successful execution](https://github.com/howdymary/compute-forecasting/actions/runs/43754381644).
+
+The independently licensed capture retrieved 436 permitted source objects totaling 93,886,733 bytes. Both A10040 and T4 still contain 234 observations from January 12 through November 6. A November 15 retrieval with a requested November 14 cutoff does not establish current prices or verified quote freshness. The new panel must remain pending if compatible fresh observations do not arrive; it cannot fill or bridge that gap.
+
+The pinned Chronos weights and the full 42-candidate numerical adapter pass a synthetic runtime contract producing 126 rows. Native Chronos output is 1×8×3; removing the explicit univariate axis produces 8×3. Registered insufficient-label and unavailable-auxiliary fallbacks are recorded: 56 of 126 synthetic rows fall back. Those counts describe a contract fixture, not GPU-market performance. The original retrospective comparator and official CSV are unchanged.
+
+All five deployed UI suites passed on the implementation revision, including concurrent publication, eight in-flight requests, exact values, mobile layouts and zero automatic HTTP retries.
+
+## Completed supplementary market planning
+
+[Versioned source and decision report](../results/review-v4/market/43754381651.json), [execution](https://github.com/howdymary/compute-forecasting/actions/runs/43754381651).
+
+Exa retrieved all six registered primary sources and searched recent provider announcements. The model made two actual bounded research decisions, before and after a fixed scope criticism. Both selected a configuration-substitution audit. The winning probability changed from 0.833 to 0.693; the chosen plan did not change. All four required cross-role recalls returned their authored source IDs. The end-to-end planning loop took 43.12 seconds, excluding remote environment setup. Exa returned $0.006 for content retrieval and $0.007 for search; other provider charges remain unknown.
+
+This is source-grounded planning with starting model weights, not evidence of SFT transfer or improved forecast accuracy. The prospective market-context arm remains a separate extra-information treatment. Current sources never become historical benchmark features.

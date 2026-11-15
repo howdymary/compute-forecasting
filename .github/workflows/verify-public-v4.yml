@@ -4,6 +4,7 @@ on:
     branches: [compute-observatory]
     paths:
       - results/review-v4/**
+      - docs/review-v4-findings.md
       - src/compute_forecast/reproduce_operations_v4.py
       - .github/workflows/verify-public-v4.yml
   workflow_dispatch:

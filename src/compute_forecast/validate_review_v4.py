@@ -7,7 +7,7 @@ URL="https://howdymary--compute-forecast-observatory-web.us-east.modal.run"
 def main():
     out=Path("artifacts/review-ui-v4");out.mkdir(parents=True,exist_ok=True)
     expected=validate(json.loads(Path("results/review-v4/findings.json").read_bytes()))
-    report={"status":"running","source_sha":os.environ.get("SOURCE_SHA",os.environ.get("GITHUB_SHA")),"widths":[],"video_recorded":False}
+    report={"status":"running","test_source_sha":os.environ.get("SOURCE_SHA",os.environ.get("GITHUB_SHA")),"widths":[],"video_recorded":False}
     with sync_playwright() as p:
         browser=p.chromium.launch()
         for width in (1512,390,320):
@@ -22,7 +22,19 @@ def main():
             assert page.locator(".v4-bar").count()==2
             page.wait_for_selector("#v4-interval-loss",timeout=90000)
             operations=page.request.get(URL+"/api/review-v4/operations").json()
+            report["ui_revision"]=page.request.get(URL+"/health").json()["ui_revision"]
             init=operations["operations"]["initialize"]["payload"]
+            market=operations["operations"]["market"]["payload"]
+            assert market["actual_tinker_decisions"]==2 and market["historical_benchmark_inputs_changed"] is False
+            expected_sources=[s for s in market["sources"] if s["status"]=="retrieved_primary_source"]
+            assert page.locator("#v4-market-sources details").count()==len(expected_sources)
+            if expected_sources:
+                detail=page.locator("#v4-market-sources details").first
+                detail.locator("summary").focus();page.keyboard.press("Enter")
+                assert detail.get_attribute("open") is not None
+                detail_id=detail.get_attribute("id")
+            raw_market=page.request.get(URL+"/api/review-v4/artifacts/"+operations["operations"]["market"]["artifact"]).body()
+            assert hashlib.sha256(raw_market).hexdigest()==operations["operations"]["market"]["sha256"]
             assert page.locator("#v4-interval-loss").inner_text()==format(init["interval"]["metrics"]["candidate_pinball"],".8f")
             if "feedback" in operations["operations"]:
                 feedback=operations["operations"]["feedback"]["payload"]
@@ -31,7 +43,10 @@ def main():
             page.locator(".v4-grid").screenshot(path=str(out/(str(width)+"-contributions.png")))
             page.locator("#v4-live-operations").evaluate("(e)=>e.scrollIntoView({block:'start'})")
             page.screenshot(path=str(out/(str(width)+"-operations.png")))
+            page.locator("#v4-market-sources").evaluate("(e)=>e.scrollIntoView({block:'start'})")
+            page.screenshot(path=str(out/(str(width)+"-market.png")))
             page.locator("#v4-comparison").select_option("static")
+            if expected_sources:assert page.locator("#"+detail_id).get_attribute("open") is not None
             assert page.locator("#v4-delta").inner_text()==format(expected["comparisons"][1]["delta"],"+.8f")
             page.locator("#v4-pin-group").click()
             pin=page.evaluate("JSON.stringify(V4S.pins[0])")
@@ -73,7 +88,7 @@ def main():
         context.close();browser.close()
     report["status"]="passed";(out/"report.json").write_text(json.dumps(report,indent=2))
     print("V4_UI_VALIDATION:"+json.dumps(report),flush=True)
-    for name in ("1512-default.png","1512-contributions.png","390-default.png","390-contributions.png","1512-operations.png","390-operations.png"):
+    for name in ("1512-default.png","1512-contributions.png","390-default.png","390-contributions.png","1512-operations.png","390-operations.png","1512-market.png","390-market.png"):
         raw=(out/name).read_bytes();data=base64.b64encode(raw).decode()
         print("V4_PNG_META:"+json.dumps({"name":name,"sha256":hashlib.sha256(raw).hexdigest(),"chunks":(len(data)+11999)//12000}),flush=True)
         for i in range(0,len(data),12000):print("V4_PNG:"+json.dumps({"name":name,"index":i//12000,"base64":data[i:i+12000]}),flush=True)
