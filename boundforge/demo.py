@@ -24,11 +24,11 @@ HTML=r"""<!doctype html>
 body{max-width:1240px;margin:auto;padding:28px}header{display:flex;justify-content:space-between;gap:20px;border-bottom:1px solid #c5d1c7;padding-bottom:18px}
 h1{font-size:32px;letter-spacing:-1px;margin:0}h2{font-size:19px;margin:0 0 14px}.eyebrow{font:12px ui-monospace,monospace;letter-spacing:2px;color:#5a6d63}
 p{margin:8px 0}main{display:grid;grid-template-columns:1.2fr 1fr;gap:20px;margin-top:24px}.card{background:white;border:1px solid #d8e0d4;border-radius:12px;padding:22px;min-width:0}
-.full{grid-column:1/-1}#bound{font:20px/1.5 ui-monospace,monospace;overflow-wrap:anywhere;color:#126a49}.muted{color:#607067;font-size:14px}
+.full{grid-column:1/-1}#bound{font:20px/1.5 ui-monospace,monospace;overflow-wrap:anywhere;color:#126a49}.muted{color:#607067;font-size:14px;overflow-wrap:anywhere}
 button,select{font:inherit;border:1px solid #c4d3c7;border-radius:7px;background:white;padding:7px 12px;cursor:pointer}button:hover{background:#e8f3e9}button.primary{background:#165b42;color:white;border-color:#165b42}
 svg{width:100%;height:320px;background:#f8faf5;border-radius:8px}pre{white-space:pre-wrap;word-break:break-word;font:12px/1.6 ui-monospace,monospace;max-height:380px;overflow:auto;background:#f6f8f3;padding:14px;border-radius:8px}
 #status{border:1px solid #a6c7b2;background:#eaf5ee;padding:5px 10px;border-radius:30px;font-size:13px;align-self:start}
-table{width:100%;border-collapse:collapse;font-size:14px}td,th{text-align:left;border-bottom:1px solid #e3e9df;padding:9px}
+table{width:100%;border-collapse:collapse;font-size:14px;table-layout:fixed}td,th{overflow-wrap:anywhere;text-align:left;border-bottom:1px solid #e3e9df;padding:9px}
 a{color:#116245}#events{max-height:420px;overflow:auto}input[type=range]{width:100%}.tag{font:12px ui-monospace,monospace;color:#496957}
 footer{margin-top:20px;font-size:12px;color:#607067}@media(max-width:760px){main{grid-template-columns:1fr}body{padding:16px}header{display:block}#status{display:inline-block;margin-top:12px}}
 </style>

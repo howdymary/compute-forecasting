@@ -12,9 +12,6 @@ on:
         description: Use verified Modal credits for CPU search
         type: boolean
         default: true
-  push:
-    branches: [compute-observatory]
-    paths: [.github/workflows/boundforge-tinker.yml]
 permissions:
   contents: read
   actions: read
@@ -45,12 +42,6 @@ jobs:
           python -m compileall -q boundforge
           python -m pytest -q -p no:cacheprovider boundforge/test_core.py
           python boundforge/sources/verify_published.py boundforge/certificates/incumbent.json
-      - uses: actions/download-artifact@v4
-        with:
-          name: boundforge-precision
-          run-id: '43670827227'
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          path: boundforge/previous
       - name: Execute bounded autonomous research
         env:
           EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
@@ -61,7 +52,7 @@ jobs:
           TRIALS: ${{ inputs.trials || '16' }}
           SECONDS: ${{ inputs.seconds || '12' }}
           REMOTE: ${{ github.event_name == 'push' || inputs.remote }}
-        run: python -u boundforge/precision_run.py --structural-trials 4 --start boundforge/previous/results/best.json
+        run: python -u boundforge/precision_run.py --structural-trials 4 --start boundforge/results/runs/43670827227/best.json
       - name: Record dependency versions
         if: always()
         run: python -m pip freeze > boundforge/results/environment.txt

@@ -2,14 +2,14 @@
 
 An auditable autonomous search for C3c, the four-slope arithmetic Kakeya sum–difference constant.
 
-**Status:** implementation and first remote experiments in progress. No new record is claimed.
+**Measured result:** a certified strict refinement of the published witness, approximately 2.21 × 10⁻²². The leading 15 digits are unchanged. This is an extremely small advance on an attributed construction, not a major new bound. See [measured report](results/REPORT.md).
 
 All project files live here. Two GitHub Actions workflow files are the necessary repository-level exception.
 No workstation checkout is required. Existing forecasting code and dependencies are independent.
 
 ## Remote reproduction
 
-Run **BoundForge certified research** on branch **compute-observatory**. Default: 16 bounded
+Run **BoundForge high precision research** on branch **compute-observatory** for the full exact search from the attributed baseline. **BoundForge certified research** retains the initial numerical pilot: 16 bounded
 12-second numerical trials using Modal CPU workers, with exact certification on a separate GitHub runner.
 The workflow retains trace, candidates, checkpoint, sources, cost reservations and dependency versions.
 Inputs are capped at 240 trials and 60 seconds; the budget gate can stop earlier.
@@ -64,8 +64,7 @@ The target projection need not be injective on the original point support: we ag
 Operator families: fixed-support probability perturbation; adding fibre-intersection points;
 bounded ruin-and-recreate exchanges; a third independent digit law.
 Two unsuccessful trials trigger neighborhood escalation. Failed trials are evidence about those attempts,
-not a proof an entire search neighborhood was exhausted. The controller is initially deterministic,
-not an LLM scientist; Tinker adaptation is gated on useful verified training data.
+not a proof an entire search neighborhood was exhausted. The initial controller is deterministic. The high-precision campaign uses a real Tinker model to rank bounded support hypotheses when available; failures fall back explicitly and remain in the log. Fine-tuning is gated on useful verified training data.
 
 ## Memory and providers
 
@@ -84,7 +83,7 @@ API accounting can lag; keep substantial headroom and recheck dashboards between
 Exa: Lite search, five results and bounded text. Each call reserves $0.10 versus the verified lower tariff.
 past.dev: ingest estimate before reservation; reserve one credit per recall conservatively.
 Modal: 2 CPU, 1 GiB, hard worker timeout, bounded containers; a separate image/build reserve.
-Tinker: train only after there is a credible supervised objective and a verified credit boundary.
+Tinker: Qwen3.5-397B-A17B can rank structural insertions. Actual inference successes are counted separately from integration failures. Train only after there is a credible supervised objective and a verified credit boundary.
 
 ## Limitations
 

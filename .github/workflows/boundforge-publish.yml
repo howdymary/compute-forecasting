@@ -1,0 +1,49 @@
+name: Publish verified BoundForge evidence
+on:
+  workflow_dispatch:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/boundforge-publish.yml]
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: boundforge-publication
+  cancel-in-progress: false
+jobs:
+  evidence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Fetch immutable project source
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Wait for final independent certification
+        run: gh run watch 43671753698 --repo "$GITHUB_REPOSITORY" --exit-status --interval 10
+      - name: Install verification and browser dependencies
+        run: |
+          python -m pip install -r boundforge/requirements.txt modal playwright
+          python -m playwright install --with-deps chromium
+      - name: Check project sources
+        run: |
+          python -m compileall -q boundforge
+          python -m pytest -q -p no:cacheprovider boundforge/test_core.py
+      - name: Verify, exercise demo and publish derived evidence
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+          PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
+        run: python -u boundforge/finalize.py --runs 43670325538 43670827227 43671271112 43671753698 --publish
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: boundforge-certified-evidence
+          path: boundforge/results/
+          retention-days: 30
