@@ -1,13 +1,13 @@
 name: CodeGarden full weight-band exact repairs
 on:
   push:
-    branches: [codegarden-weight-band-003]
+    branches: [codegarden-weight-band-004]
     paths: [.github/workflows/codegarden.yml]
   workflow_dispatch:
 permissions:
   contents: write
 concurrency:
-  group: codegarden-free-weight-band-003
+  group: codegarden-free-weight-band-004
   cancel-in-progress: false
 env:
   PYTHONDONTWRITEBYTECODE: '1'
@@ -46,6 +46,9 @@ jobs:
         with:
           name: codegarden-bundle-preflight
           path: codegarden/artifacts/phase3/weight_band_001/
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
       - name: Install isolated pinned solver
         run: |
           python -m venv codegarden/.venv
@@ -75,7 +78,7 @@ jobs:
       - name: Publish leased results
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python -B -u codegarden/phase3/publish_weight_band.py
+        run: python -B -u codegarden/phase3/publish_weight_band2.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
