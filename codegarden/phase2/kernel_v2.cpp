@@ -100,6 +100,7 @@ int main(int argc,char**argv){
     if(!initial){double mx=-1e100;for(int i=0;i<6;++i){
       double score=rewards[i]/max(.001,times[i])+sqrt(2*log(double(iterations+1))/double(counts[i]));
       if(score>mx){mx=score;arm=i;}}}
+   }
    double stepStart=cpu();auto old=g.code;int priorBest=best.size();double stale=cpu()-start-lastGain;
    if(arm==4){
     string key=exactkey(g.code);bool changed=false;
