@@ -1,0 +1,86 @@
+name: CodeGarden exhaustion-triggered radius expansion
+on:
+  push:
+    branches: [codegarden-frontier-004]
+    paths: [.github/workflows/codegarden.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: codegarden-free-frontier-004
+  cancel-in-progress: false
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+  SOURCE_SHA: ${{ github.sha }}
+  CODEGARDEN_BATCH: frontier_002
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - name: Compile and independently exhaust small cases
+        run: |
+          mkdir -p codegarden/.build
+          g++ -O3 -std=c++17 codegarden/phase3/bundle_server.cpp -o codegarden/.build/bundle
+          python -B -u codegarden/phase3/test_bundle_server.py
+          python -B -u codegarden/phase3/preflight.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: codegarden-frontier-preflight
+          path: codegarden/artifacts/phase3/frontier_002/
+  probes:
+    needs: preflight
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        lineage: [arena225, projected225, arena224, arena223]
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/download-artifact@v4
+        with:
+          name: codegarden-frontier-preflight
+          path: codegarden/artifacts/phase3/frontier_002/
+      - name: Compile and run bounded component
+        run: |
+          mkdir -p codegarden/.build
+          g++ -O3 -std=c++17 codegarden/phase3/bundle_server.cpp -o codegarden/.build/bundle
+          python -B -u codegarden/phase3/frontier_expand.py --lineage ${{ matrix.lineage }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: codegarden-frontier-${{ matrix.lineage }}
+          path: codegarden/artifacts/phase3/frontier_002/
+  collect:
+    needs: [preflight, probes]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: codegarden-frontier-*
+          merge-multiple: true
+          path: codegarden/artifacts/phase3/frontier_002/
+      - name: Publish leased results
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -B -u codegarden/phase3/publish_frontier_expand.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: codegarden-frontier-collected
+          path: codegarden/artifacts/phase3/frontier_002/

@@ -1,0 +1,65 @@
+{
+  "source_sha": "ca9abe4148dbd2d7ecff405a810c252f19407303",
+  "mode": "neutral8",
+  "radius": 8,
+  "processed": 1,
+  "discovered": 1,
+  "frontier_codes": [],
+  "rows": [
+    {
+      "found": false,
+      "complete": false,
+      "cpu_seconds": 15.0027,
+      "nodes": 413318144,
+      "closed_blocker_sets": 2444981,
+      "cache_hits": 702112,
+      "retained_closed_keys": 242736,
+      "cache_evictions": 2202245,
+      "k": 8,
+      "n": 16,
+      "memory_limited": false,
+      "budget_limited": true,
+      "neutral_cap_reached": false,
+      "candidate_count": 48034,
+      "profiled_bitset_bytes": 387023344,
+      "removed": [],
+      "added": [],
+      "scope": "Strict improvements and primitive connected neutral bundles. Under no improving exchange, the primitive moves generate the full neutral component. Any cap means incomplete. Complete is false on every time/node/memory/neighbor cap.",
+      "incumbent_witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa",
+      "incumbent_file": "state_0.txt",
+      "verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6410,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+          }
+        ]
+      },
+      "canonical_pool_sha256": "b9c645a151284e112b0ac60de0dff69fed5e685d39af7ee1bbc6c81e92d65916",
+      "seconds_limit": 15,
+      "neighbor_cap": 192,
+      "primitive_neighbors_returned": 0,
+      "ordering": "descending blocker count then descendant size"
+    }
+  ],
+  "component_complete": false,
+  "best_verified": 226,
+  "native_cpu_seconds": 15.0027,
+  "wall_seconds": 15.884266616999994,
+  "scope": "Primitive connected neutral moves generate the ordinary neutral component when there is no strict improvement. Node/time/neighbor caps prevent a closure claim."
+}

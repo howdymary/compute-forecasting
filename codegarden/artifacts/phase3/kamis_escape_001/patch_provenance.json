@@ -1,0 +1,35 @@
+{
+  "upstream_revision": "2e4b3861b8063f05e8520434b97ce59e21ca49e7",
+  "path": "lib/mis/ils/ils.cpp",
+  "upstream_file_sha256": "b3ad67559508595047301e569e9b41862d69d3193f034a2ccf41d9e54eaac654",
+  "patched_file_sha256": "93d64c13b0993966ebf31dc4e9c7362834215d08e1ea8d2018675209f43cc6e2",
+  "change": "Replace decrement-then-negative-test on unsigned plateau with saturating decrement.",
+  "arithmetic_regression": [
+    {
+      "before": 0,
+      "original_unsigned_after": 4294967295,
+      "patched_after": 0
+    },
+    {
+      "before": 1,
+      "original_unsigned_after": 0,
+      "patched_after": 0
+    },
+    {
+      "before": 2,
+      "original_unsigned_after": 1,
+      "patched_after": 1
+    },
+    {
+      "before": 226,
+      "original_unsigned_after": 225,
+      "patched_after": 225
+    },
+    {
+      "before": 4294967295,
+      "original_unsigned_after": 4294967294,
+      "patched_after": 4294967294
+    }
+  ],
+  "attribution": "KaMIS ILS method is upstream; this narrowly documented behavior correction is CodeGarden's experimental adaptation. No validity rules changed."
+}
