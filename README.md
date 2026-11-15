@@ -6,7 +6,7 @@
 
 The pricing-first Explore view puts a large interactive chart at the center of the product. Switch between the exact submitted 1/3/7-day quantiles and separate 12/24/36-month rental or resale scenarios. Adjust annual assumptions, inspect any month with mouse/touch/keyboard, and optionally supply your own rental-dollar anchor. All 37 source series have verified names and USD/GPU-hour units. Historical prices remain unpublished while redistribution permission is unresolved.
 
-[Pricing controls, formulas and data contract](docs/pricing-observatory.md). Research, Methods and Downloads keep the evidence and limitations accessible without crowding the chart.
+[Pricing controls, formulas and data contract](docs/pricing-observatory.md) · [Verified deployment](https://github.com/howdymary/compute-forecasting/actions/runs/43658918382) · [Independent desktop/mobile checks](https://github.com/howdymary/compute-forecasting/actions/runs/43659021941). Research, Methods and Downloads keep the evidence and limitations accessible without crowding the chart.
 
 We compare data representations for forecasting **advertised GPU rental offers**, then ask whether a Tinker-trained experiment-selection policy outperforms starting, fixed and random search under the same six-trial budget. The numerical forecasts and scores come from deterministic tools and the Pacific starter kit. The language model selects experiments; it does not invent prices or scores.
 
@@ -77,7 +77,7 @@ It fails closed outside the authorized GitHub Actions branch. Training requires 
 5. Selection and final evaluation are separate: **Prepare measured release freeze** creates a reviewable configuration from completed development artifacts; commit it before **Evaluate frozen policy and export submission**. Reproducing the existing frozen final requires access to its saved Tinker sampler checkpoint. Independent users can retrain and create their own separately identified freeze. Do not tune using the reported final period and continue calling it untouched.
 6. **Publish frozen research release** validates the exact successful source runs, projects an allowlisted public payload, publishes derived files, deploys on Modal and verifies the public content hashes. Public web containers have no raw-data mount or account API credentials.
 
-The end-to-end remote entrypoint [passed](https://github.com/howdymary/compute-forecasting/actions/runs/43647264275). All 53 Python boundary tests passed in the public release validation. Compilation, browser-script syntax, forecast file hashing and public-health checks are captured by Actions. Resolved client versions and per-call timings are retained with each run.
+The end-to-end remote entrypoint [passed](https://github.com/howdymary/compute-forecasting/actions/runs/43647264275). All 64 Python contract and numerical tests passed in the pricing release validation. Compilation, browser-script syntax, forecast file hashing and public-health checks are captured by Actions. Resolved client versions and per-call timings are retained with each run.
 
 ## Execution receipts
 
@@ -101,7 +101,8 @@ Grid execution took 10m13s, main training 18m13s and frozen evaluation plus expo
 - freeze_contract.py / final_evaluation.py: frozen access guard and final evaluation, with no training.
 - export_submission.py: official forecast CSV and separate long-term scenarios.
 - research_loop.py: current-methods Exa and cross-agent past.dev integration.
-- release_payload.py / release_web.py / release_ui.py: allowlisted results, private publication and credential-free public UI.
+- release_payload.py / release_web.py: allowlisted research results and the credential-free public service.
+- pricing_contract.py / pricing_publish.py / explore_ui.py: verified chart data, scenario calculations and the pricing-first interface. The earlier release_ui.py remains as the prior interface source.
 - configs/release-freeze.json: actual checkpoint and numerical source hashes selected before final results.
 - docs/: research protocol, scope amendments and demo / sponsor evidence notes.
 

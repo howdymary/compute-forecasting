@@ -71,3 +71,11 @@ Representation effects remain mixed: the strongest individual candidate used fix
 The separate **Validate pricing UI** workflow runs after a successful deployment, or manually on compute-observatory. It verifies every plotted forecast against the original CSV, scenario endpoints and custom-rate/reset behavior, dollar anchoring, resale separation, matching-series restrictions, range controls, keyboard/touch interaction, navigation preservation, all Research sections, and desktop/390px mobile overflow. It retains screenshots and a JSON validation receipt. It records no media and has no account API credentials.
 
 All source work is direct through GitHub on compute-observatory. Builds, tests and deployment run remotely. No workstation checkout is used.
+
+## Verified release receipts
+
+- [Deployment, 64 tests, frozen-code guards and public hashes](https://github.com/howdymary/compute-forecasting/actions/runs/43658918382).
+- [Independent desktop/mobile UI validation](https://github.com/howdymary/compute-forecasting/actions/runs/43659021941): every forecast point matched the CSV; scenario math, reset, anchoring, resale separation, comparison filtering, keyboard/touch tooltips, research navigation and 390px overflow checks passed. No page errors or failed public API requests were observed.
+- Deployed interface/adapter revision: 0133224571e66fc783018f0a9cdde101f8fe5635. Documentation may advance independently of this deployed code revision.
+
+The deployed scenario cursor/readout and archived forecast band were also visually reviewed in Safari. Historical data remains unavailable for public plotting. The 2026-11-06 forecasts are archived, and long-term paths remain user-adjustable scenarios rather than trained predictions.
