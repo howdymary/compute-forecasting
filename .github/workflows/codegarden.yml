@@ -1,7 +1,7 @@
 name: CodeGarden distant neutral bundles with leased checkpoints
 on:
   push:
-    branches: [codegarden-modal-004]
+    branches: [codegarden-modal-005]
     paths: [.github/workflows/codegarden.yml]
 permissions:
   contents: write
@@ -30,8 +30,13 @@ jobs:
           python -m venv codegarden/.venv
           codegarden/.venv/bin/python -m pip install -r codegarden/requirements-providers.txt
       - name: Check cross-phase imports before any provider calls
-        run: python -B -c 'import sys; sys.path.insert(0, "codegarden/phase3"); import modal_bundle'
-      - name: Refresh live account receipts, then research within the unchanged cumulative caps
+        run: python -B -c 'import sys; sys.path.insert(0, "codegarden/phase3"); import modal_persistent'
+      - name: Compile persistent server and independently test shuffled neighborhoods
+        run: |
+          mkdir -p codegarden/.build
+          g++ -O3 -std=c++17 codegarden/phase3/bundle_server.cpp -o codegarden/.build/bundle
+          python -B -u codegarden/phase3/test_bundle_server.py
+      - name: Run paired persistent walkers within cumulative existing-credit allocation
         env:
           GH_TOKEN: ${{ github.token }}
           EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
@@ -39,19 +44,19 @@ jobs:
           TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
           MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
-        run: codegarden/.venv/bin/python -B -u codegarden/phase3/modal_bundle.py
+        run: codegarden/.venv/bin/python -B -u codegarden/phase3/modal_persistent.py
       - name: Publish evidence and unresolved accounting
         if: always()
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python -B codegarden/phase3/publish_modal_bundle.py
+        run: python -B codegarden/phase3/publish_persistent.py
       - name: Retain all evidence even if a publisher fails
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: codegarden-phase3-research
           path: |
-            codegarden/artifacts/phase3/modal_bundle_001/
+            codegarden/artifacts/phase3/persistent_bundle_001/
             codegarden/artifacts/shared-budget.sqlite
             codegarden/budget/shared-allocation.json
             codegarden/budget/historical-usage.json
