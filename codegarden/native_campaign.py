@@ -16,7 +16,7 @@ def main():
         image=image.add_local_file(str(ROOT/rel),"/opt/codegarden/"+rel)
     app=modal.App("codegarden-native-search-v1",tags={"project":"codegarden"})
     volume=modal.Volume.from_name("codegarden-native-results-v1",create_if_missing=True)
-    @app.function(image=image,cpu=1,memory=768,timeout=240,max_containers=4,volumes={"/codegarden/results":volume})
+    @app.function(serialized=True,image=image,cpu=1,memory=768,timeout=240,max_containers=4,volumes={"/codegarden/results":volume})
     def worker(words,seed,policy,seconds):
         import threading
         run_id=uuid.uuid4().hex;path=pathlib.Path("/codegarden/results")/run_id;path.mkdir()

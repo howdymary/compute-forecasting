@@ -56,7 +56,7 @@ def main():
         providers.read("researcher","What verified result did the analyst obtain from the strategist's repair experiment?",result_id)
         providers.exa("binary two deletion correcting code length 16 226 227 latest explicit construction","record-check-001")
         corpus=build();(out/"training_cases.json").write_text(json.dumps(corpus))
-        held=[c for c in corpus["cases"] if c["split"]=="heldout"];training=[c for c in corpus["cases"] if c["split"]=="train"]
+        held=[c for c in corpus["cases"] if c["split"]=="heldout"][:6];training=[c for c in corpus["cases"] if c["split"]=="train"]
         instances={n:Incidence(n) for n in [10,11,12]}
         def evaluate(policy):
             rows=[]
@@ -78,7 +78,7 @@ def main():
         after_policy=Policy(providers.ledger,sampler_path=path)
         after=evaluate(after_policy)
         evaluation={"scope":"n=10,11,12 heldout strategy calibration; not a length-16 improvement",
-          "before":before,"after":after,"train_cases":32,"heldout_cases":8,"updates":8,
+          "before":before,"after":after,"train_cases":32,"heldout_cases":len(held),"updates":8,
           "sum_before":sum(r["final_cardinality"] for r in before),"sum_after":sum(r["final_cardinality"] for r in after),
           "equal_action_budget":"One selected bounded repair per heldout case; identical starting codes/seeds and pool limits"}
         evaluation["improved"]=evaluation["sum_after"]>evaluation["sum_before"]

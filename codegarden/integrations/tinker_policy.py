@@ -9,13 +9,14 @@ def prompt(state):
 def encode_prompt(tokenizer,state):
     messages=[{"role":"system","content":"Select bounded search experiments. Return only an allowed action identifier; never invent scores."},
               {"role":"user","content":prompt(state)}]
-    return tokenizer.apply_chat_template(messages,tokenize=True,add_generation_prompt=True,enable_thinking=False)
+    return tokenizer.apply_chat_template(messages,tokenize=True,add_generation_prompt=True,enable_thinking=False,return_dict=False)
 class Policy:
     def __init__(self,ledger,sampler_path=None):
         import tinker
         self.tinker=tinker;self.ledger=ledger
         self.service=tinker.ServiceClient(display_name="CodeGarden strategy policy")
         self.sampler=self.service.create_sampling_client(model_path=sampler_path) if sampler_path else self.service.create_sampling_client(base_model=MODEL)
+        if hasattr(self.sampler,"result"):self.sampler=self.sampler.result()
         self.tokenizer=self.sampler.get_tokenizer()
     def choose(self,state):
         text=prompt(state);tokens=encode_prompt(self.tokenizer,state)

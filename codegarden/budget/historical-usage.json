@@ -1,11 +1,11 @@
 {
-  "source_run": "43671948159",
-  "source_commit": "2619ea194bfbbded1bbbf77298adb63798c4ebd5",
+  "source_run": "43672598278-cumulative",
+  "source_commit": "1588ab7568da3a5fbc8dc53ab78a3ae4cb42e719",
   "conservative_totals": {
     "exa": 0.007,
-    "past": 4,
-    "modal": 0,
-    "tinker": 1
+    "past": 8,
+    "modal": 2.92,
+    "tinker": 2
   },
-  "reason": "Preserve all charged estimates and unresolved reservations from the failed integration attempt; do not reset caps on a fresh runner."
+  "reason": "Cumulative prior calls, estimated memory credits and unresolved reservations; includes native reservations made before decorator failure. No duplicate caps across runners."
 }

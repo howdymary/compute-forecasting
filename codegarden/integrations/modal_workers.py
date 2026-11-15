@@ -9,7 +9,7 @@ def run_workers(start_words,seeds,seconds,ledger,preferred_action=0):
     for rel in ["search.py","protected/verify_descendants.py","protected/verify_lcs.py"]:
         image=image.add_local_file("codegarden/"+rel,"/opt/codegarden/"+rel)
     volume=modal.Volume.from_name("codegarden-research-v1",create_if_missing=True)
-    @app.function(image=image,cpu=1,memory=1024,timeout=300,max_containers=2,
+    @app.function(serialized=True,image=image,cpu=1,memory=1024,timeout=300,max_containers=2,
                   volumes={"/codegarden/results":volume})
     def worker(words,seed,budget,preferred):
         import importlib.util,sys
