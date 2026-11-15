@@ -1,0 +1,38 @@
+name: Reconstruct and publish review v4
+on:
+  push:
+    branches: [compute-observatory]
+    paths:
+      - .github/workflows/review-v4.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: compute-forecast-review-v4-publication
+  cancel-in-progress: false
+jobs:
+  reconstruct:
+    if: github.ref == 'refs/heads/compute-observatory'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Fetch immutable source
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/${{ github.sha }}" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate contracts on the hosted runner
+        run: |
+          python -m pip install -e '.[dev]' modal numpy scipy scikit-learn
+          python -m compileall -q src
+          python -m pytest --junitxml=artifacts/review-v4-tests.xml
+      - name: Reconstruct verified public artifacts without credentials
+        run: python -m compute_forecast.review_v4 --publish
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: review-v4-${{ github.sha }}-${{ github.run_id }}
+          path: artifacts/
+          retention-days: 30
