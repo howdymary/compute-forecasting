@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-15T13:59:00Z",
+  "updated_at": "2026-11-15T14:34:00Z",
   "target_achieved": false,
   "best_found": 226,
   "best_independently_verified": 226,
@@ -693,6 +693,160 @@
       "novel226": 0,
       "verified227": 0,
       "scope": "Four matched parent families, equal600-loop-wall/two-thread caps, actual budgets unequal. Two adaptive workers ended early after a narrow proposal prefix was exhausted; this was not neighborhood exhaustion. Random closed more explicit goal-model225 families. No cardinality/adaptive advantage or absence certificate. All reported trial counts are occurrences; original reports exclude bootstrap and child-verifier CPU."
+    },
+    "random_resume": {
+      "source": "3ab7f42e2b94bb2cfbf808ba0cb8e44021548fb7",
+      "run": 43721175424,
+      "authoritative_recovery_commit": "191f420238ef63e4e63c2d388804fed3b875ca3d",
+      "cases": [
+        {
+          "case": 0,
+          "new_trials": 38,
+          "new_closed": 19,
+          "start_fixed": 153,
+          "final_fixed": 134,
+          "best_method": 225
+        },
+        {
+          "case": 2,
+          "new_trials": 42,
+          "new_closed": 26,
+          "start_fixed": 154,
+          "final_fixed": 128,
+          "best_method": 225
+        },
+        {
+          "case": 4,
+          "new_trials": 30,
+          "new_closed": 1,
+          "start_fixed": 118,
+          "final_fixed": 117,
+          "best_method": 225
+        },
+        {
+          "case": 6,
+          "new_trials": 30,
+          "new_closed": 0,
+          "start_fixed": 116,
+          "final_fixed": 116,
+          "best_method": 225
+        }
+      ],
+      "new_trials": 140,
+      "new_closed": 46,
+      "novel226": 0,
+      "verified227": 0,
+      "scope": "Continuation, not independent fresh cases. Original flattened publication overwrote sibling checkpoints; use per-worker recovered archives exclusively."
+    },
+    "minimum_growth": {
+      "source": "e8915ee0d29c36364e33d347f475072e2ec1620d",
+      "run": 43721599974,
+      "authoritative_recovery_commit": "191f420238ef63e4e63c2d388804fed3b875ca3d",
+      "matched_pairs": 8,
+      "groups": {
+        "random_one": {
+          "cases": 8,
+          "new_trials": 265,
+          "new_closed": 68,
+          "wall": 4795.550535777,
+          "self_cpu": 8866.926183,
+          "child_cpu": 334.617432,
+          "incumbent_hashes": [
+            "c8fda988772a5b51d8458eaa0506185a4fb0e389a032693c12d22934bec21a10",
+            "fc4183716581302b27b3dfd09b1fbf22403e2dc66ec5043953d3f985a25cad93",
+            "9b47f026b188e2ef818ec7bd9e599bfd8f5cd60a99e09a3df424c6c2f17fe62b",
+            "2290677b497268dcf7484daadc5b8ea07663896c9f8dc04f729be3f0674d703f",
+            "df5e2a95cf284304ffbde4df8b6a0f00d475edb6f0b580503e7b702887b2cd40",
+            "a97a10dc3c2feb94433a0ff99a381af47f68d034d3332c17de35ad3302aa8edd"
+          ]
+        },
+        "minimum_growth": {
+          "cases": 8,
+          "new_trials": 294,
+          "new_closed": 123,
+          "wall": 4798.419375018999,
+          "self_cpu": 8836.905963,
+          "child_cpu": 344.776566,
+          "incumbent_hashes": [
+            "c8fda988772a5b51d8458eaa0506185a4fb0e389a032693c12d22934bec21a10",
+            "fc4183716581302b27b3dfd09b1fbf22403e2dc66ec5043953d3f985a25cad93",
+            "9b47f026b188e2ef818ec7bd9e599bfd8f5cd60a99e09a3df424c6c2f17fe62b",
+            "2290677b497268dcf7484daadc5b8ea07663896c9f8dc04f729be3f0674d703f",
+            "df5e2a95cf284304ffbde4df8b6a0f00d475edb6f0b580503e7b702887b2cd40",
+            "a97a10dc3c2feb94433a0ff99a381af47f68d034d3332c17de35ad3302aa8edd"
+          ]
+        }
+      },
+      "wins_closed_families": {
+        "minimum_growth": 6,
+        "random": 1,
+        "tie": 1
+      },
+      "all_method_best225": true,
+      "novel226": 0,
+      "verified227": 0,
+      "scope": "Equal600loop-wall/two-thread caps; actual self/child CPU reported. Eight paired checkpoints with correlated four-family ancestry, six distinct final225 witness hashes. Minimum-growth improves closure throughput, not cardinality. No Tinker or memory-ablation claim."
+    },
+    "coordinate_lifts": {
+      "source": "dccf1a454418dc0a790ed6d08d1c9438537d6fa5",
+      "run": 43722266247,
+      "artifact_commit": "c3eb055eb250efb7e2a2a1a1b64bab1d1611d84d",
+      "coordinate_models": 256,
+      "base_sat": 16,
+      "base_unsat": 240,
+      "one_extra_queries": 1048576,
+      "native_cpu_seconds": 5.203650999999999,
+      "all_encoded_models_complete": true,
+      "verified227": 0,
+      "scope": "One common puncture coordinate and one common reinsertion coordinate, two bit choices per original word. Exactly this finite class plus one arbitrary outside word. Not all transformations or all codes."
+    },
+    "pair_domains": {
+      "source": "c1771293fed3fcda06e0343e71971193c0d3e4b1",
+      "run": 43722941866,
+      "artifact_commit": "0c7b78f7ad43f415be9c039d9e2603d25e33f23b",
+      "model_occurrences": 12000,
+      "unique_canonical_models": 10097,
+      "duplicate_model_occurrences": 1903,
+      "one_extra_queries": 90308608,
+      "native_cpu_seconds": 32.00035,
+      "all_encoded_queries_complete": true,
+      "novel226": 0,
+      "verified227": 0,
+      "scope": "XOR, position permutations, low-blocker and diverse-blocker two-choice maps only. Most random alternatives are unusable. Duplicate model occurrences explicitly counted; no global bound."
+    },
+    "union_external": {
+      "source": "f54584e7088915cc9e8cd8863a155dcb984bb6fd",
+      "run": 43723741495,
+      "artifact_commit": "559eed6a143663d25186e2c9770b61abcaf41df4",
+      "pairs": 16,
+      "outside_limits": [
+        2,
+        3
+      ],
+      "all_encoded_queries_complete": true,
+      "union_optima": [
+        225,
+        225,
+        225,
+        225,
+        225,
+        225,
+        225,
+        225,
+        225,
+        225,
+        225,
+        225,
+        225,
+        225,
+        225,
+        225
+      ],
+      "method_best_verified": 225,
+      "retained_global_best": 226,
+      "novel226": 0,
+      "verified227": 0,
+      "scope": "Full two-parent unions plus at most2/3 arbitrary outside words, safe residual maximum-matching filters and exact bounded DFS. Earlier raw best_independently_verified226 is a retained global baseline label, not a225-family result; the next engine separates method and retained scores. New226 sampling is not exhaustive."
     }
   },
   "provider_result": {
@@ -749,18 +903,18 @@
   },
   "active": [
     {
-      "branch": "codegarden-random-resume-003",
-      "source": "3ab7f42e2b94bb2cfbf808ba0cb8e44021548fb7",
-      "run": 43721175424,
-      "cases": 4,
-      "scope": "Same-engine continuation from old random cases0,2,4,6. Cumulative counts must subtract frozen resumption-plan counts;600newwall/case."
+      "branch": "codegarden-union-external-004",
+      "source": "e5b3aa1c0a6bd69fd2107c79d7506e5f619a5435",
+      "run": 43724017012,
+      "cases": 16,
+      "scope": "Continue independently source-checked completed2/3-outside families at limits4..8.600nativeCPU/case, exact residual bipartite matching, explicit root/pool status. Timeouts remain open."
     },
     {
-      "branch": "codegarden-min-growth-003",
-      "source": "e8915ee0d29c36364e33d347f475072e2ec1620d",
-      "run": 43721599974,
+      "branch": "codegarden-weighted-breakout-004",
+      "source": "e4f02ad198b582d0a4c973f460fbe638aa6f27f9",
+      "run": 43724952690,
       "cases": 16,
-      "scope": "Eight paired225 checkpoint states, correlated ancestry. Random-one versus minimum-growth ranked unfixing, broad fallback, explicit engine migration and incremental/total timing metrics;600wall/two threads each."
+      "scope": "Corrected preflight receipt path. Literal field tests precede eight matched600nativeCPU uniform/weighted pairs. Positive energy is invalid."
     }
   ],
   "consolidated_sources": [
@@ -882,6 +1036,42 @@
       "prefixes": [
         "adaptive_hulls_001"
       ]
+    },
+    {
+      "branch": "codegarden-artifact-recovery-003",
+      "commit": "191f420238ef63e4e63c2d388804fed3b875ca3d",
+      "prefixes": [
+        "random_resume_recovered_001",
+        "min_growth_recovered_001"
+      ]
+    },
+    {
+      "branch": "codegarden-coordinate-lift-003",
+      "commit": "c3eb055eb250efb7e2a2a1a1b64bab1d1611d84d",
+      "prefixes": [
+        "coordinate_lift_001"
+      ]
+    },
+    {
+      "branch": "codegarden-pair-domains-003",
+      "commit": "0c7b78f7ad43f415be9c039d9e2603d25e33f23b",
+      "prefixes": [
+        "pair_domains_001"
+      ]
+    },
+    {
+      "branch": "codegarden-union-external-003",
+      "commit": "559eed6a143663d25186e2c9770b61abcaf41df4",
+      "prefixes": [
+        "union_external_001"
+      ]
+    },
+    {
+      "branch": "codegarden-demo-qa-005",
+      "commit": "e3e2dc496cf889f7d37dfd51b56cc861e2e2ea09",
+      "prefixes": [
+        "demo_qa_005"
+      ]
     }
   ],
   "limitations": [
@@ -891,7 +1081,9 @@
     "No strict adaptive or Tinker policy superiority demonstrated.",
     "All current new compute is on free public standard GitHub runners; paid balances/allocation require renewal before another paid reservation.",
     "Most bulk negative-query logs save reconstructible family definitions/status vectors and sample literal candidate-pool hashes, not an individual SHA256 for every pool. No formal absence certificate is claimed.",
-    "Latest max-unlock policy completed no larger code and stopped early in two cases after exhausting its narrow proposal prefix. New minimum-growth engine adds broad fallback; do not compare migrated runs as independent fresh families."
+    "Latest max-unlock policy completed no larger code and stopped early in two cases after exhausting its narrow proposal prefix. New minimum-growth engine adds broad fallback; do not compare migrated runs as independent fresh families.",
+    "Full fixed/adaptive-no-memory/adaptive-memory/trained four-way held-out comparison remains incomplete. Latest minimum-growth study compares two untrained heuristics only.",
+    "Archived old flattened checkpoint collections must not be used as resume sources; exact per-worker recovery supersedes them."
   ],
   "research_cycle": [
     {
@@ -938,6 +1130,21 @@
       "hypothesis": "Prefer small tractable expansions to maximum-unlock",
       "result": "Running eight paired minimum-growth/random controls, plus four same-engine random continuations",
       "run": 43721599974
+    },
+    {
+      "hypothesis": "Minimum-growth expansion versus random",
+      "result": "123 versus68 newly closed goal-families at near-equal measured CPU; both remain225",
+      "run": 43721599974
+    },
+    {
+      "hypothesis": "Exact coordinate lifting and two-choice maps",
+      "result": "Finite models completed without new code; most arbitrary alternatives unusable",
+      "run": 43722941866
+    },
+    {
+      "hypothesis": "Use full valid two-parent unions and outside words",
+      "result": "All16 two/three-outside neighborhoods completed without227; continuing larger limits",
+      "run": 43723741495
     }
   ],
   "verification": {
@@ -950,5 +1157,314 @@
       "independent_dynamic_programming_lcs"
     ],
     "formal_absence_proof": false
+  },
+  "artifact_collection": {
+    "bug": "Flattening archives copied stale sibling checkpoints over fresh cases in continuation/migration runs.",
+    "recovery_source": "6753ac673f66e4d29650fe9021818451d5251a95",
+    "recovery_run": 43722510474,
+    "authoritative_commit": "191f420238ef63e4e63c2d388804fed3b875ca3d",
+    "authoritative_prefixes": [
+      "random_resume_recovered_001",
+      "min_growth_recovered_001"
+    ],
+    "checks": "Exact named worker archive, archive SHA256, source SHA, case ID, history count, fixed-set count, original engine pins and two protected incumbent checks.",
+    "deprecated_resume_source": "Flattened random_resume_001 and min_growth_hulls_001 publications; individual original archives and corrected prefixes remain authoritative."
+  },
+  "demo_qa": {
+    "source": "08b9756d06137cfe4ab96e5b0b2f1d3f39f0c6cb",
+    "run": 43721639918,
+    "artifact_commit": "e3e2dc496cf889f7d37dfd51b56cc861e2e2ea09",
+    "passed": true,
+    "viewports": 2,
+    "decoding_examples": 10,
+    "download_best_verified": 226,
+    "replay_not_live": true,
+    "failures_preserved": [
+      {
+        "run": 43720307660,
+        "reason": "Playwright1.56 unsupported ubuntu26.04 runner; browser tests did not execute"
+      },
+      {
+        "run": 43720556114,
+        "reason": "Actual mobile document overflow, root662 at viewport390; fixed tables and long identifiers before passing rerun"
+      }
+    ]
+  },
+  "setup_failures": [
+    {
+      "source": "692e3e5626b485a8c53343ee361c71f66bda707a",
+      "run": 43724596322,
+      "tests_passed": true,
+      "search_started": false,
+      "reason": "Prerequisite receipt written into old output path; all probes stopped before native search. Corrected isolated rerun is43724952690."
+    }
+  ],
+  "partial_current_union": {
+    "run": 43724017012,
+    "first8": [
+      {
+        "case": 0,
+        "union_size": 260,
+        "common": 190,
+        "union_alpha": 225,
+        "matching_calls": 314008162,
+        "nodes": 59648,
+        "timed_out": true,
+        "cpu_seconds": 608.274,
+        "best_method_independently_verified": 225,
+        "retained_global_best_verified": 226,
+        "levels": [
+          {
+            "outside_limit": 4,
+            "complete": true,
+            "completed_roots": 298,
+            "pool_count": 298
+          },
+          {
+            "outside_limit": 5,
+            "complete": true,
+            "completed_roots": 1864,
+            "pool_count": 1864
+          },
+          {
+            "outside_limit": 6,
+            "complete": true,
+            "completed_roots": 6532,
+            "pool_count": 6532
+          },
+          {
+            "outside_limit": 7,
+            "complete": false,
+            "completed_roots": 0,
+            "pool_count": 15136
+          }
+        ]
+      },
+      {
+        "case": 1,
+        "union_size": 260,
+        "common": 190,
+        "union_alpha": 225,
+        "matching_calls": 154790011,
+        "nodes": 29952,
+        "timed_out": true,
+        "cpu_seconds": 603.614,
+        "best_method_independently_verified": 225,
+        "retained_global_best_verified": 226,
+        "levels": [
+          {
+            "outside_limit": 4,
+            "complete": true,
+            "completed_roots": 305,
+            "pool_count": 305
+          },
+          {
+            "outside_limit": 5,
+            "complete": true,
+            "completed_roots": 1912,
+            "pool_count": 1912
+          },
+          {
+            "outside_limit": 6,
+            "complete": false,
+            "completed_roots": 101,
+            "pool_count": 6606
+          }
+        ]
+      },
+      {
+        "case": 2,
+        "union_size": 259,
+        "common": 191,
+        "union_alpha": 225,
+        "matching_calls": 175683360,
+        "nodes": 35840,
+        "timed_out": true,
+        "cpu_seconds": 604.056,
+        "best_method_independently_verified": 225,
+        "retained_global_best_verified": 226,
+        "levels": [
+          {
+            "outside_limit": 4,
+            "complete": true,
+            "completed_roots": 317,
+            "pool_count": 317
+          },
+          {
+            "outside_limit": 5,
+            "complete": true,
+            "completed_roots": 1860,
+            "pool_count": 1860
+          },
+          {
+            "outside_limit": 6,
+            "complete": false,
+            "completed_roots": 75,
+            "pool_count": 6445
+          }
+        ]
+      },
+      {
+        "case": 3,
+        "union_size": 259,
+        "common": 191,
+        "union_alpha": 225,
+        "matching_calls": 286674440,
+        "nodes": 56064,
+        "timed_out": true,
+        "cpu_seconds": 603.075,
+        "best_method_independently_verified": 225,
+        "retained_global_best_verified": 226,
+        "levels": [
+          {
+            "outside_limit": 4,
+            "complete": true,
+            "completed_roots": 319,
+            "pool_count": 319
+          },
+          {
+            "outside_limit": 5,
+            "complete": true,
+            "completed_roots": 1882,
+            "pool_count": 1882
+          },
+          {
+            "outside_limit": 6,
+            "complete": false,
+            "completed_roots": 171,
+            "pool_count": 6494
+          }
+        ]
+      },
+      {
+        "case": 4,
+        "union_size": 259,
+        "common": 191,
+        "union_alpha": 225,
+        "matching_calls": 149690451,
+        "nodes": 30720,
+        "timed_out": true,
+        "cpu_seconds": 601.792,
+        "best_method_independently_verified": 225,
+        "retained_global_best_verified": 226,
+        "levels": [
+          {
+            "outside_limit": 4,
+            "complete": true,
+            "completed_roots": 324,
+            "pool_count": 324
+          },
+          {
+            "outside_limit": 5,
+            "complete": true,
+            "completed_roots": 1910,
+            "pool_count": 1910
+          },
+          {
+            "outside_limit": 6,
+            "complete": false,
+            "completed_roots": 56,
+            "pool_count": 6523
+          }
+        ]
+      },
+      {
+        "case": 5,
+        "union_size": 259,
+        "common": 191,
+        "union_alpha": 225,
+        "matching_calls": 203602780,
+        "nodes": 40704,
+        "timed_out": true,
+        "cpu_seconds": 602.665,
+        "best_method_independently_verified": 225,
+        "retained_global_best_verified": 226,
+        "levels": [
+          {
+            "outside_limit": 4,
+            "complete": true,
+            "completed_roots": 336,
+            "pool_count": 336
+          },
+          {
+            "outside_limit": 5,
+            "complete": true,
+            "completed_roots": 1924,
+            "pool_count": 1924
+          },
+          {
+            "outside_limit": 6,
+            "complete": false,
+            "completed_roots": 76,
+            "pool_count": 6603
+          }
+        ]
+      },
+      {
+        "case": 6,
+        "union_size": 259,
+        "common": 191,
+        "union_alpha": 225,
+        "matching_calls": 234485379,
+        "nodes": 46080,
+        "timed_out": true,
+        "cpu_seconds": 601.496,
+        "best_method_independently_verified": 225,
+        "retained_global_best_verified": 226,
+        "levels": [
+          {
+            "outside_limit": 4,
+            "complete": true,
+            "completed_roots": 326,
+            "pool_count": 326
+          },
+          {
+            "outside_limit": 5,
+            "complete": true,
+            "completed_roots": 1931,
+            "pool_count": 1931
+          },
+          {
+            "outside_limit": 6,
+            "complete": false,
+            "completed_roots": 113,
+            "pool_count": 6571
+          }
+        ]
+      },
+      {
+        "case": 7,
+        "union_size": 258,
+        "common": 192,
+        "union_alpha": 225,
+        "matching_calls": 192598953,
+        "nodes": 38656,
+        "timed_out": true,
+        "cpu_seconds": 604.041,
+        "best_method_independently_verified": 225,
+        "retained_global_best_verified": 226,
+        "levels": [
+          {
+            "outside_limit": 4,
+            "complete": true,
+            "completed_roots": 326,
+            "pool_count": 326
+          },
+          {
+            "outside_limit": 5,
+            "complete": true,
+            "completed_roots": 1896,
+            "pool_count": 1896
+          },
+          {
+            "outside_limit": 6,
+            "complete": false,
+            "completed_roots": 86,
+            "pool_count": 6533
+          }
+        ]
+      }
+    ],
+    "scope": "Only first eight completed workers observed. All eight complete4/5-outside levels; case0 also6. Higher levels time out; no new code."
   }
 }

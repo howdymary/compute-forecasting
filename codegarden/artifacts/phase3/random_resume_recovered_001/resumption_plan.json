@@ -1,0 +1,134 @@
+{
+  "source_sha": "3ab7f42e2b94bb2cfbf808ba0cb8e44021548fb7",
+  "source_checkpoint_commit": "c24343245d469bb9dd0e1d4dd4023026bcbe60c5",
+  "cases": [
+    {
+      "case": 0,
+      "checkpoint_sha256": "89cf67f2e68aee1ecead2e0e53acf084e103f5ab0d5b75c95e9f0a7202397d8d",
+      "engine_sha256": "3d395631dd7368b92ea2406120f0a7481b6d01e0067f6c8737e99939743a5415",
+      "old_trials": 48,
+      "old_completed_families": 32,
+      "old_fixed_count": 153,
+      "starting_verification": {
+        "accepted": true,
+        "cardinality": 225,
+        "reports": [
+          {
+            "cardinality": 225,
+            "distinct_descendants": 6347,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "c8fda988772a5b51d8458eaa0506185a4fb0e389a032693c12d22934bec21a10"
+          },
+          {
+            "cardinality": 225,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25200,
+            "valid": true,
+            "witness_sha256": "c8fda988772a5b51d8458eaa0506185a4fb0e389a032693c12d22934bec21a10"
+          }
+        ]
+      }
+    },
+    {
+      "case": 2,
+      "checkpoint_sha256": "23517005145dbbdf30b33a31452dfed9665c9458643b0468b92a48440935daa4",
+      "engine_sha256": "3d395631dd7368b92ea2406120f0a7481b6d01e0067f6c8737e99939743a5415",
+      "old_trials": 58,
+      "old_completed_families": 47,
+      "old_fixed_count": 154,
+      "starting_verification": {
+        "accepted": true,
+        "cardinality": 225,
+        "reports": [
+          {
+            "cardinality": 225,
+            "distinct_descendants": 6367,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "fc4183716581302b27b3dfd09b1fbf22403e2dc66ec5043953d3f985a25cad93"
+          },
+          {
+            "cardinality": 225,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25200,
+            "valid": true,
+            "witness_sha256": "fc4183716581302b27b3dfd09b1fbf22403e2dc66ec5043953d3f985a25cad93"
+          }
+        ]
+      }
+    },
+    {
+      "case": 4,
+      "checkpoint_sha256": "32dd925eaed9f829cee8eb5ca2e59452a2b465be01bcc10269061c86d322a13c",
+      "engine_sha256": "3d395631dd7368b92ea2406120f0a7481b6d01e0067f6c8737e99939743a5415",
+      "old_trials": 111,
+      "old_completed_families": 91,
+      "old_fixed_count": 118,
+      "starting_verification": {
+        "accepted": true,
+        "cardinality": 225,
+        "reports": [
+          {
+            "cardinality": 225,
+            "distinct_descendants": 6400,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "9b47f026b188e2ef818ec7bd9e599bfd8f5cd60a99e09a3df424c6c2f17fe62b"
+          },
+          {
+            "cardinality": 225,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25200,
+            "valid": true,
+            "witness_sha256": "9b47f026b188e2ef818ec7bd9e599bfd8f5cd60a99e09a3df424c6c2f17fe62b"
+          }
+        ]
+      }
+    },
+    {
+      "case": 6,
+      "checkpoint_sha256": "94d31c005dd8b4ddd363027d7158f362ab51ab8332672c25f9b6b06bcee9e16f",
+      "engine_sha256": "3d395631dd7368b92ea2406120f0a7481b6d01e0067f6c8737e99939743a5415",
+      "old_trials": 110,
+      "old_completed_families": 90,
+      "old_fixed_count": 116,
+      "starting_verification": {
+        "accepted": true,
+        "cardinality": 225,
+        "reports": [
+          {
+            "cardinality": 225,
+            "distinct_descendants": 6383,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "df5e2a95cf284304ffbde4df8b6a0f00d475edb6f0b580503e7b702887b2cd40"
+          },
+          {
+            "cardinality": 225,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25200,
+            "valid": true,
+            "witness_sha256": "df5e2a95cf284304ffbde4df8b6a0f00d475edb6f0b580503e7b702887b2cd40"
+          }
+        ]
+      }
+    }
+  ],
+  "hypothesis": "Random one-word relaxation completed more progressively enlarged families than top-unlock adaptation. Continue its four verified225 checkpoints into previously unsearched relaxations; do not rerun completed child fixed sets.",
+  "new_wall_allowance_per_case": 600,
+  "solver_threads": 2,
+  "scope": "This is continuation, not a new independent comparison. Native report counts are cumulative; subtract this frozen old-trial ledger to measure new work. No paid calls."
+}

@@ -1,4 +1,4 @@
-# CodeGarden research status — 2026-11-15T13:59:00Z
+# CodeGarden research status — 2026-11-15T14:34:00Z
 
 **Objective open. Best found and independently verified remains226, reproduced from the arena. No227 witness or new global record is claimed.**
 
@@ -58,3 +58,21 @@ python -B codegarden/phase3/core_all_optima.py
 ```
 
 The explicit witness and acceptance checks require no model, provider API or search history. The latter audits cover logged local families, not the entire code problem.
+
+## Further completed experiments at this checkpoint
+
+The exact per-worker recovery fixed a collection bug in the continuation and migration batches: flattening archives could overwrite a fresh checkpoint with a stale sibling copy. Use `random_resume_recovered_001/` and `min_growth_recovered_001/`, pinned to commit`191f420238ef63e4e63c2d388804fed3b875ca3d`. Archive hashes, source/case IDs, history/fixed counts, and both protected incumbent checks passed. The earlier flattened directories are deprecated as resume inputs.
+
+The four random continuations added140 trial occurrences and46 closed225 goal-families. All remain225. The eight paired minimum-growth/random cases added559 trial occurrences: minimum-growth closed123 families versus68 for random. It won closure count in six pairs, lost one and tied one. Actual combined self/child CPU was 9181.683 versus 9201.544 seconds. Both methods produced the same six distinct final225 witness hashes; neither found a novel226 or227. This is a throughput result, not success on the cardinality objective.
+
+An exact2-SAT coordinate-lifting study covered256 puncture/reinsert contexts. Only16 diagonal contexts were satisfiable; all1048576 one-extra-word queries there completed without227. A broader sampled two-choice study completed12000 model occurrences, representing10097 canonical models and1903 duplicates. It found no novel226 or227. Most random replacements could not participate in a full valid assignment, motivating a switch to unions of two valid parents.
+
+Sixteen full two-parent unions have exact ordinary union optimum225. Matching-based searches with at most two or three arbitrary outside words completed without227. Candidate pools and source-pinned definitions are explicit. The raw first-engine score226 denotes the retained external baseline; **the method itself reached225**. The next engine separates those scores and continues limits4 through8. Its completed roots and interrupted roots are distinguished.
+
+The use of bipartite matching/vertex cover for parent unions is informed by the [primary arena discussion](https://einsteinarena.com/problems/two-deletion-code-16/threads/278). That thread reports finite union and weight-window computations, not a global bound. This implementation adds arbitrary outside-word search and is independently written. No external inline archive was executed.
+
+The recorded demo passed real Chromium checks at1440px and390px: ten decoding examples, duplicate-position rejection, and downloaded226 witnesses passing both protected checkers. Earlier unsupported-runner and mobile-overflow failures are preserved, rather than called successful tests. The replay uses the reproduced incumbent.
+
+Current research comprises [larger union neighborhoods](https://github.com/howdymary/compute-forecasting/actions/runs/43724017012) and [eight matched sparse-edge-penalty controls](https://github.com/howdymary/compute-forecasting/actions/runs/43724952690). New weighted fields require independent literal checks before search. All current new compute remains free public standard GitHub runners. No paid allocation was renewed. The requested complete four-way memory/training comparison remains incomplete; current heuristic comparisons do not establish a Tinker adaptation benefit.
+
+Weighted setup run43724596322 passed literal-field tests but all probes stopped before search because its prerequisite receipt used the old output path. The corrected source ise4f02ad198b582d0a4c973f460fbe638aa6f27f9. This is a setup failure, not a mathematical negative. First-eight union continuation workers completed outside limits4/5; case0 also completed6. Other larger limits remain open after actual601–608 CPU seconds; these are measured overruns of a soft600-second deadline, not equal exact600-second executions.

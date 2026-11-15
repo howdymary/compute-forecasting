@@ -1,0 +1,126 @@
+{
+  "union_size": 258,
+  "left": 33,
+  "right": 33,
+  "common": 192,
+  "union_alpha": 225,
+  "levels": [
+    {
+      "outside_limit": 2,
+      "required_union_size": 225,
+      "filter_complete": true,
+      "filter_matching_queries": 65,
+      "candidate_pool": [],
+      "search_order": [],
+      "completed_roots": 0,
+      "active_root": -1,
+      "complete": true,
+      "cpu_seconds_cumulative": 0.027695,
+      "candidate_pool_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "search_order_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "proof_artifact": null
+    },
+    {
+      "outside_limit": 3,
+      "required_union_size": 224,
+      "filter_complete": true,
+      "filter_matching_queries": 651,
+      "candidate_pool": [
+        133,
+        8368,
+        32767,
+        57360,
+        57376,
+        65440
+      ],
+      "search_order": [
+        133,
+        8368,
+        32767,
+        57360,
+        57376,
+        65440
+      ],
+      "completed_roots": 6,
+      "active_root": 5,
+      "complete": true,
+      "cpu_seconds_cumulative": 0.042062,
+      "candidate_pool_sha256": "646980cf8a0a541ddd687d48048187f64e374c0347cd95453060627e20110116",
+      "search_order_sha256": "646980cf8a0a541ddd687d48048187f64e374c0347cd95453060627e20110116",
+      "proof_artifact": null
+    }
+  ],
+  "matching_calls": 609,
+  "memo_hits": 145,
+  "nodes": 6,
+  "found227_unverified": false,
+  "timed_out": false,
+  "cpu_seconds": 0.042066,
+  "scope": "Full two-parent union with at most2 or3 arbitrary outside words for each completed level; exact bipartite matching after outside conflicts. Interrupted roots/filters remain open. Not all codes or global optimality.",
+  "source_sha": "f54584e7088915cc9e8cd8863a155dcb984bb6fd",
+  "case": 14,
+  "plan_sha256": "4a64a73d70e32ea6c216b37f079da5e84eb59ab099b171c7a78ae2116afe6a61",
+  "parent_sha256": [
+    "fc4183716581302b27b3dfd09b1fbf22403e2dc66ec5043953d3f985a25cad93",
+    "88aea5927bdf65ee8f30737ee899aa892e9f2df15e116cd5b3e5bc148b4eee8c"
+  ],
+  "parent_verifications": [
+    {
+      "accepted": true,
+      "cardinality": 225,
+      "reports": [
+        {
+          "cardinality": 225,
+          "distinct_descendants": 6367,
+          "length": 16,
+          "method": "distinct_string_two_deletions",
+          "valid": true,
+          "witness_sha256": "fc4183716581302b27b3dfd09b1fbf22403e2dc66ec5043953d3f985a25cad93"
+        },
+        {
+          "cardinality": 225,
+          "largest_pairwise_lcs": 13,
+          "length": 16,
+          "method": "independent_dynamic_programming_lcs",
+          "pairs_checked": 25200,
+          "valid": true,
+          "witness_sha256": "fc4183716581302b27b3dfd09b1fbf22403e2dc66ec5043953d3f985a25cad93"
+        }
+      ]
+    },
+    {
+      "accepted": true,
+      "cardinality": 225,
+      "reports": [
+        {
+          "cardinality": 225,
+          "distinct_descendants": 6347,
+          "length": 16,
+          "method": "distinct_string_two_deletions",
+          "valid": true,
+          "witness_sha256": "88aea5927bdf65ee8f30737ee899aa892e9f2df15e116cd5b3e5bc148b4eee8c"
+        },
+        {
+          "cardinality": 225,
+          "largest_pairwise_lcs": 13,
+          "length": 16,
+          "method": "independent_dynamic_programming_lcs",
+          "pairs_checked": 25200,
+          "valid": true,
+          "witness_sha256": "88aea5927bdf65ee8f30737ee899aa892e9f2df15e116cd5b3e5bc148b4eee8c"
+        }
+      ]
+    }
+  ],
+  "union_pool_sha256": "08b7a7fb92a2030b1f02e3bbf548fc6ee633fad0ae6be06f945398dd579c68a6",
+  "initial_extra_universe_sha256": "ee1247c7596f03e37f65d3fad0a09b4aa7ffbe81495839fd407ffdef888ba214",
+  "tests": {
+    "brute_force_bipartite_deletion_cases": 1440,
+    "passed": true
+  },
+  "solutions": [],
+  "best_independently_verified": 226,
+  "wall_including_verification": 0.34334355900000446,
+  "formal_absence_certificate": false,
+  "novel226_sampling": "Witnesses at non-goal nodes are sampled every17nodes, cap16. Every reachable227 target is checked; no exhaustive novelty claim."
+}

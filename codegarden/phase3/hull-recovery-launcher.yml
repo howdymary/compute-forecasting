@@ -1,0 +1,52 @@
+name: CodeGarden recover exact per-worker hull evidence
+on:
+  push:
+    branches: [codegarden-artifact-recovery-003]
+    paths: [.github/workflows/codegarden.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: codegarden-free-hull-recovery-003
+  cancel-in-progress: false
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+  SOURCE_SHA: ${{ github.sha }}
+  TMPDIR: ${{ github.workspace }}/codegarden/.tmp
+  PIP_CACHE_DIR: ${{ github.workspace }}/codegarden/.cache/pip
+  PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/codegarden/.cache/playwright
+jobs:
+  recover:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+          mkdir -p codegarden/.tmp codegarden/.cache/pip codegarden/.cache/playwright
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Recover completed continuation cases
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -B -u codegarden/phase3/recover_hull_artifacts.py random
+      - name: Wait boundedly and recover each paired worker
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -B -u codegarden/phase3/recover_hull_artifacts.py minimum
+      - name: Publish source-checked evidence
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -B codegarden/phase3/publish_hull_recovery.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: codegarden-hull-recovery
+          retention-days: 1
+          path: |
+            codegarden/artifacts/phase3/random_resume_recovered_001/
+            codegarden/artifacts/phase3/min_growth_recovered_001/

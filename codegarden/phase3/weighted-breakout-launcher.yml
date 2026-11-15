@@ -1,0 +1,107 @@
+name: CodeGarden matched sparse edge-weight breakout versus uniform conflicts
+on:
+  push:
+    branches: [codegarden-weighted-breakout-003]
+    paths: [.github/workflows/codegarden.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: codegarden-free-weighted-breakout-003
+  cancel-in-progress: false
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+  SOURCE_SHA: ${{ github.sha }}
+  CODEGARDEN_BATCH: weighted_breakout_001
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -o pipefail
+          for attempt in 1 2 3; do
+            if gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1; then break; fi
+            sleep 2
+          done
+          test -f codegarden/phase3/weighted_breakout.cpp
+      - name: Compile and independently exhaust small cases
+        run: |
+          mkdir -p codegarden/.build
+          g++ -O3 -std=c++17 codegarden/phase3/weighted_breakout.cpp -o codegarden/.build/weighted_breakout
+          python -B -u codegarden/phase3/test_weighted_breakout.py
+          python -B -u codegarden/phase3/weighted_prerequisites.py
+          python -B -u codegarden/phase3/preflight.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: codegarden-weighted-preflight
+          path: codegarden/artifacts/phase3/weighted_breakout_001/
+  probes:
+    needs: preflight
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      max-parallel: 8
+      matrix:
+        case: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -o pipefail
+          for attempt in 1 2 3; do
+            if gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1; then break; fi
+            sleep 2
+          done
+          test -f codegarden/phase3/weighted_breakout.cpp
+      - uses: actions/download-artifact@v4
+        with:
+          name: codegarden-weighted-preflight
+          path: codegarden/artifacts/phase3/weighted_breakout_001/
+      - name: Compile and run bounded component
+        run: |
+          mkdir -p codegarden/.build
+          g++ -O3 -std=c++17 codegarden/phase3/weighted_breakout.cpp -o codegarden/.build/weighted_breakout
+          python -B -u codegarden/phase3/weighted_breakout.py ${{ matrix.case }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          retention-days: 1
+          name: codegarden-weighted-${{ matrix.case }}
+          path: codegarden/artifacts/phase3/weighted_breakout_001/
+  collect:
+    needs: [preflight, probes]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -o pipefail
+          for attempt in 1 2 3; do
+            if gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1; then break; fi
+            sleep 2
+          done
+          test -f codegarden/phase3/weighted_breakout.cpp
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: codegarden-weighted-*
+          merge-multiple: true
+          path: codegarden/artifacts/phase3/weighted_breakout_001/
+      - name: Publish leased results
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -B -u codegarden/phase3/publish_weighted_breakout.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          retention-days: 1
+          name: codegarden-weighted-collected
+          path: codegarden/artifacts/phase3/weighted_breakout_001/
