@@ -1,0 +1,41 @@
+{
+  "source_sha": "bccf0a52d26996dbc34b3024b93eeff9643afcc3",
+  "case": 2,
+  "mode": "fixed",
+  "seed": 1311002,
+  "starting_verification": {
+    "accepted": true,
+    "cardinality": 225,
+    "reports": [
+      {
+        "cardinality": 225,
+        "distinct_descendants": 6389,
+        "length": 16,
+        "method": "distinct_string_two_deletions",
+        "valid": true,
+        "witness_sha256": "31e85b2e8957221808d9f17fa4aa0e2a07d9114242ce11820d89d0d39778ba58"
+      },
+      {
+        "cardinality": 225,
+        "largest_pairwise_lcs": 13,
+        "length": 16,
+        "method": "independent_dynamic_programming_lcs",
+        "pairs_checked": 25200,
+        "valid": true,
+        "witness_sha256": "31e85b2e8957221808d9f17fa4aa0e2a07d9114242ce11820d89d0d39778ba58"
+      }
+    ]
+  },
+  "starting_sha256": "31e85b2e8957221808d9f17fa4aa0e2a07d9114242ce11820d89d0d39778ba58",
+  "forbidden": [
+    7,
+    57344
+  ],
+  "hitting_scope": "At leastone absent225 word from the shared216 core of each of the four validated symmetry families; excludes all known38x4 codes, not all226 codes.",
+  "new226": null,
+  "new226_search_cpu_seconds": 300.002,
+  "new226_minimum_pair_conflicts": 1,
+  "steps": [],
+  "best_verified": 226,
+  "scope": "Bounded heuristic restricted by the explicit hitting set. No infeasibility or global-record claim from a negative result; positives accepted only by two protected verifiers."
+}
