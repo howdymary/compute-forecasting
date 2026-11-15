@@ -1,0 +1,394 @@
+{
+  "schema_version": 4,
+  "source_sha": "a57a660b01d3197c6cd6d9f0c9537ae621661943",
+  "run_id": "08bbbf33fefd401084ae9154211f8d8c",
+  "created_at": "2026-11-15T19:10:33.347010+00:00",
+  "vintage": {
+    "schema_version": 4,
+    "snapshot_id": "1bbef25ce33e68666671294c0c21a88129a41ed11def0d37a8ced01348283007",
+    "snapshot_bytes_sha256": "f1984415a5674f1e5b9d36fe835b554e4970e0c8f31dd9355c129cb39063dcf4",
+    "retrieved_at": "2026-11-15T19:10:32.902267+00:00",
+    "cutoff": "2026-11-06",
+    "target_definition_sha256": "6af3a56d1a285dc54de56173f80f8f9db86b7f6afdede034f48f0b94560ddd43",
+    "revisions": [],
+    "first_observed_vintage_preserved": true
+  },
+  "learning": {
+    "status": "gated_pending_broader_training_data",
+    "criteria": {
+      "distinct_training_tasks": {
+        "actual": 9,
+        "minimum": 24
+      },
+      "training_origins": {
+        "actual": 6,
+        "minimum": 8
+      },
+      "informative_training_tasks": {
+        "actual": 4,
+        "minimum": 12
+      },
+      "development_origins": {
+        "actual": 3,
+        "minimum": 4
+      },
+      "unique_contexts": {
+        "actual": 9,
+        "minimum": 12
+      }
+    },
+    "rationale": "Conservative engineering diversity gates, fixed before any new optimization; not a statistical power or generalization guarantee. Repeats and prompt augmentation do not increase independent task counts.",
+    "training_tasks": 9,
+    "training_origins": [
+      "2026-06-20",
+      "2026-06-27",
+      "2026-07-04",
+      "2026-07-11",
+      "2026-07-18",
+      "2026-07-24"
+    ],
+    "development_origins": [
+      "2026-08-08",
+      "2026-08-15",
+      "2026-08-22"
+    ],
+    "zero_reward_variation_tasks": 5,
+    "reward_audit": [
+      {
+        "task_id": "f20861a660bf0e5bbef8",
+        "possible_terminal_reward_range": 0.7383217084720388,
+        "possible_winners": 11,
+        "reward_is_clipped": true
+      },
+      {
+        "task_id": "5e5faa1ce8eb9d8930b9",
+        "possible_terminal_reward_range": 0.12486555870898647,
+        "possible_winners": 3,
+        "reward_is_clipped": true
+      },
+      {
+        "task_id": "c95a43e87374f33a1187",
+        "possible_terminal_reward_range": 1.0522866927217278,
+        "possible_winners": 3,
+        "reward_is_clipped": true
+      },
+      {
+        "task_id": "688743110392e1b3ea33",
+        "possible_terminal_reward_range": 0.0,
+        "possible_winners": 1,
+        "reward_is_clipped": true
+      },
+      {
+        "task_id": "feb6b7f17a1e889d83bd",
+        "possible_terminal_reward_range": 0.0,
+        "possible_winners": 1,
+        "reward_is_clipped": true
+      },
+      {
+        "task_id": "4a18b54ed7f5b19d5fdf",
+        "possible_terminal_reward_range": 0.0,
+        "possible_winners": 1,
+        "reward_is_clipped": true
+      },
+      {
+        "task_id": "cdb1b5abca86abcf002b",
+        "possible_terminal_reward_range": 0.0,
+        "possible_winners": 1,
+        "reward_is_clipped": true
+      },
+      {
+        "task_id": "6f8a76816082af649e94",
+        "possible_terminal_reward_range": 0.0,
+        "possible_winners": 1,
+        "reward_is_clipped": true
+      },
+      {
+        "task_id": "e3f1cdee2cd0a258bb83",
+        "possible_terminal_reward_range": 2.4057056412160294,
+        "possible_winners": 3,
+        "reward_is_clipped": true
+      }
+    ],
+    "near_duplicate_definition": "Exact observation plus validation-loss fingerprint rounded to 10 decimals; this is a diagnostic, not an independence estimator",
+    "unique_context_fingerprints": 9,
+    "optimizer_updates_launched": 0
+  },
+  "interval": {
+    "schema_version": 4,
+    "status": "completed_training_period_diagnostic",
+    "classification": "Additional retrospective diagnostic on independently licensed context; no tuning or independent accuracy claim",
+    "origins": [
+      "2026-06-20",
+      "2026-07-04",
+      "2026-07-18"
+    ],
+    "n_cells": 18,
+    "metrics": {
+      "candidate_pinball": 0.0031587291666666743,
+      "reference_pinball": 0.003392547175925933,
+      "candidate_covered": 0.8888888888888888,
+      "reference_covered": 0.8333333333333334,
+      "candidate_width": 0.03449229166666667,
+      "reference_width": 0.0280219777777778
+    },
+    "cases": [
+      {
+        "series_id": "hubbard-independent-a100-40",
+        "origin": "2026-06-20",
+        "horizon_days": 1,
+        "candidate_pinball": 0.0,
+        "reference_pinball": 0.0,
+        "candidate_covered": true,
+        "reference_covered": true,
+        "candidate_width": 0.0,
+        "reference_width": 0.0,
+        "residual_count": 91,
+        "effective_residuals": 46.02803134129407,
+        "last_calibration_label": "2026-06-20"
+      },
+      {
+        "series_id": "hubbard-independent-a100-40",
+        "origin": "2026-06-20",
+        "horizon_days": 3,
+        "candidate_pinball": 0.01844500000000009,
+        "reference_pinball": 0.026135500000000044,
+        "candidate_covered": false,
+        "reference_covered": false,
+        "candidate_width": 0.09129999999999994,
+        "reference_width": 0.06566500000000008,
+        "residual_count": 85,
+        "effective_residuals": 44.02310178168634,
+        "last_calibration_label": "2026-06-20"
+      },
+      {
+        "series_id": "hubbard-independent-a100-40",
+        "origin": "2026-06-20",
+        "horizon_days": 7,
+        "candidate_pinball": 0.02008950000000002,
+        "reference_pinball": 0.01844500000000009,
+        "candidate_covered": true,
+        "reference_covered": false,
+        "candidate_width": 0.14433499999999988,
+        "reference_width": 0.09129999999999994,
+        "residual_count": 76,
+        "effective_residuals": 40.26926217153445,
+        "last_calibration_label": "2026-06-20"
+      },
+      {
+        "series_id": "hubbard-independent-a100-40",
+        "origin": "2026-07-04",
+        "horizon_days": 1,
+        "candidate_pinball": 0.0,
+        "reference_pinball": 0.0,
+        "candidate_covered": true,
+        "reference_covered": true,
+        "candidate_width": 0.0,
+        "reference_width": 0.0,
+        "residual_count": 105,
+        "effective_residuals": 54.2419938836879,
+        "last_calibration_label": "2026-07-04"
+      },
+      {
+        "series_id": "hubbard-independent-a100-40",
+        "origin": "2026-07-04",
+        "horizon_days": 3,
+        "candidate_pinball": 0.0030556666666666705,
+        "reference_pinball": 0.002359733333333339,
+        "candidate_covered": true,
+        "reference_covered": true,
+        "candidate_width": 0.09167000000000014,
+        "reference_width": 0.07079200000000019,
+        "residual_count": 99,
+        "effective_residuals": 52.62919666128827,
+        "last_calibration_label": "2026-07-04"
+      },
+      {
+        "series_id": "hubbard-independent-a100-40",
+        "origin": "2026-07-04",
+        "horizon_days": 7,
+        "candidate_pinball": 0.0030556666666666705,
+        "reference_pinball": 0.0030556666666666705,
+        "candidate_covered": true,
+        "reference_covered": true,
+        "candidate_width": 0.09167000000000014,
+        "reference_width": 0.09167000000000014,
+        "residual_count": 90,
+        "effective_residuals": 49.56075815008687,
+        "last_calibration_label": "2026-07-04"
+      },
+      {
+        "series_id": "hubbard-independent-a100-40",
+        "origin": "2026-07-18",
+        "horizon_days": 1,
+        "candidate_pinball": 0.0,
+        "reference_pinball": 0.0,
+        "candidate_covered": true,
+        "reference_covered": true,
+        "candidate_width": 0.0,
+        "reference_width": 0.0,
+        "residual_count": 113,
+        "effective_residuals": 60.68027423529053,
+        "last_calibration_label": "2026-07-18"
+      },
+      {
+        "series_id": "hubbard-independent-a100-40",
+        "origin": "2026-07-18",
+        "horizon_days": 3,
+        "candidate_pinball": 0.0030433333333333306,
+        "reference_pinball": 0.0021888333333333356,
+        "candidate_covered": true,
+        "reference_covered": true,
+        "candidate_width": 0.09129999999999994,
+        "reference_width": 0.06566500000000008,
+        "residual_count": 109,
+        "effective_residuals": 59.492395993849016,
+        "last_calibration_label": "2026-07-18"
+      },
+      {
+        "series_id": "hubbard-independent-a100-40",
+        "origin": "2026-07-18",
+        "horizon_days": 7,
+        "candidate_pinball": 0.0030556666666666705,
+        "reference_pinball": 0.0030556666666666705,
+        "candidate_covered": true,
+        "reference_covered": true,
+        "candidate_width": 0.09167000000000014,
+        "reference_width": 0.09167000000000014,
+        "residual_count": 104,
+        "effective_residuals": 57.2168869298456,
+        "last_calibration_label": "2026-07-18"
+      },
+      {
+        "series_id": "hubbard-independent-t4",
+        "origin": "2026-06-20",
+        "horizon_days": 1,
+        "candidate_pinball": 2.600000000000009e-05,
+        "reference_pinball": 1.7466666666665626e-05,
+        "candidate_covered": true,
+        "reference_covered": true,
+        "candidate_width": 0.0007800000000000029,
+        "reference_width": 0.0005239999999999689,
+        "residual_count": 91,
+        "effective_residuals": 46.02803134129407,
+        "last_calibration_label": "2026-06-20"
+      },
+      {
+        "series_id": "hubbard-independent-t4",
+        "origin": "2026-06-20",
+        "horizon_days": 3,
+        "candidate_pinball": 0.0003438083333333286,
+        "reference_pinball": 0.00034632666666666126,
+        "candidate_covered": true,
+        "reference_covered": true,
+        "candidate_width": 0.0034167499999999684,
+        "reference_width": 0.0034922999999999482,
+        "residual_count": 85,
+        "effective_residuals": 44.02310178168634,
+        "last_calibration_label": "2026-06-20"
+      },
+      {
+        "series_id": "hubbard-independent-t4",
+        "origin": "2026-06-20",
+        "horizon_days": 7,
+        "candidate_pinball": 0.0002349499999999967,
+        "reference_pinball": 0.0004049999999999998,
+        "candidate_covered": true,
+        "reference_covered": true,
+        "candidate_width": 0.0037335000000000562,
+        "reference_width": 0.005500000000000005,
+        "residual_count": 76,
+        "effective_residuals": 40.26926217153445,
+        "last_calibration_label": "2026-06-20"
+      },
+      {
+        "series_id": "hubbard-independent-t4",
+        "origin": "2026-07-04",
+        "horizon_days": 1,
+        "candidate_pinball": 2.413333333333341e-05,
+        "reference_pinball": 1.4799999999998144e-05,
+        "candidate_covered": true,
+        "reference_covered": true,
+        "candidate_width": 0.0007240000000000024,
+        "reference_width": 0.00044399999999994444,
+        "residual_count": 105,
+        "effective_residuals": 54.2419938836879,
+        "last_calibration_label": "2026-07-04"
+      },
+      {
+        "series_id": "hubbard-independent-t4",
+        "origin": "2026-07-04",
+        "horizon_days": 3,
+        "candidate_pinball": 5.9483333333332216e-05,
+        "reference_pinball": 0.00011392333333333224,
+        "candidate_covered": true,
+        "reference_covered": true,
+        "candidate_width": 0.0017844999999999667,
+        "reference_width": 0.003417699999999968,
+        "residual_count": 99,
+        "effective_residuals": 52.62919666128827,
+        "last_calibration_label": "2026-07-04"
+      },
+      {
+        "series_id": "hubbard-independent-t4",
+        "origin": "2026-07-04",
+        "horizon_days": 7,
+        "candidate_pinball": 0.00023795000000000708,
+        "reference_pinball": 0.0001948125000000004,
+        "candidate_covered": true,
+        "reference_covered": true,
+        "candidate_width": 0.0037335000000000007,
+        "reference_width": 0.005485000000000018,
+        "residual_count": 90,
+        "effective_residuals": 49.56075815008687,
+        "last_calibration_label": "2026-07-04"
+      },
+      {
+        "series_id": "hubbard-independent-t4",
+        "origin": "2026-07-18",
+        "horizon_days": 1,
+        "candidate_pinball": 4.6666666666713327e-07,
+        "reference_pinball": 8.98499999999839e-06,
+        "candidate_covered": true,
+        "reference_covered": true,
+        "candidate_width": 1.4000000000014001e-05,
+        "reference_width": 0.00026954999999995177,
+        "residual_count": 113,
+        "effective_residuals": 60.68027423529053,
+        "last_calibration_label": "2026-07-18"
+      },
+      {
+        "series_id": "hubbard-independent-t4",
+        "origin": "2026-07-18",
+        "horizon_days": 3,
+        "candidate_pinball": 4.644999999999972e-05,
+        "reference_pinball": 0.00011344499999999903,
+        "candidate_covered": true,
+        "reference_covered": true,
+        "candidate_width": 0.001393499999999992,
+        "reference_width": 0.0034033499999999717,
+        "residual_count": 109,
+        "effective_residuals": 59.492395993849016,
+        "last_calibration_label": "2026-07-18"
+      },
+      {
+        "series_id": "hubbard-independent-t4",
+        "origin": "2026-07-18",
+        "horizon_days": 7,
+        "candidate_pinball": 0.005139050000000017,
+        "reference_pinball": 0.0046106899999999945,
+        "candidate_covered": false,
+        "reference_covered": false,
+        "candidate_width": 0.0033364999999999645,
+        "reference_width": 0.005097700000000038,
+        "residual_count": 104,
+        "effective_residuals": 57.2168869298456,
+        "last_calibration_label": "2026-07-18"
+      }
+    ],
+    "failures": [],
+    "future_comparison": "Registered prospective interval arm; outcomes pending",
+    "source_hash": "8d8f875ac1187bde5e26067937588429af40bfba685c12c125d6d98919433c40"
+  },
+  "new_training_updates": 0,
+  "cost_usd": null
+}
