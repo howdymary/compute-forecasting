@@ -8,6 +8,7 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
+  actions: read
 concurrency:
   group: campaign-v2-evidence
   cancel-in-progress: false
@@ -28,13 +29,19 @@ jobs:
         run: |
           python -m pip install -e . modal numpy httpx tinker
           python -m compileall -q src
+      - name: Resume successful search receipts without repeating paid queries
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p inputs/evidence-resume
+          gh run download 43664923302 --repo "$GITHUB_REPOSITORY" --name campaign-v2-evidence-a7c8dba37d19900627d00489405e9ccb259976a1-43664923302 --dir inputs/evidence-resume
       - name: Collect actual evidence and check account capabilities
         env:
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
           MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
           TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
           EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
-        run: python -m compute_forecast.campaign_v2_evidence
+        run: python -m compute_forecast.campaign_v2_evidence --resume inputs/evidence-resume/v2-evidence/evidence.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:

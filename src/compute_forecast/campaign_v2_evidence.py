@@ -25,11 +25,15 @@ def retain_private(run_id,payload):
     path=Path("/data/campaign-v2/evidence")/(run_id+".json")
     write(path,payload);volume.commit()
     return {"sha256":digest(payload),"private_storage":True}
-async def collect(output,max_queries=40):
+async def collect(output,max_queries=40,resume=None):
     import httpx,tinker
     out=Path(output);out.mkdir(parents=True,exist_ok=True)
     run_id=uuid.uuid4().hex;private={"run_id":run_id,"created_at":now(),"scope":"current_method_research","historical_market_input":False,"responses":[]}
     sources={};requests=[];started=time.perf_counter()
+    prior=json.loads(Path(resume).read_text()) if resume and Path(resume).is_file() else None
+    if prior:
+        sources={s["source_id"]:s for s in prior["sources"]};requests=list(prior["requests"])
+        private["prior_search_bodies_status"]="Earlier retention failed; original metadata retained; contents re-retrieved below"
     async with httpx.AsyncClient(timeout=60) as client:
         async def search(query,topic,snapshot=None):
             payload={"query":query,"type":"auto","numResults":3,"includeDomains":DOMAINS,"contents":{"highlights":True}}
@@ -54,8 +58,18 @@ async def collect(output,max_queries=40):
                 sources.setdefault(identifier,item)
             requests.append({"topic":topic,"query":query,"request_id":data.get("requestId"),"source_ids":ids,"status":"completed","runtime_seconds":time.perf_counter()-begin,"cost_dollars":data.get("costDollars"),"snapshot_requested":snapshot})
         # Capability request is methodological content, never a competition outcome.
-        await search("quantile regression time series official documentation","snapshot_capability","2026-07-01T00:00:00Z")
-        queries=[(topic,text+" "+suffix) for topic,text in TOPICS.items() for suffix in SUFFIXES][:max_queries]
+        if not prior:await search("quantile regression time series official documentation","snapshot_capability","2026-07-01T00:00:00Z")
+        queries=[] if prior else [(topic,text+" "+suffix) for topic,text in TOPICS.items() for suffix in SUFFIXES][:max_queries]
+        if prior:
+            urls=[s["url"] for s in sources.values()]
+            for start in range(0,len(urls),5):
+                response=await client.post("https://api.exa.ai/contents",headers={"x-api-key":os.environ["EXA_API_KEY"]},json={"ids":urls[start:start+5],"highlights":True})
+                if response.status_code==200:
+                    body=response.json();private["responses"].append({"kind":"recovered_contents","retrieved_at":now(),"response":body})
+                    for item in body.get("results",[]):
+                        sid=hashlib.sha256(item.get("url","").encode()).hexdigest()[:16]
+                        if sid in sources:sources[sid].update(content_sha256=digest(item),retrieved_at=now(),content_recovered=True)
+                else:private["responses"].append({"kind":"contents_failure","status_code":response.status_code})
         # Two requests at a time; preserve each raw response privately and metadata publicly.
         for start in range(0,len(queries),2):
             await asyncio.gather(*(search(query,topic) for topic,query in queries[start:start+2]))
@@ -83,6 +97,6 @@ async def collect(output,max_queries=40):
         f.write("# Current-method Exa research and capability probe\n\n")
         f.write("Historical market input: false. Full response bodies retained privately.\n\n~~~json\n"+json.dumps({k:v for k,v in result.items() if k not in ("requests","sources")},indent=2)+"\n~~~\n")
 if __name__=="__main__":
-    p=argparse.ArgumentParser();p.add_argument("--output",default="artifacts/v2-evidence");p.add_argument("--max-queries",type=int,default=40);a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument("--output",default="artifacts/v2-evidence");p.add_argument("--max-queries",type=int,default=40);p.add_argument("--resume");a=p.parse_args()
     if not 1<=a.max_queries<=60:raise ValueError("Unbounded research request")
-    asyncio.run(collect(a.output,a.max_queries))
+    with app.run():asyncio.run(collect(a.output,a.max_queries,a.resume))
