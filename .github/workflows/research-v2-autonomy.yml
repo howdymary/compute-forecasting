@@ -1,0 +1,54 @@
+name: Run fresh evidence-guided v2 research cycles
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/research-v2-autonomy.yml]
+  workflow_dispatch:
+    inputs:
+      question:
+        type: choice
+        options: [calibration, composition]
+        default: calibration
+permissions:
+  contents: read
+concurrency:
+  group: fresh-v2-autonomy
+  cancel-in-progress: false
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 65
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        question: [calibration, composition]
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install CPU clients and validate
+        run: |
+          python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -e '.[dev]' modal numpy tinker tinker-cookbook
+          python -m compileall -q src
+          python -m pytest
+      - name: Execute requested numerical experiments on Modal
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+          EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
+          PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
+        run: python -m compute_forecast.autonomy_v2 --question ${{ github.event.inputs.question || matrix.question }} --output artifacts/v2-autonomy
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: campaign-v2-autonomy-${{ matrix.question }}-${{ github.run_id }}
+          path: artifacts/
+          retention-days: 30
