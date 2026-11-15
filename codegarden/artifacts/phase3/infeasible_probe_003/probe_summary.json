@@ -1,0 +1,46 @@
+{
+  "finished_at": "2026-11-15T06:23:22.115576+00:00",
+  "source_sha": "cab6475cdf662494929bd4fe59641a1b342615ef",
+  "workers_complete": 4,
+  "best_independently_verified": {
+    "accepted": true,
+    "cardinality": 226,
+    "reports": [
+      {
+        "cardinality": 226,
+        "distinct_descendants": 6410,
+        "length": 16,
+        "method": "distinct_string_two_deletions",
+        "valid": true,
+        "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+      },
+      {
+        "cardinality": 226,
+        "largest_pairwise_lcs": 13,
+        "length": 16,
+        "method": "independent_dynamic_programming_lcs",
+        "pairs_checked": 25425,
+        "valid": true,
+        "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+      }
+    ]
+  },
+  "best_witness_path": "codegarden/artifacts/phase3/infeasible_probe_003/preflight/baseline.txt",
+  "modes": {
+    "pairbreak": {
+      "cases": 4,
+      "min_pair_energy": 2,
+      "iterations": 105816,
+      "search_cpu_seconds": 240.04459999999997
+    },
+    "persist": {
+      "cases": 4,
+      "min_pair_energy": 2,
+      "iterations": 2232818,
+      "search_cpu_seconds": 240.03519999999997
+    }
+  },
+  "warning": "Positive pair energy describes an invalid target-size state, never a code cardinality. No global record claim without a separate current-source comparison.",
+  "provider_cost": 0,
+  "provider_calls": 0
+}
