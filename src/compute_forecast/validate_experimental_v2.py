@@ -46,8 +46,14 @@ async def run():
             image=await page.screenshot(path=str(out/(label+".png")),full_page=False)
             for n in range(0,len(base64.b64encode(image)),2048):
                 print("V2_SCREENSHOT:"+label+":"+str(n//2048)+":"+base64.b64encode(image)[n:n+2048].decode(),flush=True)
-            await page.locator("#question").scroll_into_view_if_needed()
-            await page.screenshot(path=str(out/(label+"-activity.png")),full_page=False)
+            for section_name,index in (("learning",0),("activity",1),("forecasting",2),("evidence",3)):
+                section=page.locator("section").nth(index)
+                await section.evaluate("(el)=>el.scrollIntoView({block:'start',behavior:'instant'})")
+                capture=await page.screenshot(path=str(out/(label+"-"+section_name+".png")),full_page=False)
+                if section_name in ("learning","activity"):
+                    encoded=base64.b64encode(capture)
+                    for n in range(0,len(encoded),2048):
+                        print("V2_SCREENSHOT:"+label+"-"+section_name+":"+str(n//2048)+":"+encoded[n:n+2048].decode(),flush=True)
             await context.close();checks.append({"viewport":label,"width":width,"height":height,"no_page_overflow":True,"selectors":True,"keyboard":True,"reduced_motion":True})
         failure=await browser.new_context(viewport={"width":390,"height":844})
         page=await failure.new_page()

@@ -7,7 +7,7 @@ This document covers the separate retrospective v2 campaign on `compute-observat
 - [Explore prices](https://howdymary--compute-forecast-observatory-web.us-east.modal.run): archived November 6 benchmark and explicitly assumed long-term paths.
 - [Experimental Research](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/experimental): measured checkpoints, selector scores, operational execution traces, ablations and provider receipts.
 - [Public experimental JSON](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/api/experimental): the same allowlisted data used by the interface.
-- The research download appears after the measured finalizer and archive finish. Its URL, byte count, member hashes and whole-ZIP SHA-256 are in the public `archive` manifest. The immutable run-specific URL is preferred over `latest.zip`.
+- The research download appears after the measured finalizer and archive finish. Its URL, byte count, member hashes and whole-ZIP SHA-256 are in the public `artifact_archive` manifest. The immutable run-specific URL is preferred over `latest.zip`.
 - [Official CSV](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/files/forecasts.csv): SHA-256 `67a043255a716db6bc9b73cd28f9258c30fb299fd8671a9ee3430c0d94cadd80`. It has 111 rows across 37 headline series. V2 does not replace it.
 
 Derived scores and decisions are public. Raw offer histories, exact private model-resource paths, credentials, private sessions and restricted source excerpts are excluded. Independent numerical reruns require authorized pack access; replaying retained decisions does not require claiming access to those inputs.
