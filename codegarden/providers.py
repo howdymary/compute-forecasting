@@ -31,6 +31,9 @@ class Ledger:
                   ("history-"+history["source_run"]+"-"+provider,provider,amount))
     def reserve(self,provider,project,amount):
         provider="past" if provider=="past.dev" else provider
+        cutoff=self.spec.get("no_new_billable_after")
+        if cutoff and dt.datetime.now(dt.timezone.utc)>=dt.datetime.fromisoformat(cutoff.replace("Z","+00:00")):
+            raise Disabled("Campaign search cutoff reached; verification and reporting reserve protected")
         p=self.spec["providers"][provider];remaining=float(p["balance_at_snapshot"])
         if provider=="past":
             usage=http("https://api.past.dev/api/v1/usage",os.environ["PAST_API_KEY"])

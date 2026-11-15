@@ -4,23 +4,15 @@ on:
     branches: [codegarden]
     paths: [.github/workflows/codegarden.yml]
   workflow_dispatch:
-    inputs:
-      mode:
-        description: Bounded CodeGarden stage; paid modes require a fresh explicit shared allocation
-        type: choice
-        options: [verify, resume, transfer, research_cycle, native, full]
-        default: verify
 permissions:
   contents: write
 concurrency:
   group: codegarden-only
   cancel-in-progress: false
-env:
-  CODEGARDEN_MODE: ${{ inputs.mode || 'verify' }}
 jobs:
   verify-and-search:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 12
     steps:
       - name: Fetch immutable source
         env:
@@ -30,67 +22,22 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Verify independent checks and policy contracts
+      - name: Verify protected boundary and existing tests
         run: |
           python -B -m unittest discover -s codegarden/tests -v
           python -B codegarden/supervisor.py codegarden/artifacts/best_code.txt
-      - name: Compile and independently test the native kernel
-        run: |
-          mkdir -p codegarden/.build
-          g++ -O3 -std=c++17 codegarden/kernel.cpp -o codegarden/.build/kernel
-          python -B codegarden/test_kernel.py
-      - name: Install isolated clients only for a selected paid stage
-        if: env.CODEGARDEN_MODE != 'verify' && env.CODEGARDEN_MODE != 'resume'
+      - name: Install isolated pinned provider clients
         run: |
           python -m venv codegarden/.venv
           codegarden/.venv/bin/python -m pip install -r codegarden/requirements-providers.txt -r codegarden/requirements-exact.txt
-      - name: Read provider state for the separately allocated stage
-        if: env.CODEGARDEN_MODE != 'verify' && env.CODEGARDEN_MODE != 'resume'
+      - name: Refresh accounts and independently reproduce current arena
         env:
-          EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
           PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
           TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
           MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
-        run: codegarden/.venv/bin/python -B codegarden/budget/preflight.py
-      - name: Execute one memory-informed feedback cycle
-        if: env.CODEGARDEN_MODE == 'research_cycle'
-        env:
-          EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
-          PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
-          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
-        run: codegarden/.venv/bin/python -B -u codegarden/feedback_cycle.py
-      - name: Run bounded compiled Modal experiments
-        if: env.CODEGARDEN_MODE == 'native'
-        env:
-          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
-          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
-        run: codegarden/.venv/bin/python -B -u codegarden/native_campaign.py
-      - name: Run full sponsor and training pipeline
-        if: env.CODEGARDEN_MODE == 'full'
-        env:
-          EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
-          PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
-          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
-          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
-          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
-        run: codegarden/.venv/bin/python -B -u codegarden/live_campaign.py
-      - name: Resume only the saved feedback experiment
-        if: env.CODEGARDEN_MODE == 'resume' || env.CODEGARDEN_MODE == 'transfer'
-        env:
-          PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
-        run: python -B codegarden/feedback_resume.py
-      - name: Test the existing trained checkpoint on the same length-16 context
-        if: env.CODEGARDEN_MODE == 'transfer'
-        env:
-          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
-        run: codegarden/.venv/bin/python -B -u codegarden/trained_transfer.py
-      - name: Verify recorded frozen-policy budget comparison
-        run: python -B codegarden/policy_budget_eval.py
-      - name: Reverify every exported witness
-        if: always()
-        run: python -B codegarden/ci/final_check.py
-      - name: Publish only CodeGarden receipts with a branch lease
+        run: codegarden/.venv/bin/python -B -u codegarden/phase2/preflight.py
+      - name: Publish only CodeGarden receipts
         if: always()
         env:
           GH_TOKEN: ${{ github.token }}

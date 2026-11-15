@@ -1,18 +1,18 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "project": "codegarden",
   "source_commit": "938795b118ffdc40e1a84abeb7361b8f41721adb",
   "source_url": "https://github.com/howdymary/compute-forecasting/blob/938795b118ffdc40e1a84abeb7361b8f41721adb/boundforge/budget-snapshot.json",
-  "source_observed_at": "2026-11-15T03:00:31Z",
-  "expires_at": "2026-11-15T09:00:31Z",
-  "coordination": "Static disjoint allocation subtracts full BoundForge operational caps and conservative forecasting/pending reserves; CodeGarden billable stages are serialized through one orchestrator. Other projects do not read CodeGarden's SQLite.",
+  "source_observed_at": "2026-11-15T04:23:10Z",
+  "expires_at": "2026-11-15T05:48:09Z",
+  "coordination": "Cumulative CodeGarden caps include all phase-one holds. Full BoundForge caps plus forecasting guards and verification reserves are deducted. BoundForge structural run 43675810337 is active and is not cancelled; CodeGarden orchestration is serialized. No independent double allocation of the same account credits.",
   "providers": {
     "exa": {
-      "balance_at_snapshot": 119.58,
+      "balance_at_snapshot": 119.44,
       "boundforge_reserved": 5,
       "forecasting_pending_guard": 10,
       "verification_reserve": 5,
-      "codegarden_cap": 2,
+      "codegarden_cap": 5,
       "billing_boundary": "Free tier; dashboard says no payment method and purchases/automatic top-ups require one.",
       "source": "Authenticated Exa dashboard /billing"
     },
@@ -21,27 +21,30 @@
       "boundforge_reserved": 200,
       "forecasting_pending_guard": 10000,
       "verification_reserve": 5000,
-      "codegarden_cap": 500,
+      "codegarden_cap": 2000,
       "billing_boundary": "Metered prepaid balance; documented 402 on exhausted credits. Ingest estimated before reservation; recall conservatively 1 credit.",
       "source": "past.dev authenticated /usage"
     },
     "modal": {
-      "balance_at_snapshot": 249.33,
+      "balance_at_snapshot": 249.21,
       "boundforge_reserved": 25,
       "forecasting_pending_guard": 50,
       "verification_reserve": 20,
-      "codegarden_cap": 10,
-      "billing_boundary": "Starter; no payment method; provider-set $251 monthly usage limit. $1.64 already used at snapshot.",
+      "codegarden_cap": 50,
+      "billing_boundary": "Authenticated dashboard: Starter, $249.21 grant remaining; $251 usage limit set by Modal; payment method required to raise it; no setting changed.",
       "source": "Authenticated Modal Usage & billing"
     },
     "tinker": {
-      "balance_at_snapshot": 292.05,
+      "balance_at_snapshot": 280.43,
       "boundforge_reserved": 40,
       "forecasting_pending_guard": 100,
       "verification_reserve": 10,
-      "codegarden_cap": 20,
-      "billing_boundary": "Auto-reload disabled. Free checkpoint plan, 13 GB/100 GB and 44/100 checkpoints at snapshot.",
+      "codegarden_cap": 70,
+      "billing_boundary": "Authenticated dashboard: $280.43 prepaid, auto-reload disabled, free checkpoint storage 24GB/100GB and 85/100 checkpoints. Reserve remaining slots for other projects; at most one new CodeGarden sampler checkpoint.",
       "source": "Authenticated Tinker Billing > Balance"
     }
-  }
+  },
+  "source_note": "Recorded immediately after authenticated dashboard observations. past.dev is refreshed by remote preflight. Account-wide gross usage is deducted again conservatively before reservations.",
+  "campaign_start": "2026-11-15T04:18:09Z",
+  "no_new_billable_after": "2026-11-15T05:33:09Z"
 }

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "project": "codegarden",
+  "source_commit": "938795b118ffdc40e1a84abeb7361b8f41721adb",
+  "source_url": "https://github.com/howdymary/compute-forecasting/blob/938795b118ffdc40e1a84abeb7361b8f41721adb/boundforge/budget-snapshot.json",
+  "source_observed_at": "2026-11-15T03:00:31Z",
+  "expires_at": "2026-11-15T09:00:31Z",
+  "coordination": "Static disjoint allocation subtracts full BoundForge operational caps and conservative forecasting/pending reserves; CodeGarden billable stages are serialized through one orchestrator. Other projects do not read CodeGarden's SQLite.",
+  "providers": {
+    "exa": {
+      "balance_at_snapshot": 119.58,
+      "boundforge_reserved": 5,
+      "forecasting_pending_guard": 10,
+      "verification_reserve": 5,
+      "codegarden_cap": 2,
+      "billing_boundary": "Free tier; dashboard says no payment method and purchases/automatic top-ups require one.",
+      "source": "Authenticated Exa dashboard /billing"
+    },
+    "past": {
+      "balance_at_snapshot": 699579,
+      "boundforge_reserved": 200,
+      "forecasting_pending_guard": 10000,
+      "verification_reserve": 5000,
+      "codegarden_cap": 500,
+      "billing_boundary": "Metered prepaid balance; documented 402 on exhausted credits. Ingest estimated before reservation; recall conservatively 1 credit.",
+      "source": "past.dev authenticated /usage"
+    },
+    "modal": {
+      "balance_at_snapshot": 249.33,
+      "boundforge_reserved": 25,
+      "forecasting_pending_guard": 50,
+      "verification_reserve": 20,
+      "codegarden_cap": 10,
+      "billing_boundary": "Starter; no payment method; provider-set $251 monthly usage limit. $1.64 already used at snapshot.",
+      "source": "Authenticated Modal Usage & billing"
+    },
+    "tinker": {
+      "balance_at_snapshot": 292.05,
+      "boundforge_reserved": 40,
+      "forecasting_pending_guard": 100,
+      "verification_reserve": 10,
+      "codegarden_cap": 20,
+      "billing_boundary": "Auto-reload disabled. Free checkpoint plan, 13 GB/100 GB and 44/100 checkpoints at snapshot.",
+      "source": "Authenticated Tinker Billing > Balance"
+    }
+  }
+}

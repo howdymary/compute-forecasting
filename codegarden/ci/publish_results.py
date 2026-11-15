@@ -22,6 +22,9 @@ allowed+=list(pathlib.Path("codegarden/artifacts").glob("cp_*.json"))
 allowed+=list(pathlib.Path("codegarden/artifacts").glob("cp_*.txt"))
 allowed+=list(pathlib.Path("codegarden/artifacts").glob("provider_preflight*.json"))
 allowed+=list(pathlib.Path("codegarden/artifacts").glob("final_*.json"))
+allowed+=list(pathlib.Path("codegarden/artifacts/phase2").rglob("*.json"))
+allowed+=list(pathlib.Path("codegarden/artifacts/phase2").rglob("*.txt"))
+allowed+=[pathlib.Path("codegarden/budget/shared-allocation.json")]
 for path in sorted(set(allowed)):
     entries.append({"path":str(path),"mode":"100644","type":"blob","content":path.read_text()})
 if not entries:raise RuntimeError("No allowlisted results")
