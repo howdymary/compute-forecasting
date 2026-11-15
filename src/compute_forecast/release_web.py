@@ -156,6 +156,16 @@ def web():
     def review_protocols():
         return JSONResponse({"schema_version":4,"prospective":json.loads(Path("/opt/review-v4/prospective.json").read_bytes()),"experiments":json.loads(Path("/opt/review-v4/experiments.json").read_bytes())},headers=headers)
 
+    @api.get("/api/review-v4/operations")
+    def review_operations():
+        with lock:
+            public.reload();path=Path("/public/review-v4/operations.json")
+            if not path.is_file():return JSONResponse({"schema_version":4,"operations":{},"status":"pending_remote_execution"},headers=headers)
+            raw=path.read_bytes()
+        from .public_results import private_guard
+        payload=json.loads(raw);private_guard(payload)
+        return Response(raw,media_type="application/json",headers={**headers,"ETag":hashlib.sha256(raw).hexdigest()})
+
     @api.get("/health")
     def health():
         raw=read("results.json");r=json.loads(raw) if raw else None

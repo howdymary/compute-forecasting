@@ -11,6 +11,10 @@
 | [Expanded campaign findings](campaign-v2-findings.md) | Completed SFT/RL results, controls, limitations, and execution receipts |
 | [Remote reproduction](campaign-v2-reproduction.md) | Requirements, workflows, checkpoints, and artifact verification |
 
+## Review v4
+
+[Mechanism, contribution notebook and successor workflows](review-v4.md) · [Verified derived findings](../results/review-v4/findings.json) · [Prospective registration](../configs/prospective-selector-v4.json) · [Interval, learning and feedback registration](../configs/review-v4-experiments.json)
+
 ## Studies and protocols
 
 - **Frozen v1:** [protocol](protocol.md), [search-protocol amendment](search-protocol-amendment.md), [selection freeze](../configs/release-freeze.json), [official baseline selection](official-baseline-selection.md), and [representation findings](representation-findings.md).

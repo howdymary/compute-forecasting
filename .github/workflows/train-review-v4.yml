@@ -1,0 +1,52 @@
+name: Train a gated successor policy v4
+on:
+  workflow_dispatch:
+    inputs:
+      training_mode:
+        type: choice
+        options: [sft,rl]
+        default: sft
+      task_set:
+        type: string
+        default: original-pack-tasks
+      parent_id:
+        type: string
+        default: ''
+      resume_id:
+        type: string
+        default: ''
+permissions:
+  contents: read
+concurrency:
+  group: successor-policy-v4
+  cancel-in-progress: false
+jobs:
+  train:
+    if: github.ref == 'refs/heads/compute-observatory'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Fetch registered source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/${{ github.sha }}" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e . modal numpy
+      - name: Apply data gate before creating any training client
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+          TASK_SET: ${{ inputs.task_set }}
+          TRAINING_MODE: ${{ inputs.training_mode }}
+          PARENT_ID: ${{ inputs.parent_id }}
+          RESUME_ID: ${{ inputs.resume_id }}
+        run: python -m compute_forecast.review_remote_v4 --mode train --task-set "$TASK_SET" --training-mode "$TRAINING_MODE" --parent-id "$PARENT_ID" --resume-id "$RESUME_ID"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: successor-v4-${{ github.run_id }}
+          path: artifacts/review-v4-operations/
+          retention-days: 30

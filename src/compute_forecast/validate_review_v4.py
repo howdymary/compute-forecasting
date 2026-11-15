@@ -20,6 +20,8 @@ def main():
             page.wait_for_selector("#v4-contribution-chart",timeout=90000)
             assert page.locator("#v4-candidate").inner_text()==format(expected["comparisons"][0]["candidate_pinball"],".8f")
             assert page.locator(".v4-bar").count()==2
+            page.screenshot(path=str(out/(str(width)+"-default.png")))
+            page.locator(".v4-grid").screenshot(path=str(out/(str(width)+"-contributions.png")))
             page.locator("#v4-comparison").select_option("static")
             assert page.locator("#v4-delta").inner_text()==format(expected["comparisons"][1]["delta"],"+.8f")
             page.locator("#v4-pin-group").click()
@@ -62,7 +64,7 @@ def main():
         context.close();browser.close()
     report["status"]="passed";(out/"report.json").write_text(json.dumps(report,indent=2))
     print("V4_UI_VALIDATION:"+json.dumps(report),flush=True)
-    for name in ("1512-viewport.png","390-viewport.png"):
+    for name in ("1512-default.png","1512-contributions.png","390-default.png","390-contributions.png"):
         raw=(out/name).read_bytes();data=base64.b64encode(raw).decode()
         print("V4_PNG_META:"+json.dumps({"name":name,"sha256":hashlib.sha256(raw).hexdigest(),"chunks":(len(data)+11999)//12000}),flush=True)
         for i in range(0,len(data),12000):print("V4_PNG:"+json.dumps({"name":name,"index":i//12000,"base64":data[i:i+12000]}),flush=True)

@@ -53,7 +53,7 @@
     "require_both_matured_validation_folds": true,
     "missing_fold": "pending case; never synthesized"
   },
-  "candidate_pool": "Exact 42 identifiers in frozen v2 registry, same implementations and explicit logged baseline fallbacks for unavailable auxiliaries; no candidates added",
+  "candidate_pool": "Same 42 registered identifiers shared by every v4 selector; custom numerical implementations reused unchanged. Independent-source reference adapters are defined in prospective_panel_v4.py and versioned separately from official starter baselines. Explicit auxiliary-data fallbacks are retained.",
   "selectors": [
     "starting_policy",
     "frozen_operational_sft",
@@ -122,5 +122,13 @@
     "provider_cost_usd": null
   },
   "publication": "Only independently licensed derived observations, forecasts, scores and provenance; raw source objects retained privately",
-  "existing_commitments": "Unchanged; baseline and Chronos November16/18/22 remain locked in prospective_control_v3.py"
+  "existing_commitments": "Unchanged; baseline and Chronos November16/18/22 remain locked in prospective_control_v3.py",
+  "reference_adapters": {
+    "last_value": "Repeat latest available input",
+    "last_value_empirical": "Latest input plus unweighted linear empirical quantiles of matured same-lead differences over 180 calendar days; minimum8 pairs",
+    "drift": "Mean observed one-day change over180 days times effective lead, with centered same-lead residual quantiles",
+    "seasonal_naive": "Last observed weekday cycle using7-day season, with centered same-lead residual quantiles",
+    "failures": "Invalid positive ordered native reference quantiles fail the reference; custom method fallback uses the registered empirical reference and is recorded",
+    "comparison_scope": "New independent-source study; these adapters are not claimed to reproduce the original official export"
+  }
 }

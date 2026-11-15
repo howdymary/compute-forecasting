@@ -39,6 +39,12 @@ The policy evaluations and retrospective Chronos control cover **A100 series onl
 
 [Full campaign findings](docs/campaign-v2-findings.md) · [Frozen v1 representation findings](docs/representation-findings.md) · [Chronos control and publication audit](docs/research-explorer-v3.md)
 
+## What the review adds
+
+The [Findings notebook](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/#research) decomposes the measured gain by GPU, origin and horizon. A hash-verified replay finds that the operational SFT policy tests the same four tree configurations on all four evaluation tasks: feedback changes order, while the selected configurations and losses remain the same. This is a post-hoc explanation, not a preregistered portfolio win. Raw prediction equality remains unavailable.
+
+[Review v4 methods and remote workflows](docs/review-v4.md) · [Mechanism and contribution data](results/review-v4/findings.json) · [Registered prospective panel](configs/prospective-selector-v4.json)
+
 ## Inspect the evidence without credentials
 
 The [results directory](results/README.md) contains versioned, hash-indexed snapshots of the official forecast, numerical summaries, checkpoints, paired traces, contextual history, and scenario assumptions. Raw competition offers, restricted source excerpts, private model paths, and credentials are excluded.

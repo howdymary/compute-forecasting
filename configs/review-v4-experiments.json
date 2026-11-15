@@ -2,13 +2,13 @@
   "schema_version": 4,
   "classification": "Registered successor protocols; retrospective diagnostics explicitly separate",
   "interval": {
-    "id": "horizon-empirical-v4",
+    "id": "recency-weighted-horizon-v4",
     "base": "last_value",
-    "method": "Horizon-specific signed residual quantiles around persistence",
+    "method": "Horizon-specific recency-weighted signed-residual quantiles around persistence",
     "effective_lead": "Target date minus last input date",
     "window_calendar_days": 180,
     "min_residuals": 30,
-    "quantile_method": "linear",
+    "quantile_method": "Weighted inverse empirical CDF; no post-hoc repair",
     "quantiles": [
       0.1,
       0.5,
@@ -16,7 +16,16 @@
     ],
     "failure": "pending_insufficient_residuals; no unregistered fallback",
     "guarantee": "Empirical intervals only; no exchangeability or population coverage guarantee",
-    "outside_frozen_pool": true
+    "outside_frozen_pool": true,
+    "half_life_days": 28,
+    "min_effective_residuals": 20,
+    "amendment_before_any_evaluation": "Avoid duplicating the existing unweighted horizon-specific empirical baseline; no result from this new experiment has been viewed.",
+    "diagnostic_origins": [
+      "2026-06-20",
+      "2026-07-04",
+      "2026-07-18"
+    ],
+    "diagnostic_classification": "Training-period retrospective descriptive check on independent licensed context; no parameter selection from this check"
   },
   "learning": {
     "min_training_tasks": 24,
@@ -44,12 +53,18 @@
     "reward": "For subsequent RL: negative matured training-only terminal pinball / frozen training scale, clipped [-5,5]; four sampled trajectories per task with a group mean baseline",
     "constant_reward_stop_groups": 5,
     "resume": "Exact optimizer and RNG prefix only; otherwise a new run",
-    "release_gate": "No updates until readiness passes; no automatic RL launch"
+    "release_gate": "No updates until readiness passes; no automatic RL launch",
+    "allowed_modes": [
+      "sft",
+      "rl"
+    ],
+    "automatic_rl": false
   },
   "evidence": {
     "id": "feedback-factorial-v4",
     "conditions": [
       "feedback_only",
+      "feedback_hidden",
       "relevant_evidence",
       "irrelevant_evidence",
       "relevant_criticism",
@@ -62,9 +77,9 @@
     "trial_budget": 6,
     "selection": "Greedy categorical decisions, no model updates",
     "seed": 17,
-    "max_tasks": 8,
+    "max_tasks": 4,
     "max_exa_requests": 2,
-    "max_inferences": 500,
+    "max_inferences": 800,
     "wall_seconds": 1800,
     "packet_format": "Fixed fields and character budget; numerical feedback identical",
     "final_chooser": "True matured validation in every arm",
@@ -78,7 +93,9 @@
     ],
     "historical_scope": "Retrospective runs labeled as such; forward tasks use evidence retrieved before issuance",
     "outcomes": "pending matched forward tasks; no causal accuracy claim from current open-period prompt shifts",
-    "past_dev": "Authorship, IDs, recall results and actual use required; failed recalls recorded"
+    "past_dev": "Authorship, IDs, recall results and actual use required; failed recalls recorded",
+    "packet_characters": 900,
+    "feedback_hidden_definition": "Hide validation scores only; preserve history statistics, tested IDs, denominators and budget. Final chooser retains true validation."
   },
   "sources": [
     "https://tinker-docs.thinkingmachines.ai/cookbook/recipes/decisions/",
@@ -86,5 +103,6 @@
     "https://arxiv.org/abs/2507.02554",
     "https://arxiv.org/abs/2106.00170",
     "https://otexts.com/fpp3/tscv.html"
-  ]
+  ],
+  "resource_authorization": "User authorizes service usage without balance checks; finite job ceilings ensure reproducibility and recovery, not a spending target"
 }
