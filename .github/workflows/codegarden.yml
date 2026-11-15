@@ -1,18 +1,18 @@
 name: CodeGarden connected exchange circuits
 on:
   push:
-    branches: [codegarden-connected-003]
+    branches: [codegarden-connected-004]
     paths: [.github/workflows/codegarden.yml]
   workflow_dispatch:
 permissions:
   contents: write
 concurrency:
-  group: codegarden-free-connected-003
+  group: codegarden-free-connected-004
   cancel-in-progress: false
 env:
   PYTHONDONTWRITEBYTECODE: '1'
   SOURCE_SHA: ${{ github.sha }}
-  CODEGARDEN_BATCH: connected_001
+  CODEGARDEN_BATCH: connected_002
 jobs:
   preflight:
     runs-on: ubuntu-latest
@@ -25,13 +25,15 @@ jobs:
       - name: Compile and independently exhaust small cases
         run: |
           mkdir -p codegarden/.build
-          g++ -O3 -std=c++17 codegarden/phase3/bundle_connected.cpp -o codegarden/.build/bundle
-          python -B -u codegarden/phase3/test_connected.py
+          g++ -O3 -std=c++17 codegarden/phase3/bundle_connected_v2.cpp -o codegarden/.build/bundle
+          codegarden/.build/bundle --synthetic-tests > codegarden/.build/synthetic.json
+          python -B -u codegarden/phase3/test_connected2.py
+          mv codegarden/.build/synthetic.json codegarden/artifacts/phase3/connected_002/test_synthetic.json
           python -B -u codegarden/phase3/preflight.py
       - uses: actions/upload-artifact@v4
         with:
           name: codegarden-bundle-preflight
-          path: codegarden/artifacts/phase3/connected_001/
+          path: codegarden/artifacts/phase3/connected_002/
   probes:
     needs: preflight
     runs-on: ubuntu-latest
@@ -40,7 +42,7 @@ jobs:
       fail-fast: false
       max-parallel: 4
       matrix:
-        mode: [ascending6, ordered6, ascending7, ordered7]
+        mode: [ascending8, ordered8, ordered9, ordered10]
     steps:
       - name: Fetch immutable source
         env:
@@ -49,17 +51,17 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: codegarden-bundle-preflight
-          path: codegarden/artifacts/phase3/connected_001/
+          path: codegarden/artifacts/phase3/connected_002/
       - name: Compile and run bounded component
         run: |
           mkdir -p codegarden/.build
-          g++ -O3 -std=c++17 codegarden/phase3/bundle_connected.cpp -o codegarden/.build/bundle
-          python -B -u codegarden/phase3/connected_probe.py --mode ${{ matrix.mode }}
+          g++ -O3 -std=c++17 codegarden/phase3/bundle_connected_v2.cpp -o codegarden/.build/bundle
+          python -B -u codegarden/phase3/connected_probe2.py --mode ${{ matrix.mode }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: codegarden-bundle-${{ matrix.mode }}
-          path: codegarden/artifacts/phase3/connected_001/
+          path: codegarden/artifacts/phase3/connected_002/
   collect:
     needs: [preflight, probes]
     if: always()
@@ -74,13 +76,13 @@ jobs:
         with:
           pattern: codegarden-bundle-*
           merge-multiple: true
-          path: codegarden/artifacts/phase3/connected_001/
+          path: codegarden/artifacts/phase3/connected_002/
       - name: Publish leased results
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python -B -u codegarden/phase3/publish_connected.py
+        run: python -B -u codegarden/phase3/publish_connected2.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: codegarden-bundle-collected
-          path: codegarden/artifacts/phase3/connected_001/
+          path: codegarden/artifacts/phase3/connected_002/
