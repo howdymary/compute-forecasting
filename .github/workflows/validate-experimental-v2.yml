@@ -1,0 +1,41 @@
+name: Validate experimental research UI
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/validate-experimental-v2.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install remote browser tools and check new script
+        run: |
+          python -m pip install -e . playwright
+          python -m playwright install --with-deps chromium
+          mkdir -p artifacts
+          python - <<'PY'
+          from pathlib import Path
+          from compute_forecast.experimental_ui_v2 import HTML
+          Path('artifacts/experimental-ui.js').write_text(HTML.split('<script>',1)[1].split('</script>',1)[0])
+          PY
+          node --check artifacts/experimental-ui.js
+      - name: Verify desktop and mobile without recording
+        run: python -m compute_forecast.validate_experimental_v2
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: experimental-v2-ui-${{ github.run_id }}
+          path: artifacts/
+          retention-days: 30
