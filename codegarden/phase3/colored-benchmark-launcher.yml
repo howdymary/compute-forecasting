@@ -1,0 +1,47 @@
+name: CodeGarden coloring-bound correctness and same-input benchmark
+on:
+  push:
+    branches: [codegarden-colored-benchmark-001]
+    paths: [.github/workflows/codegarden.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: codegarden-free-full-portfolio-delta-001
+  cancel-in-progress: false
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+  SOURCE_SHA: ${{ github.sha }}
+  TMPDIR: ${{ github.workspace }}/codegarden/.tmp
+jobs:
+  research:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -o pipefail
+          gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+          mkdir -p codegarden/.tmp codegarden/.build codegarden/artifacts/phase3/colored_benchmark_001
+      - name: Compile and independently exhaust graph and known-goal fixtures
+        run: |
+          g++ -O3 -std=c++17 codegarden/phase3/bundle_novel.cpp -o codegarden/.build/bundle_novel
+          g++ -O3 -std=c++17 codegarden/phase3/bundle_colored.cpp -o codegarden/.build/bundle_colored
+          g++ -O3 -std=c++17 codegarden/phase3/test_bundle_colored.cpp -o codegarden/.build/test_bundle_colored
+          codegarden/.build/test_bundle_colored
+          codegarden/.build/bundle_colored --synthetic-tests
+      - name: Benchmark identical seed and candidate pools
+        run: python -B -u codegarden/phase3/bench_colored_bundle.py
+      - name: Publish isolated results with a source lease
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -B -u codegarden/phase3/publish_colored_benchmark.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          retention-days: 1
+          name: codegarden-full-portfolio-delta
+          path: codegarden/artifacts/phase3/colored_benchmark_001/
