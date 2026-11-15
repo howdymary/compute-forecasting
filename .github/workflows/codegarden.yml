@@ -1,13 +1,13 @@
-name: CodeGarden Kakeya two-hour pilot
+name: CodeGarden Kakeya deeper local and direction-band pilot
 on:
   push:
-    branches: [codegarden-kakeya-pilot-001]
+    branches: [codegarden-kakeya-pilot-002]
     paths: [.github/workflows/codegarden.yml]
   workflow_dispatch:
 permissions:
   contents: write
 concurrency:
-  group: codegarden-kakeya-pilot-001
+  group: codegarden-kakeya-pilot-002
   cancel-in-progress: false
 env:
   SOURCE_SHA: ${{ github.sha }}
@@ -29,7 +29,7 @@ jobs:
           python3 -B - <<'PY'
           import pathlib,urllib.request,os
           pathlib.Path("codegarden/.tmp").mkdir(parents=True,exist_ok=True)
-          names=["area.cpp","search.py","tests.py","verify.py","pilot.py","requirements.txt","baseline.json","protected/manifest.json","protected/official.py","protected/independent.py","protected/__init__.py"]
+          names=["area.cpp","search.py","tests.py","verify.py","pilot.py","requirements.txt","baseline.json","pilot001_diagnosis.json","protected/manifest.json","protected/official.py","protected/independent.py","protected/__init__.py"]
           for name in ["codegarden/kakeya/"+n for n in names]+["codegarden/side_services/cycle.py","codegarden/supervisor.py","codegarden/protected/manifest.json","codegarden/protected/verify_descendants.py","codegarden/protected/verify_lcs.py"]:
               p=pathlib.Path(name);p.parent.mkdir(parents=True,exist_ok=True)
               p.write_bytes(urllib.request.urlopen("https://raw.githubusercontent.com/howdymary/compute-forecasting/"+os.environ["SOURCE_SHA"]+"/"+name,timeout=45).read())
@@ -43,9 +43,9 @@ jobs:
           codegarden/.venv-kakeya/bin/python -m pip install --disable-pip-version-check -r codegarden/kakeya/requirements.txt
       - name: Compile and independently check proposal kernel before remote work
         run: |
-          mkdir -p codegarden/kakeya/.build codegarden/artifacts/kakeya/pilot_001
+          mkdir -p codegarden/kakeya/.build codegarden/artifacts/kakeya/pilot_002
           g++ -O3 -std=c++17 -shared -fPIC -march=x86-64 -mtune=generic codegarden/kakeya/area.cpp -o codegarden/kakeya/.build/area.so
-          codegarden/.venv-kakeya/bin/python -B codegarden/kakeya/tests.py > codegarden/artifacts/kakeya/pilot_001/preflight.json
+          codegarden/.venv-kakeya/bin/python -B codegarden/kakeya/tests.py > codegarden/artifacts/kakeya/pilot_002/preflight.json
       - name: Check launcher imports without provider calls
         run: codegarden/.venv-kakeya/bin/python -B -c "import runpy; runpy.run_path('codegarden/kakeya/pilot.py',run_name='preflight_import_only')"
       - name: Run bounded structural-versus-coordinate pilot
@@ -63,13 +63,13 @@ jobs:
         with:
           name: codegarden-kakeya-pilot
           retention-days: 30
-          path: codegarden/artifacts/kakeya/pilot_001/
+          path: codegarden/artifacts/kakeya/pilot_002/
       - uses: actions/upload-artifact@v4
         if: steps.pilot.outputs.has_candidate == 'true'
         with:
           name: codegarden-kakeya-candidate
           retention-days: 30
-          path: codegarden/artifacts/kakeya/pilot_001/candidate.json
+          path: codegarden/artifacts/kakeya/pilot_002/candidate.json
   accept:
     needs: research
     if: needs.research.outputs.has_candidate == 'true'

@@ -35,17 +35,27 @@ def run(spec,baseline,source,folder,checkpoint):
  while time.monotonic()<deadline:
   before=best[0];proposal=current.copy();description={"trial":trial[0],"policy":spec["policy"],"reflected_group":False}
   if trial[0]:
-   width=int(rng.choice(spec["widths"]));begin=int(rng.integers(0,129-width));amplitude=float(rng.choice(spec["amplitudes"]))*float(rng.normal())
+   width=int(rng.choice(spec["widths"]));begin=int(rng.integers(0,129-width))
+   if spec.get("aligned"):
+    boundaries=spec["baseline_boundaries"];left=int(rng.integers(0,len(boundaries)-1));right=min(len(boundaries)-1,left+int(rng.integers(1,3)));begin=boundaries[left];width=boundaries[right]-begin
+   amplitude=float(rng.choice(spec["amplitudes"]))*float(rng.normal())
    perturb=np.zeros(128);perturb[begin:begin+width]=amplitude;perturb-=perturb[0]
    if spec["policy"]=="coordinate":
     noise=rng.normal(size=127);noise*=np.linalg.norm(perturb[1:])/max(np.linalg.norm(noise),1e-300);perturb=np.concatenate(([0.],noise))
    elif spec["policy"]=="structural" and trial[0]%5==0:
     description["reflected_group"]=True;reflected=-proposal[begin:begin+width][::-1];reflected+=np.mean(proposal[begin:begin+width])-np.mean(reflected);proposal[begin:begin+width]=reflected
+   if spec.get("aligned") and spec.get("resize") and trial[0]%3==0:
+    boundaries=spec["baseline_boundaries"];b=int(rng.integers(1,len(boundaries)-1));lo,mid,hi=boundaries[b-1:b+2];delta=int(rng.choice([-2,-1,1,2]))
+    if mid-lo+delta>=2 and hi-mid-delta>=2:
+     left=np.interp(np.linspace(0,1,mid-lo+delta),np.linspace(0,1,mid-lo),current[lo:mid])
+     right=np.interp(np.linspace(0,1,hi-mid-delta),np.linspace(0,1,hi-mid),current[mid:hi])
+     proposal=current.copy();proposal[lo:hi]=np.concatenate((left,right));perturb[:]=0
+     description.update(move="adjacent_band_resize",lo=lo,old_mid=mid,new_mid=mid+delta,hi=hi,reflected_group=False)
    proposal+=perturb;proposal-=proposal[0];description["total_parameter_step_l2"]=float(np.linalg.norm(proposal-current))
    description.update(begin=begin,width=width,amplitude=amplitude,perturbation_l2=float(np.linalg.norm(perturb)))
   try:
-   result=minimize(objective,proposal[1:],jac=True,method="L-BFGS-B",bounds=[(-3.,3.)]*127,options={"maxiter":100,"maxfun":240,"maxls":20,"ftol":1e-14,"gtol":1e-8})
-   candidate=np.concatenate(([0.],result.x));a=kernel(candidate)[0];description.update(local_area=a,optimizer_status=int(result.status),local_evaluations=int(result.nfev))
+   result=minimize(objective,proposal[1:],jac=True,method="L-BFGS-B",bounds=[(-3.,3.)]*127,options={"maxiter":spec.get("maxiter",100),"maxfun":spec.get("maxfun",240),"maxls":20,"ftol":1e-14,"gtol":1e-8})
+   candidate=np.concatenate(([0.],result.x));a=kernel(candidate)[0];description.update(local_area=a,optimizer_status=int(result.status),local_evaluations=int(result.nfev),local_iterations=int(result.nit),optimizer_message=str(result.message),gradient_inf=float(np.max(np.abs(result.jac))))
   except BudgetStop:break
   # Same bounded basin-hopping rule in paired policies; retain a separate best proposal.
   accepted=a<current_a or rng.random()<np.exp(min(0.,(current_a-a)/spec["temperature"]))

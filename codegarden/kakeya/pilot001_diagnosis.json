@@ -1,0 +1,30 @@
+{
+  "source_sha": "8096b4c1f78b048453e22aa03de9bc4cb326f710",
+  "run_id": 43759862815,
+  "artifact_head": "caf8e0ed22dc085bba14df1ad06ff33fc69b74d7",
+  "workers": 6,
+  "trials": 337,
+  "evaluations": 36906,
+  "optimizer_status_counts": {
+    "0": 10,
+    "1": 327
+  },
+  "best_native": 0.10675138995168142,
+  "best_certified": 0.10675138995168142,
+  "new_verified_improvement": false,
+  "local_limits": {
+    "maxiter": 100,
+    "maxfun": 240
+  },
+  "interpretation": "Most non-baseline local solves hit a solver budget. This is not local optimality or exhaustion.",
+  "baseline_direction_bands": [
+    0,
+    10,
+    36,
+    72,
+    104,
+    128
+  ],
+  "band_rule": "Adjacent offset increase greater than0.025 in the reproduced baseline.",
+  "next_hypothesis": "Use deeper local solves and compare arbitrary blocks with fixed baseline-derived direction bands, optionally resizing adjacent bands."
+}
