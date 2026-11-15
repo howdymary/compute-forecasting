@@ -1,0 +1,118 @@
+{
+  "schema_version": 7,
+  "ui_source_sha": "ebc2943bf10ed5df63199c0d9ab8189f78c6d815",
+  "validation_run": "https://github.com/howdymary/compute-forecasting/actions/runs/43769336185",
+  "deployment_run": "https://github.com/howdymary/compute-forecasting/actions/runs/43768860296",
+  "deployment_attempt": 2,
+  "report": {
+    "status": "passed",
+    "widths": [
+      {
+        "width": 1512,
+        "exact_joins": 36,
+        "exact_forecasts": 111,
+        "observed_points": 3204,
+        "calendar_geometry": true,
+        "missing_days_break_paths": true,
+        "restricted_history_excluded": true,
+        "pins_immutable": true,
+        "keyboard_touch": true,
+        "no_overflow": true
+      },
+      {
+        "width": 390,
+        "exact_joins": 36,
+        "exact_forecasts": 111,
+        "observed_points": 3204,
+        "calendar_geometry": true,
+        "missing_days_break_paths": true,
+        "restricted_history_excluded": true,
+        "pins_immutable": true,
+        "keyboard_touch": true,
+        "no_overflow": true
+      },
+      {
+        "width": 320,
+        "exact_joins": 36,
+        "exact_forecasts": 111,
+        "observed_points": 3204,
+        "calendar_geometry": true,
+        "missing_days_break_paths": true,
+        "restricted_history_excluded": true,
+        "pins_immutable": true,
+        "keyboard_touch": true,
+        "no_overflow": true
+      }
+    ],
+    "recording": false,
+    "ui_source_sha": "ebc2943bf10ed5df63199c0d9ab8189f78c6d815",
+    "independent_history_loading_and_retry": true
+  },
+  "ui_checks": [
+    {
+      "name": "Validate pricing UI",
+      "url": "https://github.com/howdymary/compute-forecasting/actions/runs/43769336164"
+    },
+    {
+      "name": "Validate experimental research UI",
+      "url": "https://github.com/howdymary/compute-forecasting/actions/runs/43769336150"
+    },
+    {
+      "name": "Validate review findings without recording",
+      "url": "https://github.com/howdymary/compute-forecasting/actions/runs/43769336279"
+    },
+    {
+      "name": "Validate historical forecast timeline without recording",
+      "url": "https://github.com/howdymary/compute-forecasting/actions/runs/43769336185"
+    },
+    {
+      "name": "Validate prospective signal notebook without recording",
+      "url": "https://github.com/howdymary/compute-forecasting/actions/runs/43769336292"
+    },
+    {
+      "name": "Validate interactive notebook without recording",
+      "url": "https://github.com/howdymary/compute-forecasting/actions/runs/43769336171"
+    },
+    {
+      "name": "Validate GPU value and shared memory without recording",
+      "url": "https://github.com/howdymary/compute-forecasting/actions/runs/43769336138"
+    },
+    {
+      "name": "Validate research explorer without recording",
+      "url": "https://github.com/howdymary/compute-forecasting/actions/runs/43769336242"
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "docs/images/timeline-v7-1512-timeline.png",
+      "sha256": "16f95a02aa69336db801f6395a606b6ba2313b37c86d6022b36a67edb2c439ea",
+      "visually_inspected": true
+    },
+    {
+      "path": "docs/images/timeline-v7-1512-all-history.png",
+      "sha256": "df5e41277baba4dee017d057eeeb86bb83ed382665b758b07b372fa9b5b1362f",
+      "visually_inspected": true
+    },
+    {
+      "path": "docs/images/timeline-v7-390-opening-viewport.png",
+      "sha256": "805667b58f325981cd9171fe0758ce8e7952dabb3a0e460d223ca24e2ad5eef8",
+      "visually_inspected": true
+    },
+    {
+      "path": "docs/images/timeline-v7-320-opening-viewport.png",
+      "sha256": "a127dc563fe669b0055f06b761f1cc1f0af40074211d7aee08c0142b613d6d06",
+      "visually_inspected": true
+    }
+  ],
+  "official_csv_sha256": "67a043255a716db6bc9b73cd28f9258c30fb299fd8671a9ee3430c0d94cadd80",
+  "history": {
+    "approved_series": 36,
+    "submitted_series": 37,
+    "observations": 3204
+  },
+  "notes": [
+    "No video recorded.",
+    "The initial deployment attempt encountered a Modal startup HTTP500 after serving rollover; its single failed-job rerun passed. No HTTP or numerical assertions were relaxed.",
+    "All eight final UI suites passed."
+  ]
+}

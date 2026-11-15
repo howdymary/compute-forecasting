@@ -35,3 +35,7 @@ python -m compute_forecast.validate_timeline_v7
 ~~~
 
 This interface release was developed after the conservative November15,2026,14:00PT event deadline. It does not alter or replace the pre-deadline official submission.
+
+## Released verification
+
+[All eight final UI checks and inspected PNG hashes](../results/timeline-v7/ui-publication.json) · [Exact timeline validation](https://github.com/howdymary/compute-forecasting/actions/runs/43769336185). The price line is verified inside the opening1512/390/320px viewport. The original official CSV bytes are unchanged.

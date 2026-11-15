@@ -4,6 +4,8 @@ This directory contains versioned public research outputs. It is sufficient for 
 
 Current extension: [Pacific value v5](value-v5/README.md) adds approved matching history, the exact official-control audit, conditional economics and verified shared-memory receipts. The original manifest below describes its earlier frozen snapshot and is preserved.
 
+Current product: [Historical-price timeline v7](timeline-v7/README.md) · [Prospective signals v6](signals-v6/README.md). Frozen numerical results remain separate.
+
 ## Artifact index
 
 | Path | Contents |
