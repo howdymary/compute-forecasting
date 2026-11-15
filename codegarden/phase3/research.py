@@ -1,6 +1,6 @@
 """Renewed coordinated research calls; no model training or compute workers."""
 import datetime as dt,hashlib,json,os,pathlib,re,sys,traceback,urllib.request
-ROOT=pathlib.Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
+ROOT=pathlib.Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT));sys.path.insert(0,str(ROOT/"phase2"))
 from providers import Providers,http,cli
 from phase2.role import recalled
 OUT=ROOT/"artifacts/phase3/research_001";OUT.mkdir(parents=True,exist_ok=True)

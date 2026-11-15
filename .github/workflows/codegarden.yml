@@ -29,6 +29,8 @@ jobs:
         run: |
           python -m venv codegarden/.venv
           codegarden/.venv/bin/python -m pip install -r codegarden/requirements-providers.txt
+      - name: Check cross-phase imports before any provider calls
+        run: python -B -c 'import sys; sys.path.insert(0, "codegarden/phase3"); import research'
       - name: Refresh live account receipts, then research within the unchanged cumulative caps
         env:
           EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
