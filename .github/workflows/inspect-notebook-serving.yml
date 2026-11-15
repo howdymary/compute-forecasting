@@ -50,11 +50,11 @@ jobs:
           print('MODAL_WEB_INFO:'+str(function.info()),flush=True)
           try:print('ACTUAL_HTTP_HEALTH:'+urllib.request.urlopen(base+'/health?diagnostic=4349606',timeout=30).read().decode(),flush=True)
           except Exception as error:print('ACTUAL_HEALTH_ERROR:'+str(error),flush=True)
-          result=subprocess.run(['modal','app','logs','compute-forecast-observatory','--tail','250','--since','30m','--timestamps','--show-container-id'],capture_output=True,text=True,timeout=90)
+          result=subprocess.run(['modal','app','logs','compute-forecast-observatory','--tail','400','--since','30m','--timestamps','--show-container-id'],capture_output=True,text=True,timeout=90)
           output=result.stdout+'\n'+result.stderr
           (root/'public-app-logs.txt').write_text(output)
           print('NOTEBOOK_LOG_COMMAND_STATUS:'+str(result.returncode),flush=True)
-          print('NOTEBOOK_SERVING_LOGS:'+output[-50000:],flush=True)
+          print('NOTEBOOK_SERVING_LOGS:'+output[-85000:],flush=True)
           PY
       - uses: actions/upload-artifact@v4
         if: always()
@@ -62,3 +62,5 @@ jobs:
           name: notebook-serving-investigation-${{ github.run_id }}
           path: artifacts/
           retention-days: 30
+
+# Inspect the new revision under concurrent publication and asset requests.
