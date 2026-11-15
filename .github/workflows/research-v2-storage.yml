@@ -1,0 +1,43 @@
+name: Recover free storage by cleaning consumed RL rollout samplers
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/research-v2-storage.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ github.token }}
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+      TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+    steps:
+      - name: Fetch immutable source
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Confirm failed RL training has stopped and retain its traces
+        run: |
+          python -m pip install -e . modal tinker
+          python - <<'PY'
+          import json,os,subprocess
+          jobs=json.loads(subprocess.check_output(['gh','api','repos/'+os.environ['GITHUB_REPOSITORY']+'/actions/runs/43671941385/jobs'],text=True))['jobs']
+          assert all(j['status']=='completed' for j in jobs if j['name'].startswith('rl ('))
+          PY
+          gh run download 43671941385 --repo "$GITHUB_REPOSITORY" --pattern 'campaign-v2-rl-*' --dir inputs/failed-rl
+      - name: Delete only temporary rollout samplers from these failed v2 runs
+        run: modal run -m compute_forecast.checkpoint_cleanup_v2 --inputs inputs/failed-rl
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: campaign-v2-storage-cleanup-${{ github.run_id }}
+          path: artifacts/v2-storage/
+          retention-days: 30
