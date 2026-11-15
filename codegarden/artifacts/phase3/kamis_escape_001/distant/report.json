@@ -1,0 +1,90 @@
+{
+  "source_sha": "dcdfb5d2c48f33296460eed708027e94b7c49dd3",
+  "upstream_repository": "https://github.com/KarlsruheMIS/KaMIS",
+  "upstream_revision": "2e4b3861b8063f05e8520434b97ce59e21ca49e7",
+  "mode": "distant",
+  "small_graph_all_edges_independently_checked": true,
+  "profile": {
+    "n": 16,
+    "vertices": 65536,
+    "edges": 80964349,
+    "incidences": 2244608,
+    "csr_bytes": 648239088,
+    "conservative_solver_bytes": 3889434528,
+    "allowed": true
+  },
+  "graph_build_seconds": 14.358509332000011,
+  "experiments": [
+    {
+      "seed": 970001,
+      "method": "distant",
+      "solver_time_limit_seconds": 240,
+      "wall_seconds": 246.75548517000001,
+      "status": "returned",
+      "returncode": 0,
+      "log": "solver_970001.log",
+      "start_witness_sha256": "d3eaf114397c9778e16016063718b92ef0c43fa329fe3f59963cb2e1a5b78a8c",
+      "verification": {
+        "accepted": true,
+        "cardinality": 225,
+        "reports": [
+          {
+            "cardinality": 225,
+            "distinct_descendants": 6309,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "d3eaf114397c9778e16016063718b92ef0c43fa329fe3f59963cb2e1a5b78a8c"
+          },
+          {
+            "cardinality": 225,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25200,
+            "valid": true,
+            "witness_sha256": "d3eaf114397c9778e16016063718b92ef0c43fa329fe3f59963cb2e1a5b78a8c"
+          }
+        ]
+      }
+    },
+    {
+      "seed": 970002,
+      "method": "distant",
+      "solver_time_limit_seconds": 240,
+      "wall_seconds": 246.69633961600005,
+      "status": "returned",
+      "returncode": 0,
+      "log": "solver_970002.log",
+      "start_witness_sha256": "d3eaf114397c9778e16016063718b92ef0c43fa329fe3f59963cb2e1a5b78a8c",
+      "verification": {
+        "accepted": true,
+        "cardinality": 225,
+        "reports": [
+          {
+            "cardinality": 225,
+            "distinct_descendants": 6309,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "d3eaf114397c9778e16016063718b92ef0c43fa329fe3f59963cb2e1a5b78a8c"
+          },
+          {
+            "cardinality": 225,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25200,
+            "valid": true,
+            "witness_sha256": "d3eaf114397c9778e16016063718b92ef0c43fa329fe3f59963cb2e1a5b78a8c"
+          }
+        ]
+      }
+    }
+  ],
+  "best_verified": 226,
+  "scope": "Heuristic independent-set solver, not an optimality certificate. Graph is ephemeral and not committed.",
+  "provider_calls": 0,
+  "graph_sha256": "de8221d0814e5fcb303f529d423e801713af1cbcd61e309d8a9937a6aad08564",
+  "status": "completed"
+}
