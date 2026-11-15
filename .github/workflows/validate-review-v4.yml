@@ -4,9 +4,6 @@ on:
     workflows: ["Deploy pricing observatory"]
     types: [completed]
   workflow_dispatch:
-  push:
-    branches: [compute-observatory]
-    paths: [src/compute_forecast/validate_review_v4.py, .github/workflows/validate-review-v4.yml]
 permissions:
   contents: read
 jobs:

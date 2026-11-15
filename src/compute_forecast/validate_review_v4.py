@@ -41,9 +41,18 @@ def main():
                 assert page.locator("#v4-feedback-table tbody tr").count()==len(feedback["results"])
             page.screenshot(path=str(out/(str(width)+"-default.png")))
             page.locator(".v4-grid").screenshot(path=str(out/(str(width)+"-contributions.png")))
+            numeric=page.locator(".v4-table-wrap td").first
+            assert numeric.evaluate("(e)=>getComputedStyle(e).whiteSpace")=="nowrap"
+            table_region=page.locator(".v4-table-wrap").first
+            assert table_region.get_attribute("tabindex")=="0"
+            if width<760:
+                table_region.focus();page.keyboard.press("ArrowRight")
+                assert table_region.evaluate("(e)=>e.scrollWidth>e.clientWidth")
+                table_region.evaluate("(e)=>e.scrollLeft=0")
             page.locator("#v4-live-operations").evaluate("(e)=>e.scrollIntoView({block:'start'})")
             page.screenshot(path=str(out/(str(width)+"-operations.png")))
             page.locator("#v4-market-sources").evaluate("(e)=>e.scrollIntoView({block:'start'})")
+            page.evaluate("document.activeElement?.blur()")
             page.screenshot(path=str(out/(str(width)+"-market.png")))
             page.locator("#v4-comparison").select_option("static")
             if expected_sources:assert page.locator("#"+detail_id).get_attribute("open") is not None
