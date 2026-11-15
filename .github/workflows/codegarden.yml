@@ -1,100 +1,110 @@
-name: CodeGarden infeasible-space hypotheses
+name: CodeGarden continue verified random-hull checkpoints
 on:
   push:
-    branches: [codegarden]
+    branches: [codegarden-random-resume-003]
     paths: [.github/workflows/codegarden.yml]
   workflow_dispatch:
 permissions:
   contents: write
 concurrency:
-  group: codegarden-only
+  group: codegarden-free-random-resume-003
   cancel-in-progress: false
 env:
   PYTHONDONTWRITEBYTECODE: '1'
+  PIP_CACHE_DIR: ${{ github.workspace }}/codegarden/.cache/pip
+  TMPDIR: ${{ github.workspace }}/codegarden/.tmp
   SOURCE_SHA: ${{ github.sha }}
-  CODEGARDEN_BATCH: infeasible_probe_003
+  CODEGARDEN_BATCH: adaptive_hulls_001
 jobs:
-  preflight:
+  prepare:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 15
     steps:
       - name: Fetch immutable source
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+          mkdir -p codegarden/.tmp codegarden/.cache/pip
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Compile kernel and independently test energy updates
+      - name: Install isolated pinned solver
         run: |
-          mkdir -p codegarden/.build
-          g++ -O3 -std=c++17 codegarden/phase3/infeasible.cpp -o codegarden/.build/infeasible
-          python -B codegarden/phase3/test_infeasible.py
-          python -B codegarden/phase3/preflight.py
-      - name: Retain preflight evidence
-        if: always()
-        uses: actions/upload-artifact@v4
+          python -m venv codegarden/.venv
+          codegarden/.venv/bin/python -m pip install ortools==9.14.6206
+      - uses: actions/download-artifact@v4
         with:
-          name: codegarden-cg3-preflight
-          path: codegarden/artifacts/phase3/infeasible_probe_003/
-  probes:
-    needs: preflight
+          pattern: codegarden-adaptive-hull-*
+          run-id: 43719457523
+          github-token: ${{ github.token }}
+          merge-multiple: true
+          path: codegarden/artifacts/phase3/adaptive_hulls_001/
+      - name: Audit prerequisites and exact-size exclusions
+        run: |
+          python -B -u codegarden/phase3/prepare_random_resume.py
+          python -B -u codegarden/phase3/preflight.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          retention-days: 1
+          name: codegarden-random-resume-plan
+          path: codegarden/artifacts/phase3/adaptive_hulls_001/
+  repairs:
+    needs: prepare
     runs-on: ubuntu-latest
-    timeout-minutes: 16
+    timeout-minutes: 30
     strategy:
       fail-fast: false
       max-parallel: 4
       matrix:
-        seed: [950000, 950001, 950002, 950003]
+        case: [0, 2, 4, 6]
     steps:
       - name: Fetch immutable source
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+          mkdir -p codegarden/.tmp codegarden/.cache/pip
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: Install isolated pinned solver
+        run: |
+          python -m venv codegarden/.venv
+          codegarden/.venv/bin/python -m pip install ortools==9.14.6206
+          mkdir -p codegarden/.build
+          g++ -O3 -std=c++17 codegarden/phase3/bundle_guard.cpp -o codegarden/.build/bundle
       - uses: actions/download-artifact@v4
         with:
-          name: codegarden-cg3-preflight
-          path: codegarden/artifacts/phase3/infeasible_probe_003/
-      - name: Compile isolated native worker
-        run: |
-          mkdir -p codegarden/.build
-          g++ -O3 -std=c++17 codegarden/phase3/infeasible.cpp -o codegarden/.build/infeasible
-      - name: Test two paired 60-CPU-second hypotheses from different code families
-        run: python -B -u codegarden/phase3/probe.py --seed ${{ matrix.seed }} --seconds 60
-      - name: Retain every checkpoint and proposal, even on failure
+          name: codegarden-random-resume-plan
+          path: codegarden/artifacts/phase3/adaptive_hulls_001/
+      - name: Reoptimize full compatible universe
+        run: codegarden/.venv/bin/python -B -u codegarden/phase3/adaptive_hulls.py --case ${{ matrix.case }} --resume
+      - uses: actions/upload-artifact@v4
         if: always()
-        uses: actions/upload-artifact@v4
         with:
-          name: codegarden-cg3-probe-${{ matrix.seed }}
-          path: codegarden/artifacts/phase3/infeasible_probe_003/
+          retention-days: 1
+          name: codegarden-random-resume-${{ matrix.case }}
+          path: codegarden/artifacts/phase3/adaptive_hulls_001/
   collect:
-    needs: [preflight, probes]
+    needs: [prepare, repairs]
     if: always()
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 10
     steps:
       - name: Fetch immutable source
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+          mkdir -p codegarden/.tmp
       - uses: actions/download-artifact@v4
         with:
-          pattern: codegarden-cg3-*
+          pattern: codegarden-random-resume-*
           merge-multiple: true
-          path: codegarden/artifacts/phase3/infeasible_probe_003/
-      - name: Independently accept proposals and publish leased checkpoint
+          path: codegarden/artifacts/phase3/adaptive_hulls_001/
+      - name: Publish leased model and witness evidence
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python -B -u codegarden/phase3/publish.py
-      - name: Retain collected evidence
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: codegarden-cg3-collected
-          path: codegarden/artifacts/phase3/infeasible_probe_003/
+        run: python -B codegarden/phase3/publish_random_resume.py
