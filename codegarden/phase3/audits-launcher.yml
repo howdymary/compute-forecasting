@@ -1,0 +1,47 @@
+name: CodeGarden independent completion audits
+on:
+  push:
+    branches: [codegarden-audits-003]
+    paths: [.github/workflows/codegarden.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: codegarden-free-audits-003
+  cancel-in-progress: false
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+  SOURCE_SHA: ${{ github.sha }}
+  CODEGARDEN_BATCH: audits_001
+jobs:
+  audits:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -o pipefail
+          for attempt in 1 2 3; do
+            if gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1; then break; fi
+            sleep 2
+          done
+          test -f codegarden/phase3/audit_root10.py
+      - name: Run independent acceptance and scoped audits
+        run: |
+          python -B -m unittest discover -s codegarden/tests -v
+          python -B -u codegarden/phase3/audit_root10.py
+          python -B -u codegarden/phase3/core_all_optima.py
+          python -B -u codegarden/phase3/preflight.py
+      - name: Publish leased evidence
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -B codegarden/phase3/publish_audits.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: codegarden-independent-audits
+          retention-days: 1
+          path: codegarden/artifacts/phase3/audits_001/
