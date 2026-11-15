@@ -1,13 +1,13 @@
-name: CodeGarden bounded evolutionary initialization
+name: CodeGarden seeded evolutionary population
 on:
   push:
-    branches: [codegarden-side-startup-001]
+    branches: [codegarden-side-seeded-evo-001]
     paths: [.github/workflows/codegarden.yml]
   workflow_dispatch:
 permissions:
   contents: write
 concurrency:
-  group: codegarden-side-startup-001
+  group: codegarden-side-seeded-evo-001
   cancel-in-progress: false
 env:
   SOURCE_SHA: ${{ github.sha }}
@@ -27,7 +27,7 @@ jobs:
           python3 -B - <<'PY'
           import os,pathlib,urllib.request
           pathlib.Path("codegarden/.tmp").mkdir(parents=True,exist_ok=True)
-          for name in ["codegarden/side_startup/build.py","codegarden/side_startup/smoke.py","codegarden/side_startup/experiment.py","codegarden/side_global/graph.cpp","codegarden/side_global/warm.cpp","codegarden/side_global/known226.txt","codegarden/side_global/requirements.txt","codegarden/phase3/bundle_colored.cpp","codegarden/side_services/cycle.py","codegarden/supervisor.py","codegarden/protected/manifest.json","codegarden/protected/verify_descendants.py","codegarden/protected/verify_lcs.py","codegarden/artifacts/best_code.txt"]:
+          for name in ["codegarden/side_seeded_evo/build.py","codegarden/side_seeded_evo/smoke.py","codegarden/side_seeded_evo/experiment.py","codegarden/side_global/graph.cpp","codegarden/side_global/warm.cpp","codegarden/side_global/known226.txt","codegarden/side_global/requirements.txt","codegarden/phase3/bundle_colored.cpp","codegarden/side_services/cycle.py","codegarden/supervisor.py","codegarden/protected/manifest.json","codegarden/protected/verify_descendants.py","codegarden/protected/verify_lcs.py","codegarden/artifacts/best_code.txt"]:
               p=pathlib.Path(name);p.parent.mkdir(parents=True,exist_ok=True)
               p.write_bytes(urllib.request.urlopen("https://raw.githubusercontent.com/howdymary/compute-forecasting/"+os.environ["SOURCE_SHA"]+"/"+name,timeout=45).read())
           PY
@@ -41,9 +41,9 @@ jobs:
           g++ -O3 -std=c++17 -static -march=x86-64 -mtune=generic codegarden/phase3/bundle_colored.cpp -o codegarden/.build/global_bundle
           codegarden/.build/global_bundle --synthetic-tests
       - name: Build pinned portable KaMIS before provider calls
-        run: python3 -B -u codegarden/side_startup/build.py
+        run: python3 -B -u codegarden/side_seeded_evo/build.py
       - name: Independently test graph incidence and native binaries
-        run: python3 -B -u codegarden/side_startup/smoke.py
+        run: python3 -B -u codegarden/side_seeded_evo/smoke.py
       - name: Install isolated service clients
         run: |
           python3 -m venv codegarden/.venv
@@ -57,19 +57,19 @@ jobs:
           TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
           MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
-        run: codegarden/.venv/bin/python -B -u codegarden/side_startup/experiment.py
+        run: codegarden/.venv/bin/python -B -u codegarden/side_seeded_evo/experiment.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: codegarden-startup-research
+          name: codegarden-seeded-evo-research
           retention-days: 30
-          path: codegarden/artifacts/side_research/startup_001/
+          path: codegarden/artifacts/side_research/seeded_evo_001/
       - uses: actions/upload-artifact@v4
         if: steps.cycle.outputs.has_candidate == 'true'
         with:
-          name: codegarden-startup-227-candidate
+          name: codegarden-seeded-evo-227-candidate
           retention-days: 30
-          path: codegarden/artifacts/side_research/startup_001/candidate.txt
+          path: codegarden/artifacts/side_research/seeded_evo_001/candidate.txt
   accept:
     needs: research
     if: needs.research.outputs.has_candidate == 'true'
@@ -86,7 +86,7 @@ jobs:
           PY
       - uses: actions/download-artifact@v4
         with:
-          name: codegarden-startup-227-candidate
+          name: codegarden-seeded-evo-227-candidate
           path: codegarden/.verify-input/
       - name: Accept candidate without proposer or service credentials
         run: |
@@ -102,6 +102,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: codegarden-startup-isolated-acceptance
+          name: codegarden-seeded-evo-isolated-acceptance
           retention-days: 30
           path: codegarden/isolated_acceptance.json
