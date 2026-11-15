@@ -1,0 +1,441 @@
+{
+  "schema_version": 6,
+  "study_id": "prospective-signals-v6",
+  "captured_at": "2026-11-15T21:30:18.418786+00:00",
+  "source_sha": "0f1c55f3852fc973f9dec1a787902605e6400901",
+  "protocol_sha256": "ea2aa4e1198cec0465b4b7262e0bbb3cdfe9fab6babf96c46d21cc956db8e992",
+  "prices": {
+    "date": "2026-11-15",
+    "captured_at": "2026-11-15T21:30:15.762013+00:00",
+    "source_generated_at": "2026-11-15T08:47:11.919Z",
+    "source_sha256": "3d9a09033184e35d42db30f1925bc3decf7e0ffe48ddf21d49be66af274ab511",
+    "health_sha256": "093ed115991452adb14b92e370dc5db2750667de28409829555a36a19ee05a80",
+    "cohort": [
+      {
+        "id": "grp-v6-1656995eee0c353db46a",
+        "contract": {
+          "provider": "lambda",
+          "gpu": "a100-pcie-40",
+          "vram_gb": 40,
+          "kind": "on-demand",
+          "region": null,
+          "min_gpus": 1,
+          "instance": "1x NVIDIA A100 PCIe",
+          "cpu": null,
+          "vcpus": 30,
+          "ram_gb": null,
+          "commitment": null,
+          "reservation_months": null,
+          "source_url": "https://lambda.ai/instances"
+        },
+        "family": "A100"
+      },
+      {
+        "id": "grp-v6-6110ed2d24818c2a0071",
+        "contract": {
+          "provider": "lambda",
+          "gpu": "a100-pcie-40",
+          "vram_gb": 40,
+          "kind": "on-demand",
+          "region": null,
+          "min_gpus": 2,
+          "instance": "2x NVIDIA A100 PCIe",
+          "cpu": null,
+          "vcpus": 60,
+          "ram_gb": null,
+          "commitment": null,
+          "reservation_months": null,
+          "source_url": "https://lambda.ai/instances"
+        },
+        "family": "A100"
+      },
+      {
+        "id": "grp-v6-140133df8ce06a40bc16",
+        "contract": {
+          "provider": "lambda",
+          "gpu": "h100-pcie",
+          "vram_gb": 80,
+          "kind": "on-demand",
+          "region": null,
+          "min_gpus": 1,
+          "instance": "1x NVIDIA H100 PCIe",
+          "cpu": null,
+          "vcpus": 26,
+          "ram_gb": null,
+          "commitment": null,
+          "reservation_months": null,
+          "source_url": "https://lambda.ai/instances"
+        },
+        "family": "H100"
+      },
+      {
+        "id": "grp-v6-c65e682f32ea445a84fb",
+        "contract": {
+          "provider": "hyperai",
+          "gpu": "h100-pcie",
+          "vram_gb": 80,
+          "kind": "on-demand",
+          "region": null,
+          "min_gpus": null,
+          "instance": "H100",
+          "cpu": null,
+          "vcpus": null,
+          "ram_gb": null,
+          "commitment": null,
+          "reservation_months": null,
+          "source_url": "https://hyper.ai/en/pricing"
+        },
+        "family": "H100"
+      }
+    ],
+    "rows": [
+      {
+        "id": "grp-v6-1656995eee0c353db46a",
+        "contract": {
+          "provider": "lambda",
+          "gpu": "a100-pcie-40",
+          "vram_gb": 40,
+          "kind": "on-demand",
+          "region": null,
+          "min_gpus": 1,
+          "instance": "1x NVIDIA A100 PCIe",
+          "cpu": null,
+          "vcpus": 30,
+          "ram_gb": null,
+          "commitment": null,
+          "reservation_months": null,
+          "source_url": "https://lambda.ai/instances"
+        },
+        "family": "A100",
+        "date": "2026-11-15",
+        "value": 1.99,
+        "fetched_at": "2026-11-15T08:47:02.906Z",
+        "n_offers": 1,
+        "unit": "USD per GPU-hour",
+        "availability": "Advertised; not independently verified rentable"
+      },
+      {
+        "id": "grp-v6-6110ed2d24818c2a0071",
+        "contract": {
+          "provider": "lambda",
+          "gpu": "a100-pcie-40",
+          "vram_gb": 40,
+          "kind": "on-demand",
+          "region": null,
+          "min_gpus": 2,
+          "instance": "2x NVIDIA A100 PCIe",
+          "cpu": null,
+          "vcpus": 60,
+          "ram_gb": null,
+          "commitment": null,
+          "reservation_months": null,
+          "source_url": "https://lambda.ai/instances"
+        },
+        "family": "A100",
+        "date": "2026-11-15",
+        "value": 1.99,
+        "fetched_at": "2026-11-15T08:47:02.906Z",
+        "n_offers": 1,
+        "unit": "USD per GPU-hour",
+        "availability": "Advertised; not independently verified rentable"
+      },
+      {
+        "id": "grp-v6-140133df8ce06a40bc16",
+        "contract": {
+          "provider": "lambda",
+          "gpu": "h100-pcie",
+          "vram_gb": 80,
+          "kind": "on-demand",
+          "region": null,
+          "min_gpus": 1,
+          "instance": "1x NVIDIA H100 PCIe",
+          "cpu": null,
+          "vcpus": 26,
+          "ram_gb": null,
+          "commitment": null,
+          "reservation_months": null,
+          "source_url": "https://lambda.ai/instances"
+        },
+        "family": "H100",
+        "date": "2026-11-15",
+        "value": 3.79,
+        "fetched_at": "2026-11-15T08:47:02.906Z",
+        "n_offers": 1,
+        "unit": "USD per GPU-hour",
+        "availability": "Advertised; not independently verified rentable"
+      },
+      {
+        "id": "grp-v6-c65e682f32ea445a84fb",
+        "contract": {
+          "provider": "hyperai",
+          "gpu": "h100-pcie",
+          "vram_gb": 80,
+          "kind": "on-demand",
+          "region": null,
+          "min_gpus": null,
+          "instance": "H100",
+          "cpu": null,
+          "vcpus": null,
+          "ram_gb": null,
+          "commitment": null,
+          "reservation_months": null,
+          "source_url": "https://hyper.ai/en/pricing"
+        },
+        "family": "H100",
+        "date": "2026-11-15",
+        "value": 1.8,
+        "fetched_at": "2026-11-15T08:47:03.399Z",
+        "n_offers": 1,
+        "unit": "USD per GPU-hour",
+        "availability": "Advertised; not independently verified rentable"
+      }
+    ],
+    "exclusions": [],
+    "license": "CC BY 4.0",
+    "attribution": "GPU Rental Prices. GPU rental price index [dataset]. https://gpurentalprices.com/data",
+    "source_url": "https://gpurentalprices.com/api/latest.json",
+    "permission_url": "https://gpurentalprices.com/data"
+  },
+  "events": [
+    {
+      "id": "a1de2a8f55cbc67bfa20872b",
+      "url": "https://investors.coreweave.com/news/news-details/2026/CoreWeave-Expands-Global-AI-Cloud-Platform-With-New-Capacity-in-Denmark-and-First-Global-AI-Network-Backbone/default.aspx",
+      "title": "CoreWeave - CoreWeave Expands Global AI Cloud Platform With New Capacity in Denmark and First Global AI Network Backbone",
+      "published_at": "2026-10-27T02:00:00Z",
+      "publication_verified": true,
+      "first_observed_at": "2026-11-15T21:30:17.380505+00:00",
+      "retrieved_at": "2026-11-15T21:30:17.380505+00:00",
+      "content_sha256": "aaeb3fa172264651b801fb928667f34f9cc810c192cc991f4f5e87d26f5a06c8",
+      "kind": "capacity_plan",
+      "extraction_version": "deterministic-title-classifier-v1",
+      "uncertainty": "Title-based announcement category; no verified operating-capacity amount or causal price coefficient",
+      "publication": "Metadata and derived counts only; source body private"
+    },
+    {
+      "id": "e7168d673a067505cf39ff06",
+      "url": "https://cloud.google.com/blog/topics/ai-infrastructure/google-cloud-infrastructure-at-nvidia-gtc-berlin-2026/",
+      "title": "Google Cloud infrastructure at NVIDIA GTC Berlin 2026 | Google Cloud Blog",
+      "published_at": "2026-10-21T23:59:59.999999+00:00",
+      "publication_verified": true,
+      "first_observed_at": "2026-11-15T21:30:17.620575+00:00",
+      "retrieved_at": "2026-11-15T21:30:17.620575+00:00",
+      "content_sha256": "bd2725df9382598f480cd827d355e61e77cbb8b1269d72b0864f8760cdc60767",
+      "kind": "capacity_plan",
+      "extraction_version": "deterministic-title-classifier-v1",
+      "uncertainty": "Title-based announcement category; no verified operating-capacity amount or causal price coefficient",
+      "publication": "Metadata and derived counts only; source body private"
+    },
+    {
+      "id": "987b95d2615261459807532b",
+      "url": "https://aws.amazon.com/about-aws/whats-new/2026/11/amazon-g7-additional-regions/",
+      "title": "Amazon EC2 G7 instances now available in additional regions - AWS",
+      "published_at": null,
+      "publication_verified": false,
+      "first_observed_at": "2026-11-15T21:30:17.769141+00:00",
+      "retrieved_at": "2026-11-15T21:30:17.769141+00:00",
+      "content_sha256": "21ec535bb1da0db3d94714c94540517912a71528ba3249f230687c5ae477d69c",
+      "kind": "announcement",
+      "extraction_version": "deterministic-title-classifier-v1",
+      "uncertainty": "Title-based announcement category; no verified operating-capacity amount or causal price coefficient",
+      "publication": "Metadata and derived counts only; source body private"
+    },
+    {
+      "id": "325e264f54084e1f9fca4bb4",
+      "url": "https://nvidianews.nvidia.com/news/nvidia-introduces-dsx-pod-ai-factories-to-accelerate-europes-infrastructure-deployment",
+      "title": "NVIDIA Introduces DSX POD AI Factories to Accelerate Europe\u2019s Infrastructure Deployment | NVIDIA Newsroom",
+      "published_at": null,
+      "publication_verified": false,
+      "first_observed_at": "2026-11-15T21:30:17.868305+00:00",
+      "retrieved_at": "2026-11-15T21:30:17.868305+00:00",
+      "content_sha256": "f43d177ac6f67cc24645e1ed68bcf5ab1c0dc0e20ae08371ac638aa5045de598",
+      "kind": "capacity_plan",
+      "extraction_version": "deterministic-title-classifier-v1",
+      "uncertainty": "Title-based announcement category; no verified operating-capacity amount or causal price coefficient",
+      "publication": "Metadata and derived counts only; source body private"
+    },
+    {
+      "id": "ee7f6ef5c7eb7fd92b997a8c",
+      "url": "https://cloud.google.com/blog/topics/ai-infrastructure/confidential-g4-gpus-are-ga",
+      "title": "Confidential G4 GPUs are GA | Google Cloud Blog",
+      "published_at": "2026-10-21T23:59:59.999999+00:00",
+      "publication_verified": true,
+      "first_observed_at": "2026-11-15T21:30:18.010482+00:00",
+      "retrieved_at": "2026-11-15T21:30:18.010482+00:00",
+      "content_sha256": "0e21062f6fe3f1920f3f162e0ae343221d2496b30ec3fe62d12043d376c18b74",
+      "kind": "hardware_announcement",
+      "extraction_version": "deterministic-title-classifier-v1",
+      "uncertainty": "Title-based announcement category; no verified operating-capacity amount or causal price coefficient",
+      "publication": "Metadata and derived counts only; source body private"
+    },
+    {
+      "id": "613cf6888fd0071fc7980d39",
+      "url": "https://nvidianews.nvidia.com/news/european-ecosystem-builds-worlds-most-efficient-ai-factories-with-nvidia-dsx",
+      "title": "European Ecosystem Builds World\u2019s Most Efficient AI Factories With NVIDIA DSX | NVIDIA Newsroom",
+      "published_at": null,
+      "publication_verified": false,
+      "first_observed_at": "2026-11-15T21:30:18.115131+00:00",
+      "retrieved_at": "2026-11-15T21:30:18.115131+00:00",
+      "content_sha256": "8d09463057fd3152ef7c4e1f565908c977e188ee2cbc81fb5a2fb51e028c189d",
+      "kind": "announcement",
+      "extraction_version": "deterministic-title-classifier-v1",
+      "uncertainty": "Title-based announcement category; no verified operating-capacity amount or causal price coefficient",
+      "publication": "Metadata and derived counts only; source body private"
+    }
+  ],
+  "bls": {
+    "series_id": "PCU221122221122",
+    "unit": "Producer price index; not USD/kWh",
+    "latest_period": "2026-10",
+    "observations": [
+      {
+        "period": "2026-10",
+        "value": 198.898,
+        "footnotes": [
+          {
+            "code": "P",
+            "text": "Preliminary. All indexes are subject to monthly revisions up to four months after original publication."
+          }
+        ]
+      },
+      {
+        "period": "2026-09",
+        "value": 209.27,
+        "footnotes": [
+          {
+            "code": "P",
+            "text": "Preliminary. All indexes are subject to monthly revisions up to four months after original publication."
+          }
+        ]
+      }
+    ],
+    "first_observed_at": "2026-11-15T21:30:18.416171+00:00",
+    "period_first_observed_at": "2026-11-15T21:30:18.416171+00:00",
+    "source_url": "https://api.bls.gov/publicAPI/v2/timeseries/data/PCU221122221122",
+    "response_sha256": "c9266120df6bf6c9156a81e00c25ea0ebbdd59caa24dec6f712df618a4e0b825",
+    "release_timestamp": null,
+    "availability_rule": "Actual retrieval; no claimed historical release vintage"
+  },
+  "features": {
+    "official_announcement_count_7d": 0,
+    "gpu_price_announcement_count_7d": 0,
+    "newly_observed_evidence_age_days": null,
+    "capacity_plan_count_30d": 2,
+    "operational_capacity_confirmed_count_30d": null,
+    "hardware_announcement_count_30d": 1,
+    "electricity_ppi_index": 198.898,
+    "latest_available_month_change": -0.04956276580494101,
+    "days_since_new_period_first_seen": 3.0266203703703706e-08
+  },
+  "receipts": [
+    {
+      "url": "https://gpurentalprices.com/api/latest.json",
+      "retrieved_at": "2026-11-15T21:30:15.034054+00:00",
+      "status_code": 200,
+      "final_url": "https://gpurentalprices.com/api/latest.json",
+      "sha256": "9eafd355d20967b87348d624dcb51278df0587ec7e4253c0a6244e4498a13b3c",
+      "bytes": 528863,
+      "etag": "\"1794733828681-16-528863\"",
+      "last_modified": "Sun, 15 Nov 2026 09:10:28 GMT"
+    },
+    {
+      "url": "https://gpurentalprices.com/api/health.json",
+      "retrieved_at": "2026-11-15T21:30:15.758914+00:00",
+      "status_code": 200,
+      "final_url": "https://gpurentalprices.com/api/health.json",
+      "sha256": "365d52f6f2b5067a4f8c053d6c82c2dfacad2692d56620361f299b32613fc618",
+      "bytes": 14602,
+      "etag": "\"1794733828681-16-14602\"",
+      "last_modified": "Sun, 15 Nov 2026 09:10:28 GMT"
+    },
+    {
+      "url": "https://api.exa.ai/search",
+      "retrieved_at": "2026-11-15T21:30:17.110312+00:00",
+      "status_code": 200,
+      "final_url": "https://api.exa.ai/search",
+      "sha256": "3df492dd22e48fb4d7cdbf43f7929e9fe0ad08fa6c6a233b272ab4238d64849d",
+      "bytes": 18454,
+      "etag": "W/\"4816-wSTaLeaOZShw26QnhlA1Zct7nEA\"",
+      "last_modified": null,
+      "request_id": "942d5df1f7433c0d686058169d47cc04",
+      "cost_dollars": {
+        "total": 0.007,
+        "search": {
+          "neural": 0.007
+        }
+      },
+      "query": "Official GPU cloud price announcements, hardware launches and infrastructure capacity deployments from NVIDIA, AWS, Google Cloud, CoreWeave and Lambda. Identify exact announcement dates and distinguish plans from operating capacity."
+    },
+    {
+      "url": "https://investors.coreweave.com/news/news-details/2026/CoreWeave-Expands-Global-AI-Cloud-Platform-With-New-Capacity-in-Denmark-and-First-Global-AI-Network-Backbone/default.aspx",
+      "retrieved_at": "2026-11-15T21:30:17.380505+00:00",
+      "status_code": 200,
+      "final_url": "https://investors.coreweave.com/news/news-details/2026/CoreWeave-Expands-Global-AI-Cloud-Platform-With-New-Capacity-in-Denmark-and-First-Global-AI-Network-Backbone/default.aspx",
+      "sha256": "aaeb3fa172264651b801fb928667f34f9cc810c192cc991f4f5e87d26f5a06c8",
+      "bytes": 105734,
+      "etag": "\"75a475f4a687f8776f066e0a6231ebb0\"",
+      "last_modified": null
+    },
+    {
+      "url": "https://cloud.google.com/blog/topics/ai-infrastructure/google-cloud-infrastructure-at-nvidia-gtc-berlin-2026/",
+      "retrieved_at": "2026-11-15T21:30:17.620575+00:00",
+      "status_code": 200,
+      "final_url": "https://cloud.google.com/blog/topics/ai-infrastructure/google-cloud-infrastructure-at-nvidia-gtc-berlin-2026/",
+      "sha256": "bd2725df9382598f480cd827d355e61e77cbb8b1269d72b0864f8760cdc60767",
+      "bytes": 255114,
+      "etag": null,
+      "last_modified": null
+    },
+    {
+      "url": "https://aws.amazon.com/about-aws/whats-new/2026/11/amazon-g7-additional-regions/",
+      "retrieved_at": "2026-11-15T21:30:17.769141+00:00",
+      "status_code": 200,
+      "final_url": "https://aws.amazon.com/about-aws/whats-new/2026/11/amazon-g7-additional-regions/",
+      "sha256": "21ec535bb1da0db3d94714c94540517912a71528ba3249f230687c5ae477d69c",
+      "bytes": 299432,
+      "etag": null,
+      "last_modified": "Fri, 13 Nov 2026 04:13:34 GMT"
+    },
+    {
+      "url": "https://nvidianews.nvidia.com/news/nvidia-introduces-dsx-pod-ai-factories-to-accelerate-europes-infrastructure-deployment",
+      "retrieved_at": "2026-11-15T21:30:17.868305+00:00",
+      "status_code": 200,
+      "final_url": "https://nvidianews.nvidia.com/news/nvidia-introduces-dsx-pod-ai-factories-to-accelerate-europes-infrastructure-deployment",
+      "sha256": "f43d177ac6f67cc24645e1ed68bcf5ab1c0dc0e20ae08371ac638aa5045de598",
+      "bytes": 74296,
+      "etag": null,
+      "last_modified": null
+    },
+    {
+      "url": "https://cloud.google.com/blog/topics/ai-infrastructure/confidential-g4-gpus-are-ga",
+      "retrieved_at": "2026-11-15T21:30:18.010482+00:00",
+      "status_code": 200,
+      "final_url": "https://cloud.google.com/blog/topics/ai-infrastructure/confidential-g4-gpus-are-ga",
+      "sha256": "0e21062f6fe3f1920f3f162e0ae343221d2496b30ec3fe62d12043d376c18b74",
+      "bytes": 236849,
+      "etag": null,
+      "last_modified": null
+    },
+    {
+      "url": "https://nvidianews.nvidia.com/news/european-ecosystem-builds-worlds-most-efficient-ai-factories-with-nvidia-dsx",
+      "retrieved_at": "2026-11-15T21:30:18.115131+00:00",
+      "status_code": 200,
+      "final_url": "https://nvidianews.nvidia.com/news/european-ecosystem-builds-worlds-most-efficient-ai-factories-with-nvidia-dsx",
+      "sha256": "8d09463057fd3152ef7c4e1f565908c977e188ee2cbc81fb5a2fb51e028c189d",
+      "bytes": 85393,
+      "etag": null,
+      "last_modified": null
+    },
+    {
+      "url": "https://api.bls.gov/publicAPI/v2/timeseries/data/PCU221122221122",
+      "retrieved_at": "2026-11-15T21:30:18.416171+00:00",
+      "status_code": 200,
+      "final_url": "https://api.bls.gov/publicAPI/v2/timeseries/data/PCU221122221122",
+      "sha256": "c9266120df6bf6c9156a81e00c25ea0ebbdd59caa24dec6f712df618a4e0b825",
+      "bytes": 3629,
+      "etag": null,
+      "last_modified": null
+    }
+  ],
+  "errors": [],
+  "protected_outcomes_loaded": false
+}

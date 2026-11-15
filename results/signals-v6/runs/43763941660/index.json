@@ -1,0 +1,839 @@
+{
+  "schema_version": 6,
+  "study_id": "prospective-signals-v6",
+  "updated_at": "2026-11-15T21:30:24.601900+00:00",
+  "source_sha": "0f1c55f3852fc973f9dec1a787902605e6400901",
+  "protocol": {
+    "schema_version": 6,
+    "study_id": "prospective-signals-v6",
+    "hypothesis": "Adding origin-available news, infrastructure and BLS features lowers seven-day quantile pinball versus the identical price-only learner.",
+    "classification": "New prospective provider-quote cohort; separate from all competition targets and frozen studies",
+    "registration": "GitHub configuration committed before capture/issuance; protocol hash bound into every record",
+    "price_source": {
+      "url": "https://gpurentalprices.com/api/latest.json",
+      "health_url": "https://gpurentalprices.com/api/health.json",
+      "permission_url": "https://gpurentalprices.com/data",
+      "license": "CC BY 4.0",
+      "credit": "GPU Rental Prices. GPU rental price index [dataset]. https://gpurentalprices.com/data",
+      "unit": "USD per GPU-hour",
+      "measure": "Advertised per-provider exact-configuration offer; not transactions or guaranteed capacity",
+      "selection": "First two lexicographically ordered exact-configuration contracts per A100/H100 family, on-demand only; price-independent selection; freeze at first successful capture",
+      "known_variants": [
+        "h100-sxm",
+        "h100-pcie",
+        "a100-sxm-80",
+        "a100-pcie-80",
+        "a100-sxm-40",
+        "a100-pcie-40"
+      ],
+      "max_targets": 4,
+      "max_input_bytes": 2000000,
+      "require_same_day_provider_check": true,
+      "unknown_metadata": "Explicit null; no cross-provider/region/configuration joining"
+    },
+    "signals": {
+      "groups": [
+        "news",
+        "infrastructure",
+        "bls"
+      ],
+      "max_exa_calls_per_capture": 2,
+      "max_results": 6,
+      "max_content_chars": 10000,
+      "primary_domains": [
+        "nvidianews.nvidia.com",
+        "investor.nvidia.com",
+        "aws.amazon.com",
+        "press.aboutamazon.com",
+        "cloud.google.com",
+        "coreweave.com",
+        "lambda.ai"
+      ],
+      "bls_series": "PCU221122221122",
+      "bls_url": "https://api.bls.gov/publicAPI/v2/timeseries/data/PCU221122221122",
+      "news_features": [
+        "official_announcement_count_7d",
+        "gpu_price_announcement_count_7d",
+        "newly_observed_evidence_age_days"
+      ],
+      "infrastructure_features": [
+        "capacity_plan_count_30d",
+        "operational_capacity_confirmed_count_30d",
+        "hardware_announcement_count_30d"
+      ],
+      "bls_features": [
+        "electricity_ppi_index",
+        "latest_available_month_change",
+        "days_since_new_period_first_seen"
+      ],
+      "availability": "Content first observed by cutoff; publication date alone cannot backdate availability; date-only publication upper bound is end of its UTC day",
+      "operational_rule": "No inferred delivered capacity; requires separately verified structured source record. Missing operational evidence stays missing.",
+      "vintages": "BLS responses retained by hash. Current revisions available only at current retrieval; no retroactive edits to older feature rows."
+    },
+    "origins": [
+      "2026-11-22",
+      "2026-11-29",
+      "2026-12-06",
+      "2026-12-13",
+      "2026-12-20",
+      "2026-12-27",
+      "2027-01-03",
+      "2027-01-10",
+      "2027-01-17",
+      "2027-01-24",
+      "2027-01-31",
+      "2027-02-07",
+      "2027-02-14",
+      "2027-02-21",
+      "2027-02-28",
+      "2027-03-07",
+      "2027-03-14",
+      "2027-03-21",
+      "2027-03-28",
+      "2027-04-04",
+      "2027-04-11",
+      "2027-04-18",
+      "2027-04-25",
+      "2027-05-02",
+      "2027-05-09",
+      "2027-05-16"
+    ],
+    "origin_cutoff_utc": "18:00:00",
+    "issuance_end_utc": "20:00:00",
+    "daily_capture_cron": "30 17 * * *",
+    "weekly_cycle_cron": "15 18 * * 0",
+    "daily_scoring_cron": "45 18 * * *",
+    "schedule_end": "2027-05-25T00:00:00+00:00",
+    "horizons": [
+      1,
+      3,
+      7
+    ],
+    "quantiles": [
+      0.1,
+      0.5,
+      0.9
+    ],
+    "primary_horizon": 7,
+    "learner": {
+      "family": "Ridge on matured same-horizon log changes; empirical training-residual q10/q50/q90 shifts",
+      "alpha": 10,
+      "window_days": 180,
+      "min_price_observations": 56,
+      "min_matured_examples": 32,
+      "price_features": [
+        "log_latest",
+        "log_change_1",
+        "log_change_7",
+        "log_change_14",
+        "observation_gap_7",
+        "day_of_week"
+      ],
+      "missing": "Training-column median imputation with explicit missing flags; scale fitted on training only",
+      "quantiles": "Positive multiplicative quantiles from separate chronological calibration residuals; all arms share identical fit/calibration labels",
+      "tuning_budget": 0,
+      "feature_masks": [
+        "000",
+        "001",
+        "010",
+        "011",
+        "100",
+        "101",
+        "110",
+        "111"
+      ],
+      "mask_order": [
+        "news",
+        "infrastructure",
+        "bls"
+      ],
+      "refit": "Same deterministic refit at every eligible origin, using only labels matured by its cutoff",
+      "calibration": "Last8 matured chronological examples held out from Ridge fit; minimum24 fit examples; residual quantiles on those8; no exchangeability guarantee"
+    },
+    "references": [
+      "last_value",
+      "last_value_empirical",
+      "drift",
+      "seasonal_naive"
+    ],
+    "reference_definition": "Separate new-source adapters mirror official multiplicative log-change definitions where verified; never claim byte identity with old target exports",
+    "chronos": "Optional added fixed control only after adapter parity; not in this first signal-factorial implementation",
+    "eligibility": {
+      "primary": "Frozen target has current compatible quote at origin; >=56 retained price observations and >=28 matured same-horizon examples with actual as-of signal snapshots. Failures visible; no baseline substitution for failed factorial arms.",
+      "group_attribution": "Need actual variation: >=3 distinct BLS observation periods first-seen in retained vintages; >=8 distinct news events; >=5 distinct infrastructure events. These are identifiability screens, not a statistical power guarantee.",
+      "pilot": "One immediate cold-start last-value commitment after first registered capture; no signal-value comparison, zero-width reference quantiles explicitly uncalibrated; excluded from primary analysis"
+    },
+    "scoring": {
+      "metric": "Mean pinball over quantiles, then equal matched cell weights",
+      "cohorts": "A100 and H100 separate plus prespecified pooled result; only identical valid paired cells; report all exclusions",
+      "truth": "Earliest retained compatible snapshot of the target UTC observation date, requiring provider fetched_at date == target_date; evaluator unlocks only after end of target date. Later revisions never selected by score.",
+      "analysis": "Descriptive per-origin outcomes after full 7-day maturity; one final confirmatory analysis after all26 origins mature. No performance-based stopping.",
+      "inference": "Origin-cluster paired mean differences; four-origin moving-block bootstrap fixed seed17, 2000 replicates, only with >=16 eligible origins; dependent markets and limited power explicit.",
+      "primary_comparison": "111 versus000; separately compare111 with drift. Individual group effects are secondary paired factorial ablations with Holm correction; insufficient variation forbids group-benefit claim.",
+      "promotion": "Primary factorial configurations stay frozen through panel. Incumbent000 retained unless a separately registered challenger passes its future confirmatory block; no promotion on dev results or interim peeks."
+    },
+    "memory": {
+      "namespace": "cf-signals-v6-current",
+      "roles": [
+        "researcher",
+        "scientist",
+        "skeptic"
+      ],
+      "fallback": "Explicit canonical fallback; never counted as successful recall"
+    },
+    "training": {
+      "new_optimization": "Gated until informative chronological tasks or human-checked extraction labels exist",
+      "human_checked_extraction_labels": 0,
+      "starting_and_parent_controls_required": true,
+      "checkpoint_zero_required": true,
+      "synthetic": "Contract fixtures only, never market accuracy"
+    },
+    "resources": {
+      "modal_cpu": 2,
+      "memory_mb": 4096,
+      "timeout_seconds": 900,
+      "max_containers": 1,
+      "max_snapshots": 200,
+      "max_weekly_origins": 26,
+      "max_new_optimizer_updates": 0,
+      "max_tinker_planning_decisions": 4,
+      "provider_cost_usd": null
+    },
+    "protected_dates": {
+      "start": "2026-11-07",
+      "end": "2026-11-13",
+      "rule": "No protected competition truth downloads; collector uses current snapshot only, never historical price endpoints"
+    },
+    "publication": {
+      "current_price_rows": "Selected CC BY4 quote derivatives with attribution; source_quote fields remain private",
+      "news": "Links, metadata and authored feature counts; raw retrieval bodies private",
+      "commitments": "Append-only hash-addressed Modal artifacts with provider execution logs; initial records additionally anchored in nonforce GitHub commit. Future automatic GitHub anchoring unavailable without a long-lived publishing credential; disclose this trust boundary."
+    }
+  },
+  "protocol_sha256": "ea2aa4e1198cec0465b4b7262e0bbb3cdfe9fab6babf96c46d21cc956db8e992",
+  "registration": {
+    "registered_at": "2026-11-15T21:30:13.654391+00:00",
+    "protocol_sha256": "ea2aa4e1198cec0465b4b7262e0bbb3cdfe9fab6babf96c46d21cc956db8e992",
+    "engine_sha256": "da5d9f2b17a844bb155fb730b98a3271661eb63e409675aff4d2d56f65c8e0fe",
+    "source_sha": "0f1c55f3852fc973f9dec1a787902605e6400901",
+    "registration_commit": "https://github.com/howdymary/compute-forecasting/commit/0f1c55f3852fc973f9dec1a787902605e6400901"
+  },
+  "latest_snapshot": {
+    "schema_version": 6,
+    "study_id": "prospective-signals-v6",
+    "captured_at": "2026-11-15T21:30:18.418786+00:00",
+    "source_sha": "0f1c55f3852fc973f9dec1a787902605e6400901",
+    "protocol_sha256": "ea2aa4e1198cec0465b4b7262e0bbb3cdfe9fab6babf96c46d21cc956db8e992",
+    "prices": {
+      "date": "2026-11-15",
+      "captured_at": "2026-11-15T21:30:15.762013+00:00",
+      "source_generated_at": "2026-11-15T08:47:11.919Z",
+      "source_sha256": "3d9a09033184e35d42db30f1925bc3decf7e0ffe48ddf21d49be66af274ab511",
+      "health_sha256": "093ed115991452adb14b92e370dc5db2750667de28409829555a36a19ee05a80",
+      "cohort": [
+        {
+          "id": "grp-v6-1656995eee0c353db46a",
+          "contract": {
+            "provider": "lambda",
+            "gpu": "a100-pcie-40",
+            "vram_gb": 40,
+            "kind": "on-demand",
+            "region": null,
+            "min_gpus": 1,
+            "instance": "1x NVIDIA A100 PCIe",
+            "cpu": null,
+            "vcpus": 30,
+            "ram_gb": null,
+            "commitment": null,
+            "reservation_months": null,
+            "source_url": "https://lambda.ai/instances"
+          },
+          "family": "A100"
+        },
+        {
+          "id": "grp-v6-6110ed2d24818c2a0071",
+          "contract": {
+            "provider": "lambda",
+            "gpu": "a100-pcie-40",
+            "vram_gb": 40,
+            "kind": "on-demand",
+            "region": null,
+            "min_gpus": 2,
+            "instance": "2x NVIDIA A100 PCIe",
+            "cpu": null,
+            "vcpus": 60,
+            "ram_gb": null,
+            "commitment": null,
+            "reservation_months": null,
+            "source_url": "https://lambda.ai/instances"
+          },
+          "family": "A100"
+        },
+        {
+          "id": "grp-v6-140133df8ce06a40bc16",
+          "contract": {
+            "provider": "lambda",
+            "gpu": "h100-pcie",
+            "vram_gb": 80,
+            "kind": "on-demand",
+            "region": null,
+            "min_gpus": 1,
+            "instance": "1x NVIDIA H100 PCIe",
+            "cpu": null,
+            "vcpus": 26,
+            "ram_gb": null,
+            "commitment": null,
+            "reservation_months": null,
+            "source_url": "https://lambda.ai/instances"
+          },
+          "family": "H100"
+        },
+        {
+          "id": "grp-v6-c65e682f32ea445a84fb",
+          "contract": {
+            "provider": "hyperai",
+            "gpu": "h100-pcie",
+            "vram_gb": 80,
+            "kind": "on-demand",
+            "region": null,
+            "min_gpus": null,
+            "instance": "H100",
+            "cpu": null,
+            "vcpus": null,
+            "ram_gb": null,
+            "commitment": null,
+            "reservation_months": null,
+            "source_url": "https://hyper.ai/en/pricing"
+          },
+          "family": "H100"
+        }
+      ],
+      "rows": [
+        {
+          "id": "grp-v6-1656995eee0c353db46a",
+          "contract": {
+            "provider": "lambda",
+            "gpu": "a100-pcie-40",
+            "vram_gb": 40,
+            "kind": "on-demand",
+            "region": null,
+            "min_gpus": 1,
+            "instance": "1x NVIDIA A100 PCIe",
+            "cpu": null,
+            "vcpus": 30,
+            "ram_gb": null,
+            "commitment": null,
+            "reservation_months": null,
+            "source_url": "https://lambda.ai/instances"
+          },
+          "family": "A100",
+          "date": "2026-11-15",
+          "value": 1.99,
+          "fetched_at": "2026-11-15T08:47:02.906Z",
+          "n_offers": 1,
+          "unit": "USD per GPU-hour",
+          "availability": "Advertised; not independently verified rentable"
+        },
+        {
+          "id": "grp-v6-6110ed2d24818c2a0071",
+          "contract": {
+            "provider": "lambda",
+            "gpu": "a100-pcie-40",
+            "vram_gb": 40,
+            "kind": "on-demand",
+            "region": null,
+            "min_gpus": 2,
+            "instance": "2x NVIDIA A100 PCIe",
+            "cpu": null,
+            "vcpus": 60,
+            "ram_gb": null,
+            "commitment": null,
+            "reservation_months": null,
+            "source_url": "https://lambda.ai/instances"
+          },
+          "family": "A100",
+          "date": "2026-11-15",
+          "value": 1.99,
+          "fetched_at": "2026-11-15T08:47:02.906Z",
+          "n_offers": 1,
+          "unit": "USD per GPU-hour",
+          "availability": "Advertised; not independently verified rentable"
+        },
+        {
+          "id": "grp-v6-140133df8ce06a40bc16",
+          "contract": {
+            "provider": "lambda",
+            "gpu": "h100-pcie",
+            "vram_gb": 80,
+            "kind": "on-demand",
+            "region": null,
+            "min_gpus": 1,
+            "instance": "1x NVIDIA H100 PCIe",
+            "cpu": null,
+            "vcpus": 26,
+            "ram_gb": null,
+            "commitment": null,
+            "reservation_months": null,
+            "source_url": "https://lambda.ai/instances"
+          },
+          "family": "H100",
+          "date": "2026-11-15",
+          "value": 3.79,
+          "fetched_at": "2026-11-15T08:47:02.906Z",
+          "n_offers": 1,
+          "unit": "USD per GPU-hour",
+          "availability": "Advertised; not independently verified rentable"
+        },
+        {
+          "id": "grp-v6-c65e682f32ea445a84fb",
+          "contract": {
+            "provider": "hyperai",
+            "gpu": "h100-pcie",
+            "vram_gb": 80,
+            "kind": "on-demand",
+            "region": null,
+            "min_gpus": null,
+            "instance": "H100",
+            "cpu": null,
+            "vcpus": null,
+            "ram_gb": null,
+            "commitment": null,
+            "reservation_months": null,
+            "source_url": "https://hyper.ai/en/pricing"
+          },
+          "family": "H100",
+          "date": "2026-11-15",
+          "value": 1.8,
+          "fetched_at": "2026-11-15T08:47:03.399Z",
+          "n_offers": 1,
+          "unit": "USD per GPU-hour",
+          "availability": "Advertised; not independently verified rentable"
+        }
+      ],
+      "exclusions": [],
+      "license": "CC BY 4.0",
+      "attribution": "GPU Rental Prices. GPU rental price index [dataset]. https://gpurentalprices.com/data",
+      "source_url": "https://gpurentalprices.com/api/latest.json",
+      "permission_url": "https://gpurentalprices.com/data"
+    },
+    "events": [
+      {
+        "id": "a1de2a8f55cbc67bfa20872b",
+        "url": "https://investors.coreweave.com/news/news-details/2026/CoreWeave-Expands-Global-AI-Cloud-Platform-With-New-Capacity-in-Denmark-and-First-Global-AI-Network-Backbone/default.aspx",
+        "title": "CoreWeave - CoreWeave Expands Global AI Cloud Platform With New Capacity in Denmark and First Global AI Network Backbone",
+        "published_at": "2026-10-27T02:00:00Z",
+        "publication_verified": true,
+        "first_observed_at": "2026-11-15T21:30:17.380505+00:00",
+        "retrieved_at": "2026-11-15T21:30:17.380505+00:00",
+        "content_sha256": "aaeb3fa172264651b801fb928667f34f9cc810c192cc991f4f5e87d26f5a06c8",
+        "kind": "capacity_plan",
+        "extraction_version": "deterministic-title-classifier-v1",
+        "uncertainty": "Title-based announcement category; no verified operating-capacity amount or causal price coefficient",
+        "publication": "Metadata and derived counts only; source body private"
+      },
+      {
+        "id": "e7168d673a067505cf39ff06",
+        "url": "https://cloud.google.com/blog/topics/ai-infrastructure/google-cloud-infrastructure-at-nvidia-gtc-berlin-2026/",
+        "title": "Google Cloud infrastructure at NVIDIA GTC Berlin 2026 | Google Cloud Blog",
+        "published_at": "2026-10-21T23:59:59.999999+00:00",
+        "publication_verified": true,
+        "first_observed_at": "2026-11-15T21:30:17.620575+00:00",
+        "retrieved_at": "2026-11-15T21:30:17.620575+00:00",
+        "content_sha256": "bd2725df9382598f480cd827d355e61e77cbb8b1269d72b0864f8760cdc60767",
+        "kind": "capacity_plan",
+        "extraction_version": "deterministic-title-classifier-v1",
+        "uncertainty": "Title-based announcement category; no verified operating-capacity amount or causal price coefficient",
+        "publication": "Metadata and derived counts only; source body private"
+      },
+      {
+        "id": "987b95d2615261459807532b",
+        "url": "https://aws.amazon.com/about-aws/whats-new/2026/11/amazon-g7-additional-regions/",
+        "title": "Amazon EC2 G7 instances now available in additional regions - AWS",
+        "published_at": null,
+        "publication_verified": false,
+        "first_observed_at": "2026-11-15T21:30:17.769141+00:00",
+        "retrieved_at": "2026-11-15T21:30:17.769141+00:00",
+        "content_sha256": "21ec535bb1da0db3d94714c94540517912a71528ba3249f230687c5ae477d69c",
+        "kind": "announcement",
+        "extraction_version": "deterministic-title-classifier-v1",
+        "uncertainty": "Title-based announcement category; no verified operating-capacity amount or causal price coefficient",
+        "publication": "Metadata and derived counts only; source body private"
+      },
+      {
+        "id": "325e264f54084e1f9fca4bb4",
+        "url": "https://nvidianews.nvidia.com/news/nvidia-introduces-dsx-pod-ai-factories-to-accelerate-europes-infrastructure-deployment",
+        "title": "NVIDIA Introduces DSX POD AI Factories to Accelerate Europe\u2019s Infrastructure Deployment | NVIDIA Newsroom",
+        "published_at": null,
+        "publication_verified": false,
+        "first_observed_at": "2026-11-15T21:30:17.868305+00:00",
+        "retrieved_at": "2026-11-15T21:30:17.868305+00:00",
+        "content_sha256": "f43d177ac6f67cc24645e1ed68bcf5ab1c0dc0e20ae08371ac638aa5045de598",
+        "kind": "capacity_plan",
+        "extraction_version": "deterministic-title-classifier-v1",
+        "uncertainty": "Title-based announcement category; no verified operating-capacity amount or causal price coefficient",
+        "publication": "Metadata and derived counts only; source body private"
+      },
+      {
+        "id": "ee7f6ef5c7eb7fd92b997a8c",
+        "url": "https://cloud.google.com/blog/topics/ai-infrastructure/confidential-g4-gpus-are-ga",
+        "title": "Confidential G4 GPUs are GA | Google Cloud Blog",
+        "published_at": "2026-10-21T23:59:59.999999+00:00",
+        "publication_verified": true,
+        "first_observed_at": "2026-11-15T21:30:18.010482+00:00",
+        "retrieved_at": "2026-11-15T21:30:18.010482+00:00",
+        "content_sha256": "0e21062f6fe3f1920f3f162e0ae343221d2496b30ec3fe62d12043d376c18b74",
+        "kind": "hardware_announcement",
+        "extraction_version": "deterministic-title-classifier-v1",
+        "uncertainty": "Title-based announcement category; no verified operating-capacity amount or causal price coefficient",
+        "publication": "Metadata and derived counts only; source body private"
+      },
+      {
+        "id": "613cf6888fd0071fc7980d39",
+        "url": "https://nvidianews.nvidia.com/news/european-ecosystem-builds-worlds-most-efficient-ai-factories-with-nvidia-dsx",
+        "title": "European Ecosystem Builds World\u2019s Most Efficient AI Factories With NVIDIA DSX | NVIDIA Newsroom",
+        "published_at": null,
+        "publication_verified": false,
+        "first_observed_at": "2026-11-15T21:30:18.115131+00:00",
+        "retrieved_at": "2026-11-15T21:30:18.115131+00:00",
+        "content_sha256": "8d09463057fd3152ef7c4e1f565908c977e188ee2cbc81fb5a2fb51e028c189d",
+        "kind": "announcement",
+        "extraction_version": "deterministic-title-classifier-v1",
+        "uncertainty": "Title-based announcement category; no verified operating-capacity amount or causal price coefficient",
+        "publication": "Metadata and derived counts only; source body private"
+      }
+    ],
+    "bls": {
+      "series_id": "PCU221122221122",
+      "unit": "Producer price index; not USD/kWh",
+      "latest_period": "2026-10",
+      "observations": [
+        {
+          "period": "2026-10",
+          "value": 198.898,
+          "footnotes": [
+            {
+              "code": "P",
+              "text": "Preliminary. All indexes are subject to monthly revisions up to four months after original publication."
+            }
+          ]
+        },
+        {
+          "period": "2026-09",
+          "value": 209.27,
+          "footnotes": [
+            {
+              "code": "P",
+              "text": "Preliminary. All indexes are subject to monthly revisions up to four months after original publication."
+            }
+          ]
+        }
+      ],
+      "first_observed_at": "2026-11-15T21:30:18.416171+00:00",
+      "period_first_observed_at": "2026-11-15T21:30:18.416171+00:00",
+      "source_url": "https://api.bls.gov/publicAPI/v2/timeseries/data/PCU221122221122",
+      "response_sha256": "c9266120df6bf6c9156a81e00c25ea0ebbdd59caa24dec6f712df618a4e0b825",
+      "release_timestamp": null,
+      "availability_rule": "Actual retrieval; no claimed historical release vintage"
+    },
+    "features": {
+      "official_announcement_count_7d": 0,
+      "gpu_price_announcement_count_7d": 0,
+      "newly_observed_evidence_age_days": null,
+      "capacity_plan_count_30d": 2,
+      "operational_capacity_confirmed_count_30d": null,
+      "hardware_announcement_count_30d": 1,
+      "electricity_ppi_index": 198.898,
+      "latest_available_month_change": -0.04956276580494101,
+      "days_since_new_period_first_seen": 3.0266203703703706e-08
+    },
+    "receipts": [
+      {
+        "url": "https://gpurentalprices.com/api/latest.json",
+        "retrieved_at": "2026-11-15T21:30:15.034054+00:00",
+        "status_code": 200,
+        "final_url": "https://gpurentalprices.com/api/latest.json",
+        "sha256": "9eafd355d20967b87348d624dcb51278df0587ec7e4253c0a6244e4498a13b3c",
+        "bytes": 528863,
+        "etag": "\"1794733828681-16-528863\"",
+        "last_modified": "Sun, 15 Nov 2026 09:10:28 GMT"
+      },
+      {
+        "url": "https://gpurentalprices.com/api/health.json",
+        "retrieved_at": "2026-11-15T21:30:15.758914+00:00",
+        "status_code": 200,
+        "final_url": "https://gpurentalprices.com/api/health.json",
+        "sha256": "365d52f6f2b5067a4f8c053d6c82c2dfacad2692d56620361f299b32613fc618",
+        "bytes": 14602,
+        "etag": "\"1794733828681-16-14602\"",
+        "last_modified": "Sun, 15 Nov 2026 09:10:28 GMT"
+      },
+      {
+        "url": "https://api.exa.ai/search",
+        "retrieved_at": "2026-11-15T21:30:17.110312+00:00",
+        "status_code": 200,
+        "final_url": "https://api.exa.ai/search",
+        "sha256": "3df492dd22e48fb4d7cdbf43f7929e9fe0ad08fa6c6a233b272ab4238d64849d",
+        "bytes": 18454,
+        "etag": "W/\"4816-wSTaLeaOZShw26QnhlA1Zct7nEA\"",
+        "last_modified": null,
+        "request_id": "942d5df1f7433c0d686058169d47cc04",
+        "cost_dollars": {
+          "total": 0.007,
+          "search": {
+            "neural": 0.007
+          }
+        },
+        "query": "Official GPU cloud price announcements, hardware launches and infrastructure capacity deployments from NVIDIA, AWS, Google Cloud, CoreWeave and Lambda. Identify exact announcement dates and distinguish plans from operating capacity."
+      },
+      {
+        "url": "https://investors.coreweave.com/news/news-details/2026/CoreWeave-Expands-Global-AI-Cloud-Platform-With-New-Capacity-in-Denmark-and-First-Global-AI-Network-Backbone/default.aspx",
+        "retrieved_at": "2026-11-15T21:30:17.380505+00:00",
+        "status_code": 200,
+        "final_url": "https://investors.coreweave.com/news/news-details/2026/CoreWeave-Expands-Global-AI-Cloud-Platform-With-New-Capacity-in-Denmark-and-First-Global-AI-Network-Backbone/default.aspx",
+        "sha256": "aaeb3fa172264651b801fb928667f34f9cc810c192cc991f4f5e87d26f5a06c8",
+        "bytes": 105734,
+        "etag": "\"75a475f4a687f8776f066e0a6231ebb0\"",
+        "last_modified": null
+      },
+      {
+        "url": "https://cloud.google.com/blog/topics/ai-infrastructure/google-cloud-infrastructure-at-nvidia-gtc-berlin-2026/",
+        "retrieved_at": "2026-11-15T21:30:17.620575+00:00",
+        "status_code": 200,
+        "final_url": "https://cloud.google.com/blog/topics/ai-infrastructure/google-cloud-infrastructure-at-nvidia-gtc-berlin-2026/",
+        "sha256": "bd2725df9382598f480cd827d355e61e77cbb8b1269d72b0864f8760cdc60767",
+        "bytes": 255114,
+        "etag": null,
+        "last_modified": null
+      },
+      {
+        "url": "https://aws.amazon.com/about-aws/whats-new/2026/11/amazon-g7-additional-regions/",
+        "retrieved_at": "2026-11-15T21:30:17.769141+00:00",
+        "status_code": 200,
+        "final_url": "https://aws.amazon.com/about-aws/whats-new/2026/11/amazon-g7-additional-regions/",
+        "sha256": "21ec535bb1da0db3d94714c94540517912a71528ba3249f230687c5ae477d69c",
+        "bytes": 299432,
+        "etag": null,
+        "last_modified": "Fri, 13 Nov 2026 04:13:34 GMT"
+      },
+      {
+        "url": "https://nvidianews.nvidia.com/news/nvidia-introduces-dsx-pod-ai-factories-to-accelerate-europes-infrastructure-deployment",
+        "retrieved_at": "2026-11-15T21:30:17.868305+00:00",
+        "status_code": 200,
+        "final_url": "https://nvidianews.nvidia.com/news/nvidia-introduces-dsx-pod-ai-factories-to-accelerate-europes-infrastructure-deployment",
+        "sha256": "f43d177ac6f67cc24645e1ed68bcf5ab1c0dc0e20ae08371ac638aa5045de598",
+        "bytes": 74296,
+        "etag": null,
+        "last_modified": null
+      },
+      {
+        "url": "https://cloud.google.com/blog/topics/ai-infrastructure/confidential-g4-gpus-are-ga",
+        "retrieved_at": "2026-11-15T21:30:18.010482+00:00",
+        "status_code": 200,
+        "final_url": "https://cloud.google.com/blog/topics/ai-infrastructure/confidential-g4-gpus-are-ga",
+        "sha256": "0e21062f6fe3f1920f3f162e0ae343221d2496b30ec3fe62d12043d376c18b74",
+        "bytes": 236849,
+        "etag": null,
+        "last_modified": null
+      },
+      {
+        "url": "https://nvidianews.nvidia.com/news/european-ecosystem-builds-worlds-most-efficient-ai-factories-with-nvidia-dsx",
+        "retrieved_at": "2026-11-15T21:30:18.115131+00:00",
+        "status_code": 200,
+        "final_url": "https://nvidianews.nvidia.com/news/european-ecosystem-builds-worlds-most-efficient-ai-factories-with-nvidia-dsx",
+        "sha256": "8d09463057fd3152ef7c4e1f565908c977e188ee2cbc81fb5a2fb51e028c189d",
+        "bytes": 85393,
+        "etag": null,
+        "last_modified": null
+      },
+      {
+        "url": "https://api.bls.gov/publicAPI/v2/timeseries/data/PCU221122221122",
+        "retrieved_at": "2026-11-15T21:30:18.416171+00:00",
+        "status_code": 200,
+        "final_url": "https://api.bls.gov/publicAPI/v2/timeseries/data/PCU221122221122",
+        "sha256": "c9266120df6bf6c9156a81e00c25ea0ebbdd59caa24dec6f712df618a4e0b825",
+        "bytes": 3629,
+        "etag": null,
+        "last_modified": null
+      }
+    ],
+    "errors": [],
+    "protected_outcomes_loaded": false
+  },
+  "snapshot_count": 1,
+  "cohort": [
+    {
+      "id": "grp-v6-1656995eee0c353db46a",
+      "contract": {
+        "provider": "lambda",
+        "gpu": "a100-pcie-40",
+        "vram_gb": 40,
+        "kind": "on-demand",
+        "region": null,
+        "min_gpus": 1,
+        "instance": "1x NVIDIA A100 PCIe",
+        "cpu": null,
+        "vcpus": 30,
+        "ram_gb": null,
+        "commitment": null,
+        "reservation_months": null,
+        "source_url": "https://lambda.ai/instances"
+      },
+      "family": "A100"
+    },
+    {
+      "id": "grp-v6-6110ed2d24818c2a0071",
+      "contract": {
+        "provider": "lambda",
+        "gpu": "a100-pcie-40",
+        "vram_gb": 40,
+        "kind": "on-demand",
+        "region": null,
+        "min_gpus": 2,
+        "instance": "2x NVIDIA A100 PCIe",
+        "cpu": null,
+        "vcpus": 60,
+        "ram_gb": null,
+        "commitment": null,
+        "reservation_months": null,
+        "source_url": "https://lambda.ai/instances"
+      },
+      "family": "A100"
+    },
+    {
+      "id": "grp-v6-140133df8ce06a40bc16",
+      "contract": {
+        "provider": "lambda",
+        "gpu": "h100-pcie",
+        "vram_gb": 80,
+        "kind": "on-demand",
+        "region": null,
+        "min_gpus": 1,
+        "instance": "1x NVIDIA H100 PCIe",
+        "cpu": null,
+        "vcpus": 26,
+        "ram_gb": null,
+        "commitment": null,
+        "reservation_months": null,
+        "source_url": "https://lambda.ai/instances"
+      },
+      "family": "H100"
+    },
+    {
+      "id": "grp-v6-c65e682f32ea445a84fb",
+      "contract": {
+        "provider": "hyperai",
+        "gpu": "h100-pcie",
+        "vram_gb": 80,
+        "kind": "on-demand",
+        "region": null,
+        "min_gpus": null,
+        "instance": "H100",
+        "cpu": null,
+        "vcpus": null,
+        "ram_gb": null,
+        "commitment": null,
+        "reservation_months": null,
+        "source_url": "https://hyper.ai/en/pricing"
+      },
+      "family": "H100"
+    }
+  ],
+  "readiness": {
+    "status": "gated",
+    "retained_price_days": 1,
+    "required_price_days": 56,
+    "minimum_matured_pairs": 32,
+    "bls_periods_first_observed": 1,
+    "bls_periods_for_group_attribution": 3,
+    "verified_news_events": 3,
+    "human_checked_extraction_labels": 0,
+    "weight_training": "gated; no independent new task evidence or checked extraction labels",
+    "new_optimizer_updates": 0,
+    "reason": "Prospective collection began now; historical source vintages must not be invented"
+  },
+  "ledger": [
+    {
+      "id": "f5c73be709d50dfe510cbaa328f27e9ddc38d3e809adeaf789f58e71980fe033",
+      "origin_date": "2026-11-15",
+      "issued_at": "2026-11-15T21:30:21.811231+00:00",
+      "kind": "cold_start_reference_pilot",
+      "hypothesis": "Adding origin-available news, infrastructure and BLS features lowers seven-day quantile pinball versus the identical price-only learner.",
+      "candidate": "signals_111",
+      "incumbent": "signals_000",
+      "status": "issued_reference_pilot",
+      "rows": 48,
+      "failures": 0,
+      "target_dates": [
+        "2026-11-16",
+        "2026-11-18",
+        "2026-11-22"
+      ],
+      "score_status": "pending",
+      "decision": "incumbent_retained_pending_confirmatory_evidence",
+      "criticism": "Cold-start references are not evidence of signal value; await retained feature history and matured labels",
+      "artifact": "/api/signals-v6/artifacts/f5c73be709d50dfe510cbaa328f27e9ddc38d3e809adeaf789f58e71980fe033.json"
+    }
+  ],
+  "comparisons": [
+    {
+      "candidate": "signals_111",
+      "reference": "signals_000",
+      "cells": 0,
+      "candidate_pinball": null,
+      "reference_pinball": null,
+      "difference": null,
+      "skill": null,
+      "coverage_numerator": 0,
+      "coverage_denominator": 0,
+      "mean_interval_width": null
+    },
+    {
+      "candidate": "signals_111",
+      "reference": "drift",
+      "cells": 0,
+      "candidate_pinball": null,
+      "reference_pinball": null,
+      "difference": null,
+      "skill": null,
+      "coverage_numerator": 0,
+      "coverage_denominator": 0,
+      "mean_interval_width": null
+    }
+  ],
+  "primary_scored_cells": 0,
+  "prospective_improvement_established": false,
+  "claim": "The experiment is running; prospective improvement is not yet established.",
+  "artifacts": [
+    {
+      "kind": "snapshot",
+      "sha256": "edc1d84541789626673b225736d10f113ab7187bf1a71d1bfc4bf763a9da22d6",
+      "bytes_sha256": "018d8f433abafd54992cc89918ccb5a55e1d58f62e7b47a312cbc960cc13ae01",
+      "path": "/api/signals-v6/artifacts/edc1d84541789626673b225736d10f113ab7187bf1a71d1bfc4bf763a9da22d6.json"
+    },
+    {
+      "kind": "commitment",
+      "sha256": "f5c73be709d50dfe510cbaa328f27e9ddc38d3e809adeaf789f58e71980fe033",
+      "bytes_sha256": "6d82f2e8b4fbfce0796acdf75bf22197dc8f9b40f8040b899e0cdd8e5c0e7048",
+      "path": "/api/signals-v6/artifacts/f5c73be709d50dfe510cbaa328f27e9ddc38d3e809adeaf789f58e71980fe033.json"
+    },
+    {
+      "kind": "score",
+      "sha256": "11333080305226107edc0c24c3dfda89adf1b0f948226ed440856dc8d34c2be2",
+      "bytes_sha256": "331ba5ba742c6414735c94bb80adef9b73cd564a31c5113179c2acf31ec12cce",
+      "path": "/api/signals-v6/artifacts/11333080305226107edc0c24c3dfda89adf1b0f948226ed440856dc8d34c2be2.json"
+    }
+  ],
+  "schedule": {
+    "status": "deployed_single_serial_tick",
+    "cron_utc": "30 17,18 * * *",
+    "external_work_ends": "2027-05-25T00:00:00+00:00",
+    "note": "After end date, scheduled invocations perform no collection/inference; removing the deployed schedule is a separate operator action."
+  },
+  "execution_failures": [],
+  "training": {
+    "new_optimizer_updates": 0,
+    "status": "gated_pending_informative_tasks_and_checked_labels"
+  },
+  "execution_errors": [],
+  "runtime_seconds": 12.022084858
+}
