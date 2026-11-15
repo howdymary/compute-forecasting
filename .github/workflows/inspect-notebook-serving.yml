@@ -1,0 +1,53 @@
+name: Inspect public notebook serving diagnostics
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/inspect-notebook-serving.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  inspect:
+    if: github.ref == 'refs/heads/compute-observatory'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install read-only Modal client
+        run: python -m pip install modal
+      - name: Inspect endpoint timings and recent application logs
+        run: |
+          python - <<'PY'
+          import concurrent.futures,json,subprocess,time,urllib.request
+          from pathlib import Path
+          root=Path('artifacts');root.mkdir(exist_ok=True)
+          base='https://howdymary--compute-forecast-observatory-web.us-east.modal.run'
+          paths=['/notebook-assets/caveat-f84acf2c.ttf','/files/forecasts.csv','/api/pricing','/api/notebook']*2
+          def request(path):
+              start=time.monotonic()
+              try:
+                  with urllib.request.urlopen(base+path,timeout=20) as response:raw=response.read();status=response.status
+                  return {'path':path,'status':status,'bytes':len(raw),'seconds':time.monotonic()-start}
+              except Exception as error:return {'path':path,'error':type(error).__name__+': '+str(error),'seconds':time.monotonic()-start}
+          rows=[]
+          with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
+              for future in concurrent.futures.as_completed([executor.submit(request,p) for p in paths]):
+                  row=future.result();rows.append(row);print('NOTEBOOK_HTTP_TIMING:'+json.dumps(row),flush=True)
+          (root/'endpoint-observations.json').write_text(json.dumps({'kind':'investigation_only_not_a_passing_test','rows':rows},indent=2))
+          result=subprocess.run(['modal','app','logs','compute-forecast-observatory','--tail','250','--since','30m','--timestamps','--show-container-id'],capture_output=True,text=True,timeout=90)
+          output=result.stdout+'\n'+result.stderr
+          (root/'public-app-logs.txt').write_text(output)
+          print('NOTEBOOK_LOG_COMMAND_STATUS:'+str(result.returncode),flush=True)
+          print('NOTEBOOK_SERVING_LOGS:'+output[-50000:],flush=True)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: notebook-serving-investigation-${{ github.run_id }}
+          path: artifacts/
+          retention-days: 30
