@@ -86,3 +86,5 @@ The prompt-intervention sampler phase took396.85 seconds; that duration excludes
 Daily capture revalidates source ETags and byte counts, reuses hash-verified unchanged objects, and preserves the first retained content vintage. Cache reuse does not imply that a provider quote was refreshed. An ETag or input-hash mismatch fails collection visibly.
 
 The first new source capture completed successfully on November15. Its initial downstream Chronos runtime check failed because a univariate axis was not removed. The correction is confined to the new adapter; the archived comparator and commitments are unchanged. The rerun retains this failure as execution evidence.
+
+The synthetic runtime test also checks the registered short-window fallback: a28-day tree lacks the required24 matured labels at the eight-day effective lead and must use the declared empirical fallback. The56-day tree must execute natively. Market-news collection and numerical-runtime validation run independently; a numerical adapter check must not suppress evidence collection.

@@ -2,7 +2,7 @@ name: Validate prospective runtime with synthetic inputs
 on:
   push:
     branches: [compute-observatory]
-    paths: [.github/workflows/validate-prospective-runtime-v4.yml]
+    paths: [.github/workflows/validate-prospective-runtime-v4.yml, src/compute_forecast/review_remote_v4.py, src/compute_forecast/prospective_panel_v4.py]
   workflow_dispatch:
 permissions:
   contents: write

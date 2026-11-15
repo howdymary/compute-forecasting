@@ -123,7 +123,9 @@ def runtime_contract():
     synthetic={"series":[{"id":"hubbard-independent-a100-40","points":[{"date":(at-timedelta(days=i)).isoformat(),"value":2.+i*.001} for i in range(200)],"auxiliary":{}}]}
     fits,failures=numerical(synthetic,"hubbard-independent-a100-40","2000-08-02")
     if fits is None or len(fits)!=42 or any(len(rows)!=3 for rows in fits.values()):raise ValueError("Synthetic selector numerical contract")
-    if any(row["fallback"] is not None for identifier in ("tree_28_3","tree_56_7") for row in fits[identifier]):raise ValueError("Core target-only tree adapter failed its synthetic contract")
+    if any(row["fallback"] is not None for row in fits["tree_56_7"]):raise ValueError("Core target-only 56-day tree adapter failed its synthetic contract")
+    short={row["horizon_days"]:row for row in fits["tree_28_3"]}
+    if short[1]["fallback"] is not None or short[3]["fallback"] is not None or short[7]["fallback"]!="insufficient_tree_labels":raise ValueError("Registered short-window maturity fallback changed")
     vintages=[]
     for file in Path("/data/review-v4/vintages").glob("*.json"):
         if file.name.endswith(".receipt.json"):continue
@@ -149,9 +151,6 @@ def main():
     if a.mode=="market":
         from .market_context_v4 import run as run_market
         private_dir=Path("inputs/private-market-v4");private_dir.mkdir(parents=True,exist_ok=True)
-        with app.run():
-            runtime=runtime_contract.remote()
-        (out/"runtime-contract.json").write_bytes(encoded(runtime))
         payload=asyncio.run(run_market(private_dir,out/"market.json"))
         with app.run():
             retain_private.remote(payload["run_id"],{p.name:p.read_bytes() for p in private_dir.glob("*.json")})

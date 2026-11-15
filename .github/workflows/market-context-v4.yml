@@ -40,12 +40,6 @@ jobs:
           python -m pip install -e '.[dev]' modal numpy scipy scikit-learn tinker==0.39.0 tinker-cookbook==0.6.1 transformers==5.23.0 httpx
           python -m compileall -q src
           python -m pytest tests/test_prospective_v4.py --junitxml=artifacts/market-context-contracts.xml
-      - name: Retain a licensed price vintage with an explicit collection receipt
-        if: steps.window.outputs.active == 'true'
-        env:
-          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
-          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
-        run: python -m compute_forecast.review_remote_v4 --mode capture
       - name: Retrieve primary sources and make two bounded research decisions
         if: steps.window.outputs.active == 'true'
         env:
@@ -73,10 +67,6 @@ jobs:
           value=json.loads(Path('artifacts/review-v4-operations/market.json').read_bytes())
           path='results/review-v4/market/'+os.environ['GITHUB_RUN_ID']+'.json'
           files={path:encoded(value)}
-          runtime=json.loads(Path('artifacts/review-v4-operations/runtime-contract.json').read_bytes())
-          files['results/review-v4/runtime/'+os.environ['GITHUB_RUN_ID']+'.json']=encoded(runtime)
-          capture=json.loads(Path('artifacts/review-v4-operations/capture.json').read_bytes())
-          files['results/review-v4/vintages/'+os.environ['GITHUB_RUN_ID']+'.json']=encoded(capture)
           print('V4_MARKET_COMMIT:'+publish_append_only(files),flush=True)
           PY
     permissions:
