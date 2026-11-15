@@ -1,0 +1,63 @@
+{
+  "source_file": "artifacts/phase3/breakout_001/2/search.json",
+  "source_file_sha256": "52e65680dd40f72c10234fade502f7d7915643d1a019613e4be1eaf4d8cf3091",
+  "rows": [
+    {
+      "archive_index": 0,
+      "minimum_covers_enumerated": 1,
+      "projections_exported": 1,
+      "lower_cardinality_export_cap": 8,
+      "raw_energy": 2,
+      "edges": [
+        [
+          0,
+          1536
+        ],
+        [
+          1536,
+          6464
+        ]
+      ],
+      "minimum_cover_size": 1,
+      "best_feasible_cover_size": 1,
+      "cover_enumeration_complete": true,
+      "enumeration_nodes": 5,
+      "projections": [
+        {
+          "verification": {
+            "accepted": true,
+            "cardinality": 226,
+            "reports": [
+              {
+                "cardinality": 226,
+                "distinct_descendants": 6410,
+                "length": 16,
+                "method": "distinct_string_two_deletions",
+                "valid": true,
+                "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+              },
+              {
+                "cardinality": 226,
+                "largest_pairwise_lcs": 13,
+                "length": 16,
+                "method": "independent_dynamic_programming_lcs",
+                "pairs_checked": 25425,
+                "valid": true,
+                "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+              }
+            ]
+          },
+          "witness": "projection_417e3dab220270af.txt",
+          "removed_words": [
+            1536
+          ],
+          "known226_orbit": true
+        }
+      ]
+    }
+  ],
+  "unique_projections_verified": 1,
+  "novel226_orbits": [],
+  "best_independently_verified": 226,
+  "scope": "Only this finite archived state list. Positive-energy states are invalid; projected explicit codes are accepted only by both protected verifiers. Recovery of known226 is not a new result."
+}

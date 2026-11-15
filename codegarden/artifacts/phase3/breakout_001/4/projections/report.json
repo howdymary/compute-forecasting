@@ -1,0 +1,169 @@
+{
+  "source_file": "artifacts/phase3/breakout_001/4/search.json",
+  "source_file_sha256": "3367eff93a78e81d4283ac01e92f0a050f6b30436a4e7a96ff5b719add8dea74",
+  "rows": [
+    {
+      "archive_index": 0,
+      "minimum_covers_enumerated": 4,
+      "projections_exported": 4,
+      "lower_cardinality_export_cap": 8,
+      "raw_energy": 4,
+      "edges": [
+        [
+          255,
+          2559
+        ],
+        [
+          3919,
+          4045
+        ],
+        [
+          29752,
+          59452
+        ],
+        [
+          57589,
+          59452
+        ]
+      ],
+      "minimum_cover_size": 3,
+      "best_feasible_cover_size": 3,
+      "cover_enumeration_complete": true,
+      "enumeration_nodes": 23,
+      "projections": [
+        {
+          "verification": {
+            "accepted": true,
+            "cardinality": 224,
+            "reports": [
+              {
+                "cardinality": 224,
+                "distinct_descendants": 6352,
+                "length": 16,
+                "method": "distinct_string_two_deletions",
+                "valid": true,
+                "witness_sha256": "a8d5c85b5c8b4ac85f0f5c80488675f360a005a824bb0b33f4beeeeecf89afee"
+              },
+              {
+                "cardinality": 224,
+                "largest_pairwise_lcs": 13,
+                "length": 16,
+                "method": "independent_dynamic_programming_lcs",
+                "pairs_checked": 24976,
+                "valid": true,
+                "witness_sha256": "a8d5c85b5c8b4ac85f0f5c80488675f360a005a824bb0b33f4beeeeecf89afee"
+              }
+            ]
+          },
+          "witness": "projection_a8d5c85b5c8b4ac8.txt",
+          "removed_words": [
+            255,
+            3919,
+            59452
+          ],
+          "known226_orbit": false
+        },
+        {
+          "verification": {
+            "accepted": true,
+            "cardinality": 224,
+            "reports": [
+              {
+                "cardinality": 224,
+                "distinct_descendants": 6351,
+                "length": 16,
+                "method": "distinct_string_two_deletions",
+                "valid": true,
+                "witness_sha256": "45317f840168b1d7f0155569a802ff31eb0539dd2e6c1fbd211b6cf90f181d4e"
+              },
+              {
+                "cardinality": 224,
+                "largest_pairwise_lcs": 13,
+                "length": 16,
+                "method": "independent_dynamic_programming_lcs",
+                "pairs_checked": 24976,
+                "valid": true,
+                "witness_sha256": "45317f840168b1d7f0155569a802ff31eb0539dd2e6c1fbd211b6cf90f181d4e"
+              }
+            ]
+          },
+          "witness": "projection_45317f840168b1d7.txt",
+          "removed_words": [
+            255,
+            4045,
+            59452
+          ],
+          "known226_orbit": false
+        },
+        {
+          "verification": {
+            "accepted": true,
+            "cardinality": 224,
+            "reports": [
+              {
+                "cardinality": 224,
+                "distinct_descendants": 6347,
+                "length": 16,
+                "method": "distinct_string_two_deletions",
+                "valid": true,
+                "witness_sha256": "f270ed34d99f10c49255aeb30fd76b66295887be318d1d2a2ce7c6a5592cac5b"
+              },
+              {
+                "cardinality": 224,
+                "largest_pairwise_lcs": 13,
+                "length": 16,
+                "method": "independent_dynamic_programming_lcs",
+                "pairs_checked": 24976,
+                "valid": true,
+                "witness_sha256": "f270ed34d99f10c49255aeb30fd76b66295887be318d1d2a2ce7c6a5592cac5b"
+              }
+            ]
+          },
+          "witness": "projection_f270ed34d99f10c4.txt",
+          "removed_words": [
+            2559,
+            3919,
+            59452
+          ],
+          "known226_orbit": false
+        },
+        {
+          "verification": {
+            "accepted": true,
+            "cardinality": 224,
+            "reports": [
+              {
+                "cardinality": 224,
+                "distinct_descendants": 6346,
+                "length": 16,
+                "method": "distinct_string_two_deletions",
+                "valid": true,
+                "witness_sha256": "92041e43358c5eb25582e90198607c7ea7b7afb6a9f5f9008d5cb57e3fd6bf3f"
+              },
+              {
+                "cardinality": 224,
+                "largest_pairwise_lcs": 13,
+                "length": 16,
+                "method": "independent_dynamic_programming_lcs",
+                "pairs_checked": 24976,
+                "valid": true,
+                "witness_sha256": "92041e43358c5eb25582e90198607c7ea7b7afb6a9f5f9008d5cb57e3fd6bf3f"
+              }
+            ]
+          },
+          "witness": "projection_92041e43358c5eb2.txt",
+          "removed_words": [
+            2559,
+            4045,
+            59452
+          ],
+          "known226_orbit": false
+        }
+      ]
+    }
+  ],
+  "unique_projections_verified": 4,
+  "novel226_orbits": [],
+  "best_independently_verified": 226,
+  "scope": "Only this finite archived state list. Positive-energy states are invalid; projected explicit codes are accepted only by both protected verifiers. Recovery of known226 is not a new result."
+}
