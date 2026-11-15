@@ -29,7 +29,7 @@ def run(spec,source,folder,checkpoint):
  cpu_started=time.monotonic()
  with torch.no_grad():score(torch.tensor(original,dtype=torch.float64,device="cpu"))
  cpu_forward=time.monotonic()-cpu_started
- profile={"cpu_forward_seconds":cpu_forward,"device":device,"gpu_name":torch.cuda.get_device_name() if device=="cuda" else None,"score_seconds":device_forward,"torch":torch.__version__}
+ profile={"cpu_forward_seconds":cpu_forward,"device":device,"gpu_name":torch.cuda.get_device_name() if device=="cuda" else None,"score_seconds":device_forward,"torch":str(torch.__version__)}
  save();cycle=0
  try:
   while time.monotonic()<deadline:

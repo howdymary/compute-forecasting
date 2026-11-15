@@ -1,47 +1,41 @@
-name: CodeGarden C2 bounded polish and exact acceptance
+name: CodeGarden recover existing C2 results
 on:
   push:
-    branches: [codegarden-c2-polish-001]
+    branches: [codegarden-c2-recovery-001]
     paths: [.github/workflows/codegarden.yml]
   workflow_dispatch:
 permissions:
   contents: write
 concurrency:
-  group: codegarden-c2-polish-001
+  group: codegarden-c2-recovery-001
   cancel-in-progress: false
 env:
   SOURCE_SHA: ${{ github.sha }}
   PYTHONDONTWRITEBYTECODE: '1'
-  HF_HOME: ${{ github.workspace }}/codegarden/.cache/huggingface
-  XDG_CACHE_HOME: ${{ github.workspace }}/codegarden/.cache
-  TMPDIR: ${{ github.workspace }}/codegarden/.tmp
   OPENBLAS_NUM_THREADS: '2'
-  OMP_NUM_THREADS: '2'
 jobs:
   research:
     runs-on: ubuntu-24.04
-    timeout-minutes: 50
+    timeout-minutes: 15
     outputs:
-      has_candidate: ${{ steps.polish.outputs.has_candidate }}
+      has_candidate: ${{ steps.recover.outputs.has_candidate }}
     steps:
-      - name: Fetch isolated C2 sources
+      - name: Fetch frozen checkers and recovery reader
         run: |
           python3 -B - <<'PY'
           import pathlib,urllib.request,os
-          names=["exact.cpp","official.py","preflight.py","gpu_search.py","polish.py","manifest.json"]
-          files=["codegarden/c2/"+n for n in names]+["codegarden/side_services/cycle.py","codegarden/supervisor.py","codegarden/protected/manifest.json","codegarden/protected/verify_descendants.py","codegarden/protected/verify_lcs.py"]
-          for name in files:
+          paths=["codegarden/c2/"+n for n in ["exact.cpp","official.py","manifest.json","recover.py"]]+["codegarden/side_services/cycle.py","codegarden/supervisor.py","codegarden/protected/manifest.json","codegarden/protected/verify_descendants.py","codegarden/protected/verify_lcs.py"]
+          for name in paths:
               p=pathlib.Path(name);p.parent.mkdir(parents=True,exist_ok=True)
               p.write_bytes(urllib.request.urlopen("https://raw.githubusercontent.com/howdymary/compute-forecasting/"+os.environ["SOURCE_SHA"]+"/"+name,timeout=45).read())
           PY
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Isolated dependencies
+      - name: Isolated recovery dependencies
         run: |
-          mkdir -p codegarden/.tmp
           python3 -m venv codegarden/.venv-c2
-          codegarden/.venv-c2/bin/python -m pip install --disable-pip-version-check numpy==2.4.6 scipy==1.18.0 modal==1.6.4 tinker==0.39.0 transformers==5.23.0 jinja2==3.1.6
+          codegarden/.venv-c2/bin/python -m pip install --disable-pip-version-check numpy==2.4.6 scipy==1.18.0 modal==1.6.4
       - name: Fetch isolated header-only arithmetic dependency
         run: |
           python3 -B - <<'PY'
@@ -57,31 +51,23 @@ jobs:
         run: |
           mkdir -p codegarden/c2/.build
           g++ -O3 -std=c++17 -Icodegarden/c2/.deps/boost/usr/include codegarden/c2/exact.cpp -o codegarden/c2/.build/exact
-      - name: Exact fixtures and fresh live baseline
-        run: codegarden/.venv-c2/bin/python -B -u codegarden/c2/preflight.py
-      - name: Import check without provider calls
-        run: codegarden/.venv-c2/bin/python -B -c "import runpy; runpy.run_path('codegarden/c2/polish.py',run_name='import_only')"
-      - name: Bounded C2 polish
-        id: polish
+      - name: Read original committed results and independently verify
+        id: recover
         env:
           GH_TOKEN: ${{ github.token }}
-          EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
-          PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
-          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
           MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
-        run: codegarden/.venv-c2/bin/python -B -u codegarden/c2/polish.py
+        run: codegarden/.venv-c2/bin/python -B -u codegarden/c2/recover.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: codegarden-c2-polish
+          name: codegarden-c2-recovered
           retention-days: 30
           path: |
-            codegarden/artifacts/c2/polish_001/
-            codegarden/artifacts/c2/preflight_001/
+            codegarden/artifacts/c2/recovery_001/
             codegarden/artifacts/c2_witnesses/
       - uses: actions/upload-artifact@v4
-        if: steps.polish.outputs.has_candidate == 'true'
+        if: steps.recover.outputs.has_candidate == 'true'
         with:
           name: codegarden-c2-candidate
           retention-days: 30
@@ -89,6 +75,7 @@ jobs:
             codegarden/artifacts/c2_witnesses/${{ github.run_id }}/candidate.json
             codegarden/artifacts/c2_witnesses/${{ github.run_id }}/candidate.txt
             codegarden/artifacts/c2_witnesses/${{ github.run_id }}/candidate_target.json
+
   accept:
     needs: research
     if: needs.research.outputs.has_candidate == 'true'

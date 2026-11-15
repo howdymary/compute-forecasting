@@ -1,0 +1,144 @@
+name: CodeGarden recover existing C2 results
+on:
+  push:
+    branches: [codegarden-c2-recovery-001]
+    paths: [.github/workflows/codegarden.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: codegarden-c2-recovery-001
+  cancel-in-progress: false
+env:
+  SOURCE_SHA: ${{ github.sha }}
+  PYTHONDONTWRITEBYTECODE: '1'
+  OPENBLAS_NUM_THREADS: '2'
+jobs:
+  research:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    outputs:
+      has_candidate: ${{ steps.recover.outputs.has_candidate }}
+    steps:
+      - name: Fetch frozen checkers and recovery reader
+        run: |
+          python3 -B - <<'PY'
+          import pathlib,urllib.request,os
+          paths=["codegarden/c2/"+n for n in ["exact.cpp","official.py","manifest.json","recover.py"]]+["codegarden/side_services/cycle.py","codegarden/supervisor.py","codegarden/protected/manifest.json","codegarden/protected/verify_descendants.py","codegarden/protected/verify_lcs.py"]
+          for name in paths:
+              p=pathlib.Path(name);p.parent.mkdir(parents=True,exist_ok=True)
+              p.write_bytes(urllib.request.urlopen("https://raw.githubusercontent.com/howdymary/compute-forecasting/"+os.environ["SOURCE_SHA"]+"/"+name,timeout=45).read())
+          PY
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Isolated recovery dependencies
+        run: |
+          python3 -m venv codegarden/.venv-c2
+          codegarden/.venv-c2/bin/python -m pip install --disable-pip-version-check numpy==2.4.6 scipy==1.18.0 modal==1.6.4
+      - name: Fetch isolated header-only arithmetic dependency
+        run: |
+          python3 -B - <<'PY'
+          import pathlib,subprocess,hashlib,json
+          p=pathlib.Path("codegarden/c2/.deps");p.mkdir(parents=True,exist_ok=True)
+          subprocess.run(["apt-get","download","libboost1.83-dev"],cwd=p,check=True)
+          package=next(p.glob("libboost1.83-dev_*.deb"))
+          subprocess.run(["dpkg-deb","-x",str(package),str(p/"boost")],check=True)
+          out=pathlib.Path("codegarden/artifacts/c2/preflight_001");out.mkdir(parents=True,exist_ok=True)
+          (out/"boost_dependency.json").write_text(json.dumps({"package":package.name,"sha256":hashlib.sha256(package.read_bytes()).hexdigest(),"extracted_under":"codegarden/c2/.deps/boost"},indent=2))
+          PY
+      - name: Compile exact integer certificate engine
+        run: |
+          mkdir -p codegarden/c2/.build
+          g++ -O3 -std=c++17 -Icodegarden/c2/.deps/boost/usr/include codegarden/c2/exact.cpp -o codegarden/c2/.build/exact
+      - name: Read original committed results and independently verify
+        id: recover
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: codegarden/.venv-c2/bin/python -B -u codegarden/c2/recover.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: codegarden-c2-recovered
+          retention-days: 30
+          path: |
+            codegarden/artifacts/c2/recovery_001/
+            codegarden/artifacts/c2_witnesses/
+      - uses: actions/upload-artifact@v4
+        if: steps.recover.outputs.has_candidate == 'true'
+        with:
+          name: codegarden-c2-candidate
+          retention-days: 30
+          path: |
+            codegarden/artifacts/c2_witnesses/${{ github.run_id }}/candidate.json
+            codegarden/artifacts/c2_witnesses/${{ github.run_id }}/candidate.txt
+            codegarden/artifacts/c2_witnesses/${{ github.run_id }}/candidate_target.json
+
+  accept:
+    needs: research
+    if: needs.research.outputs.has_candidate == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Fetch frozen acceptance sources only
+        run: |
+          python3 -B - <<'PY'
+          import pathlib,urllib.request,os
+          for name in ["exact.cpp","official.py","manifest.json"]:
+              p=pathlib.Path("codegarden/c2")/name;p.parent.mkdir(parents=True,exist_ok=True)
+              p.write_bytes(urllib.request.urlopen("https://raw.githubusercontent.com/howdymary/compute-forecasting/"+os.environ["SOURCE_SHA"]+"/codegarden/c2/"+name,timeout=30).read())
+          PY
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Isolated acceptance dependencies
+        run: |
+          python3 -m venv codegarden/.venv-c2
+          codegarden/.venv-c2/bin/python -m pip install --disable-pip-version-check numpy==2.4.6 scipy==1.18.0
+      - name: Fetch isolated header-only arithmetic dependency
+        run: |
+          python3 -B - <<'PY'
+          import pathlib,subprocess,hashlib,json
+          p=pathlib.Path("codegarden/c2/.deps");p.mkdir(parents=True,exist_ok=True)
+          subprocess.run(["apt-get","download","libboost1.83-dev"],cwd=p,check=True)
+          package=next(p.glob("libboost1.83-dev_*.deb"))
+          subprocess.run(["dpkg-deb","-x",str(package),str(p/"boost")],check=True)
+          out=pathlib.Path("codegarden/artifacts/c2/preflight_001");out.mkdir(parents=True,exist_ok=True)
+          (out/"boost_dependency.json").write_text(json.dumps({"package":package.name,"sha256":hashlib.sha256(package.read_bytes()).hexdigest(),"extracted_under":"codegarden/c2/.deps/boost"},indent=2))
+          PY
+      - name: Compile exact integer certificate engine
+        run: |
+          mkdir -p codegarden/c2/.build
+          g++ -O3 -std=c++17 -Icodegarden/c2/.deps/boost/usr/include codegarden/c2/exact.cpp -o codegarden/c2/.build/exact
+      - uses: actions/download-artifact@v4
+        with:
+          name: codegarden-c2-candidate
+          path: codegarden/c2/.verify-input/
+      - name: Independent exact acceptance without optimizer or service credentials
+        run: |
+          codegarden/.venv-c2/bin/python -B - <<'PY'
+          import pathlib,json,hashlib,subprocess,importlib.util,urllib.request
+          from fractions import Fraction
+          root=pathlib.Path("codegarden")
+          for rel,h in json.loads((root/"c2/manifest.json").read_text())["files"].items():
+              assert hashlib.sha256((root/rel).read_bytes()).hexdigest()==h
+          folder=root/"c2/.verify-input";data=json.loads((folder/"candidate.json").read_text());values=data["values"]
+          assert 1<=len(values)<=2000000 and all(type(v) is int and 0<=v<=2**32 for v in values)
+          text=str(len(values))+"\n"+" ".join(map(str,values))+"\n";assert text==(folder/"candidate.txt").read_text()
+          p=subprocess.run([str(root/"c2/.build/exact")],input=text,text=True,capture_output=True,check=True,timeout=180)
+          exact=json.loads(p.stdout);fraction=Fraction(int(exact["numerator"]),int(exact["denominator"]))
+          sp=importlib.util.spec_from_file_location("frozen_c2",root/"c2/official.py");m=importlib.util.module_from_spec(sp);sp.loader.exec_module(m)
+          score=m.evaluate(data);assert abs(score-float(fraction))<1e-10
+          target=json.loads((folder/"candidate_target.json").read_text());assert float(fraction)>target["baseline"]+1e-9
+          current=json.load(urllib.request.urlopen("https://einsteinarena.com/api/solutions/best?problem_id=3&limit=1",timeout=60))[0]
+          report={"accepted":True,"exact_certificate":exact,"official_score":score,"starting_baseline":target["baseline"],"latest_arena_score":current["score"],"beats_latest_arena":float(fraction)>current["score"],"arena_min_improvement_met":float(fraction)>current["score"]+1e-5,"witness_sha256":hashlib.sha256(text.encode()).hexdigest(),"global_record_claim":False}
+          (root/"c2/isolated_acceptance.json").write_text(json.dumps(report,indent=2));print(json.dumps(report))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: codegarden-c2-isolated-acceptance
+          retention-days: 30
+          path: codegarden/c2/isolated_acceptance.json
