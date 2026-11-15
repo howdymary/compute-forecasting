@@ -1,0 +1,36 @@
+{
+  "upstream": "KarlsruheMIS/KaMIS",
+  "revision": "2e4b3861b8063f05e8520434b97ce59e21ca49e7",
+  "cmake_arguments": [
+    "cmake",
+    "-S",
+    "/home/runner/work/compute-forecasting/compute-forecasting/codegarden/vendor/global-KaMIS",
+    "-B",
+    "/home/runner/work/compute-forecasting/compute-forecasting/codegarden/.build/global-KaMIS",
+    "-DCMAKE_BUILD_TYPE=Release",
+    "-DCOMPILER_SUPPORTS_MARCH_NATIVE=FALSE",
+    "-DCMAKE_CXX_FLAGS=-march=x86-64 -mtune=generic",
+    "-DCMAKE_C_FLAGS=-march=x86-64 -mtune=generic",
+    "-DCMAKE_EXE_LINKER_FLAGS=-static",
+    "-DOpenMP_gomp_LIBRARY:FILEPATH=/usr/lib/gcc/x86_64-linux-gnu/15/libgomp.a",
+    "-DOpenMP_pthread_LIBRARY:FILEPATH=/usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/libpthread.a"
+  ],
+  "compile_commands_sha256": "e66ab8e6d18d266d35b99fb2eba74d862b2d632a77cedb96542af6c69c3a01ae",
+  "native_flags_found": false,
+  "binaries": [
+    {
+      "name": "redumis",
+      "sha256": "8a3cbabda83392fa93e1f4d1178f4f79ec1dbdfe1638b32bc7f68a8650dffa3e",
+      "bytes": 4479960,
+      "dynamic_interpreter": false
+    },
+    {
+      "name": "codegarden_pool_warm",
+      "sha256": "f5dba64d3f48dfc16a155fc5edf1cf20edbc175ead58dcd4d8bc1743ddd8b1b9",
+      "bytes": 4475720,
+      "dynamic_interpreter": false
+    }
+  ],
+  "submodules": " b6bedee5fdef49108ad8400389497192b6b23f64 mmwis/extern/KaHIP (v3.16-13-gb6bedee)\n",
+  "attribution": "KaMIS ILS and evolutionary methods are upstream; CodeGarden supplies isolation, portable build, warm-start adapter and the documented plateau correction."
+}

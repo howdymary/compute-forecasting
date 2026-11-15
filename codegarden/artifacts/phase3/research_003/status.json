@@ -1,0 +1,69 @@
+{
+  "status": "completed",
+  "source_sha": "6264dd5311d726126f0a7a2d551f4ba29fece125",
+  "started_at": "2026-11-15T08:32:19.799857+00:00",
+  "history": {
+    "source_run": "component6-complete-f0c3608c2a54e2054d55fcb4c984fd17ae10877b",
+    "conservative_totals": {
+      "exa": 0.077,
+      "past": 234.0,
+      "modal": 96.56,
+      "tinker": 22.799999999999997
+    },
+    "reason": "All prior completed/unknown holds retained, including all 36 worker time bounds."
+  },
+  "memory_query_gate": true,
+  "source_ids": [
+    "codegarden-43694919468-analyst-connected_barrier_eight-e91f5188",
+    "codegarden-43694919468-researcher-connected_reverse_search_context-ec179f25",
+    "codegarden-43694919468-strategist-selected_bounded_connected_followup-fbe174cb"
+  ],
+  "decision": {
+    "action": "primitive_bridge",
+    "valid_action": true,
+    "strict_format": true,
+    "prompt_tokens": 2652,
+    "output_tokens": 3,
+    "latency_seconds": 2.550739314999987,
+    "estimated_gross_usd": 0.000878175,
+    "reservation_usd": 0.05,
+    "reservation": "9fdf776297cc428cad99bcbd0e1346f7",
+    "state_sha256": "d1f576afbfbbb110a6508bd0ea4ec141a7a55848a8aaee76f589216b64237cf9",
+    "raw_reply_sha256": "601951c2b55367af91ed452a7ddff473b34fbc7fcb968ffe7e6c92f2f07b9dfd"
+  },
+  "best_exported": 225,
+  "best_independently_verified": 226,
+  "role_execution": "Three named software role identities in one serialized process; not independent assistant subagents",
+  "new_training": false,
+  "budget": {
+    "exa": {
+      "cap": 5,
+      "other_project_reserves": 15,
+      "verification_reserve": 5,
+      "reserved": 0.077,
+      "provider_reported_or_estimated": 0.021
+    },
+    "past": {
+      "cap": 2000,
+      "other_project_reserves": 10200,
+      "verification_reserve": 5000,
+      "reserved": 234.0,
+      "provider_reported_or_estimated": 44.0
+    },
+    "modal": {
+      "cap": 100,
+      "other_project_reserves": 75,
+      "verification_reserve": 20,
+      "reserved": 96.56,
+      "provider_reported_or_estimated": 0
+    },
+    "tinker": {
+      "cap": 70,
+      "other_project_reserves": 140,
+      "verification_reserve": 10,
+      "reserved": 22.849999999999998,
+      "provider_reported_or_estimated": 0
+    }
+  },
+  "finished_at": "2026-11-15T08:34:19.382882+00:00"
+}

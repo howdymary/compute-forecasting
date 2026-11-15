@@ -1,0 +1,215 @@
+{
+  "role": "researcher",
+  "pid": 2975,
+  "input_sha256": "e3e5f8b17ca6719ca9d70ac0a388ef91f73678a17dd225a3955a6bde8fe67e81",
+  "source_id": "codegarden-43677895831-researcher-larger_repair_method-f5576135",
+  "method": {
+    "recalled_analyst_evidence": {
+      "source_id": "codegarden-43677895831-analyst-phase2_scoped_root_facts-fce5f059",
+      "actual_content": {
+        "root_exchanges": [
+          {
+            "k": 1,
+            "status": "EXHAUSTED_EXACT_K_NEW_WORD_EXCHANGES",
+            "complete": true,
+            "found": false,
+            "incumbent_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa",
+            "candidate_universe_sha256": "91facb724b2bc1cd49df010cfbd1207d107f0c6b9c3935b5ecef8ba87cd015f9",
+            "restrictions": "Remove exactly k incumbents and add k+1 distinct words outside the original incumbent; full 65536-word universe",
+            "context_key": "28d8e651478b6affb84fbe70e19c28a3cfe1763cf605c6f47e2f0898301d24d5"
+          },
+          {
+            "k": 2,
+            "status": "EXHAUSTED_EXACT_K_NEW_WORD_EXCHANGES",
+            "complete": true,
+            "found": false,
+            "incumbent_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa",
+            "candidate_universe_sha256": "91facb724b2bc1cd49df010cfbd1207d107f0c6b9c3935b5ecef8ba87cd015f9",
+            "restrictions": "Remove exactly k incumbents and add k+1 distinct words outside the original incumbent; full 65536-word universe",
+            "context_key": "60634616b30610664d9cf5b72b5bb62950c90db4857dafe72ffd22cd61faea24"
+          }
+        ],
+        "global_cp": {
+          "status": "UNKNOWN",
+          "target": 227,
+          "pool_sha256": "91facb724b2bc1cd49df010cfbd1207d107f0c6b9c3935b5ecef8ba87cd015f9",
+          "complete": false
+        },
+        "conclusion": "Exact root k=1,2 neighborhoods are exhausted only if their complete flags are true. Full-universe UNKNOWN is not impossibility."
+      },
+      "content_sha256": "6798bdfe66c03d41eb0f17b08e8c65366fcda6dd38e2d6b70710863e1d624d6a",
+      "representation": "actual recalled source record"
+    },
+    "sources": {
+      "query": "binary deletion code maximum independent set escape two exchange local optimum large neighborhood exact set packing",
+      "request_id": "efcbc532f1843c857a81c4c93eacd56b",
+      "cost_dollars": {
+        "total": 0.007,
+        "search": {
+          "neural": 0.007
+        }
+      },
+      "sources": [
+        {
+          "title": "Nonasymptotic Upper Bounds on Binary Single Deletion Codes via Mixed Integer Linear Programming",
+          "url": "https://www.mdpi.com/1099-4300/21/12/1202",
+          "published": "2019-11-11T00:00:00.000Z",
+          "excerpt": "The size of the largest binary single deletion code has",
+          "content_sha256": "9f5b536f3db19ba98c779efd0ed9133a3a944b35fd016472b8374fcd234d6e5c"
+        },
+        {
+          "title": "Large Neighborhood Local Search for the Maximum Set Packing Problem",
+          "url": "https://arxiv.org/abs/1302.4347",
+          "published": "2013-02-18T16:48:00.000Z",
+          "excerpt": "In this paper we consider the classical maximum set packing",
+          "content_sha256": "6f2caeff2d02e6b6dc23b1217aaaafdf68641a04118ae619325bdbad638ac111"
+        },
+        {
+          "title": "Two Approaches to the Construction of Deletion Correcting Codes: Weight Partitioning and Optimal Colorings",
+          "url": "https://arxiv.org/abs/1211.4056",
+          "published": "2012-11-16T22:30:24.000Z",
+          "excerpt": "This paper addresses two questions related to code construction by",
+          "content_sha256": "66945ea1db7f719c3154e1393853162768361db4ba7d74cf14872714d8dce032"
+        },
+        {
+          "title": "On the Varshamov-Tenengolts Construction on Binary",
+          "url": "https://www.sc.iitb.ac.in/~ankur/docs/CombinInsightDM_final.pdf",
+          "published": null,
+          "excerpt": "Definition 1.1 A single-deletion (respectively, -insertion) correcting code for string",
+          "content_sha256": "9059be6c92b5b1c1acff323e1ecbdeed081bcea87f27cc6a87a638a340ab8748"
+        }
+      ],
+      "influenced_experiment": "phase2-larger-repairs"
+    },
+    "primary_reads": [
+      {
+        "url": "https://www.mdpi.com/1099-4300/21/12/1202",
+        "error_type": "HTTPError"
+      },
+      {
+        "url": "https://arxiv.org/abs/1302.4347",
+        "response_sha256": "714262a42e94a39aaac423812ad76db4ebee3eb55db9d4a018989b4a709cd560",
+        "method_excerpt": "Local Search for the Maximum Set Packing Problem Skip to main content Search Submit Donate Log in Search arXiv Press Enter to search &middot; Advanced",
+        "extracted_representation": "Independent-set / packing optimization for deletion codes; applicability to larger repair neighborhoods is our proposed adaptation."
+      }
+    ],
+    "method_hypothesis": "After a scoped radius-two exchange optimum, test larger sparse set-packing repairs, three-parent fusion, and population restarts.",
+    "candidate_methods": [
+      "ejection3",
+      "weight_band",
+      "ruin64"
+    ],
+    "attribution": "Conflict-graph/set-packing representation is adapted from retrieved literature; these bounded experiments and implementation are CodeGarden's proposals."
+  },
+  "events": [
+    {
+      "kind": "memory_read",
+      "value": {
+        "role": "researcher",
+        "required_source": "codegarden-43677895831-analyst-phase2_scoped_root_facts-fce5f059",
+        "returned_source_ids": [
+          "codegarden-43672598278-analyst-scoped_negative-457459ac",
+          "codegarden-43673585173-analyst-scoped_negative-e9c04092",
+          "codegarden-43673585173-researcher-source_backed_method-36e348c0",
+          "codegarden-43677895831-analyst-phase2_scoped_root_facts-fce5f059"
+        ],
+        "used_in_next_decision": true
+      },
+      "pid": 2975,
+      "role": "researcher",
+      "time": 1794717790.2521303
+    },
+    {
+      "kind": "exa_search",
+      "value": {
+        "query": "binary deletion code maximum independent set escape two exchange local optimum large neighborhood exact set packing",
+        "request_id": "efcbc532f1843c857a81c4c93eacd56b",
+        "cost_dollars": {
+          "total": 0.007,
+          "search": {
+            "neural": 0.007
+          }
+        },
+        "sources": [
+          {
+            "title": "Nonasymptotic Upper Bounds on Binary Single Deletion Codes via Mixed Integer Linear Programming",
+            "url": "https://www.mdpi.com/1099-4300/21/12/1202",
+            "published": "2019-11-11T00:00:00.000Z",
+            "excerpt": "The size of the largest binary single deletion code has",
+            "content_sha256": "9f5b536f3db19ba98c779efd0ed9133a3a944b35fd016472b8374fcd234d6e5c"
+          },
+          {
+            "title": "Large Neighborhood Local Search for the Maximum Set Packing Problem",
+            "url": "https://arxiv.org/abs/1302.4347",
+            "published": "2013-02-18T16:48:00.000Z",
+            "excerpt": "In this paper we consider the classical maximum set packing",
+            "content_sha256": "6f2caeff2d02e6b6dc23b1217aaaafdf68641a04118ae619325bdbad638ac111"
+          },
+          {
+            "title": "Two Approaches to the Construction of Deletion Correcting Codes: Weight Partitioning and Optimal Colorings",
+            "url": "https://arxiv.org/abs/1211.4056",
+            "published": "2012-11-16T22:30:24.000Z",
+            "excerpt": "This paper addresses two questions related to code construction by",
+            "content_sha256": "66945ea1db7f719c3154e1393853162768361db4ba7d74cf14872714d8dce032"
+          },
+          {
+            "title": "On the Varshamov-Tenengolts Construction on Binary",
+            "url": "https://www.sc.iitb.ac.in/~ankur/docs/CombinInsightDM_final.pdf",
+            "published": null,
+            "excerpt": "Definition 1.1 A single-deletion (respectively, -insertion) correcting code for string",
+            "content_sha256": "9059be6c92b5b1c1acff323e1ecbdeed081bcea87f27cc6a87a638a340ab8748"
+          }
+        ],
+        "influenced_experiment": "phase2-larger-repairs"
+      },
+      "pid": 2975,
+      "role": "researcher",
+      "time": 1794717791.6366444
+    },
+    {
+      "kind": "memory_write",
+      "value": {
+        "role": "researcher",
+        "source_id": "codegarden-43677895831-researcher-larger_repair_method-f5576135",
+        "experiment": "phase2-larger-repairs",
+        "parent_sources": [
+          "codegarden-43677895831-analyst-phase2_scoped_root_facts-fce5f059"
+        ],
+        "estimated_credits": 13
+      },
+      "pid": 2975,
+      "role": "researcher",
+      "time": 1794717809.3974714
+    }
+  ],
+  "budget": {
+    "exa": {
+      "cap": 5,
+      "other_project_reserves": 15,
+      "verification_reserve": 5,
+      "reserved": 0.021,
+      "provider_reported_or_estimated": 0.007
+    },
+    "past": {
+      "cap": 2000,
+      "other_project_reserves": 10200,
+      "verification_reserve": 5000,
+      "reserved": 79.0,
+      "provider_reported_or_estimated": 19.0
+    },
+    "modal": {
+      "cap": 50,
+      "other_project_reserves": 75,
+      "verification_reserve": 20,
+      "reserved": 6.84,
+      "provider_reported_or_estimated": 0
+    },
+    "tinker": {
+      "cap": 70,
+      "other_project_reserves": 140,
+      "verification_reserve": 10,
+      "reserved": 20.0,
+      "provider_reported_or_estimated": 0
+    }
+  }
+}

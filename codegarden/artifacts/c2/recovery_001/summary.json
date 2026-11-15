@@ -1,0 +1,41 @@
+{
+  "status": "recovered_and_exactly_verified",
+  "source_run_id": 43763414376,
+  "search_rerun": false,
+  "baseline": 0.9636615620620854,
+  "best_reproduced_or_verified": 0.9636616088232245,
+  "best_exact_verified": 0.9636616088232245,
+  "workers": [
+    {
+      "label": "selected_schedule",
+      "profile": {
+        "cpu_forward_seconds": 0.16325966900000033,
+        "device": "cpu",
+        "gpu_name": null,
+        "score_seconds": 0.17670801566666672,
+        "torch": "2.9.1+cu128"
+      },
+      "native": 0.9636616094034781,
+      "exact": 0.9636616088232245,
+      "evaluations": 2407,
+      "seconds": 901.1813401410001
+    },
+    {
+      "label": "fixed_schedule",
+      "profile": {
+        "cpu_forward_seconds": 0.15514705699999976,
+        "device": "cpu",
+        "gpu_name": null,
+        "score_seconds": 0.15029508933333316,
+        "torch": "2.9.1+cu128"
+      },
+      "native": 0.9636616094034781,
+      "exact": 0.9636616088232245,
+      "evaluations": 2468,
+      "seconds": 901.1512658009999
+    }
+  ],
+  "new_verified_candidate": true,
+  "arena_min_improvement_met": false,
+  "record_claim": false
+}

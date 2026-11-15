@@ -1,0 +1,69 @@
+name: CodeGarden exact coordinate lift plus arbitrary extra word
+on:
+  push:
+    branches: [codegarden-coordinate-lift-003]
+    paths: [.github/workflows/codegarden.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: codegarden-free-coordinate-lift-003
+  cancel-in-progress: false
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+  PIP_CACHE_DIR: ${{ github.workspace }}/codegarden/.cache/pip
+  TMPDIR: ${{ github.workspace }}/codegarden/.tmp
+  SOURCE_SHA: ${{ github.sha }}
+  CODEGARDEN_BATCH: coordinate_lift_001
+jobs:
+  repairs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        case: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+          mkdir -p codegarden/.tmp codegarden/.cache/pip
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Build isolated exact implication kernel
+        run: |
+          mkdir -p codegarden/.build
+          g++ -O3 -std=c++17 codegarden/phase3/coordinate_lift.cpp -o codegarden/.build/coordinate_lift
+      - name: Solve coordinate variants and arbitrary extra word
+        run: python -B -u codegarden/phase3/coordinate_lift.py ${{ matrix.case }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          retention-days: 1
+          name: codegarden-coordinate-lift-${{ matrix.case }}
+          path: codegarden/artifacts/phase3/coordinate_lift_001/
+  collect:
+    needs: [repairs]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+          mkdir -p codegarden/.tmp
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: codegarden-coordinate-lift-*
+          merge-multiple: true
+          path: codegarden/artifacts/phase3/coordinate_lift_001/
+      - name: Publish leased model and witness evidence
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -B codegarden/phase3/publish_coordinate_lift.py

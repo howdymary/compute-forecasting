@@ -1,0 +1,299 @@
+{
+  "source_sha": "fc46fe0ab9a16d3bfb2353579c409d678fd4a420",
+  "spec": {
+    "label": "endpoint",
+    "propagation": "endpoint",
+    "betas": [
+      1000.0,
+      100000.0,
+      10000000.0,
+      1000000000.0,
+      100000000000.0
+    ],
+    "seed": 630201,
+    "noise": 1e-10,
+    "seconds": 900,
+    "threads": 4,
+    "outer": 2,
+    "max_iter": 80,
+    "max_eval": 120
+  },
+  "status": "completed",
+  "partial_error": null,
+  "profile": {
+    "cpu_forward_seconds": 0.21341052500000046,
+    "device": "cpu",
+    "gpu_name": null,
+    "score_seconds": 0.18732243666666695,
+    "torch": "2.9.1+cu128"
+  },
+  "baseline_gpu": 0.9636616094034781,
+  "best_gpu": 0.9636616094034781,
+  "evaluations": 1811,
+  "cycles": 2,
+  "wall_seconds": 901.3929992430001,
+  "events": [
+    {
+      "cycle": 0,
+      "beta": 1000.0,
+      "outer": 0,
+      "inner_best": 0.9636616094034781,
+      "endpoint_score": 0.9614794132430902,
+      "propagation": "endpoint",
+      "best_gpu": 0.9636616094034781,
+      "evaluations": 85,
+      "seconds": 47.366436426
+    },
+    {
+      "cycle": 0,
+      "beta": 1000.0,
+      "outer": 1,
+      "inner_best": 0.9616283930687809,
+      "endpoint_score": 0.9615318095830255,
+      "propagation": "endpoint",
+      "best_gpu": 0.9636616094034781,
+      "evaluations": 167,
+      "seconds": 90.03177278
+    },
+    {
+      "cycle": 0,
+      "beta": 100000.0,
+      "outer": 0,
+      "inner_best": 0.9631219592772503,
+      "endpoint_score": 0.9631219592772503,
+      "propagation": "endpoint",
+      "best_gpu": 0.9636616094034781,
+      "evaluations": 252,
+      "seconds": 132.63743859899998
+    },
+    {
+      "cycle": 0,
+      "beta": 100000.0,
+      "outer": 1,
+      "inner_best": 0.9632755402371931,
+      "endpoint_score": 0.9632755402371931,
+      "propagation": "endpoint",
+      "best_gpu": 0.9636616094034781,
+      "evaluations": 336,
+      "seconds": 173.280541976
+    },
+    {
+      "cycle": 0,
+      "beta": 10000000.0,
+      "outer": 0,
+      "inner_best": 0.9632941947158461,
+      "endpoint_score": 0.9632941947158459,
+      "propagation": "endpoint",
+      "best_gpu": 0.9636616094034781,
+      "evaluations": 429,
+      "seconds": 219.23555905499998
+    },
+    {
+      "cycle": 0,
+      "beta": 10000000.0,
+      "outer": 1,
+      "inner_best": 0.9633010738310362,
+      "endpoint_score": 0.9633010738310361,
+      "propagation": "endpoint",
+      "best_gpu": 0.9636616094034781,
+      "evaluations": 518,
+      "seconds": 263.60167086999996
+    },
+    {
+      "cycle": 0,
+      "beta": 1000000000.0,
+      "outer": 0,
+      "inner_best": 0.9633013851915888,
+      "endpoint_score": 0.9633013851915887,
+      "propagation": "endpoint",
+      "best_gpu": 0.9636616094034781,
+      "evaluations": 620,
+      "seconds": 315.812468475
+    },
+    {
+      "cycle": 0,
+      "beta": 1000000000.0,
+      "outer": 1,
+      "inner_best": 0.9633015041318325,
+      "endpoint_score": 0.9633015041318324,
+      "propagation": "endpoint",
+      "best_gpu": 0.9636616094034781,
+      "evaluations": 711,
+      "seconds": 364.05906956399997
+    },
+    {
+      "cycle": 0,
+      "beta": 100000000000.0,
+      "outer": 0,
+      "inner_best": 0.963301505993479,
+      "endpoint_score": 0.9633015059934789,
+      "propagation": "endpoint",
+      "best_gpu": 0.9636616094034781,
+      "evaluations": 741,
+      "seconds": 376.303582271
+    },
+    {
+      "cycle": 0,
+      "beta": 100000000000.0,
+      "outer": 1,
+      "inner_best": 0.963301505993479,
+      "endpoint_score": 0.9633015059934789,
+      "propagation": "endpoint",
+      "best_gpu": 0.9636616094034781,
+      "evaluations": 753,
+      "seconds": 381.96642617099997
+    },
+    {
+      "cycle": 1,
+      "beta": 1000.0,
+      "outer": 0,
+      "inner_best": 0.9633014525442299,
+      "endpoint_score": 0.9614150567174198,
+      "propagation": "endpoint",
+      "best_gpu": 0.9636616094034781,
+      "evaluations": 837,
+      "seconds": 423.09734704
+    },
+    {
+      "cycle": 1,
+      "beta": 1000.0,
+      "outer": 1,
+      "inner_best": 0.9617088801908261,
+      "endpoint_score": 0.9615050788659991,
+      "propagation": "endpoint",
+      "best_gpu": 0.9636616094034781,
+      "evaluations": 922,
+      "seconds": 466.061812889
+    },
+    {
+      "cycle": 1,
+      "beta": 100000.0,
+      "outer": 0,
+      "inner_best": 0.9630730374343373,
+      "endpoint_score": 0.9630730374343371,
+      "propagation": "endpoint",
+      "best_gpu": 0.9636616094034781,
+      "evaluations": 1009,
+      "seconds": 507.91597853599995
+    },
+    {
+      "cycle": 1,
+      "beta": 100000.0,
+      "outer": 1,
+      "inner_best": 0.9632125011435325,
+      "endpoint_score": 0.9632113028802916,
+      "propagation": "endpoint",
+      "best_gpu": 0.9636616094034781,
+      "evaluations": 1097,
+      "seconds": 551.5007035970001
+    },
+    {
+      "cycle": 1,
+      "beta": 10000000.0,
+      "outer": 0,
+      "inner_best": 0.9632315730009813,
+      "endpoint_score": 0.9632315730009812,
+      "propagation": "endpoint",
+      "best_gpu": 0.9636616094034781,
+      "evaluations": 1196,
+      "seconds": 597.304171598
+    },
+    {
+      "cycle": 1,
+      "beta": 10000000.0,
+      "outer": 1,
+      "inner_best": 0.9632386195330157,
+      "endpoint_score": 0.9632386195330157,
+      "propagation": "endpoint",
+      "best_gpu": 0.9636616094034781,
+      "evaluations": 1290,
+      "seconds": 641.866156109
+    },
+    {
+      "cycle": 1,
+      "beta": 1000000000.0,
+      "outer": 0,
+      "inner_best": 0.9632389714307207,
+      "endpoint_score": 0.9632389714307208,
+      "propagation": "endpoint",
+      "best_gpu": 0.9636616094034781,
+      "evaluations": 1401,
+      "seconds": 692.5408543560001
+    },
+    {
+      "cycle": 1,
+      "beta": 1000000000.0,
+      "outer": 1,
+      "inner_best": 0.9632390882952876,
+      "endpoint_score": 0.9632390882952876,
+      "propagation": "endpoint",
+      "best_gpu": 0.9636616094034781,
+      "evaluations": 1495,
+      "seconds": 738.617641464
+    },
+    {
+      "cycle": 1,
+      "beta": 100000000000.0,
+      "outer": 0,
+      "inner_best": 0.963239090521602,
+      "endpoint_score": 0.9632390905216018,
+      "propagation": "endpoint",
+      "best_gpu": 0.9636616094034781,
+      "evaluations": 1518,
+      "seconds": 747.672648417
+    },
+    {
+      "cycle": 1,
+      "beta": 100000000000.0,
+      "outer": 1,
+      "inner_best": 0.963239091893152,
+      "endpoint_score": 0.963239091893152,
+      "propagation": "endpoint",
+      "best_gpu": 0.9636616094034781,
+      "evaluations": 1571,
+      "seconds": 774.4656408520001
+    },
+    {
+      "cycle": 2,
+      "beta": 1000.0,
+      "outer": 0,
+      "inner_best": 0.9632390409027842,
+      "endpoint_score": 0.9613610203808786,
+      "propagation": "endpoint",
+      "best_gpu": 0.9636616094034781,
+      "evaluations": 1658,
+      "seconds": 822.8405678080001
+    },
+    {
+      "cycle": 2,
+      "beta": 1000.0,
+      "outer": 1,
+      "inner_best": 0.9616386764854621,
+      "endpoint_score": 0.9615543009896232,
+      "propagation": "endpoint",
+      "best_gpu": 0.9636616094034781,
+      "evaluations": 1744,
+      "seconds": 865.091063218
+    }
+  ],
+  "best_rel": "768423a8997e41bd96bf1a81f070ebd5/best.npy",
+  "best_npy_sha256": "1dce5b2b6817d04bac8003bd330804486f5c78e488a3439c2cb1e9d0acefb151",
+  "record_claim": false,
+  "verification": {
+    "official_score": 0.9636616088232247,
+    "exact_certificate": {
+      "method": "exact_three_prime_ntt_crt",
+      "n": 1999999,
+      "transform_length": 4194304,
+      "coefficient_bound": "36893469700675029522448384",
+      "crt_product": "78674626319836206717730817",
+      "exact_moment_checks": true,
+      "schoolbook_all_coefficients": false,
+      "numerator": "2764182317012209325424310583885229346642720637",
+      "denominator": "2868415937403266316664617946072713880495748028",
+      "score": 0.9636616088232245,
+      "seconds": 2.746996609
+    },
+    "integer_witness_sha256": "28eb742014989dafb2ac4b104727557553efa8bae6a54a2d848d4e3a5db12da1"
+  }
+}

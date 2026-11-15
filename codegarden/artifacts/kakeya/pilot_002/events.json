@@ -1,0 +1,76 @@
+[
+  {
+    "time": "2026-11-15T20:59:27.928905+00:00",
+    "kind": "exa_kakeya_methods",
+    "data": {
+      "query": "Kakeya128 contiguous direction groups resizing optimization triangle offsets piecewise linear interpolation local refinement",
+      "request_id": "456490d6b45463bf3be1b9952f29df41",
+      "sources": [
+        {
+          "title": "EinsteinArena",
+          "url": "https://einsteinarena.com/problems/kakeya-needle-128/threads/265",
+          "short_excerpt": "Starting from JSAgent's construction, I found an arrangement with area"
+        },
+        {
+          "title": "Discretized Kakeya Needle: Verification Notebook | Station",
+          "url": "https://dualverse.ai/station/math/discretized-kakeya-needle/",
+          "short_excerpt": "The classical Kakeya needle problem asks how little area is"
+        },
+        {
+          "title": "[math/0008098] From rotating needles to stability of waves: emerging connections between combinatorics, analysis, and PDE.",
+          "url": "https://ar5iv.labs.arxiv.org/html/math/0008098",
+          "short_excerpt": "Figure 2: The iterative construction of a Besicovitch set. Each"
+        }
+      ],
+      "extracted_method": {
+        "pilot_001": {
+          "source_sha": "8096b4c1f78b048453e22aa03de9bc4cb326f710",
+          "run_id": 43759862815,
+          "artifact_head": "caf8e0ed22dc085bba14df1ad06ff33fc69b74d7",
+          "workers": 6,
+          "trials": 337,
+          "evaluations": 36906,
+          "optimizer_status_counts": {
+            "0": 10,
+            "1": 327
+          },
+          "best_native": 0.10675138995168142,
+          "best_certified": 0.10675138995168142,
+          "new_verified_improvement": false,
+          "local_limits": {
+            "maxiter": 100,
+            "maxfun": 240
+          },
+          "interpretation": "Most non-baseline local solves hit a solver budget. This is not local optimality or exhaustion.",
+          "baseline_direction_bands": [
+            0,
+            10,
+            36,
+            72,
+            104,
+            128
+          ],
+          "band_rule": "Adjacent offset increase greater than0.025 in the reproduced baseline.",
+          "next_hypothesis": "Use deeper local solves and compare arbitrary blocks with fixed baseline-derived direction bands, optionally resizing adjacent bands."
+        },
+        "source": "https://einsteinarena.com/problems/kakeya-needle-128/threads/265",
+        "author": "CrossingPaths",
+        "method": "Alternate local refinement with contiguous direction-group resizing, transfer/reflection of subpatterns and group translation. Keep diverse low-area arrangements and sometimes accept a temporary area increase.",
+        "attribution": "Borrowed structural search idea, not a claimed new method."
+      },
+      "experiment": "pilot_002 deeper refinement and baseline-band moves"
+    }
+  },
+  {
+    "time": "2026-11-15T20:59:58.106115+00:00",
+    "kind": "past_read",
+    "data": {
+      "role": "researcher",
+      "required_source_id": "codegarden-kakeya-43761025827-analyst",
+      "returned_codegarden_source_ids": [
+        "codegarden-kakeya-43759862815-researcher",
+        "codegarden-kakeya-43761025827-analyst"
+      ]
+    }
+  }
+]

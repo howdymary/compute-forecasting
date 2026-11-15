@@ -1,0 +1,55 @@
+{
+  "found": false,
+  "complete": false,
+  "cpu_seconds": 450.009,
+  "nodes": 7783786496,
+  "closed_blocker_sets": 42797477,
+  "cache_hits": 14673983,
+  "retained_closed_keys": 856708,
+  "cache_evictions": 41940768,
+  "k": 9,
+  "n": 16,
+  "memory_limited": false,
+  "budget_limited": true,
+  "neutral_cap_reached": false,
+  "learned_groups": 0,
+  "learned_prunes": 0,
+  "candidate_count": 56396,
+  "profiled_bitset_bytes": 513535680,
+  "removed": [],
+  "added": [],
+  "neighbors": [],
+  "scope": "Strict cardinality improvements only. This reduction is not claimed to preserve the full labeled neutral graph.",
+  "source_sha": "f6b84881208f231ec2583c8f17fffa0013902d46",
+  "mode": "base9",
+  "starting_verification": {
+    "accepted": true,
+    "cardinality": 226,
+    "reports": [
+      {
+        "cardinality": 226,
+        "distinct_descendants": 6410,
+        "length": 16,
+        "method": "distinct_string_two_deletions",
+        "valid": true,
+        "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+      },
+      {
+        "cardinality": 226,
+        "largest_pairwise_lcs": 13,
+        "length": 16,
+        "method": "independent_dynamic_programming_lcs",
+        "pairs_checked": 25425,
+        "valid": true,
+        "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+      }
+    ]
+  },
+  "canonical_pool_sha256": "2bde4edaa4e188183d05813f421eb4e574b1780201a5acfbb59a633f1d61bc02",
+  "learned_enabled": false,
+  "certified_groups": 36,
+  "dominance_filter_enabled": true,
+  "independent_string_certificates_checked": 444,
+  "filter_sha256": "2cf71eb15e89975a731bebb25154b312a63100702a6365552b95c8cfe2f88b36",
+  "lemma": "Replace any dominated outside word v in an improving code by retained u with D2(u) subset D2(v). If u belonged to the incumbent this restores one incumbent word; otherwise the removal count is unchanged. Validity and cardinality are preserved, so strict improvements with at most k removals remain detectable."
+}

@@ -1,0 +1,104 @@
+name: CodeGarden842 constrained overlap repair
+on:
+  push:
+    branches: [codegarden-k842-slp-001]
+    paths: [.github/workflows/codegarden.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: codegarden-k842-slp-001
+  cancel-in-progress: false
+env:
+  SOURCE_SHA: ${{ github.sha }}
+  PYTHONDONTWRITEBYTECODE: '1'
+  OPENBLAS_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+jobs:
+  search:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    outputs:
+      has_candidate: ${{ steps.search.outputs.has_candidate }}
+    steps:
+      - name: Fetch isolated sources and frozen checkers
+        run: |
+          python3 -B - <<'PY'
+          import pathlib,urllib.request,os
+          paths=["codegarden/kissing842/"+n for n in ["slp.py","official.py","independent.py","manifest.json"]]+["codegarden/side_services/cycle.py","codegarden/supervisor.py","codegarden/protected/manifest.json","codegarden/protected/verify_descendants.py","codegarden/protected/verify_lcs.py"]
+          for name in paths:
+              p=pathlib.Path(name);p.parent.mkdir(parents=True,exist_ok=True)
+              p.write_bytes(urllib.request.urlopen("https://raw.githubusercontent.com/howdymary/compute-forecasting/"+os.environ["SOURCE_SHA"]+"/"+name,timeout=45).read())
+          PY
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Isolated CPU dependencies
+        run: |
+          python3 -m venv codegarden/.venv-k842
+          codegarden/.venv-k842/bin/python -m pip install --disable-pip-version-check numpy==2.4.6 scipy==1.18.0
+      - name: Bounded constrained repair with independent interval gate
+        id: search
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
+        run: codegarden/.venv-k842/bin/python -B -u codegarden/kissing842/slp.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: codegarden-k842-slp
+          retention-days: 30
+          path: codegarden/artifacts/k842/slp_001/
+      - uses: actions/upload-artifact@v4
+        if: steps.search.outputs.has_candidate == 'true'
+        with:
+          name: codegarden-k842-candidate
+          retention-days: 30
+          path: |
+            codegarden/artifacts/k842/slp_001/best.json
+            codegarden/artifacts/k842/slp_001/baseline.json
+            codegarden/artifacts/k842/slp_001/best_verification.json
+  accept:
+    needs: search
+    if: needs.search.outputs.has_candidate == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - name: Fetch frozen acceptance sources
+        run: |
+          python3 -B - <<'PY'
+          import pathlib,urllib.request,os
+          for name in ["official.py","independent.py","manifest.json"]:
+              p=pathlib.Path("codegarden/kissing842")/name;p.parent.mkdir(parents=True,exist_ok=True)
+              p.write_bytes(urllib.request.urlopen("https://raw.githubusercontent.com/howdymary/compute-forecasting/"+os.environ["SOURCE_SHA"]+"/codegarden/kissing842/"+name,timeout=45).read())
+          PY
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          name: codegarden-k842-candidate
+          path: codegarden/kissing842/.verify-input/
+      - name: Independent fresh-process acceptance without optimizer or service credentials
+        run: |
+          python3 -B - <<'PY'
+          import pathlib,hashlib,json,sys,urllib.request
+          from decimal import Decimal
+          root=pathlib.Path("codegarden/kissing842");sys.path.insert(0,str(root))
+          for name,h in json.loads((root/"manifest.json").read_text()).items():assert hashlib.sha256((root/name).read_bytes()).hexdigest()==h
+          import independent,official
+          folder=root/".verify-input";candidate=json.loads((folder/"best.json").read_text());baseline=json.loads((folder/"baseline.json").read_text());a=independent.enclosure(candidate);b=independent.enclosure(baseline)
+          score=official.evaluate(candidate);base=official.evaluate(baseline)
+          assert score<base-1e-7 and Decimal(a["upper"])<Decimal(b["lower"])-Decimal("1e-7")
+          latest=json.load(urllib.request.urlopen("https://einsteinarena.com/api/solutions/best?problem_id=25&limit=1",timeout=45))[0]
+          report={"independently_accepted":True,"candidate_official_score":score,"baseline_official_score":base,"interval":a,"baseline_interval":b,"latest_arena_score":latest["score"],"ready_to_submit":score<latest["score"]-1e-7,"candidate_file_sha256":hashlib.sha256((folder/"best.json").read_bytes()).hexdigest(),"arena_submission_made":False,"kissing_number_record_claim":False}
+          (root/"isolated_acceptance.json").write_text(json.dumps(report,indent=2));print(json.dumps(report))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: codegarden-k842-isolated-acceptance
+          retention-days: 30
+          path: codegarden/kissing842/isolated_acceptance.json

@@ -1,0 +1,477 @@
+{
+  "recorded_at": "2026-11-15",
+  "primary_witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa",
+  "findings": [
+    {
+      "id": "cp-0",
+      "author": "codegarden-analyst",
+      "incumbent_witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa",
+      "candidate_pool_sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+      "candidate_pool_size": 1,
+      "neighborhood": {
+        "weight_band": [
+          0,
+          1,
+          2
+        ],
+        "fixed_outside_sha256": "d972a80e35c52f3a14052a22830cb88cc5194655c8b12dc04bb36af021602d5c",
+        "target": 2,
+        "full_data": "codegarden/artifacts/cp_bands.json"
+      },
+      "method": "OR-Tools CP-SAT",
+      "parameters": {
+        "seed": 41,
+        "workers": 2
+      },
+      "budget_seconds": 10,
+      "actual_wall_seconds": 0.0012205660000006446,
+      "status": "INFEASIBLE",
+      "enumeration_or_solver_complete": true,
+      "proof_artifact": null,
+      "conclusion": "no feasible target in this encoded pool",
+      "scope": "Only the explicitly encoded pool with fixed outside; UNKNOWN establishes no impossibility."
+    },
+    {
+      "id": "cp-1",
+      "author": "codegarden-analyst",
+      "incumbent_witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa",
+      "candidate_pool_sha256": "05f8f11d2e7ccc0d577200b6184ad73adfc181b5a8be260ce0ecbd3a19d2f7bf",
+      "candidate_pool_size": 82,
+      "neighborhood": {
+        "weight_band": [
+          2,
+          3,
+          4
+        ],
+        "fixed_outside_sha256": "60eae22724f7c2e0344ed417c24c5c9b814425bfcd4c9838c6e331cfd5406704",
+        "target": 10,
+        "full_data": "codegarden/artifacts/cp_bands.json"
+      },
+      "method": "OR-Tools CP-SAT",
+      "parameters": {
+        "seed": 42,
+        "workers": 2
+      },
+      "budget_seconds": 10,
+      "actual_wall_seconds": 0.009979571999991776,
+      "status": "INFEASIBLE",
+      "enumeration_or_solver_complete": true,
+      "proof_artifact": null,
+      "conclusion": "no feasible target in this encoded pool",
+      "scope": "Only the explicitly encoded pool with fixed outside; UNKNOWN establishes no impossibility."
+    },
+    {
+      "id": "cp-2",
+      "author": "codegarden-analyst",
+      "incumbent_witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa",
+      "candidate_pool_sha256": "33f9fc2c1d58eb42444752bfea1a1cdcfbf8156caaed3419d34ac79aac2a552a",
+      "candidate_pool_size": 1531,
+      "neighborhood": {
+        "weight_band": [
+          4,
+          5,
+          6
+        ],
+        "fixed_outside_sha256": "59ee01ea84458059a5e5581a0d8319bc9cc3e685829e82c9acfeed2006cd03e8",
+        "target": 54,
+        "full_data": "codegarden/artifacts/cp_bands.json"
+      },
+      "method": "OR-Tools CP-SAT",
+      "parameters": {
+        "seed": 43,
+        "workers": 2
+      },
+      "budget_seconds": 10,
+      "actual_wall_seconds": 10.01757360800002,
+      "status": "UNKNOWN",
+      "enumeration_or_solver_complete": false,
+      "proof_artifact": null,
+      "conclusion": "no conclusion before limit",
+      "scope": "Only the explicitly encoded pool with fixed outside; UNKNOWN establishes no impossibility."
+    },
+    {
+      "id": "cp-3",
+      "author": "codegarden-analyst",
+      "incumbent_witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa",
+      "candidate_pool_sha256": "c325be02c3adc25dc99d00e72d9fb528a6879ffa6d82a2fda8111a529e52772e",
+      "candidate_pool_size": 3746,
+      "neighborhood": {
+        "weight_band": [
+          6,
+          7,
+          8
+        ],
+        "fixed_outside_sha256": "3926a55f957dee8945d4cde05dce2720049d2da63d837f79fa4264f3f14d367d",
+        "target": 100,
+        "full_data": "codegarden/artifacts/cp_bands.json"
+      },
+      "method": "OR-Tools CP-SAT",
+      "parameters": {
+        "seed": 44,
+        "workers": 2
+      },
+      "budget_seconds": 10,
+      "actual_wall_seconds": 10.069860578000004,
+      "status": "UNKNOWN",
+      "enumeration_or_solver_complete": false,
+      "proof_artifact": null,
+      "conclusion": "no conclusion before limit",
+      "scope": "Only the explicitly encoded pool with fixed outside; UNKNOWN establishes no impossibility."
+    },
+    {
+      "id": "cp-4",
+      "author": "codegarden-analyst",
+      "incumbent_witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa",
+      "candidate_pool_sha256": "c2575e965940c0be1b47e16ce1d72bf4f4278a2cc04643e1f8c7f260b6c81d20",
+      "candidate_pool_size": 4004,
+      "neighborhood": {
+        "weight_band": [
+          8,
+          9,
+          10
+        ],
+        "fixed_outside_sha256": "899df54ce7a0c5bd5852b3a2c479d24295cbc99e9fcfb291d9d0017c08fb4ca7",
+        "target": 107,
+        "full_data": "codegarden/artifacts/cp_bands.json"
+      },
+      "method": "OR-Tools CP-SAT",
+      "parameters": {
+        "seed": 45,
+        "workers": 2
+      },
+      "budget_seconds": 10,
+      "actual_wall_seconds": 10.069070796999995,
+      "status": "UNKNOWN",
+      "enumeration_or_solver_complete": false,
+      "proof_artifact": null,
+      "conclusion": "no conclusion before limit",
+      "scope": "Only the explicitly encoded pool with fixed outside; UNKNOWN establishes no impossibility."
+    },
+    {
+      "id": "cp-5",
+      "author": "codegarden-analyst",
+      "incumbent_witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa",
+      "candidate_pool_sha256": "0aa4ccacc4d68bef4c82c7276f934b30ab232f0ada0f7dc8dce808eec0ffa2e2",
+      "candidate_pool_size": 1042,
+      "neighborhood": {
+        "weight_band": [
+          10,
+          11,
+          12
+        ],
+        "fixed_outside_sha256": "4d4178f2cbac5af1bf30bd09a7dc0d618b8ff8cca05444bcd948181571d946e4",
+        "target": 59,
+        "full_data": "codegarden/artifacts/cp_bands.json"
+      },
+      "method": "OR-Tools CP-SAT",
+      "parameters": {
+        "seed": 46,
+        "workers": 2
+      },
+      "budget_seconds": 10,
+      "actual_wall_seconds": 9.977298724999997,
+      "status": "UNKNOWN",
+      "enumeration_or_solver_complete": false,
+      "proof_artifact": null,
+      "conclusion": "no conclusion before limit",
+      "scope": "Only the explicitly encoded pool with fixed outside; UNKNOWN establishes no impossibility."
+    },
+    {
+      "id": "cp-6",
+      "author": "codegarden-analyst",
+      "incumbent_witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa",
+      "candidate_pool_sha256": "ab90921486fca7eee291decbb1d8c342aacd882e607120caf7eb060a70fd2bed",
+      "candidate_pool_size": 112,
+      "neighborhood": {
+        "weight_band": [
+          12,
+          13,
+          14
+        ],
+        "fixed_outside_sha256": "143938f3653bf0a6ce2f8315e5e69d6be15667f84e50b2a395cd3f09fec4a2c4",
+        "target": 17,
+        "full_data": "codegarden/artifacts/cp_bands.json"
+      },
+      "method": "OR-Tools CP-SAT",
+      "parameters": {
+        "seed": 47,
+        "workers": 2
+      },
+      "budget_seconds": 10,
+      "actual_wall_seconds": 0.049930353999997124,
+      "status": "INFEASIBLE",
+      "enumeration_or_solver_complete": true,
+      "proof_artifact": null,
+      "conclusion": "no feasible target in this encoded pool",
+      "scope": "Only the explicitly encoded pool with fixed outside; UNKNOWN establishes no impossibility."
+    },
+    {
+      "id": "cp-7",
+      "author": "codegarden-analyst",
+      "incumbent_witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa",
+      "candidate_pool_sha256": "b7d1b3a1104cc86b1cea310793cf777002db0517281d135a02de079b0ea87c23",
+      "candidate_pool_size": 1,
+      "neighborhood": {
+        "weight_band": [
+          14,
+          15,
+          16
+        ],
+        "fixed_outside_sha256": "cc5587609f09aa40a45e188302c125693cdf356df925d2b3c7e7f0ff7b0d0423",
+        "target": 2,
+        "full_data": "codegarden/artifacts/cp_bands.json"
+      },
+      "method": "OR-Tools CP-SAT",
+      "parameters": {
+        "seed": 48,
+        "workers": 2
+      },
+      "budget_seconds": 10,
+      "actual_wall_seconds": 0.00025462700000389304,
+      "status": "INFEASIBLE",
+      "enumeration_or_solver_complete": true,
+      "proof_artifact": null,
+      "conclusion": "no feasible target in this encoded pool",
+      "scope": "Only the explicitly encoded pool with fixed outside; UNKNOWN establishes no impossibility."
+    },
+    {
+      "id": "cp-8",
+      "author": "codegarden-analyst",
+      "incumbent_witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa",
+      "candidate_pool_sha256": "91facb724b2bc1cd49df010cfbd1207d107f0c6b9c3935b5ecef8ba87cd015f9",
+      "candidate_pool_size": 65536,
+      "neighborhood": {
+        "weight_band": null,
+        "fixed_outside_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "target": 227,
+        "full_data": "codegarden/artifacts/cp_global.json"
+      },
+      "method": "OR-Tools CP-SAT",
+      "parameters": {
+        "seed": 71,
+        "workers": 2
+      },
+      "budget_seconds": 180,
+      "actual_wall_seconds": 181.039266115,
+      "status": "UNKNOWN",
+      "enumeration_or_solver_complete": false,
+      "proof_artifact": null,
+      "conclusion": "no conclusion before limit",
+      "scope": "Only the explicitly encoded pool with fixed outside; UNKNOWN establishes no impossibility."
+    },
+    {
+      "id": "native-9101-fixed",
+      "author": "codegarden-analyst",
+      "incumbent_witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa",
+      "candidate_universe_sha256": "91facb724b2bc1cd49df010cfbd1207d107f0c6b9c3935b5ecef8ba87cd015f9",
+      "candidate_pool_hash_scope": "All 65,536 candidate integers; dynamic per-move compatible subpools are defined by the source algorithm and incumbent, not exhaustively logged.",
+      "neighborhood": {
+        "definition": "Sparse-incidence ruin/recreate with incremental compatibility; arm descriptions in kernel.cpp",
+        "kernel_sha256": "29684e9d4c517b4d6039fa3b455a8cd3cf640d5fb2531a03a44d038b950ba126",
+        "policy": "fixed",
+        "source_commit": "2a4eac4ccaac46389ca60782c5c49395548b2429",
+        "report_worker_index": 0
+      },
+      "parameters": {
+        "seed": 9101,
+        "cpu": 1,
+        "memory_mb": 768,
+        "iterations": 418683
+      },
+      "budget_seconds": 120,
+      "actual_seconds": 120.005,
+      "status": "BUDGET_COMPLETED_NO_STRICT_IMPROVEMENT",
+      "enumeration_complete": false,
+      "proof_artifact": null,
+      "conclusion": "No 227-word code was found along this budget-limited randomized trajectory. No neighborhood or global optimality is established."
+    },
+    {
+      "id": "native-9101-adaptive",
+      "author": "codegarden-analyst",
+      "incumbent_witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa",
+      "candidate_universe_sha256": "91facb724b2bc1cd49df010cfbd1207d107f0c6b9c3935b5ecef8ba87cd015f9",
+      "candidate_pool_hash_scope": "All 65,536 candidate integers; dynamic per-move compatible subpools are defined by the source algorithm and incumbent, not exhaustively logged.",
+      "neighborhood": {
+        "definition": "Sparse-incidence ruin/recreate with incremental compatibility; arm descriptions in kernel.cpp",
+        "kernel_sha256": "29684e9d4c517b4d6039fa3b455a8cd3cf640d5fb2531a03a44d038b950ba126",
+        "policy": "adaptive",
+        "source_commit": "2a4eac4ccaac46389ca60782c5c49395548b2429",
+        "report_worker_index": 1
+      },
+      "parameters": {
+        "seed": 9101,
+        "cpu": 1,
+        "memory_mb": 768,
+        "iterations": 164478
+      },
+      "budget_seconds": 120,
+      "actual_seconds": 120.007,
+      "status": "BUDGET_COMPLETED_NO_STRICT_IMPROVEMENT",
+      "enumeration_complete": false,
+      "proof_artifact": null,
+      "conclusion": "No 227-word code was found along this budget-limited randomized trajectory. No neighborhood or global optimality is established."
+    },
+    {
+      "id": "native-9201-fixed",
+      "author": "codegarden-analyst",
+      "incumbent_witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa",
+      "candidate_universe_sha256": "91facb724b2bc1cd49df010cfbd1207d107f0c6b9c3935b5ecef8ba87cd015f9",
+      "candidate_pool_hash_scope": "All 65,536 candidate integers; dynamic per-move compatible subpools are defined by the source algorithm and incumbent, not exhaustively logged.",
+      "neighborhood": {
+        "definition": "Sparse-incidence ruin/recreate with incremental compatibility; arm descriptions in kernel.cpp",
+        "kernel_sha256": "29684e9d4c517b4d6039fa3b455a8cd3cf640d5fb2531a03a44d038b950ba126",
+        "policy": "fixed",
+        "source_commit": "2a4eac4ccaac46389ca60782c5c49395548b2429",
+        "report_worker_index": 2
+      },
+      "parameters": {
+        "seed": 9201,
+        "cpu": 1,
+        "memory_mb": 768,
+        "iterations": 399522
+      },
+      "budget_seconds": 120,
+      "actual_seconds": 120.008,
+      "status": "BUDGET_COMPLETED_NO_STRICT_IMPROVEMENT",
+      "enumeration_complete": false,
+      "proof_artifact": null,
+      "conclusion": "No 227-word code was found along this budget-limited randomized trajectory. No neighborhood or global optimality is established."
+    },
+    {
+      "id": "native-9201-adaptive",
+      "author": "codegarden-analyst",
+      "incumbent_witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa",
+      "candidate_universe_sha256": "91facb724b2bc1cd49df010cfbd1207d107f0c6b9c3935b5ecef8ba87cd015f9",
+      "candidate_pool_hash_scope": "All 65,536 candidate integers; dynamic per-move compatible subpools are defined by the source algorithm and incumbent, not exhaustively logged.",
+      "neighborhood": {
+        "definition": "Sparse-incidence ruin/recreate with incremental compatibility; arm descriptions in kernel.cpp",
+        "kernel_sha256": "29684e9d4c517b4d6039fa3b455a8cd3cf640d5fb2531a03a44d038b950ba126",
+        "policy": "adaptive",
+        "source_commit": "2a4eac4ccaac46389ca60782c5c49395548b2429",
+        "report_worker_index": 3
+      },
+      "parameters": {
+        "seed": 9201,
+        "cpu": 1,
+        "memory_mb": 768,
+        "iterations": 162150
+      },
+      "budget_seconds": 120,
+      "actual_seconds": 120.006,
+      "status": "BUDGET_COMPLETED_NO_STRICT_IMPROVEMENT",
+      "enumeration_complete": false,
+      "proof_artifact": null,
+      "conclusion": "No 227-word code was found along this budget-limited randomized trajectory. No neighborhood or global optimality is established."
+    },
+    {
+      "id": "native-9301-fixed",
+      "author": "codegarden-analyst",
+      "incumbent_witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa",
+      "candidate_universe_sha256": "91facb724b2bc1cd49df010cfbd1207d107f0c6b9c3935b5ecef8ba87cd015f9",
+      "candidate_pool_hash_scope": "All 65,536 candidate integers; dynamic per-move compatible subpools are defined by the source algorithm and incumbent, not exhaustively logged.",
+      "neighborhood": {
+        "definition": "Sparse-incidence ruin/recreate with incremental compatibility; arm descriptions in kernel.cpp",
+        "kernel_sha256": "29684e9d4c517b4d6039fa3b455a8cd3cf640d5fb2531a03a44d038b950ba126",
+        "policy": "fixed",
+        "source_commit": "2a4eac4ccaac46389ca60782c5c49395548b2429",
+        "report_worker_index": 4
+      },
+      "parameters": {
+        "seed": 9301,
+        "cpu": 1,
+        "memory_mb": 768,
+        "iterations": 399570
+      },
+      "budget_seconds": 120,
+      "actual_seconds": 120.007,
+      "status": "BUDGET_COMPLETED_NO_STRICT_IMPROVEMENT",
+      "enumeration_complete": false,
+      "proof_artifact": null,
+      "conclusion": "No 227-word code was found along this budget-limited randomized trajectory. No neighborhood or global optimality is established."
+    },
+    {
+      "id": "native-9301-adaptive",
+      "author": "codegarden-analyst",
+      "incumbent_witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa",
+      "candidate_universe_sha256": "91facb724b2bc1cd49df010cfbd1207d107f0c6b9c3935b5ecef8ba87cd015f9",
+      "candidate_pool_hash_scope": "All 65,536 candidate integers; dynamic per-move compatible subpools are defined by the source algorithm and incumbent, not exhaustively logged.",
+      "neighborhood": {
+        "definition": "Sparse-incidence ruin/recreate with incremental compatibility; arm descriptions in kernel.cpp",
+        "kernel_sha256": "29684e9d4c517b4d6039fa3b455a8cd3cf640d5fb2531a03a44d038b950ba126",
+        "policy": "adaptive",
+        "source_commit": "2a4eac4ccaac46389ca60782c5c49395548b2429",
+        "report_worker_index": 5
+      },
+      "parameters": {
+        "seed": 9301,
+        "cpu": 1,
+        "memory_mb": 768,
+        "iterations": 174669
+      },
+      "budget_seconds": 120,
+      "actual_seconds": 120.006,
+      "status": "BUDGET_COMPLETED_NO_STRICT_IMPROVEMENT",
+      "enumeration_complete": false,
+      "proof_artifact": null,
+      "conclusion": "No 227-word code was found along this budget-limited randomized trajectory. No neighborhood or global optimality is established."
+    },
+    {
+      "id": "native-9401-fixed",
+      "author": "codegarden-analyst",
+      "incumbent_witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa",
+      "candidate_universe_sha256": "91facb724b2bc1cd49df010cfbd1207d107f0c6b9c3935b5ecef8ba87cd015f9",
+      "candidate_pool_hash_scope": "All 65,536 candidate integers; dynamic per-move compatible subpools are defined by the source algorithm and incumbent, not exhaustively logged.",
+      "neighborhood": {
+        "definition": "Sparse-incidence ruin/recreate with incremental compatibility; arm descriptions in kernel.cpp",
+        "kernel_sha256": "29684e9d4c517b4d6039fa3b455a8cd3cf640d5fb2531a03a44d038b950ba126",
+        "policy": "fixed",
+        "source_commit": "2a4eac4ccaac46389ca60782c5c49395548b2429",
+        "report_worker_index": 6
+      },
+      "parameters": {
+        "seed": 9401,
+        "cpu": 1,
+        "memory_mb": 768,
+        "iterations": 414475
+      },
+      "budget_seconds": 120,
+      "actual_seconds": 120.01,
+      "status": "BUDGET_COMPLETED_NO_STRICT_IMPROVEMENT",
+      "enumeration_complete": false,
+      "proof_artifact": null,
+      "conclusion": "No 227-word code was found along this budget-limited randomized trajectory. No neighborhood or global optimality is established."
+    },
+    {
+      "id": "native-9401-adaptive",
+      "author": "codegarden-analyst",
+      "incumbent_witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa",
+      "candidate_universe_sha256": "91facb724b2bc1cd49df010cfbd1207d107f0c6b9c3935b5ecef8ba87cd015f9",
+      "candidate_pool_hash_scope": "All 65,536 candidate integers; dynamic per-move compatible subpools are defined by the source algorithm and incumbent, not exhaustively logged.",
+      "neighborhood": {
+        "definition": "Sparse-incidence ruin/recreate with incremental compatibility; arm descriptions in kernel.cpp",
+        "kernel_sha256": "29684e9d4c517b4d6039fa3b455a8cd3cf640d5fb2531a03a44d038b950ba126",
+        "policy": "adaptive",
+        "source_commit": "2a4eac4ccaac46389ca60782c5c49395548b2429",
+        "report_worker_index": 7
+      },
+      "parameters": {
+        "seed": 9401,
+        "cpu": 1,
+        "memory_mb": 768,
+        "iterations": 162303
+      },
+      "budget_seconds": 120,
+      "actual_seconds": 120.006,
+      "status": "BUDGET_COMPLETED_NO_STRICT_IMPROVEMENT",
+      "enumeration_complete": false,
+      "proof_artifact": null,
+      "conclusion": "No 227-word code was found along this budget-limited randomized trajectory. No neighborhood or global optimality is established."
+    }
+  ],
+  "fusion_reference": {
+    "path": "codegarden/logs/fusion_001.json.zlib",
+    "experiments": 21,
+    "proof_artifact": "Each result contains an explicit matching/minimum vertex cover certificate.",
+    "scope": "Optimum within the explicitly recorded union only."
+  }
+}

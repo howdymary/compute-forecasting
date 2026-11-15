@@ -1,0 +1,48 @@
+{
+  "app_id": "ap-qXB7WD2dGilkEaT2lI4p9I",
+  "requested_device": "cpu",
+  "calls": [
+    {
+      "spec": {
+        "label": "greedy_best",
+        "propagation": "greedy_best",
+        "betas": [
+          1000.0,
+          100000.0,
+          10000000.0,
+          1000000000.0,
+          100000000000.0
+        ],
+        "seed": 630201,
+        "noise": 1e-10,
+        "seconds": 900,
+        "threads": 4,
+        "outer": 2,
+        "max_iter": 80,
+        "max_eval": 120
+      },
+      "function_call_id": "fc-01M7GKP43HKN9ASVHASBGFXZ2B"
+    },
+    {
+      "spec": {
+        "label": "endpoint",
+        "propagation": "endpoint",
+        "betas": [
+          1000.0,
+          100000.0,
+          10000000.0,
+          1000000000.0,
+          100000000000.0
+        ],
+        "seed": 630201,
+        "noise": 1e-10,
+        "seconds": 900,
+        "threads": 4,
+        "outer": 2,
+        "max_iter": 80,
+        "max_eval": 120
+      },
+      "function_call_id": "fc-01M7GKP69YYAE473WGJ80QK2XD"
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+name: CodeGarden read-only provider accounting
+on:
+  push:
+    branches: [codegarden-budget-inspect-005]
+    paths: [.github/workflows/codegarden.yml]
+permissions:
+  contents: write
+concurrency:
+  group: codegarden-provider-serial
+  cancel-in-progress: false
+env:
+  SOURCE_SHA: ${{ github.sha }}
+  HF_HOME: ${{ github.workspace }}/codegarden/.cache/huggingface
+  XDG_CACHE_HOME: ${{ github.workspace }}/codegarden/.cache
+  PIP_CACHE_DIR: ${{ github.workspace }}/codegarden/.cache/pip
+  TMPDIR: ${{ github.workspace }}/codegarden/.tmp
+  PYTHONDONTWRITEBYTECODE: '1'
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+          mkdir -p codegarden/.tmp codegarden/.cache/pip
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install isolated authenticated clients
+        run: |
+          python -m venv codegarden/.venv
+          codegarden/.venv/bin/python -m pip install -r codegarden/requirements-providers.txt
+      - name: Read billing and usage metadata without starting billable work
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: codegarden/.venv/bin/python -B -u codegarden/phase3/budget_inspect3.py
+      - name: Publish evidence and unresolved accounting
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -B codegarden/phase3/publish_budget_inspect3.py
+      - name: Retain all evidence even if a publisher fails
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          retention-days: 1
+          name: codegarden-read-only-budget
+          path: |
+            codegarden/artifacts/phase3/budget_inspect_003/

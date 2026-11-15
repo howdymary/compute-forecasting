@@ -1,0 +1,81 @@
+{
+  "target_branch": "main",
+  "parent_repository_branch": "compute-observatory",
+  "parent_repository_commit": "ebc2943bf10ed5df63199c0d9ab8189f78c6d815",
+  "research_state": "paused",
+  "record_achieved": false,
+  "source_branches": [
+    {
+      "branch": "codegarden-k842-neighborhood-001",
+      "head": "eb3d6814d584bb2a9210af8458ba7b58b523d099"
+    },
+    {
+      "branch": "codegarden-k842-slp-001",
+      "head": "053e203ea73c71c633da8bc43be37fdd786f2bd5"
+    },
+    {
+      "branch": "codegarden-c2-continuation-001",
+      "head": "91f9ad343a4adeb5bf6cf3889693fa33393a9961"
+    },
+    {
+      "branch": "codegarden-c2-audit-001",
+      "head": "857ca23f546493128573d4f2b9d8d64180f78609"
+    },
+    {
+      "branch": "codegarden-hadamard-mixed-001",
+      "head": "e9b82ee6910b7b923e89ce010057f3243012bf14"
+    },
+    {
+      "branch": "codegarden-hadamard-scan-001",
+      "head": "10cb448c67b27c0488130892a34515272ec5b6f5"
+    },
+    {
+      "branch": "codegarden-kakeya-pilot-002",
+      "head": "92177523a8f402c546199b907ef4321d62a9fd80"
+    },
+    {
+      "branch": "codegarden-side-seeded-evo-001",
+      "head": "ea7a476dd8d3ea8736402ab05ec6d9d7fc951a2f"
+    },
+    {
+      "branch": "codegarden-side-elastic-001",
+      "head": "9f3c7b26b2175de0979712977741eead3598cb6c"
+    },
+    {
+      "branch": "codegarden",
+      "head": "635d085cc08145c55fad58821678e86d02c3fe93"
+    }
+  ],
+  "codegarden_files_before_consolidation": 11414,
+  "resolved_conflicts": [
+    {
+      "path": "codegarden/c2/gpu_search.py",
+      "selected_branch": "codegarden-k842-neighborhood-001",
+      "reason": "Preserves the recovery fix serializing torch.__version__ as a plain string."
+    }
+  ],
+  "preserved_scope": "Every existing non-CodeGarden file from compute-observatory, plus its default branch ref; all experiment branches are retained.",
+  "launcher": "Manual-only protected verification; no automatic search or paid-service calls.",
+  "verification": {
+    "passed": true,
+    "reports": [
+      {
+        "valid": true,
+        "cardinality": 226,
+        "length": 16,
+        "distinct_descendants": 6410,
+        "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa",
+        "method": "distinct_string_two_deletions"
+      },
+      {
+        "valid": true,
+        "cardinality": 226,
+        "length": 16,
+        "pairs_checked": 25425,
+        "largest_pairwise_lcs": 13,
+        "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa",
+        "method": "independent_dynamic_programming_lcs"
+      }
+    ]
+  }
+}

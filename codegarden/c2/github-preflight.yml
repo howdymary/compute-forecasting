@@ -1,0 +1,59 @@
+name: CodeGarden C2 backup exact baseline preflight
+on:
+  push:
+    branches: [codegarden-c2-preflight-001]
+    paths: [.github/workflows/codegarden.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: codegarden-c2-preflight-001
+  cancel-in-progress: false
+env:
+  SOURCE_SHA: ${{ github.sha }}
+  PYTHONDONTWRITEBYTECODE: '1'
+  OPENBLAS_NUM_THREADS: '2'
+  OMP_NUM_THREADS: '2'
+jobs:
+  baseline:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Fetch isolated verifier and preflight sources
+        run: |
+          python3 -B - <<'PY'
+          import pathlib,urllib.request,os
+          for name in ["exact.cpp","official.py","preflight.py"]:
+              p=pathlib.Path("codegarden/c2")/name;p.parent.mkdir(parents=True,exist_ok=True)
+              p.write_bytes(urllib.request.urlopen("https://raw.githubusercontent.com/howdymary/compute-forecasting/"+os.environ["SOURCE_SHA"]+"/codegarden/c2/"+name,timeout=45).read())
+          PY
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Isolated numeric dependencies
+        run: |
+          python3 -m venv codegarden/.venv-c2
+          codegarden/.venv-c2/bin/python -m pip install --disable-pip-version-check numpy==2.4.6 scipy==1.18.0
+      - name: Fetch isolated header-only arithmetic dependency
+        run: |
+          python3 -B - <<'PY'
+          import pathlib,subprocess,hashlib,json
+          p=pathlib.Path("codegarden/c2/.deps");p.mkdir(parents=True,exist_ok=True)
+          subprocess.run(["apt-get","download","libboost1.83-dev"],cwd=p,check=True)
+          package=next(p.glob("libboost1.83-dev_*.deb"))
+          subprocess.run(["dpkg-deb","-x",str(package),str(p/"boost")],check=True)
+          out=pathlib.Path("codegarden/artifacts/c2/preflight_001");out.mkdir(parents=True,exist_ok=True)
+          (out/"boost_dependency.json").write_text(json.dumps({"package":package.name,"sha256":hashlib.sha256(package.read_bytes()).hexdigest(),"extracted_under":"codegarden/c2/.deps/boost"},indent=2))
+          PY
+      - name: Compile exact integer certificate engine
+        run: |
+          mkdir -p codegarden/c2/.build
+          g++ -O3 -std=c++17 -Icodegarden/c2/.deps/boost/usr/include codegarden/c2/exact.cpp -o codegarden/c2/.build/exact
+      - name: Exact fixtures and live baseline reproduction
+        run: codegarden/.venv-c2/bin/python -B -u codegarden/c2/preflight.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: codegarden-c2-exact-preflight
+          retention-days: 30
+          path: codegarden/artifacts/c2/preflight_001/

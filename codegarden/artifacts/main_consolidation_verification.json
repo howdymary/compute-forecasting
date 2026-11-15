@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "reports": [
+    {
+      "valid": true,
+      "cardinality": 226,
+      "length": 16,
+      "distinct_descendants": 6410,
+      "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa",
+      "method": "distinct_string_two_deletions"
+    },
+    {
+      "valid": true,
+      "cardinality": 226,
+      "length": 16,
+      "pairs_checked": 25425,
+      "largest_pairwise_lcs": 13,
+      "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa",
+      "method": "independent_dynamic_programming_lcs"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "primary_sources": [
+    {
+      "url": "https://arxiv.org/abs/cond-mat/0602085v3",
+      "title": "Feedback-optimized parallel tempering Monte Carlo",
+      "authors": [
+        "Katzgraber",
+        "Trebst",
+        "Huse",
+        "Troyer"
+      ],
+      "method": "Concentrate temperature density near replica-flow bottlenecks.",
+      "accessed_at": "2026-11-15T07:46:52Z"
+    }
+  ],
+  "implementation": "Regularized last-endpoint flow counts, monotone fractions, square-root interval masses and damped ladder moves, plus greedy quench/injection. An optimization adaptation, not a faithful equilibrium-sampling reproduction.",
+  "trigger": "The 8-replica pilot had nearly zero middle-ladder exchange acceptance and no energy improvement.",
+  "exa_followup": "Queued separately behind the serialized provider coordinator; not yet claimed as an Exa-driven experiment."
+}

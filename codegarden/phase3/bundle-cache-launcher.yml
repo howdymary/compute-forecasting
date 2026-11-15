@@ -1,0 +1,86 @@
+name: CodeGarden exact saturated-blocker cache
+on:
+  push:
+    branches: [codegarden-bundle-cache-003]
+    paths: [.github/workflows/codegarden.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: codegarden-free-bundle-cache-003
+  cancel-in-progress: false
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+  SOURCE_SHA: ${{ github.sha }}
+  CODEGARDEN_BATCH: bundle_cache_001
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - name: Compile and independently exhaust small cases
+        run: |
+          mkdir -p codegarden/.build
+          g++ -O3 -std=c++17 codegarden/phase3/bundle_cache.cpp -o codegarden/.build/bundle
+          python -B -u codegarden/phase3/test_bundle_cache.py
+          python -B -u codegarden/phase3/preflight.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: codegarden-bundle-preflight
+          path: codegarden/artifacts/phase3/bundle_cache_001/
+  probes:
+    needs: preflight
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        mode: [strict6, strict7, strict8, neutral4]
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/download-artifact@v4
+        with:
+          name: codegarden-bundle-preflight
+          path: codegarden/artifacts/phase3/bundle_cache_001/
+      - name: Compile and run bounded component
+        run: |
+          mkdir -p codegarden/.build
+          g++ -O3 -std=c++17 codegarden/phase3/bundle_cache.cpp -o codegarden/.build/bundle
+          python -B -u codegarden/phase3/bundle_cache_probe.py --mode ${{ matrix.mode }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: codegarden-bundle-${{ matrix.mode }}
+          path: codegarden/artifacts/phase3/bundle_cache_001/
+  collect:
+    needs: [preflight, probes]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: codegarden-bundle-*
+          merge-multiple: true
+          path: codegarden/artifacts/phase3/bundle_cache_001/
+      - name: Publish leased results
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -B -u codegarden/phase3/publish_bundle_cache.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: codegarden-bundle-collected
+          path: codegarden/artifacts/phase3/bundle_cache_001/

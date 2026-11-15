@@ -1,0 +1,99 @@
+{
+  "source_sha": "fd11486b54ec89c4cbee6a89ed5891101d9ba98e",
+  "lineage": "arena223",
+  "seed": 1030004,
+  "status": "completed",
+  "best_exported": 223,
+  "global_retained_best": 226,
+  "best_verification": {
+    "accepted": true,
+    "cardinality": 223,
+    "reports": [
+      {
+        "cardinality": 223,
+        "distinct_descendants": 6260,
+        "length": 16,
+        "method": "distinct_string_two_deletions",
+        "valid": true,
+        "witness_sha256": "e639bef4629032c8989ca5ca06a0fb7105a5f6059285e37bb8118766ac3f5789"
+      },
+      {
+        "cardinality": 223,
+        "largest_pairwise_lcs": 13,
+        "length": 16,
+        "method": "independent_dynamic_programming_lcs",
+        "pairs_checked": 24753,
+        "valid": true,
+        "witness_sha256": "e639bef4629032c8989ca5ca06a0fb7105a5f6059285e37bb8118766ac3f5789"
+      }
+    ]
+  },
+  "processed": 29,
+  "native_cpu_seconds": 450.00331299999993,
+  "process_cpu_seconds": 451.563,
+  "wall_seconds": 454.129171783,
+  "ordinary_frontier": 0,
+  "priority_frontier": 0,
+  "partial_neighborhoods": 4,
+  "complete_neighborhoods": 12,
+  "frontier_discarded": 0,
+  "known_component_recoveries": 0,
+  "novel226_orbits_verified": 0,
+  "radius_changes": [
+    {
+      "step": 0,
+      "k": 3,
+      "reason": "unseen neutral state"
+    },
+    {
+      "step": 4,
+      "k": 4,
+      "reason": "lower-radius orbit frontier closed; systematically enlarge exchange"
+    },
+    {
+      "step": 8,
+      "k": 5,
+      "reason": "lower-radius orbit frontier closed; systematically enlarge exchange"
+    },
+    {
+      "step": 12,
+      "k": 6,
+      "reason": "lower-radius orbit frontier closed; systematically enlarge exchange"
+    },
+    {
+      "step": 16,
+      "k": 7,
+      "reason": "partial frontier emptied; increase radius rather than declare exhaustion"
+    }
+  ],
+  "retries": 13,
+  "current_base_radius": 6,
+  "exhaustion_switches": [
+    {
+      "from_radius": 3,
+      "to_radius": 4,
+      "orbit_representatives": 4,
+      "all_observed_neighborhoods_complete": true,
+      "frontier_discarded": 0,
+      "precise_scope": "Union of orbit components from logged starting codes only; not a global optimum"
+    },
+    {
+      "from_radius": 4,
+      "to_radius": 5,
+      "orbit_representatives": 4,
+      "all_observed_neighborhoods_complete": true,
+      "frontier_discarded": 0,
+      "precise_scope": "Union of orbit components from logged starting codes only; not a global optimum"
+    },
+    {
+      "from_radius": 5,
+      "to_radius": 6,
+      "orbit_representatives": 4,
+      "all_observed_neighborhoods_complete": true,
+      "frontier_discarded": 0,
+      "precise_scope": "Union of orbit components from logged starting codes only; not a global optimum"
+    }
+  ],
+  "scope": "A dropped frontier or capped neighborhood is not exhaustion. Every mathematical score is a protected export.",
+  "provider_calls": 0
+}

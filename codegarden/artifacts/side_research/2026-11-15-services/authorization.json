@@ -1,0 +1,48 @@
+{
+  "project": "CodeGarden",
+  "scope": "One bounded side-conversation integration cycle; no other project changes",
+  "authorized_at": "2026-11-15T18:48:54.826Z",
+  "authority": "User explicitly requested Exa, Modal, Tinker and past.dev, removed BoundForge spending coordination, and authorized abundant use of existing credits. No purchases, reload changes or plan changes.",
+  "coordination_with_boundforge": false,
+  "paid_calls_serialized_within_this_cycle": true,
+  "prior_holds_released": false,
+  "prior_holds_still_conservatively_counted": {
+    "exa": 0.112,
+    "tinker": 23.05,
+    "modal": 149.998,
+    "past": 319
+  },
+  "provider_caps": {
+    "exa": {
+      "cap": 2,
+      "unit": "USD"
+    },
+    "past": {
+      "cap": 300,
+      "unit": "credits"
+    },
+    "tinker": {
+      "cap": 1,
+      "unit": "USD"
+    },
+    "modal": {
+      "cap": 1,
+      "unit": "USD"
+    }
+  },
+  "pending": [
+    {
+      "provider": "exa",
+      "maximum_hold_usd": 1,
+      "requests": "At most two bounded searches and two page-fetch batches; actual cost metadata may be unavailable, in which case full hold remains."
+    }
+  ],
+  "verification": "Any 227-word candidate still requires both protected independent checkers; this integration cycle alone does not establish goal completion.",
+  "timestamp_note": "Dashboard observations captured during this turn; exact per-request UTC logged separately.",
+  "user_update": "User explicitly removed BoundForge coordination, authorized abundant existing-credit use, then requested stopping further cost checks. This cycle performs no billing/balance queries, purchases, reload or plan changes.",
+  "source_branch": "codegarden-services-side-001",
+  "max_workers": 4,
+  "models": 3,
+  "paired_orderings_per_model": 2,
+  "solver_seconds_per_worker": 30
+}

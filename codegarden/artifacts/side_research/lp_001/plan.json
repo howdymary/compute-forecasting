@@ -1,0 +1,25 @@
+{
+  "hypothesis": "Descendant-packing LP bounds may prune the open large repair model, and removing the mandatory pivot enlarges it to a full fixed-code repair universe.",
+  "models": [
+    {
+      "name": "forced3151",
+      "fixed": 163,
+      "pool": 3151,
+      "target_repair": 64
+    },
+    {
+      "name": "unforced3176",
+      "fixed": 162,
+      "pool": 3176,
+      "target_repair": 65
+    }
+  ],
+  "lp_method": "scipy1.18 highs-ds,30seconds each",
+  "exact": "OR-Tools9.14.6206 strict-feasibility CP-SAT60seconds2workers,paired plain and LP-cut/hint variants on Modal",
+  "verifier": "New integer dual-cover checker independently reconstructs every one of65536 words. It never changes the protected code validity checkers.",
+  "primary_success": "An explicit227-or-larger code passing both frozen independent checkers in a fresh job",
+  "bound_scope": "Only codes containing the literal fixed words; no global optimality claim",
+  "coordination_with_boundforge": false,
+  "billing_queries": false,
+  "source_revision_pending": true
+}

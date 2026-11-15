@@ -1,0 +1,60 @@
+
+Starting CP-SAT solver v9.14.6206
+Parameters: random_seed: 1231001 max_time_in_seconds: 60 log_search_progress: true cp_model_presolve: false num_search_workers: 1 log_to_stdout: false
+
+Initial satisfaction model '': (model_fingerprint: 0x6ee7e4b02c1e5f08)
+#Variables: 3'767 (3'541 primary variables)
+  - 3'767 Booleans in [0,1]
+#kAtMostOne: 16'087 (#literals: 111'475)
+#kExactlyOne: 226 (#literals: 3'767)
+
+Starting presolve at 0.00s
+The solution hint is complete, but it is infeasible! we will try to repair it.
+
+Presolve summary:
+  - 0 affine relations were detected.
+
+Presolved satisfaction model '': (model_fingerprint: 0x6ee7e4b02c1e5f08)
+#Variables: 3'767 (3'541 primary variables)
+  - 3'767 Booleans in [0,1]
+#kAtMostOne: 16'087 (#literals: 111'475)
+#kExactlyOne: 226 (#literals: 3'767)
+[Symmetry] Graph for symmetry has 21'055 nodes and 116'860 arcs.
+[Symmetry] Symmetry computation done. time: 0.00485536 dtime: 0.00853328
+
+Preloading model.
+The solution hint is complete, but it is infeasible! we will try to repair it.
+
+Starting search at 0.02s with 1 workers.
+1 full problem subsolver: [main]
+
+
+Task timing           n [     min,      max]      avg      dev     time         n [     min,      max]      avg      dev    dtime
+      'main':         1 [   1.00m,    1.00m]    1.00m   0.00ns    1.00m         1 [   2.98m,    2.98m]    2.98m   0.00ns    2.98m
+
+Search stats    Bools  Conflicts   Branches  Restarts   BoolPropag  IntegerPropag
+       'main':  3'767    739'399  2'702'733   169'531  348'902'932              0
+
+SAT stats    ClassicMinim  LitRemoved  LitLearned  LitForgotten  Subsumed  MClauses  MDecisions  MLitTrue  MSubsumed  MLitRemoved  MReused
+    'main':       609'868  33'618'155  56'202'311    54'299'179     1'578    69'537     728'837         1     31'899      373'900    1'457
+
+Solution repositories    Added  Queried  Synchro
+  'feasible solutions':      0        0        0
+   'fj solution hints':      0        0        0
+
+CpSolverResponse summary:
+status: UNKNOWN
+objective: NA
+best_bound: NA
+integers: 0
+booleans: 3767
+conflicts: 739399
+branches: 2702733
+propagations: 348902932
+integer_propagations: 0
+restarts: 169531
+lp_iterations: 0
+walltime: 60.1336
+usertime: 60.1336
+deterministic_time: 178.952
+gap_integral: 0

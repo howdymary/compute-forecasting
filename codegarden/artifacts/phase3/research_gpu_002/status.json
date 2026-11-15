@@ -1,0 +1,48 @@
+{
+  "status": "failed_or_partial",
+  "source_sha": "de17419c4007775b0065fb8e92c21227fbe93a12",
+  "started_at": "2026-11-15T11:15:28.302525+00:00",
+  "history": {
+    "source_run": "after-long-9e02d5fbec4b5bef09c05f3182dc6f7109ea1090",
+    "conservative_totals": {
+      "exa": 0.098,
+      "past": 282.0,
+      "modal": 148.98,
+      "tinker": 22.85
+    },
+    "reason": "All historical holds retained, including complete long reservation and its retry-aware concurrency envelope."
+  },
+  "credit_floor": 247.03982535,
+  "error": "Memory ingestion not ready",
+  "budget": {
+    "exa": {
+      "cap": 5,
+      "other_project_reserves": 15,
+      "verification_reserve": 5,
+      "reserved": 0.098,
+      "provider_reported_or_estimated": 0.014
+    },
+    "past": {
+      "cap": 2000,
+      "other_project_reserves": 10200,
+      "verification_reserve": 5000,
+      "reserved": 282.0,
+      "provider_reported_or_estimated": 36.0
+    },
+    "modal": {
+      "cap": 150,
+      "other_project_reserves": 75,
+      "verification_reserve": 20,
+      "reserved": 148.98,
+      "provider_reported_or_estimated": 0
+    },
+    "tinker": {
+      "cap": 70,
+      "other_project_reserves": 140,
+      "verification_reserve": 10,
+      "reserved": 23.0,
+      "provider_reported_or_estimated": 0
+    }
+  },
+  "finished_at": "2026-11-15T11:20:31.982049+00:00"
+}

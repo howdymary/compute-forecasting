@@ -1,0 +1,44 @@
+name: CodeGarden independent verification
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: codegarden-manual-verification
+  cancel-in-progress: false
+env:
+  SOURCE_SHA: ${{ github.sha }}
+  PYTHONDONTWRITEBYTECODE: '1'
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Fetch only CodeGarden witness and protected sources
+        run: |
+          python3 -B - <<'PY'
+          import os,pathlib,urllib.request
+          names=["protected/manifest.json","protected/verify_descendants.py","protected/verify_lcs.py","artifacts/best_code.txt"]
+          for name in names:
+              p=pathlib.Path("codegarden")/name;p.parent.mkdir(parents=True,exist_ok=True)
+              p.write_bytes(urllib.request.urlopen("https://raw.githubusercontent.com/"+os.environ["GITHUB_REPOSITORY"]+"/"+os.environ["SOURCE_SHA"]+"/codegarden/"+name,timeout=45).read())
+          PY
+      - name: Verify source hashes and run both independent mathematical checks
+        run: |
+          python3 -B - <<'PY'
+          import hashlib,json,pathlib,runpy
+          root=pathlib.Path("codegarden");manifest=json.loads((root/"protected/manifest.json").read_text());words=(root/"artifacts/best_code.txt").read_text().splitlines();reports=[]
+          for rel,h in manifest["files"].items():
+              source=root/rel;assert hashlib.sha256(source.read_bytes()).hexdigest()==h
+              module=runpy.run_path(str(source),run_name="frozen_verifier")
+              report=module["verify"](words);assert report["valid"] and report["cardinality"]==226;reports.append(report)
+          assert len(reports)==2 and reports[0]["witness_sha256"]==reports[1]["witness_sha256"]
+          result={"passed":True,"reports":reports,"record_claim":False}
+          out=root/"artifacts/main-verification";out.mkdir(parents=True,exist_ok=True);(out/"verification.json").write_text(json.dumps(result,indent=2));print(json.dumps(result))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: codegarden-independent-verification
+          retention-days: 30
+          path: codegarden/artifacts/main-verification/

@@ -1,0 +1,143 @@
+{
+  "controller_self_cpu_seconds": 0.027044000000000006,
+  "all_children_cpu_seconds": 303.138593,
+  "controller_wall_including_parents_and_verification": 303.19464831799996,
+  "source_sha": "17ca60b4fed7eb631e8f32da011005d6e8e57f30",
+  "case": 0,
+  "pair": 0,
+  "seed": 1517001,
+  "mode": "fixed_outside8",
+  "plan_sha256": "4a64a73d70e32ea6c216b37f079da5e84eb59ab099b171c7a78ae2116afe6a61",
+  "parent_sha256": [
+    "4b162596f58ed789c7ad79fdb40e2c6dc2c3cce3f2ec50cf52159a5e3bea582c",
+    "fc4183716581302b27b3dfd09b1fbf22403e2dc66ec5043953d3f985a25cad93"
+  ],
+  "parent_verifications": [
+    {
+      "accepted": true,
+      "cardinality": 225,
+      "reports": [
+        {
+          "cardinality": 225,
+          "distinct_descendants": 6357,
+          "length": 16,
+          "method": "distinct_string_two_deletions",
+          "valid": true,
+          "witness_sha256": "4b162596f58ed789c7ad79fdb40e2c6dc2c3cce3f2ec50cf52159a5e3bea582c"
+        },
+        {
+          "cardinality": 225,
+          "largest_pairwise_lcs": 13,
+          "length": 16,
+          "method": "independent_dynamic_programming_lcs",
+          "pairs_checked": 25200,
+          "valid": true,
+          "witness_sha256": "4b162596f58ed789c7ad79fdb40e2c6dc2c3cce3f2ec50cf52159a5e3bea582c"
+        }
+      ]
+    },
+    {
+      "accepted": true,
+      "cardinality": 225,
+      "reports": [
+        {
+          "cardinality": 225,
+          "distinct_descendants": 6367,
+          "length": 16,
+          "method": "distinct_string_two_deletions",
+          "valid": true,
+          "witness_sha256": "fc4183716581302b27b3dfd09b1fbf22403e2dc66ec5043953d3f985a25cad93"
+        },
+        {
+          "cardinality": 225,
+          "largest_pairwise_lcs": 13,
+          "length": 16,
+          "method": "independent_dynamic_programming_lcs",
+          "pairs_checked": 25200,
+          "valid": true,
+          "witness_sha256": "fc4183716581302b27b3dfd09b1fbf22403e2dc66ec5043953d3f985a25cad93"
+        }
+      ]
+    }
+  ],
+  "union_pool_sha256": "acf4eb410c36506b078614acac8bc959b89b572d660bc6870b1d74a03a80383a",
+  "best_method_independently_verified": 225,
+  "best_verification": {
+    "accepted": true,
+    "cardinality": 225,
+    "reports": [
+      {
+        "cardinality": 225,
+        "distinct_descendants": 6367,
+        "length": 16,
+        "method": "distinct_string_two_deletions",
+        "valid": true,
+        "witness_sha256": "fc4183716581302b27b3dfd09b1fbf22403e2dc66ec5043953d3f985a25cad93"
+      },
+      {
+        "cardinality": 225,
+        "largest_pairwise_lcs": 13,
+        "length": 16,
+        "method": "independent_dynamic_programming_lcs",
+        "pairs_checked": 25200,
+        "valid": true,
+        "witness_sha256": "fc4183716581302b27b3dfd09b1fbf22403e2dc66ec5043953d3f985a25cad93"
+      }
+    ]
+  },
+  "retained_global_best_verified": 226,
+  "novel226_orbits": 0,
+  "positive_verifications": [],
+  "bank225": [
+    {
+      "path": "projection225_0.txt",
+      "sha256": "fc4183716581302b27b3dfd09b1fbf22403e2dc66ec5043953d3f985a25cad93",
+      "verification": {
+        "accepted": true,
+        "cardinality": 225,
+        "reports": [
+          {
+            "cardinality": 225,
+            "distinct_descendants": 6367,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "fc4183716581302b27b3dfd09b1fbf22403e2dc66ec5043953d3f985a25cad93"
+          },
+          {
+            "cardinality": 225,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25200,
+            "valid": true,
+            "witness_sha256": "fc4183716581302b27b3dfd09b1fbf22403e2dc66ec5043953d3f985a25cad93"
+          }
+        ]
+      },
+      "new_orbit_against_plan_parents": false
+    }
+  ],
+  "neighborhood_switches": [],
+  "wall_including_verification": 301.76835802,
+  "native_status": {
+    "seed": 1517001,
+    "adaptive": false,
+    "nominal_cpu_seconds": 300,
+    "native_cpu_including_initialization": 300.281,
+    "search_cpu_seconds": 300,
+    "cycles": 111667,
+    "matching_evaluations": 21958445,
+    "matching_calls": 22417841,
+    "memo_hits": 44424,
+    "memo_clears": 43,
+    "sample_occurrences": 200781397,
+    "duplicate_sample_occurrences": 1122251,
+    "utility_prunes": 154363532,
+    "active_outside_limit": 8,
+    "best_size_unverified": 225,
+    "best_outside": [],
+    "scope": "Heuristic outside-set ruin/recreate with exact bipartite completion. No exhaustion or global absence claim. The alternating core-upper-count penalty is a heuristic, not a necessary cut. Every exported positive still requires independent verification."
+  },
+  "scope": "Eight paired fixed8 versus empirical-stagnation8..16 outside-word policies, same parent pair/seed and300nativeCPU nominal limits. Every completion is a valid code from the residual two-parent union plus mutually compatible outside words. Alternating core-availability upper-count penalty is heuristic only and is not enforced by either acceptance verifier. No mathematical exhaustion/global absence claim. Fresh verifier-only job required before goal promotion. Supporting bank/orbit metrics are not a cardinality improvement."
+}

@@ -1,0 +1,38 @@
+{
+  "source_sha": "c7b893d6f0a7aa2dd88e52d7dfe409206710e117",
+  "kernels": {
+    "union_external2.cpp": "abb252c9d80f4f38f9b1fc625fbc48e88df992e2c473d87d641150ddc1111664",
+    "union_external3.cpp": "1cf893db6033cfc264b58f486d9d964817448bc1c1f387cf61388773f0c9a4f6"
+  },
+  "rows": [
+    {
+      "case": 0,
+      "both_complete": true,
+      "same_candidate_pool": true,
+      "candidate_pool_sha256": "ac0aa3310027c458f73a41f801c0504ead12cbba6d3a76f6cacafadf976696e0",
+      "old_cpu": 13.2469,
+      "bounded_cpu": 0.535268,
+      "old_wall": 13.670084437999996,
+      "bounded_wall": 0.8900304670000025,
+      "old_matching_calls": 3118584,
+      "bounded_matching_calls": 53718,
+      "cheap_bound_prunes": 3360533,
+      "cpu_speed_ratio_if_both_complete": 24.748163536770367
+    },
+    {
+      "case": 7,
+      "both_complete": true,
+      "same_candidate_pool": true,
+      "candidate_pool_sha256": "ad4082ff26d26b9c935ccc9d6ac902aa95cde018eb3b9b5537010db1cc62439c",
+      "old_cpu": 19.1991,
+      "bounded_cpu": 0.76982,
+      "old_wall": 19.6226092,
+      "bounded_wall": 1.1262433410000057,
+      "old_matching_calls": 4648031,
+      "bounded_matching_calls": 80044,
+      "cheap_bound_prunes": 4756463,
+      "cpu_speed_ratio_if_both_complete": 24.93972616975397
+    }
+  ],
+  "scope": "Two known-closed finite fixtures, same target227, same pool/order,30nativeCPU caps. Ratios apply only when both encoded searches finish. Bootstrap is included in process wall, not in the native timer. No primary cardinality gain or adaptive-policy generalization is claimed."
+}

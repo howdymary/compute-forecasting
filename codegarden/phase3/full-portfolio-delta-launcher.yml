@@ -1,0 +1,45 @@
+name: CodeGarden full-portfolio delta unions from guided and neutral225banks
+on:
+  push:
+    branches: [codegarden-full-portfolio-delta-001]
+    paths: [.github/workflows/codegarden.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: codegarden-free-full-portfolio-delta-001
+  cancel-in-progress: false
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+  SOURCE_SHA: ${{ github.sha }}
+  TMPDIR: ${{ github.workspace }}/codegarden/.tmp
+jobs:
+  research:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -o pipefail
+          gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+          mkdir -p codegarden/.tmp codegarden/.build codegarden/artifacts/phase3/full_portfolio_delta_001
+      - name: Compile and exhaust small bipartite tests
+        run: |
+          g++ -O3 -std=c++17 codegarden/phase3/frontier_delta.cpp -o codegarden/.build/frontier_delta
+          python -B -u codegarden/phase3/test_frontier_delta.py
+          cp codegarden/artifacts/phase3/guided_frontier_delta_001/tests.json codegarden/artifacts/phase3/full_portfolio_delta_001/matching_tests.json
+      - name: Verify canonical seeds and search new incident unions
+        run: python -B -u codegarden/phase3/full_portfolio_delta.py
+      - name: Publish isolated results with a source lease
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -B -u codegarden/phase3/publish_full_portfolio_delta.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          retention-days: 1
+          name: codegarden-full-portfolio-delta
+          path: codegarden/artifacts/phase3/full_portfolio_delta_001/

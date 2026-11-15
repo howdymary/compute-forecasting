@@ -1,0 +1,171 @@
+{
+  "controller_self_cpu_seconds": 0.028762999999999997,
+  "all_children_cpu_seconds": 303.847631,
+  "controller_wall_including_parents_and_verification": 303.942107839,
+  "source_sha": "17ca60b4fed7eb631e8f32da011005d6e8e57f30",
+  "case": 10,
+  "pair": 5,
+  "seed": 1517006,
+  "mode": "fixed_outside8",
+  "plan_sha256": "4a64a73d70e32ea6c216b37f079da5e84eb59ab099b171c7a78ae2116afe6a61",
+  "parent_sha256": [
+    "f5068f339819ec2bdf800ed4cba759a00ebdf5ce822d6ff7fb51c740e1ae8b1a",
+    "88aea5927bdf65ee8f30737ee899aa892e9f2df15e116cd5b3e5bc148b4eee8c"
+  ],
+  "parent_verifications": [
+    {
+      "accepted": true,
+      "cardinality": 225,
+      "reports": [
+        {
+          "cardinality": 225,
+          "distinct_descendants": 6360,
+          "length": 16,
+          "method": "distinct_string_two_deletions",
+          "valid": true,
+          "witness_sha256": "f5068f339819ec2bdf800ed4cba759a00ebdf5ce822d6ff7fb51c740e1ae8b1a"
+        },
+        {
+          "cardinality": 225,
+          "largest_pairwise_lcs": 13,
+          "length": 16,
+          "method": "independent_dynamic_programming_lcs",
+          "pairs_checked": 25200,
+          "valid": true,
+          "witness_sha256": "f5068f339819ec2bdf800ed4cba759a00ebdf5ce822d6ff7fb51c740e1ae8b1a"
+        }
+      ]
+    },
+    {
+      "accepted": true,
+      "cardinality": 225,
+      "reports": [
+        {
+          "cardinality": 225,
+          "distinct_descendants": 6347,
+          "length": 16,
+          "method": "distinct_string_two_deletions",
+          "valid": true,
+          "witness_sha256": "88aea5927bdf65ee8f30737ee899aa892e9f2df15e116cd5b3e5bc148b4eee8c"
+        },
+        {
+          "cardinality": 225,
+          "largest_pairwise_lcs": 13,
+          "length": 16,
+          "method": "independent_dynamic_programming_lcs",
+          "pairs_checked": 25200,
+          "valid": true,
+          "witness_sha256": "88aea5927bdf65ee8f30737ee899aa892e9f2df15e116cd5b3e5bc148b4eee8c"
+        }
+      ]
+    }
+  ],
+  "union_pool_sha256": "59defaf8d89bf1fd9fbf08155ad197b7079f0cec59ac61d0d8802b5fb73ce342",
+  "best_method_independently_verified": 225,
+  "best_verification": {
+    "accepted": true,
+    "cardinality": 225,
+    "reports": [
+      {
+        "cardinality": 225,
+        "distinct_descendants": 6347,
+        "length": 16,
+        "method": "distinct_string_two_deletions",
+        "valid": true,
+        "witness_sha256": "88aea5927bdf65ee8f30737ee899aa892e9f2df15e116cd5b3e5bc148b4eee8c"
+      },
+      {
+        "cardinality": 225,
+        "largest_pairwise_lcs": 13,
+        "length": 16,
+        "method": "independent_dynamic_programming_lcs",
+        "pairs_checked": 25200,
+        "valid": true,
+        "witness_sha256": "88aea5927bdf65ee8f30737ee899aa892e9f2df15e116cd5b3e5bc148b4eee8c"
+      }
+    ]
+  },
+  "retained_global_best_verified": 226,
+  "novel226_orbits": 0,
+  "positive_verifications": [],
+  "bank225": [
+    {
+      "path": "projection225_0.txt",
+      "sha256": "88aea5927bdf65ee8f30737ee899aa892e9f2df15e116cd5b3e5bc148b4eee8c",
+      "verification": {
+        "accepted": true,
+        "cardinality": 225,
+        "reports": [
+          {
+            "cardinality": 225,
+            "distinct_descendants": 6347,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "88aea5927bdf65ee8f30737ee899aa892e9f2df15e116cd5b3e5bc148b4eee8c"
+          },
+          {
+            "cardinality": 225,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25200,
+            "valid": true,
+            "witness_sha256": "88aea5927bdf65ee8f30737ee899aa892e9f2df15e116cd5b3e5bc148b4eee8c"
+          }
+        ]
+      },
+      "new_orbit_against_plan_parents": false
+    },
+    {
+      "path": "projection225_1.txt",
+      "sha256": "31f0c1dc6d442bc31e58463c1ce33138bb2e70e45d616e8d130e1c57959ee8df",
+      "verification": {
+        "accepted": true,
+        "cardinality": 225,
+        "reports": [
+          {
+            "cardinality": 225,
+            "distinct_descendants": 6370,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "31f0c1dc6d442bc31e58463c1ce33138bb2e70e45d616e8d130e1c57959ee8df"
+          },
+          {
+            "cardinality": 225,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25200,
+            "valid": true,
+            "witness_sha256": "31f0c1dc6d442bc31e58463c1ce33138bb2e70e45d616e8d130e1c57959ee8df"
+          }
+        ]
+      },
+      "new_orbit_against_plan_parents": true
+    }
+  ],
+  "neighborhood_switches": [],
+  "wall_including_verification": 302.50401147499997,
+  "native_status": {
+    "seed": 1517006,
+    "adaptive": false,
+    "nominal_cpu_seconds": 300,
+    "native_cpu_including_initialization": 300.282,
+    "search_cpu_seconds": 300,
+    "cycles": 117638,
+    "matching_evaluations": 20361892,
+    "matching_calls": 20851312,
+    "memo_hits": 42550,
+    "memo_clears": 40,
+    "sample_occurrences": 212137032,
+    "duplicate_sample_occurrences": 1184059,
+    "utility_prunes": 165767119,
+    "active_outside_limit": 8,
+    "best_size_unverified": 225,
+    "best_outside": [],
+    "scope": "Heuristic outside-set ruin/recreate with exact bipartite completion. No exhaustion or global absence claim. The alternating core-upper-count penalty is a heuristic, not a necessary cut. Every exported positive still requires independent verification."
+  },
+  "scope": "Eight paired fixed8 versus empirical-stagnation8..16 outside-word policies, same parent pair/seed and300nativeCPU nominal limits. Every completion is a valid code from the residual two-parent union plus mutually compatible outside words. Alternating core-availability upper-count penalty is heuristic only and is not enforced by either acceptance verifier. No mathematical exhaustion/global absence claim. Fresh verifier-only job required before goal promotion. Supporting bank/orbit metrics are not a cardinality improvement."
+}

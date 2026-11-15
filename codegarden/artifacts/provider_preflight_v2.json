@@ -1,0 +1,42 @@
+{
+  "project": "codegarden",
+  "checked_at": "2026-11-15T04:00:17.682083+00:00",
+  "read_only": true,
+  "credentials_present": {
+    "EXA_API_KEY": true,
+    "PAST_API_KEY": true,
+    "TINKER_API_KEY": true,
+    "MODAL_TOKEN_ID": true,
+    "MODAL_TOKEN_SECRET": true
+  },
+  "modal_summary_available": true,
+  "modal_summary_schema": [
+    "metered_cost",
+    "billed_cost",
+    "adjustments",
+    "metered_cost_breakdown"
+  ],
+  "modal_summary_structure": {
+    "metered_cost": "str",
+    "billed_cost": "str",
+    "adjustments": "dict",
+    "metered_cost_breakdown": "dict"
+  },
+  "modal_error": null,
+  "modal_apps_available": true,
+  "modal_apps_schema": "list",
+  "exa_balance_available": false,
+  "exa_error": {
+    "available": false,
+    "http_status": 403
+  },
+  "exa_can_cover_5usd": false,
+  "past_balance_available": true,
+  "past_error": {
+    "available": true
+  },
+  "past_can_cover_5000credits": true,
+  "billable_calls_in_this_preflight": 0,
+  "billable_enabled_for_this_preflight": false,
+  "reason": "Read-only diagnostic only. Billable stages separately require a valid explicit Ledger allocation and reservation."
+}

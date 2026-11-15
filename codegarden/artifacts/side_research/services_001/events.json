@@ -1,0 +1,86 @@
+[
+  {
+    "time": "2026-11-15T18:50:21.377459+00:00",
+    "kind": "past_write",
+    "data": {
+      "role": "analyst",
+      "source_id": "codegarden-side-43748900357-analyst-6567c447",
+      "parent_source_ids": []
+    }
+  },
+  {
+    "time": "2026-11-15T18:50:25.491682+00:00",
+    "kind": "past_read",
+    "data": {
+      "role": "researcher",
+      "required_source_id": "codegarden-side-43748900357-analyst-6567c447",
+      "returned_codegarden_source_ids": [
+        "codegarden-side-43748900357-analyst-6567c447"
+      ]
+    }
+  },
+  {
+    "time": "2026-11-15T18:50:30.757353+00:00",
+    "kind": "exa_search",
+    "data": {
+      "query": "Primary research on exact maximum clique bit parallel fixed maximum degree first ordering for medium density structured graphs, compared with coloring bounds, motivated by open779-vertex deletion-code repair model",
+      "request_id": "288230d357ebcf985ee0504395ded339",
+      "sources": [
+        {
+          "url": "https://oa.upm.es/11804/2/INVE_MEM_2011_107297.pdf",
+          "title": "An improved bit parallel exact m\u00e1ximum dique algorithm",
+          "excerpt": "# An improved bit parallel exact maximum clique algorithm Optimization",
+          "highlights_sha256": "044e4047e943796e63674564b5db5a01472aed95c0007632e221da9aaf0da611"
+        },
+        {
+          "url": "https://arxiv.org/pdf/1801.00202",
+          "title": "Efficiently Enumerating all Maximal Cliques with Bit-Parallelism",
+          "excerpt": "The maximal clique enumeration (MCE) problem has numerous applications in",
+          "highlights_sha256": "02ffdc0497aa66a0008b595d23b10db035b58058a110b87a4c3f5ce1b8e8ee25"
+        },
+        {
+          "url": "https://austinlbuchanan.github.io/files/CliqueDegeneracy.pdf",
+          "title": "Solving maximum clique in sparse graphs:",
+          "excerpt": "Abstract We describe an algorithm for the maximum clique problem",
+          "highlights_sha256": "354b3c7ee197eb22b7e80c62419d5aa15b84db38c58e9ed090cdd74400f8102a"
+        },
+        {
+          "url": "https://arxiv.org/pdf/1006.5440",
+          "title": "Listing All Maximal Cliques in Sparse Graphs in Near-optimal Time",
+          "excerpt": "The degeneracy of an $n$-vertex graph $G$ is the smallest",
+          "highlights_sha256": "190f12d6dc3b204280fe07670396f0f7852317dcc89caf84c867d1d955785fbc"
+        }
+      ],
+      "influenced_experiment": "paired fixed degree ordering in exact repair"
+    }
+  },
+  {
+    "time": "2026-11-15T18:51:38.792566+00:00",
+    "kind": "past_method_failure",
+    "data": {
+      "error": "Memory ingestion remains pending",
+      "memory_reuse_claim": false
+    }
+  },
+  {
+    "time": "2026-11-15T18:51:46.544470+00:00",
+    "kind": "tinker_strategy",
+    "data": {
+      "model": "Qwen/Qwen3.5-4B",
+      "action": "degree_desc",
+      "valid_action": true,
+      "strict_format": true,
+      "prompt_tokens": 810,
+      "output_tokens": 3,
+      "reply_sha256": "592d78200183b218e76be69bebbf13a5a6172d9567c4e29bbf92b3925eaea21b",
+      "training": false
+    }
+  },
+  {
+    "time": "2026-11-15T18:53:54.626092+00:00",
+    "kind": "past_final_failure",
+    "data": {
+      "error": "Memory ingestion remains pending"
+    }
+  }
+]

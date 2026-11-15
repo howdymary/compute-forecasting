@@ -1,0 +1,139 @@
+{
+  "experiments": [
+    {
+      "group": "complement",
+      "symmetries_checked_all_words": 65536,
+      "candidate_universe_sha256": "91facb724b2bc1cd49df010cfbd1207d107f0c6b9c3935b5ecef8ba87cd015f9",
+      "source_sha": "821c1099aaff8ae1a813b313812356e6f95e010d",
+      "valid_orbits": 32703,
+      "rejected_internal_collision_orbits": 65,
+      "candidate_definition": "All group orbits in the full 16-bit universe, excluding only orbits with an internal descendant collision",
+      "orbit_pool_sha256": "4f8da687bb6a275fef31f409d10d0ecdc5e9493c56cc8ab6e29a3c8e98327753",
+      "encoded_model_sha256": "dc2a8e5bd72bac5ad138bdea3552aa13516527d0d1d0d364f990469bc6416317",
+      "fixed_outside": [],
+      "solver_status": "FEASIBLE",
+      "solver_seconds": 60.019085845000006,
+      "solver_time_cap_seconds": 60,
+      "solver_workers": 1,
+      "solver_best_bound": 946.0,
+      "greedy_verification": {
+        "accepted": true,
+        "cardinality": 196,
+        "reports": [
+          {
+            "cardinality": 196,
+            "distinct_descendants": 4860,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "a4b7c87de0e24008dc298257798e7af8a04d4e0f1bed926d083d2afd53b84b52"
+          },
+          {
+            "cardinality": 196,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 19110,
+            "valid": true,
+            "witness_sha256": "a4b7c87de0e24008dc298257798e7af8a04d4e0f1bed926d083d2afd53b84b52"
+          }
+        ]
+      },
+      "solver_verification": {
+        "accepted": true,
+        "cardinality": 198,
+        "reports": [
+          {
+            "cardinality": 198,
+            "distinct_descendants": 5050,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "382fd5439bb17487d745d2fd1e56b29d37a924ee89aac297e9687819ad8a35fe"
+          },
+          {
+            "cardinality": 198,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 19503,
+            "valid": true,
+            "witness_sha256": "382fd5439bb17487d745d2fd1e56b29d37a924ee89aac297e9687819ad8a35fe"
+          }
+        ]
+      },
+      "best_size": 198,
+      "wall_seconds": 66.785028257,
+      "conclusion": "Feasible symmetry-invariant code; no optimality conclusion",
+      "global_optimality_claim": false
+    },
+    {
+      "group": "complement_and_reversal",
+      "symmetries_checked_all_words": 65536,
+      "candidate_universe_sha256": "91facb724b2bc1cd49df010cfbd1207d107f0c6b9c3935b5ecef8ba87cd015f9",
+      "source_sha": "821c1099aaff8ae1a813b313812356e6f95e010d",
+      "valid_orbits": 10486,
+      "rejected_internal_collision_orbits": 6026,
+      "candidate_definition": "All group orbits in the full 16-bit universe, excluding only orbits with an internal descendant collision",
+      "orbit_pool_sha256": "5fb4d106ad86ecd30172656a9a6b6afd8b9de404b1795cab004c114bd8168374",
+      "encoded_model_sha256": "b73adfdf35d7b6c6aab00b9f308e1771d71522c6104109893874a4dadba0f66c",
+      "fixed_outside": [],
+      "solver_status": "FEASIBLE",
+      "solver_seconds": 60.001904198000005,
+      "solver_time_cap_seconds": 60,
+      "solver_workers": 1,
+      "solver_best_bound": 604.0,
+      "greedy_verification": {
+        "accepted": true,
+        "cardinality": 188,
+        "reports": [
+          {
+            "cardinality": 188,
+            "distinct_descendants": 4634,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "d3d5fafaee4ed8df7fff19faab7725c1e4531a6e9eae1a389325ea9e4d2e90f5"
+          },
+          {
+            "cardinality": 188,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 17578,
+            "valid": true,
+            "witness_sha256": "d3d5fafaee4ed8df7fff19faab7725c1e4531a6e9eae1a389325ea9e4d2e90f5"
+          }
+        ]
+      },
+      "solver_verification": {
+        "accepted": true,
+        "cardinality": 188,
+        "reports": [
+          {
+            "cardinality": 188,
+            "distinct_descendants": 4634,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "d3d5fafaee4ed8df7fff19faab7725c1e4531a6e9eae1a389325ea9e4d2e90f5"
+          },
+          {
+            "cardinality": 188,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 17578,
+            "valid": true,
+            "witness_sha256": "d3d5fafaee4ed8df7fff19faab7725c1e4531a6e9eae1a389325ea9e4d2e90f5"
+          }
+        ]
+      },
+      "best_size": 188,
+      "wall_seconds": 63.81134577600001,
+      "conclusion": "Feasible symmetry-invariant code; no optimality conclusion",
+      "global_optimality_claim": false
+    }
+  ],
+  "scope": "Exploratory mathematical probes; not part of controlled adaptive-policy evaluation"
+}

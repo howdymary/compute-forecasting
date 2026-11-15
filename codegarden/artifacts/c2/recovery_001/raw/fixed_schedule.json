@@ -1,0 +1,239 @@
+{
+  "source_sha": "8b5dfa41abf7025341198a5de42e9d26f23c9cf3",
+  "spec": {
+    "label": "fixed_schedule",
+    "betas": [
+      100000000.0,
+      10000000000.0,
+      1000000000000.0
+    ],
+    "seed": 630101,
+    "noise": 1e-08,
+    "seconds": 900
+  },
+  "status": "completed",
+  "profile": {
+    "cpu_forward_seconds": 0.15514705699999976,
+    "device": "cpu",
+    "gpu_name": null,
+    "score_seconds": 0.15029508933333316,
+    "torch": "2.9.1+cu128"
+  },
+  "baseline_gpu": 0.9636615620620851,
+  "best_gpu": 0.9636616094034781,
+  "evaluations": 2468,
+  "cycles": 3,
+  "wall_seconds": 901.1512658009999,
+  "events": [
+    {
+      "cycle": 0,
+      "beta": 100000000.0,
+      "outer": 0,
+      "inner_best": 0.9636615766367078,
+      "best_gpu": 0.9636615766367078,
+      "evaluations": 181,
+      "seconds": 75.09659904099999
+    },
+    {
+      "cycle": 0,
+      "beta": 100000000.0,
+      "outer": 1,
+      "inner_best": 0.9636615766367078,
+      "best_gpu": 0.9636615766367078,
+      "evaluations": 361,
+      "seconds": 140.68400447800002
+    },
+    {
+      "cycle": 0,
+      "beta": 10000000000.0,
+      "outer": 0,
+      "inner_best": 0.9636616007459431,
+      "best_gpu": 0.9636616007459431,
+      "evaluations": 395,
+      "seconds": 155.033851324
+    },
+    {
+      "cycle": 0,
+      "beta": 10000000000.0,
+      "outer": 1,
+      "inner_best": 0.963661607678067,
+      "best_gpu": 0.963661607678067,
+      "evaluations": 532,
+      "seconds": 204.984233776
+    },
+    {
+      "cycle": 0,
+      "beta": 10000000000.0,
+      "outer": 2,
+      "inner_best": 0.9636616094034781,
+      "best_gpu": 0.9636616094034781,
+      "evaluations": 691,
+      "seconds": 254.996818303
+    },
+    {
+      "cycle": 0,
+      "beta": 1000000000000.0,
+      "outer": 0,
+      "inner_best": 0.9636616094034781,
+      "best_gpu": 0.9636616094034781,
+      "evaluations": 702,
+      "seconds": 258.636767951
+    },
+    {
+      "cycle": 1,
+      "beta": 100000000.0,
+      "outer": 0,
+      "inner_best": 0.9636583113703125,
+      "best_gpu": 0.9636616094034781,
+      "evaluations": 842,
+      "seconds": 311.890480216
+    },
+    {
+      "cycle": 1,
+      "beta": 100000000.0,
+      "outer": 1,
+      "inner_best": 0.9636589325839555,
+      "best_gpu": 0.9636616094034781,
+      "evaluations": 1005,
+      "seconds": 369.698810189
+    },
+    {
+      "cycle": 1,
+      "beta": 100000000.0,
+      "outer": 2,
+      "inner_best": 0.9636591982430744,
+      "best_gpu": 0.9636616094034781,
+      "evaluations": 1151,
+      "seconds": 422.086664394
+    },
+    {
+      "cycle": 1,
+      "beta": 10000000000.0,
+      "outer": 0,
+      "inner_best": 0.9636592193123829,
+      "best_gpu": 0.9636616094034781,
+      "evaluations": 1233,
+      "seconds": 451.084563385
+    },
+    {
+      "cycle": 1,
+      "beta": 10000000000.0,
+      "outer": 1,
+      "inner_best": 0.9636592193123829,
+      "best_gpu": 0.9636616094034781,
+      "evaluations": 1244,
+      "seconds": 455.17310341
+    },
+    {
+      "cycle": 1,
+      "beta": 1000000000000.0,
+      "outer": 0,
+      "inner_best": 0.9636592193123829,
+      "best_gpu": 0.9636616094034781,
+      "evaluations": 1255,
+      "seconds": 458.844854307
+    },
+    {
+      "cycle": 2,
+      "beta": 100000000.0,
+      "outer": 0,
+      "inner_best": 0.9636583107486961,
+      "best_gpu": 0.9636616094034781,
+      "evaluations": 1398,
+      "seconds": 510.06151435600003
+    },
+    {
+      "cycle": 2,
+      "beta": 100000000.0,
+      "outer": 1,
+      "inner_best": 0.9636589389623684,
+      "best_gpu": 0.9636616094034781,
+      "evaluations": 1549,
+      "seconds": 563.924728655
+    },
+    {
+      "cycle": 2,
+      "beta": 100000000.0,
+      "outer": 2,
+      "inner_best": 0.9636592072499074,
+      "best_gpu": 0.9636616094034781,
+      "evaluations": 1689,
+      "seconds": 616.847203673
+    },
+    {
+      "cycle": 2,
+      "beta": 10000000000.0,
+      "outer": 0,
+      "inner_best": 0.9636592318926261,
+      "best_gpu": 0.9636616094034781,
+      "evaluations": 1782,
+      "seconds": 649.068981649
+    },
+    {
+      "cycle": 2,
+      "beta": 10000000000.0,
+      "outer": 1,
+      "inner_best": 0.9636592406545604,
+      "best_gpu": 0.9636616094034781,
+      "evaluations": 1924,
+      "seconds": 701.247163108
+    },
+    {
+      "cycle": 2,
+      "beta": 10000000000.0,
+      "outer": 2,
+      "inner_best": 0.9636592412352186,
+      "best_gpu": 0.9636616094034781,
+      "evaluations": 1941,
+      "seconds": 707.067789855
+    },
+    {
+      "cycle": 2,
+      "beta": 1000000000000.0,
+      "outer": 0,
+      "inner_best": 0.9636592412493489,
+      "best_gpu": 0.9636616094034781,
+      "evaluations": 1955,
+      "seconds": 711.7424826219999
+    },
+    {
+      "cycle": 2,
+      "beta": 1000000000000.0,
+      "outer": 1,
+      "inner_best": 0.9636592412493488,
+      "best_gpu": 0.9636616094034781,
+      "evaluations": 1968,
+      "seconds": 716.1471627699999
+    },
+    {
+      "cycle": 3,
+      "beta": 100000000.0,
+      "outer": 0,
+      "inner_best": 0.9636582993286216,
+      "best_gpu": 0.9636616094034781,
+      "evaluations": 2108,
+      "seconds": 769.325838213
+    },
+    {
+      "cycle": 3,
+      "beta": 100000000.0,
+      "outer": 1,
+      "inner_best": 0.9636589291405253,
+      "best_gpu": 0.9636616094034781,
+      "evaluations": 2268,
+      "seconds": 826.837321193
+    },
+    {
+      "cycle": 3,
+      "beta": 100000000.0,
+      "outer": 2,
+      "inner_best": 0.9636591911381283,
+      "best_gpu": 0.9636616094034781,
+      "evaluations": 2402,
+      "seconds": 878.495142181
+    }
+  ],
+  "best_rel": "d0f0147dd2c746e88d8c5d8233571913/best.npy",
+  "best_npy_sha256": "1dce5b2b6817d04bac8003bd330804486f5c78e488a3439c2cb1e9d0acefb151",
+  "record_claim": false
+}

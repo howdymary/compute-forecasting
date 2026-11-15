@@ -1,0 +1,48 @@
+{
+  "workers": [
+    {
+      "label": "greedy_best",
+      "propagation": "greedy_best",
+      "betas": [
+        1000.0,
+        100000.0,
+        10000000.0,
+        1000000000.0,
+        100000000000.0
+      ],
+      "seed": 630201,
+      "noise": 1e-10,
+      "seconds": 900,
+      "threads": 4,
+      "outer": 2,
+      "max_iter": 80,
+      "max_eval": 120
+    },
+    {
+      "label": "endpoint",
+      "propagation": "endpoint",
+      "betas": [
+        1000.0,
+        100000.0,
+        10000000.0,
+        1000000000.0,
+        100000000000.0
+      ],
+      "seed": 630201,
+      "noise": 1e-10,
+      "seconds": 900,
+      "threads": 4,
+      "outer": 2,
+      "max_iter": 80,
+      "max_eval": 120
+    }
+  ],
+  "source_sha": "fc46fe0ab9a16d3bfb2353579c409d678fd4a420",
+  "initial_n": 1999999,
+  "baseline": 0.9636615620620854,
+  "baseline_npy_sha256": "1dce5b2b6817d04bac8003bd330804486f5c78e488a3439c2cb1e9d0acefb151",
+  "device_request": "cpu",
+  "gpu_attempted": false,
+  "hypothesis": "Endpoint continuation crosses a temporary drop in the true objective that greedy best propagation rejects.",
+  "record_claim": false
+}

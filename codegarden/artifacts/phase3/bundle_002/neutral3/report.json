@@ -1,0 +1,1606 @@
+{
+  "mode": "neutral3",
+  "source_sha": "3a2ddf5d0856e9223fd272d04729021c691104d7",
+  "best_verified": 226,
+  "baseline": {
+    "accepted": true,
+    "cardinality": 226,
+    "reports": [
+      {
+        "cardinality": 226,
+        "distinct_descendants": 6410,
+        "length": 16,
+        "method": "distinct_string_two_deletions",
+        "valid": true,
+        "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+      },
+      {
+        "cardinality": 226,
+        "largest_pairwise_lcs": 13,
+        "length": 16,
+        "method": "independent_dynamic_programming_lcs",
+        "pairs_checked": 25425,
+        "valid": true,
+        "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+      }
+    ]
+  },
+  "processed": 32,
+  "discovered": 32,
+  "frontier": 0,
+  "rows": [
+    {
+      "found": false,
+      "complete": true,
+      "cpu_seconds": 0.037979,
+      "nodes": 2289213,
+      "k": 3,
+      "n": 16,
+      "memory_limited": false,
+      "budget_limited": false,
+      "neutral_cap_reached": false,
+      "candidate_count": 1168,
+      "profiled_bitset_bytes": 2667904,
+      "removed": [],
+      "added": [],
+      "scope": "All outside words with at most k incumbent blockers; cliques up to k+1 new words. Complete is false on every time/node/memory/neighbor cap.",
+      "candidate_pool_sha256": "1da464e5dd759cb019984b9a10ea6754bc2cb20e258b81ab731af855ebbb60b3",
+      "candidate_pool_definition": "Every outside 16-bit word with at most k distinct incumbent blockers; reconstruct from state witness.",
+      "neutral_neighbors_returned": 16,
+      "incumbent_witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa",
+      "incumbent_file": "state_0.txt",
+      "parameters": {
+        "seconds": 12,
+        "nodes": 1000000000,
+        "neutral_cap": 96
+      },
+      "verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6410,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+          }
+        ]
+      }
+    },
+    {
+      "found": false,
+      "complete": true,
+      "cpu_seconds": 0.037348,
+      "nodes": 2259523,
+      "k": 3,
+      "n": 16,
+      "memory_limited": false,
+      "budget_limited": false,
+      "neutral_cap_reached": false,
+      "candidate_count": 1159,
+      "profiled_bitset_bytes": 2666536,
+      "removed": [],
+      "added": [],
+      "scope": "All outside words with at most k incumbent blockers; cliques up to k+1 new words. Complete is false on every time/node/memory/neighbor cap.",
+      "candidate_pool_sha256": "b0b012f46e0b11847c725b6e606e5566fd4bdc18ff21fb8570ea79eff845195f",
+      "candidate_pool_definition": "Every outside 16-bit word with at most k distinct incumbent blockers; reconstruct from state witness.",
+      "neutral_neighbors_returned": 16,
+      "incumbent_witness_sha256": "e9c51c92a3cd366e09fdb43cbd104b3376a3e06d654f6fb2695b9c679b6bf76e",
+      "incumbent_file": "state_1.txt",
+      "parameters": {
+        "seconds": 12,
+        "nodes": 1000000000,
+        "neutral_cap": 96
+      },
+      "verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6410,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "e9c51c92a3cd366e09fdb43cbd104b3376a3e06d654f6fb2695b9c679b6bf76e"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "e9c51c92a3cd366e09fdb43cbd104b3376a3e06d654f6fb2695b9c679b6bf76e"
+          }
+        ]
+      }
+    },
+    {
+      "found": false,
+      "complete": true,
+      "cpu_seconds": 0.037739,
+      "nodes": 2282384,
+      "k": 3,
+      "n": 16,
+      "memory_limited": false,
+      "budget_limited": false,
+      "neutral_cap_reached": false,
+      "candidate_count": 1167,
+      "profiled_bitset_bytes": 2667752,
+      "removed": [],
+      "added": [],
+      "scope": "All outside words with at most k incumbent blockers; cliques up to k+1 new words. Complete is false on every time/node/memory/neighbor cap.",
+      "candidate_pool_sha256": "1f83fd23c26ece66eb3e76b5751c6ce17589c20975086cf4a3aa43329914c706",
+      "candidate_pool_definition": "Every outside 16-bit word with at most k distinct incumbent blockers; reconstruct from state witness.",
+      "neutral_neighbors_returned": 16,
+      "incumbent_witness_sha256": "cf8af319c3041c586300753fb8ce4d1826af4b74ba3686824f76c5f9b9ad49e4",
+      "incumbent_file": "state_2.txt",
+      "parameters": {
+        "seconds": 12,
+        "nodes": 1000000000,
+        "neutral_cap": 96
+      },
+      "verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6410,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "cf8af319c3041c586300753fb8ce4d1826af4b74ba3686824f76c5f9b9ad49e4"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "cf8af319c3041c586300753fb8ce4d1826af4b74ba3686824f76c5f9b9ad49e4"
+          }
+        ]
+      }
+    },
+    {
+      "found": false,
+      "complete": true,
+      "cpu_seconds": 0.036314,
+      "nodes": 2190208,
+      "k": 3,
+      "n": 16,
+      "memory_limited": false,
+      "budget_limited": false,
+      "neutral_cap_reached": false,
+      "candidate_count": 1139,
+      "profiled_bitset_bytes": 2523312,
+      "removed": [],
+      "added": [],
+      "scope": "All outside words with at most k incumbent blockers; cliques up to k+1 new words. Complete is false on every time/node/memory/neighbor cap.",
+      "candidate_pool_sha256": "0e99d356ae474337d87c771e0df8219f38e6352d7f04a09cefbeb83900dbbe89",
+      "candidate_pool_definition": "Every outside 16-bit word with at most k distinct incumbent blockers; reconstruct from state witness.",
+      "neutral_neighbors_returned": 21,
+      "incumbent_witness_sha256": "b3db0cf83cda2bd254c25af84238b0f556905dc11f0741b036cdd0c318ecd15e",
+      "incumbent_file": "state_3.txt",
+      "parameters": {
+        "seconds": 12,
+        "nodes": 1000000000,
+        "neutral_cap": 96
+      },
+      "verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6417,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "b3db0cf83cda2bd254c25af84238b0f556905dc11f0741b036cdd0c318ecd15e"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "b3db0cf83cda2bd254c25af84238b0f556905dc11f0741b036cdd0c318ecd15e"
+          }
+        ]
+      }
+    },
+    {
+      "found": false,
+      "complete": true,
+      "cpu_seconds": 0.037258,
+      "nodes": 2263510,
+      "k": 3,
+      "n": 16,
+      "memory_limited": false,
+      "budget_limited": false,
+      "neutral_cap_reached": false,
+      "candidate_count": 1159,
+      "profiled_bitset_bytes": 2666536,
+      "removed": [],
+      "added": [],
+      "scope": "All outside words with at most k incumbent blockers; cliques up to k+1 new words. Complete is false on every time/node/memory/neighbor cap.",
+      "candidate_pool_sha256": "e0b4130361c706a80e93238a1da53f2ff81dcd07501d79b3e9616cb345fde217",
+      "candidate_pool_definition": "Every outside 16-bit word with at most k distinct incumbent blockers; reconstruct from state witness.",
+      "neutral_neighbors_returned": 20,
+      "incumbent_witness_sha256": "b1c2cae208133411705689ffe898750cc339bd1638e596ddcb65ca5b7db91f96",
+      "incumbent_file": "state_4.txt",
+      "parameters": {
+        "seconds": 12,
+        "nodes": 1000000000,
+        "neutral_cap": 96
+      },
+      "verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6412,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "b1c2cae208133411705689ffe898750cc339bd1638e596ddcb65ca5b7db91f96"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "b1c2cae208133411705689ffe898750cc339bd1638e596ddcb65ca5b7db91f96"
+          }
+        ]
+      }
+    },
+    {
+      "found": false,
+      "complete": true,
+      "cpu_seconds": 0.037561,
+      "nodes": 2259744,
+      "k": 3,
+      "n": 16,
+      "memory_limited": false,
+      "budget_limited": false,
+      "neutral_cap_reached": false,
+      "candidate_count": 1153,
+      "profiled_bitset_bytes": 2665624,
+      "removed": [],
+      "added": [],
+      "scope": "All outside words with at most k incumbent blockers; cliques up to k+1 new words. Complete is false on every time/node/memory/neighbor cap.",
+      "candidate_pool_sha256": "13686477244ce2d46b11b9ef1b0ff46155647c228401db804afddfb518555d0b",
+      "candidate_pool_definition": "Every outside 16-bit word with at most k distinct incumbent blockers; reconstruct from state witness.",
+      "neutral_neighbors_returned": 21,
+      "incumbent_witness_sha256": "9a7607fcd807c41796272748ac5123f1c421050717dbaa6e2d43230f9273f796",
+      "incumbent_file": "state_5.txt",
+      "parameters": {
+        "seconds": 12,
+        "nodes": 1000000000,
+        "neutral_cap": 96
+      },
+      "verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6416,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "9a7607fcd807c41796272748ac5123f1c421050717dbaa6e2d43230f9273f796"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "9a7607fcd807c41796272748ac5123f1c421050717dbaa6e2d43230f9273f796"
+          }
+        ]
+      }
+    },
+    {
+      "found": false,
+      "complete": true,
+      "cpu_seconds": 0.03748,
+      "nodes": 2242761,
+      "k": 3,
+      "n": 16,
+      "memory_limited": false,
+      "budget_limited": false,
+      "neutral_cap_reached": false,
+      "candidate_count": 1149,
+      "profiled_bitset_bytes": 2524752,
+      "removed": [],
+      "added": [],
+      "scope": "All outside words with at most k incumbent blockers; cliques up to k+1 new words. Complete is false on every time/node/memory/neighbor cap.",
+      "candidate_pool_sha256": "3605f3afe89a7dbe3795ea0cea2756ab7427e8f10bdf485fc1f0c73ea688424a",
+      "candidate_pool_definition": "Every outside 16-bit word with at most k distinct incumbent blockers; reconstruct from state witness.",
+      "neutral_neighbors_returned": 21,
+      "incumbent_witness_sha256": "5551420627bdc79a7cb2aee99f8c8df79abdc2747c7cc25438629d360333343b",
+      "incumbent_file": "state_6.txt",
+      "parameters": {
+        "seconds": 12,
+        "nodes": 1000000000,
+        "neutral_cap": 96
+      },
+      "verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6417,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "5551420627bdc79a7cb2aee99f8c8df79abdc2747c7cc25438629d360333343b"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "5551420627bdc79a7cb2aee99f8c8df79abdc2747c7cc25438629d360333343b"
+          }
+        ]
+      }
+    },
+    {
+      "found": false,
+      "complete": true,
+      "cpu_seconds": 0.038426,
+      "nodes": 2328483,
+      "k": 3,
+      "n": 16,
+      "memory_limited": false,
+      "budget_limited": false,
+      "neutral_cap_reached": false,
+      "candidate_count": 1171,
+      "profiled_bitset_bytes": 2668360,
+      "removed": [],
+      "added": [],
+      "scope": "All outside words with at most k incumbent blockers; cliques up to k+1 new words. Complete is false on every time/node/memory/neighbor cap.",
+      "candidate_pool_sha256": "4e7e1626a8907aa2ed2110c8f1bb8d6bdf703089414933846ea5852618c983e9",
+      "candidate_pool_definition": "Every outside 16-bit word with at most k distinct incumbent blockers; reconstruct from state witness.",
+      "neutral_neighbors_returned": 18,
+      "incumbent_witness_sha256": "208f24ed47c891648708cc2ecc8fe86806d1c0f079571cbd9b3fdf04b5de6ed7",
+      "incumbent_file": "state_7.txt",
+      "parameters": {
+        "seconds": 12,
+        "nodes": 1000000000,
+        "neutral_cap": 96
+      },
+      "verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6409,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "208f24ed47c891648708cc2ecc8fe86806d1c0f079571cbd9b3fdf04b5de6ed7"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "208f24ed47c891648708cc2ecc8fe86806d1c0f079571cbd9b3fdf04b5de6ed7"
+          }
+        ]
+      }
+    },
+    {
+      "found": false,
+      "complete": true,
+      "cpu_seconds": 0.038469,
+      "nodes": 2318640,
+      "k": 3,
+      "n": 16,
+      "memory_limited": false,
+      "budget_limited": false,
+      "neutral_cap_reached": false,
+      "candidate_count": 1169,
+      "profiled_bitset_bytes": 2668056,
+      "removed": [],
+      "added": [],
+      "scope": "All outside words with at most k incumbent blockers; cliques up to k+1 new words. Complete is false on every time/node/memory/neighbor cap.",
+      "candidate_pool_sha256": "868570def3792970432d797ee0f0e6747b504e3771447b8bbe71c9e01d101837",
+      "candidate_pool_definition": "Every outside 16-bit word with at most k distinct incumbent blockers; reconstruct from state witness.",
+      "neutral_neighbors_returned": 18,
+      "incumbent_witness_sha256": "1c1684774ef048338df687ea397ded4e5104947c60ef61fd915d6b4a0aea16dc",
+      "incumbent_file": "state_8.txt",
+      "parameters": {
+        "seconds": 12,
+        "nodes": 1000000000,
+        "neutral_cap": 96
+      },
+      "verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6410,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "1c1684774ef048338df687ea397ded4e5104947c60ef61fd915d6b4a0aea16dc"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "1c1684774ef048338df687ea397ded4e5104947c60ef61fd915d6b4a0aea16dc"
+          }
+        ]
+      }
+    },
+    {
+      "found": false,
+      "complete": true,
+      "cpu_seconds": 0.037471,
+      "nodes": 2249956,
+      "k": 3,
+      "n": 16,
+      "memory_limited": false,
+      "budget_limited": false,
+      "neutral_cap_reached": false,
+      "candidate_count": 1158,
+      "profiled_bitset_bytes": 2666384,
+      "removed": [],
+      "added": [],
+      "scope": "All outside words with at most k incumbent blockers; cliques up to k+1 new words. Complete is false on every time/node/memory/neighbor cap.",
+      "candidate_pool_sha256": "7bf55638b90254442b934b44369307c44805ad352b048ae88f99b8d52ceaaa54",
+      "candidate_pool_definition": "Every outside 16-bit word with at most k distinct incumbent blockers; reconstruct from state witness.",
+      "neutral_neighbors_returned": 16,
+      "incumbent_witness_sha256": "98907dd64812f58ec8ab26602d460221edec3bf904f3336ac30635f4411e4865",
+      "incumbent_file": "state_9.txt",
+      "parameters": {
+        "seconds": 12,
+        "nodes": 1000000000,
+        "neutral_cap": 96
+      },
+      "verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6410,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "98907dd64812f58ec8ab26602d460221edec3bf904f3336ac30635f4411e4865"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "98907dd64812f58ec8ab26602d460221edec3bf904f3336ac30635f4411e4865"
+          }
+        ]
+      }
+    },
+    {
+      "found": false,
+      "complete": true,
+      "cpu_seconds": 0.036134,
+      "nodes": 2159976,
+      "k": 3,
+      "n": 16,
+      "memory_limited": false,
+      "budget_limited": false,
+      "neutral_cap_reached": false,
+      "candidate_count": 1130,
+      "profiled_bitset_bytes": 2522016,
+      "removed": [],
+      "added": [],
+      "scope": "All outside words with at most k incumbent blockers; cliques up to k+1 new words. Complete is false on every time/node/memory/neighbor cap.",
+      "candidate_pool_sha256": "bcad5a9e42d7bd9e7ae043d9b1654691d7e821b5388ab5c6e3ee1121f904d5d7",
+      "candidate_pool_definition": "Every outside 16-bit word with at most k distinct incumbent blockers; reconstruct from state witness.",
+      "neutral_neighbors_returned": 21,
+      "incumbent_witness_sha256": "c6db728c32ec0d6aebb3a38bf10a41f325061d10f769fba12c4ac371abecd98d",
+      "incumbent_file": "state_10.txt",
+      "parameters": {
+        "seconds": 12,
+        "nodes": 1000000000,
+        "neutral_cap": 96
+      },
+      "verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6417,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "c6db728c32ec0d6aebb3a38bf10a41f325061d10f769fba12c4ac371abecd98d"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "c6db728c32ec0d6aebb3a38bf10a41f325061d10f769fba12c4ac371abecd98d"
+          }
+        ]
+      }
+    },
+    {
+      "found": false,
+      "complete": true,
+      "cpu_seconds": 0.036941,
+      "nodes": 2232919,
+      "k": 3,
+      "n": 16,
+      "memory_limited": false,
+      "budget_limited": false,
+      "neutral_cap_reached": false,
+      "candidate_count": 1150,
+      "profiled_bitset_bytes": 2524896,
+      "removed": [],
+      "added": [],
+      "scope": "All outside words with at most k incumbent blockers; cliques up to k+1 new words. Complete is false on every time/node/memory/neighbor cap.",
+      "candidate_pool_sha256": "f825e67b0a62b55877ff5865b6b2d7a26481cedcd8f04bf581875efd23d8a10d",
+      "candidate_pool_definition": "Every outside 16-bit word with at most k distinct incumbent blockers; reconstruct from state witness.",
+      "neutral_neighbors_returned": 20,
+      "incumbent_witness_sha256": "3910772556a142acb5e479a194ed911530069b0111fe36b9a7121fc0a4b854d6",
+      "incumbent_file": "state_11.txt",
+      "parameters": {
+        "seconds": 12,
+        "nodes": 1000000000,
+        "neutral_cap": 96
+      },
+      "verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6412,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "3910772556a142acb5e479a194ed911530069b0111fe36b9a7121fc0a4b854d6"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "3910772556a142acb5e479a194ed911530069b0111fe36b9a7121fc0a4b854d6"
+          }
+        ]
+      }
+    },
+    {
+      "found": false,
+      "complete": true,
+      "cpu_seconds": 0.037604,
+      "nodes": 2227633,
+      "k": 3,
+      "n": 16,
+      "memory_limited": false,
+      "budget_limited": false,
+      "neutral_cap_reached": false,
+      "candidate_count": 1144,
+      "profiled_bitset_bytes": 2524032,
+      "removed": [],
+      "added": [],
+      "scope": "All outside words with at most k incumbent blockers; cliques up to k+1 new words. Complete is false on every time/node/memory/neighbor cap.",
+      "candidate_pool_sha256": "d0cf7d38b3a9a8e26fc7967b4d881d622914c384a5ae84d3fbf0331032a4db3a",
+      "candidate_pool_definition": "Every outside 16-bit word with at most k distinct incumbent blockers; reconstruct from state witness.",
+      "neutral_neighbors_returned": 21,
+      "incumbent_witness_sha256": "4c2fb627af0dd1e6724477a1e22c851b3691dd1fa1330c0d93d72cd3dc65500b",
+      "incumbent_file": "state_12.txt",
+      "parameters": {
+        "seconds": 12,
+        "nodes": 1000000000,
+        "neutral_cap": 96
+      },
+      "verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6416,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "4c2fb627af0dd1e6724477a1e22c851b3691dd1fa1330c0d93d72cd3dc65500b"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "4c2fb627af0dd1e6724477a1e22c851b3691dd1fa1330c0d93d72cd3dc65500b"
+          }
+        ]
+      }
+    },
+    {
+      "found": false,
+      "complete": true,
+      "cpu_seconds": 0.036792,
+      "nodes": 2210810,
+      "k": 3,
+      "n": 16,
+      "memory_limited": false,
+      "budget_limited": false,
+      "neutral_cap_reached": false,
+      "candidate_count": 1140,
+      "profiled_bitset_bytes": 2523456,
+      "removed": [],
+      "added": [],
+      "scope": "All outside words with at most k incumbent blockers; cliques up to k+1 new words. Complete is false on every time/node/memory/neighbor cap.",
+      "candidate_pool_sha256": "647267c54508f504a652b2f803b20268806b9a17352318ed7742007f2131b674",
+      "candidate_pool_definition": "Every outside 16-bit word with at most k distinct incumbent blockers; reconstruct from state witness.",
+      "neutral_neighbors_returned": 21,
+      "incumbent_witness_sha256": "fcf4f002bd614fa34e2a2601e0d15427e2f02beacdabffdce882cacef8ab4cf9",
+      "incumbent_file": "state_13.txt",
+      "parameters": {
+        "seconds": 12,
+        "nodes": 1000000000,
+        "neutral_cap": 96
+      },
+      "verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6417,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "fcf4f002bd614fa34e2a2601e0d15427e2f02beacdabffdce882cacef8ab4cf9"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "fcf4f002bd614fa34e2a2601e0d15427e2f02beacdabffdce882cacef8ab4cf9"
+          }
+        ]
+      }
+    },
+    {
+      "found": false,
+      "complete": true,
+      "cpu_seconds": 0.038061,
+      "nodes": 2297340,
+      "k": 3,
+      "n": 16,
+      "memory_limited": false,
+      "budget_limited": false,
+      "neutral_cap_reached": false,
+      "candidate_count": 1162,
+      "profiled_bitset_bytes": 2666992,
+      "removed": [],
+      "added": [],
+      "scope": "All outside words with at most k incumbent blockers; cliques up to k+1 new words. Complete is false on every time/node/memory/neighbor cap.",
+      "candidate_pool_sha256": "1a96b0a03e17114a89fe195474109b1d54ffbd1fe1c1b3abebbd11770db8f3a0",
+      "candidate_pool_definition": "Every outside 16-bit word with at most k distinct incumbent blockers; reconstruct from state witness.",
+      "neutral_neighbors_returned": 18,
+      "incumbent_witness_sha256": "2deec651e7df9a197853d6d2550c41f4a206a2280fccdfe98c46d89bde024e24",
+      "incumbent_file": "state_14.txt",
+      "parameters": {
+        "seconds": 12,
+        "nodes": 1000000000,
+        "neutral_cap": 96
+      },
+      "verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6409,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "2deec651e7df9a197853d6d2550c41f4a206a2280fccdfe98c46d89bde024e24"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "2deec651e7df9a197853d6d2550c41f4a206a2280fccdfe98c46d89bde024e24"
+          }
+        ]
+      }
+    },
+    {
+      "found": false,
+      "complete": true,
+      "cpu_seconds": 0.038101,
+      "nodes": 2287591,
+      "k": 3,
+      "n": 16,
+      "memory_limited": false,
+      "budget_limited": false,
+      "neutral_cap_reached": false,
+      "candidate_count": 1160,
+      "profiled_bitset_bytes": 2666688,
+      "removed": [],
+      "added": [],
+      "scope": "All outside words with at most k incumbent blockers; cliques up to k+1 new words. Complete is false on every time/node/memory/neighbor cap.",
+      "candidate_pool_sha256": "adf84d9a0ed0684e707d472385b604de45ebfe046eadb54acb58bc49ac7d669c",
+      "candidate_pool_definition": "Every outside 16-bit word with at most k distinct incumbent blockers; reconstruct from state witness.",
+      "neutral_neighbors_returned": 18,
+      "incumbent_witness_sha256": "a7896696bf845b4d37ff780f89433f2bcc45574c2f82b9c4e531eb609fd88525",
+      "incumbent_file": "state_15.txt",
+      "parameters": {
+        "seconds": 12,
+        "nodes": 1000000000,
+        "neutral_cap": 96
+      },
+      "verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6410,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "a7896696bf845b4d37ff780f89433f2bcc45574c2f82b9c4e531eb609fd88525"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "a7896696bf845b4d37ff780f89433f2bcc45574c2f82b9c4e531eb609fd88525"
+          }
+        ]
+      }
+    },
+    {
+      "found": false,
+      "complete": true,
+      "cpu_seconds": 0.037561,
+      "nodes": 2269409,
+      "k": 3,
+      "n": 16,
+      "memory_limited": false,
+      "budget_limited": false,
+      "neutral_cap_reached": false,
+      "candidate_count": 1165,
+      "profiled_bitset_bytes": 2667448,
+      "removed": [],
+      "added": [],
+      "scope": "All outside words with at most k incumbent blockers; cliques up to k+1 new words. Complete is false on every time/node/memory/neighbor cap.",
+      "candidate_pool_sha256": "9143c639843b861af41015caa997e1251406f22e12c1111dca9f0700a0def3c4",
+      "candidate_pool_definition": "Every outside 16-bit word with at most k distinct incumbent blockers; reconstruct from state witness.",
+      "neutral_neighbors_returned": 15,
+      "incumbent_witness_sha256": "89e3950806a230ce30a6ab53466534d63c720268e6b7eb5bd78c5c432f2f9fe5",
+      "incumbent_file": "state_16.txt",
+      "parameters": {
+        "seconds": 12,
+        "nodes": 1000000000,
+        "neutral_cap": 96
+      },
+      "verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6412,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "89e3950806a230ce30a6ab53466534d63c720268e6b7eb5bd78c5c432f2f9fe5"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "89e3950806a230ce30a6ab53466534d63c720268e6b7eb5bd78c5c432f2f9fe5"
+          }
+        ]
+      }
+    },
+    {
+      "found": false,
+      "complete": true,
+      "cpu_seconds": 0.037354,
+      "nodes": 2239781,
+      "k": 3,
+      "n": 16,
+      "memory_limited": false,
+      "budget_limited": false,
+      "neutral_cap_reached": false,
+      "candidate_count": 1156,
+      "profiled_bitset_bytes": 2666080,
+      "removed": [],
+      "added": [],
+      "scope": "All outside words with at most k incumbent blockers; cliques up to k+1 new words. Complete is false on every time/node/memory/neighbor cap.",
+      "candidate_pool_sha256": "bce0e11df140d0a06397b36bab913c865d181f1a8c501303b3d579a14577616e",
+      "candidate_pool_definition": "Every outside 16-bit word with at most k distinct incumbent blockers; reconstruct from state witness.",
+      "neutral_neighbors_returned": 15,
+      "incumbent_witness_sha256": "5c61da0823c76e628540db456011f360a594b24875b8aafaaa0d12fa0838e14e",
+      "incumbent_file": "state_17.txt",
+      "parameters": {
+        "seconds": 12,
+        "nodes": 1000000000,
+        "neutral_cap": 96
+      },
+      "verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6412,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "5c61da0823c76e628540db456011f360a594b24875b8aafaaa0d12fa0838e14e"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "5c61da0823c76e628540db456011f360a594b24875b8aafaaa0d12fa0838e14e"
+          }
+        ]
+      }
+    },
+    {
+      "found": false,
+      "complete": true,
+      "cpu_seconds": 0.03673,
+      "nodes": 2178019,
+      "k": 3,
+      "n": 16,
+      "memory_limited": false,
+      "budget_limited": false,
+      "neutral_cap_reached": false,
+      "candidate_count": 1137,
+      "profiled_bitset_bytes": 2523024,
+      "removed": [],
+      "added": [],
+      "scope": "All outside words with at most k incumbent blockers; cliques up to k+1 new words. Complete is false on every time/node/memory/neighbor cap.",
+      "candidate_pool_sha256": "6e7916423a3247989bd004bdef72082f4823630056da3e26302c7d72405e0393",
+      "candidate_pool_definition": "Every outside 16-bit word with at most k distinct incumbent blockers; reconstruct from state witness.",
+      "neutral_neighbors_returned": 21,
+      "incumbent_witness_sha256": "ac07d2c9bf4af9e1ab93d217aa264eebb6bbc6ed427386c1f22ea22d76aeb8e8",
+      "incumbent_file": "state_18.txt",
+      "parameters": {
+        "seconds": 12,
+        "nodes": 1000000000,
+        "neutral_cap": 96
+      },
+      "verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6417,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "ac07d2c9bf4af9e1ab93d217aa264eebb6bbc6ed427386c1f22ea22d76aeb8e8"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "ac07d2c9bf4af9e1ab93d217aa264eebb6bbc6ed427386c1f22ea22d76aeb8e8"
+          }
+        ]
+      }
+    },
+    {
+      "found": false,
+      "complete": true,
+      "cpu_seconds": 0.037532,
+      "nodes": 2247644,
+      "k": 3,
+      "n": 16,
+      "memory_limited": false,
+      "budget_limited": false,
+      "neutral_cap_reached": false,
+      "candidate_count": 1156,
+      "profiled_bitset_bytes": 2666080,
+      "removed": [],
+      "added": [],
+      "scope": "All outside words with at most k incumbent blockers; cliques up to k+1 new words. Complete is false on every time/node/memory/neighbor cap.",
+      "candidate_pool_sha256": "135bac7a7ce8adb4f7f955fa9fb150876e972258b859baad7cb731a448bc0494",
+      "candidate_pool_definition": "Every outside 16-bit word with at most k distinct incumbent blockers; reconstruct from state witness.",
+      "neutral_neighbors_returned": 20,
+      "incumbent_witness_sha256": "16d62aad2ad4e7b6e21d655cbc7ef7cd5c5ac47a47ecb8d28085ba31f042e2a7",
+      "incumbent_file": "state_19.txt",
+      "parameters": {
+        "seconds": 12,
+        "nodes": 1000000000,
+        "neutral_cap": 96
+      },
+      "verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6412,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "16d62aad2ad4e7b6e21d655cbc7ef7cd5c5ac47a47ecb8d28085ba31f042e2a7"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "16d62aad2ad4e7b6e21d655cbc7ef7cd5c5ac47a47ecb8d28085ba31f042e2a7"
+          }
+        ]
+      }
+    },
+    {
+      "found": false,
+      "complete": true,
+      "cpu_seconds": 0.037734,
+      "nodes": 2247374,
+      "k": 3,
+      "n": 16,
+      "memory_limited": false,
+      "budget_limited": false,
+      "neutral_cap_reached": false,
+      "candidate_count": 1151,
+      "profiled_bitset_bytes": 2525040,
+      "removed": [],
+      "added": [],
+      "scope": "All outside words with at most k incumbent blockers; cliques up to k+1 new words. Complete is false on every time/node/memory/neighbor cap.",
+      "candidate_pool_sha256": "d305523ad749175ae493949b4cf3900c0330ba33fa16916f65504dfe48bc6456",
+      "candidate_pool_definition": "Every outside 16-bit word with at most k distinct incumbent blockers; reconstruct from state witness.",
+      "neutral_neighbors_returned": 21,
+      "incumbent_witness_sha256": "b26a83b09d1ba2df47cc82955644c53f989a2c2dc829510fa4c16104a8d16a99",
+      "incumbent_file": "state_20.txt",
+      "parameters": {
+        "seconds": 12,
+        "nodes": 1000000000,
+        "neutral_cap": 96
+      },
+      "verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6416,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "b26a83b09d1ba2df47cc82955644c53f989a2c2dc829510fa4c16104a8d16a99"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "b26a83b09d1ba2df47cc82955644c53f989a2c2dc829510fa4c16104a8d16a99"
+          }
+        ]
+      }
+    },
+    {
+      "found": false,
+      "complete": true,
+      "cpu_seconds": 0.037365,
+      "nodes": 2230175,
+      "k": 3,
+      "n": 16,
+      "memory_limited": false,
+      "budget_limited": false,
+      "neutral_cap_reached": false,
+      "candidate_count": 1147,
+      "profiled_bitset_bytes": 2524464,
+      "removed": [],
+      "added": [],
+      "scope": "All outside words with at most k incumbent blockers; cliques up to k+1 new words. Complete is false on every time/node/memory/neighbor cap.",
+      "candidate_pool_sha256": "e167b6811099570d10d0269967b13e21e8c6aa3b7bede323cbe2286573a6a4c8",
+      "candidate_pool_definition": "Every outside 16-bit word with at most k distinct incumbent blockers; reconstruct from state witness.",
+      "neutral_neighbors_returned": 21,
+      "incumbent_witness_sha256": "9b93c5822707c0ba66c14249e2c6a4ef01bc1611aa4a834e3092b57821ac310e",
+      "incumbent_file": "state_21.txt",
+      "parameters": {
+        "seconds": 12,
+        "nodes": 1000000000,
+        "neutral_cap": 96
+      },
+      "verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6417,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "9b93c5822707c0ba66c14249e2c6a4ef01bc1611aa4a834e3092b57821ac310e"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "9b93c5822707c0ba66c14249e2c6a4ef01bc1611aa4a834e3092b57821ac310e"
+          }
+        ]
+      }
+    },
+    {
+      "found": false,
+      "complete": true,
+      "cpu_seconds": 0.038028,
+      "nodes": 2307963,
+      "k": 3,
+      "n": 16,
+      "memory_limited": false,
+      "budget_limited": false,
+      "neutral_cap_reached": false,
+      "candidate_count": 1167,
+      "profiled_bitset_bytes": 2667752,
+      "removed": [],
+      "added": [],
+      "scope": "All outside words with at most k incumbent blockers; cliques up to k+1 new words. Complete is false on every time/node/memory/neighbor cap.",
+      "candidate_pool_sha256": "787e7f315e30e1639e7cb76f687094f0d8d33b2bda133fd163ab237b2f5572eb",
+      "candidate_pool_definition": "Every outside 16-bit word with at most k distinct incumbent blockers; reconstruct from state witness.",
+      "neutral_neighbors_returned": 18,
+      "incumbent_witness_sha256": "51cf9a6d96c6af551fbc5e0c4c0b59508ec678a605ac72c04e9c6dc8417eb9f8",
+      "incumbent_file": "state_22.txt",
+      "parameters": {
+        "seconds": 12,
+        "nodes": 1000000000,
+        "neutral_cap": 96
+      },
+      "verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6409,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "51cf9a6d96c6af551fbc5e0c4c0b59508ec678a605ac72c04e9c6dc8417eb9f8"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "51cf9a6d96c6af551fbc5e0c4c0b59508ec678a605ac72c04e9c6dc8417eb9f8"
+          }
+        ]
+      }
+    },
+    {
+      "found": false,
+      "complete": true,
+      "cpu_seconds": 0.038464,
+      "nodes": 2297861,
+      "k": 3,
+      "n": 16,
+      "memory_limited": false,
+      "budget_limited": false,
+      "neutral_cap_reached": false,
+      "candidate_count": 1165,
+      "profiled_bitset_bytes": 2667448,
+      "removed": [],
+      "added": [],
+      "scope": "All outside words with at most k incumbent blockers; cliques up to k+1 new words. Complete is false on every time/node/memory/neighbor cap.",
+      "candidate_pool_sha256": "5d68fc0405962cb3b1817eff8166955fb84dcb7a733cae1ec0f6173e17a06a43",
+      "candidate_pool_definition": "Every outside 16-bit word with at most k distinct incumbent blockers; reconstruct from state witness.",
+      "neutral_neighbors_returned": 18,
+      "incumbent_witness_sha256": "88cfd46e62fc55cbc2e3431d19b245df4153bbcd250f569020536a8cf16d3319",
+      "incumbent_file": "state_23.txt",
+      "parameters": {
+        "seconds": 12,
+        "nodes": 1000000000,
+        "neutral_cap": 96
+      },
+      "verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6410,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "88cfd46e62fc55cbc2e3431d19b245df4153bbcd250f569020536a8cf16d3319"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "88cfd46e62fc55cbc2e3431d19b245df4153bbcd250f569020536a8cf16d3319"
+          }
+        ]
+      }
+    },
+    {
+      "found": false,
+      "complete": true,
+      "cpu_seconds": 0.035991,
+      "nodes": 2146718,
+      "k": 3,
+      "n": 16,
+      "memory_limited": false,
+      "budget_limited": false,
+      "neutral_cap_reached": false,
+      "candidate_count": 1128,
+      "profiled_bitset_bytes": 2521728,
+      "removed": [],
+      "added": [],
+      "scope": "All outside words with at most k incumbent blockers; cliques up to k+1 new words. Complete is false on every time/node/memory/neighbor cap.",
+      "candidate_pool_sha256": "04c8fe310711f83fca1ad06fb6f64c74652cddcbfdc002f3db4e1dc192f4cecf",
+      "candidate_pool_definition": "Every outside 16-bit word with at most k distinct incumbent blockers; reconstruct from state witness.",
+      "neutral_neighbors_returned": 21,
+      "incumbent_witness_sha256": "74dc02f82bea1462f953605dc974d29bd706a3bf22384b05a8dfbc1010df3c7c",
+      "incumbent_file": "state_24.txt",
+      "parameters": {
+        "seconds": 12,
+        "nodes": 1000000000,
+        "neutral_cap": 96
+      },
+      "verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6417,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "74dc02f82bea1462f953605dc974d29bd706a3bf22384b05a8dfbc1010df3c7c"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "74dc02f82bea1462f953605dc974d29bd706a3bf22384b05a8dfbc1010df3c7c"
+          }
+        ]
+      }
+    },
+    {
+      "found": false,
+      "complete": true,
+      "cpu_seconds": 0.03752,
+      "nodes": 2215948,
+      "k": 3,
+      "n": 16,
+      "memory_limited": false,
+      "budget_limited": false,
+      "neutral_cap_reached": false,
+      "candidate_count": 1147,
+      "profiled_bitset_bytes": 2524464,
+      "removed": [],
+      "added": [],
+      "scope": "All outside words with at most k incumbent blockers; cliques up to k+1 new words. Complete is false on every time/node/memory/neighbor cap.",
+      "candidate_pool_sha256": "78a0518951cf9baf676ea019462a02def9f3a91a8b19b53dca22cdf7ae30ad78",
+      "candidate_pool_definition": "Every outside 16-bit word with at most k distinct incumbent blockers; reconstruct from state witness.",
+      "neutral_neighbors_returned": 20,
+      "incumbent_witness_sha256": "43f0bb7f7debdcfa063c92ef054db930ed3141c268bb258669140ac782a47296",
+      "incumbent_file": "state_25.txt",
+      "parameters": {
+        "seconds": 12,
+        "nodes": 1000000000,
+        "neutral_cap": 96
+      },
+      "verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6412,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "43f0bb7f7debdcfa063c92ef054db930ed3141c268bb258669140ac782a47296"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "43f0bb7f7debdcfa063c92ef054db930ed3141c268bb258669140ac782a47296"
+          }
+        ]
+      }
+    },
+    {
+      "found": false,
+      "complete": true,
+      "cpu_seconds": 0.036922,
+      "nodes": 2214249,
+      "k": 3,
+      "n": 16,
+      "memory_limited": false,
+      "budget_limited": false,
+      "neutral_cap_reached": false,
+      "candidate_count": 1142,
+      "profiled_bitset_bytes": 2523744,
+      "removed": [],
+      "added": [],
+      "scope": "All outside words with at most k incumbent blockers; cliques up to k+1 new words. Complete is false on every time/node/memory/neighbor cap.",
+      "candidate_pool_sha256": "53daed03e3c9e940878b96810e9151e584daf13de150a6d637f7b1ad7ac0af1b",
+      "candidate_pool_definition": "Every outside 16-bit word with at most k distinct incumbent blockers; reconstruct from state witness.",
+      "neutral_neighbors_returned": 21,
+      "incumbent_witness_sha256": "80c81ca46cae837684d80b1aa5167eb205d934e9bc795313e6fed1ab0a0c2a0f",
+      "incumbent_file": "state_26.txt",
+      "parameters": {
+        "seconds": 12,
+        "nodes": 1000000000,
+        "neutral_cap": 96
+      },
+      "verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6416,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "80c81ca46cae837684d80b1aa5167eb205d934e9bc795313e6fed1ab0a0c2a0f"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "80c81ca46cae837684d80b1aa5167eb205d934e9bc795313e6fed1ab0a0c2a0f"
+          }
+        ]
+      }
+    },
+    {
+      "found": false,
+      "complete": true,
+      "cpu_seconds": 0.037279,
+      "nodes": 2197216,
+      "k": 3,
+      "n": 16,
+      "memory_limited": false,
+      "budget_limited": false,
+      "neutral_cap_reached": false,
+      "candidate_count": 1138,
+      "profiled_bitset_bytes": 2523168,
+      "removed": [],
+      "added": [],
+      "scope": "All outside words with at most k incumbent blockers; cliques up to k+1 new words. Complete is false on every time/node/memory/neighbor cap.",
+      "candidate_pool_sha256": "ae5dcdd9cb1b2777b1ff46f4936d4ece589075ffc949e07748de597996284881",
+      "candidate_pool_definition": "Every outside 16-bit word with at most k distinct incumbent blockers; reconstruct from state witness.",
+      "neutral_neighbors_returned": 21,
+      "incumbent_witness_sha256": "0965a6c049fa3db5eae5c409ea18063975333e0ae2d48b660e54a557ad79f047",
+      "incumbent_file": "state_27.txt",
+      "parameters": {
+        "seconds": 12,
+        "nodes": 1000000000,
+        "neutral_cap": 96
+      },
+      "verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6417,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "0965a6c049fa3db5eae5c409ea18063975333e0ae2d48b660e54a557ad79f047"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "0965a6c049fa3db5eae5c409ea18063975333e0ae2d48b660e54a557ad79f047"
+          }
+        ]
+      }
+    },
+    {
+      "found": false,
+      "complete": true,
+      "cpu_seconds": 0.037494,
+      "nodes": 2275018,
+      "k": 3,
+      "n": 16,
+      "memory_limited": false,
+      "budget_limited": false,
+      "neutral_cap_reached": false,
+      "candidate_count": 1158,
+      "profiled_bitset_bytes": 2666384,
+      "removed": [],
+      "added": [],
+      "scope": "All outside words with at most k incumbent blockers; cliques up to k+1 new words. Complete is false on every time/node/memory/neighbor cap.",
+      "candidate_pool_sha256": "a32764c9729e5a36281ed7cb04d4cac27a7044b6a865db7e8c9dbeeb7fdf9e20",
+      "candidate_pool_definition": "Every outside 16-bit word with at most k distinct incumbent blockers; reconstruct from state witness.",
+      "neutral_neighbors_returned": 18,
+      "incumbent_witness_sha256": "bcd80600927467895f78dc19b0edbd1d5af121dfd07c3074405e7b6acb2166eb",
+      "incumbent_file": "state_28.txt",
+      "parameters": {
+        "seconds": 12,
+        "nodes": 1000000000,
+        "neutral_cap": 96
+      },
+      "verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6409,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "bcd80600927467895f78dc19b0edbd1d5af121dfd07c3074405e7b6acb2166eb"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "bcd80600927467895f78dc19b0edbd1d5af121dfd07c3074405e7b6acb2166eb"
+          }
+        ]
+      }
+    },
+    {
+      "found": false,
+      "complete": true,
+      "cpu_seconds": 0.037768,
+      "nodes": 2265016,
+      "k": 3,
+      "n": 16,
+      "memory_limited": false,
+      "budget_limited": false,
+      "neutral_cap_reached": false,
+      "candidate_count": 1156,
+      "profiled_bitset_bytes": 2666080,
+      "removed": [],
+      "added": [],
+      "scope": "All outside words with at most k incumbent blockers; cliques up to k+1 new words. Complete is false on every time/node/memory/neighbor cap.",
+      "candidate_pool_sha256": "ff7db3aceb413924c5b0c823f90d3172a26a73cef733a71b86dd6507d765dbce",
+      "candidate_pool_definition": "Every outside 16-bit word with at most k distinct incumbent blockers; reconstruct from state witness.",
+      "neutral_neighbors_returned": 18,
+      "incumbent_witness_sha256": "a072f587daa3f87886defef0ff44a609564b33ed982218b1b7752a067897d043",
+      "incumbent_file": "state_29.txt",
+      "parameters": {
+        "seconds": 12,
+        "nodes": 1000000000,
+        "neutral_cap": 96
+      },
+      "verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6410,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "a072f587daa3f87886defef0ff44a609564b33ed982218b1b7752a067897d043"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "a072f587daa3f87886defef0ff44a609564b33ed982218b1b7752a067897d043"
+          }
+        ]
+      }
+    },
+    {
+      "found": false,
+      "complete": true,
+      "cpu_seconds": 0.037491,
+      "nodes": 2257051,
+      "k": 3,
+      "n": 16,
+      "memory_limited": false,
+      "budget_limited": false,
+      "neutral_cap_reached": false,
+      "candidate_count": 1163,
+      "profiled_bitset_bytes": 2667144,
+      "removed": [],
+      "added": [],
+      "scope": "All outside words with at most k incumbent blockers; cliques up to k+1 new words. Complete is false on every time/node/memory/neighbor cap.",
+      "candidate_pool_sha256": "de83ea4f26b6b8ac9d0eda8cd1f779e11e5ceba0aea5636d90e5dd47f47523df",
+      "candidate_pool_definition": "Every outside 16-bit word with at most k distinct incumbent blockers; reconstruct from state witness.",
+      "neutral_neighbors_returned": 15,
+      "incumbent_witness_sha256": "bf1824b15cf8cc4067b6ce8d4c0528278c2da6cf07ca237f8ede404395ac5442",
+      "incumbent_file": "state_30.txt",
+      "parameters": {
+        "seconds": 12,
+        "nodes": 1000000000,
+        "neutral_cap": 96
+      },
+      "verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6412,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "bf1824b15cf8cc4067b6ce8d4c0528278c2da6cf07ca237f8ede404395ac5442"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "bf1824b15cf8cc4067b6ce8d4c0528278c2da6cf07ca237f8ede404395ac5442"
+          }
+        ]
+      }
+    },
+    {
+      "found": false,
+      "complete": true,
+      "cpu_seconds": 0.037402,
+      "nodes": 2226194,
+      "k": 3,
+      "n": 16,
+      "memory_limited": false,
+      "budget_limited": false,
+      "neutral_cap_reached": false,
+      "candidate_count": 1154,
+      "profiled_bitset_bytes": 2665776,
+      "removed": [],
+      "added": [],
+      "scope": "All outside words with at most k incumbent blockers; cliques up to k+1 new words. Complete is false on every time/node/memory/neighbor cap.",
+      "candidate_pool_sha256": "4f177073f1d88eeb5fb2bdf60d72446652aca76443e676db8d4c2c4873143f19",
+      "candidate_pool_definition": "Every outside 16-bit word with at most k distinct incumbent blockers; reconstruct from state witness.",
+      "neutral_neighbors_returned": 15,
+      "incumbent_witness_sha256": "fc38a4b24dd8714b6f97bc8e06a4a8811f9cc931cf39fd323417ec245aa86873",
+      "incumbent_file": "state_31.txt",
+      "parameters": {
+        "seconds": 12,
+        "nodes": 1000000000,
+        "neutral_cap": 96
+      },
+      "verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6412,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "fc38a4b24dd8714b6f97bc8e06a4a8811f9cc931cf39fd323417ec245aa86873"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "fc38a4b24dd8714b6f97bc8e06a4a8811f9cc931cf39fd323417ec245aa86873"
+          }
+        ]
+      }
+    }
+  ],
+  "complete_component": true,
+  "scope": "Restricted blocker-union neighborhoods, at most k removed; caps make enumeration incomplete. No global optimality.",
+  "kernel_cpu_seconds": 1.198313,
+  "wall_seconds": 28.916087367000003,
+  "provider_calls": 0
+}

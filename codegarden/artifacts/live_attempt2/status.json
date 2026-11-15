@@ -1,0 +1,72 @@
+{
+  "status": "failed_or_partial",
+  "scope": "codegarden",
+  "source_sha": "3bb0b757799731efcfc2e25178cd3e0720544a3d",
+  "events": [
+    {
+      "kind": "memory_write",
+      "value": {
+        "role": "analyst",
+        "source_id": "codegarden-43672598278-analyst-scoped_negative-457459ac",
+        "experiment": "negative-001",
+        "parent_sources": [],
+        "estimated_credits": 3
+      },
+      "time": 1794713444.6396332
+    },
+    {
+      "kind": "memory_read",
+      "value": {
+        "role": "researcher",
+        "required_source": "codegarden-43672598278-analyst-scoped_negative-457459ac",
+        "returned_source_ids": [
+          "codegarden-43672598278-analyst-scoped_negative-457459ac"
+        ],
+        "used_in_next_decision": true
+      },
+      "time": 1794713445.6305923
+    },
+    {
+      "kind": "exa_reuse",
+      "value": {
+        "source_run": "43671948159",
+        "request_id": "f1430a04e1611934dad997956c2528af",
+        "query": "binary two deletion correcting codes length 16 maximum independent set variable neighborhood exact set packing CP-SAT",
+        "influenced_experiment": "modal-repair-001"
+      },
+      "time": 1794713445.6310356
+    }
+  ],
+  "error_type": "ValidationError",
+  "error": "1 validation error for EncodedTextChunk\ntokens\n  Input should be an instance of Sequence [type=is_instance_of, input_value={'input_ids': [248045, 86...1, 1, 1, 1, 1, 1, 1, 1]}, input_type=BatchEncoding]\n    For further information visit https://errors.pydantic.dev/2.14/v/is_instance_of",
+  "budget": {
+    "exa": {
+      "cap": 2,
+      "other_project_reserves": 15,
+      "verification_reserve": 5,
+      "reserved": 0.007,
+      "provider_reported_or_estimated": 0
+    },
+    "past": {
+      "cap": 500,
+      "other_project_reserves": 10200,
+      "verification_reserve": 5000,
+      "reserved": 4,
+      "provider_reported_or_estimated": 4
+    },
+    "modal": {
+      "cap": 10,
+      "other_project_reserves": 75,
+      "verification_reserve": 20,
+      "reserved": 0,
+      "provider_reported_or_estimated": 0
+    },
+    "tinker": {
+      "cap": 20,
+      "other_project_reserves": 140,
+      "verification_reserve": 10,
+      "reserved": 2,
+      "provider_reported_or_estimated": 0
+    }
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "role": "recall",
+  "pid": 4320,
+  "input_sha256": "70965782c71631d0ddc8bdc5e72e53cf16a96edee75390ba2ab46ad0d1858ebc",
+  "evidence": {
+    "source_id": "codegarden-43677895831-researcher-larger_repair_method-f5576135",
+    "actual_content": [
+      "codegarden-researcher: Mentioned larger repair method."
+    ],
+    "content_sha256": "e91d84e1c7c68a25e4936fdec2a7fabf2ecd224155bde4cc8dfb7ba48a38f34d",
+    "representation": "actual recalled claims"
+  },
+  "events": [
+    {
+      "kind": "memory_read",
+      "value": {
+        "role": "strategist",
+        "required_source": "codegarden-43677895831-researcher-larger_repair_method-f5576135",
+        "returned_source_ids": [
+          "codegarden-43674296464-analyst-native_plateau_analysis-d110a9a4",
+          "codegarden-43677895831-researcher-larger_repair_method-f5576135",
+          "codegarden-43677895831-strategist-phase2_plan-7387c475"
+        ],
+        "used_in_next_decision": true
+      },
+      "pid": 4320,
+      "role": "recall",
+      "time": 1794719421.9335752
+    }
+  ],
+  "budget": {
+    "exa": {
+      "cap": 5,
+      "other_project_reserves": 15,
+      "verification_reserve": 5,
+      "reserved": 0.021,
+      "provider_reported_or_estimated": 0.007
+    },
+    "past": {
+      "cap": 2000,
+      "other_project_reserves": 10200,
+      "verification_reserve": 5000,
+      "reserved": 79.0,
+      "provider_reported_or_estimated": 38.0
+    },
+    "modal": {
+      "cap": 50,
+      "other_project_reserves": 75,
+      "verification_reserve": 20,
+      "reserved": 18.4,
+      "provider_reported_or_estimated": 0
+    },
+    "tinker": {
+      "cap": 70,
+      "other_project_reserves": 140,
+      "verification_reserve": 10,
+      "reserved": 20.0,
+      "provider_reported_or_estimated": 0
+    }
+  }
+}

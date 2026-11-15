@@ -1,0 +1,7 @@
+# Fixed-outside overlap neighborhoods
+
+2026-11-15 UTC. The full842-point LP's first solve exhausted its40second cap with status1 and no primal candidate. That is a computational bottleneck, not a mathematical negative. This batch changes the encoded neighborhood:24,64 or128points with largest current overlap contributions move, all others remain fixed. Selected point IDs and their SHA256 are recorded per solve. The LP includes near contacts touching those points; omitted outside pairs contribute a constant to the full penalty. Actual normalized line-search scoring and both frozen verifiers always include all pairs.
+
+HiGHS interior point replaces the previous automatic method, with20seconds per solve,240seconds per batch and24solves at most. No global or neighborhood-optimality claim follows from a solver timeout or lack of nonlinear gain. Exact acceptance still requires an improvement of1e-7 in the official score and independently outward-rounded real penalty enclosure. A nonzero score does not establish842 nonoverlapping spheres.
+
+The frozen independent checker remains unchanged (SHA256 ce4716ce9ff4001893d616f8ac0a537fe408cb2215e75f85e1140b8c438248f2), as does the official verifier (SHA25654dc5d8c02a6370dfd24688da5c5745399437e4e5d3b9fdc6c523bb0112f88be). Baseline kgrey2777 is freshly reproduced for each batch. The full run43767990585 is allowed to finish its bounded budget; this experiment has a separate isolated branch and launcher.

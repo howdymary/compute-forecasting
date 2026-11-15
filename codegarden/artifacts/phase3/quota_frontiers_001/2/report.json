@@ -1,0 +1,122 @@
+{
+  "source_sha": "4e3a337a897704dc71c1fbd7c2cb109325c5bb97",
+  "case": 2,
+  "starting_verification": {
+    "accepted": true,
+    "cardinality": 225,
+    "reports": [
+      {
+        "cardinality": 225,
+        "distinct_descendants": 6375,
+        "length": 16,
+        "method": "distinct_string_two_deletions",
+        "valid": true,
+        "witness_sha256": "39f1bb85cfc66548189dbd9fdf10f53323b9d9f55fea554474861c4420b7f6eb"
+      },
+      {
+        "cardinality": 225,
+        "largest_pairwise_lcs": 13,
+        "length": 16,
+        "method": "independent_dynamic_programming_lcs",
+        "pairs_checked": 25200,
+        "valid": true,
+        "witness_sha256": "39f1bb85cfc66548189dbd9fdf10f53323b9d9f55fea554474861c4420b7f6eb"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "found": true,
+      "complete": false,
+      "cpu_seconds": 0.332981,
+      "nodes": 4768396,
+      "closed_blocker_sets": 47381,
+      "cache_hits": 11120,
+      "retained_closed_keys": 11107,
+      "cache_evictions": 36273,
+      "k": 6,
+      "n": 16,
+      "memory_limited": false,
+      "budget_limited": false,
+      "neutral_cap_reached": false,
+      "root_shard": 0,
+      "root_shards": 1,
+      "completed_roots": 17722,
+      "active_root": 17722,
+      "last_finished_root": 17721,
+      "learned_groups": 0,
+      "learned_prunes": 0,
+      "candidate_count": 22952,
+      "profiled_bitset_bytes": 112972992,
+      "removed": [
+        1016,
+        4057,
+        8184,
+        9948,
+        13288,
+        50096
+      ],
+      "added": [
+        4024,
+        9202,
+        26096,
+        13660,
+        34292,
+        57824,
+        16368
+      ],
+      "scope": "All outside words with at most k incumbent blockers; connected improving bundles suffice by the disjoint-blocker-component lemma. Complete is false on every time/node/memory/neighbor cap.",
+      "pool_sha256": "24bf9e2d24a8adf75571dd63e93097c89f4df1e1309fb3ae7f06483f38088d98",
+      "incumbent_sha256": "39f1bb85cfc66548189dbd9fdf10f53323b9d9f55fea554474861c4420b7f6eb",
+      "verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6417,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "c6db728c32ec0d6aebb3a38bf10a41f325061d10f769fba12c4ac371abecd98d"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "c6db728c32ec0d6aebb3a38bf10a41f325061d10f769fba12c4ac371abecd98d"
+          }
+        ]
+      },
+      "known226_orbit": true
+    }
+  ],
+  "ending_verification": {
+    "accepted": true,
+    "cardinality": 226,
+    "reports": [
+      {
+        "cardinality": 226,
+        "distinct_descendants": 6417,
+        "length": 16,
+        "method": "distinct_string_two_deletions",
+        "valid": true,
+        "witness_sha256": "c6db728c32ec0d6aebb3a38bf10a41f325061d10f769fba12c4ac371abecd98d"
+      },
+      {
+        "cardinality": 226,
+        "largest_pairwise_lcs": 13,
+        "length": 16,
+        "method": "independent_dynamic_programming_lcs",
+        "pairs_checked": 25425,
+        "valid": true,
+        "witness_sha256": "c6db728c32ec0d6aebb3a38bf10a41f325061d10f769fba12c4ac371abecd98d"
+      }
+    ]
+  },
+  "best_verified": 226,
+  "scope": "Only the selected explicit projected code and bounded exact exchange neighborhoods. Timeout is unknown. Retained global226 is separate from this method's ending cardinality."
+}

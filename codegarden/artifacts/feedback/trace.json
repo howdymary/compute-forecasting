@@ -1,0 +1,117 @@
+[
+  {
+    "kind": "memory_write",
+    "value": {
+      "role": "analyst",
+      "source_id": "codegarden-43674296464-analyst-native_plateau_analysis-d110a9a4",
+      "experiment": "feedback-002",
+      "parent_sources": [],
+      "estimated_credits": 3
+    },
+    "time": 1794714833.9356325
+  },
+  {
+    "kind": "memory_read",
+    "value": {
+      "role": "researcher",
+      "required_source": "codegarden-43674296464-analyst-native_plateau_analysis-d110a9a4",
+      "returned_source_ids": [
+        "codegarden-43673585173-analyst-verified_result-ef116a06",
+        "codegarden-43673585173-researcher-source_backed_method-36e348c0",
+        "codegarden-43674296464-analyst-native_plateau_analysis-d110a9a4"
+      ],
+      "used_in_next_decision": true
+    },
+    "time": 1794714834.6016233
+  },
+  {
+    "kind": "exa_search",
+    "value": {
+      "query": "binary deletion correcting codes maximum independent set plateau exact large neighborhood ejection chain set packing",
+      "request_id": "120b2846bc6eff6d03905d5b6fae6ba0",
+      "cost_dollars": {
+        "total": 0.007,
+        "search": {
+          "neural": 0.007
+        }
+      },
+      "sources": [
+        {
+          "title": "Nonasymptotic Upper Bounds on Binary Single Deletion Codes via Mixed Integer Linear Programming",
+          "url": "https://www.mdpi.com/1099-4300/21/12/1202",
+          "published": "2019-11-11T00:00:00.000Z",
+          "excerpt": "$; however, only a few upper bounds of the size",
+          "content_sha256": "118338cb0eb0098938c00e3e9f0822ff0b642d4851dd33117e99dd3019bebe1d"
+        },
+        {
+          "title": "Upper bounds for deletion correcting codes",
+          "url": "http://resolver.tudelft.nl/uuid:c2b51ba2-f52b-4a4b-92ce-95481e1a553e",
+          "published": "2023-06-29T00:00:00.000Z",
+          "excerpt": "In [8] , Cullina and Kiyavash use packing arguments and",
+          "content_sha256": "a6c2c5bb1873a24dee3ce24a010973d52d202c9b1d1baae8c878d2b7f48d3d6c"
+        },
+        {
+          "title": "1 Introduction",
+          "url": "https://arxiv.org/html/2504.00613",
+          "published": "2026-06-05T00:00:00.000Z",
+          "excerpt": "For a fixed number of correctable errors, better codes have",
+          "content_sha256": "43e51e0ba1e1d92d275383c703beef062b62606cc3cb842c848d1a94bb206d2f"
+        },
+        {
+          "title": "Two Approaches to the Construction of Deletion Correcting Codes: Weight Partitioning and Optimal Colorings",
+          "url": "https://doi.org/10.48550/arxiv.1211.4056",
+          "published": "2012-11-16T00:00:00.000Z",
+          "excerpt": "We consider the problem of constructing deletion correcting codes over",
+          "content_sha256": "ee1740b2a92f47a9236c41a09a977547e33c302de24ae44447e4b8944eda387b"
+        }
+      ],
+      "influenced_experiment": "feedback-repair-002"
+    },
+    "time": 1794714836.0230823
+  },
+  {
+    "kind": "memory_write",
+    "value": {
+      "role": "researcher",
+      "source_id": "codegarden-43674296464-researcher-plateau_repair_method-c4127054",
+      "experiment": "feedback-repair-002",
+      "parent_sources": [
+        "codegarden-43674296464-analyst-native_plateau_analysis-d110a9a4"
+      ],
+      "estimated_credits": 15
+    },
+    "time": 1794714852.1301894
+  },
+  {
+    "kind": "memory_read",
+    "value": {
+      "role": "strategist",
+      "required_source": "codegarden-43674296464-researcher-plateau_repair_method-c4127054",
+      "returned_source_ids": [
+        "codegarden-43673585173-analyst-verified_result-ef116a06",
+        "codegarden-43674296464-analyst-native_plateau_analysis-d110a9a4",
+        "codegarden-43674296464-researcher-plateau_repair_method-c4127054"
+      ],
+      "used_in_next_decision": true
+    },
+    "time": 1794714852.8193624
+  },
+  {
+    "kind": "memory_informed_tinker_decision",
+    "value": {
+      "action": "random8greedy",
+      "valid_action": true,
+      "strict_format": true,
+      "output_tokens": 5,
+      "raw_reply_sha256": "76415a5b5044ec5fef6161eb85315a8543a3a9d19e39b6acf8ad5902a2e42b82",
+      "state_sha256": "bb3004ebd4336ec3fdaa049af1251cc2aa3533c436d67e3f91f5872b89fb8a94",
+      "reservation": "7e39b20dbf4e41bfa29cb51b77156d6e",
+      "model": "Qwen/Qwen3.5-4B",
+      "used_action": "random8greedy",
+      "explicit_fallback": false,
+      "memory_source": "codegarden-43674296464-researcher-plateau_repair_method-c4127054",
+      "context_path": "codegarden/artifacts/feedback/decision_context.json"
+    },
+    "time": 1794714863.1210701
+  }
+]

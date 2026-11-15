@@ -1,0 +1,33 @@
+{
+  "passed": true,
+  "rows": [
+    {
+      "seed": 1501001,
+      "weighted": false,
+      "repair_policy": "fixed_release8",
+      "cpu_seconds": 1.00091,
+      "iterations": 5316,
+      "minimum_pair_conflicts": 2,
+      "repair_trials": 5,
+      "repair_complete": 5,
+      "repair_timeouts": 0,
+      "repair_cpu_seconds": 0.002713
+    },
+    {
+      "seed": 1501001,
+      "weighted": false,
+      "repair_policy": "adaptive_release",
+      "cpu_seconds": 1.001,
+      "iterations": 5940,
+      "minimum_pair_conflicts": 2,
+      "repair_trials": 5,
+      "repair_complete": 5,
+      "repair_timeouts": 0,
+      "repair_cpu_seconds": 0.00208
+    }
+  ],
+  "graph_tests": {
+    "arbitrary_graph_target_fixtures": 960,
+    "passed": true
+  }
+}

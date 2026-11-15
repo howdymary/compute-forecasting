@@ -1,0 +1,548 @@
+{
+  "scope": "n=10,11,12 heldout strategy calibration; not a length-16 improvement",
+  "before": [
+    {
+      "case_id": "2000",
+      "valid_action": true,
+      "decision": {
+        "action": "random8greedy",
+        "valid_action": true,
+        "strict_format": true,
+        "output_tokens": 5,
+        "raw_reply_sha256": "76415a5b5044ec5fef6161eb85315a8543a3a9d19e39b6acf8ad5902a2e42b82",
+        "state_sha256": "f36eeab1e3b1bb134a4a054f00f5d9546f9682ae56c635206914c9ee9f5dcc24",
+        "reservation": "1edc10708ff743d6866eea38627b503f",
+        "model": "Qwen/Qwen3.5-4B"
+      },
+      "final_cardinality": 10,
+      "verification": {
+        "action": "random8greedy",
+        "cardinality": 10,
+        "actual_seconds": 0.0015474989999972877,
+        "verification": {
+          "valid": true,
+          "cardinality": 10,
+          "length": 10,
+          "distinct_descendants": 113,
+          "witness_sha256": "1e82f1fb13c01084e0fb9b3ecccce64c58ef9bdca7a643bb49b9708c5ed5673d",
+          "method": "distinct_string_two_deletions"
+        },
+        "lcs": {
+          "valid": true,
+          "cardinality": 10,
+          "length": 10,
+          "pairs_checked": 45,
+          "largest_pairwise_lcs": 7,
+          "witness_sha256": "1e82f1fb13c01084e0fb9b3ecccce64c58ef9bdca7a643bb49b9708c5ed5673d",
+          "method": "independent_dynamic_programming_lcs"
+        },
+        "exact": {
+          "status": "NOT_RUN"
+        },
+        "pool_sha256": "e0ad57c51ff1986345546133ec2c0e70fe85a0cd750703c86416618e3e670753",
+        "pool_restriction": "removed plus at most 120 total candidates, smallest descendant size with seeded ties"
+      }
+    },
+    {
+      "case_id": "2001",
+      "valid_action": true,
+      "decision": {
+        "action": "random8greedy",
+        "valid_action": true,
+        "strict_format": true,
+        "output_tokens": 5,
+        "raw_reply_sha256": "76415a5b5044ec5fef6161eb85315a8543a3a9d19e39b6acf8ad5902a2e42b82",
+        "state_sha256": "1be26b63a8878bff42f61f1df5dc55ddfd9d9116f356b3b3c8cccd5cc4084ad2",
+        "reservation": "940f620e841f40ceb0da023fd2eec712",
+        "model": "Qwen/Qwen3.5-4B"
+      },
+      "final_cardinality": 17,
+      "verification": {
+        "action": "random8greedy",
+        "cardinality": 17,
+        "actual_seconds": 0.004266387999990684,
+        "verification": {
+          "valid": true,
+          "cardinality": 17,
+          "length": 11,
+          "distinct_descendants": 178,
+          "witness_sha256": "451035b4fad8256c474c2b7638d47353fd8d85cdf6084a1187dab7254cf412ff",
+          "method": "distinct_string_two_deletions"
+        },
+        "lcs": {
+          "valid": true,
+          "cardinality": 17,
+          "length": 11,
+          "pairs_checked": 136,
+          "largest_pairwise_lcs": 8,
+          "witness_sha256": "451035b4fad8256c474c2b7638d47353fd8d85cdf6084a1187dab7254cf412ff",
+          "method": "independent_dynamic_programming_lcs"
+        },
+        "exact": {
+          "status": "NOT_RUN"
+        },
+        "pool_sha256": "9152c9daf691f17df9c3a67f39194938382c5ed3328ec67a4a00a49bf3f8d0b6",
+        "pool_restriction": "removed plus at most 120 total candidates, smallest descendant size with seeded ties"
+      }
+    },
+    {
+      "case_id": "2002",
+      "valid_action": true,
+      "decision": {
+        "action": "random8greedy",
+        "valid_action": true,
+        "strict_format": true,
+        "output_tokens": 5,
+        "raw_reply_sha256": "76415a5b5044ec5fef6161eb85315a8543a3a9d19e39b6acf8ad5902a2e42b82",
+        "state_sha256": "d290f55441ef457136b357a91d91c927b58e58e67f806eddfdc00806e7c06d35",
+        "reservation": "0e6df5f5d33d454cbd7adcb1de077899",
+        "model": "Qwen/Qwen3.5-4B"
+      },
+      "final_cardinality": 23,
+      "verification": {
+        "action": "random8greedy",
+        "cardinality": 23,
+        "actual_seconds": 0.008330335000010791,
+        "verification": {
+          "valid": true,
+          "cardinality": 23,
+          "length": 12,
+          "distinct_descendants": 346,
+          "witness_sha256": "f2e90eca4f1ea1cbb24abb2f74aa7e4f64ca49495898d58b428ea73bb0ae859f",
+          "method": "distinct_string_two_deletions"
+        },
+        "lcs": {
+          "valid": true,
+          "cardinality": 23,
+          "length": 12,
+          "pairs_checked": 253,
+          "largest_pairwise_lcs": 9,
+          "witness_sha256": "f2e90eca4f1ea1cbb24abb2f74aa7e4f64ca49495898d58b428ea73bb0ae859f",
+          "method": "independent_dynamic_programming_lcs"
+        },
+        "exact": {
+          "status": "NOT_RUN"
+        },
+        "pool_sha256": "a7334e51d9a2326400b7e4702d2b5354518b1f1a7d8a30a51a4e23c6f75423bb",
+        "pool_restriction": "removed plus at most 120 total candidates, smallest descendant size with seeded ties"
+      }
+    },
+    {
+      "case_id": "2003",
+      "valid_action": true,
+      "decision": {
+        "action": "random8greedy",
+        "valid_action": true,
+        "strict_format": true,
+        "output_tokens": 5,
+        "raw_reply_sha256": "76415a5b5044ec5fef6161eb85315a8543a3a9d19e39b6acf8ad5902a2e42b82",
+        "state_sha256": "dc5916a90316ee2f21d038a20f86a4e723ac0156fbad4d2fb7eb0c14466cc760",
+        "reservation": "07233f41637f472c8c8c75a5b0d8a4c1",
+        "model": "Qwen/Qwen3.5-4B"
+      },
+      "final_cardinality": 10,
+      "verification": {
+        "action": "random8greedy",
+        "cardinality": 10,
+        "actual_seconds": 0.0014698420000058832,
+        "verification": {
+          "valid": true,
+          "cardinality": 10,
+          "length": 10,
+          "distinct_descendants": 83,
+          "witness_sha256": "0bbc22e132465209f41d70577e15c6820d2abd3440feebdf71b1432a904b7382",
+          "method": "distinct_string_two_deletions"
+        },
+        "lcs": {
+          "valid": true,
+          "cardinality": 10,
+          "length": 10,
+          "pairs_checked": 45,
+          "largest_pairwise_lcs": 7,
+          "witness_sha256": "0bbc22e132465209f41d70577e15c6820d2abd3440feebdf71b1432a904b7382",
+          "method": "independent_dynamic_programming_lcs"
+        },
+        "exact": {
+          "status": "NOT_RUN"
+        },
+        "pool_sha256": "b1631dd795e453c567f842b09a949724aa391ca96e9579e144f29e616f732dbb",
+        "pool_restriction": "removed plus at most 120 total candidates, smallest descendant size with seeded ties"
+      }
+    },
+    {
+      "case_id": "2004",
+      "valid_action": true,
+      "decision": {
+        "action": "random8greedy",
+        "valid_action": true,
+        "strict_format": true,
+        "output_tokens": 5,
+        "raw_reply_sha256": "76415a5b5044ec5fef6161eb85315a8543a3a9d19e39b6acf8ad5902a2e42b82",
+        "state_sha256": "59f812c7d06213c3237da7f1900e06a557cafa978eccaced7fad7f371948a69b",
+        "reservation": "5cd9e3df35884b09918befe6ab4298d9",
+        "model": "Qwen/Qwen3.5-4B"
+      },
+      "final_cardinality": 16,
+      "verification": {
+        "action": "random8greedy",
+        "cardinality": 16,
+        "actual_seconds": 0.0036849400000278365,
+        "verification": {
+          "valid": true,
+          "cardinality": 16,
+          "length": 11,
+          "distinct_descendants": 173,
+          "witness_sha256": "dfb4109ca49fe933d9bea3c5c7d2dcc5fcb3b10b2928dd3e4c9a7be2c36cada9",
+          "method": "distinct_string_two_deletions"
+        },
+        "lcs": {
+          "valid": true,
+          "cardinality": 16,
+          "length": 11,
+          "pairs_checked": 120,
+          "largest_pairwise_lcs": 8,
+          "witness_sha256": "dfb4109ca49fe933d9bea3c5c7d2dcc5fcb3b10b2928dd3e4c9a7be2c36cada9",
+          "method": "independent_dynamic_programming_lcs"
+        },
+        "exact": {
+          "status": "NOT_RUN"
+        },
+        "pool_sha256": "83618849fa28161de21e87e066bcb01dca2cddbb46aecd1edc54ba13d86f6cdd",
+        "pool_restriction": "removed plus at most 120 total candidates, smallest descendant size with seeded ties"
+      }
+    },
+    {
+      "case_id": "2005",
+      "valid_action": true,
+      "decision": {
+        "action": "random8greedy",
+        "valid_action": true,
+        "strict_format": true,
+        "output_tokens": 5,
+        "raw_reply_sha256": "76415a5b5044ec5fef6161eb85315a8543a3a9d19e39b6acf8ad5902a2e42b82",
+        "state_sha256": "5c23455db6a0afa2f14f381293bbf243372866d14bc42e3da900c52aed702647",
+        "reservation": "700d949811c24dddb6bf859ee2083348",
+        "model": "Qwen/Qwen3.5-4B"
+      },
+      "final_cardinality": 24,
+      "verification": {
+        "action": "random8greedy",
+        "cardinality": 24,
+        "actual_seconds": 0.008710270999984004,
+        "verification": {
+          "valid": true,
+          "cardinality": 24,
+          "length": 12,
+          "distinct_descendants": 344,
+          "witness_sha256": "4f99d07f0f971cc605fca0c23bfe14a5dc2d17b9cbffa165e59b6f93aa6a28a3",
+          "method": "distinct_string_two_deletions"
+        },
+        "lcs": {
+          "valid": true,
+          "cardinality": 24,
+          "length": 12,
+          "pairs_checked": 276,
+          "largest_pairwise_lcs": 9,
+          "witness_sha256": "4f99d07f0f971cc605fca0c23bfe14a5dc2d17b9cbffa165e59b6f93aa6a28a3",
+          "method": "independent_dynamic_programming_lcs"
+        },
+        "exact": {
+          "status": "NOT_RUN"
+        },
+        "pool_sha256": "7952c37c67b5370d60230a4780e74529c838e3d9c36b917e0f1976c44c660295",
+        "pool_restriction": "removed plus at most 120 total candidates, smallest descendant size with seeded ties"
+      }
+    }
+  ],
+  "after": [
+    {
+      "case_id": "2000",
+      "valid_action": true,
+      "decision": {
+        "action": "opportunity12exact",
+        "valid_action": true,
+        "strict_format": true,
+        "output_tokens": 6,
+        "raw_reply_sha256": "23a67e42ad1ab3db457286f6fb411470d34fae28566b18d80e7b95dcf98c3858",
+        "state_sha256": "f36eeab1e3b1bb134a4a054f00f5d9546f9682ae56c635206914c9ee9f5dcc24",
+        "reservation": "d806d3cc2b164a3dbd0ebc368982eec6",
+        "model": "Qwen/Qwen3.5-4B"
+      },
+      "final_cardinality": 11,
+      "verification": {
+        "action": "opportunity12exact",
+        "cardinality": 11,
+        "actual_seconds": 0.0029788069999767686,
+        "verification": {
+          "valid": true,
+          "cardinality": 11,
+          "length": 10,
+          "distinct_descendants": 110,
+          "witness_sha256": "26f01c29cfa19ba83f55da855c8163c275b6c69b0afe5bf737478b2e3337c8c7",
+          "method": "distinct_string_two_deletions"
+        },
+        "lcs": {
+          "valid": true,
+          "cardinality": 11,
+          "length": 10,
+          "pairs_checked": 55,
+          "largest_pairwise_lcs": 7,
+          "witness_sha256": "26f01c29cfa19ba83f55da855c8163c275b6c69b0afe5bf737478b2e3337c8c7",
+          "method": "independent_dynamic_programming_lcs"
+        },
+        "exact": {
+          "status": "FEASIBLE",
+          "nodes": 12,
+          "complete": false,
+          "proof_artifact": null,
+          "proof_kind": null,
+          "seconds": 0.0012224810000134312
+        },
+        "pool_sha256": "67b8fba192af092dc4cf99813a0cf6ccc7301899d678e96961463fb5f7eb8462",
+        "pool_restriction": "removed plus at most 120 total candidates, smallest descendant size with seeded ties"
+      }
+    },
+    {
+      "case_id": "2001",
+      "valid_action": true,
+      "decision": {
+        "action": "opportunity12exact",
+        "valid_action": true,
+        "strict_format": true,
+        "output_tokens": 6,
+        "raw_reply_sha256": "23a67e42ad1ab3db457286f6fb411470d34fae28566b18d80e7b95dcf98c3858",
+        "state_sha256": "1be26b63a8878bff42f61f1df5dc55ddfd9d9116f356b3b3c8cccd5cc4084ad2",
+        "reservation": "da914ed1c1e842e98cbc956213533a0d",
+        "model": "Qwen/Qwen3.5-4B"
+      },
+      "final_cardinality": 17,
+      "verification": {
+        "action": "opportunity12exact",
+        "cardinality": 17,
+        "actual_seconds": 0.00589852999996765,
+        "verification": {
+          "valid": true,
+          "cardinality": 17,
+          "length": 11,
+          "distinct_descendants": 183,
+          "witness_sha256": "cd880768d3a48dc984b2bcd5b18b42c80f0be3825047a86192e329fbb0e4b537",
+          "method": "distinct_string_two_deletions"
+        },
+        "lcs": {
+          "valid": true,
+          "cardinality": 17,
+          "length": 11,
+          "pairs_checked": 136,
+          "largest_pairwise_lcs": 8,
+          "witness_sha256": "cd880768d3a48dc984b2bcd5b18b42c80f0be3825047a86192e329fbb0e4b537",
+          "method": "independent_dynamic_programming_lcs"
+        },
+        "exact": {
+          "status": "FEASIBLE",
+          "nodes": 46,
+          "complete": false,
+          "proof_artifact": null,
+          "proof_kind": null,
+          "seconds": 0.0014765029999921353
+        },
+        "pool_sha256": "5ca0a3b4eb53fa95ecd8df2a8bf0bd651f7536c43f21ca6e4688373d7aa6b786",
+        "pool_restriction": "removed plus at most 120 total candidates, smallest descendant size with seeded ties"
+      }
+    },
+    {
+      "case_id": "2002",
+      "valid_action": true,
+      "decision": {
+        "action": "opportunity12exact",
+        "valid_action": true,
+        "strict_format": true,
+        "output_tokens": 6,
+        "raw_reply_sha256": "23a67e42ad1ab3db457286f6fb411470d34fae28566b18d80e7b95dcf98c3858",
+        "state_sha256": "d290f55441ef457136b357a91d91c927b58e58e67f806eddfdc00806e7c06d35",
+        "reservation": "90d21a116605494fb431ae781275f7a5",
+        "model": "Qwen/Qwen3.5-4B"
+      },
+      "final_cardinality": 24,
+      "verification": {
+        "action": "opportunity12exact",
+        "cardinality": 24,
+        "actual_seconds": 0.010362967999981265,
+        "verification": {
+          "valid": true,
+          "cardinality": 24,
+          "length": 12,
+          "distinct_descendants": 325,
+          "witness_sha256": "7c5ca56b489564897403cca65d69bd23a4633268ca4badcb18c110f9758c9423",
+          "method": "distinct_string_two_deletions"
+        },
+        "lcs": {
+          "valid": true,
+          "cardinality": 24,
+          "length": 12,
+          "pairs_checked": 276,
+          "largest_pairwise_lcs": 9,
+          "witness_sha256": "7c5ca56b489564897403cca65d69bd23a4633268ca4badcb18c110f9758c9423",
+          "method": "independent_dynamic_programming_lcs"
+        },
+        "exact": {
+          "status": "FEASIBLE",
+          "nodes": 14,
+          "complete": false,
+          "proof_artifact": null,
+          "proof_kind": null,
+          "seconds": 0.0012405800000010458
+        },
+        "pool_sha256": "8dd2b60fcfe1c9d2d46ced6a2415c86cc57a359fc0c4a7a32c365ecf32f46033",
+        "pool_restriction": "removed plus at most 120 total candidates, smallest descendant size with seeded ties"
+      }
+    },
+    {
+      "case_id": "2003",
+      "valid_action": true,
+      "decision": {
+        "action": "opportunity12exact",
+        "valid_action": true,
+        "strict_format": true,
+        "output_tokens": 6,
+        "raw_reply_sha256": "23a67e42ad1ab3db457286f6fb411470d34fae28566b18d80e7b95dcf98c3858",
+        "state_sha256": "dc5916a90316ee2f21d038a20f86a4e723ac0156fbad4d2fb7eb0c14466cc760",
+        "reservation": "acc04fd1de5d47ccbef961d3cd98a461",
+        "model": "Qwen/Qwen3.5-4B"
+      },
+      "final_cardinality": 11,
+      "verification": {
+        "action": "opportunity12exact",
+        "cardinality": 11,
+        "actual_seconds": 0.0029422050000107447,
+        "verification": {
+          "valid": true,
+          "cardinality": 11,
+          "length": 10,
+          "distinct_descendants": 83,
+          "witness_sha256": "fb21d26852f78e0e81bed254b1581dfebe09221e863061ac07096bcd1f051794",
+          "method": "distinct_string_two_deletions"
+        },
+        "lcs": {
+          "valid": true,
+          "cardinality": 11,
+          "length": 10,
+          "pairs_checked": 55,
+          "largest_pairwise_lcs": 7,
+          "witness_sha256": "fb21d26852f78e0e81bed254b1581dfebe09221e863061ac07096bcd1f051794",
+          "method": "independent_dynamic_programming_lcs"
+        },
+        "exact": {
+          "status": "FEASIBLE",
+          "nodes": 12,
+          "complete": false,
+          "proof_artifact": null,
+          "proof_kind": null,
+          "seconds": 0.0011894959999949606
+        },
+        "pool_sha256": "952a0b493378b9e106a38f205550c5ef96988f5e0681986d7e4276b7c32fe46b",
+        "pool_restriction": "removed plus at most 120 total candidates, smallest descendant size with seeded ties"
+      }
+    },
+    {
+      "case_id": "2004",
+      "valid_action": true,
+      "decision": {
+        "action": "opportunity12exact",
+        "valid_action": true,
+        "strict_format": true,
+        "output_tokens": 6,
+        "raw_reply_sha256": "23a67e42ad1ab3db457286f6fb411470d34fae28566b18d80e7b95dcf98c3858",
+        "state_sha256": "59f812c7d06213c3237da7f1900e06a557cafa978eccaced7fad7f371948a69b",
+        "reservation": "d7d1b1349765459bb43f3764e0ae5325",
+        "model": "Qwen/Qwen3.5-4B"
+      },
+      "final_cardinality": 16,
+      "verification": {
+        "action": "opportunity12exact",
+        "cardinality": 16,
+        "actual_seconds": 0.004967421000003469,
+        "verification": {
+          "valid": true,
+          "cardinality": 16,
+          "length": 11,
+          "distinct_descendants": 173,
+          "witness_sha256": "110615fc1f82cb171000d28f038558ca1df6bcc055678258e33d4a35a1e34566",
+          "method": "distinct_string_two_deletions"
+        },
+        "lcs": {
+          "valid": true,
+          "cardinality": 16,
+          "length": 11,
+          "pairs_checked": 120,
+          "largest_pairwise_lcs": 8,
+          "witness_sha256": "110615fc1f82cb171000d28f038558ca1df6bcc055678258e33d4a35a1e34566",
+          "method": "independent_dynamic_programming_lcs"
+        },
+        "exact": {
+          "status": "FEASIBLE",
+          "nodes": 14,
+          "complete": false,
+          "proof_artifact": null,
+          "proof_kind": null,
+          "seconds": 0.0012678570000161926
+        },
+        "pool_sha256": "db58d7fabc6b60e1c482f6c60c4683873733680027aaf098e2f50b1df660aac1",
+        "pool_restriction": "removed plus at most 120 total candidates, smallest descendant size with seeded ties"
+      }
+    },
+    {
+      "case_id": "2005",
+      "valid_action": true,
+      "decision": {
+        "action": "opportunity12exact",
+        "valid_action": true,
+        "strict_format": true,
+        "output_tokens": 6,
+        "raw_reply_sha256": "23a67e42ad1ab3db457286f6fb411470d34fae28566b18d80e7b95dcf98c3858",
+        "state_sha256": "5c23455db6a0afa2f14f381293bbf243372866d14bc42e3da900c52aed702647",
+        "reservation": "a0356ae174824347892982b9bb2fef39",
+        "model": "Qwen/Qwen3.5-4B"
+      },
+      "final_cardinality": 25,
+      "verification": {
+        "action": "opportunity12exact",
+        "cardinality": 25,
+        "actual_seconds": 0.011150014000008923,
+        "verification": {
+          "valid": true,
+          "cardinality": 25,
+          "length": 12,
+          "distinct_descendants": 333,
+          "witness_sha256": "32ce6debbf6c41dfb15b9db8d575a4a2d72f06d27b606e234048990f127a82c3",
+          "method": "distinct_string_two_deletions"
+        },
+        "lcs": {
+          "valid": true,
+          "cardinality": 25,
+          "length": 12,
+          "pairs_checked": 300,
+          "largest_pairwise_lcs": 9,
+          "witness_sha256": "32ce6debbf6c41dfb15b9db8d575a4a2d72f06d27b606e234048990f127a82c3",
+          "method": "independent_dynamic_programming_lcs"
+        },
+        "exact": {
+          "status": "FEASIBLE",
+          "nodes": 14,
+          "complete": false,
+          "proof_artifact": null,
+          "proof_kind": null,
+          "seconds": 0.0012354020000202581
+        },
+        "pool_sha256": "10dcb744b9a6305e1a5138e18d9fc5d09f5196c673f34f84e9c44e5f0be31296",
+        "pool_restriction": "removed plus at most 120 total candidates, smallest descendant size with seeded ties"
+      }
+    }
+  ],
+  "train_cases": 32,
+  "heldout_cases": 6,
+  "updates": 8,
+  "sum_before": 100,
+  "sum_after": 104,
+  "equal_action_budget": "One selected bounded repair per heldout case; identical starting codes/seeds and pool limits",
+  "improved": true
+}

@@ -1,0 +1,55 @@
+{
+  "hypothesis": "Allow a larger temporary descendant over-occupancy budget while searching exact227-word shadow states; accept only zero-energy independently verified witnesses.",
+  "prior": {
+    "source": "codegarden/phase3/soft_global.py",
+    "report": "codegarden/artifacts/phase3/soft_global_001/report.json",
+    "full_reduced_pool": 65092,
+    "seconds": 90,
+    "workers": 2,
+    "cap": 2,
+    "observed_energy": 2,
+    "status": "FEASIBLE",
+    "valid_code": false
+  },
+  "new_design": {
+    "universe": 65536,
+    "fixed_words": [],
+    "cardinality": 227,
+    "models": [
+      "hard descendant packing",
+      "elastic cap2 control",
+      "Tinker-selected cap8 or32"
+    ],
+    "seconds_each": 1800,
+    "cpu_each": 8,
+    "memory_mb_each": 16384,
+    "same_seed": 2271144,
+    "positive_energy_invalid": true,
+    "all_valid227_included_in_every_model": true
+  },
+  "primary_docs": [
+    {
+      "url": "https://developers.google.com/optimization/cp/cp_solver",
+      "retrieved_via": "Exa web_fetch_exa",
+      "use": "Integer CP-SAT API and status distinctions."
+    },
+    {
+      "url": "https://pypi.org/pypi/ortools/json",
+      "version": "9.15.6755",
+      "verified_available": true
+    }
+  ],
+  "arena_observation": {
+    "date": "2026-11-15T20:18:29.027778+00:00",
+    "url": "https://einsteinarena.com/api/solutions/best?problem_id=34&limit=1",
+    "response_sha256": "6a5bc5b74f4bc9604d28fd2ba0df149ba1648139fbbdc7b5b151ab990b03e28d",
+    "solution": 2778,
+    "author": "kgrey",
+    "score": 226,
+    "count": 226,
+    "distinct": 226,
+    "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+  },
+  "global_record_claim": false,
+  "goal_achieved": false
+}

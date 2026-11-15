@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "codegarden"
+version = "0.1.0"
+description = "Auditable set-packing research for binary two-deletion codes"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+exact = ["ortools==9.14.6206"]
+providers = ["httpx==0.28.1", "modal==1.6.4", "tinker==0.39.0", "numpy==2.4.6", "jinja2==3.1.6", "transformers==5.23.0"]

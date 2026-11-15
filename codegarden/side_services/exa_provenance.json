@@ -1,0 +1,43 @@
+{
+  "date": "2026-11-15",
+  "requests": [
+    {
+      "tool": "Exa web_search_exa",
+      "query": "Primary research papers and author maintained source code for exact maximum clique solvers using bit parallelism, MaxSAT reasoning and stronger coloring bounds, especially CliSAT and MC-BRB",
+      "results_requested": 5
+    },
+    {
+      "tool": "Exa web_search_exa",
+      "query": "An explicit binary two deletion correcting code of length16 with227 or more codewords, current constructions as of2026-11-15",
+      "results_requested": 5
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://arxiv.org/abs/1801.00202",
+      "authors": "Pablo San Segundo, Jorge Artieda, Darren Strash",
+      "method": "Fixed maximum-degree-first vertex ordering combined with bit-parallel operations. The original paper studies maximal clique enumeration; this cycle adapts only the ordering idea to a maximum-clique repair solver and does not claim to reproduce its full algorithm.",
+      "experiment": "Paired original versus Tinker-selected degree ordering on literal guided-pivot pools."
+    },
+    {
+      "url": "https://github.com/psanse/CliSAT",
+      "method": "SAT and constraint propagation strengthen exact clique bounds. Repository inspected; its binary was not executed. Deferred until a separately reviewed integration."
+    },
+    {
+      "url": "https://lijunchang.github.io/MC-BRB/",
+      "method": "Author-maintained large sparse maximum-clique implementation; a candidate for later benchmarking, not executed in this cycle."
+    }
+  ],
+  "record_audit": {
+    "sources": [
+      "https://einsteinarena.com/problems/two-deletion-code-16/threads/276",
+      "https://einsteinarena.com/problems/two-deletion-code-16/threads/288",
+      "https://arxiv.org/abs/2504.00613"
+    ],
+    "found_explicit_new_227": false,
+    "exhaustive_literature_audit": false,
+    "note": "Search returned historical constructions and local obstructions. Absence in these results does not prove a global record."
+  },
+  "research_date": "2026-11-15",
+  "claims": "Exa MCP calls were actually executed in this side conversation. Request-level billing metadata was absent; the precommitted hold is retained."
+}

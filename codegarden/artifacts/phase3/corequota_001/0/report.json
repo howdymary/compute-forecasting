@@ -1,0 +1,39 @@
+{
+  "source_sha": "e026ab0f1467b3cd9e14ed25a2c24f7b13af8cb1",
+  "case": 0,
+  "mode": "fixed",
+  "seed": 1421001,
+  "target": 226,
+  "core_quota": 210,
+  "starting_verification": {
+    "accepted": true,
+    "cardinality": 226,
+    "reports": [
+      {
+        "cardinality": 226,
+        "distinct_descendants": 6410,
+        "length": 16,
+        "method": "distinct_string_two_deletions",
+        "valid": true,
+        "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+      },
+      {
+        "cardinality": 226,
+        "largest_pairwise_lcs": 13,
+        "length": 16,
+        "method": "independent_dynamic_programming_lcs",
+        "pairs_checked": 25425,
+        "valid": true,
+        "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+      }
+    ]
+  },
+  "starting_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa",
+  "best_verified": 226,
+  "novel": [],
+  "polish": [],
+  "minimum_pair_conflicts": 1,
+  "cpu_seconds": 600.003,
+  "iterations": 6320168,
+  "scope": "Quota210 follows conditional local exclusions; quota206 cases are deliberately stronger heuristic diversification, not safe global cuts.600nativeCPU each. Pair-energy states with positive score remain invalid. No absence claim from bounded heuristics; no matched total-CPU claim when polish differs."
+}

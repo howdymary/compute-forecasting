@@ -1,0 +1,86 @@
+name: CodeGarden dense and flow-feedback tempering
+on:
+  push:
+    branches: [codegarden-tempering-004]
+    paths: [.github/workflows/codegarden.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: codegarden-free-tempering-004
+  cancel-in-progress: false
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+  SOURCE_SHA: ${{ github.sha }}
+  CODEGARDEN_BATCH: tempering_flow_001
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - name: Compile and independently exhaust small cases
+        run: |
+          mkdir -p codegarden/.build
+          g++ -O3 -std=c++17 codegarden/phase3/tempering_flow.cpp -o codegarden/.build/infeasible
+          python -B -u codegarden/phase3/test_infeasible.py
+          python -B -u codegarden/phase3/preflight.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: codegarden-tempering-preflight
+          path: codegarden/artifacts/phase3/tempering_flow_001/
+  probes:
+    needs: preflight
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        seed: [1040001, 1040002, 1040003, 1040004]
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/download-artifact@v4
+        with:
+          name: codegarden-tempering-preflight
+          path: codegarden/artifacts/phase3/tempering_flow_001/
+      - name: Compile and run bounded component
+        run: |
+          mkdir -p codegarden/.build
+          g++ -O3 -std=c++17 codegarden/phase3/tempering_flow.cpp -o codegarden/.build/infeasible
+          python -B -u codegarden/phase3/tempering_flow_probe.py --seed ${{ matrix.seed }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: codegarden-tempering-${{ matrix.seed }}
+          path: codegarden/artifacts/phase3/tempering_flow_001/
+  collect:
+    needs: [preflight, probes]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: codegarden-tempering-*
+          merge-multiple: true
+          path: codegarden/artifacts/phase3/tempering_flow_001/
+      - name: Publish leased results
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -B -u codegarden/phase3/publish_tempering_flow.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: codegarden-tempering-collected
+          path: codegarden/artifacts/phase3/tempering_flow_001/

@@ -1,0 +1,771 @@
+{
+  "recovery_source_sha": "6753ac673f66e4d29650fe9021818451d5251a95",
+  "source": {
+    "run": 43721599974,
+    "source": "e8915ee0d29c36364e33d347f475072e2ec1620d",
+    "prefix": "codegarden-min-growth-",
+    "cases": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "out": "min_growth_recovered_001"
+  },
+  "observed_at": "2026-11-15T14:20:14.772397+00:00",
+  "original_run_conclusion": "success",
+  "artifact_rule": "Each numeric directory comes solely from its own named worker artifact; never merge stale sibling directories.",
+  "plan_sha256": "56aef0810a0e754c9a159fd8ade47b5245e9a40b8ddc77c30d66864d556aa3bc",
+  "cases": [
+    {
+      "case": 0,
+      "source_run": 43721599974,
+      "source_sha": "e8915ee0d29c36364e33d347f475072e2ec1620d",
+      "artifact_name": "codegarden-min-growth-0",
+      "artifact_id": 14164644795,
+      "archive_sha256": "ed75036710343131ca4517c90c42f26a5aa366af91069496615385d492ac4f5a",
+      "checkpoint_sha256": "231d38f35e61286ea9187744d436fb378ae55e4f24710a544cbf90ee7fcc32a7",
+      "report_sha256": "48786d652eace1438f502ebd68a5e6c907944fecd6717a30165a46b12e66b744",
+      "copied_files": 73,
+      "starting_fixed_count": 153,
+      "final_fixed_count": 137,
+      "new_trials": 35,
+      "new_closed_families": 16,
+      "cumulative_trials": 83,
+      "cumulative_closed_families": 48,
+      "best_in_family_verified": 225,
+      "retained_global_best_verified": 226,
+      "verification": {
+        "accepted": true,
+        "cardinality": 225,
+        "reports": [
+          {
+            "cardinality": 225,
+            "distinct_descendants": 6347,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "c8fda988772a5b51d8458eaa0506185a4fb0e389a032693c12d22934bec21a10"
+          },
+          {
+            "cardinality": 225,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25200,
+            "valid": true,
+            "witness_sha256": "c8fda988772a5b51d8458eaa0506185a4fb0e389a032693c12d22934bec21a10"
+          }
+        ]
+      },
+      "condition": "random_one",
+      "wall_seconds": 597.706266262,
+      "self_cpu_seconds": 1085.523604,
+      "children_cpu_seconds": 51.761354
+    },
+    {
+      "case": 1,
+      "source_run": 43721599974,
+      "source_sha": "e8915ee0d29c36364e33d347f475072e2ec1620d",
+      "artifact_name": "codegarden-min-growth-1",
+      "artifact_id": 14164843988,
+      "archive_sha256": "91020600f9bebf92cbda70eb89d4c9d9e787ceb1812e53b4c5c3ebc419ad7994",
+      "checkpoint_sha256": "a8fdd74b892d1961cc3e76dcd266df5259fa6bf46f352be92adc8b4469413b9d",
+      "report_sha256": "ebc0da9df11982a0e1ad8b43ca4c642486f13d33e4a84ad5b1db71bbbca5723b",
+      "copied_files": 107,
+      "starting_fixed_count": 153,
+      "final_fixed_count": 108,
+      "new_trials": 52,
+      "new_closed_families": 45,
+      "cumulative_trials": 100,
+      "cumulative_closed_families": 77,
+      "best_in_family_verified": 225,
+      "retained_global_best_verified": 226,
+      "verification": {
+        "accepted": true,
+        "cardinality": 225,
+        "reports": [
+          {
+            "cardinality": 225,
+            "distinct_descendants": 6347,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "c8fda988772a5b51d8458eaa0506185a4fb0e389a032693c12d22934bec21a10"
+          },
+          {
+            "cardinality": 225,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25200,
+            "valid": true,
+            "witness_sha256": "c8fda988772a5b51d8458eaa0506185a4fb0e389a032693c12d22934bec21a10"
+          }
+        ]
+      },
+      "condition": "minimum_growth",
+      "wall_seconds": 598.0127021540001,
+      "self_cpu_seconds": 1070.4590420000002,
+      "children_cpu_seconds": 57.273843
+    },
+    {
+      "case": 2,
+      "source_run": 43721599974,
+      "source_sha": "e8915ee0d29c36364e33d347f475072e2ec1620d",
+      "artifact_name": "codegarden-min-growth-2",
+      "artifact_id": 14164604816,
+      "archive_sha256": "1e2541134d8fcc870c0f47f25b92482970a6e538c6cc8a84852bc85f0930865b",
+      "checkpoint_sha256": "e6e368becd806e9204988db05b418b1db48e57c7e269a663f6cb5d253185319b",
+      "report_sha256": "154d6dcebd8cd077dbddcb1508bdb78ce65222067f5b7d0e83391a367dafc7ef",
+      "copied_files": 67,
+      "starting_fixed_count": 182,
+      "final_fixed_count": 176,
+      "new_trials": 32,
+      "new_closed_families": 6,
+      "cumulative_trials": 64,
+      "cumulative_closed_families": 9,
+      "best_in_family_verified": 225,
+      "retained_global_best_verified": 226,
+      "verification": {
+        "accepted": true,
+        "cardinality": 225,
+        "reports": [
+          {
+            "cardinality": 225,
+            "distinct_descendants": 6347,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "c8fda988772a5b51d8458eaa0506185a4fb0e389a032693c12d22934bec21a10"
+          },
+          {
+            "cardinality": 225,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25200,
+            "valid": true,
+            "witness_sha256": "c8fda988772a5b51d8458eaa0506185a4fb0e389a032693c12d22934bec21a10"
+          }
+        ]
+      },
+      "condition": "random_one",
+      "wall_seconds": 600.0470001,
+      "self_cpu_seconds": 1124.106509,
+      "children_cpu_seconds": 35.806982000000005
+    },
+    {
+      "case": 3,
+      "source_run": 43721599974,
+      "source_sha": "e8915ee0d29c36364e33d347f475072e2ec1620d",
+      "artifact_name": "codegarden-min-growth-3",
+      "artifact_id": 14165500334,
+      "archive_sha256": "ad9cbb9dbf9012c328322dba8ddc7cea164ff7cf00263c27fcd2fdf1ff184394",
+      "checkpoint_sha256": "abcc16769e5057673dd1109d0eea95089b0f5e663223363611f94a0c765c035d",
+      "report_sha256": "4bbcea508ceadea2b1a18accb2677a332545fcf3c3f3ad7612d325dd26282b25",
+      "copied_files": 69,
+      "starting_fixed_count": 182,
+      "final_fixed_count": 174,
+      "new_trials": 33,
+      "new_closed_families": 8,
+      "cumulative_trials": 65,
+      "cumulative_closed_families": 11,
+      "best_in_family_verified": 225,
+      "retained_global_best_verified": 226,
+      "verification": {
+        "accepted": true,
+        "cardinality": 225,
+        "reports": [
+          {
+            "cardinality": 225,
+            "distinct_descendants": 6347,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "c8fda988772a5b51d8458eaa0506185a4fb0e389a032693c12d22934bec21a10"
+          },
+          {
+            "cardinality": 225,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25200,
+            "valid": true,
+            "witness_sha256": "c8fda988772a5b51d8458eaa0506185a4fb0e389a032693c12d22934bec21a10"
+          }
+        ]
+      },
+      "condition": "minimum_growth",
+      "wall_seconds": 600.0485698939999,
+      "self_cpu_seconds": 1100.0409599999998,
+      "children_cpu_seconds": 46.847999
+    },
+    {
+      "case": 4,
+      "source_run": 43721599974,
+      "source_sha": "e8915ee0d29c36364e33d347f475072e2ec1620d",
+      "artifact_name": "codegarden-min-growth-4",
+      "artifact_id": 14164199450,
+      "archive_sha256": "6cc2f4613a273f2e64e8fe04b64151f3d649acff7f6fedf619df0f9680d4b2ed",
+      "checkpoint_sha256": "34cc08b3fce970c873f327b1bb52d489104d5522f93a1020aa35ce2bb3c70506",
+      "report_sha256": "8ed2b67165b93e2160931b3977d4ff423c6a9bb5d3d9bba6ea5b831e6d8230b3",
+      "copied_files": 83,
+      "starting_fixed_count": 154,
+      "final_fixed_count": 134,
+      "new_trials": 40,
+      "new_closed_families": 20,
+      "cumulative_trials": 98,
+      "cumulative_closed_families": 67,
+      "best_in_family_verified": 225,
+      "retained_global_best_verified": 226,
+      "verification": {
+        "accepted": true,
+        "cardinality": 225,
+        "reports": [
+          {
+            "cardinality": 225,
+            "distinct_descendants": 6367,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "fc4183716581302b27b3dfd09b1fbf22403e2dc66ec5043953d3f985a25cad93"
+          },
+          {
+            "cardinality": 225,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25200,
+            "valid": true,
+            "witness_sha256": "fc4183716581302b27b3dfd09b1fbf22403e2dc66ec5043953d3f985a25cad93"
+          }
+        ]
+      },
+      "condition": "random_one",
+      "wall_seconds": 600.054552003,
+      "self_cpu_seconds": 1104.581616,
+      "children_cpu_seconds": 44.152294
+    },
+    {
+      "case": 5,
+      "source_run": 43721599974,
+      "source_sha": "e8915ee0d29c36364e33d347f475072e2ec1620d",
+      "artifact_name": "codegarden-min-growth-5",
+      "artifact_id": 14164529976,
+      "archive_sha256": "2f045c0d7628b17d221723f9001d28c805abaae92a83b7b3fbd5a70801b47205",
+      "checkpoint_sha256": "e69303b4d6d245f8b70f99a444056f4a830de415551b6a845ba6878c3061ec4b",
+      "report_sha256": "b30f48096035fd1294aee2fac44e84c9a5d393bb55deec60a0c33c101f3f672b",
+      "copied_files": 101,
+      "starting_fixed_count": 154,
+      "final_fixed_count": 119,
+      "new_trials": 49,
+      "new_closed_families": 35,
+      "cumulative_trials": 107,
+      "cumulative_closed_families": 82,
+      "best_in_family_verified": 225,
+      "retained_global_best_verified": 226,
+      "verification": {
+        "accepted": true,
+        "cardinality": 225,
+        "reports": [
+          {
+            "cardinality": 225,
+            "distinct_descendants": 6367,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "fc4183716581302b27b3dfd09b1fbf22403e2dc66ec5043953d3f985a25cad93"
+          },
+          {
+            "cardinality": 225,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25200,
+            "valid": true,
+            "witness_sha256": "fc4183716581302b27b3dfd09b1fbf22403e2dc66ec5043953d3f985a25cad93"
+          }
+        ]
+      },
+      "condition": "minimum_growth",
+      "wall_seconds": 600.063241254,
+      "self_cpu_seconds": 1079.866622,
+      "children_cpu_seconds": 54.398521
+    },
+    {
+      "case": 6,
+      "source_run": 43721599974,
+      "source_sha": "e8915ee0d29c36364e33d347f475072e2ec1620d",
+      "artifact_name": "codegarden-min-growth-6",
+      "artifact_id": 14165042246,
+      "archive_sha256": "f4dc2b222d4644242a05da136ea559143ef9dfdd4f2f048003357a273a3e7c50",
+      "checkpoint_sha256": "b7fef7fd98a4f130bf3a5da2c7849b55026941f0a0e09d17029dc6003147691e",
+      "report_sha256": "4cbf57236e3f9e6e1fb42a428dc8d34e5ca63eb24ed87e6b50287afb04321157",
+      "copied_files": 69,
+      "starting_fixed_count": 196,
+      "final_fixed_count": 186,
+      "new_trials": 33,
+      "new_closed_families": 10,
+      "cumulative_trials": 65,
+      "cumulative_closed_families": 15,
+      "best_in_family_verified": 225,
+      "retained_global_best_verified": 226,
+      "verification": {
+        "accepted": true,
+        "cardinality": 225,
+        "reports": [
+          {
+            "cardinality": 225,
+            "distinct_descendants": 6367,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "fc4183716581302b27b3dfd09b1fbf22403e2dc66ec5043953d3f985a25cad93"
+          },
+          {
+            "cardinality": 225,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25200,
+            "valid": true,
+            "witness_sha256": "fc4183716581302b27b3dfd09b1fbf22403e2dc66ec5043953d3f985a25cad93"
+          }
+        ]
+      },
+      "condition": "random_one",
+      "wall_seconds": 599.896200173,
+      "self_cpu_seconds": 1103.882508,
+      "children_cpu_seconds": 44.720766999999995
+    },
+    {
+      "case": 7,
+      "source_run": 43721599974,
+      "source_sha": "e8915ee0d29c36364e33d347f475072e2ec1620d",
+      "artifact_name": "codegarden-min-growth-7",
+      "artifact_id": 14165385646,
+      "archive_sha256": "c47c8e519c18a276a469f13e3393c48bc3273ca575af2ea3d0ae305aeda6cddb",
+      "checkpoint_sha256": "cf5d8246290b97df3a172bd26b9e30c76c84a95c66717e8a760213b1250a96c5",
+      "report_sha256": "ad92822e516c5340f441dd390746add6482d4ffd18bdb629d05f1e57a23d05b7",
+      "copied_files": 67,
+      "starting_fixed_count": 196,
+      "final_fixed_count": 190,
+      "new_trials": 32,
+      "new_closed_families": 6,
+      "cumulative_trials": 64,
+      "cumulative_closed_families": 11,
+      "best_in_family_verified": 225,
+      "retained_global_best_verified": 226,
+      "verification": {
+        "accepted": true,
+        "cardinality": 225,
+        "reports": [
+          {
+            "cardinality": 225,
+            "distinct_descendants": 6367,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "fc4183716581302b27b3dfd09b1fbf22403e2dc66ec5043953d3f985a25cad93"
+          },
+          {
+            "cardinality": 225,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25200,
+            "valid": true,
+            "witness_sha256": "fc4183716581302b27b3dfd09b1fbf22403e2dc66ec5043953d3f985a25cad93"
+          }
+        ]
+      },
+      "condition": "minimum_growth",
+      "wall_seconds": 600.047817362,
+      "self_cpu_seconds": 1113.805695,
+      "children_cpu_seconds": 39.107216
+    },
+    {
+      "case": 8,
+      "source_run": 43721599974,
+      "source_sha": "e8915ee0d29c36364e33d347f475072e2ec1620d",
+      "artifact_name": "codegarden-min-growth-8",
+      "artifact_id": 14166150077,
+      "archive_sha256": "ea1fdb6396f29ac226d29858c2e28f993e6c8779213358915ba78b5152ca0edf",
+      "checkpoint_sha256": "a20fde61ef68acce4020e64fb99499aa3352a522321b804beb94e7714d38d13c",
+      "report_sha256": "2d6e7eb854c0595a4c18c970de0ca9f891bbd79ad0f973ad131253b49c565d9d",
+      "copied_files": 63,
+      "starting_fixed_count": 118,
+      "final_fixed_count": 118,
+      "new_trials": 30,
+      "new_closed_families": 0,
+      "cumulative_trials": 141,
+      "cumulative_closed_families": 91,
+      "best_in_family_verified": 225,
+      "retained_global_best_verified": 226,
+      "verification": {
+        "accepted": true,
+        "cardinality": 225,
+        "reports": [
+          {
+            "cardinality": 225,
+            "distinct_descendants": 6400,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "9b47f026b188e2ef818ec7bd9e599bfd8f5cd60a99e09a3df424c6c2f17fe62b"
+          },
+          {
+            "cardinality": 225,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25200,
+            "valid": true,
+            "witness_sha256": "9b47f026b188e2ef818ec7bd9e599bfd8f5cd60a99e09a3df424c6c2f17fe62b"
+          }
+        ]
+      },
+      "condition": "random_one",
+      "wall_seconds": 600.0646899010001,
+      "self_cpu_seconds": 1129.6025339999999,
+      "children_cpu_seconds": 30.713936
+    },
+    {
+      "case": 9,
+      "source_run": 43721599974,
+      "source_sha": "e8915ee0d29c36364e33d347f475072e2ec1620d",
+      "artifact_name": "codegarden-min-growth-9",
+      "artifact_id": 14165616018,
+      "archive_sha256": "2c3cfa865d7443be68bde6d296d6528824960eb988f47c5224775285be095ece",
+      "checkpoint_sha256": "e41b2a928fd7bf3239534fce11917657abc31adde5b8000377e0d53cf6f35b51",
+      "report_sha256": "6b975415864c4ceaf70c111c8c915e01801beca7479fcf1a3cd5eeaef60a9467",
+      "copied_files": 65,
+      "starting_fixed_count": 118,
+      "final_fixed_count": 114,
+      "new_trials": 31,
+      "new_closed_families": 4,
+      "cumulative_trials": 142,
+      "cumulative_closed_families": 95,
+      "best_in_family_verified": 225,
+      "retained_global_best_verified": 226,
+      "verification": {
+        "accepted": true,
+        "cardinality": 225,
+        "reports": [
+          {
+            "cardinality": 225,
+            "distinct_descendants": 6400,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "9b47f026b188e2ef818ec7bd9e599bfd8f5cd60a99e09a3df424c6c2f17fe62b"
+          },
+          {
+            "cardinality": 225,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25200,
+            "valid": true,
+            "witness_sha256": "9b47f026b188e2ef818ec7bd9e599bfd8f5cd60a99e09a3df424c6c2f17fe62b"
+          }
+        ]
+      },
+      "condition": "minimum_growth",
+      "wall_seconds": 600.072561375,
+      "self_cpu_seconds": 1131.431632,
+      "children_cpu_seconds": 29.801851000000003
+    },
+    {
+      "case": 10,
+      "source_run": 43721599974,
+      "source_sha": "e8915ee0d29c36364e33d347f475072e2ec1620d",
+      "artifact_name": "codegarden-min-growth-10",
+      "artifact_id": 14165457104,
+      "archive_sha256": "f0302961f7ee030074f630e47fbe94ce806d8dce559e91e84a5e9119aff3e82d",
+      "checkpoint_sha256": "1a6302af058f5a9c84bb82f7bf1802d884c4a7bac760c7b6dbdced6fb65399e6",
+      "report_sha256": "032e64c1d283fc899861767899e168d5d0adbd87b8b950d2a9c7febe31862ad8",
+      "copied_files": 69,
+      "starting_fixed_count": 196,
+      "final_fixed_count": 185,
+      "new_trials": 33,
+      "new_closed_families": 11,
+      "cumulative_trials": 68,
+      "cumulative_closed_families": 20,
+      "best_in_family_verified": 225,
+      "retained_global_best_verified": 226,
+      "verification": {
+        "accepted": true,
+        "cardinality": 225,
+        "reports": [
+          {
+            "cardinality": 225,
+            "distinct_descendants": 6404,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "2290677b497268dcf7484daadc5b8ea07663896c9f8dc04f729be3f0674d703f"
+          },
+          {
+            "cardinality": 225,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25200,
+            "valid": true,
+            "witness_sha256": "2290677b497268dcf7484daadc5b8ea07663896c9f8dc04f729be3f0674d703f"
+          }
+        ]
+      },
+      "condition": "random_one",
+      "wall_seconds": 597.655791884,
+      "self_cpu_seconds": 1117.82946,
+      "children_cpu_seconds": 35.94734
+    },
+    {
+      "case": 11,
+      "source_run": 43721599974,
+      "source_sha": "e8915ee0d29c36364e33d347f475072e2ec1620d",
+      "artifact_name": "codegarden-min-growth-11",
+      "artifact_id": 14165377433,
+      "archive_sha256": "055b2f47cd016d7a98f5708feb8b818700ebbefb62488bf495907aeec65b973b",
+      "checkpoint_sha256": "b2ef6317270bb220486d6a06a998d5b703575f25b3bd24dd20f23dd5df12f527",
+      "report_sha256": "7e56707686fcc4501ab4449c9d7afb91bd1626183741e2a9b4a26c6728511727",
+      "copied_files": 69,
+      "starting_fixed_count": 196,
+      "final_fixed_count": 185,
+      "new_trials": 33,
+      "new_closed_families": 11,
+      "cumulative_trials": 68,
+      "cumulative_closed_families": 20,
+      "best_in_family_verified": 225,
+      "retained_global_best_verified": 226,
+      "verification": {
+        "accepted": true,
+        "cardinality": 225,
+        "reports": [
+          {
+            "cardinality": 225,
+            "distinct_descendants": 6404,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "2290677b497268dcf7484daadc5b8ea07663896c9f8dc04f729be3f0674d703f"
+          },
+          {
+            "cardinality": 225,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25200,
+            "valid": true,
+            "witness_sha256": "2290677b497268dcf7484daadc5b8ea07663896c9f8dc04f729be3f0674d703f"
+          }
+        ]
+      },
+      "condition": "minimum_growth",
+      "wall_seconds": 600.0514579850001,
+      "self_cpu_seconds": 1094.521653,
+      "children_cpu_seconds": 48.967951
+    },
+    {
+      "case": 12,
+      "source_run": 43721599974,
+      "source_sha": "e8915ee0d29c36364e33d347f475072e2ec1620d",
+      "artifact_name": "codegarden-min-growth-12",
+      "artifact_id": 14165017868,
+      "archive_sha256": "04d08597bd8ff2c0e9ff3ad1276a96bd68e877c52d2bd3dfa33a7b5c3ea7ed16",
+      "checkpoint_sha256": "ad9e572bdb9c483157ec6a036ed6c812f08a4d229dfd55da54041bed286e45db",
+      "report_sha256": "f9ab1c06e293e2f0bd5653a4606ff63afc6839138471777e72ccb4899afc2f4a",
+      "copied_files": 63,
+      "starting_fixed_count": 116,
+      "final_fixed_count": 116,
+      "new_trials": 30,
+      "new_closed_families": 0,
+      "cumulative_trials": 140,
+      "cumulative_closed_families": 90,
+      "best_in_family_verified": 225,
+      "retained_global_best_verified": 226,
+      "verification": {
+        "accepted": true,
+        "cardinality": 225,
+        "reports": [
+          {
+            "cardinality": 225,
+            "distinct_descendants": 6383,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "df5e2a95cf284304ffbde4df8b6a0f00d475edb6f0b580503e7b702887b2cd40"
+          },
+          {
+            "cardinality": 225,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25200,
+            "valid": true,
+            "witness_sha256": "df5e2a95cf284304ffbde4df8b6a0f00d475edb6f0b580503e7b702887b2cd40"
+          }
+        ]
+      },
+      "condition": "random_one",
+      "wall_seconds": 600.077833115,
+      "self_cpu_seconds": 1099.149119,
+      "children_cpu_seconds": 45.449996000000006
+    },
+    {
+      "case": 13,
+      "source_run": 43721599974,
+      "source_sha": "e8915ee0d29c36364e33d347f475072e2ec1620d",
+      "artifact_name": "codegarden-min-growth-13",
+      "artifact_id": 14164984688,
+      "archive_sha256": "5a583322b53be7bda2dee27957fa8d65594ccd69ea3bdb2c01971f9da0936e66",
+      "checkpoint_sha256": "9c6c0f9015034a687616d8ad4bb444c1a728646437101b05bfb61e62076cdaa1",
+      "report_sha256": "7a9af4021ab7aa27a561b51b0160e51a576a5adf7dbfc5e2ffeeb7569f8efef9",
+      "copied_files": 65,
+      "starting_fixed_count": 116,
+      "final_fixed_count": 110,
+      "new_trials": 31,
+      "new_closed_families": 6,
+      "cumulative_trials": 141,
+      "cumulative_closed_families": 96,
+      "best_in_family_verified": 225,
+      "retained_global_best_verified": 226,
+      "verification": {
+        "accepted": true,
+        "cardinality": 225,
+        "reports": [
+          {
+            "cardinality": 225,
+            "distinct_descendants": 6383,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "df5e2a95cf284304ffbde4df8b6a0f00d475edb6f0b580503e7b702887b2cd40"
+          },
+          {
+            "cardinality": 225,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25200,
+            "valid": true,
+            "witness_sha256": "df5e2a95cf284304ffbde4df8b6a0f00d475edb6f0b580503e7b702887b2cd40"
+          }
+        ]
+      },
+      "condition": "minimum_growth",
+      "wall_seconds": 600.0640275989999,
+      "self_cpu_seconds": 1131.7844460000001,
+      "children_cpu_seconds": 29.297449
+    },
+    {
+      "case": 14,
+      "source_run": 43721599974,
+      "source_sha": "e8915ee0d29c36364e33d347f475072e2ec1620d",
+      "artifact_name": "codegarden-min-growth-14",
+      "artifact_id": 14165326582,
+      "archive_sha256": "d204c703fde00280213a2e8b534d9469a6c4d7f02bfe9b9ad6b68d35db22e67e",
+      "checkpoint_sha256": "9a86d5bceafec8af807de96fa7571f02750e15d3480db8889bb2096d58532987",
+      "report_sha256": "ab86880fa0a49de9cbe469254646b31c6b3e39e3b3747f1bc9c6509c4c1d0bb3",
+      "copied_files": 67,
+      "starting_fixed_count": 192,
+      "final_fixed_count": 187,
+      "new_trials": 32,
+      "new_closed_families": 5,
+      "cumulative_trials": 62,
+      "cumulative_closed_families": 15,
+      "best_in_family_verified": 225,
+      "retained_global_best_verified": 226,
+      "verification": {
+        "accepted": true,
+        "cardinality": 225,
+        "reports": [
+          {
+            "cardinality": 225,
+            "distinct_descendants": 6374,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "a97a10dc3c2feb94433a0ff99a381af47f68d034d3332c17de35ad3302aa8edd"
+          },
+          {
+            "cardinality": 225,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25200,
+            "valid": true,
+            "witness_sha256": "a97a10dc3c2feb94433a0ff99a381af47f68d034d3332c17de35ad3302aa8edd"
+          }
+        ]
+      },
+      "condition": "random_one",
+      "wall_seconds": 600.048202339,
+      "self_cpu_seconds": 1102.250833,
+      "children_cpu_seconds": 46.064763
+    },
+    {
+      "case": 15,
+      "source_run": 43721599974,
+      "source_sha": "e8915ee0d29c36364e33d347f475072e2ec1620d",
+      "artifact_name": "codegarden-min-growth-15",
+      "artifact_id": 14165766443,
+      "archive_sha256": "50b60cd8a1ce7be3cf123096ab994d6bad54119215350346fc0239233e6ccc37",
+      "checkpoint_sha256": "5eae24da1430c10add8f040f7eff44e873648be766985e58cbaece54d80b77b4",
+      "report_sha256": "2c23370bf0ad8981a39af0d5892e56eda9e7cfd59114991f8884984e23db168b",
+      "copied_files": 69,
+      "starting_fixed_count": 192,
+      "final_fixed_count": 184,
+      "new_trials": 33,
+      "new_closed_families": 8,
+      "cumulative_trials": 63,
+      "cumulative_closed_families": 18,
+      "best_in_family_verified": 225,
+      "retained_global_best_verified": 226,
+      "verification": {
+        "accepted": true,
+        "cardinality": 225,
+        "reports": [
+          {
+            "cardinality": 225,
+            "distinct_descendants": 6374,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "a97a10dc3c2feb94433a0ff99a381af47f68d034d3332c17de35ad3302aa8edd"
+          },
+          {
+            "cardinality": 225,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25200,
+            "valid": true,
+            "witness_sha256": "a97a10dc3c2feb94433a0ff99a381af47f68d034d3332c17de35ad3302aa8edd"
+          }
+        ]
+      },
+      "condition": "minimum_growth",
+      "wall_seconds": 600.058997396,
+      "self_cpu_seconds": 1114.995913,
+      "children_cpu_seconds": 39.081736
+    }
+  ],
+  "best_independently_verified": 226,
+  "scope": "Evidence recovery, no repeated search/provider spending. Original pins preserved. Each incumbent passes both protected verifiers. Local negatives are scoped, without a formal global proof."
+}

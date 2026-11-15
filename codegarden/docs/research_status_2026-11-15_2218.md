@@ -1,0 +1,20 @@
+# Research status — no qualifying breakthrough
+
+As of2026-11-15 22:18UTC. The latest explicit user target is a new Einstein Arena leaderboard record. This supersedes the original global-record/deletion-code target for current problem selection; it does not justify claiming either a global result or227deletion-code words.
+
+## Verified mathematical result
+
+C2's best exact verified integer construction remains2764182317012209325424310583885229346642720637 /2868415937403266316664617946072713880495748028 ≈0.9636616088232245. Its NPY ancestor SHA256 is1dce5b2b6817d04bac8003bd330804486f5c78e488a3439c2cb1e9d0acefb151. This is about4.6761e-8 above the observed Arena leader0.9636615620620852, versus the required1e-5 increment. It is not a qualifying leaderboard record, and no solution was submitted. The original deletion-code best remains226, with no227construction.
+
+## Completed bounded experiments
+
+- C2 continuation run43766814616, sourcefc46fe0ab9a16d3bfb2353579c409d678fd4a420: two900second CPU arms from the verified warm start. Greedy propagation3607evaluations and endpoint propagation1811evaluations both retained the identical NPY witness and identical exact score. Endpoint continuation reached lower-scoring intermediate basins; no gain was found. Actual forward timings differed substantially between workers (~0.0444s vs~0.1873s), so this is not a clean claim about comparative throughput. The result supports stopping this particular schedule, not an impossibility theorem. Summary: https://github.com/howdymary/compute-forecasting/blob/codegarden-c2-continuation-001/codegarden/artifacts/c2/continuation_001/summary.json
+- Hadamard mixed run43766985456, sourcec49282fe07840a92ec7221c022c1d44bde2c8f79:240seconds,818139row-column pair visits,52360896binary alternating starts, no gain over43.33745596194037. Repeated stochastic visits are not exhaustive search of2^50border patterns. Summary: https://github.com/howdymary/compute-forecasting/blob/codegarden-hadamard-mixed-001/codegarden/artifacts/hadamard/mixed_001/summary.json
+-842sphere full LP run43767990585, source4f4823b9b15ed7195c9461c1255221201f4f241c: six LP calls all timed out with no feasible primal candidate. This is an infrastructure/algorithm budget outcome, not evidence of nonlinear optimality. Baseline penalty0.5309634950279605 was reproduced by the official checker and an independent90digit outward enclosure, width3.308e-86. Summary: https://github.com/howdymary/compute-forecasting/blob/codegarden-k842-slp-001/codegarden/artifacts/k842/slp_001/summary.json
+-842sphere fixed-outside run43768306206, source18e0c40e7cbb72f90a989000fc45e63a7a03dc91:24/64/128moving-point neighborhoods,14numerically optimal linearized LP solves, no accepted nonlinear improvement. Stopped after33.38seconds when the trust radius shrank below1e-10, within the240second cap. Numerical LP optimality is not a proof for the nonlinear neighborhood. Each actual point pool is logged and hashed. Summary: https://github.com/howdymary/compute-forecasting/blob/codegarden-k842-neighborhood-001/codegarden/artifacts/k842/neighborhood_001/summary.json
+
+Previously completed Kakeya pilots also found no gain. Hadamard larger4–12row repair code was drafted in memory but not launched or committed; it is not a tested method. Reading a primary paper or drafting an experiment is not a result. C2's unrestricted constant is already1 by Crmarić, Kovač and Rupčić, arXiv2611.12685, and finite Arena score improvements would not establish a new unrestricted constant.
+
+## Honest conclusion
+
+No meaningful mathematical breakthrough, new Arena#1record, new global record, or227word code has been achieved. Verification and integration work is genuine supporting infrastructure. The user explicitly asked for this status, and the answer is no. No account was registered and no Arena solution submitted during these batches. All described batches are terminal. The objective remains unachieved. The user paused research before consolidation to main; this snapshot does not restart it.

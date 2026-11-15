@@ -1,0 +1,53 @@
+{
+  "status": "completed",
+  "source_sha": "e2b8a3e3ef43e1cb797d39ec7680021719d3e7f6",
+  "resumed_from_source": "52c791940563a65257ba9783e4630580b95379ed",
+  "saved_decision": {
+    "action": "random8greedy",
+    "valid_action": true,
+    "strict_format": true,
+    "output_tokens": 5,
+    "raw_reply_sha256": "76415a5b5044ec5fef6161eb85315a8543a3a9d19e39b6acf8ad5902a2e42b82",
+    "state_sha256": "bb3004ebd4336ec3fdaa049af1251cc2aa3533c436d67e3f91f5872b89fb8a94",
+    "reservation": "7e39b20dbf4e41bfa29cb51b77156d6e",
+    "model": "Qwen/Qwen3.5-4B",
+    "used_action": "random8greedy",
+    "explicit_fallback": false,
+    "memory_source": "codegarden-43674296464-researcher-plateau_repair_method-c4127054",
+    "context_path": "codegarden/artifacts/feedback/decision_context.json"
+  },
+  "extra_model_calls": 0,
+  "extra_exa_calls": 0,
+  "best_verified": 226,
+  "execution_model": "Serialized logical roles with actual recalled content; no separately spawned assistant agents.",
+  "budget": {
+    "exa": {
+      "cap": 2,
+      "other_project_reserves": 15,
+      "verification_reserve": 5,
+      "reserved": 0.021,
+      "provider_reported_or_estimated": 0
+    },
+    "past": {
+      "cap": 500,
+      "other_project_reserves": 10200,
+      "verification_reserve": 5000,
+      "reserved": 53.0,
+      "provider_reported_or_estimated": 26.0
+    },
+    "modal": {
+      "cap": 10,
+      "other_project_reserves": 75,
+      "verification_reserve": 20,
+      "reserved": 6.84,
+      "provider_reported_or_estimated": 0
+    },
+    "tinker": {
+      "cap": 20,
+      "other_project_reserves": 140,
+      "verification_reserve": 10,
+      "reserved": 19.0,
+      "provider_reported_or_estimated": 0
+    }
+  }
+}

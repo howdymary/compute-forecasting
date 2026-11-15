@@ -1,0 +1,29 @@
+{
+  "upstream_revision": "2e4b3861b8063f05e8520434b97ce59e21ca49e7",
+  "file": "lib/mis/ils/ils.cpp",
+  "before_sha256": "b3ad67559508595047301e569e9b41862d69d3193f034a2ccf41d9e54eaac654",
+  "after_sha256": "be8112556a6e2a46d37dd657ff005cd74559e0087ba7fb6d4ef1b8a9b80eeb03",
+  "change": "Replace unsigned underflow with saturating decrement; previously documented CodeGarden adaptation, not an upstream method claim.",
+  "arithmetic_cases": [
+    {
+      "x": 0,
+      "after": 0
+    },
+    {
+      "x": 1,
+      "after": 0
+    },
+    {
+      "x": 2,
+      "after": 1
+    },
+    {
+      "x": 226,
+      "after": 225
+    },
+    {
+      "x": 4294967295,
+      "after": 4294967294
+    }
+  ]
+}

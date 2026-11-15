@@ -1,0 +1,57 @@
+{
+  "state": {
+    "length": 16,
+    "starting_cardinality": 220,
+    "weight_histogram": [
+      0,
+      1,
+      0,
+      4,
+      5,
+      20,
+      27,
+      26,
+      40,
+      31,
+      32,
+      17,
+      9,
+      7,
+      0,
+      0,
+      1
+    ],
+    "stagnation_cpu_seconds": 0.087,
+    "recent_verified_results": [
+      {
+        "action": "ejection3",
+        "gain": 0,
+        "cpu_seconds": 0.086688
+      }
+    ],
+    "remaining_search_cpu_seconds": 20,
+    "incumbent_sha256": "5fd68835843f0876b075167d175a5c75e7a40aae519de2c65b10ff616b5527d2",
+    "compiled_backend_mapping": {
+      "random8greedy": 1,
+      "random16greedy": 0,
+      "structural24greedy": 3,
+      "opportunity12exact": 4,
+      "random24exact": 4,
+      "conflict8exact": 2,
+      "random40greedy": 5,
+      "structural48exact": 3,
+      "opportunity6ejection": 2
+    }
+  },
+  "decision": {
+    "action": "random8greedy",
+    "valid_action": true,
+    "strict_format": true,
+    "output_tokens": 5,
+    "raw_reply_sha256": "76415a5b5044ec5fef6161eb85315a8543a3a9d19e39b6acf8ad5902a2e42b82",
+    "state_sha256": "db9819d83244731793420b058126fa7c245c9b77cf4e82d2d945f06709bd7d05",
+    "reservation": "ef21ef35fa844727856c51b7eaa2ea57",
+    "model": "Qwen/Qwen3.5-4B",
+    "prompt_tokens": 417
+  }
+}

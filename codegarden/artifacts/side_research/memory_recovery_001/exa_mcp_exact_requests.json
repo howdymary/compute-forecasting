@@ -1,0 +1,54 @@
+{
+  "research_date": "2026-11-15",
+  "requests": [
+    {
+      "tool": "web_search_exa",
+      "input": {
+        "query": "Primary research papers and author maintained source code for exact maximum clique solvers using bit parallelism, MaxSAT reasoning and stronger coloring bounds, especially CliSAT and MC-BRB, suitable for 600 to 3000 vertex repair neighborhoods of set packing problems",
+        "objective": "Prioritize original papers and authors' GitHub repositories. Extract the algorithmic improvement, implementation URL, license and reproducible evaluation. Exclude generic tutorials and unverified performance claims.",
+        "numResults": 5
+      },
+      "response_sha256": "3ce2cc15162243f129786db037707b0120a1caf82135028f221b834f0bb8e6aa",
+      "response_hash_format": "SHA-256 of UTF-8 JSON.stringify(tool_result); full copyrighted source excerpts are not republished"
+    },
+    {
+      "tool": "web_search_exa",
+      "input": {
+        "query": "An explicit binary two deletion correcting code of length 16 with 227 or more codewords, current largest constructions and source witnesses as of November 15 2026, comparing EinsteinArena kgrey 226 and Weindel Heckel 215",
+        "objective": "Find primary sources, arena solutions, original papers or construction repositories. Distinguish verified explicit witnesses from unverified announcements, upper bounds, other lengths and stale leaderboard summaries. Report absence of evidence rather than inventing a newer record.",
+        "numResults": 5
+      },
+      "response_sha256": "f240984c1f63b671a58685e0be4c9155e086245e7e80e41477882de265a6c2f8",
+      "response_hash_format": "SHA-256 of UTF-8 JSON.stringify(tool_result); full copyrighted source excerpts are not republished"
+    },
+    {
+      "tool": "web_fetch_exa",
+      "input": {
+        "urls": [
+          "https://github.com/psanse/CliSAT",
+          "https://modal.com/docs/guide/functions",
+          "https://tinker-docs.thinkingmachines.ai/tinker/cli/billing/index.md",
+          "https://past.dev/llms.txt"
+        ],
+        "maxCharacters": 14000
+      },
+      "response_sha256": "1c0a69b6c6fa5a2fb7f92a504ceeb09311c07da3b556718f16888310107b8a33",
+      "response_hash_format": "SHA-256 of UTF-8 JSON.stringify(tool_result); full copyrighted source excerpts are not republished"
+    },
+    {
+      "tool": "web_fetch_exa",
+      "input": {
+        "urls": [
+          "https://arxiv.org/abs/1801.00202",
+          "https://tinker-docs.thinkingmachines.ai/llms.txt",
+          "https://modal.com/docs/reference/modal.App"
+        ],
+        "maxCharacters": 14000
+      },
+      "response_sha256": "caba43f5920672a9531a8a1aaa187ea290bd7a933c27546dab12195acec85cdf",
+      "response_hash_format": "SHA-256 of UTF-8 JSON.stringify(tool_result); full copyrighted source excerpts are not republished"
+    }
+  ],
+  "rest_request_log": "../services_001/events.json",
+  "global_literature_audit_complete": false
+}

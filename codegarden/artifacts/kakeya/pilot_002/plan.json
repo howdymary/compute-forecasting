@@ -1,0 +1,215 @@
+{
+  "source_sha": "27b024422bc6be0b09d484251582ec5a21b9fd44",
+  "problem": "kakeya128",
+  "workers": [
+    {
+      "policy": "structural",
+      "label": "deep_uniform",
+      "aligned": false,
+      "resize": false,
+      "baseline_boundaries": [
+        0,
+        10,
+        36,
+        72,
+        104,
+        128
+      ],
+      "maxiter": 600,
+      "maxfun": 1600,
+      "seed": 260201,
+      "seconds": 600,
+      "widths": [
+        4,
+        8,
+        16,
+        32,
+        64
+      ],
+      "amplitudes": [
+        0.0001,
+        0.001,
+        0.01,
+        0.03
+      ],
+      "temperature": 0.0001,
+      "arena_incumbent": 0.10675138995168142
+    },
+    {
+      "policy": "structural",
+      "label": "deep_aligned",
+      "aligned": true,
+      "resize": true,
+      "baseline_boundaries": [
+        0,
+        10,
+        36,
+        72,
+        104,
+        128
+      ],
+      "maxiter": 600,
+      "maxfun": 1600,
+      "seed": 260201,
+      "seconds": 600,
+      "widths": [
+        4,
+        8,
+        16,
+        32,
+        64
+      ],
+      "amplitudes": [
+        0.0001,
+        0.001,
+        0.01,
+        0.03
+      ],
+      "temperature": 0.0001,
+      "arena_incumbent": 0.10675138995168142
+    },
+    {
+      "policy": "structural",
+      "label": "deep_uniform",
+      "aligned": false,
+      "resize": false,
+      "baseline_boundaries": [
+        0,
+        10,
+        36,
+        72,
+        104,
+        128
+      ],
+      "maxiter": 600,
+      "maxfun": 1600,
+      "seed": 260202,
+      "seconds": 600,
+      "widths": [
+        4,
+        8,
+        16,
+        32,
+        64
+      ],
+      "amplitudes": [
+        0.0001,
+        0.001,
+        0.01,
+        0.03
+      ],
+      "temperature": 0.0001,
+      "arena_incumbent": 0.10675138995168142
+    },
+    {
+      "policy": "structural",
+      "label": "deep_aligned",
+      "aligned": true,
+      "resize": true,
+      "baseline_boundaries": [
+        0,
+        10,
+        36,
+        72,
+        104,
+        128
+      ],
+      "maxiter": 600,
+      "maxfun": 1600,
+      "seed": 260202,
+      "seconds": 600,
+      "widths": [
+        4,
+        8,
+        16,
+        32,
+        64
+      ],
+      "amplitudes": [
+        0.0001,
+        0.001,
+        0.01,
+        0.03
+      ],
+      "temperature": 0.0001,
+      "arena_incumbent": 0.10675138995168142
+    },
+    {
+      "policy": "structural",
+      "label": "deep_uniform",
+      "aligned": false,
+      "resize": false,
+      "baseline_boundaries": [
+        0,
+        10,
+        36,
+        72,
+        104,
+        128
+      ],
+      "maxiter": 600,
+      "maxfun": 1600,
+      "seed": 260203,
+      "seconds": 600,
+      "widths": [
+        4,
+        8,
+        16,
+        32,
+        64
+      ],
+      "amplitudes": [
+        0.0001,
+        0.001,
+        0.01,
+        0.03
+      ],
+      "temperature": 0.0001,
+      "arena_incumbent": 0.10675138995168142
+    },
+    {
+      "policy": "structural",
+      "label": "deep_aligned",
+      "aligned": true,
+      "resize": true,
+      "baseline_boundaries": [
+        0,
+        10,
+        36,
+        72,
+        104,
+        128
+      ],
+      "maxiter": 600,
+      "maxfun": 1600,
+      "seed": 260203,
+      "seconds": 600,
+      "widths": [
+        4,
+        8,
+        16,
+        32,
+        64
+      ],
+      "amplitudes": [
+        0.0001,
+        0.001,
+        0.01,
+        0.03
+      ],
+      "temperature": 0.0001,
+      "arena_incumbent": 0.10675138995168142
+    }
+  ],
+  "resources": {
+    "cpu_each": 2,
+    "memory_mb": 2048
+  },
+  "pilot_deadline_utc": "2026-11-15T22:35:18+00:00",
+  "same_starting_witness": "18d5368754ea71ebb263aef53c38b48b7be775b93980acb223fa2bddc1217c1e",
+  "bounds": [
+    -3,
+    3
+  ],
+  "heuristic_scope": "Bounded local and basin hopping search; no global optimality claim."
+}

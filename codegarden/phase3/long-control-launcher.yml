@@ -1,0 +1,52 @@
+name: CodeGarden bounded logical-worker budget control
+on:
+  push:
+    branches: [codegarden-long-control-003]
+    paths: [.github/workflows/codegarden.yml]
+permissions:
+  contents: write
+concurrency:
+  group: codegarden-owned-worker-control
+  cancel-in-progress: false
+env:
+  SOURCE_SHA: ${{ github.sha }}
+  HF_HOME: ${{ github.workspace }}/codegarden/.cache/huggingface
+  XDG_CACHE_HOME: ${{ github.workspace }}/codegarden/.cache
+  PYTHONDONTWRITEBYTECODE: '1'
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install isolated authenticated clients
+        run: |
+          python -m venv codegarden/.venv
+          codegarden/.venv/bin/python -m pip install -r codegarden/requirements-providers.txt
+      - name: Verify logical CPU budget and preserve checkpoints before guarded owned-app stop
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: codegarden/.venv/bin/python -B -u codegarden/phase3/control_long.py
+      - name: Publish evidence and unresolved accounting
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -B codegarden/phase3/publish_long_control.py
+      - name: Retain all evidence even if a publisher fails
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: codegarden-phase3-research
+          path: |
+            codegarden/artifacts/phase3/long_control_001/
+            codegarden/artifacts/shared-budget.sqlite
+            codegarden/budget/shared-allocation.json
+            codegarden/budget/historical-usage.json

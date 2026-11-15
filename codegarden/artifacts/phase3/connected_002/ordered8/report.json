@@ -1,0 +1,49 @@
+{
+  "found": false,
+  "complete": true,
+  "cpu_seconds": 130.138,
+  "nodes": 1549486001,
+  "closed_blocker_sets": 15496115,
+  "cache_hits": 6341633,
+  "retained_closed_keys": 466948,
+  "cache_evictions": 15029167,
+  "k": 8,
+  "n": 16,
+  "memory_limited": false,
+  "budget_limited": false,
+  "neutral_cap_reached": false,
+  "candidate_count": 48034,
+  "profiled_bitset_bytes": 387023344,
+  "removed": [],
+  "added": [],
+  "neighbors": [],
+  "scope": "All outside words with at most k incumbent blockers; connected improving bundles suffice by the disjoint-blocker-component lemma. Complete is false on every time/node/memory/neighbor cap.",
+  "source_sha": "b8793b1483a34f9b9913a9c58850295f8b737304",
+  "starting_verification": {
+    "accepted": true,
+    "cardinality": 226,
+    "reports": [
+      {
+        "cardinality": 226,
+        "distinct_descendants": 6410,
+        "length": 16,
+        "method": "distinct_string_two_deletions",
+        "valid": true,
+        "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+      },
+      {
+        "cardinality": 226,
+        "largest_pairwise_lcs": 13,
+        "length": 16,
+        "method": "independent_dynamic_programming_lcs",
+        "pairs_checked": 25425,
+        "valid": true,
+        "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+      }
+    ]
+  },
+  "ordering": "descending blocker count then descendant size",
+  "candidate_order_sha256": "e0ecd3b96ff0f6defcccf60022a3a407a1beb27e233d29179c819e74004bd12e",
+  "canonical_candidate_pool_sha256": "b9c645a151284e112b0ac60de0dff69fed5e685d39af7ee1bbc6c81e92d65916",
+  "proof_lemma": "A deficient compatible bundle has a deficient blocker-connected component. A connected bundle has a unique parent obtained by deleting its largest non-root non-articulation vertex."
+}

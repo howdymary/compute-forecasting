@@ -1,0 +1,161 @@
+{
+  "source_sha": "ec7db8a6d52768fdea5ad356cf45e416926aa3c7",
+  "starting_witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa",
+  "state_cap": 64,
+  "states": [
+    {
+      "id": 0,
+      "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa",
+      "independent_verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6410,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+          }
+        ]
+      },
+      "all_neutral_neighbors": [
+        {
+          "remove": 584,
+          "add": 1096,
+          "neighbor_witness_sha256": "e9c51c92a3cd366e09fdb43cbd104b3376a3e06d654f6fb2695b9c679b6bf76e",
+          "neighbor_id": 1
+        }
+      ],
+      "compatible_new_words_without_removal": [],
+      "candidate_universe_sha256": "91facb724b2bc1cd49df010cfbd1207d107f0c6b9c3935b5ecef8ba87cd015f9"
+    },
+    {
+      "id": 1,
+      "witness_sha256": "e9c51c92a3cd366e09fdb43cbd104b3376a3e06d654f6fb2695b9c679b6bf76e",
+      "independent_verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6410,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "e9c51c92a3cd366e09fdb43cbd104b3376a3e06d654f6fb2695b9c679b6bf76e"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "e9c51c92a3cd366e09fdb43cbd104b3376a3e06d654f6fb2695b9c679b6bf76e"
+          }
+        ]
+      },
+      "all_neutral_neighbors": [
+        {
+          "remove": 1096,
+          "add": 584,
+          "neighbor_witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa",
+          "neighbor_id": 0
+        }
+      ],
+      "compatible_new_words_without_removal": [],
+      "candidate_universe_sha256": "91facb724b2bc1cd49df010cfbd1207d107f0c6b9c3935b5ecef8ba87cd015f9"
+    }
+  ],
+  "complete_component": true,
+  "scope": "Connected component under exactly one incumbent removal and one different word addition, preserving cardinality. Enumeration only; not global optimality.",
+  "additional_state_sweeps": [
+    {
+      "k": 1,
+      "found": false,
+      "complete": true,
+      "status": "EXHAUSTED_EXACT_K_NEW_WORD_EXCHANGES",
+      "removal_sets_checked": 226,
+      "candidate_checks": 0,
+      "universe_scanned": 65536,
+      "seconds": 0.00759224,
+      "removed": [],
+      "added": [],
+      "candidate_pool": [],
+      "state_id": 1,
+      "incumbent_witness_sha256": "e9c51c92a3cd366e09fdb43cbd104b3376a3e06d654f6fb2695b9c679b6bf76e",
+      "candidate_universe_sha256": "91facb724b2bc1cd49df010cfbd1207d107f0c6b9c3935b5ecef8ba87cd015f9",
+      "total_removal_sets": 226,
+      "source_sha": "ec7db8a6d52768fdea5ad356cf45e416926aa3c7",
+      "restriction": "Exactly k removed and k+1 new words outside this specific state"
+    },
+    {
+      "k": 2,
+      "found": false,
+      "complete": true,
+      "status": "EXHAUSTED_EXACT_K_NEW_WORD_EXCHANGES",
+      "removal_sets_checked": 25425,
+      "candidate_checks": 105,
+      "universe_scanned": 65536,
+      "seconds": 0.0128658,
+      "removed": [],
+      "added": [],
+      "candidate_pool": [],
+      "state_id": 1,
+      "incumbent_witness_sha256": "e9c51c92a3cd366e09fdb43cbd104b3376a3e06d654f6fb2695b9c679b6bf76e",
+      "candidate_universe_sha256": "91facb724b2bc1cd49df010cfbd1207d107f0c6b9c3935b5ecef8ba87cd015f9",
+      "total_removal_sets": 25425,
+      "source_sha": "ec7db8a6d52768fdea5ad356cf45e416926aa3c7",
+      "restriction": "Exactly k removed and k+1 new words outside this specific state"
+    },
+    {
+      "k": 3,
+      "found": false,
+      "complete": true,
+      "status": "EXHAUSTED_EXACT_K_NEW_WORD_EXCHANGES",
+      "removal_sets_checked": 1898400,
+      "candidate_checks": 14010,
+      "universe_scanned": 65536,
+      "seconds": 0.40681,
+      "removed": [],
+      "added": [],
+      "candidate_pool": [],
+      "state_id": 1,
+      "incumbent_witness_sha256": "e9c51c92a3cd366e09fdb43cbd104b3376a3e06d654f6fb2695b9c679b6bf76e",
+      "candidate_universe_sha256": "91facb724b2bc1cd49df010cfbd1207d107f0c6b9c3935b5ecef8ba87cd015f9",
+      "total_removal_sets": 1898400,
+      "source_sha": "ec7db8a6d52768fdea5ad356cf45e416926aa3c7",
+      "restriction": "Exactly k removed and k+1 new words outside this specific state"
+    },
+    {
+      "k": 4,
+      "found": false,
+      "complete": true,
+      "status": "EXHAUSTED_EXACT_K_NEW_WORD_EXCHANGES",
+      "removal_sets_checked": 105835800,
+      "candidate_checks": 1226937,
+      "universe_scanned": 65536,
+      "seconds": 58.3741,
+      "removed": [],
+      "added": [],
+      "candidate_pool": [],
+      "state_id": 1,
+      "incumbent_witness_sha256": "e9c51c92a3cd366e09fdb43cbd104b3376a3e06d654f6fb2695b9c679b6bf76e",
+      "candidate_universe_sha256": "91facb724b2bc1cd49df010cfbd1207d107f0c6b9c3935b5ecef8ba87cd015f9",
+      "total_removal_sets": 105835800,
+      "source_sha": "ec7db8a6d52768fdea5ad356cf45e416926aa3c7",
+      "restriction": "Exactly k removed and k+1 new words outside this specific state"
+    }
+  ]
+}

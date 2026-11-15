@@ -1,0 +1,120 @@
+{
+  "union_size": 260,
+  "left": 35,
+  "right": 35,
+  "common": 190,
+  "union_alpha": 225,
+  "levels": [
+    {
+      "outside_limit": 2,
+      "required_union_size": 225,
+      "filter_complete": true,
+      "filter_matching_queries": 90,
+      "candidate_pool": [],
+      "search_order": [],
+      "completed_roots": 0,
+      "active_root": -1,
+      "complete": true,
+      "cpu_seconds_cumulative": 0.022273,
+      "candidate_pool_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "search_order_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "proof_artifact": null
+    },
+    {
+      "outside_limit": 3,
+      "required_union_size": 224,
+      "filter_complete": true,
+      "filter_matching_queries": 705,
+      "candidate_pool": [
+        69,
+        57360,
+        57376
+      ],
+      "search_order": [
+        69,
+        57360,
+        57376
+      ],
+      "completed_roots": 3,
+      "active_root": 2,
+      "complete": true,
+      "cpu_seconds_cumulative": 0.032122,
+      "candidate_pool_sha256": "d47d649a6691da4a9fb99714d50961767ee77b0f9159b41f626261fd5bc8efe2",
+      "search_order_sha256": "d47d649a6691da4a9fb99714d50961767ee77b0f9159b41f626261fd5bc8efe2",
+      "proof_artifact": null
+    }
+  ],
+  "matching_calls": 652,
+  "memo_hits": 154,
+  "nodes": 3,
+  "found227_unverified": false,
+  "timed_out": false,
+  "cpu_seconds": 0.032126,
+  "scope": "Full two-parent union with at most2 or3 arbitrary outside words for each completed level; exact bipartite matching after outside conflicts. Interrupted roots/filters remain open. Not all codes or global optimality.",
+  "source_sha": "f54584e7088915cc9e8cd8863a155dcb984bb6fd",
+  "case": 1,
+  "plan_sha256": "4a64a73d70e32ea6c216b37f079da5e84eb59ab099b171c7a78ae2116afe6a61",
+  "parent_sha256": [
+    "fc4183716581302b27b3dfd09b1fbf22403e2dc66ec5043953d3f985a25cad93",
+    "fd6fc6baff0f36e9e59df3e1ce4f9457ce966df52cfe458d63ba3f7dbaa30f5f"
+  ],
+  "parent_verifications": [
+    {
+      "accepted": true,
+      "cardinality": 225,
+      "reports": [
+        {
+          "cardinality": 225,
+          "distinct_descendants": 6367,
+          "length": 16,
+          "method": "distinct_string_two_deletions",
+          "valid": true,
+          "witness_sha256": "fc4183716581302b27b3dfd09b1fbf22403e2dc66ec5043953d3f985a25cad93"
+        },
+        {
+          "cardinality": 225,
+          "largest_pairwise_lcs": 13,
+          "length": 16,
+          "method": "independent_dynamic_programming_lcs",
+          "pairs_checked": 25200,
+          "valid": true,
+          "witness_sha256": "fc4183716581302b27b3dfd09b1fbf22403e2dc66ec5043953d3f985a25cad93"
+        }
+      ]
+    },
+    {
+      "accepted": true,
+      "cardinality": 225,
+      "reports": [
+        {
+          "cardinality": 225,
+          "distinct_descendants": 6360,
+          "length": 16,
+          "method": "distinct_string_two_deletions",
+          "valid": true,
+          "witness_sha256": "fd6fc6baff0f36e9e59df3e1ce4f9457ce966df52cfe458d63ba3f7dbaa30f5f"
+        },
+        {
+          "cardinality": 225,
+          "largest_pairwise_lcs": 13,
+          "length": 16,
+          "method": "independent_dynamic_programming_lcs",
+          "pairs_checked": 25200,
+          "valid": true,
+          "witness_sha256": "fd6fc6baff0f36e9e59df3e1ce4f9457ce966df52cfe458d63ba3f7dbaa30f5f"
+        }
+      ]
+    }
+  ],
+  "union_pool_sha256": "febdac03137d57a819b288db51e6f34bd3872f69a9fb546572bdfd75d3e5557c",
+  "initial_extra_universe_sha256": "7ea70e58d12753bd2aee3de581df2df4d9daa0dcb97136bdebae104234f8ff66",
+  "tests": {
+    "brute_force_bipartite_deletion_cases": 1440,
+    "passed": true
+  },
+  "solutions": [],
+  "best_independently_verified": 226,
+  "wall_including_verification": 0.3275356409999972,
+  "formal_absence_certificate": false,
+  "novel226_sampling": "Witnesses at non-goal nodes are sampled every17nodes, cap16. Every reachable227 target is checked; no exhaustive novelty claim."
+}

@@ -1,0 +1,87 @@
+{
+  "mode": "strict5",
+  "source_sha": "50a82878caf37d72691d4004bea5670c410eec10",
+  "best_verified": 226,
+  "baseline": {
+    "accepted": true,
+    "cardinality": 226,
+    "reports": [
+      {
+        "cardinality": 226,
+        "distinct_descendants": 6410,
+        "length": 16,
+        "method": "distinct_string_two_deletions",
+        "valid": true,
+        "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+      },
+      {
+        "cardinality": 226,
+        "largest_pairwise_lcs": 13,
+        "length": 16,
+        "method": "independent_dynamic_programming_lcs",
+        "pairs_checked": 25425,
+        "valid": true,
+        "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+      }
+    ]
+  },
+  "processed": 1,
+  "discovered": 1,
+  "frontier": 0,
+  "rows": [
+    {
+      "found": false,
+      "complete": false,
+      "cpu_seconds": 4.29832,
+      "nodes": 6000000,
+      "k": 5,
+      "n": 16,
+      "memory_limited": false,
+      "budget_limited": true,
+      "neutral_cap_reached": false,
+      "candidate_count": 11374,
+      "profiled_bitset_bytes": 39527392,
+      "removed": [],
+      "added": [],
+      "scope": "All outside words with at most k incumbent blockers; cliques up to k+1 new words. Complete is false on every time/node/memory/neighbor cap.",
+      "candidate_pool_sha256": "10359f03e9dcd7fd067997f26e9e567a74e5d92989a157f054ec01d05cbfbda6",
+      "candidate_pool_definition": "Every outside 16-bit word with at most k distinct incumbent blockers; reconstruct from state witness.",
+      "neutral_neighbors_returned": 0,
+      "incumbent_witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa",
+      "incumbent_file": "state_0.txt",
+      "parameters": {
+        "seconds": 180,
+        "nodes": 6000000,
+        "neutral_cap": 0
+      },
+      "verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6410,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+          }
+        ]
+      }
+    }
+  ],
+  "complete_component": false,
+  "scope": "Restricted blocker-union neighborhoods, at most k removed; caps make enumeration incomplete. No global optimality.",
+  "kernel_cpu_seconds": 4.29832,
+  "wall_seconds": 5.288044103000001,
+  "provider_calls": 0
+}

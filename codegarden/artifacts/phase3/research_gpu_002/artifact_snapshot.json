@@ -1,0 +1,201 @@
+{
+  "updated_at": "2026-11-15T11:06:00Z",
+  "target_achieved": false,
+  "best_found": 226,
+  "best_independently_verified": 226,
+  "arena_incumbent": {
+    "cardinality": 226,
+    "agent": "kgrey",
+    "id": 2778,
+    "hash": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+  },
+  "new_consolidated": [
+    {
+      "prefix": "breakout_001",
+      "branch": "codegarden-breakout-003",
+      "commit": "13c61f4e429828dd9609052d358e240d44c08201",
+      "files": 83
+    },
+    {
+      "prefix": "pair_breakout_001",
+      "branch": "codegarden-pair-breakout-003",
+      "commit": "8eb4b49c189c63061137d78e5db9474319ce6edf",
+      "files": 67
+    },
+    {
+      "prefix": "pair_events_001",
+      "branch": "codegarden-pair-events-003",
+      "commit": "aaae709e2c93b850219369653307824ba21a23dc",
+      "files": 75
+    },
+    {
+      "prefix": "frontier8_001",
+      "branch": "codegarden-frontier8-003",
+      "commit": "ca8466f6978ca260662147825432ebe3405431a4",
+      "files": 67
+    },
+    {
+      "prefix": "long_snapshot_003",
+      "branch": "codegarden-observer-005",
+      "commit": "d3607f55337e57f53b872dcfc499d37fab3d964f",
+      "files": 17
+    }
+  ],
+  "previous_main": "e9a1b311d16d708dccad6c194fd06cd422773f31",
+  "completed_root_radius": 9,
+  "formal_absence_proof": false,
+  "active": [
+    {
+      "branch": "codegarden-modal-009",
+      "run": 43698542525,
+      "source": "9e02d5fbec4b5bef09c05f3182dc6f7109ea1090",
+      "completed_logical_cases": 7,
+      "scope": "Seven6000CPU cases finished at225; retried case2 counted across attempts, censored from matched totals"
+    },
+    {
+      "branch": "codegarden-long-control-003",
+      "run": 43706689697,
+      "source": "79bf6f41f1f4ead4603670982329e2f7d470ea86",
+      "scope": "Zero newworkers; preserve verified snapshots; stop only exact owned app after all logical CPU budgets spent and other seven cases completed"
+    },
+    {
+      "branch": "codegarden-resume10-003",
+      "run": 43705132167,
+      "source": "06000bb4fd75dda6cbdd442e10adf062093d501f",
+      "scope": "24small disjoint interval tests passed. Some partitions completed; no full radius10 claim yet."
+    },
+    {
+      "branch": "codegarden-basin-escape-003",
+      "run": 43706852924,
+      "source": "bccf0a52d26996dbc34b3024b93eeff9643afcc3",
+      "scope": "Seek226 while excluding every known symmetry family using an explicit hitting set, then attempt227"
+    }
+  ],
+  "accounting": {
+    "conservative_holds": {
+      "exa": 0.098,
+      "past": 278,
+      "modal": 148.98,
+      "tinker": 22.85
+    },
+    "modal_old_holds": 141.76,
+    "modal_long_reservation": 7.22,
+    "modal_cap": 150,
+    "modal_account_wide_metering": 3.37021913,
+    "not_attributed_spend": true,
+    "pending_gpu_maximum": 0.868,
+    "maximum_held_if_executed": 149.848,
+    "retry_audit": {
+      "snapshot_at": "2026-11-15T10:13:25.311257+00:00",
+      "source_sha": "9e02d5fbec4b5bef09c05f3182dc6f7109ea1090",
+      "max_containers": 8,
+      "cpu_hard_limit": 1,
+      "memory_gib_hard_limit": 1,
+      "controller_timeout_seconds": 9000,
+      "shutdown_guard_seconds": 600,
+      "maximum_region_multiplier": 1.75,
+      "extra_nonpreemptible_sensitivity_multiplier": 3,
+      "base_rate_per_resource_second": 1.5361111111111113e-05,
+      "conservative_whole_batch_bound_usd": 6.693600000000001,
+      "reservation_held_usd": 7.22,
+      "covered": true,
+      "duplicate_logical_case": 2,
+      "duplicate_cause": "Unresolved; do not assume an extra independent case or count missing progress as failure",
+      "evaluation": "Pair containing case2 must be censored or include recovered attempt CPU overhead before a matched-total-compute claim."
+    },
+    "metering_observed_at": "2026-11-15T10:44:36Z"
+  },
+  "latest_findings": {
+    "revisit": {
+      "states": 412,
+      "upgrades": 0,
+      "radius6_completed": 412,
+      "radius7_completed": 153,
+      "radius7_remainder": "timeouts; no impossibility"
+    },
+    "arc_hamming": {
+      "pivots": 128,
+      "status": "all CP-SAT UNKNOWN",
+      "independent_pruning_replay": true
+    },
+    "hamming_diagnostic": {
+      "pivot": 7932,
+      "hard_default": "UNKNOWN",
+      "hard_no_presolve": "UNKNOWN",
+      "soft_default": 225,
+      "soft_no_presolve": 225,
+      "seconds_per_config": 60
+    },
+    "exact_lns": {
+      "cases": 8,
+      "cpu_seconds_per_case": 180,
+      "new226_orbits": 0,
+      "scope": "Repeated finite repairs; aggregate exact-negative counts do not count unique neighborhoods"
+    },
+    "tensor_cpu4": {
+      "native_steps": 13800,
+      "wall_seconds": 300.03513071399993,
+      "min_raw_energy": 2,
+      "quota_min_raw_energy": 11,
+      "projections_verified": 57,
+      "new226_orbits": 0,
+      "scope": "Positive energy invalid; known226 recovery only",
+      "cli_issue": "--steps parsed but not forwarded in frozen prototypes; actual recorded step counts are authoritative. Current source fixes forwarding."
+    },
+    "breakout": {
+      "cases": 8,
+      "seconds_per_case": 300,
+      "verified227": 0,
+      "novel226": 0,
+      "raw_minima": [
+        4,
+        5,
+        2,
+        2,
+        4,
+        5,
+        5,
+        5
+      ]
+    },
+    "pair_conflict_search": {
+      "cases": 8,
+      "seconds_per_case": 300,
+      "novel226": 0,
+      "verified227": 0,
+      "pair_conflict_minima": [
+        1,
+        1,
+        1,
+        1,
+        2,
+        2,
+        2,
+        2
+      ],
+      "scope": "Equal native CPU budgets; fixed/adaptive best pair scores tied in all four matched pairs; no policy improvement demonstrated"
+    },
+    "pair_event_capture": {
+      "cases": 8,
+      "seconds_per_case": 300,
+      "novel226_events": 0,
+      "verified227": 0,
+      "scope": "Ordinary one-edge swap states are projected and compared exactly against known226 families. Restart intermediate states are not exhaustively captured. Any new226 would receive protected verification and bounded exact polish."
+    },
+    "frontier8": {
+      "cases": 32,
+      "upgrades": 0,
+      "completed_no_improvement": 6,
+      "timeouts": 26,
+      "native_cpu_seconds": 3772.4937999999997
+    }
+  },
+  "pending": [
+    {
+      "branch": "codegarden-research-gpu-003",
+      "source": "0221384cb28b67be89565a01fe17d5f97fbcb084",
+      "run": 43704414840,
+      "gate": "Wait for current paid coordinator; actual provider balance, shared holds, memory gate, protected math tests, then measured GPU speedup"
+    }
+  ]
+}
