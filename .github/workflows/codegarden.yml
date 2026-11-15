@@ -1,18 +1,18 @@
-name: CodeGarden infeasible-space hypotheses
+name: CodeGarden event-driven new226 basin capture
 on:
   push:
-    branches: [codegarden]
+    branches: [codegarden-pair-events-003]
     paths: [.github/workflows/codegarden.yml]
   workflow_dispatch:
 permissions:
   contents: write
 concurrency:
-  group: codegarden-only
+  group: codegarden-free-pair-events-003
   cancel-in-progress: false
 env:
   PYTHONDONTWRITEBYTECODE: '1'
   SOURCE_SHA: ${{ github.sha }}
-  CODEGARDEN_BATCH: infeasible_probe_003
+  CODEGARDEN_BATCH: pair_events_001
 jobs:
   preflight:
     runs-on: ubuntu-latest
@@ -22,54 +22,46 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      - name: Compile kernel and independently test energy updates
+      - name: Compile and independently exhaust small cases
         run: |
           mkdir -p codegarden/.build
-          g++ -O3 -std=c++17 codegarden/phase3/infeasible.cpp -o codegarden/.build/infeasible
-          python -B codegarden/phase3/test_infeasible.py
-          python -B codegarden/phase3/preflight.py
-      - name: Retain preflight evidence
-        if: always()
-        uses: actions/upload-artifact@v4
+          g++ -O3 -std=c++17 codegarden/phase3/pair_events.cpp -o codegarden/.build/pair_events
+          g++ -O3 -std=c++17 codegarden/phase3/test_pair_events.cpp -o codegarden/.build/pair_test
+          python -B -u codegarden/phase3/test_pair_events.py
+          python -B -u codegarden/phase3/preflight.py
+      - uses: actions/upload-artifact@v4
         with:
-          name: codegarden-cg3-preflight
-          path: codegarden/artifacts/phase3/infeasible_probe_003/
+          name: codegarden-bundle-preflight
+          path: codegarden/artifacts/phase3/pair_events_001/
   probes:
     needs: preflight
     runs-on: ubuntu-latest
-    timeout-minutes: 16
+    timeout-minutes: 20
     strategy:
       fail-fast: false
       max-parallel: 4
       matrix:
-        seed: [950000, 950001, 950002, 950003]
+        case: [0, 1, 2, 3, 4, 5, 6, 7]
     steps:
       - name: Fetch immutable source
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
       - uses: actions/download-artifact@v4
         with:
-          name: codegarden-cg3-preflight
-          path: codegarden/artifacts/phase3/infeasible_probe_003/
-      - name: Compile isolated native worker
+          name: codegarden-bundle-preflight
+          path: codegarden/artifacts/phase3/pair_events_001/
+      - name: Compile and run bounded component
         run: |
           mkdir -p codegarden/.build
-          g++ -O3 -std=c++17 codegarden/phase3/infeasible.cpp -o codegarden/.build/infeasible
-      - name: Test two paired 60-CPU-second hypotheses from different code families
-        run: python -B -u codegarden/phase3/probe.py --seed ${{ matrix.seed }} --seconds 60
-      - name: Retain every checkpoint and proposal, even on failure
+          g++ -O3 -std=c++17 codegarden/phase3/pair_events.cpp -o codegarden/.build/pair_events
+          g++ -O3 -std=c++17 codegarden/phase3/bundle_guard.cpp -o codegarden/.build/bundle
+          python -B -u codegarden/phase3/pair_events_probe.py --case ${{ matrix.case }}
+      - uses: actions/upload-artifact@v4
         if: always()
-        uses: actions/upload-artifact@v4
         with:
-          name: codegarden-cg3-probe-${{ matrix.seed }}
-          path: codegarden/artifacts/phase3/infeasible_probe_003/
+          name: codegarden-bundle-${{ matrix.case }}
+          path: codegarden/artifacts/phase3/pair_events_001/
   collect:
     needs: [preflight, probes]
     if: always()
@@ -80,21 +72,17 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
       - uses: actions/download-artifact@v4
         with:
-          pattern: codegarden-cg3-*
+          pattern: codegarden-bundle-*
           merge-multiple: true
-          path: codegarden/artifacts/phase3/infeasible_probe_003/
-      - name: Independently accept proposals and publish leased checkpoint
+          path: codegarden/artifacts/phase3/pair_events_001/
+      - name: Publish leased results
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python -B -u codegarden/phase3/publish.py
-      - name: Retain collected evidence
+        run: python -B -u codegarden/phase3/publish_pair_events.py
+      - uses: actions/upload-artifact@v4
         if: always()
-        uses: actions/upload-artifact@v4
         with:
-          name: codegarden-cg3-collected
-          path: codegarden/artifacts/phase3/infeasible_probe_003/
+          name: codegarden-bundle-collected
+          path: codegarden/artifacts/phase3/pair_events_001/
