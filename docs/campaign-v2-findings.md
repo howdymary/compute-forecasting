@@ -1,135 +1,121 @@
 # Compute Forecast v2: measured findings
 
-V2 is a separate retrospective study. The original frozen SFT result remains 0.01781945 versus 0.01735406 for the starting policy (2.68% worse); its official 111-row submission has not changed.
+All six selected SFT checkpoints lower pooled loss versus starting weights on three reused, dependent A100 dates. This is a retrospective result; it does not replace the original frozen submission.
 
-**All six selected SFT checkpoints lower loss versus starting weights on the new retrospective evaluation; the development-selected operational checkpoint scores 0.01156980 versus 0.01499533 (22.84% lower).** Five of six feedback-hidden controls tie the corresponding trained procedure, so incremental feedback value remains unresolved. RL and the complete-metadata GP comparison are still running. This is a progress report, not a claim of completed reward-learning improvement.
+The development-selected operational checkpoint is soft/seed 17, update 100: 0.01156980 pinball versus 0.01499533 for starting weights (22.84% lower). Agent-feedback-hidden controls tie in 5/6 SFT runs.
+Three RL reports cover 99 actual optimizer updates: 0 lower loss versus their SFT parent, 3 tie and 0 increase loss. Completing updates is separate from demonstrating improvement.
 
-## What was actually run
+The original frozen v1 SFT result remains 0.01781945 versus 0.01735406 starting (2.68% worse). Its 111-row, 37-series November 6 export remains byte-identical.
 
-- A registered 42-configuration numerical grid across 18 origins, including validation-support origins: 756 method-origin results from 18 completed Modal origin executions.
-- Six Qwen3.5-4B rank-16 Tinker SFT runs: hard/soft objectives, seeds 17/29/43, 100 optimizer updates each, checkpoints 0/20/50/100. Total: 600 SFT updates across six models, not 600 updates to one model.
-- Three exploratory RL runs selected their SFT parents by development loss only. Sampling-iteration ceilings and actual optimizer updates are reported separately.
-- Current-methodological Exa evidence, fresh operational numerical research, authored past.dev exchanges and controlled inference-time context ablations.
-- Matched price-value removal, actual preprocessing-availability audit, and a timestamped prospective manifest with outcomes pending.
+## What the experiment measures
 
-Training has nine eligible series-origin tasks over six dates; development has six tasks over three dates. Selector evaluation has four tasks over **three dependent dates and 12 series-horizon cells**, all A100 40GB or A100 SXM 80GB. A100 40GB contributes three cells and SXM 80GB nine cells. These are not 12 independent market histories. The full numerical-grid table has 15 cells and cannot be directly compared with the selector table.
+The pack measures advertised GPU rental offers, not transactions, available capacity or hardware resale values. Original targets and the Pacific scorer are retained.
+V2 training has nine eligible tasks across six dates (June 20/27, July 4/11/18/24), with every reward label ending by July 31. Development has six tasks over August 8/15/22. Selector evaluation has four tasks over August 29, September 5/12: 12 series-horizon cells, three dependent dates, A100 40GB and A100 SXM 80GB only.
+These evaluation dates were previously inspected during v1 development. They are excluded from new weight updates/checkpoint selection, but are not an untouched test. The original September 27–October 25 final and restricted November 7–13 outcomes are excluded.
+The full numerical-grid evaluation has 15 cells. Its scores must not be mixed with the 12-cell selector scores. A100 40GB contributes three selector cells and SXM 80GB nine; pooled SFT improvement is concentrated in SXM 80GB. SFT loss on A100 40GB is 0.00290788 versus 0.00254829 starting, about 14.1% worse.
 
-The evaluation dates (August 29, September 5/12) were previously inspected during v1 development. New weights and checkpoint selection exclude them, but this is not an untouched or prospective test. The original September 27–October 25 final and restricted November 7–13 competition outcomes are excluded from v2.
+## Matched selector comparison
 
-## Controlled selector results
+All search procedures use the same 42 candidates, two common persistence starts and four additional choices. The final deterministic chooser minimizes revealed matured validation loss. The six-trial budget counts cached result reveals, not equal wall time, dollars or offline training expenditure.
 
-Every selector receives the same 42-arm pool, common persistence starts and four additional choices. The final forecaster minimizes revealed matured validation loss. Cached numerical feedback is explicit; six result reveals are not six new backtests or equal training expenditure.
-
-| Procedure | Pinball ↓ | Skill against last value |
+| Procedure | Pinball | Skill vs last value |
 | --- | ---: | ---: |
+| Official last value | 0.01590833 | 0.00% |
 | Starting policy | 0.01499533 | 5.74% |
-| Development-selected SFT (soft / 17, update 100) | 0.01156980 | 27.27% |
-| Hard SFT mean, seeds 17/29/43 | 0.01156980 | 27.27% |
-| Soft SFT mean, seeds 17/29/43 | 0.01113861 | 29.98% |
+| Development-selected SFT | 0.01156980 | 27.27% |
 | Static, training-validation ranked | 0.01213654 | 23.71% |
 | Static, exhaustive training-outcome selected | 0.01404649 | 11.70% |
 | Random search, 100-seed mean | 0.01353609 | 14.91% |
 | GP, original encoding | 0.01220091 | 23.30% |
-| Single forecaster selected on training (drift) | 0.01326771 | 16.60% |
-| Official last-value reference | 0.01590833 | 0.00% |
-| GP, complete metadata | Pending final analysis | — |
+| GP, complete metadata | 0.01408559 | 11.46% |
+| Single forecaster selected on training: drift | 0.01326771 | 16.60% |
 
-| Objective / seed | Selected update | Development pinball | Evaluation pinball | Versus starting | 80% coverage |
+The exhaustive static portfolio is selected among 91,390 possibilities using training outcomes only. Its worse evaluation result is retained. The additional complete-metadata GP preserves the original kernel, acquisition, starts and budget; it is an added retrospective control, not a replacement preregistered result.
+
+## Every training seed
+
+| Mode / objective / seed | Actual updates | Selected update | Development loss | Evaluation loss | Reference loss |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| hard / 17 | 20 | 0.01125387 | 0.01156980 | -22.84% | 75.0% |
-| soft / 17 | 100 | 0.00905034 | 0.01156980 | -22.84% | 75.0% |
-| hard / 29 | 20 | 0.01125387 | 0.01156980 | -22.84% | 75.0% |
-| soft / 29 | 20 | 0.01092629 | 0.01027624 | -31.47% | 83.3% |
-| hard / 43 | 20 | 0.01125387 | 0.01156980 | -22.84% | 75.0% |
-| soft / 43 | 50 | 0.01125387 | 0.01156980 | -22.84% | 75.0% |
+| sft / hard / 17 | 100 | 20 | 0.01125387 | 0.01156980 | 0.01499533 |
+| sft / soft / 17 | 100 | 100 | 0.00905034 | 0.01156980 | 0.01499533 |
+| sft / hard / 29 | 100 | 20 | 0.01125387 | 0.01156980 | 0.01499533 |
+| sft / soft / 29 | 100 | 20 | 0.01092629 | 0.01027624 | 0.01499533 |
+| sft / hard / 43 | 100 | 20 | 0.01125387 | 0.01156980 | 0.01499533 |
+| sft / soft / 43 | 100 | 50 | 0.01125387 | 0.01156980 | 0.01499533 |
+| rl / soft / 17 | 41 | 0 | 0.00905034 | 0.01156980 | 0.01156980 |
+| rl / soft / 29 | 36 | 0 | 0.01092629 | 0.01027624 | 0.01027624 |
+| rl / hard / 43 | 22 | 0 | 0.01125387 | 0.01156980 | 0.01156980 |
 
-The gain is uneven: selected SFT loss on A100 40GB is 0.00290788 versus 0.00254829 for the starting policy, approximately 14.1% worse. Pooled improvement comes from A100 SXM 80GB, which contributes nine of the 12 cells. One-day last-value reference loss is zero on this evaluation, so one-day skill is undefined rather than an invented percentage.
+Checkpoints are selected by development loss with earlier-update ties, including update zero. The global operational SFT choice additionally breaks ties by seed/objective. Evaluation-best seeds are not substituted.
+[All evaluated checkpoint IDs, seeds, source revisions and recovery metadata](campaign-v2-checkpoints.json) are retained. IDs hash private sampler resource paths; they are not weight-content hashes. The model resources stay in the owner's account.
 
-Checkpoints are selected by development pinball with earlier-update ties, including update zero. A global operational checkpoint uses development loss across all six runs, then earlier update, seed and objective. The best evaluation seed is not substituted for that rule.
+## RL execution and storage recovery
 
-[All 24 saved SFT checkpoint IDs, seeds, development scores and artifact links](campaign-v2-checkpoints.json) are retained. IDs hash private resource paths rather than weight contents; model resources stay in the owner's Tinker account. RL states will be added after their evaluation reports finish.
+RL uses genuinely sampled bounded actions and logged conditional propensities. Four trajectories share a task; reward is negative subsequent training-period loss divided by a training-only scale and clipped to[-5,5]. A categorical policy-gradient objective uses their mean reward as baseline. Constant groups do not update weights; five consecutive constant groups stop training. The 60-group ceiling counts sampling iterations, separately from optimizer updates.
+A training-only curriculum selects registered cases with reachable clipped-reward variation; evaluation still covers all original eligible cases. The RL amendment was fixed before its first updates, after two seed 17 SFT evaluations had been seen; it remains exploratory.
+The initial clients hit Tinker's free checkpoint-storage cap after exactly ten updates/thirteen groups each for seeds 17/29; seed 43 could not start. Cleanup removed 26 temporary rollout samplers. Continuations restore the exact Adam/RNG prefixes, discard no optimizer updates and include those 13 groups in the same 60-group limit. Consumed samplers and superseded unevaluated recovery states are removed after successful use/replacement; original and evaluated models are preserved. Six redundant zero-update SFT optimizer copies were also removed after every corresponding sampler was verified; all nonzero SFT optimizer states and selected parents were preserved. [Exact retention receipt and limits](campaign-v2-retention.md). No billing settings changed.
 
-## Incremental RL result
+- Seed 29 gate: Five consecutive sampled within-task groups had constant clipped reward; stopped after 36 RL optimizer updates
+- Seed 43 gate: Five consecutive sampled within-task groups had constant clipped reward; stopped after 22 RL optimizer updates
 
-The initial attempt completed ten genuine RL optimizer updates and thirteen sampled groups for each of seeds 17/29 before Tinker's free checkpoint-storage cap closed the clients; seed 43 could not create a client. Cleanup removed only 26 consumed rollout samplers. The continuation restores the exact Adam/RNG prefixes, discards no optimizer work and counts the existing thirteen groups within the original 60-group limit. Evaluated/frozen checkpoints remain intact. [Recovery amendment](../configs/campaign-v2-storage-recovery.json), [failed attempt](https://github.com/howdymary/compute-forecasting/actions/runs/43671941385), [cleanup receipt](https://github.com/howdymary/compute-forecasting/actions/runs/43677120366), [continuation](https://github.com/howdymary/compute-forecasting/actions/runs/43677499284). Final RL performance is pending; these updates alone establish no accuracy gain.
+RL's incremental reference is its own frozen SFT parent. A zero-update selected checkpoint means no demonstrated benefit from RL selection, even if other updates were performed.
 
-The exploratory amendment was fixed before RL updates, after seed-17 SFT evaluation had been observed. The primary SFT protocol stayed fixed. Training-only curriculum eligibility uses reachable clipped-reward variation; actor observations do not expose terminal future loss. Four genuinely sampled trajectories share each task, with recorded conditional action propensities and a group-mean reward baseline. Constant groups do not update weights; five consecutive constant groups stop the run.
+## Feedback, evidence and criticism
 
-RL's reference is its frozen SFT parent. Beating the untrained model alone would not establish incremental RL value. Temporary rollout samplers have one-hour TTLs; evaluated states and private optimizer-recovery snapshots are retained.
+The no-observation arm hides history summaries and validation scores from the agent, while retaining tested-arm IDs/budget. The final deterministic chooser continues using matured validation in every arm. A forecast-loss tie therefore concerns feedback to experiment selection, not removal of all validation.
 
-## Controls and limitations of the apparent gain
+| SFT objective / seed | Primary | Feedback hidden | Fixed critic added | Source metadata added |
+| --- | ---: | ---: | ---: | ---: |
+| hard / 17 | 0.01156980 | 0.01156980 | 0.01156980 | 0.01156980 |
+| soft / 17 | 0.01156980 | 0.01156980 | 0.01315182 | 0.01156980 |
+| hard / 29 | 0.01156980 | 0.01156980 | 0.01156980 | 0.01156980 |
+| soft / 29 | 0.01027624 | 0.01082398 | 0.01479314 | 0.01333005 |
+| hard / 43 | 0.01156980 | 0.01156980 | 0.01156980 | 0.01156980 |
+| soft / 43 | 0.01156980 | 0.01156980 | 0.01156980 | 0.01156980 |
 
-Five of six SFT runs have identical forecast loss with agent feedback hidden. Several still change their action sequences, so a loss tie does not prove a static action policy. Soft/seed 29 worsens from 0.01027624 to 0.01082398 without observations. Adding the fixed critic worsens soft/seed 17 to 0.01315182 and soft/seed 29 to 0.01479314; adding source metadata worsens soft/seed 29 to 0.01333005. Other SFT ablation losses tie. These inference-time context additions can also shift the prompt distribution; they do not establish that research evidence or criticism is universally harmful.
+Action sequences can change while the selected forecaster/loss stays the same. Added evidence is a fixed source-metadata packet; its negative effects also involve inference-time prompt shift and do not establish that research evidence or criticism is universally harmful.
+Training-only teacher alignment is mixed: its validation-oracle choice beats persistence on one task, ties five and worsens three; rank correlations range approximately −0.291 to 0.748. Paired-origin and leave-one-origin-out analyses are in the archive/API. These are descriptive checks across the same three dependent dates, not population confidence intervals.
+Hindsight regret compares the selected loss with the best future-scoring arm among 42 after evaluation. That oracle may not be reachable under the fixed validation chooser.
 
-The no-observation condition hides history summaries and revealed validation scores from the experiment-selection agent while retaining its tested-arm IDs and budget. The final deterministic forecaster chooser still uses revealed matured validation in every condition. A tie therefore limits claims about feedback **to experiment selection**, not about removing validation from the complete forecasting procedure.
+## Numerical models and measurement controls
 
-The stronger static control enumerates all 91,390 portfolios of four additional arms, chooses using training-period future outcomes only, and uses the same revealed-validation final chooser at evaluation. It preserves the original weaker training-validation-ranked static control.
+The registry has 42 configurations: official references, Ridge representations, direct autoregression, EWMA, quantile gradient boosting, convex mixtures and auxiliary-price controls. Chronos was not added. Numerical preprocessing/calibration uses permitted past data, preserves missingness and reports fallbacks.
+On the separate 15-cell evaluation, tree_28_3/tree_28_7 score0.01335719 with five fallback cases; tree_56_3 scores0.01353057 without fallback; empirical persistence/drift score0.01412099. These are retrospective rows, not competition leaderboard results or replacement submissions.
+Matched price-value removal keeps absolute-level/log targets, 56-day windows, alpha100, train-only imputation and original missingness flags fixed. Removing nine price predictors increases level loss from 0.02037651 to 0.02903200 and log loss from 0.02138023 to 0.03128927, roughly 42.5%/46.3%. It is a 15-cell conditional diagnostic, not an economic mechanism claim. The earlier unmatched diagnostic also changed target/anchor formulation and remains labeled separately.
+Actual fit-mask auditing at 18 origins finds evaluation auxiliary imputation about 0.018% for raw composition and 3.03% for fixed basket. Repeated masks are not independent data. The original v1 finding remains mixed: best individual fixed-basket configuration, lower matched-configuration mean for target-only features.
 
-The original GP control aliased auxiliary representations/reference identities. Its result remains retained; the additional complete-encoding control keeps acquisition, kernel, starts, iteration order and budget unchanged. It was added after some SFT evaluations and is an additional retrospective control, not a replacement preregistered result.
+## Operational autonomy and sources
 
-The selected SFT policies lower mean-origin loss on each of the three evaluation dates, and leave-one-origin-out pooled differences remain negative. That describes this tiny observed set only. The largest contribution comes from September 12.
-
-The training teacher's inner-validation versus subsequent-loss rank correlations range from −0.291 to 0.748 across nine correlated training tasks. The validation-oracle choice performs worse than starting persistence on three tasks, better on one and ties on five. This objective mismatch is a reason to test future-loss rewards; additional imitation updates alone do not solve it.
-
-Reported hindsight regret is the loss gap to the best future-scoring configuration among the 42 arms, evaluated after selection. That oracle arm need not be reachable under the fixed final validation chooser. It is not an attainable-performance guarantee.
-
-Training-seed ranges and leave-one-origin-out changes describe sensitivity on these same three dependent dates. They are not population confidence intervals. Pretrained knowledge and frozen-pack vintage remain uncontrolled limitations even though the model sees bounded state summaries rather than later outcomes.
-
-## Numerical forecasting and price information
-
-On the separate 15-cell numerical-grid evaluation, tree_28_3 and tree_28_7 score 0.01335719 with five fallback cases each. Tree_56_3 scores 0.01353057 with no fallbacks. Empirical persistence/drift score 0.01412099, and the official last-value reference scores 0.02024667. The best tree row was identified after evaluation; it is not a preregistered winner or a replacement submission.
-
-Across the three numerical development dates, empirical persistence/drift score best (0.01101059). Across numerical training dates, they also score best (0.00386106). This stability of a simple baseline is part of the result, even though retrospective evaluation contains better-scoring tree candidates.
-
-A matched diagnostic fits absolute-level and log-level Ridge models with the same 56-day window, alpha 100, train-only imputation, original missingness flags and prequential residual calibration. Removing nine price-value predictors increases evaluation loss from 0.02037651 to 0.02903200 (level) and 0.02138023 to 0.03128927 (log), approximately 42.5% and 46.3%. This is a conditional diagnostic on 15 cells, not a universal claim about market mechanisms.
-
-The earlier strict price-free diagnostic also changed the target/anchor formulation. It remains as a historical unmatched result; the matched design addresses that confound.
-
-The feature audit covers actual primary and prequential fits at 18 origins. Evaluation auxiliary imputation is approximately 0.018% for raw-composition features and 3.03% for fixed-basket features. Repeated masks across alpha settings are not independent data. Neither the audit nor alternative representations change official target definitions.
-
-The v1 representation finding remains mixed: the best individual candidate used fixed-basket features, while target-only features had lower mean loss across matched settings. No universal normalization benefit is claimed; Silicon Data and SemiAnalysis are credited precedents.
-
-## Operational autonomy and evidence
-
-Four completed cycles executed 24 numerical trials through 20 fresh Modal function calls and recorded 33 verified cross-role memory reads. Each common persistence call computes two references; four subsequent calls compute requested alternatives. New executions are new computation on the same training-period observations, not independent market histories.
-
-The initial July 24 cycles found zero-loss persistence. A skeptic objection led the starting scientist to choose July 18 from eligible non-flat training cases, using actual reference feedback. Its best measured diagnostic was fixed-basket level Ridge (0.00746641), versus empirical persistence 0.00822406.
-
-The operational trained cycle restored the development-selected soft/seed 17 update 100 checkpoint `ef9cf57b88d0bbe9ef3d`. It requested five fresh numerical calls, recorded eight verified memory reads, and changed two of four choices under context removal and two under results removal. It ultimately selected empirical persistence 0.00822406; none of its four requested alternatives beat persistence. This is evidence of real execution and state-sensitive decisions, not a live forecasting improvement. The operational prompt/evidence context differs from the controlled selector evaluation, so comparison with the earlier starting cycle is not causal.
-
-Forty distinct methodological searches plus one Snapshot capability probe produced 41 search receipts and 76 unique source URLs. Raw retrieved bodies remain private. The initial retention failure is disclosed; subsequent content retrieval did not recover the original bodies verbatim.
-
-Snapshot request acceptance does not verify historical entitlement, historical page validity or ranking vintage. Current content stays outside historical market inputs. The controlled evidence ablation adds fixed source metadata, while operational agents also receive privately retrieved methodological highlights. This does not make all evidence conditions equivalent.
-
-Memory records preserve role authorship, record IDs and required source-ID recall checks. Canonical authored text is used after verification or a disclosed local-record fallback. Cross-role use establishes provenance, not a measured memory-system performance improvement. The skeptic is bounded deterministic code, not an independently trained researcher.
+4 completed research cycles made 24 numerical trials through 20 fresh Modal calls, with 33 verified cross-role memory reads. Repeated training-origin observations are not independent new market evidence.
+Criticism of zero-loss July 24 tasks led the starting scientist to choose a non-flat July 18 task. The restored development-selected SFT policy also executed five fresh calls on July 18, made context-sensitive choices and ultimately selected empirical persistence; its alternatives did not improve the task. Different operational contexts prevent a causal trained-versus-starting comparison.
+Exa supplied 40 distinct methodological searches plus one Snapshot capability probe and 76 unique URLs. Current evidence stays outside historical market inputs. Accepted Snapshot parameters do not verify historical entitlement, page/ranking vintage or numerical-data vintage. Raw bodies remain private; an initial retention failure and subsequent re-retrieval are disclosed.
+past.dev records preserve authorship, IDs and required-source recall checks. Canonical authored text is used after verification or a disclosed fallback. This establishes cross-role use, not a measured memory-system accuracy gain. The skeptic is bounded deterministic code, not an independently trained researcher.
 
 ## Prospective commitment and publication
 
-The corrected manifest was issued November 15 at 02:55:42 UTC, using a November 15 UTC origin and target dates November 16/18/22. It contains 42 predictions across 14 H100/A100 series, based on a nine-day-old November 6 snapshot. Its numerical rows remain private pending publication review; outcomes are pending and do not mature before the event.
+The corrected prospective manifest was issued November 15 at 02:55:42 UTC for November 16/18/22, using a nine-day-old November 6 snapshot. There are 42 predictions across 14 H100/A100 series; outcomes are pending and do not mature before the event. Numerical rows remain private pending publication review. The earlier UTC-misaligned manifest is retained as superseded.
+Commitment 428296e044ca0a5c362ee5b96d9488c6fe47cd59be6a3d70000ac2c51cbf29d2 hashes the private record's sorted-key Python JSON serialization, with default separators and ensure_ascii=True, not its pretty-file bytes. See the public manifest for exact hash semantics.
+The pack compilation license is described as CC BY 4.0, owner's default pending confirmation, with upstream terms unresolved. Aggregation does not establish redistribution permission. Raw offers, restricted excerpts, private resources and credentials stay private.
+Provider/configuration normalization is established practice: [Silicon Data](https://www.silicondata.com/products/silicon-index) and [SemiAnalysis](https://semianalysis.com/gpu-pricing-index/). Our contribution is an inspectable empirical study, not an invention/first-benchmark claim. [Targeted primary-source related-work review](campaign-v2-related-work.md) places the study alongside earlier cloud-price forecasting, learned experiment selection and agent benchmarks. A frozen data vintage and pretrained-model contamination remain limitations.
 
-Forecast commitment: `428296e044ca0a5c362ee5b96d9488c6fe47cd59be6a3d70000ac2c51cbf29d2`. Hash basis is UTF-8 Python `json.dumps(private_record, sort_keys=True, allow_nan=False)` with default separators and `ensure_ascii=True`; manifest-only fields are excluded. This is not the pretty-printed file-byte hash.
+## Runtime, cost and verification
 
-An earlier Pacific/UTC-misaligned manifest is retained as superseded. The corrected first target UTC day starts strictly after issuance.
+The numerical stage ran 18 origins and 756 method-origin results in 541.215 wall seconds, about 1.996 origins/minute. Function durations sum to 41.04 minutes. This includes stage cold-start/client overhead and does not establish serial speedup or GPU utilization.
+Costs below are provider-reported estimates before credits where available. They can lag and do not establish remaining balances; unknown is not zero.
 
-The pack measures advertised rental offers, not transactions or available capacity. Histories remain unpublished while licensing/upstream redistribution terms are unresolved. Dollar rental units are USD/GPU-hour; physical resale remains a separate assumption-based scenario without an observed dollar anchor.
+- tinker: USD 16.22596422; status provider_receipt_partial.
+- modal: USD 1.00634482; status provider_receipt_partial.
+- exa: USD 0.412; status retained_request_receipts.
 
-## Usage, validation and artifacts
+See [the complete usage/provenance JSON](campaign-v2-final-status.json) for attribution scope, timestamps and receipt counts. SDK retry/failure totals are not completely instrumented; memory HTTP statuses and engineering failures remain in traces/Actions.
+The measured finalizer verified protected source blobs, all nine reports, the unchanged official CSV, real API values, desktop/mobile layouts, keyboard focus, reduced motion and outage/retry recovery. PNGs only; no recording job was run.
 
-Verified completed SFT work is 600 optimizer updates across six runs. The grid used 18 fresh origin functions and approximately 41.04 summed function-minutes, excluding autonomy, client setup and policy inference. The six SFT client runtimes sum to approximately 231.69 minutes including their evaluations; these are not billed GPU minutes. Final RL counts and native provider receipts are pending. The earlier provider ledger is partial: Modal $0.05712 from already closed billing hours, Tinker cost unavailable, and Exa $0.28 for 40 costed search receipts, excluding later contents/autonomy requests. These are not total campaign costs or remaining balances. No balance is verified and no billing settings changed.
+[Download the immutable derived archive](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/experimental/downloads/43677783872.zip). ZIP SHA-256: 5ec7ef997571dd925ef521895f9b950373f87d85cf8111bfe52adf5937e8c3e5. It includes member hashes, all permitted reports/traces, failed prefixes, cleanup receipts, client versions and the archived CSV; raw inputs/private resources are excluded.
+Failed prefixes also appear at the beginning of their resumed records. Do not count those updates twice. Independent numerical reproduction requires authorized pack access; model resources remain in the owner's account.
 
-Completed episodes validate every bounded action menu before execution. This does not establish a complete count of failed underlying API calls: SDK retries are not fully instrumented, so their total remains unknown. The autonomous memory calls retain actual HTTP status receipts; engineering failures and targeted retries remain visible in Actions.
+## Defensible public claim
 
-[Foundation validation](https://github.com/howdymary/compute-forecasting/actions/runs/43677499285) and [desktop/mobile UI validation](https://github.com/howdymary/compute-forecasting/actions/runs/43677709072) passed. Checks cover real API numerical values, keyboard focus, reduced motion, no horizontal page overflow and outage/retry recovery. The phase badge distinguishes completed SFT from pending RL/controls. Original numerical modules, release freeze and recording files retain their original Git blob hashes; the official CSV retains its published SHA-256. Final measured verification remains [queued behind the continuation](https://github.com/howdymary/compute-forecasting/actions/runs/43677709126). PNG inspection only; no recording job.
+Compute Forecast is an auditable GPU rental forecasting study with 42 numerical configurations, 600 SFT updates and 99 cumulative RL updates. It runs real, evidence-guided numerical research and measures trained selection against fixed/random/adaptive controls. SFT lowers loss on three reused A100 dates, while feedback value and generalization remain limited; incremental RL has 0 improving, 3 tied and 0 worsening seed results versus its SFT parents.
+Automation, state-sensitive adaptation, weight learning and forecast value are separate claims. No H100 policy result, broad research-intelligence gain, calibrated long-term confidence interval or competition win is established. Long-term rental/resale curves remain explicit assumption-based scenarios.
 
-The [durable derived archive](https://github.com/howdymary/compute-forecasting/actions/runs/43677783872) waits for final verification. It will preserve member/ZIP checksums, actual reports, traces, failed prefixes, cleanup receipts and exact client versions. Raw offers, private model paths, restricted excerpts and credentials are excluded. Until that workflow finishes, use the canonical run links in the runbook; no completed archive is claimed.
-
-The [remote runbook](campaign-v2-reproduction.md) links immutable sources, workflow artifacts and private-access prerequisites. The public web container has no raw-data mount or sponsor API secrets. Authenticated GitHub workflows launch paid work; public controls filter real running/recorded streams.
-
-## What can be claimed
-
-- **Automation:** demonstrated bounded, fresh numerical execution and provenance across four completed cycles.
-- **Adaptation:** demonstrated state-sensitive choices and a research-origin change after criticism, without claiming that every changed choice improves the outcome.
-- **Learning:** all six SFT-selected procedures lower loss versus starting weights on three reused, dependent dates; the effect is uneven across series. Incremental RL performance is pending.
-- **Forecast value:** SFT is competitive with the specified controls on exactly matched cases. The complete-encoding GP comparison is pending; there is no official competition-outcome score or broad market generalization claim.
-
-No v2 winner replaces the frozen official submission. No H100 policy result, independently calibrated future interval, broad research intelligence gain or competition leaderboard win is established. The prospective outcome log is a commitment to future measurement, not an already scored success.
+[Remote runbook and canonical execution links](campaign-v2-reproduction.md) · [Live research view](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/experimental)

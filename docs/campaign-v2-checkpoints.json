@@ -1,18 +1,18 @@
 {
   "schema_version": 2,
-  "status": "SFT complete; three RL continuation reports pending",
-  "compiled_at": "2026-11-15 04:45:41 UTC",
-  "checkpoint_id_basis": "SHA256 prefix of the private sampler resource path; not a hash of weight bytes",
-  "private_resource_paths_included": false,
+  "status": "measured campaign complete",
+  "id_basis": "Checkpoint IDs hash private sampler resource paths, not weight contents",
+  "private_paths_included": false,
   "runs": [
     {
       "mode": "sft",
       "objective": "hard",
       "seed": 17,
       "model": "Qwen/Qwen3.5-4B",
-      "source_sha": "a147797ec4557a337e2157ac60857d575e121630",
+      "code_sha": "a147797ec4557a337e2157ac60857d575e121630",
       "grid_source_sha": "a147797ec4557a337e2157ac60857d575e121630",
       "actual_optimizer_updates": 100,
+      "optimizer_updates_this_process": null,
       "selected_update": 20,
       "checkpoints": [
         {
@@ -36,16 +36,20 @@
           "development_pinball": 0.011253870422938421
         }
       ],
-      "artifact_url": "https://github.com/howdymary/compute-forecasting/actions/runs/43665821333/artifacts/14143675681"
+      "recovery_checkpoints": null,
+      "resumption": null,
+      "parent_checkpoint_id": null,
+      "rl_gate": null
     },
     {
       "mode": "sft",
       "objective": "soft",
       "seed": 17,
       "model": "Qwen/Qwen3.5-4B",
-      "source_sha": "a147797ec4557a337e2157ac60857d575e121630",
+      "code_sha": "a147797ec4557a337e2157ac60857d575e121630",
       "grid_source_sha": "a147797ec4557a337e2157ac60857d575e121630",
       "actual_optimizer_updates": 100,
+      "optimizer_updates_this_process": null,
       "selected_update": 100,
       "checkpoints": [
         {
@@ -69,16 +73,20 @@
           "development_pinball": 0.009050336633428241
         }
       ],
-      "artifact_url": "https://github.com/howdymary/compute-forecasting/actions/runs/43665821333/artifacts/14143559167"
+      "recovery_checkpoints": null,
+      "resumption": null,
+      "parent_checkpoint_id": null,
+      "rl_gate": null
     },
     {
       "mode": "sft",
       "objective": "hard",
       "seed": 29,
       "model": "Qwen/Qwen3.5-4B",
-      "source_sha": "a147797ec4557a337e2157ac60857d575e121630",
+      "code_sha": "a147797ec4557a337e2157ac60857d575e121630",
       "grid_source_sha": "a147797ec4557a337e2157ac60857d575e121630",
       "actual_optimizer_updates": 100,
+      "optimizer_updates_this_process": null,
       "selected_update": 20,
       "checkpoints": [
         {
@@ -102,16 +110,20 @@
           "development_pinball": 0.011253870422938421
         }
       ],
-      "artifact_url": "https://github.com/howdymary/compute-forecasting/actions/runs/43665821333/artifacts/14144533218"
+      "recovery_checkpoints": null,
+      "resumption": null,
+      "parent_checkpoint_id": null,
+      "rl_gate": null
     },
     {
       "mode": "sft",
       "objective": "soft",
       "seed": 29,
       "model": "Qwen/Qwen3.5-4B",
-      "source_sha": "a147797ec4557a337e2157ac60857d575e121630",
+      "code_sha": "a147797ec4557a337e2157ac60857d575e121630",
       "grid_source_sha": "a147797ec4557a337e2157ac60857d575e121630",
       "actual_optimizer_updates": 100,
+      "optimizer_updates_this_process": null,
       "selected_update": 20,
       "checkpoints": [
         {
@@ -135,16 +147,20 @@
           "development_pinball": 0.011253870422938421
         }
       ],
-      "artifact_url": "https://github.com/howdymary/compute-forecasting/actions/runs/43665821333/artifacts/14143689784"
+      "recovery_checkpoints": null,
+      "resumption": null,
+      "parent_checkpoint_id": null,
+      "rl_gate": null
     },
     {
       "mode": "sft",
       "objective": "hard",
       "seed": 43,
       "model": "Qwen/Qwen3.5-4B",
-      "source_sha": "a147797ec4557a337e2157ac60857d575e121630",
+      "code_sha": "a147797ec4557a337e2157ac60857d575e121630",
       "grid_source_sha": "a147797ec4557a337e2157ac60857d575e121630",
       "actual_optimizer_updates": 100,
+      "optimizer_updates_this_process": null,
       "selected_update": 20,
       "checkpoints": [
         {
@@ -168,16 +184,20 @@
           "development_pinball": 0.011253870422938421
         }
       ],
-      "artifact_url": "https://github.com/howdymary/compute-forecasting/actions/runs/43665821333/artifacts/14146400876"
+      "recovery_checkpoints": null,
+      "resumption": null,
+      "parent_checkpoint_id": null,
+      "rl_gate": null
     },
     {
       "mode": "sft",
       "objective": "soft",
       "seed": 43,
       "model": "Qwen/Qwen3.5-4B",
-      "source_sha": "a147797ec4557a337e2157ac60857d575e121630",
+      "code_sha": "a147797ec4557a337e2157ac60857d575e121630",
       "grid_source_sha": "a147797ec4557a337e2157ac60857d575e121630",
       "actual_optimizer_updates": 100,
+      "optimizer_updates_this_process": null,
       "selected_update": 50,
       "checkpoints": [
         {
@@ -201,7 +221,203 @@
           "development_pinball": 0.011253870422938421
         }
       ],
-      "artifact_url": "https://github.com/howdymary/compute-forecasting/actions/runs/43665821333/artifacts/14146362450"
+      "recovery_checkpoints": null,
+      "resumption": null,
+      "parent_checkpoint_id": null,
+      "rl_gate": null
+    },
+    {
+      "mode": "rl",
+      "objective": "soft",
+      "seed": 17,
+      "model": "Qwen/Qwen3.5-4B",
+      "code_sha": "f77491274342436078224d9b862780cfeb576ef0",
+      "grid_source_sha": "a147797ec4557a337e2157ac60857d575e121630",
+      "actual_optimizer_updates": 41,
+      "optimizer_updates_this_process": 31,
+      "selected_update": 0,
+      "checkpoints": [
+        {
+          "update": 0,
+          "rollout_iteration": 0,
+          "checkpoint_id": "c7f84f46fcbe4b3f8a62",
+          "development_pinball": 0.009050336633428241
+        },
+        {
+          "update": 14,
+          "rollout_iteration": 20,
+          "checkpoint_id": "213ae04a2fd5b86ab9be",
+          "development_pinball": 0.016687127357439303
+        },
+        {
+          "update": 36,
+          "rollout_iteration": 50,
+          "checkpoint_id": "e155deacb998fb9f2369",
+          "development_pinball": 0.016090783233772766
+        },
+        {
+          "update": 41,
+          "rollout_iteration": 60,
+          "checkpoint_id": "53072ba0a9030c029585",
+          "development_pinball": 0.016090783233772766
+        }
+      ],
+      "recovery_checkpoints": [
+        {
+          "update": 10,
+          "rollout_iteration": 13,
+          "checkpoint_id": "2084e8b966c739a72340",
+          "kind": "optimizer_state",
+          "development_evaluated": false,
+          "status": "superseded_and_deleted"
+        },
+        {
+          "update": 20,
+          "rollout_iteration": 27,
+          "checkpoint_id": "6f1d3f5ac466b8c2ce21",
+          "kind": "optimizer_state",
+          "development_evaluated": false,
+          "status": "superseded_and_deleted"
+        },
+        {
+          "update": 30,
+          "rollout_iteration": 42,
+          "checkpoint_id": "dcbf752f838aa07e6e1c",
+          "kind": "optimizer_state",
+          "development_evaluated": false,
+          "status": "superseded_and_deleted"
+        },
+        {
+          "update": 40,
+          "rollout_iteration": 58,
+          "checkpoint_id": "8a3b122d3b9df913fb2f",
+          "kind": "optimizer_state",
+          "development_evaluated": false
+        }
+      ],
+      "resumption": {
+        "source_failed_run_id": "43671941385",
+        "recovery_checkpoint_id": "2084e8b966c739a72340",
+        "optimizer_updates_already_executed": 10,
+        "sampling_iterations_already_executed": 13,
+        "discarded_optimizer_updates": 0,
+        "optimizer_state_restored": true,
+        "resumed_at": "2026-11-15T04:37:55.482614+00:00"
+      },
+      "parent_checkpoint_id": "ef9cf57b88d0bbe9ef3d",
+      "rl_gate": null
+    },
+    {
+      "mode": "rl",
+      "objective": "soft",
+      "seed": 29,
+      "model": "Qwen/Qwen3.5-4B",
+      "code_sha": "f77491274342436078224d9b862780cfeb576ef0",
+      "grid_source_sha": "a147797ec4557a337e2157ac60857d575e121630",
+      "actual_optimizer_updates": 36,
+      "optimizer_updates_this_process": 26,
+      "selected_update": 0,
+      "checkpoints": [
+        {
+          "update": 0,
+          "rollout_iteration": 0,
+          "checkpoint_id": "5bc55fa7809cb593d422",
+          "development_pinball": 0.010926291265415443
+        },
+        {
+          "update": 33,
+          "rollout_iteration": 50,
+          "checkpoint_id": "5f9d0f8544f23382ea41",
+          "development_pinball": 0.017720889303430628
+        },
+        {
+          "update": 36,
+          "rollout_iteration": 59,
+          "checkpoint_id": "147e4473d297910d7f54",
+          "development_pinball": 0.020984007338780843
+        }
+      ],
+      "recovery_checkpoints": [
+        {
+          "update": 10,
+          "rollout_iteration": 13,
+          "checkpoint_id": "a948009b36f5524f222e",
+          "kind": "optimizer_state",
+          "development_evaluated": false,
+          "status": "superseded_and_deleted"
+        },
+        {
+          "update": 20,
+          "rollout_iteration": 32,
+          "checkpoint_id": "01dc11180635bd14ea3b",
+          "kind": "optimizer_state",
+          "development_evaluated": false,
+          "status": "superseded_and_deleted"
+        },
+        {
+          "update": 30,
+          "rollout_iteration": 46,
+          "checkpoint_id": "2541013ed2f8933a1c09",
+          "kind": "optimizer_state",
+          "development_evaluated": false
+        }
+      ],
+      "resumption": {
+        "source_failed_run_id": "43671941385",
+        "recovery_checkpoint_id": "a948009b36f5524f222e",
+        "optimizer_updates_already_executed": 10,
+        "sampling_iterations_already_executed": 13,
+        "discarded_optimizer_updates": 0,
+        "optimizer_state_restored": true,
+        "resumed_at": "2026-11-15T05:33:25.498916+00:00"
+      },
+      "parent_checkpoint_id": "de79d0b85209a44d31b7",
+      "rl_gate": "Five consecutive sampled within-task groups had constant clipped reward; stopped after 36 RL optimizer updates"
+    },
+    {
+      "mode": "rl",
+      "objective": "hard",
+      "seed": 43,
+      "model": "Qwen/Qwen3.5-4B",
+      "code_sha": "f77491274342436078224d9b862780cfeb576ef0",
+      "grid_source_sha": "a147797ec4557a337e2157ac60857d575e121630",
+      "actual_optimizer_updates": 22,
+      "optimizer_updates_this_process": 22,
+      "selected_update": 0,
+      "checkpoints": [
+        {
+          "update": 0,
+          "rollout_iteration": 0,
+          "checkpoint_id": "b86ba5c5b019f17c5e1e",
+          "development_pinball": 0.011253870422938421
+        },
+        {
+          "update": 22,
+          "rollout_iteration": 44,
+          "checkpoint_id": "8fe38e649100bdece86a",
+          "development_pinball": 0.018112047819066727
+        }
+      ],
+      "recovery_checkpoints": [
+        {
+          "update": 10,
+          "rollout_iteration": 16,
+          "checkpoint_id": "e3bac983eb17f49124fe",
+          "kind": "optimizer_state",
+          "development_evaluated": false,
+          "status": "superseded_and_deleted"
+        },
+        {
+          "update": 20,
+          "rollout_iteration": 37,
+          "checkpoint_id": "8b1570cf570224387fcb",
+          "kind": "optimizer_state",
+          "development_evaluated": false
+        }
+      ],
+      "resumption": null,
+      "parent_checkpoint_id": "b86ba5c5b019f17c5e1e",
+      "rl_gate": "Five consecutive sampled within-task groups had constant clipped reward; stopped after 22 RL optimizer updates"
     }
   ]
 }
