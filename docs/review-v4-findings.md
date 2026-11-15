@@ -8,7 +8,7 @@ The original operational SFT (soft17/update100) reveals the same four additional
 
 The portfolio was discovered after evaluation. It is explanatory, not an originally registered control. Raw quantile equality is unknown because the public operational artifacts retain losses rather than full predictions.
 
-The contribution notebook uses exactly 12 cells across four tasks, two A100 series and three dependent dates. SFT mean pinball is0.011569797542840439 versus0.014995328587716763 for the archived starting policy and0.01213653754659247 for training-selected static. The A10040 group worsens versus starting; A100 SXM improves. The separate 15-cell numerical grid, official 37-series submission and frozen v1 negative result retain their own scope.
+The contribution notebook uses exactly 12 cells across four tasks, two A100 series and three dependent dates. SFT mean pinball is 0.011569797542840439 versus 0.014995328587716763 for the archived starting policy and 0.01213653754659247 for training-selected static. The A100 40GB group worsens versus starting; A100 SXM improves. The separate 15-cell numerical grid, official 37-series submission and frozen v1 negative result retain their own scope.
 
 ## Completed controlled prompt-intervention diagnostic
 
@@ -33,7 +33,7 @@ This new experiment uses a common intervention prompt and hides only numerical v
 
 [Retained report](../results/review-v4/operations/43750529486/initialize.json).
 
-A fixed recency-weighted same-lead residual interval was compared with unweighted empirical persistence on independently licensed A10040 and T4 history. Three June/July training-period origins provide18 cells.
+A fixed recency-weighted same-lead residual interval was compared with unweighted empirical persistence on independently licensed A100 40GB and T4 history. Three June/July training-period origins provide 18 cells.
 
 | Measure | Recency weighted | Unweighted reference |
 |---|---:|---:|
@@ -50,17 +50,17 @@ There were no failed cells. These are dependent descriptive cases, not an indepe
 | Mechanism and portfolio audit | Exact four-task reconstruction, original tie rules, null unavailable prediction comparison | Complete, descriptive |
 | Prospective selector panel | Eight weekly origins, immutable snapshots and commitments, matched six-reveal selectors, locked scoring, separate A100/T4 cohorts | First origin November 23; outcomes pending |
 | Gain-contribution notebook | Matched series/origin/horizon and cell views, linked traces, source-bound pins | Deployed; exact values checked remotely |
-| Continuous vintage capture | Licensed adapter, append-only source and revision hashes, collection/failure receipts, finite daily schedule | Initial context retained; new captures recorded separately |
+| Continuous vintage capture | Licensed adapter, append-only source and revision hashes, collection/failure receipts, finite daily schedule | Full captures retained; both series still end November 6 |
 | Horizon interval experiment | Fixed method, maturity guards, diagnostic and prospective arm | Diagnostic complete; future accuracy pending |
 | Learning readiness | Temporal split and reachable-reward audit; gated SFT/RL with checkpoint zero and development selection | Nine tasks, five flat rewards; no new training |
-| Evidence/criticism controls | Actual retrieval, memory,48 inference episodes and behavior/loss measures | Complete, retrospective |
-| Public reproduction | Hash-bound core reconstruction and credential-free operation arithmetic | Remote verification path; private access limits documented |
+| Evidence/criticism controls | Actual retrieval, memory, 48 inference episodes and behavior/loss measures | Complete, retrospective |
+| Public reproduction | Hash-bound core reconstruction and credential-free operation arithmetic | Credential-free reconstruction passed; access limits documented |
 
 ## Prospective eligibility
 
-The new panel is separate from the existing November16/18/22 persistence–Chronos commitments and their November 23 scoring gate. It begins with weekly origins November 23 through January 11. A forecast must finish within two UTC hours of its origin, use a previously retained compatible snapshot, and bind its actual completion timestamp.
+The new panel is separate from the existing November 16/18/22 persistence–Chronos commitments and their November 23 scoring gate. It begins with weekly origins November 23 through January 11. A forecast must finish within two UTC hours of its origin, use a previously retained compatible snapshot, and bind its actual completion timestamp.
 
-Two validation folds, 8 and 15 days earlier, require real capture vintages and matured seven-day labels. Missing captures remain pending; the first fully eligible selector case can be later than the first scheduled direct forecast. A10040 primary and T4 transfer scores remain separate. First-complete post-maturity truth vintage selection is fixed in advance.
+Two validation folds, 8 and 15 days earlier, require real capture vintages and matured seven-day labels. Missing captures remain pending; the first fully eligible selector case can be later than the first scheduled direct forecast. A100 40GB primary and T4 transfer scores remain separate. First-complete post-maturity truth vintage selection is fixed in advance.
 
 [Supplementary current market context](market-context-v4.md) is a separate extra-information treatment. It cannot alter the archived benchmark or be pooled into the primary equal-information comparison.
 
@@ -75,11 +75,11 @@ python -m compute_forecast.reproduce_operations_v4
 
 The existing review reconstruction additionally verifies the full public derived ZIP, indexed members, matched contributions and original chooser replay. Public arithmetic is reproducible without source-pack or model accounts. Re-fitting needs authorized source inputs; original sampler access needs the account's private resources. Raw evidence bodies, model paths and private sessions remain private.
 
-The full Pacific pack was reverified privately:284,917,807 bytes and672 manifest entries. Limited policy-study coverage reflects eligible temporal cases, not absence of the full pack. The project's code has no newly granted blanket license; existing source-specific and third-party licenses remain in force.
+The full Pacific pack was reverified privately: 284,917,807 bytes and 672 manifest entries. Limited policy-study coverage reflects eligible temporal cases, not absence of the full pack. The project's code has no newly granted blanket license; existing source-specific and third-party licenses remain in force.
 
 ## Validation notes
 
-The credential-free verifier reconstructed all committed operation hashes, the18-cell interval arithmetic, 48 intervention episodes and 519 sampler calls. Source-to-screen checks retain exact values and the unchanged official CSV. A repeated HTTP/2 stress failure affected all eight streams after an idle client pool; restoring HTTPX's documented five-second idle expiry passed the full eight-caller stress and publication check without changing retries or response assertions. This is a validated client-transport adjustment, not a claim to have changed Modal's HTTP/2 implementation.
+The credential-free verifier reconstructed all committed operation hashes, the 18-cell interval arithmetic, 48 intervention episodes and 519 sampler calls. Source-to-screen checks retain exact values and the unchanged official CSV. A repeated HTTP/2 stress failure affected all eight streams after an idle client pool; restoring HTTPX's documented five-second idle expiry passed the full eight-caller stress and publication check without changing retries or response assertions. This is a validated client-transport adjustment, not a claim to have changed Modal's HTTP/2 implementation.
  
 The prompt-intervention sampler phase took 396.85 seconds; that duration excludes earlier evidence retrieval, memory ingestion and environment setup. It is not an end-to-end cost estimate. Modal/Tinker/past.dev monetary costs remain unknown where no provider receipt is available.
 
@@ -93,7 +93,7 @@ The synthetic runtime test also checks the registered short-window fallback: a 2
 
 [Remote runtime receipt](../results/review-v4/runtime/43754381644.json), [successful execution](https://github.com/howdymary/compute-forecasting/actions/runs/43754381644).
 
-The independently licensed capture retrieved 436 permitted source objects totaling 93,886,733 bytes. Both A10040 and T4 still contain 234 observations from January 12 through November 6. A November 15 retrieval with a requested November 14 cutoff does not establish current prices or verified quote freshness. The new panel must remain pending if compatible fresh observations do not arrive; it cannot fill or bridge that gap.
+The independently licensed capture retrieved 436 permitted source objects totaling 93,886,733 bytes. Both A100 40GB and T4 still contain 234 observations from January 12 through November 6. A November 15 retrieval with a requested November 14 cutoff does not establish current prices or verified quote freshness. The new panel must remain pending if compatible fresh observations do not arrive; it cannot fill or bridge that gap.
 
 The pinned Chronos weights and the full 42-candidate numerical adapter pass a synthetic runtime contract producing 126 rows. Native Chronos output is 1×8×3; removing the explicit univariate axis produces 8×3. Registered insufficient-label and unavailable-auxiliary fallbacks are recorded: 56 of 126 synthetic rows fall back. Those counts describe a contract fixture, not GPU-market performance. The original retrospective comparator and official CSV are unchanged.
 
@@ -106,3 +106,15 @@ All five deployed UI suites passed on the implementation revision, including con
 Exa retrieved all six registered primary sources and searched recent provider announcements. The model made two actual bounded research decisions, before and after a fixed scope criticism. Both selected a configuration-substitution audit. The winning probability changed from 0.833 to 0.693; the chosen plan did not change. All four required cross-role recalls returned their authored source IDs. The end-to-end planning loop took 43.12 seconds, excluding remote environment setup. Exa returned $0.006 for content retrieval and $0.007 for search; other provider charges remain unknown.
 
 This is source-grounded planning with starting model weights, not evidence of SFT transfer or improved forecast accuracy. The prospective market-context arm remains a separate extra-information treatment. Current sources never become historical benchmark features.
+
+## Final interface verification
+
+The deployed revision passed [Findings and source-card checks](https://github.com/howdymary/compute-forecasting/actions/runs/43755238539), [pricing](https://github.com/howdymary/compute-forecasting/actions/runs/43755238685), [notebook](https://github.com/howdymary/compute-forecasting/actions/runs/43755238564), [experimental research](https://github.com/howdymary/compute-forecasting/actions/runs/43755238561), and [research-explorer stress/publication checks](https://github.com/howdymary/compute-forecasting/actions/runs/43755238565).
+
+The contract suite passed 123 tests with one optional dependency skip. PNGs were inspected at desktop and narrow mobile widths. Tables preserve numeric strings and offer keyboard-accessible horizontal scrolling. Source summaries, actual plan choices, report hashes, disclosures and immutable pins were checked against their artifacts.
+
+[PNG source hashes and UI revision](../results/review-v4/ui-publication.json) · [Public arithmetic verification](../results/review-v4/public-verification-43754767862.json).
+
+![Exact matched contributions and source-bound margin note](images/review-v4-contributions.png)
+
+![Current-source notes and pending prospective status on mobile](images/review-v4-market-mobile.png)

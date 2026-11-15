@@ -51,6 +51,8 @@ The new 48-episode evidence/criticism diagnostic found no improvement from relev
 
 [Review v4 methods and remote workflows](docs/review-v4.md) · [Mechanism and contribution data](results/review-v4/findings.json) · [Registered prospective panel](configs/prospective-selector-v4.json)
 
+![Exact matched research contributions and source-bound margin note](docs/images/review-v4-contributions.png)
+
 ## Inspect the evidence without credentials
 
 The [results directory](results/README.md) contains versioned, hash-indexed snapshots of the official forecast, numerical summaries, checkpoints, paired traces, contextual history, and scenario assumptions. Raw competition offers, restricted source excerpts, private model paths, and credentials are excluded.
@@ -72,7 +74,7 @@ The interface uses HTML, CSS, JavaScript, and SVG, served by FastAPI on Modal. N
 3. Configure the documented GitHub Actions secrets and use the remote workflows on `compute-observatory`. The workflows verify source hashes, archive manifests, cutoffs, and output contracts.
 4. Audit the committed snapshots without accounts, or reproduce recorded decisions from the [derived research archive](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/experimental/downloads/43677783872.zip). New training is stochastic and should receive its own run identity.
 
-The current research-foundation suite passed **123 tests**, with one optional dependency skip; the fuller deployment checks also enforce frozen sources, numerical contracts and exact CSV bytes. [Pricing](https://github.com/howdymary/compute-forecasting/actions/runs/43691563096), [experimental](https://github.com/howdymary/compute-forecasting/actions/runs/43691563062), [notebook](https://github.com/howdymary/compute-forecasting/actions/runs/43691563067), and [research-explorer](https://github.com/howdymary/compute-forecasting/actions/runs/43691563100) UI checks passed. Desktop and mobile PNGs were inspected at 1512, 390, and 320 pixels. Stress checks retained eight simultaneous callers, exact numerical assertions, and zero automatic retries.
+The current contract suite passed **123 tests**, with one optional dependency skip. [Pricing](https://github.com/howdymary/compute-forecasting/actions/runs/43755238685), [Findings](https://github.com/howdymary/compute-forecasting/actions/runs/43755238539), [notebook](https://github.com/howdymary/compute-forecasting/actions/runs/43755238564), [experimental](https://github.com/howdymary/compute-forecasting/actions/runs/43755238561), and [research-explorer](https://github.com/howdymary/compute-forecasting/actions/runs/43755238565) checks passed. Desktop and mobile PNGs were inspected; layout and interaction checks passed at 1512, 390 and 320 pixels. The stress check retains eight simultaneous callers, exact numerical assertions and zero automatic retries. [Image and validation provenance](results/review-v4/ui-publication.json).
 
 ## Repository guide
 

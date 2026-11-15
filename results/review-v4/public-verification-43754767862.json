@@ -1,0 +1,45 @@
+{
+  "schema_version": 4,
+  "source_commit": "6dce5e558af66f755a6da00c21f3727617c7aa20",
+  "verification_workflow_run_id": 43754767862,
+  "report": {
+    "status": "verified",
+    "credential_free": true,
+    "operation_reports": [
+      {
+        "path": "results/review-v4/operations/43750529486/initialize.json",
+        "sha256": "929b22235810ffcb66d6b6c39203996ef633eb5c732f06386ee65471ca5f5658",
+        "interval_cells": 18,
+        "new_training_updates": 0
+      },
+      {
+        "path": "results/review-v4/operations/43750529486/feedback.json",
+        "sha256": "eb49c30afb1cb42d7128717ce9d87ee237201e28cd95a827641f2e70e35f16ac",
+        "episodes": 48,
+        "conditions": 12,
+        "sampler_calls": 519,
+        "new_optimizer_updates": 0
+      },
+      {
+        "path": "results/review-v4/operations/43750529486/pacific-access-v4.json",
+        "sha256": "caa8f86e45ce517539810200229add8131d45aaf0583709c6d6c612606b2f282",
+        "inventory_only": true
+      }
+    ],
+    "market_reports": [
+      {
+        "path": "results/review-v4/market/43754381651.json",
+        "sha256": "d98d538daec8157657fee2a639c5dae6038c76badea31f4aebe1e8c3cba06a38",
+        "decisions": 2,
+        "accuracy_claim": null
+      }
+    ],
+    "runtime_reports": [
+      {
+        "path": "results/review-v4/runtime/43754381644.json",
+        "sha256": "5fd84547c381ffc8dd204d8b96f81822026fc1a90491222a2b18f72e97b796c3",
+        "classification": "Contract verification, not forecasting accuracy"
+      }
+    ]
+  }
+}

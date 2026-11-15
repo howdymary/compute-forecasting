@@ -56,6 +56,14 @@ def check(root="."):
         if value.get("synthetic_numerical_candidates")!=42 or value.get("synthetic_numerical_rows")!=126:raise ValueError("Synthetic numerical scope differs")
         if "synthetic" not in value.get("fixture","").lower():raise ValueError("Synthetic fixture label missing")
         report.setdefault("runtime_reports",[]).append({"path":str(path.relative_to(root)),"sha256":hashlib.sha256(path.read_bytes()).hexdigest(),"classification":"Contract verification, not forecasting accuracy"})
+    ui=base/"ui-publication.json"
+    if ui.exists():
+        provenance=json.loads(ui.read_bytes())
+        if provenance["status"]!="passed" or provenance["report"]["video_recorded"] is not False:raise ValueError("UI verification provenance differs")
+        for path,meta in provenance["pngs"].items():
+            if not path.startswith("docs/images/") or ".." in Path(path).parts:raise ValueError("Unexpected screenshot path")
+            if hashlib.sha256((root/path).read_bytes()).hexdigest()!=meta["sha256"]:raise ValueError("Screenshot source hash mismatch")
+        report["verified_ui_pngs"]=len(provenance["pngs"])
     return report
 def main():
     out=Path("artifacts/public-reproduction-v4");out.mkdir(parents=True,exist_ok=True)
