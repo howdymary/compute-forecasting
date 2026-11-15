@@ -1,0 +1,34 @@
+name: Audit pre-cutoff historical metadata without price publication
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/history-audit-v3.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    if: github.ref == 'refs/heads/compute-observatory'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+    steps:
+      - name: Fetch immutable source remotely
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e . modal
+      - name: Audit metadata and permission flags on Modal
+        run: modal run -m compute_forecast.history_audit_v3
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: history-metadata-audit-${{ github.run_id }}
+          path: artifacts/
+          retention-days: 30
