@@ -30,7 +30,7 @@ jobs:
           import pathlib,urllib.request,os
           pathlib.Path("codegarden/.tmp").mkdir(parents=True,exist_ok=True)
           names=["area.cpp","search.py","tests.py","verify.py","pilot.py","requirements.txt","baseline.json","protected/manifest.json","protected/official.py","protected/independent.py","protected/__init__.py"]
-          for name in ["codegarden/kakeya/"+n for n in names]+["codegarden/side_services/cycle.py"]:
+          for name in ["codegarden/kakeya/"+n for n in names]+["codegarden/side_services/cycle.py","codegarden/supervisor.py","codegarden/protected/manifest.json","codegarden/protected/verify_descendants.py","codegarden/protected/verify_lcs.py"]:
               p=pathlib.Path(name);p.parent.mkdir(parents=True,exist_ok=True)
               p.write_bytes(urllib.request.urlopen("https://raw.githubusercontent.com/howdymary/compute-forecasting/"+os.environ["SOURCE_SHA"]+"/"+name,timeout=45).read())
           PY
@@ -46,6 +46,8 @@ jobs:
           mkdir -p codegarden/kakeya/.build codegarden/artifacts/kakeya/pilot_001
           g++ -O3 -std=c++17 -shared -fPIC -march=x86-64 -mtune=generic codegarden/kakeya/area.cpp -o codegarden/kakeya/.build/area.so
           codegarden/.venv-kakeya/bin/python -B codegarden/kakeya/tests.py > codegarden/artifacts/kakeya/pilot_001/preflight.json
+      - name: Check launcher imports without provider calls
+        run: codegarden/.venv-kakeya/bin/python -B -c "import runpy; runpy.run_path('codegarden/kakeya/pilot.py',run_name='preflight_import_only')"
       - name: Run bounded structural-versus-coordinate pilot
         id: pilot
         env:

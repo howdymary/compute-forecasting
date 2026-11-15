@@ -1,6 +1,6 @@
 """Two-hour Kakeya pilot: measured kernel, real research hooks, six bounded workers."""
 import concurrent.futures,datetime,hashlib,importlib.util,json,os,pathlib,sys,time,traceback
-ROOT=pathlib.Path(__file__).resolve().parents[1];K=ROOT/"kakeya";sys.path.insert(0,str(K))
+ROOT=pathlib.Path(__file__).resolve().parents[1];K=ROOT/"kakeya";sys.path.insert(0,str(ROOT));sys.path.insert(0,str(K))
 from verify import verify
 sp=importlib.util.spec_from_file_location("cg_kakeya_services",ROOT/"side_services/cycle.py");C=importlib.util.module_from_spec(sp);sp.loader.exec_module(C)
 C.BRANCH="codegarden-kakeya-pilot-001";C.OUT=ROOT/"artifacts/kakeya/pilot_001";C.OUT.mkdir(parents=True,exist_ok=True);C.ledger.rows=[];C.ledger.caps["modal"]=10
@@ -71,8 +71,9 @@ def main():
      row=future.result()
      if "verification" in row:
       row["host_verification"]=verify(row["proposal"])
-      if row["host_verification"]["score"]<best-1e-9:
-       best=row["host_verification"]["score"];C.save("candidate.json",row["proposal"]);C.save("candidate_verification.json",row["host_verification"])
+      if row["host_verification"]["score"]<best:
+       best=row["host_verification"]["score"]
+       if best<accepted["score"]-1e-9:C.save("candidate.json",row["proposal"]);C.save("candidate_verification.json",row["host_verification"])
      C.save("workers/"+str(i)+".json",row);results.append(row);C.publish()
     except Exception as e:C.save("workers/"+str(i)+"_error.json",{"error":str(e)[:1500],"scope":"Infrastructure/optimizer failure, not a mathematical negative."});C.publish()
  summary={"source_sha":C.SOURCE,"problem":"kakeya128","status":"completed_batch","baseline":accepted["score"],"best_certified":best,"workers":[{"spec":r["spec"],"best_native_area":r["best_native_area"],"certified_score":r.get("verification",{}).get("score"),"certified_arena_improvement":r["certified_arena_improvement"],"evaluations":r["evaluations"],"trials":r["completed_trials"],"wall_seconds":r["wall_seconds"]} for r in results],"global_record_claim":False,"pilot_deadline_utc":DEADLINE.isoformat()}

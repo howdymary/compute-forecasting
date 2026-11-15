@@ -33,15 +33,15 @@ def run(spec,baseline,source,folder,checkpoint):
  current=x.copy();current_a=baseline_area;stale=0
  save()
  while time.monotonic()<deadline:
-  before=best[0];proposal=current.copy();description={"trial":trial[0],"policy":spec["policy"]}
+  before=best[0];proposal=current.copy();description={"trial":trial[0],"policy":spec["policy"],"reflected_group":False}
   if trial[0]:
    width=int(rng.choice(spec["widths"]));begin=int(rng.integers(0,129-width));amplitude=float(rng.choice(spec["amplitudes"]))*float(rng.normal())
    perturb=np.zeros(128);perturb[begin:begin+width]=amplitude;perturb-=perturb[0]
    if spec["policy"]=="coordinate":
     noise=rng.normal(size=127);noise*=np.linalg.norm(perturb[1:])/max(np.linalg.norm(noise),1e-300);perturb=np.concatenate(([0.],noise))
    elif spec["policy"]=="structural" and trial[0]%5==0:
-    reflected=-proposal[begin:begin+width][::-1];reflected+=np.mean(proposal[begin:begin+width])-np.mean(reflected);proposal[begin:begin+width]=reflected
-   proposal+=perturb;proposal-=proposal[0]
+    description["reflected_group"]=True;reflected=-proposal[begin:begin+width][::-1];reflected+=np.mean(proposal[begin:begin+width])-np.mean(reflected);proposal[begin:begin+width]=reflected
+   proposal+=perturb;proposal-=proposal[0];description["total_parameter_step_l2"]=float(np.linalg.norm(proposal-current))
    description.update(begin=begin,width=width,amplitude=amplitude,perturbation_l2=float(np.linalg.norm(perturb)))
   try:
    result=minimize(objective,proposal[1:],jac=True,method="L-BFGS-B",bounds=[(-3.,3.)]*127,options={"maxiter":100,"maxfun":240,"maxls":20,"ftol":1e-14,"gtol":1e-8})
