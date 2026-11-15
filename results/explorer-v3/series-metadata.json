@@ -1,0 +1,1538 @@
+{
+  "schema_version": 1,
+  "code_sha": "80bf0d6af21bed45cd236d9d756d9f1b1a130983",
+  "dataset_sha256": "f0b52af28c52545732208bcc4905facd9b941aa5779da683e1d9884c283b7c7c",
+  "forecast_csv_sha256": "67a043255a716db6bc9b73cd28f9258c30fb299fd8671a9ee3430c0d94cadd80",
+  "metadata_catalog_sha256": "803f0141103b2601a40e7877a44391784e9138981cd8c5b5fad80404d027b31a",
+  "metadata_run_id": 43657301892,
+  "origin_date": "2026-11-06",
+  "origin_cutoff_utc": "2026-11-06T23:59:59+00:00",
+  "measurement": "advertised_rental_offer_rate",
+  "series": [
+    {
+      "id": "afhubbard.hyperscaler_spot.A100_40GB.spot.median",
+      "label": "A100 40GB \u00b7 Hyperscaler spot \u00b7 Hubbard",
+      "gpu_model": "A100 40GB",
+      "market": "Hyperscaler spot",
+      "source": "Hubbard",
+      "source_id": "afhubbard",
+      "source_url": "https://hubbard-gpu-price-data.s3.amazonaws.com/?list-type=2&prefix=prices/",
+      "licence_id": "CC-BY-4.0",
+      "pricing_tier": "spot",
+      "instrument_class": "hyperscaler_spot",
+      "statistic": "median_usd_per_gpu_hour",
+      "unit": "USD per GPU-hour",
+      "unit_code": "usd_per_gpu_hour",
+      "comparison_key": "[\"A100 40GB\",\"hyperscaler_spot\",\"spot\",\"median_usd_per_gpu_hour\",\"\",\"\",\"\"]",
+      "forecasts": [
+        {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 1.9891,
+          "q50": 1.9891,
+          "q90": 1.9891
+        },
+        {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 1.9891,
+          "q50": 1.9891,
+          "q90": 2.000728468
+        },
+        {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 1.949907219,
+          "q50": 1.9891,
+          "q90": 2.094166954
+        }
+      ]
+    },
+    {
+      "id": "fastgpu_daily.neocloud_rate_card.A100_40GB.on_demand.median",
+      "label": "A100 40GB \u00b7 Neocloud on demand \u00b7 FastGPU",
+      "gpu_model": "A100 40GB",
+      "market": "Neocloud on demand",
+      "source": "FastGPU",
+      "source_id": "fastgpu_daily",
+      "source_url": "https://huggingface.co/datasets/fastgpu/cloud-gpu-prices",
+      "licence_id": "CC-BY-4.0",
+      "pricing_tier": "on_demand",
+      "instrument_class": "neocloud_rate_card",
+      "statistic": "median_usd_per_gpu_hour",
+      "unit": "USD per GPU-hour",
+      "unit_code": "usd_per_gpu_hour",
+      "comparison_key": "[\"A100 40GB\",\"neocloud_rate_card\",\"on_demand\",\"median_usd_per_gpu_hour\",\"\",\"\",\"\"]",
+      "forecasts": [
+        {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 1.8155,
+          "q50": 1.8155,
+          "q90": 1.83366216
+        },
+        {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 1.793913262,
+          "q50": 1.8155,
+          "q90": 1.871267597
+        },
+        {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 1.571328071,
+          "q50": 1.8155,
+          "q90": 2.11269136
+        }
+      ]
+    },
+    {
+      "id": "gpurentalprices.neocloud_rate_card.A100_40GB.on_demand.median",
+      "label": "A100 40GB \u00b7 Neocloud on demand \u00b7 GPU Rental Prices",
+      "gpu_model": "A100 40GB",
+      "market": "Neocloud on demand",
+      "source": "GPU Rental Prices",
+      "source_id": "gpurentalprices",
+      "source_url": "https://gpurentalprices.com/data",
+      "licence_id": "CC-BY-4.0",
+      "pricing_tier": "on_demand",
+      "instrument_class": "neocloud_rate_card",
+      "statistic": "median_usd_per_gpu_hour",
+      "unit": "USD per GPU-hour",
+      "unit_code": "usd_per_gpu_hour",
+      "comparison_key": "[\"A100 40GB\",\"neocloud_rate_card\",\"on_demand\",\"median_usd_per_gpu_hour\",\"\",\"\",\"\"]",
+      "forecasts": [
+        {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 1.99,
+          "q50": 1.99,
+          "q90": 1.99
+        },
+        {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 1.99,
+          "q50": 1.99,
+          "q90": 2.00880315
+        },
+        {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 1.99,
+          "q50": 1.99,
+          "q90": 2.03931255
+        }
+      ]
+    },
+    {
+      "id": "fastgpu_daily.hyperscaler_spot.A100_80GB.spot.median",
+      "label": "A100 80GB \u00b7 Hyperscaler spot \u00b7 FastGPU",
+      "gpu_model": "A100 80GB",
+      "market": "Hyperscaler spot",
+      "source": "FastGPU",
+      "source_id": "fastgpu_daily",
+      "source_url": "https://huggingface.co/datasets/fastgpu/cloud-gpu-prices",
+      "licence_id": "CC-BY-4.0",
+      "pricing_tier": "spot",
+      "instrument_class": "hyperscaler_spot",
+      "statistic": "median_usd_per_gpu_hour",
+      "unit": "USD per GPU-hour",
+      "unit_code": "usd_per_gpu_hour",
+      "comparison_key": "[\"A100 80GB\",\"hyperscaler_spot\",\"spot\",\"median_usd_per_gpu_hour\",\"\",\"\",\"\"]",
+      "forecasts": [
+        {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 1.684610129,
+          "q50": 1.757,
+          "q90": 1.843821644
+        },
+        {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 1.582609897,
+          "q50": 1.757,
+          "q90": 1.961562315
+        },
+        {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 1.452143213,
+          "q50": 1.757,
+          "q90": 2.11675583
+        }
+      ]
+    },
+    {
+      "id": "fastgpu_daily.neocloud_rate_card.A100_80GB.on_demand.median",
+      "label": "A100 80GB \u00b7 Neocloud on demand \u00b7 FastGPU",
+      "gpu_model": "A100 80GB",
+      "market": "Neocloud on demand",
+      "source": "FastGPU",
+      "source_id": "fastgpu_daily",
+      "source_url": "https://huggingface.co/datasets/fastgpu/cloud-gpu-prices",
+      "licence_id": "CC-BY-4.0",
+      "pricing_tier": "on_demand",
+      "instrument_class": "neocloud_rate_card",
+      "statistic": "median_usd_per_gpu_hour",
+      "unit": "USD per GPU-hour",
+      "unit_code": "usd_per_gpu_hour",
+      "comparison_key": "[\"A100 80GB\",\"neocloud_rate_card\",\"on_demand\",\"median_usd_per_gpu_hour\",\"\",\"\",\"\"]",
+      "forecasts": [
+        {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 2.293,
+          "q50": 2.293,
+          "q90": 2.315569248
+        },
+        {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 2.23337274,
+          "q50": 2.293,
+          "q90": 2.422573667
+        },
+        {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 2.240670018,
+          "q50": 2.293,
+          "q90": 2.553659396
+        }
+      ]
+    },
+    {
+      "id": "fastgpu_daily.neocloud_spot.A100_80GB.spot.median",
+      "label": "A100 80GB \u00b7 Neocloud spot \u00b7 FastGPU",
+      "gpu_model": "A100 80GB",
+      "market": "Neocloud spot",
+      "source": "FastGPU",
+      "source_id": "fastgpu_daily",
+      "source_url": "https://huggingface.co/datasets/fastgpu/cloud-gpu-prices",
+      "licence_id": "CC-BY-4.0",
+      "pricing_tier": "spot",
+      "instrument_class": "neocloud_spot",
+      "statistic": "median_usd_per_gpu_hour",
+      "unit": "USD per GPU-hour",
+      "unit_code": "usd_per_gpu_hour",
+      "comparison_key": "[\"A100 80GB\",\"neocloud_spot\",\"spot\",\"median_usd_per_gpu_hour\",\"\",\"\",\"\"]",
+      "forecasts": [
+        {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 1.147,
+          "q50": 1.147,
+          "q90": 1.149236281
+        },
+        {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 1.147,
+          "q50": 1.147,
+          "q90": 1.158860173
+        },
+        {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 1.147,
+          "q50": 1.147,
+          "q90": 1.191007753
+        }
+      ]
+    },
+    {
+      "id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+      "label": "A100 SXM 80GB \u00b7 Hyperscaler spot \u00b7 Hubbard",
+      "gpu_model": "A100 SXM 80GB",
+      "market": "Hyperscaler spot",
+      "source": "Hubbard",
+      "source_id": "afhubbard",
+      "source_url": "https://hubbard-gpu-price-data.s3.amazonaws.com/?list-type=2&prefix=prices/",
+      "licence_id": "CC-BY-4.0",
+      "pricing_tier": "spot",
+      "instrument_class": "hyperscaler_spot",
+      "statistic": "median_usd_per_gpu_hour",
+      "unit": "USD per GPU-hour",
+      "unit_code": "usd_per_gpu_hour",
+      "comparison_key": "[\"A100 SXM 80GB\",\"hyperscaler_spot\",\"spot\",\"median_usd_per_gpu_hour\",\"\",\"\",\"\"]",
+      "forecasts": [
+        {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 1.8818,
+          "q50": 1.8818,
+          "q90": 1.8818
+        },
+        {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 1.849607979,
+          "q50": 1.8818,
+          "q90": 1.914068126
+        },
+        {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 1.788922101,
+          "q50": 1.8818,
+          "q90": 1.974671438
+        }
+      ]
+    },
+    {
+      "id": "gpurentalprices.neocloud_rate_card.A100_SXM_80GB.on_demand.median",
+      "label": "A100 SXM 80GB \u00b7 Neocloud on demand \u00b7 GPU Rental Prices",
+      "gpu_model": "A100 SXM 80GB",
+      "market": "Neocloud on demand",
+      "source": "GPU Rental Prices",
+      "source_id": "gpurentalprices",
+      "source_url": "https://gpurentalprices.com/data",
+      "licence_id": "CC-BY-4.0",
+      "pricing_tier": "on_demand",
+      "instrument_class": "neocloud_rate_card",
+      "statistic": "median_usd_per_gpu_hour",
+      "unit": "USD per GPU-hour",
+      "unit_code": "usd_per_gpu_hour",
+      "comparison_key": "[\"A100 SXM 80GB\",\"neocloud_rate_card\",\"on_demand\",\"median_usd_per_gpu_hour\",\"\",\"\",\"\"]",
+      "forecasts": [
+        {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 1.95,
+          "q50": 1.95,
+          "q90": 1.969612513
+        },
+        {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 1.940233723,
+          "q50": 1.95,
+          "q90": 2.000102775
+        },
+        {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 1.890083799,
+          "q50": 1.95,
+          "q90": 2.062168459
+        }
+      ]
+    },
+    {
+      "id": "fastgpu_daily.neocloud_rate_card.B200.on_demand.median",
+      "label": "B200 \u00b7 Neocloud on demand \u00b7 FastGPU",
+      "gpu_model": "B200",
+      "market": "Neocloud on demand",
+      "source": "FastGPU",
+      "source_id": "fastgpu_daily",
+      "source_url": "https://huggingface.co/datasets/fastgpu/cloud-gpu-prices",
+      "licence_id": "CC-BY-4.0",
+      "pricing_tier": "on_demand",
+      "instrument_class": "neocloud_rate_card",
+      "statistic": "median_usd_per_gpu_hour",
+      "unit": "USD per GPU-hour",
+      "unit_code": "usd_per_gpu_hour",
+      "comparison_key": "[\"B200\",\"neocloud_rate_card\",\"on_demand\",\"median_usd_per_gpu_hour\",\"\",\"\",\"\"]",
+      "forecasts": [
+        {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 6.262837697,
+          "q50": 6.3,
+          "q90": 6.363065998
+        },
+        {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 6.039105853,
+          "q50": 6.3,
+          "q90": 6.614524008
+        },
+        {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 5.538475947,
+          "q50": 6.3,
+          "q90": 6.930960292
+        }
+      ]
+    },
+    {
+      "id": "gpurentalprices.neocloud_rate_card.B200.on_demand.median",
+      "label": "B200 \u00b7 Neocloud on demand \u00b7 GPU Rental Prices",
+      "gpu_model": "B200",
+      "market": "Neocloud on demand",
+      "source": "GPU Rental Prices",
+      "source_id": "gpurentalprices",
+      "source_url": "https://gpurentalprices.com/data",
+      "licence_id": "CC-BY-4.0",
+      "pricing_tier": "on_demand",
+      "instrument_class": "neocloud_rate_card",
+      "statistic": "median_usd_per_gpu_hour",
+      "unit": "USD per GPU-hour",
+      "unit_code": "usd_per_gpu_hour",
+      "comparison_key": "[\"B200\",\"neocloud_rate_card\",\"on_demand\",\"median_usd_per_gpu_hour\",\"\",\"\",\"\"]",
+      "forecasts": [
+        {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 7.89,
+          "q50": 7.89,
+          "q90": 7.929093781
+        },
+        {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 7.89,
+          "q50": 7.89,
+          "q90": 7.989726631
+        },
+        {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 7.83315562,
+          "q50": 7.89,
+          "q90": 8.081702344
+        }
+      ]
+    },
+    {
+      "id": "fastgpu_daily.neocloud_spot.B200.spot.median",
+      "label": "B200 \u00b7 Neocloud spot \u00b7 FastGPU",
+      "gpu_model": "B200",
+      "market": "Neocloud spot",
+      "source": "FastGPU",
+      "source_id": "fastgpu_daily",
+      "source_url": "https://huggingface.co/datasets/fastgpu/cloud-gpu-prices",
+      "licence_id": "CC-BY-4.0",
+      "pricing_tier": "spot",
+      "instrument_class": "neocloud_spot",
+      "statistic": "median_usd_per_gpu_hour",
+      "unit": "USD per GPU-hour",
+      "unit_code": "usd_per_gpu_hour",
+      "comparison_key": "[\"B200\",\"neocloud_spot\",\"spot\",\"median_usd_per_gpu_hour\",\"\",\"\",\"\"]",
+      "forecasts": [
+        {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 4.177,
+          "q50": 4.177,
+          "q90": 4.197433
+        },
+        {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 4.177,
+          "q50": 4.177,
+          "q90": 4.236841501
+        },
+        {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 4.123069114,
+          "q50": 4.177,
+          "q90": 4.308776209
+        }
+      ]
+    },
+    {
+      "id": "fastgpu_daily.neocloud_rate_card.B300.on_demand.median",
+      "label": "B300 \u00b7 Neocloud on demand \u00b7 FastGPU",
+      "gpu_model": "B300",
+      "market": "Neocloud on demand",
+      "source": "FastGPU",
+      "source_id": "fastgpu_daily",
+      "source_url": "https://huggingface.co/datasets/fastgpu/cloud-gpu-prices",
+      "licence_id": "CC-BY-4.0",
+      "pricing_tier": "on_demand",
+      "instrument_class": "neocloud_rate_card",
+      "statistic": "median_usd_per_gpu_hour",
+      "unit": "USD per GPU-hour",
+      "unit_code": "usd_per_gpu_hour",
+      "comparison_key": "[\"B300\",\"neocloud_rate_card\",\"on_demand\",\"median_usd_per_gpu_hour\",\"\",\"\",\"\"]",
+      "forecasts": [
+        {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 8.49,
+          "q50": 8.49,
+          "q90": 8.575698535
+        },
+        {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 8.287563888,
+          "q50": 8.49,
+          "q90": 8.746565493
+        },
+        {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 7.558767553,
+          "q50": 8.49,
+          "q90": 9.493151081
+        }
+      ]
+    },
+    {
+      "id": "gpurentalprices.neocloud_rate_card.B300.on_demand.median",
+      "label": "B300 \u00b7 Neocloud on demand \u00b7 GPU Rental Prices",
+      "gpu_model": "B300",
+      "market": "Neocloud on demand",
+      "source": "GPU Rental Prices",
+      "source_id": "gpurentalprices",
+      "source_url": "https://gpurentalprices.com/data",
+      "licence_id": "CC-BY-4.0",
+      "pricing_tier": "on_demand",
+      "instrument_class": "neocloud_rate_card",
+      "statistic": "median_usd_per_gpu_hour",
+      "unit": "USD per GPU-hour",
+      "unit_code": "usd_per_gpu_hour",
+      "comparison_key": "[\"B300\",\"neocloud_rate_card\",\"on_demand\",\"median_usd_per_gpu_hour\",\"\",\"\",\"\"]",
+      "forecasts": [
+        {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 9.730558402,
+          "q50": 9.745,
+          "q90": 9.792679573
+        },
+        {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 9.720731746,
+          "q50": 9.745,
+          "q90": 9.965544737
+        },
+        {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 9.703770374,
+          "q50": 9.745,
+          "q90": 10.58786913
+        }
+      ]
+    },
+    {
+      "id": "fastgpu_daily.neocloud_spot.B300.spot.median",
+      "label": "B300 \u00b7 Neocloud spot \u00b7 FastGPU",
+      "gpu_model": "B300",
+      "market": "Neocloud spot",
+      "source": "FastGPU",
+      "source_id": "fastgpu_daily",
+      "source_url": "https://huggingface.co/datasets/fastgpu/cloud-gpu-prices",
+      "licence_id": "CC-BY-4.0",
+      "pricing_tier": "spot",
+      "instrument_class": "neocloud_spot",
+      "statistic": "median_usd_per_gpu_hour",
+      "unit": "USD per GPU-hour",
+      "unit_code": "usd_per_gpu_hour",
+      "comparison_key": "[\"B300\",\"neocloud_spot\",\"spot\",\"median_usd_per_gpu_hour\",\"\",\"\",\"\"]",
+      "forecasts": [
+        {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 4.735,
+          "q50": 4.735,
+          "q90": 4.759718942
+        },
+        {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 4.735,
+          "q50": 4.735,
+          "q90": 4.833648186
+        },
+        {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 4.735,
+          "q50": 4.735,
+          "q90": 4.921122817
+        }
+      ]
+    },
+    {
+      "id": "gpurentalprices.marketplace_ask.H100_80GB.spot.median",
+      "label": "H100 80GB \u00b7 Marketplace asks \u00b7 GPU Rental Prices",
+      "gpu_model": "H100 80GB",
+      "market": "Marketplace asks",
+      "source": "GPU Rental Prices",
+      "source_id": "gpurentalprices",
+      "source_url": "https://gpurentalprices.com/data",
+      "licence_id": "CC-BY-4.0",
+      "pricing_tier": "spot",
+      "instrument_class": "marketplace_ask",
+      "statistic": "median_usd_per_gpu_hour",
+      "unit": "USD per GPU-hour",
+      "unit_code": "usd_per_gpu_hour",
+      "comparison_key": "[\"H100 80GB\",\"marketplace_ask\",\"spot\",\"median_usd_per_gpu_hour\",\"\",\"\",\"\"]",
+      "forecasts": [
+        {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 1.603541662,
+          "q50": 1.875,
+          "q90": 2.224421994
+        },
+        {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 1.549330689,
+          "q50": 1.875,
+          "q90": 2.260135135
+        },
+        {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 1.30784456,
+          "q50": 1.875,
+          "q90": 2.631854299
+        }
+      ]
+    },
+    {
+      "id": "gpurentalprices.neocloud_rate_card.H100_80GB.on_demand.median",
+      "label": "H100 80GB \u00b7 Neocloud on demand \u00b7 GPU Rental Prices",
+      "gpu_model": "H100 80GB",
+      "market": "Neocloud on demand",
+      "source": "GPU Rental Prices",
+      "source_id": "gpurentalprices",
+      "source_url": "https://gpurentalprices.com/data",
+      "licence_id": "CC-BY-4.0",
+      "pricing_tier": "on_demand",
+      "instrument_class": "neocloud_rate_card",
+      "statistic": "median_usd_per_gpu_hour",
+      "unit": "USD per GPU-hour",
+      "unit_code": "usd_per_gpu_hour",
+      "comparison_key": "[\"H100 80GB\",\"neocloud_rate_card\",\"on_demand\",\"median_usd_per_gpu_hour\",\"\",\"\",\"\"]",
+      "forecasts": [
+        {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 3.871660141,
+          "q50": 3.885,
+          "q90": 3.89685864
+        },
+        {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 3.864664019,
+          "q50": 3.885,
+          "q90": 3.911719395
+        },
+        {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 3.847055204,
+          "q50": 3.885,
+          "q90": 4.155395335
+        }
+      ]
+    },
+    {
+      "id": "fastgpu_daily.neocloud_rate_card.H100_PCIe_80GB.on_demand.median",
+      "label": "H100 PCIe 80GB \u00b7 Neocloud on demand \u00b7 FastGPU",
+      "gpu_model": "H100 PCIe 80GB",
+      "market": "Neocloud on demand",
+      "source": "FastGPU",
+      "source_id": "fastgpu_daily",
+      "source_url": "https://huggingface.co/datasets/fastgpu/cloud-gpu-prices",
+      "licence_id": "CC-BY-4.0",
+      "pricing_tier": "on_demand",
+      "instrument_class": "neocloud_rate_card",
+      "statistic": "median_usd_per_gpu_hour",
+      "unit": "USD per GPU-hour",
+      "unit_code": "usd_per_gpu_hour",
+      "comparison_key": "[\"H100 PCIe 80GB\",\"neocloud_rate_card\",\"on_demand\",\"median_usd_per_gpu_hour\",\"\",\"\",\"\"]",
+      "forecasts": [
+        {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 2.79,
+          "q50": 2.79,
+          "q90": 2.79
+        },
+        {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 2.680424872,
+          "q50": 2.79,
+          "q90": 2.79
+        },
+        {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 2.524078125,
+          "q50": 2.79,
+          "q90": 2.872670019
+        }
+      ]
+    },
+    {
+      "id": "fastgpu_daily.neocloud_rate_card.H100_SXM_80GB.on_demand.median",
+      "label": "H100 SXM 80GB \u00b7 Neocloud on demand \u00b7 FastGPU",
+      "gpu_model": "H100 SXM 80GB",
+      "market": "Neocloud on demand",
+      "source": "FastGPU",
+      "source_id": "fastgpu_daily",
+      "source_url": "https://huggingface.co/datasets/fastgpu/cloud-gpu-prices",
+      "licence_id": "CC-BY-4.0",
+      "pricing_tier": "on_demand",
+      "instrument_class": "neocloud_rate_card",
+      "statistic": "median_usd_per_gpu_hour",
+      "unit": "USD per GPU-hour",
+      "unit_code": "usd_per_gpu_hour",
+      "comparison_key": "[\"H100 SXM 80GB\",\"neocloud_rate_card\",\"on_demand\",\"median_usd_per_gpu_hour\",\"\",\"\",\"\"]",
+      "forecasts": [
+        {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 3.949,
+          "q50": 3.949,
+          "q90": 3.953091513
+        },
+        {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 3.92860587,
+          "q50": 3.949,
+          "q90": 3.980679192
+        },
+        {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 3.92860587,
+          "q50": 3.949,
+          "q90": 3.999279347
+        }
+      ]
+    },
+    {
+      "id": "gpurentalprices.neocloud_rate_card.H100_SXM_80GB.on_demand.median",
+      "label": "H100 SXM 80GB \u00b7 Neocloud on demand \u00b7 GPU Rental Prices",
+      "gpu_model": "H100 SXM 80GB",
+      "market": "Neocloud on demand",
+      "source": "GPU Rental Prices",
+      "source_id": "gpurentalprices",
+      "source_url": "https://gpurentalprices.com/data",
+      "licence_id": "CC-BY-4.0",
+      "pricing_tier": "on_demand",
+      "instrument_class": "neocloud_rate_card",
+      "statistic": "median_usd_per_gpu_hour",
+      "unit": "USD per GPU-hour",
+      "unit_code": "usd_per_gpu_hour",
+      "comparison_key": "[\"H100 SXM 80GB\",\"neocloud_rate_card\",\"on_demand\",\"median_usd_per_gpu_hour\",\"\",\"\",\"\"]",
+      "forecasts": [
+        {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 3.5539,
+          "q50": 3.5539,
+          "q90": 3.573660429
+        },
+        {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 3.526350388,
+          "q50": 3.5539,
+          "q90": 3.609514053
+        },
+        {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 3.526350388,
+          "q50": 3.5539,
+          "q90": 3.746700389
+        }
+      ]
+    },
+    {
+      "id": "fastgpu_daily.neocloud_spot.H100_SXM_80GB.spot.median",
+      "label": "H100 SXM 80GB \u00b7 Neocloud spot \u00b7 FastGPU",
+      "gpu_model": "H100 SXM 80GB",
+      "market": "Neocloud spot",
+      "source": "FastGPU",
+      "source_id": "fastgpu_daily",
+      "source_url": "https://huggingface.co/datasets/fastgpu/cloud-gpu-prices",
+      "licence_id": "CC-BY-4.0",
+      "pricing_tier": "spot",
+      "instrument_class": "neocloud_spot",
+      "statistic": "median_usd_per_gpu_hour",
+      "unit": "USD per GPU-hour",
+      "unit_code": "usd_per_gpu_hour",
+      "comparison_key": "[\"H100 SXM 80GB\",\"neocloud_spot\",\"spot\",\"median_usd_per_gpu_hour\",\"\",\"\",\"\"]",
+      "forecasts": [
+        {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 2.285,
+          "q50": 2.285,
+          "q90": 2.285
+        },
+        {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 2.285,
+          "q50": 2.285,
+          "q90": 2.327881265
+        },
+        {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 2.285,
+          "q50": 2.285,
+          "q90": 2.348767442
+        }
+      ]
+    },
+    {
+      "id": "fastgpu_daily.neocloud_rate_card.H200.on_demand.median",
+      "label": "H200 \u00b7 Neocloud on demand \u00b7 FastGPU",
+      "gpu_model": "H200",
+      "market": "Neocloud on demand",
+      "source": "FastGPU",
+      "source_id": "fastgpu_daily",
+      "source_url": "https://huggingface.co/datasets/fastgpu/cloud-gpu-prices",
+      "licence_id": "CC-BY-4.0",
+      "pricing_tier": "on_demand",
+      "instrument_class": "neocloud_rate_card",
+      "statistic": "median_usd_per_gpu_hour",
+      "unit": "USD per GPU-hour",
+      "unit_code": "usd_per_gpu_hour",
+      "comparison_key": "[\"H200\",\"neocloud_rate_card\",\"on_demand\",\"median_usd_per_gpu_hour\",\"\",\"\",\"\"]",
+      "forecasts": [
+        {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 4.54,
+          "q50": 4.54,
+          "q90": 4.56250775
+        },
+        {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 4.515136911,
+          "q50": 4.54,
+          "q90": 4.58444699
+        },
+        {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 4.515136911,
+          "q50": 4.54,
+          "q90": 4.644918439
+        }
+      ]
+    },
+    {
+      "id": "gpurentalprices.neocloud_rate_card.H200.on_demand.median",
+      "label": "H200 \u00b7 Neocloud on demand \u00b7 GPU Rental Prices",
+      "gpu_model": "H200",
+      "market": "Neocloud on demand",
+      "source": "GPU Rental Prices",
+      "source_id": "gpurentalprices",
+      "source_url": "https://gpurentalprices.com/data",
+      "licence_id": "CC-BY-4.0",
+      "pricing_tier": "on_demand",
+      "instrument_class": "neocloud_rate_card",
+      "statistic": "median_usd_per_gpu_hour",
+      "unit": "USD per GPU-hour",
+      "unit_code": "usd_per_gpu_hour",
+      "comparison_key": "[\"H200\",\"neocloud_rate_card\",\"on_demand\",\"median_usd_per_gpu_hour\",\"\",\"\",\"\"]",
+      "forecasts": [
+        {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 4.59,
+          "q50": 4.59,
+          "q90": 4.59
+        },
+        {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 4.59,
+          "q50": 4.59,
+          "q90": 4.648232895
+        },
+        {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 4.495684932,
+          "q50": 4.59,
+          "q90": 4.700548757
+        }
+      ]
+    },
+    {
+      "id": "fastgpu_daily.neocloud_spot.H200.spot.median",
+      "label": "H200 \u00b7 Neocloud spot \u00b7 FastGPU",
+      "gpu_model": "H200",
+      "market": "Neocloud spot",
+      "source": "FastGPU",
+      "source_id": "fastgpu_daily",
+      "source_url": "https://huggingface.co/datasets/fastgpu/cloud-gpu-prices",
+      "licence_id": "CC-BY-4.0",
+      "pricing_tier": "spot",
+      "instrument_class": "neocloud_spot",
+      "statistic": "median_usd_per_gpu_hour",
+      "unit": "USD per GPU-hour",
+      "unit_code": "usd_per_gpu_hour",
+      "comparison_key": "[\"H200\",\"neocloud_spot\",\"spot\",\"median_usd_per_gpu_hour\",\"\",\"\",\"\"]",
+      "forecasts": [
+        {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 2.8,
+          "q50": 2.8,
+          "q90": 2.814743308
+        },
+        {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 2.8,
+          "q50": 2.8,
+          "q90": 2.844237096
+        },
+        {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 2.8,
+          "q50": 2.8,
+          "q90": 2.901809561
+        }
+      ]
+    },
+    {
+      "id": "gpurentalprices.neocloud_rate_card.L4.on_demand.median",
+      "label": "L4 \u00b7 Neocloud on demand \u00b7 GPU Rental Prices",
+      "gpu_model": "L4",
+      "market": "Neocloud on demand",
+      "source": "GPU Rental Prices",
+      "source_id": "gpurentalprices",
+      "source_url": "https://gpurentalprices.com/data",
+      "licence_id": "CC-BY-4.0",
+      "pricing_tier": "on_demand",
+      "instrument_class": "neocloud_rate_card",
+      "statistic": "median_usd_per_gpu_hour",
+      "unit": "USD per GPU-hour",
+      "unit_code": "usd_per_gpu_hour",
+      "comparison_key": "[\"L4\",\"neocloud_rate_card\",\"on_demand\",\"median_usd_per_gpu_hour\",\"\",\"\",\"\"]",
+      "forecasts": [
+        {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 0.8808044088,
+          "q50": 0.8839,
+          "q90": 0.8866177508
+        },
+        {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 0.878555398,
+          "q50": 0.8839,
+          "q90": 0.8885120009
+        },
+        {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 0.8737765786,
+          "q50": 0.8839,
+          "q90": 0.8897166116
+        }
+      ]
+    },
+    {
+      "id": "fastgpu_daily.neocloud_rate_card.L40S.on_demand.median",
+      "label": "L40S \u00b7 Neocloud on demand \u00b7 FastGPU",
+      "gpu_model": "L40S",
+      "market": "Neocloud on demand",
+      "source": "FastGPU",
+      "source_id": "fastgpu_daily",
+      "source_url": "https://huggingface.co/datasets/fastgpu/cloud-gpu-prices",
+      "licence_id": "CC-BY-4.0",
+      "pricing_tier": "on_demand",
+      "instrument_class": "neocloud_rate_card",
+      "statistic": "median_usd_per_gpu_hour",
+      "unit": "USD per GPU-hour",
+      "unit_code": "usd_per_gpu_hour",
+      "comparison_key": "[\"L40S\",\"neocloud_rate_card\",\"on_demand\",\"median_usd_per_gpu_hour\",\"\",\"\",\"\"]",
+      "forecasts": [
+        {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 1.7355,
+          "q50": 1.7355,
+          "q90": 1.74624955
+        },
+        {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 1.732843959,
+          "q50": 1.7355,
+          "q90": 1.787806224
+        },
+        {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 1.684277812,
+          "q50": 1.7355,
+          "q90": 1.830866619
+        }
+      ]
+    },
+    {
+      "id": "gpurentalprices.neocloud_rate_card.L40S.on_demand.median",
+      "label": "L40S \u00b7 Neocloud on demand \u00b7 GPU Rental Prices",
+      "gpu_model": "L40S",
+      "market": "Neocloud on demand",
+      "source": "GPU Rental Prices",
+      "source_id": "gpurentalprices",
+      "source_url": "https://gpurentalprices.com/data",
+      "licence_id": "CC-BY-4.0",
+      "pricing_tier": "on_demand",
+      "instrument_class": "neocloud_rate_card",
+      "statistic": "median_usd_per_gpu_hour",
+      "unit": "USD per GPU-hour",
+      "unit_code": "usd_per_gpu_hour",
+      "comparison_key": "[\"L40S\",\"neocloud_rate_card\",\"on_demand\",\"median_usd_per_gpu_hour\",\"\",\"\",\"\"]",
+      "forecasts": [
+        {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 1.6099,
+          "q50": 1.6099,
+          "q90": 1.611386853
+        },
+        {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 1.6099,
+          "q50": 1.6099,
+          "q90": 1.618215599
+        },
+        {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 1.603893452,
+          "q50": 1.6099,
+          "q90": 1.619387331
+        }
+      ]
+    },
+    {
+      "id": "fastgpu_daily.neocloud_spot.L40S.spot.median",
+      "label": "L40S \u00b7 Neocloud spot \u00b7 FastGPU",
+      "gpu_model": "L40S",
+      "market": "Neocloud spot",
+      "source": "FastGPU",
+      "source_id": "fastgpu_daily",
+      "source_url": "https://huggingface.co/datasets/fastgpu/cloud-gpu-prices",
+      "licence_id": "CC-BY-4.0",
+      "pricing_tier": "spot",
+      "instrument_class": "neocloud_spot",
+      "statistic": "median_usd_per_gpu_hour",
+      "unit": "USD per GPU-hour",
+      "unit_code": "usd_per_gpu_hour",
+      "comparison_key": "[\"L40S\",\"neocloud_spot\",\"spot\",\"median_usd_per_gpu_hour\",\"\",\"\",\"\"]",
+      "forecasts": [
+        {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 0.97,
+          "q50": 0.97,
+          "q90": 0.9801147467
+        },
+        {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 0.97,
+          "q50": 0.97,
+          "q90": 0.9991113674
+        },
+        {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 0.97,
+          "q50": 0.97,
+          "q90": 1.029799403
+        }
+      ]
+    },
+    {
+      "id": "fastgpu_daily.neocloud_rate_card.RTX_6000_Ada.on_demand.median",
+      "label": "RTX 6000 Ada \u00b7 Neocloud on demand \u00b7 FastGPU",
+      "gpu_model": "RTX 6000 Ada",
+      "market": "Neocloud on demand",
+      "source": "FastGPU",
+      "source_id": "fastgpu_daily",
+      "source_url": "https://huggingface.co/datasets/fastgpu/cloud-gpu-prices",
+      "licence_id": "CC-BY-4.0",
+      "pricing_tier": "on_demand",
+      "instrument_class": "neocloud_rate_card",
+      "statistic": "median_usd_per_gpu_hour",
+      "unit": "USD per GPU-hour",
+      "unit_code": "usd_per_gpu_hour",
+      "comparison_key": "[\"RTX 6000 Ada\",\"neocloud_rate_card\",\"on_demand\",\"median_usd_per_gpu_hour\",\"\",\"\",\"\"]",
+      "forecasts": [
+        {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 1.528,
+          "q50": 1.528,
+          "q90": 1.543615664
+        },
+        {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 1.528,
+          "q50": 1.528,
+          "q90": 1.57498503
+        },
+        {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 1.365350717,
+          "q50": 1.528,
+          "q90": 1.638289515
+        }
+      ]
+    },
+    {
+      "id": "gpurentalprices.neocloud_rate_card.RTX_6000_Ada.on_demand.median",
+      "label": "RTX 6000 Ada \u00b7 Neocloud on demand \u00b7 GPU Rental Prices",
+      "gpu_model": "RTX 6000 Ada",
+      "market": "Neocloud on demand",
+      "source": "GPU Rental Prices",
+      "source_id": "gpurentalprices",
+      "source_url": "https://gpurentalprices.com/data",
+      "licence_id": "CC-BY-4.0",
+      "pricing_tier": "on_demand",
+      "instrument_class": "neocloud_rate_card",
+      "statistic": "median_usd_per_gpu_hour",
+      "unit": "USD per GPU-hour",
+      "unit_code": "usd_per_gpu_hour",
+      "comparison_key": "[\"RTX 6000 Ada\",\"neocloud_rate_card\",\"on_demand\",\"median_usd_per_gpu_hour\",\"\",\"\",\"\"]",
+      "forecasts": [
+        {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 1.2515,
+          "q50": 1.2515,
+          "q90": 1.264296276
+        },
+        {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 1.2515,
+          "q50": 1.2515,
+          "q90": 1.289766852
+        },
+        {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 1.2515,
+          "q50": 1.2515,
+          "q90": 1.329131882
+        }
+      ]
+    },
+    {
+      "id": "fastgpu_daily.neocloud_rate_card.RTX_A6000.on_demand.median",
+      "label": "RTX A6000 \u00b7 Neocloud on demand \u00b7 FastGPU",
+      "gpu_model": "RTX A6000",
+      "market": "Neocloud on demand",
+      "source": "FastGPU",
+      "source_id": "fastgpu_daily",
+      "source_url": "https://huggingface.co/datasets/fastgpu/cloud-gpu-prices",
+      "licence_id": "CC-BY-4.0",
+      "pricing_tier": "on_demand",
+      "instrument_class": "neocloud_rate_card",
+      "statistic": "median_usd_per_gpu_hour",
+      "unit": "USD per GPU-hour",
+      "unit_code": "usd_per_gpu_hour",
+      "comparison_key": "[\"RTX A6000\",\"neocloud_rate_card\",\"on_demand\",\"median_usd_per_gpu_hour\",\"\",\"\",\"\"]",
+      "forecasts": [
+        {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 0.5,
+          "q50": 0.5,
+          "q90": 0.5027056404
+        },
+        {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 0.4918918919,
+          "q50": 0.5,
+          "q90": 0.5080819525
+        },
+        {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 0.4465065315,
+          "q50": 0.5,
+          "q90": 0.5137401605
+        }
+      ]
+    },
+    {
+      "id": "gpurentalprices.neocloud_rate_card.RTX_A6000.on_demand.median",
+      "label": "RTX A6000 \u00b7 Neocloud on demand \u00b7 GPU Rental Prices",
+      "gpu_model": "RTX A6000",
+      "market": "Neocloud on demand",
+      "source": "GPU Rental Prices",
+      "source_id": "gpurentalprices",
+      "source_url": "https://gpurentalprices.com/data",
+      "licence_id": "CC-BY-4.0",
+      "pricing_tier": "on_demand",
+      "instrument_class": "neocloud_rate_card",
+      "statistic": "median_usd_per_gpu_hour",
+      "unit": "USD per GPU-hour",
+      "unit_code": "usd_per_gpu_hour",
+      "comparison_key": "[\"RTX A6000\",\"neocloud_rate_card\",\"on_demand\",\"median_usd_per_gpu_hour\",\"\",\"\",\"\"]",
+      "forecasts": [
+        {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 0.711,
+          "q50": 0.711,
+          "q90": 0.7181315077
+        },
+        {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 0.711,
+          "q50": 0.711,
+          "q90": 0.7326548223
+        },
+        {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 0.711,
+          "q50": 0.711,
+          "q90": 0.7620080037
+        }
+      ]
+    },
+    {
+      "id": "fastgpu_daily.neocloud_rate_card.RTX_PRO_6000.on_demand.median",
+      "label": "RTX PRO 6000 \u00b7 Neocloud on demand \u00b7 FastGPU",
+      "gpu_model": "RTX PRO 6000",
+      "market": "Neocloud on demand",
+      "source": "FastGPU",
+      "source_id": "fastgpu_daily",
+      "source_url": "https://huggingface.co/datasets/fastgpu/cloud-gpu-prices",
+      "licence_id": "CC-BY-4.0",
+      "pricing_tier": "on_demand",
+      "instrument_class": "neocloud_rate_card",
+      "statistic": "median_usd_per_gpu_hour",
+      "unit": "USD per GPU-hour",
+      "unit_code": "usd_per_gpu_hour",
+      "comparison_key": "[\"RTX PRO 6000\",\"neocloud_rate_card\",\"on_demand\",\"median_usd_per_gpu_hour\",\"\",\"\",\"\"]",
+      "forecasts": [
+        {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 2.151621082,
+          "q50": 2.1615,
+          "q90": 2.182894087
+        },
+        {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 2.075090477,
+          "q50": 2.1615,
+          "q90": 2.272404131
+        },
+        {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 2.049303111,
+          "q50": 2.1615,
+          "q90": 2.526891484
+        }
+      ]
+    },
+    {
+      "id": "gpurentalprices.neocloud_rate_card.RTX_PRO_6000.on_demand.median",
+      "label": "RTX PRO 6000 \u00b7 Neocloud on demand \u00b7 GPU Rental Prices",
+      "gpu_model": "RTX PRO 6000",
+      "market": "Neocloud on demand",
+      "source": "GPU Rental Prices",
+      "source_id": "gpurentalprices",
+      "source_url": "https://gpurentalprices.com/data",
+      "licence_id": "CC-BY-4.0",
+      "pricing_tier": "on_demand",
+      "instrument_class": "neocloud_rate_card",
+      "statistic": "median_usd_per_gpu_hour",
+      "unit": "USD per GPU-hour",
+      "unit_code": "usd_per_gpu_hour",
+      "comparison_key": "[\"RTX PRO 6000\",\"neocloud_rate_card\",\"on_demand\",\"median_usd_per_gpu_hour\",\"\",\"\",\"\"]",
+      "forecasts": [
+        {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 2.3,
+          "q50": 2.3,
+          "q90": 2.322719721
+        },
+        {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 2.3,
+          "q50": 2.3,
+          "q90": 2.346843177
+        },
+        {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 2.3,
+          "q50": 2.3,
+          "q90": 2.462785388
+        }
+      ]
+    },
+    {
+      "id": "fastgpu_daily.neocloud_spot.RTX_PRO_6000.spot.median",
+      "label": "RTX PRO 6000 \u00b7 Neocloud spot \u00b7 FastGPU",
+      "gpu_model": "RTX PRO 6000",
+      "market": "Neocloud spot",
+      "source": "FastGPU",
+      "source_id": "fastgpu_daily",
+      "source_url": "https://huggingface.co/datasets/fastgpu/cloud-gpu-prices",
+      "licence_id": "CC-BY-4.0",
+      "pricing_tier": "spot",
+      "instrument_class": "neocloud_spot",
+      "statistic": "median_usd_per_gpu_hour",
+      "unit": "USD per GPU-hour",
+      "unit_code": "usd_per_gpu_hour",
+      "comparison_key": "[\"RTX PRO 6000\",\"neocloud_spot\",\"spot\",\"median_usd_per_gpu_hour\",\"\",\"\",\"\"]",
+      "forecasts": [
+        {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 1.4145,
+          "q50": 1.4145,
+          "q90": 1.421109547
+        },
+        {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 1.4145,
+          "q50": 1.4145,
+          "q90": 1.480767617
+        },
+        {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 1.4145,
+          "q50": 1.4145,
+          "q90": 1.583174686
+        }
+      ]
+    },
+    {
+      "id": "fastgpu_daily.hyperscaler_spot.T4.spot.median",
+      "label": "T4 \u00b7 Hyperscaler spot \u00b7 FastGPU",
+      "gpu_model": "T4",
+      "market": "Hyperscaler spot",
+      "source": "FastGPU",
+      "source_id": "fastgpu_daily",
+      "source_url": "https://huggingface.co/datasets/fastgpu/cloud-gpu-prices",
+      "licence_id": "CC-BY-4.0",
+      "pricing_tier": "spot",
+      "instrument_class": "hyperscaler_spot",
+      "statistic": "median_usd_per_gpu_hour",
+      "unit": "USD per GPU-hour",
+      "unit_code": "usd_per_gpu_hour",
+      "comparison_key": "[\"T4\",\"hyperscaler_spot\",\"spot\",\"median_usd_per_gpu_hour\",\"\",\"\",\"\"]",
+      "forecasts": [
+        {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 0.08597905957,
+          "q50": 0.089,
+          "q90": 0.09113473886
+        },
+        {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 0.08195890105,
+          "q50": 0.089,
+          "q90": 0.09524791997
+        },
+        {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 0.07602584954,
+          "q50": 0.089,
+          "q90": 0.1046464581
+        }
+      ]
+    },
+    {
+      "id": "afhubbard.hyperscaler_spot.T4.spot.median",
+      "label": "T4 \u00b7 Hyperscaler spot \u00b7 Hubbard",
+      "gpu_model": "T4",
+      "market": "Hyperscaler spot",
+      "source": "Hubbard",
+      "source_id": "afhubbard",
+      "source_url": "https://hubbard-gpu-price-data.s3.amazonaws.com/?list-type=2&prefix=prices/",
+      "licence_id": "CC-BY-4.0",
+      "pricing_tier": "spot",
+      "instrument_class": "hyperscaler_spot",
+      "statistic": "median_usd_per_gpu_hour",
+      "unit": "USD per GPU-hour",
+      "unit_code": "usd_per_gpu_hour",
+      "comparison_key": "[\"T4\",\"hyperscaler_spot\",\"spot\",\"median_usd_per_gpu_hour\",\"\",\"\",\"\"]",
+      "forecasts": [
+        {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 0.3041251285,
+          "q50": 0.3047,
+          "q90": 0.306036637
+        },
+        {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 0.3032914952,
+          "q50": 0.3047,
+          "q90": 0.3092386071
+        },
+        {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 0.3028470512,
+          "q50": 0.3047,
+          "q90": 0.3125566702
+        }
+      ]
+    },
+    {
+      "id": "afhubbard.hyperscaler_spot.V100.spot.median",
+      "label": "V100 \u00b7 Hyperscaler spot \u00b7 Hubbard",
+      "gpu_model": "V100",
+      "market": "Hyperscaler spot",
+      "source": "Hubbard",
+      "source_id": "afhubbard",
+      "source_url": "https://hubbard-gpu-price-data.s3.amazonaws.com/?list-type=2&prefix=prices/",
+      "licence_id": "CC-BY-4.0",
+      "pricing_tier": "spot",
+      "instrument_class": "hyperscaler_spot",
+      "statistic": "median_usd_per_gpu_hour",
+      "unit": "USD per GPU-hour",
+      "unit_code": "usd_per_gpu_hour",
+      "comparison_key": "[\"V100\",\"hyperscaler_spot\",\"spot\",\"median_usd_per_gpu_hour\",\"\",\"\",\"\"]",
+      "forecasts": [
+        {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 1.475,
+          "q50": 1.475,
+          "q90": 1.475
+        },
+        {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 1.454007963,
+          "q50": 1.475,
+          "q90": 1.544205089
+        },
+        {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 1.4266,
+          "q50": 1.475,
+          "q90": 1.54984807
+        }
+      ]
+    }
+  ],
+  "history": {
+    "status": "not_published",
+    "points": [],
+    "reason": "Compilation permission remains pending owner confirmation and upstream terms apply. No historical price values are published by this adapter."
+  },
+  "outlook": {
+    "kind": "assumption_driven_scenario_not_fitted_forecast",
+    "reference_date": "2026-11-06",
+    "reference_index": 100,
+    "rental_reference": "100 represents the November 6 advertised rate for a specified source/SKU/contract, conditional on that contract still being quoted.",
+    "resale_reference": "100 is a hypothetical hardware resale-value anchor. The pack does not provide an open executed resale-price dataset; no observed dollar resale anchor is claimed.",
+    "scenario_probabilities": null,
+    "confidence_level": null,
+    "assumptions": [
+      {
+        "scenario": "supply_expansion",
+        "rental_annual_change": -0.35,
+        "resale_annual_depreciation": 0.4,
+        "assumption": "Rapid capacity addition and substitution toward newer accelerators."
+      },
+      {
+        "scenario": "moderate_decline",
+        "rental_annual_change": -0.15,
+        "resale_annual_depreciation": 0.25,
+        "assumption": "Continued efficiency gains with continued demand for older accelerators."
+      },
+      {
+        "scenario": "persistent_constraints",
+        "rental_annual_change": 0.05,
+        "resale_annual_depreciation": 0.1,
+        "assumption": "Capacity constraints support nominal rental rates and slow depreciation."
+      }
+    ],
+    "results": [
+      {
+        "scenario": "supply_expansion",
+        "years": 2,
+        "rental_index": 42.25000000000001,
+        "resale_index": 36.0
+      },
+      {
+        "scenario": "supply_expansion",
+        "years": 3,
+        "rental_index": 27.462500000000002,
+        "resale_index": 21.599999999999998
+      },
+      {
+        "scenario": "moderate_decline",
+        "years": 2,
+        "rental_index": 72.24999999999999,
+        "resale_index": 56.25
+      },
+      {
+        "scenario": "moderate_decline",
+        "years": 3,
+        "rental_index": 61.412499999999994,
+        "resale_index": 42.1875
+      },
+      {
+        "scenario": "persistent_constraints",
+        "years": 2,
+        "rental_index": 110.25,
+        "resale_index": 81.0
+      },
+      {
+        "scenario": "persistent_constraints",
+        "years": 3,
+        "rental_index": 115.76250000000002,
+        "resale_index": 72.9
+      }
+    ],
+    "limitations": [
+      "The scenario envelope is not a confidence interval or quantile forecast.",
+      "No scenario probabilities were estimated.",
+      "Quote survival, capacity, transaction execution and hardware condition are not modeled.",
+      "Rental and hardware resale are separate instruments; rental rates do not directly determine resale prices.",
+      "These illustrative annual changes are explicit assumptions, not empirical estimates."
+    ]
+  },
+  "comparison_note": "Aligned GPU, market, tier and statistic only. Each source may sample different providers; these are source-level median series, not matched individual offers.",
+  "method": "last_value_empirical",
+  "source_attribution": "Pacific Machines (2026), gpu-price-pack v0.1.1-handover; upstream source attribution retained."
+}

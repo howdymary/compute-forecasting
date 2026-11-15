@@ -1,0 +1,74 @@
+{
+  "kind": "assumption_driven_scenario_not_fitted_forecast",
+  "reference_date": "2026-11-06",
+  "reference_index": 100,
+  "rental_reference": "100 represents the November 6 advertised rate for a specified source/SKU/contract, conditional on that contract still being quoted.",
+  "resale_reference": "100 is a hypothetical hardware resale-value anchor. The pack does not provide an open executed resale-price dataset; no observed dollar resale anchor is claimed.",
+  "scenario_probabilities": null,
+  "confidence_level": null,
+  "assumptions": [
+    {
+      "scenario": "supply_expansion",
+      "rental_annual_change": -0.35,
+      "resale_annual_depreciation": 0.4,
+      "assumption": "Rapid capacity addition and substitution toward newer accelerators."
+    },
+    {
+      "scenario": "moderate_decline",
+      "rental_annual_change": -0.15,
+      "resale_annual_depreciation": 0.25,
+      "assumption": "Continued efficiency gains with continued demand for older accelerators."
+    },
+    {
+      "scenario": "persistent_constraints",
+      "rental_annual_change": 0.05,
+      "resale_annual_depreciation": 0.1,
+      "assumption": "Capacity constraints support nominal rental rates and slow depreciation."
+    }
+  ],
+  "results": [
+    {
+      "scenario": "supply_expansion",
+      "years": 2,
+      "rental_index": 42.25000000000001,
+      "resale_index": 36.0
+    },
+    {
+      "scenario": "supply_expansion",
+      "years": 3,
+      "rental_index": 27.462500000000002,
+      "resale_index": 21.599999999999998
+    },
+    {
+      "scenario": "moderate_decline",
+      "years": 2,
+      "rental_index": 72.24999999999999,
+      "resale_index": 56.25
+    },
+    {
+      "scenario": "moderate_decline",
+      "years": 3,
+      "rental_index": 61.412499999999994,
+      "resale_index": 42.1875
+    },
+    {
+      "scenario": "persistent_constraints",
+      "years": 2,
+      "rental_index": 110.25,
+      "resale_index": 81.0
+    },
+    {
+      "scenario": "persistent_constraints",
+      "years": 3,
+      "rental_index": 115.76250000000002,
+      "resale_index": 72.9
+    }
+  ],
+  "limitations": [
+    "The scenario envelope is not a confidence interval or quantile forecast.",
+    "No scenario probabilities were estimated.",
+    "Quote survival, capacity, transaction execution and hardware condition are not modeled.",
+    "Rental and hardware resale are separate instruments; rental rates do not directly determine resale prices.",
+    "These illustrative annual changes are explicit assumptions, not empirical estimates."
+  ]
+}
