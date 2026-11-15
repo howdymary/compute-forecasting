@@ -1,0 +1,28 @@
+{
+  "source_sha": "7d0d7b4780cfdf5117b48f261d53bdaf7735881a",
+  "case": 1,
+  "target": 227,
+  "forbidden": [
+    6587,
+    16368,
+    50687,
+    57440
+  ],
+  "pool_count": 3028,
+  "pool_hash": "36204ffb803dc2604f149ffd98902e226e60da9d132c4293fb2dc284c5b6f83a",
+  "model_sha256": "d3c4f6161e04604f35924c88bd8d66bd082341c69155700082a029c54c78ffb6",
+  "solver": "SCIP 9.2.2 [LP solver: SoPlex 7.1.3]",
+  "seconds_limit": 300,
+  "workers": 2,
+  "best_verified": 226,
+  "best_exported": 225,
+  "hint": "Verified 225-word code, intentionally below target. A hint is not a feasible result.",
+  "hypothesis": "A separate MILP feasibility formulation and clique/LP processing may escape the CP-SAT and local-search basin.",
+  "scope": "Restricted explicit union and four backbone exclusions. Zero objective; OPTIMAL with a solution means encoded feasibility only. INFEASIBLE is restricted to this model; no global conclusion.",
+  "documentation": "https://developers.google.com/optimization/mip/mip_example",
+  "status": "NOT_SOLVED",
+  "wall_seconds": 300.29339083,
+  "nodes": 1,
+  "iterations": 270197,
+  "followups": []
+}

@@ -1,0 +1,54 @@
+{
+  "source_sha": "a8cbffbd3602fd2cc3862b2628b3f1f0302f8a96",
+  "case": 6,
+  "condition": "weight_band",
+  "seed": 1170004,
+  "weight_band": [
+    9,
+    13
+  ],
+  "removed_count": 96,
+  "fixed_count": 130,
+  "fixed_sha256": "e15e4519244e440da5a5f92378b832b34be16268098efc2d6203fde751a5a62c",
+  "incumbent_verification": {
+    "accepted": true,
+    "cardinality": 226,
+    "reports": [
+      {
+        "cardinality": 226,
+        "distinct_descendants": 6410,
+        "length": 16,
+        "method": "distinct_string_two_deletions",
+        "valid": true,
+        "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+      },
+      {
+        "cardinality": 226,
+        "largest_pairwise_lcs": 13,
+        "length": 16,
+        "method": "independent_dynamic_programming_lcs",
+        "pairs_checked": 25425,
+        "valid": true,
+        "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+      }
+    ]
+  },
+  "pool_count": 9163,
+  "pool_sha256": "a5b4cd28e64d71bdbc7f420abde57430c90448244ed6b66e23e8e9ca3a5b123b",
+  "target_added": 97,
+  "model_sha256": "a58265cc732a321fd77bdee5996ccdb15877529eae61872f12e51be75b465668",
+  "solutions": [],
+  "seconds_limit": 300,
+  "workers": 2,
+  "hypothesis": "Deletion descendant weights lie in [wt(x)-2,wt(x)], so conflicts occur only between weight layers at distance at most two. Reoptimize an entire multi-layer band rather than a bounded k-exchange. Random controls remove the same number of incumbent words.",
+  "scope": "Every binary 16-bit word compatible with the explicitly fixed outside code is eligible. No component, symmetry, dominance or learned cuts; a timeout is not local optimality.",
+  "proof_artifact": null,
+  "status": "UNKNOWN",
+  "wall_seconds": 300.028248162,
+  "best_objective_bound": 189.0,
+  "conflicts": 3197,
+  "branches": 119417,
+  "response_stats": "CpSolverResponse summary:\nstatus: UNKNOWN\nobjective: -0\nbest_bound: 189\nintegers: 5721\nbooleans: 9137\nconflicts: 3197\nbranches: 119417\npropagations: 41192981\ninteger_propagations: 24988533\nrestarts: 79940\nlp_iterations: 1705562\nwalltime: 300.017\nusertime: 300.017\ndeterministic_time: 1568.66\ngap_integral: 8206.55\n",
+  "best_verified": 226,
+  "conclusion": "No improvement within budget; neighborhood open"
+}

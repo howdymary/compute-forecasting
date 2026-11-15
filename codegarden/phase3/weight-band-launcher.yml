@@ -1,0 +1,83 @@
+name: CodeGarden full weight-band exact repairs
+on:
+  push:
+    branches: [codegarden-weight-band-003]
+    paths: [.github/workflows/codegarden.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: codegarden-free-weight-band-003
+  cancel-in-progress: false
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+  SOURCE_SHA: ${{ github.sha }}
+  CODEGARDEN_BATCH: weight_band_001
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - name: Verify current official baseline
+        run: python -B -u codegarden/phase3/preflight.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: codegarden-bundle-preflight
+          path: codegarden/artifacts/phase3/weight_band_001/
+  probes:
+    needs: preflight
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        case: [0, 1, 2, 3, 4, 5, 6, 7]
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/download-artifact@v4
+        with:
+          name: codegarden-bundle-preflight
+          path: codegarden/artifacts/phase3/weight_band_001/
+      - name: Install isolated pinned solver
+        run: |
+          python -m venv codegarden/.venv
+          codegarden/.venv/bin/python -m pip install ortools==9.14.6206
+      - name: Reoptimize full compatible pool
+        run: codegarden/.venv/bin/python -B -u codegarden/phase3/weight_band.py --case ${{ matrix.case }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: codegarden-bundle-${{ matrix.case }}
+          path: codegarden/artifacts/phase3/weight_band_001/
+  collect:
+    needs: [preflight, probes]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: codegarden-bundle-*
+          merge-multiple: true
+          path: codegarden/artifacts/phase3/weight_band_001/
+      - name: Publish leased results
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -B -u codegarden/phase3/publish_weight_band.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: codegarden-bundle-collected
+          path: codegarden/artifacts/phase3/weight_band_001/

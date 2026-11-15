@@ -1,0 +1,64 @@
+name: CodeGarden bounded Modal radius-ten partitions
+on:
+  push:
+    branches: [codegarden-modal-008]
+    paths: [.github/workflows/codegarden.yml]
+permissions:
+  contents: write
+concurrency:
+  group: codegarden-provider-serial
+  cancel-in-progress: false
+env:
+  SOURCE_SHA: ${{ github.sha }}
+  HF_HOME: ${{ github.workspace }}/codegarden/.cache/huggingface
+  XDG_CACHE_HOME: ${{ github.workspace }}/codegarden/.cache
+  PYTHONDONTWRITEBYTECODE: '1'
+  CODEGARDEN_BATCH: sharded10_001
+jobs:
+  modal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 48
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install isolated clients
+        run: |
+          python -m venv codegarden/.venv
+          codegarden/.venv/bin/python -m pip install -r codegarden/requirements-providers.txt
+      - name: Validate exact root partition and both verifiers before spending
+        run: |
+          mkdir -p codegarden/.build
+          g++ -O3 -std=c++17 codegarden/phase3/bundle_sharded.cpp -o codegarden/.build/bundle
+          codegarden/.build/bundle --synthetic-tests
+          python -B -u codegarden/phase3/test_connected2.py
+          python -B -u codegarden/phase3/test_dominance_local.py
+          python -B -u codegarden/phase3/test_shards.py
+          python -B -u codegarden/phase3/preflight.py
+      - name: Refresh credit floor, preserve shared guards, then run bounded Modal workers
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+        run: codegarden/.venv/bin/python -B -u codegarden/phase3/modal_sharded10.py
+      - name: Publish final checkpoint
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -B -u codegarden/phase3/publish_sharded10.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: codegarden-sharded10
+          path: |
+            codegarden/artifacts/phase3/sharded10_001/
+            codegarden/artifacts/phase3/budget_renewal_004/
+            codegarden/artifacts/shared-budget.sqlite
+            codegarden/budget/shared-allocation.json
+            codegarden/budget/historical-usage.json
