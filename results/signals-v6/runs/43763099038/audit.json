@@ -1,0 +1,569 @@
+{
+  "checked_at": "2026-11-15T21:20:24.266765+00:00",
+  "sources": [
+    {
+      "url": "https://gpurentalprices.com/api/latest.json",
+      "status": 200,
+      "sha256": "9eafd355d20967b87348d624dcb51278df0587ec7e4253c0a6244e4498a13b3c",
+      "bytes": 528863,
+      "top_keys": [
+        "date",
+        "generated_at",
+        "offers",
+        "providers",
+        "meta"
+      ],
+      "preview": "{'date': '2026-11-15', 'generated_at': '2026-11-15T08:47:11.919Z', 'offers': [{'provider': 'daytona', 'gpu': 'b300', 'vram_gb': 288, 'usd_hr': 8.99, 'kind': 'on-demand', 'source_url': 'https://billing.app.daytona.io/gpu-pricing', 'fetched_at': '2026-11-15T08:47:02.453121373Z', 'availability': 'not-reported', 'instance': 'B300; GPU rate only, CPU/memory/disk billed separately', 'source_quote': '{\"type\":\"B300\",\"onDemandPricePerHour\":8.99,\"spotPricePerHour\":5.17,\"onDemandPricePerSecond\":0.0024972222222222223,\"spotPricePerSecond\":0.001436111111111111}'}, {'provider': 'daytona', 'gpu': 'b300', 'vram_gb': 288, 'usd_hr': 5.17, 'kind': 'spot', 'source_url': 'https://billing.app.daytona.io/gpu-pricing', 'fetched_at': '2026-11-15T08:47:02.453121373Z', 'availability': 'not-reported', 'instance': 'B300; GPU rate only, CPU/memory/disk billed separately', 'source_quote': '{\"type\":\"B300\",\"onDemandPricePerHour\":8.99,\"spotPricePerHour\":5.17,\"onDemandPricePerSecond\":0.0024972222222222223,\"spotPricePerSecond\":0.001436111111111111}'}, {'provider': 'daytona', 'gpu': 'b200', 'vram_gb': 180, 'usd_hr': 7.49, 'kind': 'on-demand', 'source_url': 'https://billing.app.daytona.io/gpu-pricing', 'fetched_at': '2026-11-15T08:47:02.453121373Z', 'availability': 'not-reported', 'instance': 'B200; GPU rate only, CPU/memory/disk billed separately', 'source_quote': '{\"type\":\"B200\",\"onDemandPricePerHour\":7.49,\"spotPricePerHour\":4.3,\"onDemandPricePerSecond\":0.0020805555555555555,\"spotPricePerSecond\":0.0011944444444444444}'}, {'provider': 'daytona', 'gpu': 'b200', 'vram_gb': 180, 'usd_hr': 4.3, 'kind': 'spot', 'source_url': 'https://billing.app.daytona.io/gpu-pricing', 'fetched_at': '2026-11-15T08:47:02.453121373Z', 'availability': 'not-reported', 'instance': 'B200; GPU rate only, CPU/memory/disk billed separat",
+      "arrays": {
+        "offers": {
+          "rows": 648,
+          "first": [
+            {
+              "provider": "daytona",
+              "gpu": "b300",
+              "vram_gb": 288,
+              "usd_hr": 8.99,
+              "kind": "on-demand",
+              "source_url": "https://billing.app.daytona.io/gpu-pricing",
+              "fetched_at": "2026-11-15T08:47:02.453121373Z",
+              "availability": "not-reported",
+              "instance": "B300; GPU rate only, CPU/memory/disk billed separately",
+              "source_quote": "{\"type\":\"B300\",\"onDemandPricePerHour\":8.99,\"spotPricePerHour\":5.17,\"onDemandPricePerSecond\":0.0024972222222222223,\"spotPricePerSecond\":0.001436111111111111}"
+            },
+            {
+              "provider": "daytona",
+              "gpu": "b300",
+              "vram_gb": 288,
+              "usd_hr": 5.17,
+              "kind": "spot",
+              "source_url": "https://billing.app.daytona.io/gpu-pricing",
+              "fetched_at": "2026-11-15T08:47:02.453121373Z",
+              "availability": "not-reported",
+              "instance": "B300; GPU rate only, CPU/memory/disk billed separately",
+              "source_quote": "{\"type\":\"B300\",\"onDemandPricePerHour\":8.99,\"spotPricePerHour\":5.17,\"onDemandPricePerSecond\":0.0024972222222222223,\"spotPricePerSecond\":0.001436111111111111}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "url": "https://gpurentalprices.com/api/health.json",
+      "status": 200,
+      "sha256": "365d52f6f2b5067a4f8c053d6c82c2dfacad2692d56620361f299b32613fc618",
+      "bytes": 14602,
+      "top_keys": [
+        "status",
+        "providers_ok",
+        "scrape_ok",
+        "provider_coverage_slo",
+        "fresh_ratio",
+        "ok_count",
+        "stale_count",
+        "stale_providers",
+        "provider_failures",
+        "snapshot_date",
+        "generated_at",
+        "provider_count",
+        "public_price_provider_count",
+        "not_public_providers",
+        "retired_providers",
+        "provider_freshness",
+        "paused_providers",
+        "paused_count",
+        "retained_offer_count",
+        "unknown_sku_count",
+        "unknown_skus",
+        "new_unknown_sku_count",
+        "new_unknown_skus",
+        "offer_count"
+      ],
+      "preview": "{'status': 'ok', 'providers_ok': True, 'scrape_ok': True, 'provider_coverage_slo': 0.5, 'fresh_ratio': 0.881, 'ok_count': 37, 'stale_count': 5, 'stale_providers': ['impossiblecloud', 'together', 'fireworks', 'baseten', 'primeintellect'], 'provider_failures': [{'provider': 'impossiblecloud', 'name': 'Impossible Cloud', 'error': 'impossiblecloud malformed card b300-48gpu-383-b300: identity, terms or GPU-hour units missing', 'source_url': 'https://www.impossiblecloud.com/en-us/baremetal', 'last_verified': '2026-11-05T08:47:03.241Z', 'carried_rows': 59}, {'provider': 'together', 'name': 'Together AI', 'error': 'together parser matched 0 on-demand GPU Cluster rows', 'source_url': 'https://www.together.ai/pricing', 'last_verified': '2026-11-10T08:47:02.457Z', 'carried_rows': 8}, {'provider': 'fireworks', 'name': 'Fireworks AI', 'error': 'fireworks GPU deployment table matched 0 rows (layout change?)', 'source_url': 'https://fireworks.ai/pricing', 'last_verified': '2026-11-02T08:47:03.062Z', 'carried_rows': 5}, {'provider': 'baseten', 'name': 'Baseten', 'error': 'baseten parser matched 0 GPU instance rows', 'source_url': 'https://www.baseten.co/pricing/', 'last_verified': '2026-11-02T08:47:03.026Z', 'carried_rows': 6}, {'provider': 'primeintellect', 'name': 'Prime Intellect', 'error': 'primeintellect parser matched 0 live rate rows', 'source_url': 'https://www.primeintellect.ai/', 'last_verified': '2026-10-31T08:47:03.066Z', 'carried_rows': 5}], 'snapshot_date': '2026-11-15', 'generated_at': '2026-11-15T08:47:11.919Z', 'provider_count': 42, 'public_price_provider_count': 42, 'not_public_providers': [], 'retired_providers': ['sfcompute'], 'provider_freshness': {'daytona': {'status': 'current', 'last_verified': '2026-11-15T08:47:02.453Z', 'max_age_hours': 48, 'age_hours': 0.3037"
+    },
+    {
+      "url": "https://gpurentalprices.com/gpu-prices.csv",
+      "status": 200,
+      "sha256": "53402f87ec3dbc4d601f34f0da13e951643910873dc1616a04100e191674a6ba",
+      "bytes": 70780,
+      "columns": [
+        "date",
+        "provider",
+        "gpu",
+        "vram_gb",
+        "usd_per_hr",
+        "kind",
+        "source_url",
+        "fetched_at"
+      ],
+      "rows": 648,
+      "examples": [
+        {
+          "date": "2026-11-15",
+          "provider": "daytona",
+          "gpu": "h100",
+          "vram_gb": "80",
+          "usd_per_hr": "4.29",
+          "kind": "on-demand",
+          "source_url": "https://billing.app.daytona.io/gpu-pricing",
+          "fetched_at": "2026-11-15T08:47:02.453121373Z"
+        },
+        {
+          "date": "2026-11-15",
+          "provider": "daytona",
+          "gpu": "h100",
+          "vram_gb": "80",
+          "usd_per_hr": "2.47",
+          "kind": "spot",
+          "source_url": "https://billing.app.daytona.io/gpu-pricing",
+          "fetched_at": "2026-11-15T08:47:02.453121373Z"
+        },
+        {
+          "date": "2026-11-15",
+          "provider": "lium",
+          "gpu": "h100",
+          "vram_gb": "80",
+          "usd_per_hr": "1.55",
+          "kind": "spot",
+          "source_url": "https://lium.io/api/public/v1/nodes",
+          "fetched_at": "2026-11-15T08:46:34.756298Z"
+        },
+        {
+          "date": "2026-11-15",
+          "provider": "lium",
+          "gpu": "h100",
+          "vram_gb": "80",
+          "usd_per_hr": "1.85",
+          "kind": "spot",
+          "source_url": "https://lium.io/api/public/v1/nodes",
+          "fetched_at": "2026-11-15T08:46:34.756298Z"
+        },
+        {
+          "date": "2026-11-15",
+          "provider": "lium",
+          "gpu": "h100",
+          "vram_gb": "80",
+          "usd_per_hr": "5",
+          "kind": "spot",
+          "source_url": "https://lium.io/api/public/v1/nodes",
+          "fetched_at": "2026-11-15T08:46:34.756298Z"
+        },
+        {
+          "date": "2026-11-15",
+          "provider": "lium",
+          "gpu": "h100",
+          "vram_gb": "80",
+          "usd_per_hr": "1.85",
+          "kind": "spot",
+          "source_url": "https://lium.io/api/public/v1/nodes",
+          "fetched_at": "2026-11-15T08:46:34.756298Z"
+        },
+        {
+          "date": "2026-11-15",
+          "provider": "lium",
+          "gpu": "a100-pcie-80",
+          "vram_gb": "80",
+          "usd_per_hr": "0.81",
+          "kind": "marketplace",
+          "source_url": "https://lium.io/api/public/v1/nodes",
+          "fetched_at": "2026-11-15T08:46:34.756298Z"
+        },
+        {
+          "date": "2026-11-15",
+          "provider": "hyperai",
+          "gpu": "h100-pcie",
+          "vram_gb": "80",
+          "usd_per_hr": "1.8",
+          "kind": "on-demand",
+          "source_url": "https://hyper.ai/en/pricing",
+          "fetched_at": "2026-11-15T08:47:03.399Z"
+        },
+        {
+          "date": "2026-11-15",
+          "provider": "runcrate",
+          "gpu": "h100",
+          "vram_gb": "80",
+          "usd_per_hr": "3.58",
+          "kind": "on-demand",
+          "source_url": "https://www.runcrate.ai/pricing",
+          "fetched_at": "2026-11-15T08:37:08.000Z"
+        },
+        {
+          "date": "2026-11-15",
+          "provider": "runcrate",
+          "gpu": "a100",
+          "vram_gb": "80",
+          "usd_per_hr": "1.73",
+          "kind": "on-demand",
+          "source_url": "https://www.runcrate.ai/pricing",
+          "fetched_at": "2026-11-15T08:37:08.000Z"
+        },
+        {
+          "date": "2026-11-15",
+          "provider": "runpod",
+          "gpu": "a100-pcie-80",
+          "vram_gb": "80",
+          "usd_per_hr": "2.09",
+          "kind": "secure",
+          "source_url": "https://www.runpod.io/pricing",
+          "fetched_at": "2026-11-15T08:47:03.329Z"
+        },
+        {
+          "date": "2026-11-15",
+          "provider": "runpod",
+          "gpu": "a100-pcie-80",
+          "vram_gb": "80",
+          "usd_per_hr": "1.19",
+          "kind": "community",
+          "source_url": "https://www.runpod.io/pricing",
+          "fetched_at": "2026-11-15T08:47:03.329Z"
+        }
+      ]
+    },
+    {
+      "url": "https://api.bls.gov/publicAPI/v2/timeseries/data/PCU221122221122",
+      "status": 200,
+      "sha256": "d0550bcb59d0117326477b6a34d5987157da664aad3c2f830418c0dbe660c0e6",
+      "bytes": 3629,
+      "top_keys": [
+        "status",
+        "responseTime",
+        "message",
+        "Results"
+      ],
+      "preview": "{'status': 'REQUEST_SUCCEEDED', 'responseTime': 20, 'message': [], 'Results': {'series': [{'seriesID': 'PCU221122221122', 'data': [{'year': '2026', 'period': 'M10', 'periodName': 'October', 'latest': 'true', 'value': '198.898', 'footnotes': [{'code': 'P', 'text': 'Preliminary. All indexes are subject to monthly revisions up to four months after original publication.'}]}, {'year': '2026', 'period': 'M09', 'periodName': 'September', 'value': '209.270', 'footnotes': [{'code': 'P', 'text': 'Preliminary. All indexes are subject to monthly revisions up to four months after original publication.'}]}, {'year': '2026', 'period': 'M08', 'periodName': 'August', 'value': '209.348', 'footnotes': [{'code': 'P', 'text': 'Preliminary. All indexes are subject to monthly revisions up to four months after original publication.'}]}, {'year': '2026', 'period': 'M07', 'periodName': 'July', 'value': '210.029', 'footnotes': [{'code': 'P', 'text': 'Preliminary. All indexes are subject to monthly revisions up to four months after original publication.'}]}, {'year': '2026', 'period': 'M06', 'periodName': 'June', 'value': '207.557', 'footnotes': [{}]}, {'year': '2026', 'period': 'M05', 'periodName': 'May', 'value': '196.440', 'footnotes': [{}]}, {'year': '2026', 'period': 'M04', 'periodName': 'April', 'value': '196.338', 'footnotes': [{}]}, {'year': '2026', 'period': 'M03', 'periodName': 'March', 'value': '196.834', 'footnotes': [{}]}, {'year': '2026', 'period': 'M02', 'periodName': 'February', 'value': '213.304', 'footnotes': [{}]}, {'year': '2026', 'period': 'M01', 'periodName': 'January', 'value': '202.064', 'footnotes': [{}]}, {'year': '2025', 'period': 'M12', 'periodName': 'December', 'value': '199.445', 'footnotes': [{}]}, {'year': '2025', 'period': 'M11', 'periodName': 'November', 'value': ",
+      "value": {
+        "status": "REQUEST_SUCCEEDED",
+        "responseTime": 20,
+        "message": [],
+        "Results": {
+          "series": [
+            {
+              "seriesID": "PCU221122221122",
+              "data": [
+                {
+                  "year": "2026",
+                  "period": "M10",
+                  "periodName": "October",
+                  "latest": "true",
+                  "value": "198.898",
+                  "footnotes": [
+                    {
+                      "code": "P",
+                      "text": "Preliminary. All indexes are subject to monthly revisions up to four months after original publication."
+                    }
+                  ]
+                },
+                {
+                  "year": "2026",
+                  "period": "M09",
+                  "periodName": "September",
+                  "value": "209.270",
+                  "footnotes": [
+                    {
+                      "code": "P",
+                      "text": "Preliminary. All indexes are subject to monthly revisions up to four months after original publication."
+                    }
+                  ]
+                },
+                {
+                  "year": "2026",
+                  "period": "M08",
+                  "periodName": "August",
+                  "value": "209.348",
+                  "footnotes": [
+                    {
+                      "code": "P",
+                      "text": "Preliminary. All indexes are subject to monthly revisions up to four months after original publication."
+                    }
+                  ]
+                },
+                {
+                  "year": "2026",
+                  "period": "M07",
+                  "periodName": "July",
+                  "value": "210.029",
+                  "footnotes": [
+                    {
+                      "code": "P",
+                      "text": "Preliminary. All indexes are subject to monthly revisions up to four months after original publication."
+                    }
+                  ]
+                },
+                {
+                  "year": "2026",
+                  "period": "M06",
+                  "periodName": "June",
+                  "value": "207.557",
+                  "footnotes": [
+                    {}
+                  ]
+                },
+                {
+                  "year": "2026",
+                  "period": "M05",
+                  "periodName": "May",
+                  "value": "196.440",
+                  "footnotes": [
+                    {}
+                  ]
+                },
+                {
+                  "year": "2026",
+                  "period": "M04",
+                  "periodName": "April",
+                  "value": "196.338",
+                  "footnotes": [
+                    {}
+                  ]
+                },
+                {
+                  "year": "2026",
+                  "period": "M03",
+                  "periodName": "March",
+                  "value": "196.834",
+                  "footnotes": [
+                    {}
+                  ]
+                },
+                {
+                  "year": "2026",
+                  "period": "M02",
+                  "periodName": "February",
+                  "value": "213.304",
+                  "footnotes": [
+                    {}
+                  ]
+                },
+                {
+                  "year": "2026",
+                  "period": "M01",
+                  "periodName": "January",
+                  "value": "202.064",
+                  "footnotes": [
+                    {}
+                  ]
+                },
+                {
+                  "year": "2025",
+                  "period": "M12",
+                  "periodName": "December",
+                  "value": "199.445",
+                  "footnotes": [
+                    {}
+                  ]
+                },
+                {
+                  "year": "2025",
+                  "period": "M11",
+                  "periodName": "November",
+                  "value": "196.716",
+                  "footnotes": [
+                    {}
+                  ]
+                },
+                {
+                  "year": "2025",
+                  "period": "M10",
+                  "periodName": "October",
+                  "value": "196.351",
+                  "footnotes": [
+                    {}
+                  ]
+                },
+                {
+                  "year": "2025",
+                  "period": "M09",
+                  "periodName": "September",
+                  "value": "202.739",
+                  "footnotes": [
+                    {}
+                  ]
+                },
+                {
+                  "year": "2025",
+                  "period": "M08",
+                  "periodName": "August",
+                  "value": "205.313",
+                  "footnotes": [
+                    {}
+                  ]
+                },
+                {
+                  "year": "2025",
+                  "period": "M07",
+                  "periodName": "July",
+                  "value": "204.994",
+                  "footnotes": [
+                    {}
+                  ]
+                },
+                {
+                  "year": "2025",
+                  "period": "M06",
+                  "periodName": "June",
+                  "value": "202.493",
+                  "footnotes": [
+                    {}
+                  ]
+                },
+                {
+                  "year": "2025",
+                  "period": "M05",
+                  "periodName": "May",
+                  "value": "190.047",
+                  "footnotes": [
+                    {}
+                  ]
+                },
+                {
+                  "year": "2025",
+                  "period": "M04",
+                  "periodName": "April",
+                  "value": "192.497",
+                  "footnotes": [
+                    {}
+                  ]
+                },
+                {
+                  "year": "2025",
+                  "period": "M03",
+                  "periodName": "March",
+                  "value": "191.861",
+                  "footnotes": [
+                    {}
+                  ]
+                },
+                {
+                  "year": "2025",
+                  "period": "M02",
+                  "periodName": "February",
+                  "value": "190.377",
+                  "footnotes": [
+                    {}
+                  ]
+                },
+                {
+                  "year": "2025",
+                  "period": "M01",
+                  "periodName": "January",
+                  "value": "188.302",
+                  "footnotes": [
+                    {}
+                  ]
+                },
+                {
+                  "year": "2024",
+                  "period": "M12",
+                  "periodName": "December",
+                  "value": "185.592",
+                  "footnotes": [
+                    {}
+                  ]
+                },
+                {
+                  "year": "2024",
+                  "period": "M11",
+                  "periodName": "November",
+                  "value": "182.787",
+                  "footnotes": [
+                    {}
+                  ]
+                },
+                {
+                  "year": "2024",
+                  "period": "M10",
+                  "periodName": "October",
+                  "value": "186.855",
+                  "footnotes": [
+                    {}
+                  ]
+                },
+                {
+                  "year": "2024",
+                  "period": "M09",
+                  "periodName": "September",
+                  "value": "192.854",
+                  "footnotes": [
+                    {}
+                  ]
+                },
+                {
+                  "year": "2024",
+                  "period": "M08",
+                  "periodName": "August",
+                  "value": "192.589",
+                  "footnotes": [
+                    {}
+                  ]
+                },
+                {
+                  "year": "2024",
+                  "period": "M07",
+                  "periodName": "July",
+                  "value": "196.808",
+                  "footnotes": [
+                    {}
+                  ]
+                },
+                {
+                  "year": "2024",
+                  "period": "M06",
+                  "periodName": "June",
+                  "value": "200.169",
+                  "footnotes": [
+                    {}
+                  ]
+                },
+                {
+                  "year": "2024",
+                  "period": "M05",
+                  "periodName": "May",
+                  "value": "184.671",
+                  "footnotes": [
+                    {}
+                  ]
+                },
+                {
+                  "year": "2024",
+                  "period": "M04",
+                  "periodName": "April",
+                  "value": "184.748",
+                  "footnotes": [
+                    {}
+                  ]
+                },
+                {
+                  "year": "2024",
+                  "period": "M03",
+                  "periodName": "March",
+                  "value": "184.913",
+                  "footnotes": [
+                    {}
+                  ]
+                },
+                {
+                  "year": "2024",
+                  "period": "M02",
+                  "periodName": "February",
+                  "value": "184.006",
+                  "footnotes": [
+                    {}
+                  ]
+                },
+                {
+                  "year": "2024",
+                  "period": "M01",
+                  "periodName": "January",
+                  "value": "183.455",
+                  "footnotes": [
+                    {}
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "protected_outcomes_loaded": false
+}
