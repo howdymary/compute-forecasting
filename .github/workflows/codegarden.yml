@@ -1,13 +1,13 @@
-name: CodeGarden842 constrained overlap repair
+name: CodeGarden842 fixed-outside LP neighborhoods
 on:
   push:
-    branches: [codegarden-k842-slp-001]
+    branches: [codegarden-k842-neighborhood-001]
     paths: [.github/workflows/codegarden.yml]
   workflow_dispatch:
 permissions:
   contents: write
 concurrency:
-  group: codegarden-k842-slp-001
+  group: codegarden-k842-neighborhood-001
   cancel-in-progress: false
 env:
   SOURCE_SHA: ${{ github.sha }}
@@ -25,7 +25,7 @@ jobs:
         run: |
           python3 -B - <<'PY'
           import pathlib,urllib.request,os
-          paths=["codegarden/kissing842/"+n for n in ["slp.py","official.py","independent.py","manifest.json"]]+["codegarden/side_services/cycle.py","codegarden/supervisor.py","codegarden/protected/manifest.json","codegarden/protected/verify_descendants.py","codegarden/protected/verify_lcs.py"]
+          paths=["codegarden/kissing842/"+n for n in ["neighborhood.py","official.py","independent.py","manifest.json"]]+["codegarden/side_services/cycle.py","codegarden/supervisor.py","codegarden/protected/manifest.json","codegarden/protected/verify_descendants.py","codegarden/protected/verify_lcs.py"]
           for name in paths:
               p=pathlib.Path(name);p.parent.mkdir(parents=True,exist_ok=True)
               p.write_bytes(urllib.request.urlopen("https://raw.githubusercontent.com/howdymary/compute-forecasting/"+os.environ["SOURCE_SHA"]+"/"+name,timeout=45).read())
@@ -42,22 +42,22 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
-        run: codegarden/.venv-k842/bin/python -B -u codegarden/kissing842/slp.py
+        run: codegarden/.venv-k842/bin/python -B -u codegarden/kissing842/neighborhood.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: codegarden-k842-slp
+          name: codegarden-k842-neighborhood
           retention-days: 30
-          path: codegarden/artifacts/k842/slp_001/
+          path: codegarden/artifacts/k842/neighborhood_001/
       - uses: actions/upload-artifact@v4
         if: steps.search.outputs.has_candidate == 'true'
         with:
           name: codegarden-k842-candidate
           retention-days: 30
           path: |
-            codegarden/artifacts/k842/slp_001/best.json
-            codegarden/artifacts/k842/slp_001/baseline.json
-            codegarden/artifacts/k842/slp_001/best_verification.json
+            codegarden/artifacts/k842/neighborhood_001/best.json
+            codegarden/artifacts/k842/neighborhood_001/baseline.json
+            codegarden/artifacts/k842/neighborhood_001/best_verification.json
   accept:
     needs: search
     if: needs.search.outputs.has_candidate == 'true'
