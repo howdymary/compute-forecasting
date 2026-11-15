@@ -41,7 +41,7 @@ def main():
     assert q["complete"] and set(map(tuple,q["neighbors"]))==neighbors,(q,neighbors)
     for other in q["neighbors"]:vd.verify([format(w,"0%db"%n) for w in other],n)
    rows.append({"seed":seed,"length":n,"size":len(code),"k":k,"improving":expected,"nodes":r["nodes"]})
- out=ROOT/"artifacts/phase3/bundle_001";out.mkdir(parents=True,exist_ok=True)
+ out=ROOT/"artifacts/phase3/bundle_002";out.mkdir(parents=True,exist_ok=True)
  (out/"test.json").write_text(json.dumps({"cases":rows,"passed":len(rows),"neutral_sets":"Complete sets compared where no augmentation exists; protected string D2 checks"},indent=2))
  print("BUNDLE_TESTS",len(rows),flush=True)
 if __name__=="__main__":main()

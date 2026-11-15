@@ -15,7 +15,7 @@ uint32_t dropbit(uint32_t x,int p){return ((x>>(p+1))<<p)|(x&((1u<<p)-1));}
 void arr(const vector<int>&a){cout<<"[";for(size_t i=0;i<a.size();++i){if(i)cout<<",";cout<<a[i];}cout<<"]";}
 int pop(const vector<uint64_t>&b){int n=0;for(auto x:b)n+=__builtin_popcountll(x);return n;}
 struct Search{
- int n,K,N,M,BW,W=0,neutralCap;uint64_t nodeLimit,nodes=0;double budget,start;bool found=false,limited=false,memoryLimited=false,neighborLimited=false;
+ int n,K,N,M,BW,W=0,neutralCap,depthLimit;uint64_t nodeLimit,nodes=0;double budget,start;bool found=false,limited=false,memoryLimited=false,neighborLimited=false;
  vector<vector<uint16_t>>desc;vector<int>code,owner,words,chosen,answerAdded,answerRemoved;vector<vector<uint64_t>>blocks;
  vector<uint64_t>compat;vector<vector<int>>neighbors;set<vector<int>>neighborKeys;
  Search(int nn,int kk,double sec,uint64_t lim,int cap):n(nn),K(kk),N(1<<nn),M(1<<(nn-2)),neutralCap(cap),nodeLimit(lim),budget(sec),desc(N),owner(M,-1){
@@ -29,7 +29,7 @@ struct Search{
  }
  bool dfs(vector<uint64_t>p,const vector<uint64_t>&b){
   for(int block=0;block<W;++block)while(p[block]){
-   if(over()){limited=true;return true;}
+   if(nodes>=nodeLimit||((nodes&1023)==0&&cpu()-start>=budget)){limited=true;return true;}
    int bit=__builtin_ctzll(p[block]),v=block*64+bit;p[block]&=p[block]-1;++nodes;
    vector<uint64_t>nb(BW);for(int j=0;j<BW;++j)nb[j]=b[j]|blocks[v][j];int removed=pop(nb);if(removed>K)continue;
    chosen.push_back(v);
@@ -38,11 +38,11 @@ struct Search{
     for(size_t i=0;i<code.size();++i)if(nb[i/64]&(1ull<<(i%64)))answerRemoved.push_back(code[i]);
     return true;
    }
-   if(neutralCap>0&&int(chosen.size())==removed){
+   if(neutralCap>0&&int(chosen.size())==depthLimit&&int(chosen.size())==removed){
     auto next=changed(nb,chosen);if(neighborKeys.insert(next).second){neighbors.push_back(next);
      if(int(neighbors.size())>=neutralCap){neighborLimited=true;return true;}}
    }
-   if(int(chosen.size())<=K){
+   if(int(chosen.size())<depthLimit){
     vector<uint64_t>q(W);int remaining=0;for(int j=0;j<W;++j){q[j]=p[j]&compat[size_t(v)*W+j];remaining+=__builtin_popcountll(q[j]);}
     if((int(chosen.size())+remaining>removed||(neutralCap>0&&int(chosen.size())+remaining==removed))&&remaining)if(dfs(q,nb))return true;
    }
@@ -69,7 +69,7 @@ struct Search{
    if(W&&words.size()%64)row[W-1]&=(1ull<<(words.size()%64))-1;
   }
   vector<uint64_t>p(W,~0ull),b(BW,0);if(W&&words.size()%64)p[W-1]&=(1ull<<(words.size()%64))-1;
-  dfs(p,b);
+  for(depthLimit=1;depthLimit<=K+1;++depthLimit)if(dfs(p,b))break;
  }
 };
 int main(int argc,char**argv){
