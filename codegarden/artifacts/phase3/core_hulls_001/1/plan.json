@@ -1,0 +1,43 @@
+{
+  "source_sha": "e88696335e995a05c96884c69500c25643749cbe",
+  "case": 1,
+  "seed": 1441001,
+  "condition": "exact_known226_exclusion",
+  "starting_verification": {
+    "accepted": true,
+    "cardinality": 225,
+    "reports": [
+      {
+        "cardinality": 225,
+        "distinct_descendants": 6357,
+        "length": 16,
+        "method": "distinct_string_two_deletions",
+        "valid": true,
+        "witness_sha256": "4b162596f58ed789c7ad79fdb40e2c6dc2c3cce3f2ec50cf52159a5e3bea582c"
+      },
+      {
+        "cardinality": 225,
+        "largest_pairwise_lcs": 13,
+        "length": 16,
+        "method": "independent_dynamic_programming_lcs",
+        "pairs_checked": 25200,
+        "valid": true,
+        "witness_sha256": "4b162596f58ed789c7ad79fdb40e2c6dc2c3cce3f2ec50cf52159a5e3bea582c"
+      }
+    ]
+  },
+  "incumbent_sha256": "4b162596f58ed789c7ad79fdb40e2c6dc2c3cce3f2ec50cf52159a5e3bea582c",
+  "fixed_count": 185,
+  "fixed_sha256": "85f3bc88e653c46918eb738acda56963a9a7caa4ed164a680f92e4d9c1e7602a",
+  "pool_count": 457,
+  "pool_sha256": "90f91455d4ff7504a7666463bacce99a2f1f358f265c419d6b5339fe3c70f6b5",
+  "wall_limit_seconds": 600,
+  "solver_workers": 2,
+  "solutions": [],
+  "best_in_family_verified": 225,
+  "retained_global_best_verified": 226,
+  "scope": "Only the full compatible universe for this explicit fixed core. Conditional core cuts rely on earlier computational closure; exact-size known-code exclusions reject only supplied226 arrays, not larger supersets. No global optimality or record inference.",
+  "proof_artifact": null,
+  "known_exclusion_count": 38,
+  "model_sha256": "63dd8ce7b9d17f3a1868fbdd31e07c968adb1c46cfdd18114dcdef9db05aebac"
+}
