@@ -1,18 +1,18 @@
-name: CodeGarden direct blocker bundles
+name: CodeGarden priority and incomplete-frontier recovery
 on:
   push:
-    branches: [codegarden-bundle-006]
+    branches: [codegarden-frontier-003]
     paths: [.github/workflows/codegarden.yml]
   workflow_dispatch:
 permissions:
   contents: write
 concurrency:
-  group: codegarden-free-bundle-006
+  group: codegarden-free-frontier-003
   cancel-in-progress: false
 env:
   PYTHONDONTWRITEBYTECODE: '1'
   SOURCE_SHA: ${{ github.sha }}
-  CODEGARDEN_BATCH: bundle_004
+  CODEGARDEN_BATCH: frontier_001
 jobs:
   preflight:
     runs-on: ubuntu-latest
@@ -25,13 +25,13 @@ jobs:
       - name: Compile and independently exhaust small cases
         run: |
           mkdir -p codegarden/.build
-          g++ -O3 -std=c++17 codegarden/phase3/bundle_fast.cpp -o codegarden/.build/bundle
-          python -B -u codegarden/phase3/test_bundle_fast.py
+          g++ -O3 -std=c++17 codegarden/phase3/bundle_server.cpp -o codegarden/.build/bundle
+          python -B -u codegarden/phase3/test_bundle_server.py
           python -B -u codegarden/phase3/preflight.py
       - uses: actions/upload-artifact@v4
         with:
-          name: codegarden-bundle-preflight
-          path: codegarden/artifacts/phase3/bundle_004/
+          name: codegarden-frontier-preflight
+          path: codegarden/artifacts/phase3/frontier_001/
   probes:
     needs: preflight
     runs-on: ubuntu-latest
@@ -40,7 +40,7 @@ jobs:
       fail-fast: false
       max-parallel: 4
       matrix:
-        mode: [component5, newroot6]
+        lineage: [arena225, projected225, arena224, arena223]
     steps:
       - name: Fetch immutable source
         env:
@@ -48,18 +48,18 @@ jobs:
         run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
       - uses: actions/download-artifact@v4
         with:
-          name: codegarden-bundle-preflight
-          path: codegarden/artifacts/phase3/bundle_004/
+          name: codegarden-frontier-preflight
+          path: codegarden/artifacts/phase3/frontier_001/
       - name: Compile and run bounded component
         run: |
           mkdir -p codegarden/.build
-          g++ -O3 -std=c++17 codegarden/phase3/bundle_fast.cpp -o codegarden/.build/bundle
-          python -B -u codegarden/phase3/bundle_continue.py --mode ${{ matrix.mode }}
+          g++ -O3 -std=c++17 codegarden/phase3/bundle_server.cpp -o codegarden/.build/bundle
+          python -B -u codegarden/phase3/frontier.py --lineage ${{ matrix.lineage }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: codegarden-bundle-${{ matrix.mode }}
-          path: codegarden/artifacts/phase3/bundle_004/
+          name: codegarden-frontier-${{ matrix.lineage }}
+          path: codegarden/artifacts/phase3/frontier_001/
   collect:
     needs: [preflight, probes]
     if: always()
@@ -72,15 +72,15 @@ jobs:
         run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
       - uses: actions/download-artifact@v4
         with:
-          pattern: codegarden-bundle-*
+          pattern: codegarden-frontier-*
           merge-multiple: true
-          path: codegarden/artifacts/phase3/bundle_004/
+          path: codegarden/artifacts/phase3/frontier_001/
       - name: Publish leased results
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python -B -u codegarden/phase3/publish_bundle_continue.py
+        run: python -B -u codegarden/phase3/publish_frontier.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: codegarden-bundle-collected
-          path: codegarden/artifacts/phase3/bundle_004/
+          name: codegarden-frontier-collected
+          path: codegarden/artifacts/phase3/frontier_001/

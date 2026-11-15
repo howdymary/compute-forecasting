@@ -1,5 +1,5 @@
 """Project near-feasible states, polish valid subsets and solve bounded exact repairs."""
-import hashlib,itertools,json,pathlib,random,subprocess,sys,time
+import hashlib,itertools,json,os,pathlib,random,subprocess,sys,time
 ROOT=pathlib.Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
 from search import Incidence,canonical,pool_hash,digest_words
 from supervisor import verify
@@ -38,7 +38,7 @@ def refine(native,reference,target,seed,out):
  for i,p in enumerate(ordered):
   path=out/("worker_projected_"+str(i)+".txt");path.write_text(canonical(p["words"]));checked=verify(path)
   valid.append({"words":p["words"],"verification":checked,"witness":path.name,"distance_outside_reference":p["distance"]})
-  q=subprocess.run(["/opt/codegarden/kernel_v2","2",str(seed+i),"fixed",str(out/("polish_checkpoint_"+str(i)+".txt")),str(target),"4"],
+  q=subprocess.run([os.environ.get("CODEGARDEN_VALID_KERNEL","/opt/codegarden/kernel_v2"),"2",str(seed+i),"fixed",str(out/("polish_checkpoint_"+str(i)+".txt")),str(target),"4"],
     input=canonical(p["words"]),text=True,capture_output=True,check=True,timeout=20)
   r=json.loads(q.stdout);result=r["best"];path=out/("worker_polished_"+str(i)+".txt");path.write_text(canonical(result));accepted=verify(path)
   polished.append({"seed":seed+i,"starting_sha256":digest_words(p["words"]),"search_cpu_seconds":r["cpu_seconds"],"iterations":r["iterations"],
