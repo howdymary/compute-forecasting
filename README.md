@@ -2,7 +2,7 @@
 
 Mochi investigates failed robot actions, searches for a better controller, and tests the change in simulation. Four model-driven roles handle research, policy design, experimentation, and criticism. A miniature humanoid shows the resulting motion in a desk scene.
 
-[Live demo][demo] · [Mochi source][code] · [Expanded experiment][expanded-run] · [Architecture][architecture]
+[Video walkthrough][walkthrough] · [Live demo][demo] · [Mochi source][code] · [Expanded experiment][expanded-run] · [Architecture][architecture]
 
 **Code location:** the Mochi project is in `mochi/` on the **`mochi-hackathon`** branch. The clone command below selects that branch.
 
@@ -160,3 +160,5 @@ Built for Track 5, Open Track, during the November 2026 research hackathon. Moch
 [scripts]: https://github.com/howdymary/mochi-demo/tree/mochi-hackathon/mochi/scripts
 [docs]: https://github.com/howdymary/mochi-demo/tree/mochi-hackathon/mochi/docs
 [project-readme]: https://github.com/howdymary/mochi-demo/blob/mochi-hackathon/mochi/README.md
+
+[walkthrough]: https://www.loom.com/share/39e28d8b88ff4773a98e799f9a02f0e6?t=4
