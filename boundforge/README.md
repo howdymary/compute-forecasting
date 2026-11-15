@@ -90,3 +90,5 @@ Tinker: Qwen3.5-397B-A17B can rank structural insertions. Actual inference succe
 A small random perturbation is unlikely to improve this carefully optimized incumbent. Structural support
 changes and complementary laws are the substantive targets. An exact positive result is a valid lower bound,
 not a solution for the sharp value of C3c. No formal proof-assistant verification is claimed.
+
+[Model-policy comparison and reasoning audit](POLICY_REVIEW.md) · [Self-contained replay source](results/demo.html)
