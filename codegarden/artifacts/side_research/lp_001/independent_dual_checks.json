@@ -1,0 +1,38 @@
+{
+  "run_id": 43750749052,
+  "job_id": 132925053258,
+  "source_sha": "16e9471f063e8c6e6b04758a03ce592185da34af",
+  "observed_at": "2026-11-15T19:19:42.220Z",
+  "fresh_job_conclusion": "success",
+  "reports": {
+    "unforced3176.json": {
+      "valid": true,
+      "fixed_cardinality": 162,
+      "pool_cardinality": 3176,
+      "scale": 1000000,
+      "dual_numerator": 83923927,
+      "integer_repair_upper_bound": 83,
+      "integer_total_upper_bound_for_codes_containing_fixed_words": 245,
+      "excludes_227_in_this_fixed_neighborhood": false,
+      "pool_sha256": "6fb37782459eeccb5100dab6fde2b1aa88958e96fb69573622d12306c046e7fb",
+      "global_optimality_claim": false,
+      "proof": "Every pool word has dual cover at least scale. Pairwise descendant disjointness bounds any extension by total nonnegative dual mass / scale. Every compatible universe word was checked."
+    },
+    "forced3151.json": {
+      "valid": true,
+      "fixed_cardinality": 163,
+      "pool_cardinality": 3151,
+      "scale": 1000000,
+      "dual_numerator": 81499917,
+      "integer_repair_upper_bound": 81,
+      "integer_total_upper_bound_for_codes_containing_fixed_words": 244,
+      "excludes_227_in_this_fixed_neighborhood": false,
+      "pool_sha256": "976c93773888ad54dde6158370cecb673c6e43df7798fb081f14be42c5c29394",
+      "global_optimality_claim": false,
+      "proof": "Every pool word has dual cover at least scale. Pairwise descendant disjointness bounds any extension by total nonnegative dual mass / scale. Every compatible universe word was checked."
+    }
+  },
+  "solver_or_model_required": false,
+  "source_cli": "python3 -B codegarden/side_lp/dual_verify.py CERTIFICATE.json",
+  "global_claim": false
+}
