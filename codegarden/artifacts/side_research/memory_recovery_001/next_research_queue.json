@@ -1,0 +1,40 @@
+{
+  "based_on_memory_source_id": "codegarden-side-43748900357-researcher-01539582",
+  "memory_reuse_verified": true,
+  "best_verified_cardinality": 226,
+  "retired_literal_models": [
+    {
+      "pivot_id": 1,
+      "removed_count": 32,
+      "ordering": 1,
+      "reason": "Exact solver completed the explicitly encoded model without a feasible227; no global inference."
+    },
+    {
+      "pivot_id": 2,
+      "removed_count": 32,
+      "ordering": 1,
+      "reason": "Exact solver completed the explicitly encoded model without a feasible227; no global inference."
+    }
+  ],
+  "open_models": [
+    {
+      "pivot": 4,
+      "removed": 64,
+      "ordering": 0,
+      "status": "TIMEOUT",
+      "nodes": 1858561,
+      "seconds": 30.015
+    },
+    {
+      "pivot": 4,
+      "removed": 64,
+      "ordering": 1,
+      "status": "TIMEOUT",
+      "nodes": 2054145,
+      "seconds": 30.0084
+    }
+  ],
+  "next_hypothesis": "Stronger bounds or a different repair neighborhood are needed for the3151-candidate model; fixed degree ordering alone did not finish it in30seconds.",
+  "new_global_record_claim": false,
+  "training_improvement_claim": false
+}
