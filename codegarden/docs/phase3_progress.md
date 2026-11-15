@@ -1,4 +1,4 @@
-# CodeGarden research status — 15 November 2026, 12:47 UTC
+# CodeGarden research status — 15 November 2026, 12:56 UTC
 
 **The objective is open. Best found and independently verified: 226 distinct words. No 227-word construction or new global record is claimed.**
 
@@ -16,7 +16,7 @@ Five-removal generation produces2731144 supported sets from3739729608 possibilit
 
 All51569 single forced-pivot hulls with6–18 core blockers also completed both targets without a solution, cap or timeout, in93.557 aggregate native CPU seconds. These are specifically core-minus-the-pivot’s-blockers plus the forced word, not all arbitrary removal sets of those sizes.
 
-The active compound-pivot experiment forces2–5 mutually compatible outside words together and solves the full compatible repair pool. Fixed configurations and a schedule that changes pivot count/rank cap after512 unproductive proposals are bounded at600nativeCPU seconds per case. This tests interactions absent from the single-pivot hulls. No positive claim is made while it runs.
+The active compound-pivot experiment forces2–5 mutually compatible outside words together and solves the full compatible repair pool. Fixed configurations and a schedule that changes pivot count/rank cap after512 unproductive proposals are bounded at600nativeCPU seconds per case. This tests interactions absent from the single-pivot hulls. No positive claim is made while it runs. A second active batch uses the conditional<=210 overlap cut in all four validated symmetry frames for direct226/227 pair-conflict search; stronger206-overlap cases are explicitly heuristic controls. Its24 prerequisite receipts and four independent literal-conflict/quota tests passed.
 
 ## Other completed hypotheses
 
@@ -39,6 +39,8 @@ Modal rejected T4 deployment because the account requires a payment method for G
 Cumulative conservative holds: Exa0.112USD, past319credits, Modal149.998USD, Tinker23.05USD. These include unknown/unattributed historical costs and the entire rejectedGPU reservation; they are **not actual attributed charges**. Full other-project and independent-verification reserves remain protected. The last paid allocation expired12:00UTC, with no new paid reservations after11:45. Current research uses free public standard GitHub runners. A later paid batch must refresh balances and the shared allocation; it cannot reuse the expired snapshot.
 
 Everything is remote. Consolidation changes only `codegarden/`; the main protected verifiers, main launcher and every file outside the directory are preserved. Isolated experimental branches use only the previously authorized launcher exception. Frozen source revisions and artifact-origin commits are in the adjacent JSON. Durable explicit witnesses and experiment files remain authoritative; past.dev stores attributed context and scoped findings.
+
+Most bulk negative logs save full reconstructible neighborhood definitions, completion vectors and sampled literal pool hashes, rather than an individual SHA-256 for every candidate pool. This evidence gap is explicit; the search has not produced an independently formal absence certificate. All33 size225 long-run checkpoints are symmetry-equivalent to entries in the existing412-state archive, so their previously completed neighborhoods are not rerun merely because their worker is newer.
 
 ## Reproduce acceptance and the new audits
 
