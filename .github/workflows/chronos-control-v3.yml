@@ -1,0 +1,37 @@
+name: Run one registered Chronos-2 comparator
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/chronos-control-v3.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  control:
+    if: github.ref == 'refs/heads/compute-observatory'
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    env:
+      GH_TOKEN: ${{ github.token }}
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+    steps:
+      - name: Fetch immutable registered source
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e . modal
+      - name: Download the completed frozen grid only
+        run: gh run download 43665821333 --repo "$GITHUB_REPOSITORY" --pattern 'campaign-v2-*' --dir inputs
+      - name: Evaluate one fixed model and retain a separate future commitment
+        run: modal run -m compute_forecast.chronos_control_v3 --inputs inputs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: chronos-control-v3-${{ github.run_id }}
+          path: artifacts/
+          retention-days: 30
