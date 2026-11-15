@@ -38,7 +38,7 @@ def audit():
   "action":"none","documentation":"https://modal.com/docs/cli/latest/app#modal-app-stop","budget":"Full7.22USD reservation and all earlier holds retained; no reconciliation or release."}
  if best>=227 or (duplicate and exhausted and other_done):
   apps=json.loads(cli("modal","app","list","--limit","100","--json"));apps=apps if isinstance(apps,list) else apps.get("apps",[])
-  candidates=[a for a in apps if a.get("description")==APP and a.get("state")!="stopped" and str(a.get("created_at","")).startswith("2026-11-15 09:1")]
+  candidates=[a for a in apps if a.get("description")==APP and a.get("state")!="stopped" and "2026-11-15 09:17"<=str(a.get("created_at",""))<="2026-11-15 09:25:59"]
   assert len(candidates)<=1,"Ambiguous app ownership; refuse stop"
   if candidates:
    app=candidates[0];assert app["app_id"].startswith("ap-")

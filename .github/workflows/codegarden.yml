@@ -31,6 +31,7 @@ jobs:
           codegarden/.venv/bin/python -m pip install -r codegarden/requirements-providers.txt
       - name: Verify logical CPU budget and preserve checkpoints before guarded owned-app stop
         env:
+          GH_TOKEN: ${{ github.token }}
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
           MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
         run: codegarden/.venv/bin/python -B -u codegarden/phase3/control_long.py
