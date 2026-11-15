@@ -77,13 +77,16 @@ def main():
     assert not responses,responses
     filters="drawbox=x=0:y=ih-126:w=iw:h=126:color=0x162730@0.97:t=fill"
     for i,(a,b,text) in enumerate(captions):
-        (out/f"caption-{i}.txt").write_text("\n".join(textwrap.wrap(text,86)))
-        filters+=f",drawtext=textfile=artifacts/caption-{i}.txt:fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf:fontsize=28:fontcolor=white:x=(w-text_w)/2:y=h-126+(126-text_h)/2:line_spacing=8:enable='gte(t,{a})*lt(t,{b})'"
+        lines=textwrap.wrap(text,86)
+        for j,line in enumerate(lines):
+            (out/f"caption-{i}-{j}.txt").write_text(line)
+            y=900-126+(126-len(lines)*36)/2+j*36
+            filters+=f",drawtext=textfile=artifacts/caption-{i}-{j}.txt:fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf:fontsize=28:fontcolor=white:x=(w-text_w)/2:y={y}:enable='gte(t,{a})*lt(t,{b})'"
     subprocess.run(["ffmpeg","-y","-ss",str(trim_start),"-i",str(path),"-vf",filters,"-t","120","-c:v","libx264","-preset","veryfast","-crf","21","-pix_fmt","yuv420p","-movflags","+faststart","-an",str(out/"demo.mp4")],check=True)
     duration=float(subprocess.check_output(["ffprobe","-v","error","-show_entries","format=duration","-of","default=noprint_wrappers=1:nokey=1",str(out/"demo.mp4")],text=True))
     assert 119.8<=duration<=120.2,duration
     movie=(out/"demo.mp4").read_bytes()
-    manifest={"mode":"recorded_actual_public_results","live_inference":False,"duration_seconds":duration,"video_sha256":hashlib.sha256(movie).hexdigest(),"release_sha256":digest,"release_code_sha":data["code_sha"],"validated_views":["overview","benchmarks","recorded_policy_replay","evidence_and_memory","reproduce"],"mobile_width":390,"console_errors":errors,"failed_public_requests":responses,"captions":captions,"source_url":URL}
+    manifest={"mode":"recorded_actual_public_results","live_inference":False,"replay_origin":changed,"caption_rendering":"one_drawtext_per_line","duration_seconds":duration,"video_sha256":hashlib.sha256(movie).hexdigest(),"release_sha256":digest,"release_code_sha":data["code_sha"],"validated_views":["overview","benchmarks","recorded_policy_replay","evidence_and_memory","reproduce"],"mobile_width":390,"console_errors":errors,"failed_public_requests":responses,"captions":captions,"source_url":URL}
     (out/"demo-manifest.json").write_text(json.dumps(manifest,indent=2)+"\n")
     print(json.dumps(manifest,indent=2))
 
