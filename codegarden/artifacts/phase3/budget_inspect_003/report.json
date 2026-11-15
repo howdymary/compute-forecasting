@@ -1,0 +1,115 @@
+{
+  "observed_at": "2026-11-15T13:08:36.423478+00:00",
+  "source_sha": "f2b0e15124446c4d5e51a107409615dd84fe9be0",
+  "billable_work_started": false,
+  "historical_holds_unchanged": true,
+  "allocation_renewed": false,
+  "credit_purchases_or_setting_changes": false,
+  "desktop_balance_refresh": "Unavailable: native surface reported locked Mac.",
+  "providers": {
+    "modal": {
+      "financial_scalars": {
+        "metered_cost": 3.49103696,
+        "billed_cost": 0.0,
+        "adjustments.credits": -3.48,
+        "adjustments.plan_cost": 0.0
+      },
+      "response_schema": {
+        "metered_cost": "str",
+        "billed_cost": "str",
+        "adjustments": {
+          "credits": "str",
+          "network_egress_allowance": "str",
+          "plan_cost": "str",
+          "free_storage": "str",
+          "reservation_adjustment": "str"
+        },
+        "metered_cost_breakdown": {
+          "network_egress": "str",
+          "volumes": "str",
+          "llm_tokens": "str",
+          "ephemeral_apps": "str",
+          "deployed_apps": "str"
+        }
+      },
+      "response_sha256": "9d9dbb7c273d5188965dcbe5ca2b65f24423b7c49111e4c3c2605db9abd78547",
+      "scope": "Account-wide gross usage, not attributed CodeGarden spend. No release of unresolved holds or new worker."
+    },
+    "past": {
+      "balance_left": 699096.0,
+      "source": "Authenticated GET /api/v1/usage; no recall/ingest request."
+    },
+    "tinker": {
+      "begin": "2026-11-15T00:00:00+00:00",
+      "ending_before": "2026-11-15T13:00:00+00:00",
+      "event_rows": 150,
+      "event_field_names": [
+        "data"
+      ],
+      "usage_response_schema": {
+        "data": {
+          "list_length": 150,
+          "element_schema": {
+            "bucket_start": "str",
+            "bucket_end": "str",
+            "base_model": "str",
+            "user_id": "str",
+            "user_name": "str",
+            "session_id": "str",
+            "project_id": "NoneType",
+            "estimated_cost_usd": "float",
+            "effective_rate_usd_per_million_tokens": "float",
+            "effective_rate_usd_per_gigabyte_month": "NoneType",
+            "event_info": {
+              "type": "str",
+              "token_count": "int"
+            }
+          }
+        },
+        "sessions": {
+          "map_length": 34,
+          "value_schema": {
+            "user_metadata": "NoneType"
+          }
+        },
+        "cost_data_through": "NoneType"
+      },
+      "interpretation": "Zero extracted rows is not evidence of zero spend; absent event fields or reporting lag remain explicit.",
+      "estimated_gross_cost_usd": 22.645927004999997,
+      "unpriced_rows": 8,
+      "cost_data_through": null,
+      "storage_financial_scalars": {
+        "data[0].estimated_monthly_cost_usd": 0.0
+      },
+      "storage_response_schema": {
+        "effective_rate_usd_per_gigabyte_month": "float",
+        "data": {
+          "list_length": 1,
+          "element_schema": {
+            "project_id": "NoneType",
+            "org_user_urn": "str",
+            "user_email": "str",
+            "user_name": "str",
+            "checkpoint_count": "int",
+            "size_bytes": "int",
+            "size_gigabytes": "float",
+            "estimated_monthly_cost_usd": "float"
+          }
+        }
+      },
+      "usage_response_sha256": "b7f2e61f2071b6455ae290857645bdc4fbe935b5f475c9b8e90de54b41ed3b2a",
+      "balance_unknown": true,
+      "scope": "Read-only RestClient billing/storage metadata; no ServiceClient, sampler, training client or checkpoint creation. Usage can lag hours and is not prepaid balance."
+    },
+    "exa": {
+      "balance_unknown": true,
+      "read_status": "No documented regular-key prepaid-balance endpoint available; separate admin service credentials not assumed. No billable search started."
+    }
+  },
+  "official_docs": [
+    "https://modal.com/docs/guide/billing",
+    "https://modal.com/docs/sdk/py/releases",
+    "https://tinker-docs.thinkingmachines.ai/tinker/api-reference/restclient/",
+    "https://tinker-docs.thinkingmachines.ai/tinker/cli/billing/"
+  ]
+}
