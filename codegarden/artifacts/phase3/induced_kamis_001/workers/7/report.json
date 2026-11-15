@@ -1,0 +1,36 @@
+{
+  "source_sha": "b32da35f20abaf9f9f8d1c92d761bf860d1bffbc",
+  "case": 7,
+  "mode": "ils_warm",
+  "pool_sha256": "74bb03f6a1bdc19d9c0e1ec473ac4218c24292c2adcd9fb078c19c0ba709f9f2",
+  "pool_count": 22338,
+  "graph_profile": {
+    "n": 16,
+    "vertices": 22338,
+    "edges": 8021387,
+    "incidences": 602802,
+    "csr_bytes": 64349808,
+    "conservative_solver_bytes": 2059193856,
+    "allowed": true
+  },
+  "graph_build_seconds": 1.8310852789999998,
+  "rounds": [
+    {
+      "round": 0,
+      "seed": 1550008,
+      "seconds_limit": 300,
+      "wall_seconds": 0.1660582420000054,
+      "status": "RETURNED",
+      "returncode": -4,
+      "log": "solver_0.txt",
+      "starting_sha256": "5d83992f55479c96101b016d4479a58ad0a41bce283a80ce9cd5fcd1561c554c"
+    }
+  ],
+  "scope": "Two explicit induced word pools, not the entire universe. Heuristic runs have no impossibility or optimality claim. Initialization differs between cold evolutionary and warm ILS, so no causal algorithm superiority is inferred. Only protected witness checks assign scores. Failed memory gates/processes are failures, not negative mathematical results.",
+  "best_method_independently_verified": null,
+  "retained_global_best_verified": 226,
+  "novel226": false,
+  "strict_followups": [],
+  "graph_sha256": "091b24f27d07ea1c2c498db4897724ea75cdf1ac98eca8b31cdb8a906fe200ab",
+  "status": "PROCESS_FAILURE_OR_NO_OUTPUT_STOPPED"
+}

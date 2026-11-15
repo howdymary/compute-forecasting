@@ -1,0 +1,96 @@
+{
+  "source_sha": "b32da35f20abaf9f9f8d1c92d761bf860d1bffbc",
+  "case": 5,
+  "mode": "ils_warm",
+  "pool_sha256": "74bb03f6a1bdc19d9c0e1ec473ac4218c24292c2adcd9fb078c19c0ba709f9f2",
+  "pool_count": 22338,
+  "graph_profile": {
+    "n": 16,
+    "vertices": 22338,
+    "edges": 8021387,
+    "incidences": 602802,
+    "csr_bytes": 64349808,
+    "conservative_solver_bytes": 2059193856,
+    "allowed": true
+  },
+  "graph_build_seconds": 1.5586635619999996,
+  "rounds": [
+    {
+      "round": 0,
+      "seed": 1550006,
+      "seconds_limit": 300,
+      "wall_seconds": 300.743333436,
+      "status": "RETURNED",
+      "returncode": 0,
+      "log": "solver_0.txt",
+      "starting_sha256": "52a2956b5734f1fe81bab6f50f3bec5456cdf4c11f847560f0e865fdc41c6361",
+      "path": "witness_0.txt",
+      "verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6403,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "42cad5f5fa34792f98a9be8adaf2321ea5bf6ec87de53d679e668d53c995414b"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "42cad5f5fa34792f98a9be8adaf2321ea5bf6ec87de53d679e668d53c995414b"
+          }
+        ]
+      },
+      "novel_against152known226arrays": false
+    },
+    {
+      "round": 1,
+      "seed": 1550106,
+      "seconds_limit": 300,
+      "wall_seconds": 300.76930567299996,
+      "status": "RETURNED",
+      "returncode": 0,
+      "log": "solver_1.txt",
+      "starting_sha256": "42cad5f5fa34792f98a9be8adaf2321ea5bf6ec87de53d679e668d53c995414b",
+      "path": "witness_1.txt",
+      "verification": {
+        "accepted": true,
+        "cardinality": 226,
+        "reports": [
+          {
+            "cardinality": 226,
+            "distinct_descendants": 6403,
+            "length": 16,
+            "method": "distinct_string_two_deletions",
+            "valid": true,
+            "witness_sha256": "42cad5f5fa34792f98a9be8adaf2321ea5bf6ec87de53d679e668d53c995414b"
+          },
+          {
+            "cardinality": 226,
+            "largest_pairwise_lcs": 13,
+            "length": 16,
+            "method": "independent_dynamic_programming_lcs",
+            "pairs_checked": 25425,
+            "valid": true,
+            "witness_sha256": "42cad5f5fa34792f98a9be8adaf2321ea5bf6ec87de53d679e668d53c995414b"
+          }
+        ]
+      },
+      "novel_against152known226arrays": false
+    }
+  ],
+  "scope": "Two explicit induced word pools, not the entire universe. Heuristic runs have no impossibility or optimality claim. Initialization differs between cold evolutionary and warm ILS, so no causal algorithm superiority is inferred. Only protected witness checks assign scores. Failed memory gates/processes are failures, not negative mathematical results.",
+  "best_method_independently_verified": 226,
+  "retained_global_best_verified": 226,
+  "novel226": false,
+  "strict_followups": [],
+  "graph_sha256": "091b24f27d07ea1c2c498db4897724ea75cdf1ac98eca8b31cdb8a906fe200ab",
+  "status": "COMPLETED_BOUNDED_ROUNDS"
+}

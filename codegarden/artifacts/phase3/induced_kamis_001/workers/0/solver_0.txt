@@ -1,0 +1,183 @@
+		Graph
+==========================================
+IO time:			0.111068
+Filename:			induced_0.graph
+|-Nodes:			8672
+|-Edges:			2426390
+
+		Configuration
+==========================================
+Population size:		50
+Repetitions:			50
+Time limit:			300
+---
+KaHIP mode:			0
+---
+Seed:				1550001
+Base imbalance:			0.03
+Random imbalance:		1
+---
+Tournament size:		2
+---
+Mutation rate:			1
+---
+Use Multiway-VC:		0
+Multiway blocks:		64
+---
+Apply all reductions:		1
+Reductions threshold:		350
+---
+Insert threshold:		150
+Pool threshold:			250
+---
+ILS iterations:			15000
+---
+No. of partitions:		10
+No. of separators:		10
+No. of k-partitions:		10
+No. of k-separators:		10
+
+==========================================
+		Reduction
+==========================================
+Offset:				2
+Kernel size:			8374
+
+		Partitioning
+==========================================
+block weight upper bound 5540
+Partition [Seed: 6797, K: 2]
+block weight upper bound 4542
+Partition [Seed: 1267, K: 2]
+block weight upper bound 7053
+Partition [Seed: 3058, K: 2]
+block weight upper bound 7013
+Partition [Seed: 1953, K: 2]
+block weight upper bound 5622
+Partition [Seed: 8442, K: 2]
+block weight upper bound 4684
+Partition [Seed: 790, K: 2]
+block weight upper bound 4899
+Partition [Seed: 6163, K: 2]
+block weight upper bound 4686
+Partition [Seed: 151, K: 2]
+block weight upper bound 4673
+Partition [Seed: 8003, K: 2]
+block weight upper bound 6196
+Partition [Seed: 6979, K: 2]
+block weight upper bound 5979
+Separator [Seed: 8307, K: 2, Size: 2875]
+block weight upper bound 6175
+Separator [Seed: 158, K: 2, Size: 2875]
+block weight upper bound 5484
+Separator [Seed: 5512, K: 2, Size: 2875]
+block weight upper bound 5018
+Separator [Seed: 7116, K: 2, Size: 2875]
+block weight upper bound 6854
+Separator [Seed: 1272, K: 2, Size: 2875]
+block weight upper bound 4872
+Separator [Seed: 3148, K: 2, Size: 2875]
+block weight upper bound 5008
+Separator [Seed: 7808, K: 2, Size: 2875]
+block weight upper bound 4928
+Separator [Seed: 7900, K: 2, Size: 2875]
+block weight upper bound 4731
+Separator [Seed: 6114, K: 2, Size: 2875]
+block weight upper bound 5472
+Separator [Seed: 8919, K: 2, Size: 2875]
+block weight upper bound 763
+Separator [Seed: 3590, K: 12, Size: 7512]
+block weight upper bound 1274
+Separator [Seed: 8878, K: 10, Size: 7861]
+block weight upper bound 400
+Separator [Seed: 3174, K: 29, Size: 7956]
+block weight upper bound 636
+Separator [Seed: 436, K: 16, Size: 7625]
+block weight upper bound 468
+Separator [Seed: 1637, K: 27, Size: 8026]
+block weight upper bound 318
+Separator [Seed: 7234, K: 37, Size: 8141]
+block weight upper bound 257
+Separator [Seed: 3103, K: 35, Size: 7734]
+block weight upper bound 5751
+Separator [Seed: 4085, K: 2, Size: 2875]
+block weight upper bound 1139
+Separator [Seed: 8862, K: 10, Size: 6224]
+block weight upper bound 230
+Separator [Seed: 3399, K: 54, Size: 8032]
+Created separator pool:	30.5818
+
+		Initialization
+==========================================
+0		Initial		122	124	30.8608
+0		Initial		172	174	30.8917
+
+Round:				1
+Best solution:			174
+Time:				31.69
+
+		Evolution
+==========================================
+1		Node separator	224	226	32.3962
+
+Round:				2
+Best solution:			226
+Time:				75.648
+
+		Evolution
+==========================================
+
+Round:				3
+Best solution:			226
+Time:				124.568
+
+		Evolution
+==========================================
+
+Round:				4
+Best solution:			226
+Time:				169.397
+
+		Evolution
+==========================================
+
+Round:				5
+Best solution:			226
+Time:				216.491
+
+		Evolution
+==========================================
+
+Round:				6
+Best solution:			226
+Time:				262.335
+
+		Evolution
+==========================================
+293		Combine reduction	224	226	301.126
+
+		Statistics
+==========================================
+Total time:			301.243
+Evolution time:			301.132
+Number of rounds:		6
+Number of repetitions:		293
+
+Operator	Times selected	Improvements	Avg. time	Avg. improv
+--------------------------------------------------------------------------------
+Vertex cover	96		0		0.984472	0
+Node separator	105		1		0.916651	50
+Multiway	92		0		0.846357	0
+
+		Best
+==========================================
+Size:				226
+Time found:			301.126
+Operator:			Combine reduction
+Repetition number:		293
+Round number:			6
+
+writing independent set to /home/runner/work/compute-forecasting/compute-forecasting/codegarden/artifacts/phase3/induced_kamis_001/workers/0/selected_0.txt ... 
+checking solution ...
+done ...
+Independent set has size 226

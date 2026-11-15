@@ -1,0 +1,97 @@
+{
+  "source_sha": "b32da35f20abaf9f9f8d1c92d761bf860d1bffbc",
+  "upstream_repository": "https://github.com/KarlsruheMIS/KaMIS",
+  "upstream_revision": "2e4b3861b8063f05e8520434b97ce59e21ca49e7",
+  "source_low_plan_sha256": "2ff78e247e7dfdd7959aece345c8d8edf789a34253c4792a98e1f2dc9f6871e2",
+  "pools": [
+    {
+      "blocker_union": 3,
+      "pool_count": 8672,
+      "pool_sha256": "2890dc5475acae8c524168b1a1994ec01f112b9c795f0906e42b0a5dc22862bd",
+      "path": "pool_3.txt"
+    },
+    {
+      "blocker_union": 4,
+      "pool_count": 22338,
+      "pool_sha256": "74bb03f6a1bdc19d9c0e1ec473ac4218c24292c2adcd9fb078c19c0ba709f9f2",
+      "path": "pool_4.txt"
+    }
+  ],
+  "cases": [
+    {
+      "case": 0,
+      "blocker_union": 3,
+      "mode": "evolutionary_cold",
+      "warm_parent": null,
+      "seed": 1550001,
+      "rounds": 2,
+      "seconds_per_round": 300
+    },
+    {
+      "case": 1,
+      "blocker_union": 3,
+      "mode": "ils_warm",
+      "warm_parent": 1,
+      "seed": 1550002,
+      "rounds": 2,
+      "seconds_per_round": 300
+    },
+    {
+      "case": 2,
+      "blocker_union": 3,
+      "mode": "evolutionary_cold",
+      "warm_parent": null,
+      "seed": 1550003,
+      "rounds": 2,
+      "seconds_per_round": 300
+    },
+    {
+      "case": 3,
+      "blocker_union": 3,
+      "mode": "ils_warm",
+      "warm_parent": 3,
+      "seed": 1550004,
+      "rounds": 2,
+      "seconds_per_round": 300
+    },
+    {
+      "case": 4,
+      "blocker_union": 4,
+      "mode": "evolutionary_cold",
+      "warm_parent": null,
+      "seed": 1550005,
+      "rounds": 2,
+      "seconds_per_round": 300
+    },
+    {
+      "case": 5,
+      "blocker_union": 4,
+      "mode": "ils_warm",
+      "warm_parent": 5,
+      "seed": 1550006,
+      "rounds": 2,
+      "seconds_per_round": 300
+    },
+    {
+      "case": 6,
+      "blocker_union": 4,
+      "mode": "evolutionary_cold",
+      "warm_parent": null,
+      "seed": 1550007,
+      "rounds": 2,
+      "seconds_per_round": 300
+    },
+    {
+      "case": 7,
+      "blocker_union": 4,
+      "mode": "ils_warm",
+      "warm_parent": 7,
+      "seed": 1550008,
+      "rounds": 2,
+      "seconds_per_round": 300
+    }
+  ],
+  "small_graph_all_edges_independently_checked": true,
+  "hypothesis": "Earlier full65536vertex ReduMIS aborted with bad_alloc. Unioning low-blocker neighborhoods from eight diverse incumbent families gives larger shared universes than any single corridor, while reducing graph memory. Profile actual sparse edges, gate32times CSR below5GB, and try evolutionary search plus warm ILS. No graph is persisted in Git.",
+  "scope": "Two explicit induced word pools, not the entire universe. Heuristic runs have no impossibility or optimality claim. Initialization differs between cold evolutionary and warm ILS, so no causal algorithm superiority is inferred. Only protected witness checks assign scores. Failed memory gates/processes are failures, not negative mathematical results."
+}
