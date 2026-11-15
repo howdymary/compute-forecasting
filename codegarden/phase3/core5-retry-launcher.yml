@@ -1,0 +1,50 @@
+name: CodeGarden missing five-core partition retry
+on:
+  push:
+    branches: [codegarden-core5-repair-004]
+    paths: [.github/workflows/codegarden.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: codegarden-free-core5-retry-004
+  cancel-in-progress: false
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+  SOURCE_SHA: ${{ github.sha }}
+jobs:
+  retry:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for attempt in 1 2 3; do
+            if gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" > codegarden-source.tar.gz; then
+              tar -xz --strip-components=1 -f codegarden-source.tar.gz
+              rm codegarden-source.tar.gz
+              break
+            fi
+            sleep 2
+          done
+          test -f codegarden/phase3/core5_repair.cpp
+      - name: Verify and execute missing partition
+        run: |
+          mkdir -p codegarden/.build
+          g++ -O3 -std=c++17 codegarden/phase3/core5_repair.cpp -o codegarden/.build/core5_repair
+          g++ -O3 -std=c++17 codegarden/phase3/bundle_guard.cpp -o codegarden/.build/bundle
+          python -B codegarden/phase3/test_core5_repair.py
+          python -B -u codegarden/phase3/core5_repair_probe.py --case 9
+      - name: Publish leased evidence
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -B codegarden/phase3/publish_core5_retry.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: codegarden-core5-retry
+          retention-days: 1
+          path: codegarden/artifacts/phase3/core5_repair_001/

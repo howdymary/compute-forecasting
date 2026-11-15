@@ -1,4 +1,4 @@
-# CodeGarden research status — 15 November 2026, 12:37 UTC
+# CodeGarden research status — 15 November 2026, 12:47 UTC
 
 **The objective is open. Best found and independently verified: 226 distinct words. No 227-word construction or new global record is claimed.**
 
@@ -6,13 +6,17 @@ The incumbent reproduces kgrey’s arena solution2778. Its witness SHA-256 is `4
 
 ## New mathematical findings
 
-The resumed radius-ten search finished all32 suffix partitions. Together with the old eight completed prefixes, it covers each of61427 canonical roots exactly once, with no strict augmentation. Total native CPU17262.28seconds. This excludes exchanges removing at most10 incumbent words under the documented safe dominance and learned-certificate reductions. It is a **local native enumeration**, not global optimality or an independent formal absence proof. The new standalone coverage audit checks these completion records; it does not rerun all search nodes.
+The resumed radius-ten search finished all32 suffix partitions. Together with the old eight completed prefixes, it covers each of61427 canonical roots exactly once, with no strict augmentation. Total native CPU17262.28seconds. This excludes exchanges removing at most10 incumbent words under the documented safe dominance and learned-certificate reductions. It is a **local native enumeration**, not global optimality or an independent formal absence proof. The standalone coverage audit completed successfully and checks these completion records; it does not rerun all search nodes.
 
-The38 known226-word codes share216 words. Independent full-universe compatibility enumeration gives57 other words compatible with that complete core. The previously audited241-word union palette contains only25 of those variables and must not be confused with the full fixed-core pool. A separate simple literal-string clique audit is being run to reproduce the full57-variable optimum and all maxima durably.
+The38 known226-word codes share216 words. Independent full-universe compatibility enumeration gives57 other words compatible with that complete core. The previously audited241-word union palette contains only25 of those variables and must not be confused with the full fixed-core pool. A separate literal-string clique audit completed durably: maximum226 and exactly38 maxima in that full57-variable pool. Every maximum witness passed both protected verifiers.
 
 Exact full-universe repairs completed all23436 single/pair core-removal queries and all1656360 triple queries, without227 or a new226 excluding the removed words. For four removals, a checked blocker-support lemma reduces88201170 possibilities to203077 supported sets. Every supported primary227 and secondary226 query completed without improvement, timeout or pool cap. Unsupported sets are ruled out **conditionally on lower-depth results and the reinsertion lemma**. These conclusions concern these fixed-core families only.
 
-Five-removal generation produces2731144 supported sets from3739729608 possibilities. Fifteen partitions completed; case9 failed HTTP502 during source retrieval before running search. It requires a bounded retry before any full five-removal claim.
+Five-removal generation produces2731144 supported sets from3739729608 possibilities. All sixteen partitions completed with no primary227 or secondary226 solution, timeout or pool cap. Case9 first failed HTTP502 during source retrieval, then completed in an isolated retry. Together with the documented reinsertion lemma and lower-depth results, these computations exclude any227 code retaining all but at most five core words. A different226 code must also omit at least six, using the independent full-core maxima audit and the secondary queries. This is a conditional computational local conclusion, not a global bound.
+
+All51569 single forced-pivot hulls with6–18 core blockers also completed both targets without a solution, cap or timeout, in93.557 aggregate native CPU seconds. These are specifically core-minus-the-pivot’s-blockers plus the forced word, not all arbitrary removal sets of those sizes.
+
+The active compound-pivot experiment forces2–5 mutually compatible outside words together and solves the full compatible repair pool. Fixed configurations and a schedule that changes pivot count/rank cap after512 unproductive proposals are bounded at600nativeCPU seconds per case. This tests interactions absent from the single-pivot hulls. No positive claim is made while it runs.
 
 ## Other completed hypotheses
 

@@ -1,0 +1,45 @@
+{
+  "source_sha": "5a8a73aa81dab29045c4e2a9cc0502e6c3e879f7",
+  "case": 12,
+  "native": {
+    "case": 12,
+    "seed": 1391013,
+    "planned": 170696,
+    "processed": 170696,
+    "primary_complete_no227": 170696,
+    "primary_timeouts": 0,
+    "secondary_complete_no226_excluding_removed": 170696,
+    "secondary_timeouts": 0,
+    "pool_cap_skips": 0,
+    "all_planned_neighborhoods_processed": true,
+    "cpu_seconds": 73.1963,
+    "best_size_unverified": 226
+  },
+  "new226": [],
+  "polish": [],
+  "best_verified": 226,
+  "winner_verification": {
+    "accepted": true,
+    "cardinality": 226,
+    "reports": [
+      {
+        "cardinality": 226,
+        "distinct_descendants": 6410,
+        "length": 16,
+        "method": "distinct_string_two_deletions",
+        "valid": true,
+        "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+      },
+      {
+        "cardinality": 226,
+        "largest_pairwise_lcs": 13,
+        "length": 16,
+        "method": "independent_dynamic_programming_lcs",
+        "pairs_checked": 25425,
+        "valid": true,
+        "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+      }
+    ]
+  },
+  "scope": "Explicit supported five-core removal sets from support_plan.json, partitioned by index modulo16. All unsupported sets are eliminated only by the documented lemma and completed lower-depth prerequisites; status files I=infeasible in exact encoded query, T=timeout,C=pool cap,F=feasible,N=notrun. Sampled rows have literal pool hashes; full candidate pools are reconstructible from fixed code and universe. Only explicit fixed-core repair families. Primary227 query allows the FULL compatible universe. Secondary226 query explicitly excludes all removed core words; its infeasibility does not by itself exclude every226 code. Timeouts/caps are not proofs."
+}

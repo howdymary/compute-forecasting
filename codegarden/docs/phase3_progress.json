@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-15T12:37:00Z",
+  "updated_at": "2026-11-15T12:47:00Z",
   "target_achieved": false,
   "best_found": 226,
   "best_independently_verified": 226,
@@ -272,7 +272,13 @@
       "duplicated_completed_roots": [],
       "all_resumed_partitions_complete": true,
       "strict_improvement_found": false,
-      "scope": "Complete native search for a strict improvement removing at most10 words from this incumbent, under the documented safe dominance and learned-certificate reductions. Coverage audit verifies each canonical root exactly once across old completed prefixes and resumed suffixes. Not global optimality; no independent formal absence certificate."
+      "scope": "Complete native search for a strict improvement removing at most10 words from this incumbent, under the documented safe dominance and learned-certificate reductions. Coverage audit verifies each canonical root exactly once across old completed prefixes and resumed suffixes. Not global optimality; no independent formal absence certificate.",
+      "standalone_audit": {
+        "source": "f0cd92c3b8fe8b7d40cf9613adbf0269ea7e6905",
+        "run": 43714914328,
+        "success": true,
+        "scope": "Coverage records audited; not independent search-node absence proof."
+      }
     },
     "core_removals": {
       "core_size": 216,
@@ -285,7 +291,21 @@
       "all_encoded_queries_completed": true,
       "new226": 0,
       "verified227": 0,
-      "formal_absence_certificate": false
+      "formal_absence_certificate": false,
+      "rank5_supported_queries": 2731144,
+      "rank5_all_removals": 3739729608,
+      "rank5_complete": true,
+      "rank5_retry": "Case9 HTTP502 before search; completed in isolated retry source18c345022edf0cd43b68435c557216fc07af7e6f. Other15 cases source5a8a73aa81dab29045c4e2a9cc0502e6c3e879f7.",
+      "full_core_all_maxima": {
+        "variables": 57,
+        "maximum226": true,
+        "count": 38,
+        "independent_literal_string_enumeration": true,
+        "source": "f0cd92c3b8fe8b7d40cf9613adbf0269ea7e6905",
+        "run": 43714914328,
+        "nodes": 59784,
+        "all_maxima_nodes": 77273
+      }
     },
     "recombination": {
       "two_parent_orientations": 4,
@@ -312,6 +332,18 @@
       "method_best_verified": 202,
       "retained_global_best": 226,
       "scope": "Finite GF2 hash/count-parity parameters only; not disproof of literature construction"
+    },
+    "core_pivots": {
+      "pivots": 51569,
+      "all_complete": true,
+      "timeouts": 0,
+      "caps": 0,
+      "new226": 0,
+      "cpu": 93.55685,
+      "best": 226,
+      "source": "a2287504878cda38863fa15a43e77516f5dda1e1",
+      "run": 43715191290,
+      "scope": "Single forced outside-word hulls, all core blocker counts6..18 (actual maximum16), not every arbitrary removal set."
     }
   },
   "provider_result": {
@@ -352,13 +384,10 @@
   },
   "active": [
     {
-      "branch": "codegarden-core5-repair-003",
-      "source": "5a8a73aa81dab29045c4e2a9cc0502e6c3e879f7",
-      "run": 43714413441,
-      "supported_queries": 2731144,
-      "completed_partitions": 15,
-      "total_partitions": 16,
-      "remaining": "Case9 failed HTTP502 during source download before search; retry required. No full rank5 conclusion yet."
+      "branch": "codegarden-compound-pivot-003",
+      "source": "e30decb5f8997fc59f27252f7e21525dfc0e3402",
+      "run": 43715553644,
+      "scope": "Coordinated mutually compatible2..5 pivots, full compatible repair, bounded600nativeCPU per case,16cases, no paid provider calls"
     }
   ],
   "consolidated_sources": [
