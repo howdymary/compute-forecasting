@@ -1,100 +1,52 @@
-name: CodeGarden infeasible-space hypotheses
+name: CodeGarden recover exact per-worker hull evidence
 on:
   push:
-    branches: [codegarden]
+    branches: [codegarden-artifact-recovery-003]
     paths: [.github/workflows/codegarden.yml]
   workflow_dispatch:
 permissions:
   contents: write
 concurrency:
-  group: codegarden-only
+  group: codegarden-free-hull-recovery-003
   cancel-in-progress: false
 env:
   PYTHONDONTWRITEBYTECODE: '1'
   SOURCE_SHA: ${{ github.sha }}
-  CODEGARDEN_BATCH: infeasible_probe_003
+  TMPDIR: ${{ github.workspace }}/codegarden/.tmp
+  PIP_CACHE_DIR: ${{ github.workspace }}/codegarden/.cache/pip
+  PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/codegarden/.cache/playwright
 jobs:
-  preflight:
-    runs-on: ubuntu-latest
-    timeout-minutes: 8
+  recover:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
     steps:
       - name: Fetch immutable source
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      - name: Compile kernel and independently test energy updates
         run: |
-          mkdir -p codegarden/.build
-          g++ -O3 -std=c++17 codegarden/phase3/infeasible.cpp -o codegarden/.build/infeasible
-          python -B codegarden/phase3/test_infeasible.py
-          python -B codegarden/phase3/preflight.py
-      - name: Retain preflight evidence
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: codegarden-cg3-preflight
-          path: codegarden/artifacts/phase3/infeasible_probe_003/
-  probes:
-    needs: preflight
-    runs-on: ubuntu-latest
-    timeout-minutes: 16
-    strategy:
-      fail-fast: false
-      max-parallel: 4
-      matrix:
-        seed: [950000, 950001, 950002, 950003]
-    steps:
-      - name: Fetch immutable source
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+          gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+          mkdir -p codegarden/.tmp codegarden/.cache/pip codegarden/.cache/playwright
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - uses: actions/download-artifact@v4
-        with:
-          name: codegarden-cg3-preflight
-          path: codegarden/artifacts/phase3/infeasible_probe_003/
-      - name: Compile isolated native worker
-        run: |
-          mkdir -p codegarden/.build
-          g++ -O3 -std=c++17 codegarden/phase3/infeasible.cpp -o codegarden/.build/infeasible
-      - name: Test two paired 60-CPU-second hypotheses from different code families
-        run: python -B -u codegarden/phase3/probe.py --seed ${{ matrix.seed }} --seconds 60
-      - name: Retain every checkpoint and proposal, even on failure
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: codegarden-cg3-probe-${{ matrix.seed }}
-          path: codegarden/artifacts/phase3/infeasible_probe_003/
-  collect:
-    needs: [preflight, probes]
-    if: always()
-    runs-on: ubuntu-latest
-    timeout-minutes: 8
-    steps:
-      - name: Fetch immutable source
+      - name: Recover completed continuation cases
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      - uses: actions/download-artifact@v4
-        with:
-          pattern: codegarden-cg3-*
-          merge-multiple: true
-          path: codegarden/artifacts/phase3/infeasible_probe_003/
-      - name: Independently accept proposals and publish leased checkpoint
+        run: python -B -u codegarden/phase3/recover_hull_artifacts.py random
+      - name: Wait boundedly and recover each paired worker
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python -B -u codegarden/phase3/publish.py
-      - name: Retain collected evidence
+        run: python -B -u codegarden/phase3/recover_hull_artifacts.py minimum
+      - name: Publish source-checked evidence
         if: always()
-        uses: actions/upload-artifact@v4
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -B codegarden/phase3/publish_hull_recovery.py
+      - uses: actions/upload-artifact@v4
+        if: always()
         with:
-          name: codegarden-cg3-collected
-          path: codegarden/artifacts/phase3/infeasible_probe_003/
+          name: codegarden-hull-recovery
+          retention-days: 1
+          path: |
+            codegarden/artifacts/phase3/random_resume_recovered_001/
+            codegarden/artifacts/phase3/min_growth_recovered_001/
