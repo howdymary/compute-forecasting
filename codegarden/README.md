@@ -19,7 +19,7 @@ runner, creates codegarden/.venv, verifies, searches, verifies again and commits
 allowlisted outputs back with a branch lease. It never force-pushes or cancels
 another project's job. To launch a changed bounded batch, commit a reviewed
 change to the isolated launcher on codegarden. Do not edit an existing
-forecasting workflow. No private account balance or credential is published.
+forecasting workflow. Credentials are never published; budget snapshots and accounting are explicit review artifacts.
 
 For execution in an authorized remote container, from the repository root:
 
@@ -36,6 +36,25 @@ Plain witnesses are one exactly 16-bit word per line. Both independent verifiers
 also accept a JSON list or the official {"words": [...]} object. Both reject
 duplicates, malformed words, and empty input. The descendant verifier returns
 conflicting words, a shared descendant and deletion positions on failure.
+
+## Compiled and structural search
+
+These commands run inside the remote runner/container, with all outputs under codegarden/:
+
+~~~sh
+mkdir -p codegarden/.build
+g++ -O3 -std=c++17 codegarden/kernel.cpp -o codegarden/.build/kernel
+python -B codegarden/test_kernel.py
+codegarden/.build/kernel 120 9101 adaptive codegarden/artifacts/native_checkpoint.txt 227 < codegarden/artifacts/best_code.txt
+python -B codegarden/structural.py
+python -B codegarden/policy_budget_eval.py
+~~~
+
+The last command independently checks the recorded small-code replay witnesses.
+Use --rerun to make a new timed replay. Historical timing receipts remain the basis
+of the report. The final launcher defaults to verification; paid modes require a
+fresh explicit shared allocation and cumulative reservation accounting. Tinker's
+current conservative allowance is fully reserved.
 
 ## Exact repairs
 
@@ -67,32 +86,52 @@ No timeout is promoted to an optimality claim.
 
 ## Demo
 
+The commit-pinned browser preview is linked in docs/research_report.md. The
+third-party static proxy may show an external-content notice first; it hosts only
+public repository files and asks for no credentials.
+
 Serve codegarden/demo in a remote container:
 python -m http.server 8000 --directory codegarden/demo
 
 The browser displays actual recorded scores, witness download, source links,
 verification output, a live unique-deletion decoder, and a rejected candidate.
-It labels recorded runs and unexecuted sponsor integrations explicitly.
+It labels recorded runs separately from the live browser decoder. Sponsor execution status comes from the saved receipts, never from whether an adapter exists.
 
 ## Sponsor integration and budget boundary
 
-budget/ledger.py is an atomic accounting implementation, not an assertion that
-all projects currently participate. A production deployment must use ONE shared
-transactional coordinator with verified balances and other projects' pending
-reservations. Unknown/stale values fail closed. It reserves verification budget.
+The executed coordinator is providers.py::Ledger. It uses the explicitly disjoint
+allocation in budget/shared-allocation.json, subtracts full BoundForge caps,
+forecasting pending guards and final-verification reserves, checks live account
+usage where available, and serializes CodeGarden billable stages. Other projects
+do not read its SQLite; this is an allocation boundary, not a claim that their
+private ledgers participate. Historical reservations survive fresh runners.
+Unknown or expired allocations fail closed. No purchase, upgrade or replenishment
+is performed. Revalidate the snapshot before a later campaign.
 
-- integrations/exa.py::search_methods is the real Exa request implementation.
-- integrations/past_memory.py namespaces real researcher/strategist/analyst
-  authors, validates actual recalled source IDs, and logs causal references.
+- providers.py::Providers.exa is the Exa call used by the executed research loop;
+  integrations/exa.py is a standalone adapter.
+- providers.py::Providers.write/read perform the executed past.dev operations:
+  distinct researcher/strategist/analyst identities, verified recalled source IDs,
+  a CodeGarden-only audience and causal parent references. These are logical roles
+  inside one orchestrator, not separately spawned assistant agents.
 - integrations/modal_workers.py provides isolated CPU workers and durable volume
   artifacts; no existing app or volume is stopped.
 - integrations/tinker_policy.py implements bounded strategy choices and
   verifier-grounded SFT. Untrained/trained held-out evaluation is mandatory before
   claiming adaptation gains.
 
-An adapter's existence is not evidence of execution. See integrations/STATUS.md
-and artifacts/tinker_evaluation.json for current live status. The local adaptive
+An adapter's existence is not evidence of execution. See integrations/STATUS.md,
+artifacts/live/status.json and artifacts/live/tinker_evaluation.json for actual
+execution and adaptation status. Earlier failed attempts remain archived. The local adaptive
 controller is empirical UCB, not an LLM and not a Tinker-trained policy.
+
+## Actual findings
+
+The eight compiled Modal workers attempted 2,295,850 moves, retaining 226.
+Tinker changed the proposed operator, but the trained policy did not outperform
+under matched search budgets: small frozen-choice replay 113 versus 104; matched
+length-16 transfer 226 versus 226. See docs/research_report.md, including limitations,
+source provenance, setup failures and unresolved provider billing attribution.
 
 ## Scope and credit
 

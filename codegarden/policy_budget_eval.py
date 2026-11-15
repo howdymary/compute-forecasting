@@ -5,10 +5,21 @@ held-out decisions, not a fresh model-generalization test.
 """
 import json,pathlib,sys,time,random
 ROOT=pathlib.Path(__file__).resolve().parent;sys.path.insert(0,str(ROOT))
-from training_cases import act,ACTIONS
+from training_cases import act,ACTIONS,D,L
 from search import Incidence
 def main():
-    out=ROOT/"artifacts/live";evaluation=json.loads((out/"tinker_evaluation.json").read_text())
+    out=ROOT/"artifacts/live"
+    cached=out/"fixed_budget_evaluation.json"
+    if cached.exists() and "--rerun" not in sys.argv:
+        saved=json.loads(cached.read_text())
+        for row in saved["rows"]:
+            for phase in ["before","after"]:
+                result=row["results"][phase];words=result["best_words"]
+                assert len(words)==result["best_cardinality"]
+                assert D.verify(words,row["length"])["valid"] and L.verify(words,row["length"])["valid"]
+        print("FROZEN_BUDGET_REPLAY verified recorded witnesses; use --rerun for a new timed measurement")
+        return
+    evaluation=json.loads((out/"tinker_evaluation.json").read_text())
     corpus=json.loads((out/"training_cases.json").read_text());cases={c["case_id"]:c for c in corpus["cases"]}
     instances={n:Incidence(n) for n in [10,11,12]};rows=[];limit=.2
     for i,pre in enumerate(evaluation["before"]):

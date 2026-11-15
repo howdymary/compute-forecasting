@@ -7,18 +7,20 @@
 <main>
 <div class="eyebrow">CodeGarden / binary two-deletion codes</div>
 <h1>Search, then verify.</h1>
-<p class="muted">Actual recorded experiments. The decoder below runs live in your browser. A replay is never presented as a live research worker.</p>
+<p class="muted" id="run-state"></p><p class="muted">Actual recorded experiments. The decoder below runs live in your browser. A replay is never presented as a live research worker.</p>
 <div class="grid"><div class="card"><div>Best independently verified</div><div class="big" id="best">—</div><div id="best-kind"></div></div><div class="card"><div>Strongest reproduced baseline</div><div class="big" id="baseline">—</div><div>226-word arena witness</div></div><div class="card"><div>Strict-improvement target</div><div class="big" id="target">—</div><div>No new global record claimed</div></div></div>
-<section class="card section"><h2>Current hypothesis</h2><p id="hypothesis"></p><p class="muted">Operators: randomized construction → bounded exchanges → structural destruction → opportunity-driven ejection → exact repair.</p></section>
+<section class="card section"><h2>Last tested hypothesis</h2><p id="hypothesis"></p><p class="muted">Operators: randomized construction → bounded exchanges → structural destruction → opportunity-driven ejection → exact repair.</p></section>
 <section class="card section"><h2>Decode two deletions</h2><p>Choose a word and two zero-based positions. The decoder scans every codeword and recovers the unique original.</p>
 <label>Word <select id="word"></select></label><label>Delete position <input id="d1" type="number" min="0" max="15" value="2" style="width:65px"></label><label>and <input id="d2" type="number" min="0" max="15" value="7" style="width:65px"></label><button id="decode">Decode</button>
 <p class="bits" id="original"></p><p class="bits" id="received"></p><p class="success" id="recovered"></p>
 </section>
 <section class="card section"><h2>A rejected candidate</h2><p class="mono">0000000000000000<br>0000000000000001</p><p>Both produce <code>00000000000000</code>. This is a cross-codeword collision; repeated ways to delete from the first word alone are harmless.</p></section>
-<section class="card section"><h2>Verified experiment scores</h2><p class="muted">Separate runs, not a fabricated continuous improvement curve. Integration pilots have equal cycle caps but unequal runtimes; the seed-43 pair uses a three-second search budget.</p><table><thead><tr><th>Policy</th><th>Seed</th><th>Best</th><th>Cycles</th><th>Seconds</th></tr></thead><tbody id="runs"></tbody></table>
+<section class="card section"><h2>Verified best progression</h2><p class="muted">Includes the reproduced incumbent. The flat line records no strict improvement.</p><svg id="progress" viewBox="0 0 760 170" role="img" aria-label="Verified best code size remains 226 throughout the recorded batches" style="width:100%;height:auto"></svg></section>
+<section class="card section"><h2>Policy adaptation</h2><p id="training-summary"></p><p class="muted" id="training-scope"></p></section>
+<section class="card section"><h2>Verified experiment scores</h2><p class="muted">Separate runs, not a fabricated continuous improvement curve. Native rows count compiled iterations; Python rows count research cycles. These are different work units. Matched comparisons are described in the report.</p><table><thead><tr><th>Policy</th><th>Seed</th><th>Best</th><th>Iterations / cycles</th><th>Seconds</th></tr></thead><tbody id="runs"></tbody></table>
 <p id="fusion"></p></section>
 <section class="card section"><h2>Witness and verification</h2><button id="download">Download explicit witness</button><p class="mono" id="hash"></p><details><summary>Independent verification output</summary><pre id="verification"></pre></details></section>
-<section class="card section"><h2>Sources and memory</h2><ul id="sources"></ul><p class="warning" id="memory"></p></section>
+<section class="card section"><h2>Sources and memory</h2><ul id="sources"></ul><p class="muted" id="memory"></p><details><summary>Role and memory references</summary><pre id="causal"></pre></details></section>
 </main>
 <script>
 "use strict";
@@ -38,13 +40,25 @@ async function main(){
  data=await(await fetch("data.json")).json();
  for(const [id,value]of [["best",data.best.size],["baseline",data.baseline],["target",data.target],["best-kind",data.best.kind],["hypothesis",data.hypothesis],["hash","SHA-256 "+data.best.sha256]])document.getElementById(id).textContent=value;
  data.best.words.forEach((w,i)=>{const o=document.createElement("option");o.value=i;o.textContent=i+": "+w;document.querySelector("#word").append(o);});
- for(const r of data.experiments){const tr=document.createElement("tr");for(const v of [r.method,r.seed,r.size,r.cycles,r.seconds.toFixed(3)]){const td=document.createElement("td");td.textContent=v;tr.append(td);}document.querySelector("#runs").append(tr);}
+ for(const r of data.experiments){const tr=document.createElement("tr");for(const v of [r.method,r.seed,r.size,r.cycles,r.seconds===null?"—":r.seconds.toFixed(3)]){const td=document.createElement("td");td.textContent=v;tr.append(td);}document.querySelector("#runs").append(tr);}
  document.querySelector("#fusion").textContent="21 exact union experiments: no improvement. Each certificate applies only to that union.";
  document.querySelector("#verification").textContent=JSON.stringify(data.verification,null,2);
  for(const s of data.sources){const li=document.createElement("li"),a=document.createElement("a");a.href=s.url;a.textContent=s.title;a.rel="noreferrer";li.append(a);document.querySelector("#sources").append(li);}
  document.querySelector("#memory").textContent=data.memory.status;
+ document.querySelector("#run-state").textContent=data.run_state;
+ document.querySelector("#training-summary").textContent=data.training.summary;
+ document.querySelector("#training-scope").textContent=data.training.scope;
+ document.querySelector("#causal").textContent=JSON.stringify(data.causal_references,null,2);
+ const svg=document.querySelector("#progress"),ns="http://www.w3.org/2000/svg";
+ function el(name,attrs,text){const e=document.createElementNS(ns,name);for(const[k,v]of Object.entries(attrs))e.setAttribute(k,v);if(text)e.textContent=text;svg.append(e);return e;}
+ const y=s=>130-(s-200)*3;
+ for(const s of [200,215,230]){el("line",{x1:50,x2:735,y1:y(s),y2:y(s),stroke:"#314538"});el("text",{x:8,y:y(s)+4,fill:"#acc0b0","font-size":11},String(s));}
+ const points=data.progression.map((p,i)=>[65+i*160,y(p.size)]);
+ el("polyline",{points:points.map(p=>p.join(",")).join(" "),fill:"none",stroke:"#b3efba","stroke-width":3});
+ data.progression.forEach((p,i)=>{const[x,yy]=points[i];el("circle",{cx:x,cy:yy,r:5,fill:"#c7f7cc"});el("text",{x,y:yy-12,fill:"#e8eee9","text-anchor":"middle","font-size":12},String(p.size));el("text",{x,y:157,fill:"#acc0b0","text-anchor":"middle","font-size":10},p.label);});
  document.querySelector("#decode").onclick=decode;
- document.querySelector("#download").onclick=()=>{const blob=new Blob([data.best.words.join("\n")+"\n"],{type:"text/plain"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="codegarden-verified-226.txt";a.click();URL.revokeObjectURL(url);};
+ document.querySelector("#download").onclick=()=>{const blob=new Blob([data.best.words.join("\n")+"\n"],{type:"text/plain"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="codegarden-verified-"+data.best.size+".txt";a.click();URL.revokeObjectURL(url);};
+ document.querySelector("#word").selectedIndex=1;
  decode();
 }
 main().catch(e=>document.querySelector("#hypothesis").textContent="Cannot load recorded data: "+e.message);

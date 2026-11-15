@@ -84,6 +84,8 @@ def main():
           "equal_action_budget":"One selected bounded repair per heldout case; identical starting codes/seeds and pool limits"}
         evaluation["improved"]=evaluation["sum_after"]>evaluation["sum_before"]
         (out/"tinker_evaluation.json").write_text(json.dumps(evaluation,indent=2))
+        trained["status"]="trained_and_evaluated";trained["heldout_results"]="codegarden/artifacts/live/tinker_evaluation.json"
+        (out/"training.json").write_text(json.dumps(trained))
         status.update({"status":"completed","modal_best":max(r["best_size"] for r in reports["workers"]),"tinker":evaluation})
     except Exception as e:
         status.update({"status":"failed_or_partial","error_type":type(e).__name__,"error":str(e)[:600]})

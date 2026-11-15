@@ -236,7 +236,7 @@
   "baseline": 226,
   "target": 227,
   "global_record_claim": false,
-  "hypothesis": "Larger structural and ejection neighborhoods may escape the 226-word plateau.",
+  "hypothesis": "Memory-informed and trained operator choices both retained 226. Larger exact neighborhoods remain a hypothesis; they have not been ruled out.",
   "experiments": [
     {
       "method": "fixed",
@@ -279,6 +279,90 @@
       "size": 226,
       "seconds": 3.0025897081941366,
       "cycles": 71
+    },
+    {
+      "method": "native fixed",
+      "seed": 9101,
+      "size": 226,
+      "cycles": 418683,
+      "seconds": 120.005
+    },
+    {
+      "method": "native adaptive",
+      "seed": 9101,
+      "size": 226,
+      "cycles": 164478,
+      "seconds": 120.007
+    },
+    {
+      "method": "native fixed",
+      "seed": 9201,
+      "size": 226,
+      "cycles": 399522,
+      "seconds": 120.008
+    },
+    {
+      "method": "native adaptive",
+      "seed": 9201,
+      "size": 226,
+      "cycles": 162150,
+      "seconds": 120.006
+    },
+    {
+      "method": "native fixed",
+      "seed": 9301,
+      "size": 226,
+      "cycles": 399570,
+      "seconds": 120.007
+    },
+    {
+      "method": "native adaptive",
+      "seed": 9301,
+      "size": 226,
+      "cycles": 174669,
+      "seconds": 120.006
+    },
+    {
+      "method": "native fixed",
+      "seed": 9401,
+      "size": 226,
+      "cycles": 414475,
+      "seconds": 120.01
+    },
+    {
+      "method": "native adaptive",
+      "seed": 9401,
+      "size": 226,
+      "cycles": 162303,
+      "seconds": 120.006
+    },
+    {
+      "method": "hosted adaptive",
+      "seed": 2026,
+      "size": 226,
+      "cycles": 1200,
+      "seconds": null
+    },
+    {
+      "method": "hosted adaptive",
+      "seed": 2027,
+      "size": 226,
+      "cycles": 5000,
+      "seconds": null
+    },
+    {
+      "method": "memory-informed untrained",
+      "seed": 93017,
+      "size": 226,
+      "cycles": 1551,
+      "seconds": 30.005811971000014
+    },
+    {
+      "method": "trained transfer",
+      "seed": 93017,
+      "size": 226,
+      "cycles": 232,
+      "seconds": 30.003457137000055
     }
   ],
   "greedy": [
@@ -355,12 +439,21 @@
     {
       "title": "CPro1 pinned result",
       "url": "https://github.com/Constructive-Codes/CPro1/blob/5b26b1a5ca0625a857cf6c2adcc6668e1d66a2ac/designs/deletion-code/result-16-2-208-seed49008.txt"
+    },
+    {
+      "title": "Actual recalled strategy context",
+      "url": "https://github.com/howdymary/compute-forecasting/blob/codegarden/codegarden/artifacts/feedback/decision_context.json"
+    },
+    {
+      "title": "Research report and limitations",
+      "url": "https://github.com/howdymary/compute-forecasting/blob/codegarden/codegarden/docs/research_report.md"
     }
   ],
   "memory": {
-    "live_past_reads": 0,
-    "live_past_writes": 0,
-    "status": "Not yet run; no cross-agent reuse claimed"
+    "live_past_reads": 9,
+    "live_past_writes": 8,
+    "execution": "Three serialized logical roles, not independently spawned assistant agents.",
+    "status": "past.dev: 8 writes and 9 reads across three serialized logical roles. Actual recalled content is included in the saved strategy context."
   },
   "verification": {
     "descendant": {
@@ -387,5 +480,242 @@
     "experiments": 21,
     "improvement": false,
     "scope": "Each exact result applies only to its explicit union."
-  }
+  },
+  "capture_utc": "2026-11-15T04:03:18Z",
+  "run_state": "Completed bounded batches. No live research worker is attached to this page.",
+  "training": {
+    "one_action": {
+      "before": 100,
+      "after": 104
+    },
+    "matched_cpu": {
+      "before": 113,
+      "after": 104
+    },
+    "length16": {
+      "before": 226,
+      "after": 226
+    },
+    "summary": "Single-action small-code scores improved 100 → 104. Under matched search CPU budgets, the result reversed: 113 → 104. Length-16 transfer remained 226 → 226. No budget-matched adaptation advantage was demonstrated.",
+    "scope": "Six held-out n=10,11,12 cases; post-hoc CPU replay of frozen choices. Separate matched n=16 transfer uses the same context/start/seed and 30-second caps."
+  },
+  "progression": [
+    {
+      "label": "Reproduced arena",
+      "size": 226
+    },
+    {
+      "label": "1,200 cycles",
+      "size": 226
+    },
+    {
+      "label": "5,000 cycles",
+      "size": 226
+    },
+    {
+      "label": "Native batch",
+      "size": 226
+    },
+    {
+      "label": "Trained transfer",
+      "size": 226
+    }
+  ],
+  "causal_references": [
+    {
+      "kind": "memory_write",
+      "role": "analyst",
+      "source_id": "codegarden-43673585173-analyst-scoped_negative-e9c04092",
+      "experiment": "negative-001",
+      "parent_sources": [],
+      "estimated_credits": 3
+    },
+    {
+      "kind": "memory_read",
+      "role": "researcher",
+      "required_source": "codegarden-43673585173-analyst-scoped_negative-e9c04092",
+      "returned_source_ids": [
+        "codegarden-43672598278-analyst-scoped_negative-457459ac",
+        "codegarden-43672967716-analyst-scoped_negative-21c40fba",
+        "codegarden-43673585173-analyst-scoped_negative-e9c04092"
+      ],
+      "used_in_next_decision": true
+    },
+    {
+      "kind": "memory_write",
+      "role": "researcher",
+      "source_id": "codegarden-43673585173-researcher-source_backed_method-36e348c0",
+      "experiment": "modal-repair-001",
+      "parent_sources": [
+        "codegarden-43673585173-analyst-scoped_negative-e9c04092"
+      ],
+      "estimated_credits": 7
+    },
+    {
+      "kind": "memory_read",
+      "role": "strategist",
+      "required_source": "codegarden-43673585173-researcher-source_backed_method-36e348c0",
+      "returned_source_ids": [
+        "codegarden-43672598278-analyst-scoped_negative-457459ac",
+        "codegarden-43672967716-analyst-scoped_negative-21c40fba",
+        "codegarden-43673585173-analyst-scoped_negative-e9c04092",
+        "codegarden-43673585173-researcher-source_backed_method-36e348c0"
+      ],
+      "used_in_next_decision": true
+    },
+    {
+      "kind": "memory_write",
+      "role": "strategist",
+      "source_id": "codegarden-43673585173-strategist-experiment_plan-1dd00061",
+      "experiment": "modal-repair-001",
+      "parent_sources": [
+        "codegarden-43673585173-researcher-source_backed_method-36e348c0"
+      ],
+      "estimated_credits": 2
+    },
+    {
+      "kind": "memory_read",
+      "role": "analyst",
+      "required_source": "codegarden-43673585173-strategist-experiment_plan-1dd00061",
+      "returned_source_ids": [
+        "codegarden-43672598278-analyst-scoped_negative-457459ac",
+        "codegarden-43672967716-analyst-scoped_negative-21c40fba",
+        "codegarden-43673585173-analyst-scoped_negative-e9c04092",
+        "codegarden-43673585173-researcher-source_backed_method-36e348c0",
+        "codegarden-43673585173-strategist-experiment_plan-1dd00061"
+      ],
+      "used_in_next_decision": true
+    },
+    {
+      "kind": "memory_write",
+      "role": "analyst",
+      "source_id": "codegarden-43673585173-analyst-verified_result-ef116a06",
+      "experiment": "modal-repair-001",
+      "parent_sources": [
+        "codegarden-43673585173-strategist-experiment_plan-1dd00061"
+      ],
+      "estimated_credits": 5
+    },
+    {
+      "kind": "memory_read",
+      "role": "researcher",
+      "required_source": "codegarden-43673585173-analyst-verified_result-ef116a06",
+      "returned_source_ids": [
+        "codegarden-43672598278-analyst-scoped_negative-457459ac",
+        "codegarden-43673585173-analyst-scoped_negative-e9c04092",
+        "codegarden-43673585173-analyst-verified_result-ef116a06",
+        "codegarden-43673585173-strategist-experiment_plan-1dd00061"
+      ],
+      "used_in_next_decision": true
+    },
+    {
+      "kind": "memory_write",
+      "role": "analyst",
+      "source_id": "codegarden-43674296464-analyst-native_plateau_analysis-d110a9a4",
+      "experiment": "feedback-002",
+      "parent_sources": [],
+      "estimated_credits": 3
+    },
+    {
+      "kind": "memory_read",
+      "role": "researcher",
+      "required_source": "codegarden-43674296464-analyst-native_plateau_analysis-d110a9a4",
+      "returned_source_ids": [
+        "codegarden-43673585173-analyst-verified_result-ef116a06",
+        "codegarden-43673585173-researcher-source_backed_method-36e348c0",
+        "codegarden-43674296464-analyst-native_plateau_analysis-d110a9a4"
+      ],
+      "used_in_next_decision": true
+    },
+    {
+      "kind": "memory_write",
+      "role": "researcher",
+      "source_id": "codegarden-43674296464-researcher-plateau_repair_method-c4127054",
+      "experiment": "feedback-repair-002",
+      "parent_sources": [
+        "codegarden-43674296464-analyst-native_plateau_analysis-d110a9a4"
+      ],
+      "estimated_credits": 15
+    },
+    {
+      "kind": "memory_read",
+      "role": "strategist",
+      "required_source": "codegarden-43674296464-researcher-plateau_repair_method-c4127054",
+      "returned_source_ids": [
+        "codegarden-43673585173-analyst-verified_result-ef116a06",
+        "codegarden-43674296464-analyst-native_plateau_analysis-d110a9a4",
+        "codegarden-43674296464-researcher-plateau_repair_method-c4127054"
+      ],
+      "used_in_next_decision": true
+    },
+    {
+      "kind": "memory_informed_tinker_decision",
+      "action": "random8greedy",
+      "valid_action": true,
+      "strict_format": true,
+      "output_tokens": 5,
+      "raw_reply_sha256": "76415a5b5044ec5fef6161eb85315a8543a3a9d19e39b6acf8ad5902a2e42b82",
+      "state_sha256": "bb3004ebd4336ec3fdaa049af1251cc2aa3533c436d67e3f91f5872b89fb8a94",
+      "reservation": "7e39b20dbf4e41bfa29cb51b77156d6e",
+      "model": "Qwen/Qwen3.5-4B",
+      "used_action": "random8greedy",
+      "explicit_fallback": false,
+      "memory_source": "codegarden-43674296464-researcher-plateau_repair_method-c4127054",
+      "context_path": "codegarden/artifacts/feedback/decision_context.json"
+    },
+    {
+      "kind": "memory_read",
+      "role": "strategist",
+      "required_source": "codegarden-43674296464-researcher-plateau_repair_method-c4127054",
+      "returned_source_ids": [
+        "codegarden-43674296464-analyst-native_plateau_analysis-d110a9a4",
+        "codegarden-43674296464-researcher-plateau_repair_method-c4127054"
+      ],
+      "used_in_next_decision": true
+    },
+    {
+      "kind": "memory_write",
+      "role": "strategist",
+      "source_id": "codegarden-43674769064-strategist-resumed_feedback_plan-ca6b1d4b",
+      "experiment": "feedback-repair-002",
+      "parent_sources": [
+        "codegarden-43674296464-researcher-plateau_repair_method-c4127054"
+      ],
+      "estimated_credits": 12
+    },
+    {
+      "kind": "memory_read",
+      "role": "analyst",
+      "required_source": "codegarden-43674769064-strategist-resumed_feedback_plan-ca6b1d4b",
+      "returned_source_ids": [
+        "codegarden-43673585173-researcher-source_backed_method-36e348c0",
+        "codegarden-43673585173-strategist-experiment_plan-1dd00061",
+        "codegarden-43674296464-researcher-plateau_repair_method-c4127054",
+        "codegarden-43674769064-strategist-resumed_feedback_plan-ca6b1d4b"
+      ],
+      "used_in_next_decision": true
+    },
+    {
+      "kind": "memory_write",
+      "role": "analyst",
+      "source_id": "codegarden-43674769064-analyst-resumed_feedback_result-d18cd4d0",
+      "experiment": "feedback-repair-002",
+      "parent_sources": [
+        "codegarden-43674769064-strategist-resumed_feedback_plan-ca6b1d4b"
+      ],
+      "estimated_credits": 11
+    },
+    {
+      "kind": "memory_read",
+      "role": "researcher",
+      "required_source": "codegarden-43674769064-analyst-resumed_feedback_result-d18cd4d0",
+      "returned_source_ids": [
+        "codegarden-43672598278-analyst-scoped_negative-457459ac",
+        "codegarden-43673585173-analyst-verified_result-ef116a06",
+        "codegarden-43674296464-analyst-native_plateau_analysis-d110a9a4",
+        "codegarden-43674769064-analyst-resumed_feedback_result-d18cd4d0"
+      ],
+      "used_in_next_decision": true
+    }
+  ]
 }

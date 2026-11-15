@@ -1,10 +1,11 @@
 {
-  "source_run": "43674296464-cumulative",
+  "source_run": "43674769064-cumulative",
+  "source_commit": "ae178dd20a870d567f7f82ec759b1d481cda41a9",
   "conservative_totals": {
     "exa": 0.021,
-    "past": 53,
+    "past": 79,
     "modal": 6.84,
-    "tinker": 19
+    "tinker": 20
   },
-  "reason": "Preserve all cumulative charges, estimates and pending reservations before resuming the already paid model decision; no model or Exa re-query is permitted."
+  "reason": "Final cumulative accounting. Keep the full unresolved Modal/Tinker reservations; do not reset caps on fresh runners. Tinker allowance is exhausted by reservations."
 }

@@ -1,0 +1,89 @@
+{
+  "recorded_at": "2026-11-15T04:03:18Z",
+  "allocation_path": "codegarden/budget/shared-allocation.json",
+  "raw_cumulative_ledger": {
+    "exa": {
+      "cap": 2,
+      "other_project_reserves": 15,
+      "verification_reserve": 5,
+      "reserved": 0.021,
+      "provider_reported_or_estimated": 0
+    },
+    "past": {
+      "cap": 500,
+      "other_project_reserves": 10200,
+      "verification_reserve": 5000,
+      "reserved": 53,
+      "provider_reported_or_estimated": 26
+    },
+    "modal": {
+      "cap": 10,
+      "other_project_reserves": 75,
+      "verification_reserve": 20,
+      "reserved": 6.84,
+      "provider_reported_or_estimated": 0
+    },
+    "tinker": {
+      "cap": 20,
+      "other_project_reserves": 140,
+      "verification_reserve": 10,
+      "reserved": 20,
+      "provider_reported_or_estimated": 0
+    }
+  },
+  "providers": {
+    "exa": {
+      "cap_usd": 2,
+      "provider_reported_request_cost_usd": 0.021,
+      "actual_requests": 3,
+      "pending_cost_attribution_usd": 0,
+      "remaining_codegarden_allowance_usd": 1.979,
+      "request_ids": [
+        "f1430a04e1611934dad997956c2528af",
+        "40d715204ef808238e5a0700c590260a",
+        "120b2846bc6eff6d03905d5b6fae6ba0"
+      ],
+      "note": "Historical charged costs were carried as reservations in the raw ledger; this summary reconciles them to actual API costDollars receipts without adding them twice."
+    },
+    "past": {
+      "cap_credits": 500,
+      "conservatively_accounted_credits": 79,
+      "remaining_codegarden_allowance_credits": 421,
+      "actual_attributed_provider_charge_credits": null,
+      "note": "Ingest estimates plus conservative recall allowances, including failed setup attempts; not a reconciled provider invoice."
+    },
+    "modal": {
+      "cap_usd": 10,
+      "pending_conservative_reservations_usd": 6.84,
+      "remaining_unreserved_codegarden_allowance_usd": 3.16,
+      "actual_attributed_charge_usd": null,
+      "completed_search_workers": 10,
+      "search_seconds_caps": 1080,
+      "note": "Eight 120-second native workers plus two 60-second Python workers. Runtime also includes setup and verification. Reservations include failed prelaunch reservations; do not infer billed cost from them."
+    },
+    "tinker": {
+      "cap_usd": 20,
+      "pending_conservative_reservations_usd": 20,
+      "remaining_unreserved_codegarden_allowance_usd": 0,
+      "actual_attributed_charge_usd": null,
+      "completed_sft_updates": 8,
+      "trained_examples": 32,
+      "note": "The entire conservative allowance remains held pending attribution. No further model call is authorized by this allocation."
+    }
+  },
+  "independent_verification_reserves": {
+    "exa_usd": 5,
+    "past_credits": 5000,
+    "modal_usd": 20,
+    "tinker_usd": 10
+  },
+  "billing_attribution_receipt": "codegarden/artifacts/live/billing_receipts.json",
+  "attribution_gap": "Read-only usage exports returned no attributed rows at capture time; empty rows are not zero charges.",
+  "budget_coordination": "Disjoint static allocation subtracts full BoundForge allowances and forecasting guards; other projects do not read CodeGarden's job ledger.",
+  "purchases": 0,
+  "replenishment_enabled": false,
+  "plans_changed": false,
+  "other_projects_cancelled": false,
+  "provider_remaining_balances": "Account-wide snapshots are in shared-allocation.json. Concurrent usage makes them different from the remaining CodeGarden allocation; no fresh exact balance is asserted here.",
+  "no_more_billable_batches": true
+}

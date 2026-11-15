@@ -16,7 +16,7 @@ concurrency:
   group: codegarden-only
   cancel-in-progress: false
 env:
-  CODEGARDEN_MODE: ${{ inputs.mode || 'transfer' }}
+  CODEGARDEN_MODE: ${{ inputs.mode || 'verify' }}
 jobs:
   verify-and-search:
     runs-on: ubuntu-latest
@@ -85,7 +85,7 @@ jobs:
         env:
           TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
         run: codegarden/.venv/bin/python -B -u codegarden/trained_transfer.py
-      - name: Replay frozen choices with matched search CPU budgets
+      - name: Verify recorded frozen-policy budget comparison
         run: python -B codegarden/policy_budget_eval.py
       - name: Reverify every exported witness
         if: always()

@@ -1,0 +1,522 @@
+{
+  "scope": "Exploratory structural baselines, not record candidates or universal family optima",
+  "VT": {
+    "definition": "sum((i+1)*bit_i for i=0..15) modulo 17; LSB indexing; greedy D2 packing inside each class",
+    "inspiration": "VT-family single-deletion discussion in Weindel-Heckel; no claim that the whole class corrects two deletions",
+    "runs": [
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 0,
+        "seed": 4101,
+        "candidate_pool_sha256": "d866a745e7fe162a3920317164ef012767eb57a9852efedba6f5b03dcc5536ef",
+        "size_unverified": 128
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 0,
+        "seed": 4102,
+        "candidate_pool_sha256": "d866a745e7fe162a3920317164ef012767eb57a9852efedba6f5b03dcc5536ef",
+        "size_unverified": 130
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 0,
+        "seed": 4103,
+        "candidate_pool_sha256": "d866a745e7fe162a3920317164ef012767eb57a9852efedba6f5b03dcc5536ef",
+        "size_unverified": 129
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 1,
+        "seed": 4101,
+        "candidate_pool_sha256": "9961112f6b7b9a2ef6638014f5c9c628b50a072585ef1d9f50399bdc90012e03",
+        "size_unverified": 130
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 1,
+        "seed": 4102,
+        "candidate_pool_sha256": "9961112f6b7b9a2ef6638014f5c9c628b50a072585ef1d9f50399bdc90012e03",
+        "size_unverified": 124
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 1,
+        "seed": 4103,
+        "candidate_pool_sha256": "9961112f6b7b9a2ef6638014f5c9c628b50a072585ef1d9f50399bdc90012e03",
+        "size_unverified": 127
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 2,
+        "seed": 4101,
+        "candidate_pool_sha256": "d3484df7b9fa8b75e690f99e4e788412576c5942e58a1c76954cfb5ddc2c45e0",
+        "size_unverified": 127
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 2,
+        "seed": 4102,
+        "candidate_pool_sha256": "d3484df7b9fa8b75e690f99e4e788412576c5942e58a1c76954cfb5ddc2c45e0",
+        "size_unverified": 131
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 2,
+        "seed": 4103,
+        "candidate_pool_sha256": "d3484df7b9fa8b75e690f99e4e788412576c5942e58a1c76954cfb5ddc2c45e0",
+        "size_unverified": 126
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 3,
+        "seed": 4101,
+        "candidate_pool_sha256": "6637ad01e566f4d83d414e43dcab04eb6506e0495dc1948cab613de2704584db",
+        "size_unverified": 126
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 3,
+        "seed": 4102,
+        "candidate_pool_sha256": "6637ad01e566f4d83d414e43dcab04eb6506e0495dc1948cab613de2704584db",
+        "size_unverified": 127
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 3,
+        "seed": 4103,
+        "candidate_pool_sha256": "6637ad01e566f4d83d414e43dcab04eb6506e0495dc1948cab613de2704584db",
+        "size_unverified": 124
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 4,
+        "seed": 4101,
+        "candidate_pool_sha256": "8abc2afec09de3b47710ed0dc24f79d127d6275f1fcd3aef93ce0882053a9fb7",
+        "size_unverified": 131
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 4,
+        "seed": 4102,
+        "candidate_pool_sha256": "8abc2afec09de3b47710ed0dc24f79d127d6275f1fcd3aef93ce0882053a9fb7",
+        "size_unverified": 125
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 4,
+        "seed": 4103,
+        "candidate_pool_sha256": "8abc2afec09de3b47710ed0dc24f79d127d6275f1fcd3aef93ce0882053a9fb7",
+        "size_unverified": 128
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 5,
+        "seed": 4101,
+        "candidate_pool_sha256": "1227c327cab426be48bf72b440345e925caf7ed2f67e796f452eeae29b5c0036",
+        "size_unverified": 125
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 5,
+        "seed": 4102,
+        "candidate_pool_sha256": "1227c327cab426be48bf72b440345e925caf7ed2f67e796f452eeae29b5c0036",
+        "size_unverified": 128
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 5,
+        "seed": 4103,
+        "candidate_pool_sha256": "1227c327cab426be48bf72b440345e925caf7ed2f67e796f452eeae29b5c0036",
+        "size_unverified": 127
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 6,
+        "seed": 4101,
+        "candidate_pool_sha256": "1eae15197be54f10b4262b9813bd9b209f59f37233cddf04447a775f1d6d7ca9",
+        "size_unverified": 121
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 6,
+        "seed": 4102,
+        "candidate_pool_sha256": "1eae15197be54f10b4262b9813bd9b209f59f37233cddf04447a775f1d6d7ca9",
+        "size_unverified": 123
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 6,
+        "seed": 4103,
+        "candidate_pool_sha256": "1eae15197be54f10b4262b9813bd9b209f59f37233cddf04447a775f1d6d7ca9",
+        "size_unverified": 127
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 7,
+        "seed": 4101,
+        "candidate_pool_sha256": "88665c28bfc05824092badc39b0b32ffd02e2699198adeb74677d1f86d84b480",
+        "size_unverified": 128
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 7,
+        "seed": 4102,
+        "candidate_pool_sha256": "88665c28bfc05824092badc39b0b32ffd02e2699198adeb74677d1f86d84b480",
+        "size_unverified": 126
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 7,
+        "seed": 4103,
+        "candidate_pool_sha256": "88665c28bfc05824092badc39b0b32ffd02e2699198adeb74677d1f86d84b480",
+        "size_unverified": 126
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 8,
+        "seed": 4101,
+        "candidate_pool_sha256": "cac2f7ef0860d047001aa4016143a41956342cbc5a113b30b181facb62199c54",
+        "size_unverified": 121
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 8,
+        "seed": 4102,
+        "candidate_pool_sha256": "cac2f7ef0860d047001aa4016143a41956342cbc5a113b30b181facb62199c54",
+        "size_unverified": 128
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 8,
+        "seed": 4103,
+        "candidate_pool_sha256": "cac2f7ef0860d047001aa4016143a41956342cbc5a113b30b181facb62199c54",
+        "size_unverified": 128
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 9,
+        "seed": 4101,
+        "candidate_pool_sha256": "b8349d8b5c3802a87678c83e77e98e82e06450660f9f09877e831b3ab6f480be",
+        "size_unverified": 128
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 9,
+        "seed": 4102,
+        "candidate_pool_sha256": "b8349d8b5c3802a87678c83e77e98e82e06450660f9f09877e831b3ab6f480be",
+        "size_unverified": 124
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 9,
+        "seed": 4103,
+        "candidate_pool_sha256": "b8349d8b5c3802a87678c83e77e98e82e06450660f9f09877e831b3ab6f480be",
+        "size_unverified": 129
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 10,
+        "seed": 4101,
+        "candidate_pool_sha256": "d963772f98ec38f3654e50476cf60510de05824032727b6e9aecf07346adb68b",
+        "size_unverified": 125
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 10,
+        "seed": 4102,
+        "candidate_pool_sha256": "d963772f98ec38f3654e50476cf60510de05824032727b6e9aecf07346adb68b",
+        "size_unverified": 123
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 10,
+        "seed": 4103,
+        "candidate_pool_sha256": "d963772f98ec38f3654e50476cf60510de05824032727b6e9aecf07346adb68b",
+        "size_unverified": 130
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 11,
+        "seed": 4101,
+        "candidate_pool_sha256": "0dd76c69ffd3d927ed9e4abb0574ae049b2d978a8b3590860d842114b3d10b34",
+        "size_unverified": 128
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 11,
+        "seed": 4102,
+        "candidate_pool_sha256": "0dd76c69ffd3d927ed9e4abb0574ae049b2d978a8b3590860d842114b3d10b34",
+        "size_unverified": 128
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 11,
+        "seed": 4103,
+        "candidate_pool_sha256": "0dd76c69ffd3d927ed9e4abb0574ae049b2d978a8b3590860d842114b3d10b34",
+        "size_unverified": 128
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 12,
+        "seed": 4101,
+        "candidate_pool_sha256": "8dc3ebc8778ba0ca0a60c76b2b3117d0480a5ef9c885b469a379fed827774b92",
+        "size_unverified": 127
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 12,
+        "seed": 4102,
+        "candidate_pool_sha256": "8dc3ebc8778ba0ca0a60c76b2b3117d0480a5ef9c885b469a379fed827774b92",
+        "size_unverified": 127
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 12,
+        "seed": 4103,
+        "candidate_pool_sha256": "8dc3ebc8778ba0ca0a60c76b2b3117d0480a5ef9c885b469a379fed827774b92",
+        "size_unverified": 127
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 13,
+        "seed": 4101,
+        "candidate_pool_sha256": "0fcaa880600bfb072736474cec64df18c9475a198d4ba267002305afd09e12cc",
+        "size_unverified": 127
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 13,
+        "seed": 4102,
+        "candidate_pool_sha256": "0fcaa880600bfb072736474cec64df18c9475a198d4ba267002305afd09e12cc",
+        "size_unverified": 123
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 13,
+        "seed": 4103,
+        "candidate_pool_sha256": "0fcaa880600bfb072736474cec64df18c9475a198d4ba267002305afd09e12cc",
+        "size_unverified": 126
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 14,
+        "seed": 4101,
+        "candidate_pool_sha256": "0304dda9671a6ac554e333c14ec7582bae7b1464ba6a1e478653fc821b923541",
+        "size_unverified": 122
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 14,
+        "seed": 4102,
+        "candidate_pool_sha256": "0304dda9671a6ac554e333c14ec7582bae7b1464ba6a1e478653fc821b923541",
+        "size_unverified": 124
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 14,
+        "seed": 4103,
+        "candidate_pool_sha256": "0304dda9671a6ac554e333c14ec7582bae7b1464ba6a1e478653fc821b923541",
+        "size_unverified": 125
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 15,
+        "seed": 4101,
+        "candidate_pool_sha256": "1a5c3675fa38d5eedbe779fc934dfe3865755576225426860a0c9c3a40f3e245",
+        "size_unverified": 124
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 15,
+        "seed": 4102,
+        "candidate_pool_sha256": "1a5c3675fa38d5eedbe779fc934dfe3865755576225426860a0c9c3a40f3e245",
+        "size_unverified": 128
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 15,
+        "seed": 4103,
+        "candidate_pool_sha256": "1a5c3675fa38d5eedbe779fc934dfe3865755576225426860a0c9c3a40f3e245",
+        "size_unverified": 128
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 16,
+        "seed": 4101,
+        "candidate_pool_sha256": "dbf7d9978a7e1ad38c3ddd624571548bebda98c6cd4810fb31dd81a892e08b45",
+        "size_unverified": 128
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 16,
+        "seed": 4102,
+        "candidate_pool_sha256": "dbf7d9978a7e1ad38c3ddd624571548bebda98c6cd4810fb31dd81a892e08b45",
+        "size_unverified": 129
+      },
+      {
+        "family": "VT-syndrome restriction",
+        "syndrome": 16,
+        "seed": 4103,
+        "candidate_pool_sha256": "dbf7d9978a7e1ad38c3ddd624571548bebda98c6cd4810fb31dd81a892e08b45",
+        "size_unverified": 127
+      }
+    ],
+    "best": {
+      "cardinality": 131,
+      "verification": {
+        "descendant": {
+          "valid": true,
+          "cardinality": 131,
+          "length": 16,
+          "distinct_descendants": 3192,
+          "witness_sha256": "04b0e52a2ac5eeba301c5e416012fa6533293c816a0e4b9c6a31de1807108d14",
+          "method": "distinct_string_two_deletions"
+        },
+        "lcs": {
+          "valid": true,
+          "cardinality": 131,
+          "length": 16,
+          "pairs_checked": 8515,
+          "largest_pairwise_lcs": 13,
+          "witness_sha256": "04b0e52a2ac5eeba301c5e416012fa6533293c816a0e4b9c6a31de1807108d14",
+          "method": "independent_dynamic_programming_lcs"
+        }
+      },
+      "parameters": {
+        "syndrome": 2,
+        "seed": 4102
+      }
+    }
+  },
+  "structured_families": {
+    "repeated_half": {
+      "cardinality": 23,
+      "verification": {
+        "descendant": {
+          "valid": true,
+          "cardinality": 23,
+          "length": 16,
+          "distinct_descendants": 611,
+          "witness_sha256": "f7e3f60f6b05467a37de001eb20a34cc690e72cae160781b828acddc304c28ea",
+          "method": "distinct_string_two_deletions"
+        },
+        "lcs": {
+          "valid": true,
+          "cardinality": 23,
+          "length": 16,
+          "pairs_checked": 253,
+          "largest_pairwise_lcs": 13,
+          "witness_sha256": "f7e3f60f6b05467a37de001eb20a34cc690e72cae160781b828acddc304c28ea",
+          "method": "independent_dynamic_programming_lcs"
+        }
+      },
+      "candidate_pool_sha256": "2cd48603780584810ab94d1c1654fb98d4c480f188930a847c9205da41ca0afb"
+    },
+    "mirror_half": {
+      "cardinality": 25,
+      "verification": {
+        "descendant": {
+          "valid": true,
+          "cardinality": 25,
+          "length": 16,
+          "distinct_descendants": 580,
+          "witness_sha256": "f77739472de045a4d928bd0bb78708f43eba71e6a22f19b08a26daaa4132af19",
+          "method": "distinct_string_two_deletions"
+        },
+        "lcs": {
+          "valid": true,
+          "cardinality": 25,
+          "length": 16,
+          "pairs_checked": 300,
+          "largest_pairwise_lcs": 13,
+          "witness_sha256": "f77739472de045a4d928bd0bb78708f43eba71e6a22f19b08a26daaa4132af19",
+          "method": "independent_dynamic_programming_lcs"
+        }
+      },
+      "candidate_pool_sha256": "931efd50aea3a031693920d5fcafddac72120a89efe45db9b1d747fb990d6127"
+    },
+    "complement_mirror_half": {
+      "cardinality": 24,
+      "verification": {
+        "descendant": {
+          "valid": true,
+          "cardinality": 24,
+          "length": 16,
+          "distinct_descendants": 719,
+          "witness_sha256": "3da5122762ba637da9592c801acb89ebb44bf6af8a884383c918b5320b387dc5",
+          "method": "distinct_string_two_deletions"
+        },
+        "lcs": {
+          "valid": true,
+          "cardinality": 24,
+          "length": 16,
+          "pairs_checked": 276,
+          "largest_pairwise_lcs": 13,
+          "witness_sha256": "3da5122762ba637da9592c801acb89ebb44bf6af8a884383c918b5320b387dc5",
+          "method": "independent_dynamic_programming_lcs"
+        }
+      },
+      "candidate_pool_sha256": "af4b9c4c7949e4aa7887e3ffd6f5bda8af742873b53dd8819050b8311263e79c"
+    }
+  },
+  "recursive_product": {
+    "component_length": 8,
+    "component_size": 7,
+    "component_words": [
+      "00000000",
+      "11111111",
+      "00000111",
+      "00111110",
+      "01110000",
+      "10001100",
+      "11010101"
+    ],
+    "component_verification": {
+      "descendant": {
+        "valid": true,
+        "cardinality": 7,
+        "length": 8,
+        "distinct_descendants": 41,
+        "witness_sha256": "a3e91b296e0f5a5ac431a2994dc564adaa132878a245e31145e85d1c0dcc022e",
+        "method": "distinct_string_two_deletions"
+      },
+      "lcs": {
+        "valid": true,
+        "cardinality": 7,
+        "length": 8,
+        "pairs_checked": 21,
+        "largest_pairwise_lcs": 5,
+        "witness_sha256": "a3e91b296e0f5a5ac431a2994dc564adaa132878a245e31145e85d1c0dcc022e",
+        "method": "independent_dynamic_programming_lcs"
+      }
+    },
+    "length16_result": {
+      "cardinality": 49,
+      "verification": {
+        "descendant": {
+          "valid": true,
+          "cardinality": 49,
+          "length": 16,
+          "distinct_descendants": 869,
+          "witness_sha256": "e4caa6e9eef75dbb19dfd4d67fc76c7a91080e283777fd0ee19a8e4e507cd483",
+          "method": "distinct_string_two_deletions"
+        },
+        "lcs": {
+          "valid": true,
+          "cardinality": 49,
+          "length": 16,
+          "pairs_checked": 1176,
+          "largest_pairwise_lcs": 13,
+          "witness_sha256": "e4caa6e9eef75dbb19dfd4d67fc76c7a91080e283777fd0ee19a8e4e507cd483",
+          "method": "independent_dynamic_programming_lcs"
+        }
+      }
+    },
+    "why_valid": "The first six received bits belong to D2 of the prefix component, and the last six to D2 of the suffix component; both component words are uniquely determined."
+  },
+  "actual_wall_seconds": 1.427729582414031,
+  "global_optimality_claim": false,
+  "source_sha256": "20f170b1a56dadfa3e3aadadc7c7d21140d6bdde321c80a59c047fefd4106f92",
+  "execution": "RAM-only Python; no project files written on workstation"
+}
