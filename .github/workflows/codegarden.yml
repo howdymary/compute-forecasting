@@ -1,37 +1,139 @@
-name: CodeGarden recover pending research memory
+name: CodeGarden LP-guided fixed-neighborhood repair
 on:
   push:
-    branches: [codegarden-side-memory-recovery-001]
+    branches: [codegarden-side-lp-001]
     paths: [.github/workflows/codegarden.yml]
+  workflow_dispatch:
 permissions:
   contents: write
 concurrency:
-  group: codegarden-side-memory-recovery-001
+  group: codegarden-side-lp-001
   cancel-in-progress: false
 env:
   SOURCE_SHA: ${{ github.sha }}
   PYTHONDONTWRITEBYTECODE: '1'
+  HF_HOME: ${{ github.workspace }}/codegarden/.cache/huggingface
+  XDG_CACHE_HOME: ${{ github.workspace }}/codegarden/.cache
 jobs:
-  recover:
+  research:
     runs-on: ubuntu-latest
-    timeout-minutes: 4
+    timeout-minutes: 14
+    outputs:
+      has_candidate: ${{ steps.cycle.outputs.has_candidate }}
     steps:
-      - name: Fetch minimal isolated recovery source
+      - name: Fetch minimal immutable source
         run: |
           python3 -B - <<'PY'
           import pathlib,urllib.request,os
-          for name in ["codegarden/side_services/cycle.py","codegarden/side_services/recover_memory.py","codegarden/supervisor.py","codegarden/protected/manifest.json","codegarden/protected/verify_descendants.py","codegarden/protected/verify_lcs.py","codegarden/artifacts/side_research/services_001/summary.json"]:
+          for name in ["codegarden/side_lp/experiment.py","codegarden/side_lp/dual_verify.py","codegarden/side_lp/test_dual_verify.py","codegarden/side_lp/requirements.txt","codegarden/side_services/cycle.py","codegarden/side_services/models.json","codegarden/supervisor.py","codegarden/protected/manifest.json","codegarden/protected/verify_descendants.py","codegarden/protected/verify_lcs.py","codegarden/artifacts/best_code.txt"]:
               p=pathlib.Path(name);p.parent.mkdir(parents=True,exist_ok=True)
-              p.write_bytes(urllib.request.urlopen("https://raw.githubusercontent.com/howdymary/compute-forecasting/"+os.environ["SOURCE_SHA"]+"/"+name,timeout=30).read())
+              p.write_bytes(urllib.request.urlopen("https://raw.githubusercontent.com/howdymary/compute-forecasting/"+os.environ["SOURCE_SHA"]+"/"+name,timeout=45).read())
           PY
-      - name: Recover existing handles and reuse method without resubmitting ingestions
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test independent certificate checker before provider calls
+        run: python3 -B codegarden/side_lp/test_dual_verify.py
+      - name: Install isolated clients and LP solver
+        run: |
+          python3 -m venv codegarden/.venv
+          codegarden/.venv/bin/python -m pip install --disable-pip-version-check -r codegarden/side_lp/requirements.txt
+      - name: Solve LPs and run paired exact repairs on Modal
+        id: cycle
         env:
           GH_TOKEN: ${{ github.token }}
+          EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
           PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
-        run: python3 -B -u codegarden/side_services/recover_memory.py
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: codegarden/.venv/bin/python -B -u codegarden/side_lp/experiment.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: codegarden-side-memory-recovery
+          name: codegarden-lp-certificates
           retention-days: 30
-          path: codegarden/artifacts/side_research/memory_recovery_001/
+          path: codegarden/artifacts/side_research/lp_001/certificates/
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: codegarden-lp-research
+          retention-days: 30
+          path: codegarden/artifacts/side_research/lp_001/
+      - uses: actions/upload-artifact@v4
+        if: steps.cycle.outputs.has_candidate == 'true'
+        with:
+          name: codegarden-lp-227-candidate
+          retention-days: 30
+          path: codegarden/artifacts/side_research/lp_001/candidate.txt
+  verify_bounds:
+    needs: research
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - name: Fetch only pinned standalone integer checker
+        run: |
+          python3 -B - <<'PY'
+          import pathlib,urllib.request,os
+          p=pathlib.Path("codegarden/side_lp/dual_verify.py");p.parent.mkdir(parents=True,exist_ok=True)
+          p.write_bytes(urllib.request.urlopen("https://raw.githubusercontent.com/howdymary/compute-forecasting/"+os.environ["SOURCE_SHA"]+"/codegarden/side_lp/dual_verify.py",timeout=30).read())
+          PY
+      - uses: actions/download-artifact@v4
+        with:
+          name: codegarden-lp-certificates
+          path: codegarden/.verify-certificates/
+      - name: Check every universe word and every integer dual constraint without a solver
+        run: |
+          python3 -B - <<'PY'
+          import json,pathlib,sys
+          sys.path.insert(0,"codegarden/side_lp")
+          from dual_verify import check
+          reports={}
+          for p in pathlib.Path("codegarden/.verify-certificates").glob("*.json"):
+              reports[p.name]=check(json.loads(p.read_text()))
+          assert reports,"No certificate was produced"
+          pathlib.Path("codegarden/independent_dual_checks.json").write_text(json.dumps(reports,indent=2))
+          print(json.dumps(reports))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: codegarden-independent-dual-checks
+          retention-days: 30
+          path: codegarden/independent_dual_checks.json
+  accept:
+    needs: research
+    if: needs.research.outputs.has_candidate == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - name: Fetch only frozen independent word verifiers
+        run: |
+          python3 -B - <<'PY'
+          import pathlib,urllib.request
+          for name in ["supervisor.py","protected/manifest.json","protected/verify_descendants.py","protected/verify_lcs.py"]:
+              p=pathlib.Path("codegarden")/name;p.parent.mkdir(parents=True,exist_ok=True)
+              p.write_bytes(urllib.request.urlopen("https://raw.githubusercontent.com/howdymary/compute-forecasting/ce5eab1859c271686876ee5c2d21c0e0a5316d67/codegarden/"+name,timeout=30).read())
+          PY
+      - uses: actions/download-artifact@v4
+        with:
+          name: codegarden-lp-227-candidate
+          path: codegarden/.verify-input/
+      - name: Accept explicit candidate using both frozen checkers
+        run: |
+          python3 -B - <<'PY'
+          import json,pathlib,sys
+          sys.path.insert(0,"codegarden")
+          from supervisor import verify
+          result=verify(pathlib.Path("codegarden/.verify-input/candidate.txt"))
+          assert result["cardinality"]>=227
+          pathlib.Path("codegarden/isolated_acceptance.json").write_text(json.dumps(result,indent=2))
+          print(json.dumps(result))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: codegarden-lp-isolated-acceptance
+          retention-days: 30
+          path: codegarden/isolated_acceptance.json
