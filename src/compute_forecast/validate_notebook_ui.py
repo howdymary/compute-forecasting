@@ -42,7 +42,8 @@ def main():
             page.route("**/api/notebook",lambda route:route.fulfill(status=200,content_type="application/json",body=json.dumps(notes)))
             page.goto(URL,wait_until="networkidle",timeout=120000)
             page.get_by_role("heading",name="See what compute could cost.",exact=True).wait_for()
-            page.evaluate("document.fonts.ready")
+            loaded_faces=page.evaluate("document.fonts.load('24px Caveat','Notes on the price of compute').then(faces=>faces.length)")
+            assert loaded_faces>=1, "The self-hosted handwriting face did not load"
             assert page.evaluate("document.fonts.check('24px Caveat')")
             assert page.evaluate("document.documentElement.scrollWidth<=innerWidth+1"),label
             def values():return [float(v) for v in page.locator("[data-point-value]").evaluate_all("(es)=>es.map(e=>e.dataset.value)")]
@@ -125,7 +126,7 @@ def main():
         page.locator("#price-chart").wait_for()
         context.close();browser.close()
     assert not errors,errors
-    report={"status":"passed","checks":checks,"source_sha":os.environ.get("SOURCE_SHA"),"font_license_and_blob_verified":True,"peer_sources":15,"diagnostic_report_count":len(notes["calibration"]),"diagnostic_api_roundtrip_seconds":round(elapsed,4),"diagnostics_match_public_saved_results":True,"pricing_outage_retry":True,"page_errors":errors,"reduced_motion":True,"recording":False}
+    report={"status":"passed","checks":checks,"source_sha":os.environ.get("SOURCE_SHA"),"font_license_and_blob_verified":True,"explicit_loaded_font_faces":loaded_faces,"peer_sources":15,"diagnostic_report_count":len(notes["calibration"]),"diagnostic_api_roundtrip_seconds":round(elapsed,4),"diagnostics_match_public_saved_results":True,"pricing_outage_retry":True,"page_errors":errors,"reduced_motion":True,"recording":False}
     (out/"validation.json").write_text(json.dumps(report,indent=2)+"\n")
     (out/"diagnostic-snapshot.json").write_text(json.dumps(notes,indent=2)+"\n")
     print("NOTEBOOK_UI_REPORT:"+json.dumps(report),flush=True)
