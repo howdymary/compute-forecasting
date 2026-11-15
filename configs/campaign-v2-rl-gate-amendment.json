@@ -1,0 +1,21 @@
+{
+  "schema_version": 2,
+  "registered_at_utc": "2026-11-15T03:05:57Z",
+  "applies_to": "RL before its first optimizer update; six SFT runs and the official release unchanged",
+  "changes": [
+    "Reachability accounts for the four additional trial slots",
+    "Gate variability after the actual reward clipping",
+    "Stop after five consecutive constant-reward groups, including after earlier useful updates",
+    "Plot actual optimizer updates separately from rollout iterations",
+    "Save a final development-evaluated checkpoint after early stopping; save optimizer recovery states every ten useful updates",
+    "Rollout sampler snapshots expire after one hour; persistent evaluated states remain"
+  ],
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "maximum_sampling_iterations": 60,
+  "evaluation_selection": "unchanged development-only selection",
+  "source_grid_sha": "a147797ec4557a337e2157ac60857d575e121630"
+}

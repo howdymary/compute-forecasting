@@ -1,9 +1,11 @@
 name: Run gated three-seed reward learning
+run-name: V2 reward learning · ${{ inputs.controller_id || 'manual' }}
 on:
-  push:
-    branches: [compute-observatory]
-    paths: [.github/workflows/research-v2-rl.yml]
   workflow_dispatch:
+    inputs:
+      controller_id:
+        type: string
+        required: false
 permissions:
   contents: read
   actions: read
@@ -37,7 +39,7 @@ jobs:
           python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
           python -m pip install -e '.[dev]' modal numpy scipy scikit-learn tinker tinker-cookbook
           python -m compileall -q src
-          python -m pytest tests/test_policy_v2.py tests/test_experimental_v2.py
+          python -m pytest tests/test_policy_v2.py tests/test_experimental_v2.py tests/test_rl_gate_v2.py
       - name: Await the complete controlled SFT campaign
         run: |
           gh run watch 43665821333 --repo "$GITHUB_REPOSITORY" --exit-status --interval 30

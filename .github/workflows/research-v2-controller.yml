@@ -1,0 +1,62 @@
+name: Replace pending RL orchestration with verified reward gates
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/research-v2-controller.yml]
+permissions:
+  contents: read
+  actions: write
+jobs:
+  replace:
+    if: github.ref == 'refs/heads/compute-observatory'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Fetch immutable source and validate reward-gate tests
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+          python -m pip install -e '.[dev]' modal numpy
+          python -m pytest tests/test_rl_gate_v2.py tests/test_policy_v2.py
+      - name: Replace only the two identified pending workflows
+        run: |
+          python - <<'PY'
+          import json,os,subprocess,time
+          from pathlib import Path
+          repo=os.environ['GITHUB_REPOSITORY'];controller=os.environ['GITHUB_RUN_ID']
+          def api(path,method='GET',payload=None):
+              cmd=['gh','api','repos/'+repo+'/'+path,'--method',method]
+              if payload is not None:cmd+=['--input','-']
+              out=subprocess.check_output(cmd,input=json.dumps(payload).encode() if payload is not None else None)
+              return json.loads(out) if out.strip() else None
+          cancelled=[]
+          targets=[(43666948222,'Run gated three-seed reward learning','a73a8f31e6f6c01ffa118d4c8abdd166519763af','Test reachable reward variation then sample actual trajectories'),(43667980295,'Analyze paired policy results and strong static control','10500f7388607c5d3909cde953f8723e95484eb3','Evaluate the training-selected control and paired sensitivities')]
+          for rid,name,sha,expensive in targets:
+              run=api('actions/runs/'+str(rid))
+              assert run['name']==name and run['head_branch']=='compute-observatory' and run['head_sha']==sha
+              jobs=api('actions/runs/'+str(rid)+'/jobs?per_page=100')['jobs']
+              assert all(s['status'] not in ('in_progress','completed') for j in jobs for s in (j.get('steps') or []) if s['name']==expensive),'Useful work already began; preserve it'
+              if run['status']!='completed':
+                  api('actions/runs/'+str(rid)+'/cancel','POST');cancelled.append(rid)
+          api('actions/workflows/research-v2-rl.yml/dispatches','POST',{'ref':'compute-observatory','inputs':{'controller_id':controller}})
+          new=None
+          for _ in range(24):
+              runs=api('actions/workflows/research-v2-rl.yml/runs?event=workflow_dispatch&branch=compute-observatory&per_page=20')['workflow_runs']
+              new=next((r for r in runs if controller in r['display_title']),None)
+              if new:break
+              time.sleep(5)
+          assert new is not None,'Dispatch accepted but new run receipt not yet visible'
+          api('actions/workflows/research-v2-analysis.yml/dispatches','POST',{'ref':'compute-observatory','inputs':{'rl_run_id':str(new['id'])}})
+          receipt={'controller_run_id':controller,'source_sha':os.environ['GITHUB_SHA'],'cancelled_pending_run_ids':cancelled,'replacement_rl_run_id':new['id'],'replacement_rl_source_sha':new['head_sha'],'reason':'Correct training-only reward gates before RL starts; SFT and numerical results preserved'}
+          Path('artifacts').mkdir(exist_ok=True);Path('artifacts/rl-controller.json').write_text(json.dumps(receipt,indent=2))
+          print('V2_RL_CONTROLLER:'+json.dumps(receipt),flush=True)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: v2-rl-controller-${{ github.run_id }}
+          path: artifacts/
+          retention-days: 30

@@ -1,9 +1,10 @@
 name: Analyze paired policy results and strong static control
 on:
-  push:
-    branches: [compute-observatory]
-    paths: [.github/workflows/research-v2-analysis.yml]
   workflow_dispatch:
+    inputs:
+      rl_run_id:
+        type: string
+        required: true
 permissions:
   contents: read
   actions: read
@@ -13,6 +14,7 @@ jobs:
     timeout-minutes: 360
     env:
       GH_TOKEN: ${{ github.token }}
+      RL_RUN_ID: ${{ inputs.rl_run_id }}
       MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
       MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
     steps:
@@ -35,10 +37,10 @@ jobs:
           python - <<'PY'
           import json,os,subprocess
           from pathlib import Path
-          subprocess.run(['gh','run','watch','43666948222','--repo',os.environ['GITHUB_REPOSITORY'],'--interval','30'])
-          run=json.loads(subprocess.check_output(['gh','api','repos/'+os.environ['GITHUB_REPOSITORY']+'/actions/runs/43666948222'],text=True))
+          subprocess.run(['gh','run','watch',os.environ['RL_RUN_ID'],'--repo',os.environ['GITHUB_REPOSITORY'],'--interval','30'])
+          run=json.loads(subprocess.check_output(['gh','api','repos/'+os.environ['GITHUB_REPOSITORY']+'/actions/runs/'+os.environ['RL_RUN_ID']],text=True))
           Path('artifacts').mkdir(exist_ok=True);Path('artifacts/rl-run-status.json').write_text(json.dumps(run,indent=2))
-          subprocess.run(['gh','run','download','43666948222','--repo',os.environ['GITHUB_REPOSITORY'],'--pattern','campaign-v2-rl-*','--dir','inputs/rl'],check=False)
+          subprocess.run(['gh','run','download',os.environ['RL_RUN_ID'],'--repo',os.environ['GITHUB_REPOSITORY'],'--pattern','campaign-v2-rl-*','--dir','inputs/rl'],check=False)
           PY
       - name: Evaluate the training-selected control and paired sensitivities
         run: modal run -m compute_forecast.analysis_v2 --inputs inputs

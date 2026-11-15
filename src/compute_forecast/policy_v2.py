@@ -184,6 +184,18 @@ def controls(tasks,training):
     rows.append(summary("gp_expected_improvement",traces));return rows,fixed
 def public_score(report):return {k:v for k,v in report.items() if k!="traces"}
 
+def reachable_training_rewards(task):
+    if task["phase"]!="training":raise ValueError("Reward gates may inspect training only")
+    candidates=[c for c in BY_ID if c not in INITIAL]
+    first=min(INITIAL,key=lambda c:task["validation"][c]["loss"]);threshold=task["validation"][first]["loss"]
+    possible=[first] if sum(task["validation"][c]["loss"]>=threshold for c in candidates)>=4 else []
+    for c in candidates:
+        v=task["validation"][c]["loss"]
+        if v<threshold and sum(task["validation"][other]["loss"]>=v for other in candidates if other!=c)>=3:possible.append(c)
+    if not possible:raise ValueError("No reachable six-trial terminal winner")
+    rewards=[max(-5,min(5,-task["future_evaluator_only"][c]["loss"]/task["scale"])) for c in possible]
+    return {"task_id":task["task_id"],"possible_terminal_reward_range":max(rewards)-min(rewards),"possible_winners":len(possible),"reward_is_clipped":True}
+
 async def run(grid_path,output,objective,seed,mode="sft",parent=None,max_updates=None,evidence_path=None):
     import tinker,torch
     from tinker_cookbook import model_info,renderers
@@ -210,21 +222,18 @@ async def run(grid_path,output,objective,seed,mode="sft",parent=None,max_updates
         state=await trainer.save_state("v2_"+mode+"_"+str(step));weights=await trainer.save_weights_for_sampler("v2_"+mode+"_"+str(step))
         sampler=await service.create_sampling_client(model_path=weights.path)
         scored=await evaluate(dev,sampler,renderer,mode+"_"+objective+"_step"+str(step))
-        row={"update":step,"checkpoint_id":hashlib.sha256(weights.path.encode()).hexdigest()[:20],"development_pinball":scored["pinball"]}
+        row={"update":len(updates),"rollout_iteration":step,"checkpoint_id":hashlib.sha256(weights.path.encode()).hexdigest()[:20],"development_pinball":scored["pinball"]}
         checkpoints.append(row);private["checkpoints"].append({**row,"state_path":state.path,"sampler_path":weights.path})
+        private["rng_state"]=rng.getstate();private["completed_optimizer_updates"]=len(updates)
         retain_private.remote(run_id,private);write(out/"checkpoints.json",checkpoints);write(out/("development-"+str(step)+".json"),scored)
         print("V2_CHECKPOINT:"+json.dumps({**row,"seed":seed,"objective":objective,"mode":mode}),flush=True)
     await checkpoint(0)
     ceiling=protocol()["sft_max_updates"] if mode=="sft" else protocol()["rl_max_updates"]
     limit=max_updates or ceiling
     if not 1<=limit<=ceiling:raise ValueError("Update limit exceeds registered ceiling")
-    rl_trajectories=[];gate=None
-    variation=[]
-    for t in train:
-        initial_winner=min(INITIAL,key=lambda c:t["validation"][c]["loss"])
-        possible=[initial_winner]+[c for c in BY_ID if c not in INITIAL and t["validation"][c]["loss"]<t["validation"][initial_winner]["loss"]]
-        rewards=[-t["future_evaluator_only"][c]["loss"]/t["scale"] for c in possible]
-        variation.append({"task_id":t["task_id"],"possible_terminal_reward_range":max(rewards)-min(rewards),"possible_winners":len(possible)})
+    rl_trajectories=[];gate=None;constant_streak=0;skipped_constant_groups=0;recovery_checkpoints=[]
+    private["rollout_snapshots"]=[];private["recovery_states"]=[]
+    variation=[reachable_training_rewards(t) for t in train]
     write(out/"reward-audit.json",variation)
     if mode=="rl" and max(v["possible_terminal_reward_range"] for v in variation)<1e-8:
         gate="All reachable training terminal rewards are constant; RL skipped"
@@ -244,19 +253,23 @@ async def run(grid_path,output,objective,seed,mode="sft",parent=None,max_updates
         # True sampled-action PPO-style policy gradient on the bounded categorical distribution.
         # Rewards are tool-computed subsequent forecast losses inside TRAINING only.
         for step in range(1,limit+1):
-            weights=await trainer.save_weights_for_sampler("v2_rl_rollout_"+str(step))
+            weights=await trainer.save_weights_for_sampler("v2_rl_rollout_"+str(step),ttl_seconds=3600)
+            rollout_checkpoint_id=hashlib.sha256(weights.path.encode()).hexdigest()[:20]
+            private["rollout_snapshots"].append({"iteration":step,"checkpoint_id":rollout_checkpoint_id,"sampler_path":weights.path,"ttl_seconds":3600})
             sampler=await service.create_sampling_client(model_path=weights.path)
             task=train[rng.randrange(len(train))]
             batch_tasks=[task]*4  # Same task, four genuinely sampled trajectories.
             rollouts=await asyncio.gather(*(episode(t,sampler,renderer,random.Random(seed*100000+step*10+i)) for i,t in enumerate(batch_tasks)))
             rewards=[max(-5,min(5,-r[0]["pinball"]/t["scale"])) for r,t in zip(rollouts,batch_tasks)]
             for (r,raw),reward,t in zip(rollouts,rewards,batch_tasks):
-                rl_trajectories.append({"step":step,"task_id":t["task_id"],"phase":"training","reward":reward,"reward_label_end":t["reward_label_end"],"trace":r,"sampled_actions":[{k:v for k,v in d.items() if k!="decision"} for d in raw]})
+                rl_trajectories.append({"step":step,"task_id":t["task_id"],"phase":"training","feedback_cache_hit":True,"new_numerical_execution":False,"rollout_checkpoint_id":rollout_checkpoint_id,"reward":reward,"reward_label_end":t["reward_label_end"],"trace":r,"sampled_actions":[{k:v for k,v in d.items() if k!="decision"} for d in raw]})
             write(out/"rl-trajectories.json",rl_trajectories)
             if max(rewards)-min(rewards)<1e-10:
-                if step>=5 and not updates:
-                    gate="Five sampled within-task groups had constant reward; no RL optimizer updates performed";break
+                constant_streak+=1;skipped_constant_groups+=1
+                if constant_streak>=5:
+                    gate="Five consecutive sampled within-task groups had constant clipped reward; stopped after "+str(len(updates))+" RL optimizer updates";break
                 continue
+            constant_streak=0
             center=statistics.mean(rewards);training_pairs=[];old_probs=[];advantages=[]
             for (r,raw),reward in zip(rollouts,rewards):
                 for d in raw:
@@ -272,9 +285,15 @@ async def run(grid_path,output,objective,seed,mode="sft",parent=None,max_updates
                 loss=torch.stack(losses).mean()
                 return loss,{"loss":float(loss.detach()),"reward_mean":center,"reward_range":max(rewards)-min(rewards),"ratio_mean":float(torch.stack(ratios).mean())}
             forward=trainer.forward_backward_custom(data,policy_gradient);optim=trainer.optim_step(tinker.AdamParams(learning_rate=1e-5))
-            result=await forward;await optim;updates.append({"update":step,"metrics":result.metrics,"sampled_episodes":4})
+            result=await forward;await optim;updates.append({"update":len(updates)+1,"rollout_iteration":step,"metrics":result.metrics,"sampled_episodes":4})
             write(out/"updates.json",updates)
+            if len(updates)%10==0:
+                recovery=await trainer.save_state("v2_rl_recovery_"+str(len(updates)))
+                record={"update":len(updates),"rollout_iteration":step,"checkpoint_id":hashlib.sha256(recovery.path.encode()).hexdigest()[:20],"kind":"optimizer_state","development_evaluated":False}
+                recovery_checkpoints.append(record);private["recovery_states"].append({**record,"state_path":recovery.path})
+                private["rng_state"]=rng.getstate();private["completed_optimizer_updates"]=len(updates);retain_private.remote(run_id,private)
             if step in (20,50,limit):await checkpoint(step)
+    if mode=="rl" and updates and checkpoints[-1]["update"]!=len(updates):await checkpoint(rl_trajectories[-1]["step"])
     best=min(private["checkpoints"],key=lambda x:(x["development_pinball"],x["update"]));private["selected"]=best
     retain_private.remote(run_id,private)
     # Selection is persisted before opening any v2 evaluation score.
@@ -295,7 +314,7 @@ async def run(grid_path,output,objective,seed,mode="sft",parent=None,max_updates
       "training_tasks":len(train),"training_temporal_origins":len({t["origin"] for t in train}),"development_tasks":len(dev),"evaluation_tasks":len(test),
       "evaluation_status":protocol()["evaluation_status"],"future_competition_truth_loaded":False,"v1_final_used":False,
       "comparisons":[public_score(x) for x in [initial,trained,noobs,critic,*([evidence_report] if evidence_report else []),*refs]],"static_portfolio":fixed,
-      "rl_gate":gate,"reward_audit":variation,"evidence_packet":packet,"critic_behavior":"fixed deterministic, sees revealed validation only","runtime_seconds":time.perf_counter()-started,"cost_status":"unavailable","cost":None,
+      "rl_gate":gate,"rl_gate_revision":2 if mode=="rl" else None,"skipped_constant_groups":skipped_constant_groups,"sampled_training_episodes":len(rl_trajectories),"recovery_checkpoints":recovery_checkpoints,"numerical_feedback_cache_hit":True,"new_rollout_numerical_executions":0,"reward_audit":variation,"evidence_packet":packet,"critic_behavior":"fixed deterministic, sees revealed validation only","runtime_seconds":time.perf_counter()-started,"cost_status":"unavailable","cost":None,
       "limitations":["Retrospective evaluation reuses previously published v1 development dates","Series and horizons share observations; tasks are dependent","Pretrained knowledge and true historical vintage cannot be excluded"]}
     write(out/"policy-report.json",result);print("V2_POLICY_REPORT:"+json.dumps(result),flush=True)
     with open(os.environ["GITHUB_STEP_SUMMARY"],"a") as f:f.write("# V2 policy "+mode+" "+objective+" seed"+str(seed)+"\n\n~~~json\n"+json.dumps(result,indent=2)+"\n~~~\n")
