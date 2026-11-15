@@ -1,0 +1,338 @@
+{
+  "actual_Tinker_choice": {
+    "action": "quota206",
+    "valid_action": true,
+    "strict_format": true,
+    "prompt_tokens": 5019,
+    "output_tokens": 5,
+    "latency_seconds": 2.529973737000006,
+    "estimated_gross_usd": 0.0016612950000000001,
+    "reservation_usd": 0.05,
+    "reservation": "baa600fe7d8b4d52ba4cc871b192e8d7",
+    "state_sha256": "0757f310158d28fa16f66c385f30dd39df517588325ba41766a0441a1b56e8d1",
+    "raw_reply_sha256": "9a8ffa5b2db27188102ca36c86a86bc324b674268d43ecfd6021e1fa375c92b3"
+  },
+  "actual_researcher_memory": {
+    "source_id": "codegarden-43707956052-researcher-tensor_method_context_v2-5af7490c",
+    "actual_content": {
+      "source_review": {
+        "action": "diversity",
+        "valid_action": true,
+        "strict_format": true,
+        "prompt_tokens": 3712,
+        "output_tokens": 4,
+        "latency_seconds": 2.4150542659999985,
+        "estimated_gross_usd": 0.00122898,
+        "reservation_usd": 0.05,
+        "reservation": "0585dd4dcc2f4f5d815788e113185a24",
+        "state_sha256": "8d5f679f47b8bfc7de36c4395f5915f9d85121d24debe9f73ec853d221bd27c9",
+        "raw_reply_sha256": "f277b1934a3bf105a7d2730f9ab3a398311ec76c0aa491b9b6c8283957751d85"
+      },
+      "query_decision": {
+        "action": "overlap",
+        "valid_action": true,
+        "strict_format": true,
+        "prompt_tokens": 1434,
+        "output_tokens": 2,
+        "latency_seconds": 2.5677112810000153,
+        "estimated_gross_usd": 0.00047523000000000004,
+        "reservation_usd": 0.05,
+        "reservation": "322063c6c2cb4676b82f1738dac04125",
+        "state_sha256": "9deb5e85e3d76eab30f96d1fc9d9c09c6347be4deb0d3dce1ab0172ce5c4ad69",
+        "raw_reply_sha256": "fe55bd22d9475bdebec3c49d274b87f5a264b12865f4c45b03120992e726f659"
+      },
+      "actual_analyst_recall": {
+        "source_id": "codegarden-43707956052-analyst-tensor_escape_diagnosis_v2-aef84a22",
+        "actual_content": {
+          "facts": {
+            "primary_best_verified": 226,
+            "target": 227,
+            "closed_root_radius": 9,
+            "known226_common_core": 216,
+            "hard_csp_unknown": 128,
+            "tensor_projection": "First CPU archive contained only recoveries of known226; quota206 is an explicitly restricted diversification heuristic, not a validity rule.",
+            "experiments": "No new verified227. Exact, tensor and valid-packing methods have distinct resource budgets. Positive-energy227 states are invalid.",
+            "training_gate": "No new adaptation dataset with verified primary gains; use frozen proposals, retain previous tied/negative Tinker evaluation.",
+            "latest_artifact_summary": {
+              "revisit": {
+                "states": 412,
+                "upgrades": 0,
+                "radius6_completed": 412,
+                "radius7_completed": 153,
+                "radius7_remainder": "timeouts; no impossibility"
+              },
+              "arc_hamming": {
+                "pivots": 128,
+                "status": "all CP-SAT UNKNOWN",
+                "independent_pruning_replay": true
+              },
+              "hamming_diagnostic": {
+                "pivot": 7932,
+                "hard_default": "UNKNOWN",
+                "hard_no_presolve": "UNKNOWN",
+                "soft_default": 225,
+                "soft_no_presolve": 225,
+                "seconds_per_config": 60
+              },
+              "exact_lns": {
+                "cases": 8,
+                "cpu_seconds_per_case": 180,
+                "new226_orbits": 0,
+                "scope": "Repeated finite repairs; aggregate exact-negative counts do not count unique neighborhoods"
+              },
+              "tensor_cpu4": {
+                "native_steps": 13800,
+                "wall_seconds": 300.03513071399993,
+                "min_raw_energy": 2,
+                "quota_min_raw_energy": 11,
+                "projections_verified": 57,
+                "new226_orbits": 0,
+                "scope": "Positive energy invalid; known226 recovery only",
+                "cli_issue": "--steps parsed but not forwarded in frozen prototypes; actual recorded step counts are authoritative. Current source fixes forwarding."
+              },
+              "breakout": {
+                "cases": 8,
+                "seconds_per_case": 300,
+                "verified227": 0,
+                "novel226": 0,
+                "raw_minima": [
+                  4,
+                  5,
+                  2,
+                  2,
+                  4,
+                  5,
+                  5,
+                  5
+                ]
+              },
+              "pair_conflict_search": {
+                "cases": 8,
+                "seconds_per_case": 300,
+                "novel226": 0,
+                "verified227": 0,
+                "pair_conflict_minima": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  2,
+                  2,
+                  2,
+                  2
+                ],
+                "scope": "Equal native CPU budgets; fixed/adaptive best pair scores tied in all four matched pairs; no policy improvement demonstrated"
+              },
+              "pair_event_capture": {
+                "cases": 8,
+                "seconds_per_case": 300,
+                "novel226_events": 0,
+                "verified227": 0,
+                "scope": "Ordinary one-edge swap states are projected and compared exactly against known226 families. Restart intermediate states are not exhaustively captured. Any new226 would receive protected verification and bounded exact polish."
+              },
+              "frontier8": {
+                "cases": 32,
+                "upgrades": 0,
+                "completed_no_improvement": 6,
+                "timeouts": 26,
+                "native_cpu_seconds": 3772.4937999999997
+              }
+            },
+            "artifact_updated_at": "2026-11-15T11:06:00Z",
+            "artifact_sha256": "610dadfde7d155b2689058e9313731cd4c7709ad5f1fc593af8c2573a819a89d",
+            "memory_gap": "Earlier legacy-source recall did not return its required source; four charged/estimated recall credits are carried forward. Bootstrap fresh analyst findings from pinned durable artifacts."
+          },
+          "separate_model_context": {
+            "action": "diversity",
+            "valid_action": true,
+            "strict_format": true,
+            "prompt_tokens": 992,
+            "output_tokens": 4,
+            "latency_seconds": 2.6138917820000103,
+            "estimated_gross_usd": 0.00033138,
+            "reservation_usd": 0.05,
+            "reservation": "4801b1d1be2648d0af5bda012de3fd3a",
+            "state_sha256": "ef5249e8417b92ee0c64200693cb59ca46d9ea87d7e0141925bd3d6a6e77b3b3",
+            "raw_reply_sha256": "f277b1934a3bf105a7d2730f9ab3a398311ec76c0aa491b9b6c8283957751d85"
+          },
+          "artifact_source": "codegarden/docs/phase3_progress.json",
+          "artifact_revision": "2026-11-15T11:06:00Z"
+        },
+        "content_sha256": "c4c5e4e597f800a5d63133a4bc341846c81c64e431a15961ef6c16caec013288",
+        "representation": "actual recalled source record"
+      },
+      "sources": [
+        {
+          "query": "maximum independent set diverse solutions incumbent overlap constraints local search",
+          "request_id": "dc2132aa1f4cfb021abcd5b38ba8971c",
+          "cost_dollars": {
+            "total": 0.007,
+            "search": {
+              "neural": 0.007
+            }
+          },
+          "sources": [
+            {
+              "title": "Accelerating Local Search for the Maximum Independent Set Problem",
+              "url": "https://arxiv.org/pdf/1602.01659.pdf",
+              "published": null,
+              "excerpt": "ARW algorithm consists of a perturbation and a local search",
+              "content_sha256": "bf317bc4a8f5eb3094fb3ea3c96fb80614b5776deadd099a2b5a1bb7123312b0"
+            },
+            {
+              "title": "General swap-based multiple neighborhood tabu search for the maximum independent set problem",
+              "url": "https://leria-info.univ-angers.fr/~jinkao.hao/papers/JinHaoEAAI2014.pdf",
+              "published": null,
+              "excerpt": "2.1. General procedure The general SBTS procedure is summarized in",
+              "content_sha256": "49cf4d5e383ba57b5fb471f9ff1831609ed2d96a506e352a06428c9754e567d5"
+            },
+            {
+              "title": "An efficient local search algorithm with large neighborhoods for the maximum weighted independent set problem\u2020",
+              "url": "https://doi.org/10.1111/itor.12619",
+              "published": "2018-12-07T00:00:00.000Z",
+              "excerpt": "Abstract Given an undirected graph and a weight for each",
+              "content_sha256": "3c49177d96552636a97928cf6e46b59750c52c0bddefd34ab98d4a2b6c13a6c9"
+            },
+            {
+              "title": "FAST LOCAL SEARCH FOR THE MAXIMUM ...",
+              "url": "https://renatowerneck.wordpress.com/wp-content/uploads/2016/06/arw10-mis-journal.pdf",
+              "published": null,
+              "excerpt": "Abstract. Given a graph G = (V, E), the independent",
+              "content_sha256": "6d7b12ab4e95e314a9314ca8279eff569460324c71dea3ee5b276aa5d1e01869"
+            }
+          ],
+          "influenced_experiment": "profiled-core-quota-tensor"
+        },
+        {
+          "query": "binary two deletion correcting codes length16 226 227 explicit construction 2026",
+          "request_id": "13906922cc9a3522c4fadc37770232fe",
+          "cost_dollars": {
+            "total": 0.007,
+            "search": {
+              "neural": 0.007
+            }
+          },
+          "sources": [
+            {
+              "title": "[2609.19493] Polynomially larger deletion codes by linear hashing of substring counts",
+              "url": "https://arxiv.org/abs/2609.19493",
+              "published": "2026-09-16T23:24:08.000Z",
+              "excerpt": "# Polynomially larger deletion codes by linear hashing of substring",
+              "content_sha256": "5e878f374efddb31ce8af5c31678bcfaef383ccc748971a82ae385578eabc4a4"
+            },
+            {
+              "title": "Codes Correcting Two Deletions",
+              "url": "https://arxiv.org/abs/1712.07222",
+              "published": "2017-12-19T21:26:52.000Z",
+              "excerpt": "In this work, we investigate the problem of constructing codes",
+              "content_sha256": "f041592069e1b4fa1b3ef4f2cc2fa285e21c40873561f85f51da8b2e2cdb1f1a"
+            },
+            {
+              "title": "Two Deletion Correcting Codesfrom Indicator Vectors",
+              "url": "https://arxiv.org/html/1806.09240",
+              "published": "2018-06-25T00:00:00.000Z",
+              "excerpt": "Construction of capacity achieving deletion correcting codes has been a",
+              "content_sha256": "b377f20c4f637442b3531fd13bcdf9b2fb16f5eb053103082351ff1748283353"
+            },
+            {
+              "title": "[2007.10592] Explicit two-deletion codes with redundancy matching the existential bound",
+              "url": "https://ar5iv.labs.arxiv.org/html/2007.10592",
+              "published": null,
+              "excerpt": "###### Abstract We give an explicit construction of length- $n$",
+              "content_sha256": "9556ac17b989332bbf16a6d290595d3ffd485e1197a115bb5ee2b87b8db63f7c"
+            }
+          ],
+          "influenced_experiment": "profiled-core-quota-tensor"
+        }
+      ],
+      "extracted_method": "Use diversity/overlap restrictions and dynamic penalties as experimental escape mechanisms; retain the full word universe and independent positive verification. Sparse all-word derivatives are an implementation experiment, not a coding theorem."
+    },
+    "content_sha256": "bfa551eb53df913344d5722c084245afdee07c3e7a609d396f79f9bbad82bab4",
+    "representation": "actual recalled source record"
+  },
+  "actual_Exa_sources": [
+    {
+      "query": "maximum independent set diverse solutions incumbent overlap constraints local search",
+      "request_id": "dc2132aa1f4cfb021abcd5b38ba8971c",
+      "cost_dollars": {
+        "total": 0.007,
+        "search": {
+          "neural": 0.007
+        }
+      },
+      "sources": [
+        {
+          "title": "Accelerating Local Search for the Maximum Independent Set Problem",
+          "url": "https://arxiv.org/pdf/1602.01659.pdf",
+          "published": null,
+          "excerpt": "ARW algorithm consists of a perturbation and a local search",
+          "content_sha256": "bf317bc4a8f5eb3094fb3ea3c96fb80614b5776deadd099a2b5a1bb7123312b0"
+        },
+        {
+          "title": "General swap-based multiple neighborhood tabu search for the maximum independent set problem",
+          "url": "https://leria-info.univ-angers.fr/~jinkao.hao/papers/JinHaoEAAI2014.pdf",
+          "published": null,
+          "excerpt": "2.1. General procedure The general SBTS procedure is summarized in",
+          "content_sha256": "49cf4d5e383ba57b5fb471f9ff1831609ed2d96a506e352a06428c9754e567d5"
+        },
+        {
+          "title": "An efficient local search algorithm with large neighborhoods for the maximum weighted independent set problem\u2020",
+          "url": "https://doi.org/10.1111/itor.12619",
+          "published": "2018-12-07T00:00:00.000Z",
+          "excerpt": "Abstract Given an undirected graph and a weight for each",
+          "content_sha256": "3c49177d96552636a97928cf6e46b59750c52c0bddefd34ab98d4a2b6c13a6c9"
+        },
+        {
+          "title": "FAST LOCAL SEARCH FOR THE MAXIMUM ...",
+          "url": "https://renatowerneck.wordpress.com/wp-content/uploads/2016/06/arw10-mis-journal.pdf",
+          "published": null,
+          "excerpt": "Abstract. Given a graph G = (V, E), the independent",
+          "content_sha256": "6d7b12ab4e95e314a9314ca8279eff569460324c71dea3ee5b276aa5d1e01869"
+        }
+      ],
+      "influenced_experiment": "profiled-core-quota-tensor"
+    },
+    {
+      "query": "binary two deletion correcting codes length16 226 227 explicit construction 2026",
+      "request_id": "13906922cc9a3522c4fadc37770232fe",
+      "cost_dollars": {
+        "total": 0.007,
+        "search": {
+          "neural": 0.007
+        }
+      },
+      "sources": [
+        {
+          "title": "[2609.19493] Polynomially larger deletion codes by linear hashing of substring counts",
+          "url": "https://arxiv.org/abs/2609.19493",
+          "published": "2026-09-16T23:24:08.000Z",
+          "excerpt": "# Polynomially larger deletion codes by linear hashing of substring",
+          "content_sha256": "5e878f374efddb31ce8af5c31678bcfaef383ccc748971a82ae385578eabc4a4"
+        },
+        {
+          "title": "Codes Correcting Two Deletions",
+          "url": "https://arxiv.org/abs/1712.07222",
+          "published": "2017-12-19T21:26:52.000Z",
+          "excerpt": "In this work, we investigate the problem of constructing codes",
+          "content_sha256": "f041592069e1b4fa1b3ef4f2cc2fa285e21c40873561f85f51da8b2e2cdb1f1a"
+        },
+        {
+          "title": "Two Deletion Correcting Codesfrom Indicator Vectors",
+          "url": "https://arxiv.org/html/1806.09240",
+          "published": "2018-06-25T00:00:00.000Z",
+          "excerpt": "Construction of capacity achieving deletion correcting codes has been a",
+          "content_sha256": "b377f20c4f637442b3531fd13bcdf9b2fb16f5eb053103082351ff1748283353"
+        },
+        {
+          "title": "[2007.10592] Explicit two-deletion codes with redundancy matching the existential bound",
+          "url": "https://ar5iv.labs.arxiv.org/html/2007.10592",
+          "published": null,
+          "excerpt": "###### Abstract We give an explicit construction of length- $n$",
+          "content_sha256": "9556ac17b989332bbf16a6d290595d3ffd485e1197a115bb5ee2b87b8db63f7c"
+        }
+      ],
+      "influenced_experiment": "profiled-core-quota-tensor"
+    }
+  ],
+  "adaptation": "Same selected kernel/quota on CPU because the account rejected GPU deployment; no claim of a measured GPU speedup."
+}

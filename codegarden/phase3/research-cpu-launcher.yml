@@ -1,0 +1,62 @@
+name: CodeGarden credit-bounded CPU hardware fallback
+on:
+  push:
+    branches: [codegarden-research-cpu-003]
+    paths: [.github/workflows/codegarden.yml]
+permissions:
+  contents: write
+concurrency:
+  group: codegarden-provider-serial
+  cancel-in-progress: false
+env:
+  SOURCE_SHA: ${{ github.sha }}
+  HF_HOME: ${{ github.workspace }}/codegarden/.cache/huggingface
+  XDG_CACHE_HOME: ${{ github.workspace }}/codegarden/.cache
+  PYTHONDONTWRITEBYTECODE: '1'
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install isolated authenticated clients
+        run: |
+          python -m venv codegarden/.venv
+          codegarden/.venv/bin/python -m pip install -r codegarden/requirements-providers.txt
+      - name: Validate tensor math and compiled repair before provider calls
+        run: |
+          codegarden/.venv/bin/python -m pip install torch==2.8.0 --index-url https://download.pytorch.org/whl/cpu
+          mkdir -p codegarden/.build
+          g++ -O3 -std=c++17 codegarden/phase3/bundle_guard.cpp -o codegarden/.build/bundle
+          python -B -u codegarden/phase3/preflight.py
+          codegarden/.venv/bin/python -B -u codegarden/phase3/tensor_search4.py --action test
+      - name: Research through Exa and memory, then execute the Tinker-selected experiment
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
+          PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: codegarden/.venv/bin/python -B -u codegarden/phase3/research_cpu.py
+      - name: Publish evidence and unresolved accounting
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -B codegarden/phase3/publish_research_cpu.py
+      - name: Retain all evidence even if a publisher fails
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: codegarden-phase3-research
+          path: |
+            codegarden/artifacts/phase3/research_cpu_001/
+            codegarden/artifacts/shared-budget.sqlite
+            codegarden/budget/shared-allocation.json
+            codegarden/budget/historical-usage.json

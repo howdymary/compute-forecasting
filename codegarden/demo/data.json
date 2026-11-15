@@ -236,7 +236,7 @@
   "baseline": 226,
   "target": 227,
   "global_record_claim": false,
-  "hypothesis": "After exact small exchanges were exhausted, test larger compatible repair pools and symmetry-orbit constructions. No strict improvement beyond 226 was found.",
+  "hypothesis": "Escape the known226 basin: complete supported five-core repairs, then use checked structural exclusions to guide larger neighborhoods. Best remains reproduced226.",
   "experiments": [
     {
       "method": "fixed",
@@ -433,7 +433,7 @@
       "url": "https://einsteinarena.com/problems/two-deletion-code-16"
     },
     {
-      "title": "Weindel\u2013Heckel v2",
+      "title": "Weindel–Heckel v2",
       "url": "https://arxiv.org/html/2504.00613v2"
     },
     {
@@ -481,8 +481,8 @@
     "improvement": false,
     "scope": "Each exact result applies only to its explicit union."
   },
-  "capture_utc": "2026-11-15T04:03:18Z",
-  "run_state": "Recorded phase-two campaign, November 14\u201315, 2026. Paid search stopped at the published cutoff; this page replays evidence.",
+  "capture_utc": "2026-11-15T12:37:00Z",
+  "run_state": "Recorded replay through12:37UTC; five-core experiment15/16 partitions complete, one source-download retry required. No227 or global-record claim.",
   "training": {
     "one_action": {
       "before": 100,
@@ -742,7 +742,7 @@
         },
         {
           "family": "arena_226_kgrey",
-          "maximum_jaccard_against_226_modulo_symmetries": 1.0
+          "maximum_jaccard_against_226_modulo_symmetries": 1
         }
       ],
       "main_summary": {
@@ -752,7 +752,7 @@
           "sum_best_sizes": 1777,
           "improved_cases": 6,
           "search_cpu_seconds": 960,
-          "controller_seconds": 2.4356999801966595e-05
+          "controller_seconds": 0.000024356999801966595
         },
         "adaptive_no_external": {
           "cases": 8,
@@ -760,7 +760,7 @@
           "sum_best_sizes": 1777,
           "improved_cases": 6,
           "search_cpu_seconds": 960,
-          "controller_seconds": 8.834300024318509e-05
+          "controller_seconds": 0.00008834300024318509
         },
         "adaptive_with_research": {
           "cases": 8,
@@ -768,7 +768,7 @@
           "sum_best_sizes": 1777,
           "improved_cases": 6,
           "search_cpu_seconds": 960.01,
-          "controller_seconds": 9.154699989721848e-05
+          "controller_seconds": 0.00009154699989721848
         }
       },
       "supplement_summary": {
@@ -776,7 +776,7 @@
           "cases": 8,
           "sum_best_sizes": 1807,
           "search_cpu_seconds": 160,
-          "controller_seconds": 5.671999986134324e-06,
+          "controller_seconds": 0.000005671999986134324,
           "valid_model_choices": 0
         },
         "untrained_no_external": {
@@ -1272,7 +1272,7 @@
     "cycle": [
       {
         "step": "Stagnation",
-        "evidence": "Root 1\u21922 and 2\u21923 exchanges exhausted around the pinned 226-word witness."
+        "evidence": "Root 1→2 and 2→3 exchanges exhausted around the pinned 226-word witness."
       },
       {
         "step": "Recall",
@@ -1280,11 +1280,11 @@
       },
       {
         "step": "Research and selection",
-        "evidence": "Actual Exa query returned Sviridenko\u2013Ward large-neighborhood set packing; strategist PID 2980 retrieved the proposed larger-repair method."
+        "evidence": "Actual Exa query returned Sviridenko–Ward large-neighborhood set packing; strategist PID 2980 retrieved the proposed larger-repair method."
       },
       {
         "step": "Execution",
-        "evidence": "Six sparse CP repairs; outer-controller extension to exact radii 3\u20134 and 512 conflict-driven repairs."
+        "evidence": "Six sparse CP repairs; outer-controller extension to exact radii 3–4 and 512 conflict-driven repairs."
       },
       {
         "step": "Independent checks",
@@ -1292,5 +1292,490 @@
       }
     ],
     "scope": "Recorded causal trace. The radius extension was proposed by the outer research assistant, outside the frozen policy comparison. It is not evidence that the trained model chose the extension."
+  },
+  "phase3": {
+    "updated_at": "2026-11-15T12:37:00Z",
+    "target_achieved": false,
+    "best_found": 226,
+    "best_independently_verified": 226,
+    "global_record_claim": false,
+    "arena_incumbent": {
+      "cardinality": 226,
+      "agent": "kgrey",
+      "id": 2778,
+      "sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa",
+      "last_checked": "2026-11-15T12:26:00Z",
+      "scope": "Live arena only; global literature audit incomplete"
+    },
+    "completed_local_findings": {
+      "root10": {
+        "incumbent_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa",
+        "candidate_pool_sha256": "091054e7eb0c2642a937e2d7a4d05a9a90ff9c55070a72ee88964829b80e8044",
+        "candidate_count": 61427,
+        "radius": 10,
+        "old_source": "b0039e3dcc3e8884cb667ca3e914c19a2d709d80",
+        "resumed_source": "06000bb4fd75dda6cbdd442e10adf062093d501f",
+        "old_root_prefixes": [
+          {
+            "shard": 0,
+            "active_root": 53240,
+            "completed_roots": 6655,
+            "cpu_seconds": 600
+          },
+          {
+            "shard": 1,
+            "active_root": 53881,
+            "completed_roots": 6735,
+            "cpu_seconds": 600
+          },
+          {
+            "shard": 2,
+            "active_root": 52842,
+            "completed_roots": 6605,
+            "cpu_seconds": 600
+          },
+          {
+            "shard": 3,
+            "active_root": 53515,
+            "completed_roots": 6689,
+            "cpu_seconds": 600
+          },
+          {
+            "shard": 4,
+            "active_root": 53156,
+            "completed_roots": 6644,
+            "cpu_seconds": 600
+          },
+          {
+            "shard": 5,
+            "active_root": 51517,
+            "completed_roots": 6439,
+            "cpu_seconds": 600
+          },
+          {
+            "shard": 6,
+            "active_root": 51662,
+            "completed_roots": 6457,
+            "cpu_seconds": 600
+          },
+          {
+            "shard": 7,
+            "active_root": 51191,
+            "completed_roots": 6398,
+            "cpu_seconds": 600
+          }
+        ],
+        "resumed_suffixes": [
+          {
+            "shard": 0,
+            "begin": 53240,
+            "completed_roots": 256,
+            "cpu_seconds": 516.722
+          },
+          {
+            "shard": 1,
+            "begin": 53881,
+            "completed_roots": 236,
+            "cpu_seconds": 393.505
+          },
+          {
+            "shard": 2,
+            "begin": 52842,
+            "completed_roots": 268,
+            "cpu_seconds": 324.648
+          },
+          {
+            "shard": 3,
+            "begin": 53515,
+            "completed_roots": 247,
+            "cpu_seconds": 398.16
+          },
+          {
+            "shard": 4,
+            "begin": 53156,
+            "completed_roots": 259,
+            "cpu_seconds": 502.066
+          },
+          {
+            "shard": 5,
+            "begin": 51517,
+            "completed_roots": 310,
+            "cpu_seconds": 304.576
+          },
+          {
+            "shard": 6,
+            "begin": 51662,
+            "completed_roots": 305,
+            "cpu_seconds": 404.616
+          },
+          {
+            "shard": 7,
+            "begin": 51191,
+            "completed_roots": 320,
+            "cpu_seconds": 376.275
+          },
+          {
+            "shard": 8,
+            "begin": 53240,
+            "completed_roots": 256,
+            "cpu_seconds": 404.236
+          },
+          {
+            "shard": 9,
+            "begin": 53881,
+            "completed_roots": 236,
+            "cpu_seconds": 374.608
+          },
+          {
+            "shard": 10,
+            "begin": 52842,
+            "completed_roots": 269,
+            "cpu_seconds": 522.131
+          },
+          {
+            "shard": 11,
+            "begin": 53515,
+            "completed_roots": 248,
+            "cpu_seconds": 426.708
+          },
+          {
+            "shard": 12,
+            "begin": 53156,
+            "completed_roots": 259,
+            "cpu_seconds": 273.63
+          },
+          {
+            "shard": 13,
+            "begin": 51517,
+            "completed_roots": 310,
+            "cpu_seconds": 355.87
+          },
+          {
+            "shard": 14,
+            "begin": 51662,
+            "completed_roots": 306,
+            "cpu_seconds": 378.79
+          },
+          {
+            "shard": 15,
+            "begin": 51191,
+            "completed_roots": 320,
+            "cpu_seconds": 296.828
+          },
+          {
+            "shard": 16,
+            "begin": 53240,
+            "completed_roots": 256,
+            "cpu_seconds": 423.857
+          },
+          {
+            "shard": 17,
+            "begin": 53881,
+            "completed_roots": 236,
+            "cpu_seconds": 495.183
+          },
+          {
+            "shard": 18,
+            "begin": 52842,
+            "completed_roots": 269,
+            "cpu_seconds": 491.387
+          },
+          {
+            "shard": 19,
+            "begin": 53515,
+            "completed_roots": 247,
+            "cpu_seconds": 413.477
+          },
+          {
+            "shard": 20,
+            "begin": 53156,
+            "completed_roots": 258,
+            "cpu_seconds": 304.949
+          },
+          {
+            "shard": 21,
+            "begin": 51517,
+            "completed_roots": 309,
+            "cpu_seconds": 308.004
+          },
+          {
+            "shard": 22,
+            "begin": 51662,
+            "completed_roots": 305,
+            "cpu_seconds": 434.065
+          },
+          {
+            "shard": 23,
+            "begin": 51191,
+            "completed_roots": 320,
+            "cpu_seconds": 317.239
+          },
+          {
+            "shard": 24,
+            "begin": 53240,
+            "completed_roots": 256,
+            "cpu_seconds": 354.272
+          },
+          {
+            "shard": 25,
+            "begin": 53881,
+            "completed_roots": 236,
+            "cpu_seconds": 380.195
+          },
+          {
+            "shard": 26,
+            "begin": 52842,
+            "completed_roots": 268,
+            "cpu_seconds": 344.631
+          },
+          {
+            "shard": 27,
+            "begin": 53515,
+            "completed_roots": 247,
+            "cpu_seconds": 307.295
+          },
+          {
+            "shard": 28,
+            "begin": 53156,
+            "completed_roots": 258,
+            "cpu_seconds": 443.099
+          },
+          {
+            "shard": 29,
+            "begin": 51517,
+            "completed_roots": 310,
+            "cpu_seconds": 411.124
+          },
+          {
+            "shard": 30,
+            "begin": 51662,
+            "completed_roots": 305,
+            "cpu_seconds": 392.498
+          },
+          {
+            "shard": 31,
+            "begin": 51191,
+            "completed_roots": 320,
+            "cpu_seconds": 387.636
+          }
+        ],
+        "old_roots": 52622,
+        "new_roots": 8805,
+        "tail_native_cpu_seconds": 12462.28,
+        "all_native_cpu_seconds": 17262.280000000002,
+        "uncovered_roots": [],
+        "duplicated_completed_roots": [],
+        "all_resumed_partitions_complete": true,
+        "strict_improvement_found": false,
+        "scope": "Complete native search for a strict improvement removing at most10 words from this incumbent, under the documented safe dominance and learned-certificate reductions. Coverage audit verifies each canonical root exactly once across old completed prefixes and resumed suffixes. Not global optimality; no independent formal absence certificate."
+      },
+      "core_removals": {
+        "core_size": 216,
+        "full_fixed_core_variable_pool": 57,
+        "rank1_and2_queries": 23436,
+        "rank3_queries": 1656360,
+        "rank4_supported_queries": 203077,
+        "rank4_all_removals": 88201170,
+        "rank4_reduction": "Unsupported sets eliminated only by explicit reinsertion lemma and completed lower-depth No227",
+        "all_encoded_queries_completed": true,
+        "new226": 0,
+        "verified227": 0,
+        "formal_absence_certificate": false
+      },
+      "recombination": {
+        "two_parent_orientations": 4,
+        "parents_per_orientation": 1558,
+        "pairs_per_orientation": 1212903,
+        "all_pairs_complete": true,
+        "novel226": 0,
+        "verified227": 0,
+        "scope": "Overlapping pair families; do not add counts as unique. Strict gains among lower parents recover known sizes."
+      },
+      "three_parent_bridge": {
+        "queries": [
+          15814,
+          2611831,
+          52873,
+          52087
+        ],
+        "novel226": 0,
+        "verified227": 0,
+        "scope": "Explicit unions and fixed common parents only. Includes many completed queries, caps/timeouts in some modes. No full-universe bound."
+      },
+      "hash_fibers": {
+        "cases": 4,
+        "method_best_verified": 202,
+        "retained_global_best": 226,
+        "scope": "Finite GF2 hash/count-parity parameters only; not disproof of literature construction"
+      }
+    },
+    "provider_result": {
+      "real_exa_calls": 2,
+      "new_exa_reported_cost_usd": 0.014,
+      "analyst_memory": "codegarden-43707956052-analyst-tensor_escape_diagnosis_v2-aef84a22",
+      "researcher_memory": "codegarden-43707956052-researcher-tensor_method_context_v2-5af7490c",
+      "cross_role_read_write_evidence": true,
+      "strategy_choice": {
+        "quota": 206,
+        "provider": "Tinker",
+        "actual_sample": true
+      },
+      "roles": "Separate frozen model contexts, not assistant subagents or a parallel swarm",
+      "gpu": "Account rejected T4 functions: payment method required. No billing settings changed, no GPU profile or result claimed.",
+      "cpu_fallback": {
+        "source": "a92159037d77ead65dbf736ac3ed9467d168ab57",
+        "run": 43709372350,
+        "duration_seconds": 930.854206153,
+        "best_verified": 226,
+        "improvement": false
+      },
+      "training": "Earlier matched trained/untrained evaluation preserved in phase2 report. No new adaptation advantage established."
+    },
+    "accounting": {
+      "conservative_cumulative_holds": {
+        "exa": 0.112,
+        "past": 319,
+        "modal": 149.998,
+        "tinker": 23.05
+      },
+      "holds_are_not_actual_attributed_spend": true,
+      "modal_cap": 150,
+      "verification_and_other_projects_reserves_preserved": true,
+      "paid_allocation_expired_at": "2026-11-15T12:00:00Z",
+      "new_paid_work": false,
+      "long_case2": "Retried logical case; summed attempt CPU6004.28, censored from matched-total-compute claims. Only own app stopped after bounded allowances."
+    },
+    "active": [
+      {
+        "branch": "codegarden-core5-repair-003",
+        "source": "5a8a73aa81dab29045c4e2a9cc0502e6c3e879f7",
+        "run": 43714413441,
+        "supported_queries": 2731144,
+        "completed_partitions": 15,
+        "total_partitions": 16,
+        "remaining": "Case9 failed HTTP502 during source download before search; retry required. No full rank5 conclusion yet."
+      }
+    ],
+    "consolidated_sources": [
+      {
+        "branch": "codegarden-long-control-003",
+        "commit": "05fe51550ddee710f85d2774e86eb4a2ac4d7598",
+        "prefixes": [
+          "long_control_001"
+        ]
+      },
+      {
+        "branch": "codegarden-modal-009",
+        "commit": "ad81416cc8cd3c8a08bd465bca40fdfa93fb5898",
+        "prefixes": [
+          "long_diversification_001"
+        ]
+      },
+      {
+        "branch": "codegarden-research-gpu-003",
+        "commit": "586badc1780068ee892e7a272257e78f2bfc20e6",
+        "prefixes": [
+          "research_gpu_001"
+        ]
+      },
+      {
+        "branch": "codegarden-research-gpu-004",
+        "commit": "fa5a5fc409aee923fb18602df3e944369cc8117c",
+        "prefixes": [
+          "research_gpu_002"
+        ]
+      },
+      {
+        "branch": "codegarden-research-gpu-005",
+        "commit": "e8f6d2381dcff80c80a0b38a436efc6c2fd8a9e2",
+        "prefixes": [
+          "research_gpu_003"
+        ]
+      },
+      {
+        "branch": "codegarden-research-cpu-003",
+        "commit": "9ec38a6968ff2a5f00ec2195ae4506484f250288",
+        "prefixes": [
+          "research_cpu_001"
+        ]
+      },
+      {
+        "branch": "codegarden-cpu-observer-003",
+        "commit": "e4f07577e180f5fbb43bbe0ddfac23cf03431632",
+        "prefixes": [
+          "cpu_snapshot_001"
+        ]
+      },
+      {
+        "branch": "codegarden-recombine-003",
+        "commit": "4252ffa87a7e36f07596cec4295a831a330fe4cf",
+        "prefixes": [
+          "recombine_001"
+        ]
+      },
+      {
+        "branch": "codegarden-recombine-004",
+        "commit": "53807722e48120a108a4fa71cc2411be65040d58",
+        "prefixes": [
+          "recombine_long_001"
+        ]
+      },
+      {
+        "branch": "codegarden-fusion3-003",
+        "commit": "e7d0d81af9fb2216a760faa8bd32a1adbc218ae2",
+        "prefixes": [
+          "fusion3_001"
+        ]
+      },
+      {
+        "branch": "codegarden-fusion3-004",
+        "commit": "75ffad583915cfb7f341656fdaae4fe03da214f6",
+        "prefixes": [
+          "fusion3_bridge_001"
+        ]
+      },
+      {
+        "branch": "codegarden-resume10-003",
+        "commit": "59f2c4273b4bcfc40fc57ea29d874babaf9b31b9",
+        "prefixes": [
+          "resume10_001"
+        ]
+      },
+      {
+        "branch": "codegarden-core-repair-003",
+        "commit": "d57b44e2b83f2eef524104efaf1259cdbdf481f7",
+        "prefixes": [
+          "core_repair_001"
+        ]
+      },
+      {
+        "branch": "codegarden-core3-repair-004",
+        "commit": "3187b1f72d49a12590d669f04c990486ef976ae9",
+        "prefixes": [
+          "core3_repair_001"
+        ]
+      },
+      {
+        "branch": "codegarden-core4-repair-003",
+        "commit": "d5eb573fe4e87b90d192b3346abb6e1fd2c9c367",
+        "prefixes": [
+          "core4_repair_001"
+        ]
+      },
+      {
+        "branch": "codegarden-hash-fibers-003",
+        "commit": "40378b0f63e323e272723ee8fc34bd39c2556725",
+        "prefixes": [
+          "hash_fibers_001"
+        ]
+      }
+    ],
+    "limitations": [
+      "Best remains reproduced226; no227 or global record.",
+      "Native local infeasibility reports are scoped computations, not formal globally checked absence proofs.",
+      "Positive-energy227 states are invalid.",
+      "No strict adaptive or Tinker policy superiority demonstrated.",
+      "All current new compute is on free public standard GitHub runners; paid balances/allocation require renewal before another paid reservation."
+    ]
   }
 }

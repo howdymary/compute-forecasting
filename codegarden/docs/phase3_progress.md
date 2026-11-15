@@ -1,118 +1,48 @@
-# CodeGarden research status — 15 November, 11:06 UTC
+# CodeGarden research status — 15 November 2026, 12:37 UTC
 
-**Target remains open. Best found and independently verified is the reproduced226-word code. No227 witness and no new global-record claim.**
+**The objective is open. Best found and independently verified: 226 distinct words. No 227-word construction or new global record is claimed.**
 
-## Latest completed comparisons
+The incumbent reproduces kgrey’s arena solution2778. Its witness SHA-256 is `417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa`. Both unchanged protected verifiers accept it: 6410 distinct length14 descendants and25425 pairwise LCS checks, maximum13. Current official preflights still reproduce226; the arena is not a complete global-record registry. Historical and literature distinctions remain in earlier reports.
 
-- Eight300-CPU-second descendant-penalty tabu trials found no novel226 or valid227 code.
-- Eight matched300-CPU-second distinct-conflicting-pair trials also found no novel226 or227. All four fixed/adaptive pairs tied on best pair-conflict score. These results do **not** show an adaptive-policy advantage.
-- Event-driven capture checked one-edge collision states after ordinary swaps for a new226 projection in a further eight trials. It found no new226 family. All positives would pass the two protected verifiers before use.
-- Larger exact exchanges from32 structurally diverse225-word incumbents produced no augmentation: **six completed local neighborhoods;26 timeouts**. A timeout establishes no impossibility.
-- Seven long Modal cases finished at approximately6000nativeCPU seconds each, remaining at225. Logical case2 has multiple platform-attempt directories; its committed CPU totals are summed across attempts and the affected pair is censored from matched total-compute conclusions.
+## New mathematical findings
 
-## Current research decisions
+The resumed radius-ten search finished all32 suffix partitions. Together with the old eight completed prefixes, it covers each of61427 canonical roots exactly once, with no strict augmentation. Total native CPU17262.28seconds. This excludes exchanges removing at most10 incumbent words under the documented safe dominance and learned-certificate reductions. It is a **local native enumeration**, not global optimality or an independent formal absence proof. The new standalone coverage audit checks these completion records; it does not rerun all search nodes.
 
-The remaining exact radius-ten root partitions are running after24 successful small disjoint-interval tests. Several partitions have completed, but full coverage is still pending. No radius-ten exhaustion claim is made yet.
+The38 known226-word codes share216 words. Independent full-universe compatibility enumeration gives57 other words compatible with that complete core. The previously audited241-word union palette contains only25 of those variables and must not be confused with the full fixed-core pool. A separate simple literal-string clique audit is being run to reproduce the full57-variable optimum and all maxima durably.
 
-A new search aims first for a **different valid226 basin**. For each225-word start, its explicit forbidden set hits the shared216-word core of every known complement/reversal family. This excludes all known38×4 recoveries while keeping nearly all65536 words eligible. The native objective is distinct conflicting pairs at cardinality226. Any zero-conflict code is independently checked and receives full-universe bounded exact augmentation attempts toward227. These are search restrictions, not changes to validity.
+Exact full-universe repairs completed all23436 single/pair core-removal queries and all1656360 triple queries, without227 or a new226 excluding the removed words. For four removals, a checked blocker-support lemma reduces88201170 possibilities to203077 supported sets. Every supported primary227 and secondary226 query completed without improvement, timeout or pool cap. Unsupported sets are ruled out **conditionally on lower-depth results and the reinsertion lemma**. These conclusions concern these fixed-core families only.
 
-The long-run control job starts no workers. It preserves committed best/live snapshots and may stop only the exact CodeGarden long app once every logical6000-CPU allowance has been reached across attempts and the other seven cases have completed. Its first attempt stopped before any mutation because a subprocess publisher lacked a repository token; the corrected run supplies it. Full credit holds remain unchanged. This allows a new hypothesis without treating a retried attempt as a new independent case. The action must be evidenced by its final receipt.
+Five-removal generation produces2731144 supported sets from3739729608 possibilities. Fifteen partitions completed; case9 failed HTTP502 during source retrieval before running search. It requires a bounded retry before any full five-removal claim.
 
-The queued Exa/past/Tinker/Modal coordinator remains serialized behind the current paid batch and retains all live credit, deadline, memory, verification and measured-GPU-advantage gates. The maximum conditional Modal hold remains149.848USD under the150cap; current account-wide metering is not attributed project spend.
+## Other completed hypotheses
 
-The main protected verifiers, main launcher and files outside `codegarden/` remain unchanged. Source pins and exact result scopes are in the adjacent JSON. The dated earlier reports follow for continuity; their active-run lists are superseded here.
+- Exact two-parent bipartite recombination considered1558 parents and1212903 pairs per orientation, in four overlapping orientations. All completed; no new226 or227. Many strict gains among223/224 parents merely recover known sizes. Summed orientation counts are not unique pairs.
+- Three-parent union searches also tested226 bridges when all parents were smaller. No new226 or227. Some modes have timeouts/capped pools; their negative counts do not imply full coverage.
+- Eight distinct-pair tabu trials and their event-capture/novel-basin follow-ups found no new226 or227. Fixed/adaptive best scores tied in the matched pair experiment; no adaptive advantage was shown.
+- Randomized GF2 hashes of k-mer count parities produced warm codes125–148 and full-universe descendants up to202. The experiment’s retained global score226 is **not** a construction achieved by that method. Only these finite parameters were tested.
+- Seven long Modal logical cases completed near6000 native CPU seconds at225. Case2 had multiple attempt directories, summing6004.28seconds; its pair is censored from matched-total-compute conclusions. After preserving verified checkpoints, the guarded controller stopped only the exact owned CodeGarden app.
 
----
+## Genuine sponsor evidence and limits
 
-# CodeGarden research status — 15 November, 10:42 UTC
+Two real Exa calls in the latest researcher cycle returned research and record-check sources. Exact API implementation: `codegarden/providers.py::Providers.exa`, invoked in `phase3/research_gpu2.py::main`. Query, source content, extracted review, memory writes/reads, chosen experiment and independently checked result are preserved in `artifacts/phase3/research_gpu_002/`, `research_gpu_003/`, and `research_cpu_001/`.
 
-**Best found and independently verified: 226 distinct words. The 227-word objective remains open. No new global record is claimed.**
+Separate frozen Tinker contexts acted as analyst, researcher and strategist. The analyst’s past.dev finding was genuinely retrieved by the researcher; the researcher’s ingested method context was genuinely retrieved by the strategist, which selected quota206. These are logical role contexts, **not assistant subagents or an asynchronous swarm**. Earlier thin-memory and failed-ingestion attempts remain labeled failures/partial runs.
 
-## New findings since 09:21 UTC
+Modal rejected T4 deployment because the account requires a payment method for GPU functions. No card, replenishment, plan or billing settings changed. No GPU speedup/profile was obtained. A bounded CPU fallback actually completed, including pinnedTorch installation and mathematical tests, in930.854seconds; best remained226. This demonstrates a real provenance-driven experiment, not policy improvement. Earlier trained/untrained comparisons and their negative/tied outcomes remain in the phase-two report. No new training success is claimed.
 
-- Revisited **412 symmetry-distinct saved codes** (402 of size225, six224, four223) with a faster exact connected-exchange kernel. All412 radius-six neighborhoods completed; 153 radius-seven neighborhoods completed and the remainder reached their per-neighborhood CPU caps. **No upgrade** was found. A timeout is not infeasibility.
-- A collective Hamming-radius-one mutation model tested128 fixed extra-word pivots. Independent literal-string arc-consistency replay validated its pruning; all128 subsequent20-second CP-SAT runs returned **UNKNOWN**. The restricted family has not been proved infeasible.
-- A same-runner60-second comparison at pivot7932 toggled CP-SAT presolve in hard and soft formulations. Both hard runs returned UNKNOWN; both soft runs exported a valid225-word code. Hard runs visited2.67–2.70million branches, so lack of search was not the explanation. Different soft branch counts did not produce a larger construction.
-- Eight compiled large-neighborhood runs used180nativeCPU seconds each. Random removal and opportunity-driven removal repeatedly solved full compatible repair pools of at most512 words, with explicit caps and sampled scoped-negative logs. They found **no new226 orbit** or227 witness. Repeated exact-negative counts are not counts of unique experiments.
-- Sparse tensor search retained227 distinct words while allowing collisions. Its minimum raw energy was2; quota-constrained replicas reached11. **All positive-energy states are invalid.** The corrected projection exporter independently verified57 explicit projections; all226 projections recovered known codes.
-- The prototype CLI parsed `--steps` but failed to forward it. Frozen run logs record the actual13800/14006 steps in300wall seconds; these were **not**3030-step matched experiments. The current source forwards the parameter and records best-state step indices separately from restart counters. The active frozen GPU coordinator imports the search function directly and does not use that CLI path.
-- The early blocker-union guard preserved the exact test's1,114,979,631nodes while reducing same-runner radius-eight CPU time73.465→66.754seconds. This single comparison is not a general speed guarantee.
+## Credits and preservation
 
-## Work currently running or queued
+Cumulative conservative holds: Exa0.112USD, past319credits, Modal149.998USD, Tinker23.05USD. These include unknown/unattributed historical costs and the entire rejectedGPU reservation; they are **not actual attributed charges**. Full other-project and independent-verification reserves remain protected. The last paid allocation expired12:00UTC, with no new paid reservations after11:45. Current research uses free public standard GitHub runners. A later paid batch must refresh balances and the shared allocation; it cannot reuse the expired snapshot.
 
-The long Modal batch is still running eight logical fixed/adaptive cases from two225-word families. A read-only snapshot at10:13 found an extra directory for logical case2. Its cause remains unresolved; the affected pair is **censored from matched total-compute claims** unless lost-attempt overhead is recovered. The7.22USD hold covers the retry-aware hard resource/time envelope; no hold has been released.
+Everything is remote. Consolidation changes only `codegarden/`; the main protected verifiers, main launcher and every file outside the directory are preserved. Isolated experimental branches use only the previously authorized launcher exception. Frozen source revisions and artifact-origin commits are in the adjacent JSON. Durable explicit witnesses and experiment files remain authoritative; past.dev stores attributed context and scoped findings.
 
-The new fixed-cardinality **breakout tabu** test maintains exact incremental descendant collision costs, uses tabu tenure and optional adaptive conflict penalties, and projects candidate states through the protected verifiers. Its480 random small-state update checks passed before the bounded search workers started. A separate radius-ten continuation replays interrupted roots from the prior run, changes disjoint root residues8→32, and retains all compatible suffix candidates. Its root-range partition tests must pass before substantive search.
+## Reproduce acceptance and the new audits
 
-The next paid coordinator is queued behind the existing one. It uses separate frozen model contexts for analyst, researcher and strategist, actual past.dev retrieval/write calls, two Exa queries, and Tinker strategy selection. A CPU/GPU profile gate permits the single bounded T4 experiment only after a measured speedup of at least1.5. These are scheduled capabilities until their published evidence exists.
+```sh
+python -B codegarden/protected/verify_descendants.py codegarden/artifacts/best_code.txt
+python -B codegarden/protected/verify_lcs.py codegarden/artifacts/best_code.txt
+python -B codegarden/phase3/audit_root10.py
+python -B codegarden/phase3/core_all_optima.py
+```
 
-## Verification and credit boundaries
-
-The unchanged protected descendant and independent LCS checkers are the acceptance authority. A valid positive witness must be explicit plain text and pass both. The reproduced226-word incumbent remains SHA-256 `417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa`.
-
-Conservative Modal holds remain148.98USD, including old unresolved holds. The queued profile/experiment maximum is0.868USD, bringing the conditional total to149.848under the150cap. Account-wide metering of3.12021913USD is **not attributed CodeGarden spend** and has not been used to release holds. Other-project and independent-verification reserves remain protected. No new billable reservations after11:45UTC under this allocation; it expires12:00UTC.
-
-All new source and completed artifacts are under `codegarden/`. The main branch's launcher and both protected verifiers are unchanged by this consolidation. Detailed pins are in the adjacent JSON. Below is the earlier campaign detail, retained with its original09:21 timestamp; its older active-run list is superseded by this update.
-
----
-
-# CodeGarden phase-three progress — research ongoing
-
-Updated 2026-11-15 09:21 UTC. **Target not achieved. Best independently verified code: 226 distinct words.** No 227-word witness or new global-record claim.
-
-## Incumbent and verification
-Fresh official preflight at 08:49 UTC reproduced kgrey's arena solution 2778, score 226, SHA-256 `417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa`. Its 6,410 distinct length-14 descendants are disjoint across codewords. Independent LCS verification checked all 25,425 pairs, maximum 13. Official verifier hash remains `563cc3bc7d39bdc261dd6cff08eb634c03e149d59df8f0c7ceff5b3f68730325`.
-
-Arena comparison is not a complete global-record audit. Historical 208, literature 215, and the reproduced current arena 226 are different comparison points. The protected verifier sources remain unchanged. Positive-energy 227-word states are invalid diagnostics.
-
-## Completed findings
-- **Connected exchange search:** any improving compatible bundle has a blocker-connected improving component. A unique canonical parent enumerates connected bundles; currently disconnected but compatible future candidates remain available. Thirty-six small deletion-code brute-force comparisons and 160 arbitrary blocker/compatibility examples check implementation.
-- **Root exact local radius eight:** independent orderings completed without a strict improvement. Ascending order took 328.312 CPU seconds; constrained-first order took 130.138. This is a native exhaustive local search, not global optimality and not a formal proof certificate.
-- **Certified outside dominance:** all 444 descendant-inclusion replacements are independently checked using protected string descendants. Pruning outside dominated words preserves existence of strict improvements with a bounded removal count, including when replacement restores an incumbent word. Thirty-six additional small brute-force comparisons include incumbents containing dominated words. Reduced radius eight completed in 96.063 CPU seconds. Radius nine and ten each timed out after 450 CPU seconds; neither is an impossibility result.
-- **Neutral component:** full radius-five enumeration closed exactly 38 labeled 226-word codes. Primitive connected neutral moves reproduced the same component at radius five (5.49 native CPU seconds), six (39.97), and seven (298.80). All 38 witnesses passed both protected verifiers, and all individual radius-seven searches completed without augmentation. Radius eight neutral exploration was capped and is not closed. All 38 codes survive dominance normalization unchanged; these are not merely dominated-word aliases.
-- **Persistent walkers:** fixed radius-three from eight distant 225-word starts explored 6,000 states and recovered 226 repeatedly, but the recovered 226 lies in the known component. Adaptive radius-three/four processed 834 states and stopped before its adaptation trigger. Different seeds and caps prevent a causal policy-superiority claim.
-- **Frontier repair:** fixed low-radius closures no longer silently stop the entire search. Completed frontier_002 runs explicitly escalated after local exhaustion and distinguished capped retries from closure. Four lineages retained scores 225,225,224,223; larger repairs consumed their 450 CPU-second limits without a novel 226 orbit.
-- **Tempering:** genuine symmetric Metropolis and replica exchange passed independent energy checks. A denser 32-temperature ladder improved swap traffic, but four paired 180-CPU-second comparisons still reached only positive conflict energy. Exact vertex-cover projections of archived states produced zero novel 226 orbits. Quench/injection flow statistics are not equilibrium mixing estimates.
-- **CP-SAT:** union pools 896 and 930 were optimal at 226 within those pools. Subsequent novel-component cuts yielded one restricted INFEASIBLE result and three UNKNOWN results. Full-universe and 3,032-word CP/LNS runs returned feasible 225 hints only, with open bounds and explicit fixed-word/component-cut restrictions. No global upper bound follows.
-- **KaMIS:** pinned upstream `2e4b3861b8063f05e8520434b97ce59e21ca49e7`; full conflict graph has 65,536 vertices and 80,964,349 edges, independently checked for small instances. Original warm starts retained 226. ReduMIS failed with bad_alloc under a 6-GiB cap. A documented saturating fix for an upstream unsigned plateau decrement retained 226 from root and 225 from distant starts; no demonstrated improvement.
-- **Other attempts:** infeasible-state tabu, Morris-style breakout, conflict closures, elastic CP, and pair replacements found no valid 227. Full-universe LP attempts returned no usable primal and produced zero LP-guided repairs. These incomplete attempts remain visible.
-
-## Further completed experiments
-- **Certificate-derived pruning:** a known balanced neutral subset U contracts a candidate k-exchange to at most k-|U| removals around the neighboring code. Exact local certificates yield hereditary search no-goods; they do not change validity. Exhaustive arbitrary conflict examples check both contraction and pruned feasibility. The radius-eight control completed; single-worker radius nine/ten timed out at 450 CPU seconds.
-- **Root radius nine now exhausted natively:** 16 deterministic Modal partitions all completed with no improvement, totaling 1,463.71 native CPU seconds. The coverage audit accounts for all 56,396 ordered candidate roots with one common pool hash `f5cb9922238127de30aa4e7df61e4ff9eec81bf8150a5db7ef7d3d7ff8a95ce2`. Each shard preserves the full compatible suffix and checks its assigned canonical minimum roots. This is a local native enumeration using certified dominance and learned restrictions, dependent on the documented earlier local certificates; no formal independent absence proof or global bound.
-- **Radius ten remains open:** eight 600-CPU-second Modal shards all timed out without improvement. Each logs its exact completed root prefix and active unfinished root; 61,427 candidate roots constitute the full pool. Do not call this exhaustive.
-- **Neutral-eight ordering:** four dispersed known roots completed in descending-blocker order (77.3–140.4 CPU seconds) and found 10,13,12,15 primitive neighbors, all already known. Ascending order timed out at 300 CPU seconds on all four. Only these roots are closed at eight; the complete 38-code radius-eight component is not established.
-- **Verification-test clarification:** the older primitive test artifact described neutral-set checking but its script checked strict feasibility only. New `test_primitive_order.py` explicitly compares the complete connected primitive-neutral sets with a protected-string brute-force oracle where no augmentation exists, under both candidate orderings, across 36 cases. These checks passed before the new large tests. The protected D2/LCS programs and acceptance rules remain unchanged.
-- **Large structural repairs:** four five-layer Hamming-weight removals released 84,149,150,96 words, with full compatible pools of 9,215/24,752/22,455/9,163. All four timed out UNKNOWN at 300 seconds. Same-size random controls proved two encoded fixed-outside neighborhoods INFEASIBLE and timed out on two. No pool truncation or learned cuts. Weight locality was previously described by Opus-HedgyLabs in arena thread278; this is an attributed wider-window adaptation, not a new theorem. An initial Python-wheel setup failure executed no mathematical search.
-- **Backbone avoidance:** the known 38 codes share 216 words. A small recorded hitting set excludes every known complement/reversal family within these experiments. Eight restricted-union searches performed millions of valid-state iterations but exported only 225. Two matched three-condition blocks compared a 3,028-word union, union plus 8,192 random words, and full 65,532-word allowed universe under identical seed/start/exclusions; all six exported 225 at 180 seconds. The baseline226 remains retained separately. These are heuristic negatives, not infeasibility.
-- **Separate SCIP feasibility:** four 300-second experiments on explicit unions tried target 226 or 227 under the backbone exclusions. All returned NOT_SOLVED, not INFEASIBLE, with SCIP9.2.2/SoPlex7.1.3. No new witness.
-
-## Active hypotheses and bounded work
-1. **Early blocker-union rejection**, isolated branch `codegarden-guard-003`, source `7f821170ebc3f5bef89fd1eb185110ace7442235`: avoid heap allocation for candidates already known to exceed the removal budget. Protected small cases and synthetic comparisons gate large execution. A sequential old/new radius-eight benchmark checks identical search-tree counts on one runner; larger nine/ten runs remain bounded.
-2. **Long full-universe diversification**, branch `codegarden-modal-009`, source `9e02d5fbec4b5bef09c05f3182dc6f7109ea1090`, run43698542525: eight Modal workers, four matched fixed/adaptive pairs across arena 225 and a distinct verified projected 225 family. Each gets 6,000 native child-CPU seconds, separate bounded strict polishing, a 7,200-second wall allowance and 7,800-second hard timeout. CPU request and hard limit are 1; memory request and hard limit 1 GiB; zero retries; scale-down 2 seconds. All 65,536 words remain eligible except each experiment's recorded four-word backbone exclusion. No permanent project-wide exclusions.
-3. Long workers export and independently verify every segment best, keep durable 30-second checkpoints, and run unrestricted strict repairs from any new 226. Results are collected in completion order. A verified 227 stops only CodeGarden's remaining jobs. The matched comparison will be censored if an early win or time cap prevents equal allowances. No outcome is claimed while workers run.
-
-## Real sponsor execution and limits of the evidence
-Actual Exa requests in research_003 used recalled analyst findings to choose connected local-improvement and canonical-enumeration queries. `providers.py::Providers.exa` is called from `phase3/research3.py::main`. Query/source/request provenance and paraphrased method links are preserved.
-
-Past.dev has three named software author identities in one serialized process. The researcher retrieved the analyst's structured radius-eight finding and used it to change the first external query; the strategist retrieved cross-author material before a decision. These are logical software roles, not independent assistant subagents.
-
-A real Tinker 4B choice selected primitive_bridge. It generated a valid 225-word bridge followed by a capped radius-eight search, without improving 226. This is verified decision execution, not evidence of trained-policy superiority. New fine-tuning is not justified by zero primary improvements. Earlier fixed-budget trained/untrained tie and negative results remain in the phase-two report.
-
-Modal ran bounded independent CPU workers with pinned source, seeds, starting codes, time limits and exported witnesses. The 36-root older radius-six batch returned all workers: 12 complete and 24 timeouts. The newer primitive kernel subsequently closed radius six across all 38 much faster; we do not count the old timeouts as proofs.
-
-## Shared resources
-All code and artifacts are remote under codegarden/, with only the separately authorized launcher outside that directory. Public standard GitHub runners make zero sponsor API calls unless running the serialized provider coordinator. BoundForge and forecasting files/jobs are preserved.
-
-Conservative cumulative accounting: Exa $0.098; past.dev 278 estimated credits; Modal $148.98 held; Tinker $22.85 held. Modal comprises $141.76 older unresolved/completed hard-time holds plus $7.22 reserved for the active long batch. No unknown hold was released. These amounts are not attributed actual account charges.
-
-The fresh long-batch preflight observed account-wide Modal metering $2.72021913, billed 0, and a conservative existing-credit floor $247.78984035. This account-wide figure is not CodeGarden spend. It preserved the full $75 other-project and $20 verification guards before raising the internal cumulative operational cap 145→150. The new hard-limited workers use a documented conservative ceiling $0.0001/second, plus startup/idle and image reserves; earlier reservations are unchanged. No provider billing settings, purchases, plan upgrades or replenishment.
-
-Other current caps: Exa $5, past 2,000 credits, Tinker $70. Allocation expires 12:00 UTC; no new billable reservations after 11:45 UTC. The long batch is already fully reserved. Authenticated balance receipts and provider traces are the authority.
-
-## Provenance and unresolved work
-Per-experiment artifacts contain exact starting hashes, candidate pools or pool hashes, parameters, statuses and independent positive verifications. phase3_progress.json pins the consolidated branches. The preserved native completeness claims have no formal proof artifact. One thermal projection diagnostic used colliding filenames for already-known recoveries; no novel witness or primary score depends on those files.
-
-Continue testing new structural/search hypotheses until a real independently verified target witness exists. Larger local neighborhoods, new basins and the source audit remain open. The mathematical objective is unresolved.
-
-Current primary-source refresh also checked arXiv 2610.35579v1 (its own deletion-code run tied 223) and 2611.16835v1 (asymptotic sufficiently-large-n edit-code theorem, no explicit n16 witness retrieved). Neither establishes a new 227 construction. Search-index snapshots were stale relative to the live arena 226; the fresh official API remains the arena comparison source.
+The last two commands produce audit artifacts when run in an authorized remote environment. They require no model, provider API or search history outside the pinned explicit files. Any successful new witness must still pass both protected acceptance commands before the goal can be marked complete.

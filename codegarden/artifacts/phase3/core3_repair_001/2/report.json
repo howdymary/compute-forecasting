@@ -1,0 +1,45 @@
+{
+  "source_sha": "294ecfa8f9b70b6356f862d84ce30c7c605a5c6d",
+  "case": 2,
+  "native": {
+    "case": 2,
+    "seed": 1371003,
+    "planned": 414090,
+    "processed": 414090,
+    "primary_complete_no227": 414090,
+    "primary_timeouts": 0,
+    "secondary_complete_no226_excluding_removed": 414090,
+    "secondary_timeouts": 0,
+    "pool_cap_skips": 0,
+    "all_planned_neighborhoods_processed": true,
+    "cpu_seconds": 74.3388,
+    "best_size_unverified": 226
+  },
+  "new226": [],
+  "polish": [],
+  "best_verified": 226,
+  "winner_verification": {
+    "accepted": true,
+    "cardinality": 226,
+    "reports": [
+      {
+        "cardinality": 226,
+        "distinct_descendants": 6410,
+        "length": 16,
+        "method": "distinct_string_two_deletions",
+        "valid": true,
+        "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+      },
+      {
+        "cardinality": 226,
+        "largest_pairwise_lcs": 13,
+        "length": 16,
+        "method": "independent_dynamic_programming_lcs",
+        "pairs_checked": 25425,
+        "valid": true,
+        "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+      }
+    ]
+  },
+  "scope": "All lexicographic triple-core removal sets, partitioned by index modulo4; status files I=infeasible in exact encoded query, T=timeout,C=pool cap,F=feasible,N=notrun. Sampled rows have literal pool hashes; full candidate pools are reconstructible from fixed code and universe. Only explicit fixed-core repair families. Primary227 query allows the FULL compatible universe. Secondary226 query explicitly excludes all removed core words; its infeasibility does not by itself exclude every226 code. Timeouts/caps are not proofs."
+}

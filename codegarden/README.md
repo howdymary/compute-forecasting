@@ -2,7 +2,7 @@
 
 **Best independently verified: 226 words, reproduced from the arena. No 227 found.**
 
-[Phase-two report](docs/phase2_report.md) · [phase-one report](docs/research_report.md) ·
+[Current research status](docs/phase3_progress.md) · [Phase-two report](docs/phase2_report.md) · [phase-one report](docs/research_report.md) ·
 [explicit witness](artifacts/best_code.txt) · [published replay](https://raw.githack.com/howdymary/compute-forecasting/21fc929ebc97258e7b76fb51a5dabeb3901eb389/codegarden/demo/index.html) ·
 [final verification](artifacts/final_verification.json)
 

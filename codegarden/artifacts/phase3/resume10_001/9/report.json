@@ -1,0 +1,88 @@
+{
+  "source_sha": "06000bb4fd75dda6cbdd442e10adf062093d501f",
+  "case": 9,
+  "previous_source": "b0039e3dcc3e8884cb667ca3e914c19a2d709d80",
+  "previous_run": 43697372047,
+  "root_begin": 53881,
+  "root_shard": 9,
+  "root_shards": 32,
+  "candidate_pool_sha256": "091054e7eb0c2642a937e2d7a4d05a9a90ff9c55070a72ee88964829b80e8044",
+  "starting_verification": {
+    "accepted": true,
+    "cardinality": 226,
+    "reports": [
+      {
+        "cardinality": 226,
+        "distinct_descendants": 6410,
+        "length": 16,
+        "method": "distinct_string_two_deletions",
+        "valid": true,
+        "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+      },
+      {
+        "cardinality": 226,
+        "largest_pairwise_lcs": 13,
+        "length": 16,
+        "method": "independent_dynamic_programming_lcs",
+        "pairs_checked": 25425,
+        "valid": true,
+        "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+      }
+    ]
+  },
+  "native": {
+    "found": false,
+    "complete": true,
+    "cpu_seconds": 374.608,
+    "nodes": 3306702866,
+    "closed_blocker_sets": 20567585,
+    "cache_hits": 7975755,
+    "retained_closed_keys": 622846,
+    "cache_evictions": 19944739,
+    "k": 10,
+    "n": 16,
+    "memory_limited": false,
+    "budget_limited": false,
+    "neutral_cap_reached": false,
+    "root_begin": 53881,
+    "root_end": 2147483647,
+    "root_shard": 9,
+    "root_shards": 32,
+    "completed_roots": 236,
+    "active_root": -1,
+    "last_finished_root": 61417,
+    "learned_groups": 29,
+    "learned_prunes": 2695,
+    "candidate_count": 61427,
+    "profiled_bitset_bytes": 597588480,
+    "removed": [],
+    "added": [],
+    "neighbors": [],
+    "scope": "All outside words with at most k incumbent blockers; connected improving bundles suffice by the disjoint-blocker-component lemma. Complete is false on every time/node/memory/neighbor cap."
+  },
+  "verification": {
+    "accepted": true,
+    "cardinality": 226,
+    "reports": [
+      {
+        "cardinality": 226,
+        "distinct_descendants": 6410,
+        "length": 16,
+        "method": "distinct_string_two_deletions",
+        "valid": true,
+        "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+      },
+      {
+        "cardinality": 226,
+        "largest_pairwise_lcs": 13,
+        "length": 16,
+        "method": "independent_dynamic_programming_lcs",
+        "pairs_checked": 25425,
+        "valid": true,
+        "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+      }
+    ]
+  },
+  "best_verified": 226,
+  "scope": "Only the logged minimum-root residue and suffix. The prior interrupted root is replayed, not assumed complete. All suffix candidates retained. Both old and new complete coverage audits required for radius-ten exhaustion."
+}
