@@ -1,0 +1,66 @@
+{
+  "status": "completed",
+  "source_sha": "c484c1629ebd04149512697ec617ae9d31636eb7",
+  "campaign_start": "2026-11-15T04:18:09Z",
+  "search_cutoff": "2026-11-15T05:33:09Z",
+  "evaluation_summary": {
+    "fixed": {
+      "cases": 8,
+      "completed_chunks": 32,
+      "sum_best_sizes": 1777,
+      "improved_cases": 6,
+      "search_cpu_seconds": 960,
+      "controller_seconds": 2.4356999801966595e-05
+    },
+    "adaptive_no_external": {
+      "cases": 8,
+      "completed_chunks": 32,
+      "sum_best_sizes": 1777,
+      "improved_cases": 6,
+      "search_cpu_seconds": 960,
+      "controller_seconds": 8.834300024318509e-05
+    },
+    "adaptive_with_research": {
+      "cases": 8,
+      "completed_chunks": 32,
+      "sum_best_sizes": 1777,
+      "improved_cases": 6,
+      "search_cpu_seconds": 960.01,
+      "controller_seconds": 9.154699989721848e-05
+    }
+  },
+  "training_status": "not_trained",
+  "role_execution": "Independent OS processes and separate input/output contexts; policy sampling contexts are stateless per decision.",
+  "research_memory_changed": "Actual recalled context supplied to research/trained conditions; benefit judged only from ablations.",
+  "budget": {
+    "exa": {
+      "cap": 5,
+      "other_project_reserves": 15,
+      "verification_reserve": 5,
+      "reserved": 0.021,
+      "provider_reported_or_estimated": 0.007
+    },
+    "past": {
+      "cap": 2000,
+      "other_project_reserves": 10200,
+      "verification_reserve": 5000,
+      "reserved": 79.0,
+      "provider_reported_or_estimated": 43.0
+    },
+    "modal": {
+      "cap": 50,
+      "other_project_reserves": 75,
+      "verification_reserve": 20,
+      "reserved": 21.28,
+      "provider_reported_or_estimated": 0
+    },
+    "tinker": {
+      "cap": 70,
+      "other_project_reserves": 140,
+      "verification_reserve": 10,
+      "reserved": 20.0,
+      "provider_reported_or_estimated": 0
+    }
+  },
+  "finished_at": "2026-11-15T05:18:29.688680+00:00"
+}
