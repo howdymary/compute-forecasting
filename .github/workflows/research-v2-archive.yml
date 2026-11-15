@@ -29,11 +29,13 @@ jobs:
           python -m pytest tests/test_archive_v2.py
       - name: Await measured finalization and collect derived results
         run: |
-          gh run watch 43672927148 --repo "$GITHUB_REPOSITORY" --exit-status --interval 30
+          gh run watch 43677709126 --repo "$GITHUB_REPOSITORY" --exit-status --interval 30
           gh run download 43665821333 --repo "$GITHUB_REPOSITORY" --pattern 'campaign-v2-*' --dir inputs/campaign
-          gh run download 43671941385 --repo "$GITHUB_REPOSITORY" --pattern 'campaign-v2-rl-*' --dir inputs/rl
+          gh run download 43677499284 --repo "$GITHUB_REPOSITORY" --pattern 'campaign-v2-rl-*' --dir inputs/rl
           gh run download 43665112830 --repo "$GITHUB_REPOSITORY" --name campaign-v2-evidence-bd267f17fa31106a05a22e3b6b4739f7bd6c0327-43665112830 --dir inputs/evidence
-          gh run download 43672927148 --repo "$GITHUB_REPOSITORY" --name campaign-v2-final-43672927148 --dir inputs/final
+          gh run download 43677709126 --repo "$GITHUB_REPOSITORY" --name campaign-v2-final-43677709126 --dir inputs/final
+          gh run download 43671941385 --repo "$GITHUB_REPOSITORY" --pattern 'campaign-v2-rl-*' --dir inputs/failed-rl-prefixes
+          gh run download 43677120366 --repo "$GITHUB_REPOSITORY" --name campaign-v2-storage-cleanup-43677120366 --dir inputs/storage
       - name: Publish durable derived artifact bundle
         run: modal run -m compute_forecast.archive_v2 --inputs inputs
       - name: Verify the public download and every member checksum
