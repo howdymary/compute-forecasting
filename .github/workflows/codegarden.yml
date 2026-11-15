@@ -4,11 +4,19 @@ on:
     branches: [codegarden]
     paths: [.github/workflows/codegarden.yml]
   workflow_dispatch:
+    inputs:
+      mode:
+        description: Bounded CodeGarden stage; paid modes require a fresh explicit shared allocation
+        type: choice
+        options: [verify, resume, research_cycle, native, full]
+        default: verify
 permissions:
   contents: write
 concurrency:
   group: codegarden-only
   cancel-in-progress: false
+env:
+  CODEGARDEN_MODE: ${{ inputs.mode || 'resume' }}
 jobs:
   verify-and-search:
     runs-on: ubuntu-latest
@@ -22,20 +30,22 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Verify all independent checks and protection
+      - name: Verify independent checks and policy contracts
         run: |
           python -B -m unittest discover -s codegarden/tests -v
           python -B codegarden/supervisor.py codegarden/artifacts/best_code.txt
-      - name: Install only CodeGarden clients and exact solver
-        run: |
-          python -m venv codegarden/.venv
-          codegarden/.venv/bin/python -m pip install -r codegarden/requirements-providers.txt -r codegarden/requirements-exact.txt
-      - name: Compile and independently test the native incidence kernel
+      - name: Compile and independently test the native kernel
         run: |
           mkdir -p codegarden/.build
           g++ -O3 -std=c++17 codegarden/kernel.cpp -o codegarden/.build/kernel
           python -B codegarden/test_kernel.py
-      - name: Read current account usage before allocated sponsor work
+      - name: Install isolated clients only for a selected paid stage
+        if: env.CODEGARDEN_MODE != 'verify' && env.CODEGARDEN_MODE != 'resume'
+        run: |
+          python -m venv codegarden/.venv
+          codegarden/.venv/bin/python -m pip install -r codegarden/requirements-providers.txt -r codegarden/requirements-exact.txt
+      - name: Read provider state for the separately allocated stage
+        if: env.CODEGARDEN_MODE != 'verify'
         env:
           EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
           PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
@@ -43,32 +53,41 @@ jobs:
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
           MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
         run: codegarden/.venv/bin/python -B codegarden/budget/preflight.py
-      - name: Execute one memory-informed bounded feedback cycle
+      - name: Execute one memory-informed feedback cycle
+        if: env.CODEGARDEN_MODE == 'research_cycle'
+        env:
+          EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
+          PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+        run: codegarden/.venv/bin/python -B -u codegarden/feedback_cycle.py
+      - name: Run bounded compiled Modal experiments
+        if: env.CODEGARDEN_MODE == 'native'
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: codegarden/.venv/bin/python -B -u codegarden/native_campaign.py
+      - name: Run full sponsor and training pipeline
+        if: env.CODEGARDEN_MODE == 'full'
         env:
           EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
           PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
           TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
           MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
-        run: codegarden/.venv/bin/python -B -u codegarden/feedback_cycle.py
-      - name: Collect read-only attributed billing receipts
-        if: always()
+        run: codegarden/.venv/bin/python -B -u codegarden/live_campaign.py
+      - name: Resume only the saved feedback experiment
+        if: env.CODEGARDEN_MODE == 'resume'
         env:
-          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
-          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
-          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
-        run: codegarden/.venv/bin/python -B codegarden/ci/cost_receipts.py
-      - name: Retain exact client versions and independently check all outputs
+          PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
+        run: python -B codegarden/feedback_resume.py
+      - name: Replay frozen choices with matched search CPU budgets
+        run: python -B codegarden/policy_budget_eval.py
+      - name: Reverify every exported witness
         if: always()
-        run: |
-          codegarden/.venv/bin/python -m pip freeze > codegarden/artifacts/live/environment.txt
-          python -B codegarden/ci/final_check.py
+        run: python -B codegarden/ci/final_check.py
       - name: Publish only CodeGarden receipts with a branch lease
         if: always()
         env:
           GH_TOKEN: ${{ github.token }}
           SOURCE_SHA: ${{ github.sha }}
         run: python -B codegarden/ci/publish_results.py
-# Normalize Transformers template output and serialize isolated Modal closures.
-# Resume only the unfinished live research and policy evaluation; native paired batch is complete.
-# Feed actual recalled content into the next strategy and verify a fresh bounded experiment.

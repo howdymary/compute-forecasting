@@ -49,7 +49,7 @@ def main():
           "memory_source":researcher_id,"context_path":"codegarden/artifacts/feedback/decision_context.json"})
         log("memory_informed_tinker_decision",decision)
         plan_id=p.write("strategist","feedback_experiment_plan",{"decision":decision,"seconds":30,"seed":93017,
-          "incumbent_witness_sha256":best["witness_sha256"]},"feedback-repair-002",[researcher_id])
+          "incumbent_witness_sha256":best["reports"][0]["witness_sha256"]},"feedback-repair-002",[researcher_id])
         arm=S.ARMS[selected];others=[a for i,a in enumerate(S.ARMS) if i!=selected];S.ARMS=others[:1]+[arm]+others[1:]
         inc=S.Incidence(16);start=[int(w,2) for w in (ROOT/"artifacts/best_code.txt").read_text().splitlines()]
         result=S.run(inc,start,93017,seconds=30,max_cycles=100000,policy="fixed")
