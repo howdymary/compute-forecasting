@@ -4,10 +4,11 @@ from datetime import datetime,timezone
 from pathlib import Path
 import modal
 from .release_payload import build,validate
-from .release_ui import HTML
+from .explore_ui import HTML
+from .pricing_contract import validate as validate_pricing
 app=modal.App("compute-forecast-observatory")
 public=modal.Volume.from_name("compute-forecast-public",create_if_missing=True,version=2)
-image=modal.Image.debian_slim(python_version="3.11").pip_install("fastapi[standard]>=0.115,<1").add_local_python_source("compute_forecast")
+image=modal.Image.debian_slim(python_version="3.11").pip_install("fastapi[standard]>=0.115,<1").env({"OBSERVATORY_UI_SHA":os.environ.get("GITHUB_SHA","unknown")}).add_local_python_source("compute_forecast")
 FILES={"forecasts.csv":"text/csv","outlook.md":"text/markdown","outlook-scenarios.json":"application/json","demo.mp4":"video/mp4"}
 
 @app.function(image=image,cpu=.25,memory=256,timeout=90,volumes={"/public":public})
@@ -42,10 +43,16 @@ def web():
         raw=read("results.json")
         if raw is None:return JSONResponse({"error":"Measured release is not yet published"},status_code=503,headers=headers)
         validate(json.loads(raw));return Response(raw,media_type="application/json",headers={**headers,"ETag":hashlib.sha256(raw).hexdigest()})
+    @api.get("/api/pricing")
+    def pricing():
+        raw=read("pricing.json")
+        if raw is None:return JSONResponse({"error":"Verified pricing adapter is not yet published"},status_code=503,headers=headers)
+        validate_pricing(json.loads(raw))
+        return Response(raw,media_type="application/json",headers={**headers,"ETag":hashlib.sha256(raw).hexdigest()})
     @api.get("/health")
     def health():
         raw=read("results.json");r=json.loads(raw) if raw else None
-        return JSONResponse({"status":"ok" if r else "awaiting_results","release_sha256":hashlib.sha256(raw).hexdigest() if raw else None,"code_sha":r["code_sha"] if r else None,"training_updates":r["development"]["actual_training_updates"] if r else None,"final_origins":r["final"]["temporal_origins"] if r else None,"actual_cross_agent_use":r["memory"]["actual_cross_agent_use"] if r else None},headers=headers)
+        return JSONResponse({"ui_revision":os.environ.get("OBSERVATORY_UI_SHA"),"status":"ok" if r else "awaiting_results","release_sha256":hashlib.sha256(raw).hexdigest() if raw else None,"code_sha":r["code_sha"] if r else None,"training_updates":r["development"]["actual_training_updates"] if r else None,"final_origins":r["final"]["temporal_origins"] if r else None,"actual_cross_agent_use":r["memory"]["actual_cross_agent_use"] if r else None},headers=headers)
     @api.get("/files/{name}")
     def download(name:str,request:Request):
         if name not in FILES:return Response(status_code=404,headers=headers)

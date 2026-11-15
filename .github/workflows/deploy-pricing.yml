@@ -1,0 +1,96 @@
+name: Deploy pricing observatory
+on:
+  workflow_dispatch:
+  push:
+    branches: [compute-observatory]
+    paths:
+      - src/compute_forecast/explore_ui.py
+      - src/compute_forecast/pricing_contract.py
+      - src/compute_forecast/pricing_publish.py
+      - src/compute_forecast/release_web.py
+      - tests/test_pricing_contract.py
+      - .github/workflows/deploy-pricing.yml
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: compute-forecast-public-release
+  cancel-in-progress: false
+jobs:
+  deploy:
+    if: github.ref == 'refs/heads/compute-observatory'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Fetch immutable source on hosted runner
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate math, frozen code and browser script
+        run: |
+          python -m pip install -e '.[dev]' modal numpy
+          python -m compileall -q src
+          python -m pytest --junitxml=artifacts/pricing-tests.xml
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from compute_forecast.freeze_contract import validate_freeze
+          from compute_forecast.explore_ui import HTML
+          validate_freeze(json.loads(Path('configs/release-freeze.json').read_text()))
+          assert HTML.count('<script>')==1 and HTML.count('</script>')==1
+          Path('artifacts/explore-ui.js').write_text(HTML.split('<script>',1)[1].split('</script>',1)[0])
+          PY
+          node --check artifacts/explore-ui.js
+      - name: Verify protected source and exact metadata provenance
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import json,os,subprocess
+          repo=os.environ['GITHUB_REPOSITORY'];base='68ae96926bd1164a2ed356ab2f0c8687b733ebd6'
+          def api(path):return json.loads(subprocess.check_output(['gh','api','repos/'+repo+'/'+path],text=True))
+          for path in ('src/compute_forecast/record_demo.py','.github/workflows/record-demo.yml','configs/release-freeze.json','src/compute_forecast/export_submission.py'):
+              assert api('contents/'+path+'?ref='+base)['sha']==api('contents/'+path+'?ref='+os.environ['GITHUB_SHA'])['sha'],'Protected file changed: '+path
+          run=api('actions/runs/43657301892')
+          assert run['conclusion']=='success' and run['head_branch']=='compute-observatory' and run['head_sha']=='38a37b6065bbd1f374f935ec1208ac2274842a2f'
+          subprocess.run(['gh','run','download','43657301892','--repo',repo,'--name','pricing-metadata-38a37b6065bbd1f374f935ec1208ac2274842a2f-43657301892','--dir','inputs/metadata'],check=True)
+          PY
+      - name: Publish pricing adapter without rewriting existing artifacts
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: modal run -m compute_forecast.pricing_publish
+      - name: Deploy pricing-first interface
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: modal deploy -m compute_forecast.release_web 2>&1 | tee artifacts/pricing-deployment.txt
+      - name: Verify deployed interface and unchanged official forecast
+        run: |
+          python - <<'PY'
+          import hashlib,json,os,urllib.request
+          from pathlib import Path
+          from compute_forecast.pricing_contract import validate,FORECAST_SHA
+          url='https://howdymary--compute-forecast-observatory-web.us-east.modal.run'
+          def get(path):return urllib.request.urlopen(url+path,timeout=90).read()
+          receipt=json.loads(Path('artifacts/pricing-publication.json').read_text())
+          raw=get('/api/pricing');payload=validate(json.loads(raw));health=json.loads(get('/health'))
+          assert hashlib.sha256(raw).hexdigest()==receipt['pricing_sha256']
+          assert health['ui_revision']==os.environ['GITHUB_SHA'] and payload['code_sha']==os.environ['GITHUB_SHA']
+          assert hashlib.sha256(get('/files/forecasts.csv')).hexdigest()==FORECAST_SHA
+          assert health['training_updates']==50 and health['final_origins']==5 and health['actual_cross_agent_use']
+          assert payload['history']['points']==[] and len(payload['series'])==37
+          assert b'See what compute could cost.' in get('/')
+          Path('artifacts/pricing-health.json').write_text(json.dumps(health,indent=2))
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:f.write('\nLive pricing observatory: '+url+'\n\nAll 37 series verified; frozen CSV unchanged; UI revision '+health['ui_revision']+'.\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pricing-observatory-${{ github.sha }}-${{ github.run_id }}
+          path: artifacts/
+          retention-days: 30
