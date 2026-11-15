@@ -1,7 +1,7 @@
-name: CodeGarden breakout tabu search and verified projections
+name: CodeGarden resume the open radius-ten root suffixes
 on:
   push:
-    branches: [codegarden-breakout-003]
+    branches: [codegarden-resume10-003]
     paths: [.github/workflows/codegarden.yml]
   workflow_dispatch:
 permissions:
@@ -12,7 +12,7 @@ concurrency:
 env:
   PYTHONDONTWRITEBYTECODE: '1'
   SOURCE_SHA: ${{ github.sha }}
-  CODEGARDEN_BATCH: breakout_001
+  CODEGARDEN_BATCH: resume10_001
 jobs:
   preflight:
     runs-on: ubuntu-latest
@@ -25,13 +25,13 @@ jobs:
       - name: Compile and independently exhaust small cases
         run: |
           mkdir -p codegarden/.build
-          g++ -O3 -std=c++17 codegarden/phase3/breakout.cpp -o codegarden/.build/breakout
-          python -B -u codegarden/phase3/test_breakout.py
+          g++ -O3 -std=c++17 codegarden/phase3/bundle_resume.cpp -o codegarden/.build/bundle
+          python -B -u codegarden/phase3/test_resume.py
           python -B -u codegarden/phase3/preflight.py
       - uses: actions/upload-artifact@v4
         with:
           name: codegarden-bundle-preflight
-          path: codegarden/artifacts/phase3/breakout_001/
+          path: codegarden/artifacts/phase3/resume10_001/
   probes:
     needs: preflight
     runs-on: ubuntu-latest
@@ -40,7 +40,7 @@ jobs:
       fail-fast: false
       max-parallel: 4
       matrix:
-        case: [0, 1, 2, 3, 4, 5, 6, 7]
+        case: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
     steps:
       - name: Fetch immutable source
         env:
@@ -49,18 +49,17 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: codegarden-bundle-preflight
-          path: codegarden/artifacts/phase3/breakout_001/
+          path: codegarden/artifacts/phase3/resume10_001/
       - name: Compile and run bounded component
         run: |
           mkdir -p codegarden/.build
-          g++ -O3 -std=c++17 codegarden/phase3/breakout.cpp -o codegarden/.build/breakout
-          g++ -O3 -std=c++17 codegarden/phase3/bundle_guard.cpp -o codegarden/.build/bundle
-          python -B -u codegarden/phase3/breakout_probe.py --case ${{ matrix.case }}
+          g++ -O3 -std=c++17 codegarden/phase3/bundle_resume.cpp -o codegarden/.build/bundle
+          python -B -u codegarden/phase3/resume10_probe.py --case ${{ matrix.case }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: codegarden-bundle-${{ matrix.case }}
-          path: codegarden/artifacts/phase3/breakout_001/
+          path: codegarden/artifacts/phase3/resume10_001/
   collect:
     needs: [preflight, probes]
     if: always()
@@ -75,13 +74,13 @@ jobs:
         with:
           pattern: codegarden-bundle-*
           merge-multiple: true
-          path: codegarden/artifacts/phase3/breakout_001/
+          path: codegarden/artifacts/phase3/resume10_001/
       - name: Publish leased results
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python -B -u codegarden/phase3/publish_breakout.py
+        run: python -B -u codegarden/phase3/publish_resume10.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: codegarden-bundle-collected
-          path: codegarden/artifacts/phase3/breakout_001/
+          path: codegarden/artifacts/phase3/resume10_001/
