@@ -1,0 +1,91 @@
+{
+  "source_sha": "7f821170ebc3f5bef89fd1eb185110ace7442235",
+  "mode": "benchmark8",
+  "starting_verification": {
+    "accepted": true,
+    "cardinality": 226,
+    "reports": [
+      {
+        "cardinality": 226,
+        "distinct_descendants": 6410,
+        "length": 16,
+        "method": "distinct_string_two_deletions",
+        "valid": true,
+        "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+      },
+      {
+        "cardinality": 226,
+        "largest_pairwise_lcs": 13,
+        "length": 16,
+        "method": "independent_dynamic_programming_lcs",
+        "pairs_checked": 25425,
+        "valid": true,
+        "witness_sha256": "417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa"
+      }
+    ]
+  },
+  "rows": [
+    {
+      "found": false,
+      "complete": true,
+      "cpu_seconds": 73.4647,
+      "nodes": 1114979631,
+      "closed_blocker_sets": 13821316,
+      "cache_hits": 4561242,
+      "retained_closed_keys": 449570,
+      "cache_evictions": 13371746,
+      "k": 8,
+      "n": 16,
+      "memory_limited": false,
+      "budget_limited": false,
+      "neutral_cap_reached": false,
+      "root_shard": 0,
+      "root_shards": 1,
+      "completed_roots": 47591,
+      "active_root": -1,
+      "last_finished_root": 47590,
+      "learned_groups": 0,
+      "learned_prunes": 0,
+      "candidate_count": 47591,
+      "profiled_bitset_bytes": 380779200,
+      "removed": [],
+      "added": [],
+      "neighbors": [],
+      "scope": "All outside words with at most k incumbent blockers; connected improving bundles suffice by the disjoint-blocker-component lemma. Complete is false on every time/node/memory/neighbor cap.",
+      "pool_order_sha256": "2c373c922fd158f2668a1219efbbdf0ecfcf5002bd42dbb4d7e6f5b9c2332be5",
+      "binary": "guard_old"
+    },
+    {
+      "found": false,
+      "complete": true,
+      "cpu_seconds": 66.7544,
+      "nodes": 1114979631,
+      "closed_blocker_sets": 13821316,
+      "cache_hits": 4561242,
+      "retained_closed_keys": 449570,
+      "cache_evictions": 13371746,
+      "k": 8,
+      "n": 16,
+      "memory_limited": false,
+      "budget_limited": false,
+      "neutral_cap_reached": false,
+      "root_shard": 0,
+      "root_shards": 1,
+      "completed_roots": 47591,
+      "active_root": -1,
+      "last_finished_root": 47590,
+      "learned_groups": 0,
+      "learned_prunes": 0,
+      "candidate_count": 47591,
+      "profiled_bitset_bytes": 380779200,
+      "removed": [],
+      "added": [],
+      "neighbors": [],
+      "scope": "All outside words with at most k incumbent blockers; connected improving bundles suffice by the disjoint-blocker-component lemma. Complete is false on every time/node/memory/neighbor cap.",
+      "pool_order_sha256": "2c373c922fd158f2668a1219efbbdf0ecfcf5002bd42dbb4d7e6f5b9c2332be5",
+      "binary": "bundle"
+    }
+  ],
+  "best_verified": 226,
+  "scope": "The early union-size guard is semantically identical. Sequential old/new benchmark on one runner; one case only, no broad speed claim. Larger timeouts remain open."
+}

@@ -1,0 +1,68 @@
+
+Starting CP-SAT solver v9.14.6206
+Parameters: random_seed: 1231001 max_time_in_seconds: 60 log_search_progress: true cp_model_presolve: false num_search_workers: 1 log_to_stdout: false
+
+Initial optimization model '': (model_fingerprint: 0x5a5c8104e9f98941)
+#Variables: 3'993 (#bools: 226 in objective) (3'767 primary variables)
+  - 3'993 Booleans in [0,1]
+#kAtMostOne: 16'087 (#literals: 111'475)
+#kExactlyOne: 226 (#literals: 3'993)
+
+Starting presolve at 0.00s
+The solution hint is complete and is feasible. Its objective value is 2.
+
+Presolve summary:
+  - 0 affine relations were detected.
+
+Presolved optimization model '': (model_fingerprint: 0x65c7819ccc0822d6)
+#Variables: 3'993 (#bools: 226 in objective) (3'767 primary variables)
+  - 3'993 Booleans in [0,1]
+#kAtMostOne: 16'087 (#literals: 111'475)
+#kExactlyOne: 226 (#literals: 3'993)
+[Symmetry] Graph for symmetry has 21'281 nodes and 117'086 arcs.
+[Symmetry] Symmetry computation done. time: 0.00489908 dtime: 0.00859492
+
+Preloading model.
+#Bound   0.02s best:inf   next:[0,226]    initial_domain
+#1       0.02s best:2     next:[0,1]      complete_hint
+
+Starting search at 1.10s with 1 workers.
+1 full problem subsolver: [main]
+
+
+Task timing           n [     min,      max]      avg      dev     time         n [     min,      max]      avg      dev    dtime
+      'main':         1 [  59.34s,   59.34s]   59.34s   0.00ns   59.34s         1 [   2.96m,    2.96m]    2.96m   0.00ns    2.96m
+
+Search stats    Bools  Conflicts   Branches  Restarts   BoolPropag  IntegerPropag
+       'main':  3'993    669'467  3'494'413   189'266  348'662'377     12'682'263
+
+SAT stats    ClassicMinim  LitRemoved  LitLearned  LitForgotten  Subsumed  MClauses  MDecisions  MLitTrue  MSubsumed  MLitRemoved  MReused
+    'main':       533'999  39'248'303  79'722'120    76'219'601     1'551    64'772     851'987         0     29'015      389'088    1'850
+
+Solutions (1)       Num   Rank
+  'complete_hint':    1  [1,1]
+
+Objective bounds     Num
+  'initial_domain':    1
+
+Solution repositories    Added  Queried  Synchro
+  'feasible solutions':      1        0        1
+   'fj solution hints':      0        0        0
+
+CpSolverResponse summary:
+status: FEASIBLE
+objective: 2
+best_bound: 0
+integers: 242
+booleans: 3993
+conflicts: 669467
+branches: 3494413
+propagations: 348662377
+integer_propagations: 12682263
+restarts: 189266
+lp_iterations: 0
+walltime: 60.4378
+usertime: 60.4378
+deterministic_time: 177.648
+gap_integral: 0
+solution_fingerprint: 0x77c2dc90d1817957

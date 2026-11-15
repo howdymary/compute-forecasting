@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-15T09:21:00Z",
+  "updated_at": "2026-11-15T10:42:00Z",
   "target_achieved": false,
   "best_found": 226,
   "best_independently_verified": 226,
@@ -11,67 +11,96 @@
   },
   "new_consolidated": [
     {
-      "prefix": "learned_native_001",
-      "branch": "codegarden-learned-003",
-      "commit": "599bdf0d053b3b82e8c9b91905808c149b966fc8",
-      "files": 11
+      "prefix": "guard_001",
+      "branch": "codegarden-guard-003",
+      "commit": "3d5ed9c0dd5289049db2fe7c0596d540396e6628",
+      "files": 6
     },
     {
-      "prefix": "sharded9_001",
-      "branch": "codegarden-modal-007",
-      "commit": "a5d32e060801c46e4697d5ef3754b942d663c013",
-      "files": 39
+      "prefix": "hamming_csp_001",
+      "branch": "codegarden-hamming-csp-003",
+      "commit": "8a4842dd9880d1f255eca35573d3fc86458d3b90",
+      "files": 12
     },
     {
-      "prefix": "sharded10_001",
-      "branch": "codegarden-modal-008",
-      "commit": "c2ee2a013fc172cd3f08c2ada68d6994d1b28c43",
-      "files": 22
+      "prefix": "hamming_soft_001",
+      "branch": "codegarden-hamming-soft-003",
+      "commit": "f864ea86dea049e012c7ad2086b0acc57e7639f0",
+      "files": 36
     },
     {
-      "prefix": "weight_band_001",
-      "branch": "codegarden-weight-band-004",
-      "commit": "9f0ef5f48a11756bf7fb769198919aa5577422a7",
-      "files": 42
+      "prefix": "hamming_diag_001",
+      "branch": "codegarden-hamming-diag-003",
+      "commit": "0c9219fbbdafe79ee67804632553f3d353c30001",
+      "files": 16
     },
     {
-      "prefix": "neutral8_order_001",
-      "branch": "codegarden-neutral8-order-004",
-      "commit": "dbd7bd9cf8f7d017eafb4494e14f89c3bc2120dd",
-      "files": 20
+      "prefix": "arc_hamming_001",
+      "branch": "codegarden-arc-hamming-003",
+      "commit": "9eb2ccf29d96bf0e91fcb00ffd72ec2b40e07355",
+      "files": 140
     },
     {
-      "prefix": "pool_bridge_001",
-      "branch": "codegarden-pool-bridge-003",
-      "commit": "b7b3a9d8343962cff2e433fae333d7c2732fdf9b",
-      "files": 44
+      "prefix": "revisit_frontiers_001",
+      "branch": "codegarden-revisit-003",
+      "commit": "f4baae37f1a59debbe683a52aac7bccfd5500fd9",
+      "files": 836
     },
     {
-      "prefix": "pool_widen_001",
-      "branch": "codegarden-pool-widen-003",
-      "commit": "6ae0e080e328eafb40999145a1bfe0215aa5e226",
-      "files": 34
+      "prefix": "exact_lns_001",
+      "branch": "codegarden-exact-lns-003",
+      "commit": "da881e369d12cca2b2ef68755ceef76bcb398982",
+      "files": 36
     },
     {
-      "prefix": "scip_bridge_001",
-      "branch": "codegarden-scip-bridge-003",
-      "commit": "eaf524f26de527ba863b139d4c41f8df4cc68ee6",
-      "files": 18
+      "prefix": "tensor_cpu_001",
+      "branch": "codegarden-tensor-cpu-003",
+      "commit": "1274f26c69c8025e9523485cf47c3841d22128a5",
+      "files": 6
+    },
+    {
+      "prefix": "tensor_cpu_002",
+      "branch": "codegarden-tensor-cpu-004",
+      "commit": "c3a36849d484bba61e937eb703bef5955fcf6246",
+      "files": 8
+    },
+    {
+      "prefix": "tensor_cpu_004",
+      "branch": "codegarden-tensor-cpu-006",
+      "commit": "4a343c888664de41e8028695bfe51e2dd97fbbdd",
+      "files": 64
+    },
+    {
+      "prefix": "long_snapshot_001",
+      "branch": "codegarden-observer-003",
+      "commit": "57ef051c63a4d9c97c57716e272e8e7bfb9d6a9b",
+      "files": 17
+    },
+    {
+      "prefix": "long_snapshot_002",
+      "branch": "codegarden-observer-004",
+      "commit": "4bcda9198795497793a13021a4dcdb7c88c08967",
+      "files": 17
     }
   ],
-  "previous_main": "9dcf27328af18baac0fcb26949f42c0df68aa5ce",
+  "previous_main": "9cb316446b6b2f5bd3f97eb3a2b7c9f9a0fa61de",
   "completed_root_radius": 9,
   "formal_absence_proof": false,
   "active": [
     {
-      "branch": "codegarden-guard-003",
-      "source": "7f821170ebc3f5bef89fd1eb185110ace7442235",
-      "run": 43698725107
-    },
-    {
       "branch": "codegarden-modal-009",
       "source": "9e02d5fbec4b5bef09c05f3182dc6f7109ea1090",
       "run": 43698542525
+    },
+    {
+      "branch": "codegarden-breakout-003",
+      "source": "e735ac81161b7abef89428919a343633790d5d3f",
+      "run": 43704958395
+    },
+    {
+      "branch": "codegarden-resume10-003",
+      "source": "06000bb4fd75dda6cbdd442e10adf062093d501f",
+      "run": 43705132167
     }
   ],
   "accounting": {
@@ -84,7 +113,73 @@
     "modal_old_holds": 141.76,
     "modal_long_reservation": 7.22,
     "modal_cap": 150,
-    "modal_account_wide_metering": 2.72021913,
-    "not_attributed_spend": true
-  }
+    "modal_account_wide_metering": 3.12021913,
+    "not_attributed_spend": true,
+    "pending_gpu_maximum": 0.868,
+    "maximum_held_if_executed": 149.848,
+    "retry_audit": {
+      "snapshot_at": "2026-11-15T10:13:25.311257+00:00",
+      "source_sha": "9e02d5fbec4b5bef09c05f3182dc6f7109ea1090",
+      "max_containers": 8,
+      "cpu_hard_limit": 1,
+      "memory_gib_hard_limit": 1,
+      "controller_timeout_seconds": 9000,
+      "shutdown_guard_seconds": 600,
+      "maximum_region_multiplier": 1.75,
+      "extra_nonpreemptible_sensitivity_multiplier": 3,
+      "base_rate_per_resource_second": 0.000015361111111111113,
+      "conservative_whole_batch_bound_usd": 6.693600000000001,
+      "reservation_held_usd": 7.22,
+      "covered": true,
+      "duplicate_logical_case": 2,
+      "duplicate_cause": "Unresolved; do not assume an extra independent case or count missing progress as failure",
+      "evaluation": "Pair containing case2 must be censored or include recovered attempt CPU overhead before a matched-total-compute claim."
+    }
+  },
+  "latest_findings": {
+    "revisit": {
+      "states": 412,
+      "upgrades": 0,
+      "radius6_completed": 412,
+      "radius7_completed": 153,
+      "radius7_remainder": "timeouts; no impossibility"
+    },
+    "arc_hamming": {
+      "pivots": 128,
+      "status": "all CP-SAT UNKNOWN",
+      "independent_pruning_replay": true
+    },
+    "hamming_diagnostic": {
+      "pivot": 7932,
+      "hard_default": "UNKNOWN",
+      "hard_no_presolve": "UNKNOWN",
+      "soft_default": 225,
+      "soft_no_presolve": 225,
+      "seconds_per_config": 60
+    },
+    "exact_lns": {
+      "cases": 8,
+      "cpu_seconds_per_case": 180,
+      "new226_orbits": 0,
+      "scope": "Repeated finite repairs; aggregate exact-negative counts do not count unique neighborhoods"
+    },
+    "tensor_cpu4": {
+      "native_steps": 13800,
+      "wall_seconds": 300.03513071399993,
+      "min_raw_energy": 2,
+      "quota_min_raw_energy": 11,
+      "projections_verified": 57,
+      "new226_orbits": 0,
+      "scope": "Positive energy invalid; known226 recovery only",
+      "cli_issue": "--steps parsed but not forwarded in frozen prototypes; actual recorded step counts are authoritative. Current source fixes forwarding."
+    }
+  },
+  "pending": [
+    {
+      "branch": "codegarden-research-gpu-003",
+      "source": "0221384cb28b67be89565a01fe17d5f97fbcb084",
+      "run": 43704414840,
+      "gate": "Wait for current paid coordinator; actual provider balance, shared holds, memory gate, protected math tests, then measured GPU speedup"
+    }
+  ]
 }

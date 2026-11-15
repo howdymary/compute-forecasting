@@ -1,3 +1,35 @@
+# CodeGarden research status — 15 November, 10:42 UTC
+
+**Best found and independently verified: 226 distinct words. The 227-word objective remains open. No new global record is claimed.**
+
+## New findings since 09:21 UTC
+
+- Revisited **412 symmetry-distinct saved codes** (402 of size225, six224, four223) with a faster exact connected-exchange kernel. All412 radius-six neighborhoods completed; 153 radius-seven neighborhoods completed and the remainder reached their per-neighborhood CPU caps. **No upgrade** was found. A timeout is not infeasibility.
+- A collective Hamming-radius-one mutation model tested128 fixed extra-word pivots. Independent literal-string arc-consistency replay validated its pruning; all128 subsequent20-second CP-SAT runs returned **UNKNOWN**. The restricted family has not been proved infeasible.
+- A same-runner60-second comparison at pivot7932 toggled CP-SAT presolve in hard and soft formulations. Both hard runs returned UNKNOWN; both soft runs exported a valid225-word code. Hard runs visited2.67–2.70million branches, so lack of search was not the explanation. Different soft branch counts did not produce a larger construction.
+- Eight compiled large-neighborhood runs used180nativeCPU seconds each. Random removal and opportunity-driven removal repeatedly solved full compatible repair pools of at most512 words, with explicit caps and sampled scoped-negative logs. They found **no new226 orbit** or227 witness. Repeated exact-negative counts are not counts of unique experiments.
+- Sparse tensor search retained227 distinct words while allowing collisions. Its minimum raw energy was2; quota-constrained replicas reached11. **All positive-energy states are invalid.** The corrected projection exporter independently verified57 explicit projections; all226 projections recovered known codes.
+- The prototype CLI parsed `--steps` but failed to forward it. Frozen run logs record the actual13800/14006 steps in300wall seconds; these were **not**3030-step matched experiments. The current source forwards the parameter and records best-state step indices separately from restart counters. The active frozen GPU coordinator imports the search function directly and does not use that CLI path.
+- The early blocker-union guard preserved the exact test's1,114,979,631nodes while reducing same-runner radius-eight CPU time73.465→66.754seconds. This single comparison is not a general speed guarantee.
+
+## Work currently running or queued
+
+The long Modal batch is still running eight logical fixed/adaptive cases from two225-word families. A read-only snapshot at10:13 found an extra directory for logical case2. Its cause remains unresolved; the affected pair is **censored from matched total-compute claims** unless lost-attempt overhead is recovered. The7.22USD hold covers the retry-aware hard resource/time envelope; no hold has been released.
+
+The new fixed-cardinality **breakout tabu** test maintains exact incremental descendant collision costs, uses tabu tenure and optional adaptive conflict penalties, and projects candidate states through the protected verifiers. Its480 random small-state update checks passed before the bounded search workers started. A separate radius-ten continuation replays interrupted roots from the prior run, changes disjoint root residues8→32, and retains all compatible suffix candidates. Its root-range partition tests must pass before substantive search.
+
+The next paid coordinator is queued behind the existing one. It uses separate frozen model contexts for analyst, researcher and strategist, actual past.dev retrieval/write calls, two Exa queries, and Tinker strategy selection. A CPU/GPU profile gate permits the single bounded T4 experiment only after a measured speedup of at least1.5. These are scheduled capabilities until their published evidence exists.
+
+## Verification and credit boundaries
+
+The unchanged protected descendant and independent LCS checkers are the acceptance authority. A valid positive witness must be explicit plain text and pass both. The reproduced226-word incumbent remains SHA-256 `417e3dab220270af47121962faa0af62d37d77668f79d1b38889fcc7e4a63efa`.
+
+Conservative Modal holds remain148.98USD, including old unresolved holds. The queued profile/experiment maximum is0.868USD, bringing the conditional total to149.848under the150cap. Account-wide metering of3.12021913USD is **not attributed CodeGarden spend** and has not been used to release holds. Other-project and independent-verification reserves remain protected. No new billable reservations after11:45UTC under this allocation; it expires12:00UTC.
+
+All new source and completed artifacts are under `codegarden/`. The main branch's launcher and both protected verifiers are unchanged by this consolidation. Detailed pins are in the adjacent JSON. Below is the earlier campaign detail, retained with its original09:21 timestamp; its older active-run list is superseded by this update.
+
+---
+
 # CodeGarden phase-three progress — research ongoing
 
 Updated 2026-11-15 09:21 UTC. **Target not achieved. Best independently verified code: 226 distinct words.** No 227-word witness or new global-record claim.

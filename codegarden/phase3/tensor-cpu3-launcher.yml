@@ -1,0 +1,47 @@
+name: CodeGarden quota-diversified tensor CPU prototype
+on:
+  push:
+    branches: [codegarden-tensor-cpu-005]
+    paths: [.github/workflows/codegarden.yml]
+permissions:
+  contents: write
+concurrency:
+  group: codegarden-free-tensor-cpu
+  cancel-in-progress: false
+env:
+  SOURCE_SHA: ${{ github.sha }}
+  PYTHONDONTWRITEBYTECODE: '1'
+  CODEGARDEN_BATCH: tensor_cpu_003
+jobs:
+  cpu:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install isolated CPU-only tensor runtime
+        run: |
+          python -m venv codegarden/.venv
+          codegarden/.venv/bin/python -m pip install torch==2.8.0 --index-url https://download.pytorch.org/whl/cpu
+      - name: Check exact tensor energies and weighted derivatives against literal string descendants
+        run: |
+          python -B -u codegarden/phase3/preflight.py
+          codegarden/.venv/bin/python -B -u codegarden/phase3/tensor_search3.py --action test
+          codegarden/.venv/bin/python -B -u codegarden/phase3/tensor_search3.py --action profile
+          codegarden/.venv/bin/python -B -u codegarden/phase3/tensor_search3.py --action search --seconds 300 --steps 3030
+          python -B -u codegarden/phase3/project_tensor2.py --batch tensor_cpu_003
+      - name: Publish bounded CPU evidence
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -B -u codegarden/phase3/publish_tensor_cpu3.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: codegarden-tensor-cpu
+          path: codegarden/artifacts/phase3/tensor_cpu_003/
