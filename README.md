@@ -1,137 +1,162 @@
-# Compute Forecast
+# MOCHI: Autonomous Robot Policy Optimization
 
-**A GPU-value research notebook: rental history, archived forecasts and conditional capital economics.**
+Mochi investigates failed robot actions, searches for a better controller, and tests the change in simulation. Four model-driven roles handle research, policy design, experimentation, and criticism. A miniature humanoid shows the resulting motion in a desk scene.
 
-Explore advertised rental prices, inspect an archived forecast, and see how explicit assumptions change longer-term pricing paths. The research atlas connects saved model checkpoints, forecast scores, uncertainty, and actual experiment-selection decisions.
+[Live demo][demo] · [Mochi source][code] · [Expanded experiment][expanded-run] · [Architecture][architecture]
 
-[Prospective signals](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/#signals) · [GPU value and shared research memory](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/#value) · [Explore the notebook](https://howdymary--compute-forecast-observatory-web.us-east.modal.run) · [Research atlas](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/#research) · [Results and downloads](results/README.md) · [Methods](docs/README.md)
+**Code location:** the Mochi project is in `mochi/` on the **`mochi-hackathon`** branch. The clone command below selects that branch.
 
-![Matching historical prices and actual archived forecast points](docs/images/timeline-v7-1512-timeline.png)
+![Mochi's original mechanical humanoid design on a desk][robot-image]
 
-*Actual permitted history and the unchanged November 6 submission. Missing dates remain missing; the forecast contains only the submitted 1/3/7-day points. Screenshots come from the verified deployed application.*
+*The mechanical humanoid is a visual design around a supported manipulation experiment. The evaluated task is puck pushing; the bowling props are a proposed task.*
 
-## Historical prices and the archived forecast
+## The research loop
 
-Explore now opens on a source-matched timeline: licensed daily history in ink, the unchanged submitted quantiles in cobalt, a marked November6 cutoff, and a full-history overview. Inspect2-week,1-month,3-month or all-history windows; hover, touch or use the keyboard to pin exact source-bound points.36 of37 histories are approved for publication; the remaining forecast is shown with its history withheld. [Controls, provenance and limitations](docs/timeline-v7.md).
+Mochi pushes a puck toward a target ring. After a failed attempt, the system searches for a mechanism that could explain the failure, proposes bounded controller changes, and evaluates candidates across environment seeds. A model critic reviews the evidence; a deterministic improvement gate can veto acceptance.
 
-## What you can explore
+```mermaid
+flowchart LR
+    A[MuJoCo failure] --> B[Researcher: Exa search]
+    B --> C[Designer: controller candidates]
+    C --> D[Experimenter: Modal rollouts]
+    D --> E[Critic and numerical gate]
+    E --> F[past.dev findings]
+    F --> B
+    D --> G[Recorded poses: Blender and Three.js]
+```
 
-- **Matching benchmark history.** 3,204 permitted observations across 36 of the 37 exact submitted target series, with the November 6 cutoff and unchanged forecast points. The remaining marketplace-ask history stays withheld under a source-specific caveat. [Publication decision](docs/DATA_SOURCES.md).
-- **Independent historical context.** Independently licensed A100 40GB and T4 hyperscaler-spot series: 234 observed dates each, January 12–November 6, 2026, with 65 missing calendar dates. Gaps remain visible. This context failed the strict numerical-identity check against competition targets and is never stitched to their forecasts.
-- **Archived benchmark forecasts.** The exact November 6, 2026 submission: 37 headline series, 111 rows, 1/3/7-day horizons, and q10/q50/q90. This is an archived forecast, not a live quote.
-- **Long-term economics.** Archived H100/A100 rental anchors, 24/36-month operating cashflows, operating break-even utilization and an income-based residual proxy. Adjustable assumptions and explicit discounting keep this separate from observed resale prices. The original index-100 rental/resale scenarios remain available.
-- **Research results.** Actual checkpoint curves, matched controls, coverage versus interval width, paired action traces, and separate accounting for cached reveals, fresh executions, optimizer updates, time, and partial provider receipts.
+The policy-editing interface can select controller families and change bounded parameters. The simulator, success verifier, and evaluation scenarios remain outside that interface. The selected policy is frozen before held-out evaluation.
 
-![Saved checkpoint trajectories and uncertainty comparisons in the research atlas](docs/images/research-atlas.png)
+The demo replays completed experiments. Research sources, controller changes, critic decisions, and memory handoffs are linked to their execution records.
 
-## Pacific value study and shared memory
+## Robot and control system
 
-The [GPU value notebook](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/#value) now joins permitted **matching** history to actual submitted forecast points. It keeps independent historical context separate.
-
-The unchanged official starter was rerun on the same 12-cell retrospective A100 cohort. Empirical persistence and drift both score **0.01326771**, versus **0.01590833** for last value. These are matched integrity checks, not new untouched test results or the full competition leaderboard.
-
-The long-term explorer makes the economic mechanism inspectable: advertised rate → realized revenue assumption → utilization and operating costs → discounted operating income and a separate tail-income residual proxy. The annual paths are assumptions, not estimates inferred from news. [Equations, source evidence and conditional results](docs/pacific-value-v5.md).
-
-**past.dev is verified:** three distinct roles wrote, three read, and six cross-role recalls supplied records used in actual research tasks. A scientist tested a workload-specific rental/throughput ratio; a skeptic flagged unmatched provider populations. The final publication action did not change. No forecasting gain from memory is claimed. [Authorship, actual recall receipts, setup diagnosis and storage map](docs/past-dev-memory.md).
-
-The first v5 setup failed because a 44-character audience ID exceeded past.dev's 40-character limit. The ID is now 30 characters, errors retain sanitized receipts, and a failed memory gate fails the workflow. [Successful execution](https://github.com/howdymary/compute-forecasting/actions/runs/43758970371) · [Isolated API regression check](results/value-v5/runs/43759581339/setup-diagnostic.json).
-
-![Verified multi-agent memory used in the GPU-value research loop](docs/images/value-v5-memory.png)
-
-## Prospective signals: now collecting real future evidence
-
-A separate [registered signals study](docs/prospective-signals-v6.md) captures fresh provider quotes, dated primary announcements and BLS vintages. The November15 source check succeeded for four exact A100/H100 contracts. These are separate from competition medians and independently licensed Hubbard context.
-
-At21:30UTC on November15, the system issued **48 cold-start reference forecasts** for November16/18/22 and anchored them on GitHub. They are excluded from the signal-value test. All outcomes remain pending.
-
-Eight fixed feature combinations compare news, infrastructure and BLS against an identical price-only learner. The26 weekly origins, maturity gates, failed-data behavior, uncertainty analysis and incumbent rule are registered. A deployed Modal scheduler collects and evaluates; primary models wait for56 actual retained price days and32 matured examples.
-
-The new memory run completed three writers, three readers and five cross-role uses. After criticism, the scientist changed its next executed check from informative-history coverage to BLS revision capture. Four actual Tinker planning decisions were made; no new optimization or accuracy gain is claimed.
-
-**The experiment is running; prospective improvement is not yet established.**
-
-[Initial commitments and source receipts](results/signals-v6/runs/43763941660/index.json) · [Actual memory sequence](results/signals-v6/runs/43764698758/memory.json) · [Registered protocol](configs/prospective-signals-v6.json).
-
-## What the research found
-
-The two policy studies have different evaluation scopes and must not be pooled.
-
-| Study | Comparison | Pinball loss ↓ | Evaluation scope |
-| --- | --- | ---: | --- |
-| Frozen v1 | Starting policy | 0.01735406 | 30 cells across five dependent dates |
-| Frozen v1 | Selected SFT policy | 0.01781945 | Same cells; **2.68% worse** |
-| Expanded v2 | Starting selector | 0.01499533 | 12 eligible cells across three dependent dates |
-| Expanded v2 | Development-selected operational SFT | 0.01156980 | Same cells; **22.84% lower** |
-| Additional control | Fixed zero-shot Chronos-2 | 0.01211355 | Same 12 cells; additional retrospective comparison |
-
-The expanded campaign completed **six SFT runs / 600 optimizer updates** and **three RL runs / 99 updates**. All three RL selections returned update zero, their frozen SFT parent: there was **no incremental RL gain**.
-
-Feedback-hidden controls tie in forecast loss in five of six SFT runs. Some tied runs nevertheless change their action sequences. Changed behaviour and improved forecasting are separate questions.
-
-The policy evaluations and retrospective Chronos control cover **A100 series only**. They do not establish H100 policy performance or general research intelligence. V2 reuses previously inspected dates; its improvement is not an untouched or prospective result. Three dependent dates do not establish population calibration.
-
-[Full campaign findings](docs/campaign-v2-findings.md) · [Frozen v1 representation findings](docs/representation-findings.md) · [Chronos control and publication audit](docs/research-explorer-v3.md)
-
-## What the review adds
-
-The [Findings notebook](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/#research) decomposes the measured gain by GPU, origin and horizon. A hash-verified replay finds that the operational SFT policy tests the same four tree configurations on all four evaluation tasks: feedback changes order, while the selected configurations and losses remain the same. This is a post-hoc explanation, not a preregistered portfolio win. Raw prediction equality remains unavailable.
-
-A fresh November 15 source capture still ends on November 6 for both licensed series; prospective issuance requires compatible fresher observations.
-
-The new 48-episode evidence/criticism diagnostic found no improvement from relevant evidence for frozen SFT; criticism worsened its score. An 18-cell retrospective interval diagnostic lowered loss with wider intervals. Future selector and interval outcomes remain pending, and further training is gated on broader informative tasks.
-
-[Executed v4 findings](docs/review-v4-findings.md) · [Forward-only market context](docs/market-context-v4.md) · [Credential-free operation checks](.github/workflows/verify-public-v4.yml)
-
-[Review v4 methods and remote workflows](docs/review-v4.md) · [Mechanism and contribution data](results/review-v4/findings.json) · [Registered prospective panel](configs/prospective-selector-v4.json)
-
-![Exact matched research contributions and source-bound margin note](docs/images/review-v4-contributions.png)
-
-## Inspect the evidence without credentials
-
-The [results directory](results/README.md) contains versioned, hash-indexed snapshots of the official forecast, numerical summaries, checkpoints, paired traces, contextual history, and scenario assumptions. Raw competition offers, restricted source excerpts, private model paths, and credentials are excluded.
-
-- [Official forecast CSV](results/frozen-v1/forecasts.csv)
-- [Expanded campaign results](results/expanded-v2/summary.json)
-- [Chronos-2 control and future commitment](results/explorer-v3/chronos-control.json)
-- [Historical context, permissions, and paired traces](results/explorer-v3/history-and-traces.json)
-- [Artifact checksums and provenance](results/manifest.json)
-
-A separate **14-series / 42-row prospective commitment** targets November 16, 18, and 22, 2026. Outcomes remain pending. The locked evaluator cannot score before November 23 UTC and additionally requires verified compatible outcome data. Both comparators use the same stale November 6 snapshot.
-
-## Reproduce and validate
-
-The interface uses HTML, CSS, JavaScript, and SVG, served by FastAPI on Modal. Numerical tools score forecasts deterministically; a Tinker-trained Qwen policy selects bounded experiment configurations. Exa retrieves dated primary evidence; past.dev connects evidence, deterministic experiments, criticism and next decisions. This current-research loop is separate from historical benchmark inputs.
-
-A credential-free pack-based command reproduced the official CSV byte for byte in [remote run 43758970357](https://github.com/howdymary/compute-forecasting/actions/runs/43758970357):
-
-~~~sh
-python -m compute_forecast.reproduce_pacific_v5 --pack /path/to/gpu-price-pack-v0.1.1-handover --out /path/outside-pack/reproduction
-~~~
-
-After installing this package and the pack's starter requirements, this command checks all 672 manifest entries and preserves the source pack. To verify published arithmetic without the pack or provider accounts, run `python -m compute_forecast.verify_value_v5`. [Passed public reconstruction](https://github.com/howdymary/compute-forecasting/actions/runs/43759952952).
-
-1. Start with the [reproduction guide](docs/campaign-v2-reproduction.md) and [frozen v1 protocol](docs/protocol.md).
-2. Numerical reruns require the separately obtained, unchanged source pack. Training additionally requires Tinker access; saved private checkpoints are not bundled here.
-3. Configure the documented GitHub Actions secrets and use the remote workflows on `compute-observatory`. The workflows verify source hashes, archive manifests, cutoffs, and output contracts.
-4. Audit the committed snapshots without accounts, or reproduce recorded decisions from the [derived research archive](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/experimental/downloads/43677783872.zip). New training is stochastic and should receive its own run identity.
-
-The timeline release passed **150 foundation tests**, with three skips, and all eight UI suites. [Current timeline validation and PNG provenance](results/timeline-v7/ui-publication.json). [V5 validation](https://github.com/howdymary/compute-forecasting/actions/runs/43760739987) checks matching history, exact quantiles, economic calculations, eight concurrent value/memory reads, immutable pins, keyboard/touch controls and widths 1512, 390 and 320. [Current PNG and validation provenance](results/value-v5/ui-publication.json). Earlier v4 checks remain linked below. [Pricing](https://github.com/howdymary/compute-forecasting/actions/runs/43755238685), [Findings](https://github.com/howdymary/compute-forecasting/actions/runs/43755238539), [notebook](https://github.com/howdymary/compute-forecasting/actions/runs/43755238564), [experimental](https://github.com/howdymary/compute-forecasting/actions/runs/43755238561), and [research-explorer](https://github.com/howdymary/compute-forecasting/actions/runs/43755238565) checks passed. Desktop and mobile PNGs were inspected; layout and interaction checks passed at 1512, 390 and 320 pixels. The stress check retains eight simultaneous callers, exact numerical assertions and zero automatic retries. [Image and validation provenance](results/review-v4/ui-publication.json).
-
-## Repository guide
-
-| Directory | Contents |
+| Component | Implementation |
 | --- | --- |
-| [src/compute_forecast](src/compute_forecast) | Forecasting, policy training, evaluation, publication, and interface code |
-| [configs](configs) | Registered experiments, immutable selection boundaries, and model revisions |
-| [results](results/README.md) | Public numerical snapshots, forecast exports, and provenance |
-| [docs](docs/README.md) | Methods, findings, related work, data definitions, and reproduction guides |
-| [tests](tests) | Cutoff, scoring, publication, and contract checks |
-| [.github/workflows](.github/workflows) | Remote experiments, validation, artifact publication, and deployment |
+| Task | Push a puck into a target ring across varied starting positions, friction, and mass |
+| Physics | MuJoCo 3.3.7, 500 Hz simulation |
+| Control | State-based inverse kinematics and actuator control at 50 Hz; three actuated right-arm joints |
+| Policy search | Controller-family selection and bounded speed, approach, contact-height, stopping, and feedback parameters |
+| Success | Within 2.8 cm of the target for at least 0.5 seconds, persisting through the terminal state and validity checks |
+| Episode | Six seconds |
+| Visualization | Three.js pose replay and Blender renders of recorded body positions and quaternions |
 
-## Sources and reuse
+This is supported upper-body manipulation with a simplified collision model. The legs and gripper details are visual elements. The project does not demonstrate walking, unsupported balance, dexterous grasping, newly trained neural motor policies, or transfer to a physical robot.
 
-The data measures **advertised rental offers**, not transactions, guaranteed capacity, or physical GPU resale prices. Provider/configuration normalization has established precedents, including [Silicon Data](https://www.silicondata.com/products/silicon-index) and [SemiAnalysis](https://semianalysis.com/gpu-pricing-index/).
+## Sponsor integrations
 
-Independent historical context is derived from [Alex Hubbard's GPU Price Tracker](https://github.com/alex-hubbard/gpu_price_tracker) under its explicit CC BY 4.0 data license. The verified current brief grants CC BY 4.0 on the compilation; approved matching v5 target histories are now published with component notices and attribution. The marketplace-ask history remains withheld under its specific caveat. Model, library, and data licenses apply independently; see [sources and publication rights](docs/DATA_SOURCES.md) and [attribution](NOTICE.md).
+| Service | Role in the system | Implementation |
+| --- | --- | --- |
+| **Exa** | Searches from observed failures inside the main research loop. Retrieved sources motivate controller-family choices and remain attached to the experiment record. | [`Services.search`][integrations], [research loop][research], [expanded loop][robustness] |
+| **Tinker** | Powers bounded decisions for all four roles: what to investigate, which controller family to test, which diagnostic to emphasize, and whether to accept a candidate. The expanded study used `Qwen/Qwen3.6-35B-A3B`. | [`Services.decide`][integrations], [`ExpandedServices`][robustness] |
+| **Modal** | Executes policy × environment-seed rollouts in parallel, with deterministic seeds, at most eight CPU workers, and per-rollout resource and duration records. | [Original workers][remote], [expanded workers][robustness] |
+| **past.dev** | Stores authored findings and supports cross-agent recall under explicit reader identities and audiences. A required source ID must be returned before the corresponding canonical artifact enters an agent's context. | [Memory adapters][integrations], [expanded ingestion and recall][robustness] |
 
-For citation metadata, see [CITATION.cff](CITATION.cff).
+The completed expanded study recorded **eight Exa searches, 33 Tinker decisions, 33 memory records, and 42 verified cross-agent reads**. Four identities both wrote and read. One of those reads repeated during checkpoint recovery.
+
+## Measured results
+
+Two studies use separate development and evaluation cohorts. Their results are reported separately.
+
+| Study and evaluation set | Starting controller | Research-selected controller | Conventional search |
+| --- | ---: | ---: | ---: |
+| Initial study: held-out, 12 scenarios | 2/12 | 8/12 | 6/12 |
+| Initial study: higher friction and mass, 8 scenarios | 2/8 | 1/8 | 6/8 |
+| Expanded study: held-out mixture, 64 scenarios | 22/64 | **55/64** | 58/64 |
+| Expanded study: high-friction/mass stress, 64 scenarios | 30/64 | **59/64** | 62/64 |
+
+The expanded controller achieved **85.9% held-out success** and **92.2% stress success**. Its 95% Wilson intervals were 75.4–92.4% and 83.0–96.6%, respectively. Both improve on the starting controller. Matched random search finished higher in both cohorts; these experiments do not establish a causal advantage from research or memory.
+
+The initial study completed **188 rollouts**. Its conventional control had access to a narrower controller family, which limits that comparison. The expanded study gives both search arms access to the same four families and the same parameter-sampling helper: **32 candidates × 24 development scenarios = 768 search rollouts per arm**.
+
+The expanded protocol contains **2,016 rollouts**. Checkpoint recovery repeated 24 initial rollouts, bringing actual execution to **2,040**. The artifact audit verifies all 2,016 archived protocol rows, numerical summaries, disjoint seed cohorts, hashes, and required source-verified memory reads. Failed attempts remain in the workflow history.
+
+[Initial execution][initial-run] · [Initial findings][initial-results] · [Expanded execution and downloadable artifact][expanded-run] · [Expanded method][expanded-method] · [Audit code][audit-expanded]
+
+## Run the demo locally
+
+Use Python 3.11. The committed replay works without provider API keys.
+
+```sh
+git clone --branch mochi-hackathon --single-branch https://github.com/howdymary/mochi-demo.git
+cd mochi-demo
+python3.11 -m venv mochi/.venv
+mochi/.venv/bin/python -m pip install './mochi[dev]'
+PYTHONPATH=mochi/src mochi/.venv/bin/python -m mochi.cli serve --port 8765
+```
+
+Open [localhost:8765](http://127.0.0.1:8765). The browser viewer uses public Three.js and font CDNs.
+
+Run the physics checks, audit the committed initial-study pack, or execute a local conventional controller search:
+
+```sh
+PYTHONPATH=mochi/src mochi/.venv/bin/python -m pytest mochi/tests -q
+mochi/.venv/bin/python mochi/scripts/audit_pack.py mochi/web/data
+PYTHONPATH=mochi/src mochi/.venv/bin/python -m mochi.cli demo --out mochi/artifacts/local
+```
+
+The local search has its own budget and results. It does not call sponsor services or replace the committed study.
+
+To audit the expanded study, download its completed Actions artifact:
+
+```sh
+gh run download 43769159917 --repo howdymary/mochi-demo --name mochi-robustness-43769159917 --dir mochi/artifacts/robustness-v2
+mochi/.venv/bin/python mochi/scripts/audit_robustness.py mochi/artifacts/robustness-v2/report.json
+```
+
+New service-connected experiments require the `remote` dependencies and backend environment variables `EXA_API_KEY`, `PAST_API_KEY`, `TINKER_API_KEY`, `MODAL_TOKEN_ID`, and `MODAL_TOKEN_SECRET`. Keys stay on the backend. See the [capability inventory][inventory] and [Mochi workflows][workflows] for the configured execution paths.
+
+## past.dev challenge
+
+### Agents
+
+The researcher writes sourced hypotheses and reads criticism. The designer reads research and writes candidate proposals. The experimenter reads proposals and writes measurements. The critic reads evidence and results, then writes a verdict that the researcher uses in its next task. Each role has its own instructions, identity, and working context.
+
+### Layers
+
+Agent prompts hold working context. past.dev holds authored findings and semantic evidence. Versioned Python defines procedures. JSON artifacts hold exact numerical payloads and trajectories. Recall must return the required source ID before the matching canonical artifact is supplied to the consumer.
+
+### Results
+
+The expanded study has four writers, four readers, 33 records, and 42 verified cross-agent recalls, including one recovery read. The initial study also passed a positive/negative critic-private canary test. That isolation test was not repeated in the expanded study.
+
+### Caveats
+
+No matched no-memory or no-search ablation has been completed. Verified handoffs demonstrate that memory was used; they do not establish that memory caused better policies. The synthetic isolation check covers one access boundary.
+
+## Repository map
+
+| Path on `mochi-hackathon` | Contents |
+| --- | --- |
+| [`mochi/src/mochi/`][source] | Simulation, policies, evaluation, research roles, service adapters, and API |
+| [`mochi/configs/`][configs] | Success criteria, seed cohorts, and experiment budgets |
+| [`mochi/web/`][web] | Animated research replay, source cards, comparison, and evidence interface |
+| [`mochi/assets/blender/`][assets] | Original procedural humanoid design |
+| [`mochi/scripts/`][scripts] | Rendering, replay export, publication, and artifact audits |
+| [`mochi/docs/`][docs] | Architecture, results, integration records, and limitations |
+| [`.github/workflows/`][workflows] | Mochi experiment, replay, and deployment workflows |
+
+Built for Track 5, Open Track, during the November 2026 research hackathon. Mochi's robot geometry and scene are original procedural assets. Dependency licenses and external research attribution are listed in the [project documentation][project-readme]. Earlier forecasting work remains in the repository history and other directories; Mochi's application lives under `mochi/`.
+
+[demo]: https://howdymary--mochi-policy-studio-web.us-east.modal.run/
+[code]: https://github.com/howdymary/mochi-demo/tree/mochi-hackathon/mochi
+[robot-image]: https://raw.githubusercontent.com/howdymary/mochi-demo/mochi-hackathon/mochi/web/design/desk.png
+[architecture]: https://github.com/howdymary/mochi-demo/blob/mochi-hackathon/mochi/docs/architecture.md
+[integrations]: https://github.com/howdymary/mochi-demo/blob/mochi-hackathon/mochi/src/mochi/integrations.py
+[research]: https://github.com/howdymary/mochi-demo/blob/mochi-hackathon/mochi/src/mochi/research.py
+[robustness]: https://github.com/howdymary/mochi-demo/blob/mochi-hackathon/mochi/src/mochi/robustness.py
+[remote]: https://github.com/howdymary/mochi-demo/blob/mochi-hackathon/mochi/src/mochi/remote.py
+[initial-run]: https://github.com/howdymary/mochi-demo/actions/runs/43762703104
+[initial-results]: https://github.com/howdymary/mochi-demo/blob/mochi-hackathon/mochi/docs/results.md
+[expanded-run]: https://github.com/howdymary/mochi-demo/actions/runs/43769159917
+[expanded-method]: https://github.com/howdymary/mochi-demo/blob/mochi-hackathon/mochi/docs/robustness-v2.md
+[audit-expanded]: https://github.com/howdymary/mochi-demo/blob/mochi-hackathon/mochi/scripts/audit_robustness.py
+[inventory]: https://github.com/howdymary/mochi-demo/blob/mochi-hackathon/mochi/docs/integrations.md
+[workflows]: https://github.com/howdymary/mochi-demo/tree/mochi-hackathon/.github/workflows
+[source]: https://github.com/howdymary/mochi-demo/tree/mochi-hackathon/mochi/src/mochi
+[configs]: https://github.com/howdymary/mochi-demo/tree/mochi-hackathon/mochi/configs
+[web]: https://github.com/howdymary/mochi-demo/tree/mochi-hackathon/mochi/web
+[assets]: https://github.com/howdymary/mochi-demo/tree/mochi-hackathon/mochi/assets/blender
+[scripts]: https://github.com/howdymary/mochi-demo/tree/mochi-hackathon/mochi/scripts
+[docs]: https://github.com/howdymary/mochi-demo/tree/mochi-hackathon/mochi/docs
+[project-readme]: https://github.com/howdymary/mochi-demo/blob/mochi-hackathon/mochi/README.md
