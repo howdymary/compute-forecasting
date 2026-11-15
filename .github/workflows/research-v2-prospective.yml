@@ -1,0 +1,39 @@
+name: Register prospective GPU forecasts
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/research-v2-prospective.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: prospective-v2
+  cancel-in-progress: false
+jobs:
+  issue:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate and issue without reading later outcomes
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: |
+          python -m pip install -e '.[dev]' modal numpy
+          python -m compileall -q src
+          python -m pytest tests/test_campaign_v2.py
+          modal run -m compute_forecast.prospective_v2
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: prospective-v2-${{ github.run_id }}
+          path: artifacts/
+          retention-days: 30
