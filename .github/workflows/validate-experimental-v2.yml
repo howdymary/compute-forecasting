@@ -1,21 +1,23 @@
 name: Validate experimental research UI
 on:
-  push:
-    branches: [compute-observatory]
-    paths: [.github/workflows/validate-experimental-v2.yml]
+  workflow_run:
+    workflows: ["Deploy pricing observatory"]
+    types: [completed]
   workflow_dispatch:
 permissions:
   contents: read
   actions: read
 jobs:
   validate:
+    if: (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/compute-observatory') || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'compute-observatory')
     runs-on: ubuntu-latest
+    env:
+      SOURCE_SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
     timeout-minutes: 25
     steps:
       - name: Fetch immutable source
         env:
           GH_TOKEN: ${{ github.token }}
-          SOURCE_SHA: ${{ github.sha }}
         run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
       - uses: actions/setup-python@v5
         with:

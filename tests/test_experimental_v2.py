@@ -13,5 +13,6 @@ def test_derived_metric_pooling_uses_cells_not_mean_of_series():
     assert row["coverage"]==pytest.approx(2/3) and set(row["by_horizon"])=={"1","3","7"}
 def test_experimental_page_has_no_write_endpoint_or_recording():
     from compute_forecast.experimental_ui_v2 import HTML
+    assert HTML.count("<script>")==1 and HTML.count("</script>")==1
     assert "fetch('/api/experimental'" in HTML
     assert "MediaRecorder" not in HTML and "method:'POST'" not in HTML

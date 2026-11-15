@@ -5,6 +5,7 @@ on:
     branches: [compute-observatory]
     paths:
       - src/compute_forecast/explore_ui.py
+      - src/compute_forecast/experimental_ui_v2.py
       - src/compute_forecast/pricing_contract.py
       - src/compute_forecast/pricing_publish.py
       - src/compute_forecast/release_web.py
@@ -40,11 +41,15 @@ jobs:
           from pathlib import Path
           from compute_forecast.freeze_contract import validate_freeze
           from compute_forecast.explore_ui import HTML
+          from compute_forecast.experimental_ui_v2 import HTML as EXPERIMENTAL_HTML
           validate_freeze(json.loads(Path('configs/release-freeze.json').read_text()))
           assert HTML.count('<script>')==1 and HTML.count('</script>')==1
           Path('artifacts/explore-ui.js').write_text(HTML.split('<script>',1)[1].split('</script>',1)[0])
+          assert EXPERIMENTAL_HTML.count('<script>')==1 and EXPERIMENTAL_HTML.count('</script>')==1
+          Path('artifacts/experimental-ui.js').write_text(EXPERIMENTAL_HTML.split('<script>',1)[1].split('</script>',1)[0])
           PY
           node --check artifacts/explore-ui.js
+          node --check artifacts/experimental-ui.js
       - name: Verify protected source and exact metadata provenance
         env:
           GH_TOKEN: ${{ github.token }}
