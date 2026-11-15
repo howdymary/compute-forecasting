@@ -1,7 +1,257 @@
 {
-  "status": "running",
   "source_sha": "27b024422bc6be0b09d484251582ec5a21b9fd44",
-  "problem": "kakeya-needle-128",
+  "problem": "kakeya128",
+  "status": "completed_batch",
   "baseline": 0.10675138995168142,
+  "best_certified": 0.10675138995168142,
+  "workers": [
+    {
+      "spec": {
+        "policy": "structural",
+        "label": "deep_uniform",
+        "aligned": false,
+        "resize": false,
+        "baseline_boundaries": [
+          0,
+          10,
+          36,
+          72,
+          104,
+          128
+        ],
+        "maxiter": 600,
+        "maxfun": 1600,
+        "seed": 260201,
+        "seconds": 600,
+        "widths": [
+          4,
+          8,
+          16,
+          32,
+          64
+        ],
+        "amplitudes": [
+          0.0001,
+          0.001,
+          0.01,
+          0.03
+        ],
+        "temperature": 0.0001,
+        "arena_incumbent": 0.10675138995168142
+      },
+      "best_native_area": 0.10675138995168142,
+      "certified_score": null,
+      "certified_arena_improvement": false,
+      "evaluations": 9047,
+      "trials": 22,
+      "wall_seconds": 600.032327581
+    },
+    {
+      "spec": {
+        "policy": "structural",
+        "label": "deep_aligned",
+        "aligned": true,
+        "resize": true,
+        "baseline_boundaries": [
+          0,
+          10,
+          36,
+          72,
+          104,
+          128
+        ],
+        "maxiter": 600,
+        "maxfun": 1600,
+        "seed": 260201,
+        "seconds": 600,
+        "widths": [
+          4,
+          8,
+          16,
+          32,
+          64
+        ],
+        "amplitudes": [
+          0.0001,
+          0.001,
+          0.01,
+          0.03
+        ],
+        "temperature": 0.0001,
+        "arena_incumbent": 0.10675138995168142
+      },
+      "best_native_area": 0.10675138995168142,
+      "certified_score": null,
+      "certified_arena_improvement": false,
+      "evaluations": 9319,
+      "trials": 22,
+      "wall_seconds": 600.0145326779999
+    },
+    {
+      "spec": {
+        "policy": "structural",
+        "label": "deep_uniform",
+        "aligned": false,
+        "resize": false,
+        "baseline_boundaries": [
+          0,
+          10,
+          36,
+          72,
+          104,
+          128
+        ],
+        "maxiter": 600,
+        "maxfun": 1600,
+        "seed": 260202,
+        "seconds": 600,
+        "widths": [
+          4,
+          8,
+          16,
+          32,
+          64
+        ],
+        "amplitudes": [
+          0.0001,
+          0.001,
+          0.01,
+          0.03
+        ],
+        "temperature": 0.0001,
+        "arena_incumbent": 0.10675138995168142
+      },
+      "best_native_area": 0.10675138995168142,
+      "certified_score": null,
+      "certified_arena_improvement": false,
+      "evaluations": 11881,
+      "trials": 31,
+      "wall_seconds": 600.006180794
+    },
+    {
+      "spec": {
+        "policy": "structural",
+        "label": "deep_aligned",
+        "aligned": true,
+        "resize": true,
+        "baseline_boundaries": [
+          0,
+          10,
+          36,
+          72,
+          104,
+          128
+        ],
+        "maxiter": 600,
+        "maxfun": 1600,
+        "seed": 260202,
+        "seconds": 600,
+        "widths": [
+          4,
+          8,
+          16,
+          32,
+          64
+        ],
+        "amplitudes": [
+          0.0001,
+          0.001,
+          0.01,
+          0.03
+        ],
+        "temperature": 0.0001,
+        "arena_incumbent": 0.10675138995168142
+      },
+      "best_native_area": 0.10675138995168142,
+      "certified_score": null,
+      "certified_arena_improvement": false,
+      "evaluations": 9277,
+      "trials": 21,
+      "wall_seconds": 600.051842295
+    },
+    {
+      "spec": {
+        "policy": "structural",
+        "label": "deep_uniform",
+        "aligned": false,
+        "resize": false,
+        "baseline_boundaries": [
+          0,
+          10,
+          36,
+          72,
+          104,
+          128
+        ],
+        "maxiter": 600,
+        "maxfun": 1600,
+        "seed": 260203,
+        "seconds": 600,
+        "widths": [
+          4,
+          8,
+          16,
+          32,
+          64
+        ],
+        "amplitudes": [
+          0.0001,
+          0.001,
+          0.01,
+          0.03
+        ],
+        "temperature": 0.0001,
+        "arena_incumbent": 0.10675138995168142
+      },
+      "best_native_area": 0.10675138995168142,
+      "certified_score": null,
+      "certified_arena_improvement": false,
+      "evaluations": 9089,
+      "trials": 21,
+      "wall_seconds": 600.0208795799999
+    },
+    {
+      "spec": {
+        "policy": "structural",
+        "label": "deep_aligned",
+        "aligned": true,
+        "resize": true,
+        "baseline_boundaries": [
+          0,
+          10,
+          36,
+          72,
+          104,
+          128
+        ],
+        "maxiter": 600,
+        "maxfun": 1600,
+        "seed": 260203,
+        "seconds": 600,
+        "widths": [
+          4,
+          8,
+          16,
+          32,
+          64
+        ],
+        "amplitudes": [
+          0.0001,
+          0.001,
+          0.01,
+          0.03
+        ],
+        "temperature": 0.0001,
+        "arena_incumbent": 0.10675138995168142
+      },
+      "best_native_area": 0.10675138995168142,
+      "certified_score": null,
+      "certified_arena_improvement": false,
+      "evaluations": 8938,
+      "trials": 22,
+      "wall_seconds": 600.0495395390001
+    }
+  ],
+  "global_record_claim": false,
   "pilot_deadline_utc": "2026-11-15T22:35:18+00:00"
 }
