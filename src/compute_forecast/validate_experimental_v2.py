@@ -4,6 +4,20 @@ import asyncio,base64,hashlib,json,os
 from pathlib import Path
 from urllib.request import urlopen
 URL="https://howdymary--compute-forecast-observatory-web.us-east.modal.run"
+async def assert_policy_results(page,data,mode):
+    panel=page.locator("div.panel").filter(has=page.get_by_role("heading",name="Evaluation after selection",exact=True))
+    reports=[r for r in data.get("policy_reports",[]) if r["mode"]==mode]
+    if not reports:return
+    table=panel.locator("table").first
+    assert ("vs SFT parent" if mode=="rl" else "vs starting") in await table.inner_text()
+    for r in reports:
+        label=mode.upper()+" "+r["objective"]+" · "+str(r["seed"])
+        row=table.locator("tbody tr").filter(has_text=label)
+        assert await row.count()==1,label
+        metric=next(c for c in r["comparisons"] if c["policy"]=="selected_"+mode+"_"+r["objective"])
+        assert format(metric["pinball"],".8f") in await row.inner_text(),label
+        assert "selected update "+str(r["selected_update"]) in await row.inner_text(),label
+
 async def run():
     from playwright.async_api import async_playwright
     out=Path("artifacts/v2-ui");out.mkdir(parents=True,exist_ok=True);checks=[];errors=[]
@@ -34,6 +48,7 @@ async def run():
             await page.locator("#question").select_option("composition")
             assert await page.locator("#question").input_value()=="composition"
             await page.locator("#stage").select_option("rl")
+            await assert_policy_results(page,data,"rl")
             rl_curves=[r for r in data.get("training_progress",{}).get("runs",[]) if r["mode"]=="rl" and r.get("checkpoints")]
             rl_curves += [r for r in data.get("checkpoint_runs",[]) if r["mode"]=="rl"]
             if rl_curves:
@@ -49,6 +64,7 @@ async def run():
                 for n in range(0,len(encoded),2048):
                     print("V2_SCREENSHOT:"+label+"-rl-learning:"+str(n//2048)+":"+encoded[n:n+2048].decode(),flush=True)
             await page.locator("#stage").select_option("sft")
+            await assert_policy_results(page,data,"sft")
             await page.locator("#phase").select_option("development");await page.locator("#horizon").select_option("3")
             assert await page.locator("#phase").input_value()=="development" and await page.locator("#horizon").input_value()=="3"
             table=page.locator("section").filter(has=page.locator("#phase")).locator("tbody tr").first
@@ -103,7 +119,7 @@ async def run():
         await page.unroute("**/api/experimental")
         await page.route("**/api/experimental",lambda route:route.fulfill(status=200,content_type="application/json",body=raw))
         await page.locator("#retry").click();await page.locator("#question").wait_for()
-        await failure.close();checks.append({"error_retry_recovery":True,"real_response_frozen_for_assertions":True,"numerical_rows_match_api":True,"selection_preserved_on_refresh":True,"details_preserved_on_refresh":True,"mid_session_outage_recovery":True})
+        await failure.close();checks.append({"error_retry_recovery":True,"real_response_frozen_for_assertions":True,"numerical_rows_match_api":True,"sft_and_rl_selection_rows_match_api":True,"selection_preserved_on_refresh":True,"details_preserved_on_refresh":True,"mid_session_outage_recovery":True})
         await browser.close()
     assert not errors,errors
     report={"status":"passed","checks":checks,"page_errors":errors,"forecast_sha256":hashlib.sha256(get("/files/forecasts.csv")).hexdigest(),"experimental_source_sha":data.get("source_sha"),"validated_at_source":os.environ.get("GITHUB_SHA"),"recording":False}
