@@ -1,5 +1,8 @@
 name: Validate experimental research UI
 on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/validate-experimental-v2.yml, src/compute_forecast/validate_experimental_v2.py]
   workflow_run:
     workflows: ["Deploy pricing observatory"]
     types: [completed]
@@ -9,7 +12,7 @@ permissions:
   actions: read
 jobs:
   validate:
-    if: (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/compute-observatory') || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'compute-observatory')
+    if: ((github.event_name == 'workflow_dispatch' || github.event_name == 'push') && github.ref == 'refs/heads/compute-observatory') || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'compute-observatory')
     runs-on: ubuntu-latest
     env:
       SOURCE_SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
