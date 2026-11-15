@@ -12,6 +12,11 @@ def main():
  # Fresh serialized research receipts supersede older cumulative carries.
  prior=json.loads((ROOT/"artifacts/phase3/research_002/status.json").read_text())["budget"]
  history={"source_run":"phase3-research-002-complete","conservative_totals":{p:v["reserved"]+v["provider_reported_or_estimated"] for p,v in prior.items()},"reason":"Carry every earlier hold; no previous unknown charge released."}
+ previous=OUT/"status.json"
+ if previous.exists():
+  previous_budget=json.loads(previous.read_text()).get("budget",{})
+  for name,v in previous_budget.items():history["conservative_totals"][name]=max(history["conservative_totals"].get(name,0),v["reserved"]+v["provider_reported_or_estimated"])
+ history["source_run"]="carried-modal-bundle-"+os.environ["GITHUB_SHA"]
  (ROOT/"budget/historical-usage.json").write_text(json.dumps(history,indent=2))
  ledger=Ledger(OUT);calls=[];status={"status":"running","source_sha":os.environ["GITHUB_SHA"],"started_at":dt.datetime.now(dt.timezone.utc).isoformat()}
  try:
