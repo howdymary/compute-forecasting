@@ -1,4 +1,4 @@
-name: CodeGarden primitive neutral component search
+name: CodeGarden primitive neutral search with retained test artifacts
 on:
   push:
     branches: [codegarden-primitive-003]
@@ -27,7 +27,7 @@ jobs:
           mkdir -p codegarden/.build
           g++ -O3 -std=c++17 codegarden/phase3/bundle_primitive.cpp -o codegarden/.build/bundle
           codegarden/.build/bundle --synthetic-tests > codegarden/.build/synthetic.json
-          python -B -u codegarden/phase3/test_connected2.py
+          python -B -u codegarden/phase3/test_primitive.py
           mv codegarden/.build/synthetic.json codegarden/artifacts/phase3/primitive_001/test_synthetic.json
           python -B -u codegarden/phase3/preflight.py
       - uses: actions/upload-artifact@v4

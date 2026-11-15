@@ -176,7 +176,7 @@ int syntheticTests(){
    vector<uint64_t>chain{1,3,6,12,24,48,96,64};shuffle(chain.begin(),chain.end(),rng);B=chain;
   }else for(int i=0;i<m;++i){int size=1+rng()%3;while(__builtin_popcountll(B[i])<size)B[i]|=1ull<<(rng()%7);}
   vector<vector<bool>>compatible(m,vector<bool>(m,false));
-  for(int i=0;i<m;++i)for(int j=0;j<i;++j)compatible[i][j]=compatible[j][i]=caseId<10?true:caseId<20?!(i==0&&j==1):rng()%100<60;
+  for(int i=0;i<m;++i)for(int j=0;j<i;++j)compatible[i][j]=compatible[j][i]=caseId<10?true:caseId<20?!(i==1&&j==0):rng()%100<60;
   bool expected=false;
   for(unsigned mask=1;mask<(1u<<m)&&!expected;++mask){
    uint64_t used=0;bool ok=true;int count=__builtin_popcount(mask);
