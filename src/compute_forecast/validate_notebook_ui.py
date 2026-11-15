@@ -8,7 +8,8 @@ from .notebook_diagnostics import build
 from .validate_pricing_ui import main as validate_existing_pricing
 URL="https://howdymary--compute-forecast-observatory-web.us-east.modal.run"
 def get(path):
-    with urlopen(URL+path,timeout=90) as response:return response.read()
+    from .remote_validation_http import get_bytes
+    return get_bytes(path)
 def close(a,b):
     assert len(a)==len(b) and all(math.isclose(x,y,rel_tol=1e-10,abs_tol=1e-12) for x,y in zip(a,b)),(a,b)
 def contrast_ratio(foreground,background):
@@ -58,6 +59,8 @@ def main():
         for future in as_completed(futures):
             path,raw,row=future.result();concurrent_results.append((path,raw));concurrent_observations.append(row)
     assert all(raw is not None for _,raw in concurrent_results),concurrent_observations
+    from .remote_validation_http import snapshot
+    assert snapshot()["maximum_observed_in_flight"]==8
     for path,raw in concurrent_results:
         assert raw
         if path.endswith(".csv"):
@@ -181,7 +184,7 @@ def main():
         page.locator("#price-chart").wait_for()
         context.close();browser.close()
     assert not errors,errors
-    report={"status":"passed","checks":checks,"source_sha":os.environ.get("SOURCE_SHA"),"font_license_and_blob_verified":True,"explicit_loaded_font_faces":loaded_faces,"concurrent_asset_and_data_requests":len(concurrent_results),"concurrent_request_observations":concurrent_observations,"peer_sources":15,"diagnostic_report_count":len(notes["calibration"]),"diagnostic_api_roundtrip_seconds":round(elapsed,4),"diagnostics_match_public_saved_results":True,"pricing_outage_retry":True,"primary_chart_independent_of_research_requests":True,"page_errors":errors,"reduced_motion":True,"recording":False}
+    report={"status":"passed","checks":checks,"source_sha":os.environ.get("SOURCE_SHA"),"font_license_and_blob_verified":True,"explicit_loaded_font_faces":loaded_faces,"concurrent_asset_and_data_requests":len(concurrent_results),"concurrent_request_observations":concurrent_observations,"peer_sources":15,"diagnostic_report_count":len(notes["calibration"]),"diagnostic_api_roundtrip_seconds":round(elapsed,4),"diagnostics_match_public_saved_results":True,"pricing_outage_retry":True,"primary_chart_independent_of_research_requests":True,"http_transport":snapshot(),"page_errors":errors,"reduced_motion":True,"recording":False}
     (out/"validation.json").write_text(json.dumps(report,indent=2)+"\n")
     (out/"diagnostic-snapshot.json").write_text(json.dumps(notes,indent=2)+"\n")
     print("NOTEBOOK_UI_REPORT:"+json.dumps(report),flush=True)

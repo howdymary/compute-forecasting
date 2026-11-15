@@ -5,7 +5,8 @@ from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
 from .history_contract_v3 import validate_assets
 from .validate_notebook_ui import capture,contrast_ratio
-from .validate_pricing_ui import get,URL
+from .validate_pricing_ui import URL
+from .remote_validation_http import get_bytes as get,snapshot
 CSV_SHA="67a043255a716db6bc9b73cd28f9258c30fb299fd8671a9ee3430c0d94cadd80"
 def main():
     from playwright.sync_api import sync_playwright,expect
@@ -133,13 +134,14 @@ def main():
         log=(out/"publication-stdout.txt").open("w")
         process=subprocess.Popen(["modal","run","-m","compute_forecast.research_assets_v3","--inputs","inputs"],stdout=log,stderr=subprocess.STDOUT)
     with ThreadPoolExecutor(max_workers=8) as pool:http=list(pool.map(probe,paths))
+    assert snapshot()["maximum_observed_in_flight"]==8
     if process:
         assert process.wait(timeout=300)==0,"Atomic republish failed"
         log.close()
     assert not errors,errors
     assert not failed,failed
     assert hashlib.sha256(get("/files/forecasts.csv")).hexdigest()==CSV_SHA
-    report={"status":"passed","ui_revision":json.loads(get("/health"))["ui_revision"],"checks":checks,"concurrent_requests":http,"concurrent_validated_publication":process is not None,"historical_series":2,"historical_observations":468,"context_only":True,"comparator_pinball":control["metrics"]["pinball"],"prospective":"pending","campaign_reports":9,"page_errors":errors,"unexpected_http_failures":failed,"recording":False}
+    report={"status":"passed","ui_revision":json.loads(get("/health"))["ui_revision"],"checks":checks,"concurrent_requests":http,"http_transport":snapshot(),"concurrent_validated_publication":process is not None,"historical_series":2,"historical_observations":468,"context_only":True,"comparator_pinball":control["metrics"]["pinball"],"prospective":"pending","campaign_reports":9,"page_errors":errors,"unexpected_http_failures":failed,"recording":False}
     (out/"validation.json").write_text(json.dumps(report,indent=2)+"\n")
     print("RESEARCH_EXPLORER_VALIDATION:"+json.dumps(report),flush=True)
 if __name__=="__main__":main()
