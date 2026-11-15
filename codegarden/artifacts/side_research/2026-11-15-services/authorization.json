@@ -1,7 +1,7 @@
 {
   "project": "CodeGarden",
   "scope": "One bounded side-conversation integration cycle; no other project changes",
-  "authorized_at": "2026-11-15T18:43:00Z",
+  "authorized_at": "2026-11-15T18:48:54.826Z",
   "authority": "User explicitly requested Exa, Modal, Tinker and past.dev, removed BoundForge spending coordination, and authorized abundant use of existing credits. No purchases, reload changes or plan changes.",
   "coordination_with_boundforge": false,
   "paid_calls_serialized_within_this_cycle": true,
@@ -14,28 +14,20 @@
   },
   "provider_caps": {
     "exa": {
-      "unit": "USD",
-      "cap": 1,
-      "status": "reserved_for_MCP_research",
-      "balance_verified_live": true
-    },
-    "tinker": {
-      "unit": "USD",
-      "cap": 1,
-      "status": "not_started",
-      "balance_verified_live": true
-    },
-    "modal": {
-      "unit": "USD",
-      "cap": 1,
-      "status": "not_started",
-      "balance_verified_live": true
+      "cap": 2,
+      "unit": "USD"
     },
     "past": {
-      "unit": "credits",
-      "cap": 50,
-      "status": "disabled_until_authenticated_usage_read",
-      "balance_verified_live": false
+      "cap": 300,
+      "unit": "credits"
+    },
+    "tinker": {
+      "cap": 1,
+      "unit": "USD"
+    },
+    "modal": {
+      "cap": 1,
+      "unit": "USD"
     }
   },
   "pending": [
@@ -46,5 +38,11 @@
     }
   ],
   "verification": "Any 227-word candidate still requires both protected independent checkers; this integration cycle alone does not establish goal completion.",
-  "timestamp_note": "Dashboard observations captured during this turn; exact per-request UTC logged separately."
+  "timestamp_note": "Dashboard observations captured during this turn; exact per-request UTC logged separately.",
+  "user_update": "User explicitly removed BoundForge coordination, authorized abundant existing-credit use, then requested stopping further cost checks. This cycle performs no billing/balance queries, purchases, reload or plan changes.",
+  "source_branch": "codegarden-services-side-001",
+  "max_workers": 4,
+  "models": 3,
+  "paired_orderings_per_model": 2,
+  "solver_seconds_per_worker": 30
 }

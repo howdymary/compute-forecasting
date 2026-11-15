@@ -1,0 +1,109 @@
+name: CodeGarden side service-backed ordering experiment
+on:
+  push:
+    branches: [codegarden-services-side-001]
+    paths: [.github/workflows/codegarden.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: codegarden-side-services-001
+  cancel-in-progress: false
+env:
+  SOURCE_SHA: ${{ github.sha }}
+  PYTHONDONTWRITEBYTECODE: '1'
+  HF_HOME: ${{ github.workspace }}/codegarden/.cache/huggingface
+  XDG_CACHE_HOME: ${{ github.workspace }}/codegarden/.cache
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    outputs:
+      has_candidate: ${{ steps.cycle.outputs.has_candidate }}
+    steps:
+      - name: Fetch minimal immutable source inside CodeGarden
+        run: |
+          python3 -B - <<'PY'
+          import os,pathlib,urllib.request
+          paths=["codegarden/side_services/cycle.py","codegarden/side_services/clique.cpp","codegarden/side_services/models.json","codegarden/side_services/exa_provenance.json","codegarden/side_services/requirements.txt","codegarden/supervisor.py","codegarden/protected/manifest.json","codegarden/protected/verify_descendants.py","codegarden/protected/verify_lcs.py","codegarden/artifacts/best_code.txt"]
+          for name in paths:
+              p=pathlib.Path(name);p.parent.mkdir(parents=True,exist_ok=True)
+              p.write_bytes(urllib.request.urlopen("https://raw.githubusercontent.com/howdymary/compute-forecasting/"+os.environ["SOURCE_SHA"]+"/"+name,timeout=45).read())
+          PY
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Build portable reviewed kernel and validate it before provider calls
+        run: |
+          mkdir -p codegarden/.build codegarden/.tmp codegarden/artifacts/side_research/services_001
+          g++ -O3 -std=c++17 -static codegarden/side_services/clique.cpp -o codegarden/.build/side_clique
+          codegarden/.build/side_clique --self-test | tee codegarden/artifacts/side_research/services_001/kernel_selftest.json
+          python3 -B - <<'PY'
+          import hashlib,json,pathlib,platform,subprocess,sys
+          root=pathlib.Path("codegarden")
+          d={"source_sha":__import__("os").environ["SOURCE_SHA"],"python":sys.version,"platform":platform.platform(),"compiler":subprocess.check_output(["g++","--version"],text=True),"flags":["-O3","-std=c++17","-static"],"cpu_native_flags":False,"binary_sha256":hashlib.sha256((root/".build/side_clique").read_bytes()).hexdigest(),"cpp_sha256":hashlib.sha256((root/"side_services/clique.cpp").read_bytes()).hexdigest()}
+          (root/"artifacts/side_research/services_001/build.json").write_text(json.dumps(d,indent=2))
+          PY
+      - name: Install isolated SDKs
+        run: |
+          python3 -m venv codegarden/.venv
+          codegarden/.venv/bin/python -m pip install --disable-pip-version-check -r codegarden/side_services/requirements.txt
+      - name: Run Exa, past.dev, Tinker and paired Modal experiments
+        id: cycle
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
+          PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: codegarden/.venv/bin/python -B -u codegarden/side_services/cycle.py
+      - name: Preserve runtime evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: codegarden-side-services-evidence
+          retention-days: 30
+          path: codegarden/artifacts/side_research/services_001/
+      - name: Export candidate for isolated acceptance
+        if: steps.cycle.outputs.has_candidate == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: codegarden-side-227-candidate
+          retention-days: 30
+          path: codegarden/artifacts/side_research/services_001/candidate.txt
+  accept:
+    needs: research
+    if: needs.research.outputs.has_candidate == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Fetch only frozen independent checker sources
+        run: |
+          python3 -B - <<'PY'
+          import pathlib,urllib.request
+          for name in ["supervisor.py","protected/manifest.json","protected/verify_descendants.py","protected/verify_lcs.py"]:
+              p=pathlib.Path("codegarden")/name;p.parent.mkdir(parents=True,exist_ok=True)
+              p.write_bytes(urllib.request.urlopen("https://raw.githubusercontent.com/howdymary/compute-forecasting/ce5eab1859c271686876ee5c2d21c0e0a5316d67/codegarden/"+name,timeout=45).read())
+          PY
+      - uses: actions/download-artifact@v4
+        with:
+          name: codegarden-side-227-candidate
+          path: codegarden/.verify-input/
+      - name: Run both frozen checkers without proposer or service credentials
+        run: |
+          python3 -B - <<'PY'
+          import json,pathlib,sys
+          sys.path.insert(0,"codegarden")
+          from supervisor import verify
+          result=verify(pathlib.Path("codegarden/.verify-input/candidate.txt"))
+          assert result["cardinality"]>=227
+          pathlib.Path("codegarden/isolated_acceptance.json").write_text(json.dumps(result,indent=2))
+          print(json.dumps(result))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: codegarden-side-isolated-acceptance
+          retention-days: 30
+          path: codegarden/isolated_acceptance.json
