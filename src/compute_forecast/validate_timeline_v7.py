@@ -15,7 +15,7 @@ def main():
             context=browser.new_context(viewport={"width":width,"height":height},is_mobile=width<760,has_touch=width<760,reduced_motion="reduce")
             page=context.new_page();errors=[];page.on("pageerror",lambda e:errors.append(str(e)))
             page.goto(URL,wait_until="domcontentloaded",timeout=90000);page.wait_for_selector("#price-chart",timeout=90000)
-            page.wait_for_function("V5!==null && P!==null && T7.points.length>3",timeout=90000)
+            page.wait_for_function("() => V5!==null && P!==null && T7.points.length>3",timeout=90000)
             assert page.evaluate("S.mode")=="benchmark"
             health=page.request.get(URL+"/health");assert health.ok
             if os.environ.get("SOURCE_SHA"):assert health.json()["ui_revision"]==os.environ["SOURCE_SHA"]
@@ -86,9 +86,9 @@ def main():
         assert page.locator("[data-timeline-forecast]").count()==3 and len(held)==1
         assert page.locator("#timeline-observed-path").get_attribute("data-observed-count")=="0"
         held[0].fulfill(status=503,content_type="application/json",body='{"error":"synthetic transport fixture"}')
-        page.wait_for_function("V5Error!==null")
+        page.wait_for_function("() => V5Error!==null")
         page.unroute("**/api/value-v5");page.locator("#timeline-history-retry").click()
-        page.wait_for_function("V5!==null && t7Observed().length>0",timeout=90000)
+        page.wait_for_function("() => V5!==null && t7Observed().length>0",timeout=90000)
         assert int(page.locator("#timeline-observed-path").get_attribute("data-observed-count"))>0
         report["independent_history_loading_and_retry"]=True
         context.close();browser.close()

@@ -125,7 +125,7 @@ async function start(){
  fetchJson('/api/notebook').then(value=>{N=value;if(P&&view==='research'&&['notes','visual'].includes(researchTab))render()}).catch(error=>{notebookError=error;if(P&&view==='research'&&researchTab==='notes')render()});
  P=await fetchJson('/api/pricing');
  if(P.schema_version!==1||P.series.length!==37)throw Error('Unexpected pricing data format');
- S.series=(P.series.find(s=>s.gpu_model==='H100 SXM 80GB'&&s.source_id==='fastgpu_daily'&&s.pricing_tier==='on_demand')||P.series[0]).id;
+ S.series=(P.series.find(s=>s.gpu_model==='H100 SXM 80GB'&&s.source_id==='gpurentalprices'&&s.pricing_tier==='on_demand')||P.series[0]).id;
  S.rates.rental=defaults('rental');S.rates.resale=defaults('resale');
  let requested=location.hash.slice(1);view=['explore','research','methods','downloads'].includes(requested)?requested:'explore';
  $('#revision').textContent='Pricing adapter '+P.code_sha.slice(0,7)+' · cutoff 2026-11-06 UTC';
