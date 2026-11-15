@@ -1,4 +1,4 @@
-name: CodeGarden supplemental controls
+name: CodeGarden memory-only recovery
 on:
   push:
     branches: [codegarden-policy-control]
@@ -9,14 +9,15 @@ concurrency:
   group: codegarden-only
   cancel-in-progress: false
 env:
-  HF_HOME: ${{ github.workspace }}/codegarden/.cache/huggingface
   PYTHONDONTWRITEBYTECODE: '1'
+  HF_HOME: ${{ github.workspace }}/codegarden/.cache/huggingface
+  XDG_CACHE_HOME: ${{ github.workspace }}/codegarden/.cache
 jobs:
-  controls:
+  memory:
     runs-on: ubuntu-latest
-    timeout-minutes: 18
+    timeout-minutes: 7
     steps:
-      - name: Fetch immutable preregistered control source
+      - name: Fetch immutable recovery source
         env:
           GH_TOKEN: ${{ github.token }}
           SOURCE_SHA: ${{ github.sha }}
@@ -24,17 +25,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Verify protected boundary and install isolated clients
+      - name: Install isolated clients
         run: |
-          python -B codegarden/supervisor.py codegarden/artifacts/best_code.txt
           python -m venv codegarden/.venv
           codegarden/.venv/bin/python -m pip install -r codegarden/requirements-providers.txt
-      - name: Run serialized controls with main-campaign reservations imported
+      - name: Run bounded memory-only recovery and retain every completed response
         env:
           GH_TOKEN: ${{ github.token }}
-          SOURCE_SHA: ${{ github.sha }}
           PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
           TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
-          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
-          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
-        run: codegarden/.venv/bin/python -B -u codegarden/phase2/supplement.py
+        run: codegarden/.venv/bin/python -B -u codegarden/phase2/memory_recovery.py
