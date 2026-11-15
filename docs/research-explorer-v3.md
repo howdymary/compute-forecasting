@@ -71,3 +71,7 @@ No local checkout is required. GitHub Actions fetches immutable commit tarballs.
 - Existing `/api/notebook`, `/api/experimental` and official download stay available.
 
 Remote unit checks enforce publication permission identity, units, cutoff, missingness, hash integrity and time gates. A separate PNG-only research-explorer UI workflow checks values against artifacts, historical gaps, matched comparison counts, checkpoint rings, paired traces, pin immutability, keyboard/touch, narrow layouts, loading/retry states and concurrent requests. Existing pricing/notebook/experimental checks continue. No recording jobs or video files are touched.
+
+## Serving readiness
+
+A strict first deployment check exposed a warm pre-deploy ASGI container continuing to serve v38 despite v39 metadata referencing the new image. The workflow retains exact revision/HTTP/hash assertions and permits one explicitly logged serving-only recreate rollover after the bounded readiness window. It never restarts training applications. Continued staleness remains a hard failure.

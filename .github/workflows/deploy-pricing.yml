@@ -89,9 +89,12 @@ jobs:
           set -o pipefail
           modal deploy -m compute_forecast.release_web 2>&1 | tee artifacts/pricing-deployment.txt
       - name: Verify deployed interface and unchanged official forecast
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
         run: |
           python - <<'PY'
-          import hashlib,json,os,time,urllib.request
+          import hashlib,json,os,subprocess,time,urllib.request
           from pathlib import Path
           from compute_forecast.pricing_contract import validate,FORECAST_SHA
           url='https://howdymary--compute-forecast-observatory-web.us-east.modal.run'
@@ -105,7 +108,21 @@ jobs:
               except urllib.error.HTTPError as error:
                   if error.code not in (404,502,503,504):raise
               time.sleep(3)
-          else:raise RuntimeError('New deployment did not become ready within the bounded readiness window')
+          else:
+              # Investigated v39: deployment metadata used the new image, while one
+              # pre-deploy warm ASGI container served v38 indefinitely under polling.
+              # One explicit serving-only rollover; numerical apps are not touched.
+              print('STALE_SERVING_REVISION: '+json.dumps(health),flush=True)
+              subprocess.run(['modal','app','rollover','compute-forecast-observatory','--strategy','recreate'],check=True,timeout=90)
+              for attempt in range(30):
+                  try:
+                      health=json.loads(get('/health'))
+                      if health.get('ui_revision')==os.environ['GITHUB_SHA']:
+                          raw=get('/api/pricing');payload=validate(json.loads(raw));break
+                  except urllib.error.HTTPError as error:
+                      if error.code not in (404,502,503,504):raise
+                  time.sleep(3)
+              else:raise RuntimeError('New deployment remained stale after one bounded serving rollover')
           assert hashlib.sha256(raw).hexdigest()==receipt['pricing_sha256']
           assert health['ui_revision']==os.environ['GITHUB_SHA'] and payload['code_sha']==os.environ['GITHUB_SHA']
           assert hashlib.sha256(get('/files/forecasts.csv')).hexdigest()==FORECAST_SHA
