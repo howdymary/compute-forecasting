@@ -27,6 +27,8 @@ async def run():
             await page.locator("#question").wait_for()
             assert await page.locator("h1").inner_text()=="Can a researcher learn\nto research?"
             assert await page.evaluate("document.documentElement.scrollWidth<=window.innerWidth"),label+" overflow"
+            if sum(r["mode"]=="sft" for r in data.get("policy_reports",[]))==6 and sum(r["mode"]=="rl" for r in data.get("policy_reports",[]))<3:
+                assert "RL results pending" in await page.locator("#app").inner_text()
             await page.locator("#question").select_option("composition")
             assert await page.locator("#question").input_value()=="composition"
             await page.locator("#stage").select_option("rl");await page.locator("#stage").select_option("sft")
