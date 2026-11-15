@@ -9,7 +9,8 @@ from .experimental_ui_v2 import HTML as EXPERIMENTAL_HTML
 from .pricing_contract import validate as validate_pricing
 app=modal.App("compute-forecast-observatory")
 public=modal.Volume.from_name("compute-forecast-public",create_if_missing=True,version=2)
-image=modal.Image.debian_slim(python_version="3.11").pip_install("fastapi[standard]>=0.115,<1").env({"OBSERVATORY_UI_SHA":os.environ.get("GITHUB_SHA","unknown")}).add_local_python_source("compute_forecast")
+STATIC_ASSET_BUILD="python - <<'PY'\nfrom pathlib import Path\nfrom urllib.request import urlopen\nimport hashlib\nbase=\"https://raw.githubusercontent.com/google/fonts/a85fc09e44c70c7159761adfdc9d5dd007792c15/ofl/caveat/\"\nroot=Path(\"/opt/notebook-static\");root.mkdir(parents=True,exist_ok=True)\nfor source,name,expected in [(\"Caveat%5Bwght%5D.ttf\",\"caveat-f84acf2c.ttf\",\"f84acf2ce2d1b3329b194749530dbaec047e6df6\"),(\"OFL.txt\",\"OFL.txt\",\"6e5220c9576d98dfc684e550ddf0d87f68b3edc5\")]:\n    raw=urlopen(base+source,timeout=60).read()\n    assert hashlib.sha1(b\"blob \"+str(len(raw)).encode()+b\"\\0\"+raw).hexdigest()==expected,\"Unverified static asset\"\n    (root/name).write_bytes(raw)\nPY"
+image=modal.Image.debian_slim(python_version="3.11").pip_install("fastapi[standard]>=0.115,<1").run_commands(STATIC_ASSET_BUILD).env({"OBSERVATORY_UI_SHA":os.environ.get("GITHUB_SHA","unknown")}).add_local_python_source("compute_forecast")
 FILES={"forecasts.csv":"text/csv","outlook.md":"text/markdown","outlook-scenarios.json":"application/json","demo.mp4":"video/mp4"}
 
 @app.function(image=image,cpu=.25,memory=256,timeout=90,volumes={"/public":public})
@@ -24,14 +25,14 @@ def publish_release(payload:dict,files:dict):
     temporary=root/"results.pending";temporary.write_bytes(encoded);temporary.replace(root/"results.json");public.commit()
     return {"sha256":hashlib.sha256(encoded).hexdigest(),"bytes":len(encoded),"code_sha":payload["code_sha"],"files":{name:{"bytes":len(b),"sha256":hashlib.sha256(b).hexdigest()} for name,b in files.items()},"published_at":datetime.now(timezone.utc).isoformat()}
 
-@app.function(image=image,cpu=.25,memory=256,timeout=60,scaledown_window=60,volumes={"/public":public})
-@modal.concurrent(max_inputs=20)
+@app.function(image=image,cpu=1,memory=512,timeout=60,scaledown_window=60,max_containers=8,volumes={"/public":public})
+@modal.concurrent(max_inputs=8,target_inputs=4)
 @modal.asgi_app()
 def web():
     import threading
     from fastapi import FastAPI,Request
     from fastapi.responses import HTMLResponse,JSONResponse,Response
-    api=FastAPI(docs_url=None,redoc_url=None,openapi_url=None);lock=threading.Lock();archive_cache={"sha":None,"bytes":None};asset_cache={};release_cache={};notebook_cache={};notebook_lock=threading.Lock()
+    api=FastAPI(docs_url=None,redoc_url=None,openapi_url=None);lock=threading.Lock();archive_cache={"sha":None,"bytes":None};asset_cache={name:(Path("/opt/notebook-static")/name).read_bytes() for name in ("caveat-f84acf2c.ttf","OFL.txt")};release_cache={};notebook_cache={};notebook_lock=threading.Lock()
     headers={"Cache-Control":"no-store","X-Content-Type-Options":"nosniff","Referrer-Policy":"strict-origin-when-cross-origin","Content-Security-Policy":"default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'"}
     def read(name):
         with lock:
@@ -101,14 +102,13 @@ def web():
     def notebook_asset(name:str):
         allowed={"caveat-f84acf2c.ttf":"font/ttf","OFL.txt":"text/plain","peer-studies.json":"application/json"}
         if name not in allowed:return Response(status_code=404,headers=headers)
-        with lock:
-            raw=asset_cache.get(name) if name!="peer-studies.json" else None
-            if raw is None:
+        raw=asset_cache.get(name)
+        if raw is None:
+            with lock:
                 public.reload();path=Path("/public/notebook")/name
                 if not path.is_file():return Response(status_code=404,headers=headers)
                 raw=path.read_bytes()
                 if len(raw)>1_000_000:return Response(status_code=503,headers=headers)
-                if name!="peer-studies.json":asset_cache[name]=raw
         return Response(raw,media_type=allowed[name],headers={**headers,"Cache-Control":"public, max-age=31536000, immutable" if name.endswith(".ttf") else "no-store","ETag":hashlib.sha256(raw).hexdigest()})
 
     @api.get("/api/release")

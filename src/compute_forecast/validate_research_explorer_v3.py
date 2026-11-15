@@ -24,21 +24,20 @@ def main():
         assert s["observations"]==234 and s["missing_calendar_days"]==65
         assert s["points"][0]["date"]=="2026-01-12" and s["points"][-1]["date"]=="2026-11-06"
         assert s["benchmark_overlay_allowed"] is False
-    # Exercise requests while the same validated values are atomically republished.
     process=None;log=None
-    if os.environ.get("VALIDATE_PUBLICATION")=="1":
-        log=(out/"publication-stdout.txt").open("w")
-        process=subprocess.Popen(["modal","run","-m","compute_forecast.research_assets_v3","--inputs","inputs"],stdout=log,stderr=subprocess.STDOUT)
     paths=["/api/research-assets","/api/chronos-control","/api/pricing","/api/experimental","/api/notebook","/notebook-assets/caveat-f84acf2c.ttf","/files/forecasts.csv"]*3
     def probe(p):
-        t=time.monotonic();raw=get(p)
+        t=time.monotonic()
+        try:raw=get(p)
+        except Exception as error:
+            print("RESEARCH_HTTP_FAILURE:"+json.dumps({"path":p,"seconds":time.monotonic()-t,"error":str(error)}),flush=True)
+            raise
         if p.endswith(".csv"):assert hashlib.sha256(raw).hexdigest()==CSV_SHA
         elif p.endswith(".ttf"):assert len(raw)>100000
         else:
             j=json.loads(raw)
             if p=="/api/research-assets":validate_assets(j)
         return {"path":p,"status":200,"seconds":time.monotonic()-t,"bytes":len(raw)}
-    with ThreadPoolExecutor(max_workers=8) as pool:http=list(pool.map(probe,paths))
     errors=[];checks=[];failed=[]
     with sync_playwright() as pw:
         browser=pw.chromium.launch()
@@ -125,6 +124,12 @@ def main():
         page.locator("[data-history-value]").wait_for(timeout=90000)
         assert attempts[0]==2
         context.close();browser.close()
+    # Keep the full strict stress assertion; screenshots are captured first so a
+    # transport failure does not prevent visual diagnosis.
+    if os.environ.get("VALIDATE_PUBLICATION")=="1":
+        log=(out/"publication-stdout.txt").open("w")
+        process=subprocess.Popen(["modal","run","-m","compute_forecast.research_assets_v3","--inputs","inputs"],stdout=log,stderr=subprocess.STDOUT)
+    with ThreadPoolExecutor(max_workers=8) as pool:http=list(pool.map(probe,paths))
     if process:
         assert process.wait(timeout=300)==0,"Atomic republish failed"
         log.close()
