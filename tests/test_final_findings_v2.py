@@ -25,3 +25,27 @@ def test_publication_refuses_unapproved_paths_before_creating_blobs(monkeypatch)
     with pytest.raises(ValueError,match="Unexpected publication path"):
         report.publish({"metagame.txt":"bad"},"replacement")
     assert mutations==[]
+
+def test_renderer_reports_improving_tied_and_worsening_rl_without_api_calls():
+    # Explicit unit fixtures only; never submitted as an experiment or public live result.
+    def metric(label,value):
+        return {"policy":label,"pinball":value,"baseline_pinball":.25,"n_cells":12}
+    reports=[]
+    for seed in (17,29,43):
+        for objective in ("hard","soft"):
+            comparisons=[metric(k,v) for k,v in (
+                ("starting_policy",.2),("selected_sft_"+objective,.1),
+                ("selected_no_observation",.1),("selected_with_criticism",.12),
+                ("selected_with_method_evidence",.11),("training_selected_static",.13),
+                ("random_100_seed_distribution",.14),("gp_expected_improvement",.15))]
+            reports.append({"mode":"sft","objective":objective,"seed":seed,"actual_optimizer_updates":100,"selected_update":20,"checkpoints":[{"update":20,"development_pinball":.1,"checkpoint_id":"unit-fixture"}],"future_competition_truth_loaded":False,"v1_final_used":False,"comparisons":comparisons})
+    for seed,value in ((17,.09),(29,.1),(43,.11)):
+        reports.append({"mode":"rl","objective":"hard","seed":seed,"actual_optimizer_updates":20,"selected_update":20,"checkpoints":[{"update":20,"development_pinball":.1,"checkpoint_id":"unit-fixture"}],"future_competition_truth_loaded":False,"v1_final_used":False,"comparisons":[metric("selected_rl_hard",value),metric("sft_parent",.1)]})
+    data={"policy_reports":reports,"analysis":{"complete_encoding_gp_control":{"pinball":.12},"stronger_static_control":{"pinball":.13},"training_selected_fixed_forecaster":{"pinball":.14,"config_id":"unit-fixture"},"evaluation_temporal_origins":["2026-08-29","2026-09-05","2026-09-12"]},"artifact_archive":{"url":"https://example.invalid/unit-fixture.zip","sha256":"0"*64},"autonomy_runs":[]}
+    perf={"origins":18,"method_origin_results":756,"stage_wall_seconds":541.215,"origins_per_minute":1.9955,"sum_function_elapsed_seconds":2462.55}
+    text,registry,summary,intro=report.render(data,perf)
+    assert (summary["rl_improving_seeds"],summary["rl_tied_seeds"],summary["rl_worsening_seeds"])==(1,1,1)
+    assert summary["rl_updates"]==60 and len(registry["runs"])==9
+    assert "1 lower loss versus their SFT parent, 1 tie and 1 increase loss" in text
+    assert "1 improve, 1 tie, 1 worsen" in intro
+    assert "tinker://" not in str(registry)
