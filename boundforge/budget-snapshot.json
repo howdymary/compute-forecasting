@@ -1,0 +1,106 @@
+{
+  "timestamp": "2026-11-15T02:50:48.912173+00:00",
+  "policy": "Existing credits only; disabled until balance AND safe billing boundary are verified.",
+  "providers": {
+    "exa": {
+      "credential_present": true,
+      "enabled": true,
+      "initial_cap": 119.58,
+      "reserved": 0,
+      "actual": 0,
+      "expiration": "Expiration control exposed no details; do not rely on long-lived credits.",
+      "probe": {
+        "status": 401,
+        "reason": "account endpoint rejected credentials"
+      },
+      "reason": "Balance, expiration and no-overage boundary require verification; no paid operations were launched.",
+      "unit": "USD prepaid credits",
+      "verified_via": "Authenticated Exa dashboard /billing",
+      "timestamp": "2026-11-15T02:56:00Z",
+      "billing_boundary": "Free tier; dashboard says no payment method and purchases/automatic top-ups require one.",
+      "operational_cap": 5
+    },
+    "past": {
+      "credential_present": true,
+      "enabled": true,
+      "initial_cap": 699579,
+      "reserved": 0,
+      "actual": 0,
+      "expiration": "/usage resetsAt=null; grant expiration not exposed",
+      "probe": {
+        "status": 200,
+        "month": {
+          "from": "2026-11-01T00:00:00Z",
+          "to": "2026-11-15T02:50:49.5703957Z",
+          "resetsAt": null
+        },
+        "balance": {
+          "left": 699579,
+          "included": 200000,
+          "bought": 499579,
+          "rolledOver": 0,
+          "spent": 421
+        },
+        "project": {
+          "credits": 421,
+          "ingestions": 46,
+          "recalls": 67,
+          "creditCap": null,
+          "creditCapLeft": null,
+          "ingestionCap": null,
+          "ingestionCapLeft": null
+        },
+        "metered": true
+      },
+      "reason": "Balance, expiration and no-overage boundary require verification; no paid operations were launched.",
+      "unit": "credits",
+      "billing_boundary": "Metered prepaid balance; documented 402 on exhausted credits. Ingest estimated before reservation; recall conservatively 1 credit.",
+      "operational_cap": 200
+    },
+    "tinker": {
+      "credential_present": true,
+      "enabled": false,
+      "initial_cap": null,
+      "reserved": 0,
+      "actual": 0,
+      "expiration": null,
+      "reason": "Official CLI exposes gross usage, not remaining prepaid balance. No training/sampling enabled."
+    },
+    "modal": {
+      "credential_present": true,
+      "enabled": true,
+      "initial_cap": 249.36,
+      "reserved": 0,
+      "actual": 0,
+      "expiration": "Additional hackathon grant expires 2027-11-30; monthly $1 resets.",
+      "probe": {
+        "status": 200,
+        "data": {
+          "metered_cost": "1.64005948",
+          "billed_cost": "0E-8",
+          "adjustments": {
+            "network_egress_allowance": "-0.00005948",
+            "reservation_adjustment": "-0E-8",
+            "free_storage": "-0E-8",
+            "plan_cost": "0E-8",
+            "credits": "-1.64000000"
+          },
+          "metered_cost_breakdown": {
+            "volumes": "0E-8",
+            "network_egress": "0.00005948",
+            "llm_tokens": "0E-8",
+            "ephemeral_apps": "1.61847529",
+            "deployed_apps": "0.02128575"
+          }
+        }
+      },
+      "reason": "Balance, expiration and no-overage boundary require verification; no paid operations were launched.",
+      "unit": "USD compute credits",
+      "verified_via": "Authenticated Modal Usage & billing",
+      "timestamp": "2026-11-15T02:56:00Z",
+      "billing_boundary": "Starter; no payment method; provider-set $251 monthly usage limit. $1.64 already used at snapshot.",
+      "operational_cap": 15,
+      "current_verified_remaining": 249.33
+    }
+  }
+}

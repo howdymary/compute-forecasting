@@ -1,0 +1,96 @@
+name: BoundForge certified research
+on:
+  workflow_dispatch:
+    inputs:
+      trials:
+        description: Bounded trial count (1–240)
+        default: '16'
+      seconds:
+        description: Numerical solver seconds per trial (1–60)
+        default: '12'
+      remote:
+        description: Use verified Modal credits for CPU search
+        type: boolean
+        default: true
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/boundforge.yml]
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: boundforge-research
+  cancel-in-progress: false
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - name: Fetch immutable source on remote runner
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install isolated BoundForge requirements
+        run: python -m pip install -r boundforge/requirements.txt modal
+      - name: Verify source integrity and rejection cases
+        run: |
+          python -m compileall -q boundforge
+          python -m pytest -q -p no:cacheprovider boundforge/test_core.py
+          python boundforge/sources/verify_published.py boundforge/certificates/incumbent.json
+      - name: Execute bounded autonomous research
+        env:
+          EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
+          PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+          TRIALS: ${{ inputs.trials || '16' }}
+          SECONDS: ${{ inputs.seconds || '12' }}
+          REMOTE: ${{ github.event_name == 'push' || inputs.remote }}
+        run: |
+          if [ "$REMOTE" = "true" ]; then
+            python -u boundforge/run.py --trials "$TRIALS" --seconds "$SECONDS" --remote
+          else
+            python -u boundforge/run.py --trials "$TRIALS" --seconds "$SECONDS"
+          fi
+      - name: Record dependency versions
+        if: always()
+        run: python -m pip freeze > boundforge/results/environment.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: boundforge-research
+          path: |
+            boundforge/results/
+            boundforge/budget-snapshot.json
+          retention-days: 30
+  independent-certificate:
+    needs: research
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Fetch exact verifier source
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/download-artifact@v4
+        with:
+          name: boundforge-research
+          path: boundforge/artifact
+      - name: Independently check exact final witness
+        run: |
+          python boundforge/verify_independent.py boundforge/artifact/results/best.json
+          python -m pip install python-flint==0.8.0
+          python boundforge/verify.py boundforge/artifact/results/best.json --baseline boundforge/certificates/incumbent.json
