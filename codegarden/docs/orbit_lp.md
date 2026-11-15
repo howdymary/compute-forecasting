@@ -1,0 +1,11 @@
+# Full-universe fractional packing with an exact symmetry quotient
+
+The earlier full LP attempt reached its60-second limit without a solution. This experiment reduces the full fractional packing LP by the verified complement/reversal group, giving16512word orbits and4160descendant orbits. It does not restrict an integer code to be symmetric.
+
+Let X_o be total fractional mass over a word orbit, t_ro the number of distinct descendants of one representative lying in descendant orbit r, and s_r that descendant orbit's size. The quotient is max sum(X_o), subject to sum_o t_ro X_o<=s_r and X_o>=0. Averaging any feasible full fractional solution over the group yields the quotient; lifting X_o uniformly over its word orbit gives the full feasible solution. Two independent group generators are checked on all65536incidence rows. Small full and quotient LPs are also compared, and their symmetries checked with the protected literal string generator.
+
+Dual variables lambda_r cover each word orbit by sum_r t_ro lambda_r>=1. They lift to equal weights on all descendants of r. Numerical weights are rounded upward to integer multiples of a fixed denominator, repaired conservatively if needed, and exported as plain JSON. `verify_dual_certificate.py` independently generates every word's distinct descendants with the frozen protected string generator and checks all65536cover inequalities using exact Python integers. Disjoint descendant sets then imply code_size*denominator<=total_descendant_weight. Verification needs no solver, model, API, or search history.
+
+Two bounded300-wall-second solvers, HiGHS dual simplex and interior point, are compared. Numerical optimality is fractional only. A verified integer upper bound is supporting evidence and does not satisfy the227construction objective. No new literature/global record is claimed. A full fractional vector can later guide randomized search with nonzero support retained for every word; it is never a code witness.
+
+SciPy1.18.0requiresPython>=3.12, confirmed from PyPI metadata. Isolated CodeGarden dependencies only. Official method documentation: https://docs.scipy.org/doc/scipy/reference/optimize.linprog-highs.html and https://docs.scipy.org/doc/scipy/reference/optimize.linprog-highs-ipm.html . Standard public GitHub runners only; no new sponsor requests or budget changes.

@@ -1,0 +1,124 @@
+name: CodeGarden full symmetric fractional packing and exact dual verification
+on:
+  push:
+    branches: [codegarden-orbit-lp-001]
+    paths: [.github/workflows/codegarden.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: codegarden-free-orbit-lp-001
+  cancel-in-progress: false
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+  SOURCE_SHA: ${{ github.sha }}
+  TMPDIR: ${{ github.workspace }}/codegarden/.tmp
+  PIP_CACHE_DIR: ${{ github.workspace }}/codegarden/.cache/pip
+  OMP_NUM_THREADS: '1'
+  OPENBLAS_NUM_THREADS: '1'
+  CODEGARDEN_BATCH: orbit_lp_001
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -o pipefail
+          for attempt in 1 2 3; do
+            if gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1; then break; fi
+            sleep 2
+          done
+          test -f codegarden/phase3/orbit_lp.py
+          mkdir -p codegarden/.tmp codegarden/.cache/pip
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install isolated solver and exhaust model logic
+        run: |
+          set -o pipefail
+          python -m venv codegarden/.venv
+          codegarden/.venv/bin/python -m pip install -r codegarden/phase3/requirements-orbit-lp.txt
+          mkdir -p codegarden/artifacts/phase3/orbit_lp_001
+          codegarden/.venv/bin/python -B -u codegarden/phase3/test_orbit_lp.py | tee codegarden/artifacts/phase3/orbit_lp_001/quotient_tests.json
+          codegarden/.venv/bin/python -B -u codegarden/phase3/preflight.py
+      - uses: actions/upload-artifact@v4
+        with:
+          retention-days: 1
+          name: codegarden-orbit-lp-preflight
+          path: codegarden/artifacts/phase3/orbit_lp_001/
+  probes:
+    needs: preflight
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        case: [0, 1]
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -o pipefail
+          for attempt in 1 2 3; do
+            if gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1; then break; fi
+            sleep 2
+          done
+          test -f codegarden/phase3/orbit_lp.py
+          mkdir -p codegarden/.tmp codegarden/.cache/pip
+      - uses: actions/download-artifact@v4
+        with:
+          name: codegarden-orbit-lp-preflight
+          path: codegarden/artifacts/phase3/orbit_lp_001/
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Solve quotient LP and independently check integer dual
+        run: |
+          python -m venv codegarden/.venv
+          codegarden/.venv/bin/python -m pip install -r codegarden/phase3/requirements-orbit-lp.txt
+          codegarden/.venv/bin/python -B -u codegarden/phase3/orbit_lp.py ${{ matrix.case }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          retention-days: 1
+          name: codegarden-orbit-lp-${{ matrix.case }}
+          path: codegarden/artifacts/phase3/orbit_lp_001/
+  collect:
+    needs: [preflight, probes]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -o pipefail
+          for attempt in 1 2 3; do
+            if gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1; then break; fi
+            sleep 2
+          done
+          test -f codegarden/phase3/orbit_lp.py
+          mkdir -p codegarden/.tmp codegarden/.cache/pip
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: codegarden-orbit-lp-*
+          merge-multiple: true
+          path: codegarden/artifacts/phase3/orbit_lp_001/
+      - name: Publish leased results
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python -B -u codegarden/phase3/collect_orbit_lp.py
+          python -B -u codegarden/phase3/publish_orbit_lp.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          retention-days: 1
+          name: codegarden-orbit-lp-collected
+          path: codegarden/artifacts/phase3/orbit_lp_001/
