@@ -1,0 +1,44 @@
+name: Reconstruct matched training resource accounting v14
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/resources-evidence-v14.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+jobs:
+  profile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Fetch locked study source
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Retrieve immutable paired inputs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run download 43966729631 --repo "$GITHUB_REPOSITORY" --name evidence-v14-inputs-43966729631 --dir inputs/evidence-v14
+      - run: |
+          python -m pip install --extra-index-url https://download.pytorch.org/whl/cpu -r inputs/evidence-v14/requirements-lock.txt
+          python -m pip install -e . --no-deps
+      - name: Reconstruct exact batches and token lengths without optimization
+        env:
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+        run: PYTHONPATH=src python scripts/profile_evidence_v14.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: evidence-v14-resources-${{ github.run_id }}
+          path: artifacts/evidence-v14-audit
+          retention-days: 30
+      - name: Publish usage provenance
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/publish_evidence_audit_v14.py
