@@ -9,7 +9,7 @@
   },
   "model": {
     "base": "Qwen/Qwen3.5-4B",
-    "renderer": "qwen3_5",
+    "renderer": "qwen3_5_disable_thinking",
     "rank": 16,
     "learning_rate": 0.00005,
     "batch_size": 16,
@@ -25,7 +25,8 @@
       50,
       100
     ],
-    "max_context_tokens": 6144
+    "max_context_tokens": 6144,
+    "renderer_reason": "Official supported non-thinking renderer; identical SFT and sampling template for bounded numeric JSON"
   },
   "data": {
     "source_ids": [
@@ -61,7 +62,12 @@
     ],
     "unit": "USD per GPU-hour",
     "max_training_windows_per_series": 160,
-    "max_per_source_family": 2
+    "max_per_source_family": 2,
+    "instrument_classes": [
+      "hyperscaler_spot",
+      "neocloud_rate_card"
+    ],
+    "permission_rule": "CC-BY-4.0 catalog sources restricted to approved hyperscaler spot and neocloud rate-card derivatives; marketplace asks excluded regardless of compilation license"
   },
   "sampling": {
     "samples": 64,

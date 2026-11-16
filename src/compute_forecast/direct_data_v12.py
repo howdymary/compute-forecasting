@@ -31,7 +31,7 @@ def prepare():
     if (out/"audit.json").exists():return json.loads((out/"audit.json").read_text())
     work=Path(tempfile.mkdtemp(prefix="direct-v12-"))
     hist,catalog,history_path,catalog_path=build_history(root,work,p["data"]["history_cutoff"])
-    approved=[m for m in catalog if m.get("tier")=="headline" and m.get("table")=="daily_statistics" and m.get("source_id") in p["data"]["source_ids"] and m.get("gpu_model","").upper().startswith(tuple(p["data"]["gpu_prefixes"]))]
+    approved=[m for m in catalog if m.get("tier")=="headline" and m.get("table")=="daily_statistics" and m.get("source_id") in p["data"]["source_ids"] and m.get("instrument_class") in p["data"]["instrument_classes"] and m.get("licence_id")=="CC-BY-4.0" and m.get("gpu_model","").upper().startswith(tuple(p["data"]["gpu_prefixes"]))]
     selected=[];counts={}
     for m in sorted(approved,key=lambda m:m["series_id"]):
         key=(m["source_id"],m["gpu_model"].split()[0].upper())

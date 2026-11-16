@@ -6,6 +6,7 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
+  actions: write
 concurrency:
   group: direct-v12-preparation
   cancel-in-progress: false
@@ -20,6 +21,13 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           SOURCE_SHA: ${{ github.sha }}
         run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - name: Remove superseded audit with an ineligible marketplace derivative
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          status=$(gh api -i -X DELETE "repos/$GITHUB_REPOSITORY/actions/runs/43951206032" 2>&1) || {
+            case "$status" in *"404"*) true ;; *) printf '%s\n' "$status"; exit 1 ;; esac
+          }
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
