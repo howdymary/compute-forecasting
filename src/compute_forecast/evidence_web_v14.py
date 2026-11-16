@@ -1,20 +1,28 @@
 """Read-only paired-study web service; no private data or model credentials."""
 import hashlib,json,os,threading,time,urllib.request
+from pathlib import Path
 import modal
+STATIC_ASSET_BUILD="python - <<'PY'\nfrom pathlib import Path\nfrom urllib.request import urlopen\nimport hashlib\nbase=\"https://raw.githubusercontent.com/google/fonts/a85fc09e44c70c7159761adfdc9d5dd007792c15/ofl/caveat/\"\nroot=Path(\"/opt/notebook-static\");root.mkdir(parents=True,exist_ok=True)\nfor source,name,expected in [(\"Caveat%5Bwght%5D.ttf\",\"caveat-f84acf2c.ttf\",\"f84acf2ce2d1b3329b194749530dbaec047e6df6\"),(\"OFL.txt\",\"OFL.txt\",\"6e5220c9576d98dfc684e550ddf0d87f68b3edc5\")]:\n    raw=urlopen(base+source,timeout=60).read()\n    assert hashlib.sha1(b\"blob \"+str(len(raw)).encode()+b\"\\0\"+raw).hexdigest()==expected,\"Unverified static asset\"\n    (root/name).write_bytes(raw)\nPY"
 from .evidence_ui_v14 import HTML
 app=modal.App("compute-forecast-evidence-v14")
-image=modal.Image.debian_slim(python_version="3.11").pip_install("fastapi[standard]>=0.115,<1").env({"EVIDENCE_UI_SHA":os.environ.get("GITHUB_SHA","unknown")}).add_local_python_source("compute_forecast")
+image=modal.Image.debian_slim(python_version="3.11").pip_install("fastapi[standard]>=0.115,<1").run_commands(STATIC_ASSET_BUILD).env({"EVIDENCE_UI_SHA":os.environ.get("GITHUB_SHA","unknown")}).add_local_python_source("compute_forecast")
 BASE="https://raw.githubusercontent.com/howdymary/mochi-demo/compute-observatory/"
 @app.function(image=image,cpu=.5,memory=512,timeout=120,max_containers=4)
 @modal.concurrent(max_inputs=8)
 @modal.asgi_app()
 def web():
     from fastapi import FastAPI
-    from fastapi.responses import HTMLResponse,JSONResponse
+    from fastapi.responses import HTMLResponse,JSONResponse,Response
     api=FastAPI(docs_url=None,redoc_url=None,openapi_url=None);cache={};lock=threading.Lock()
     headers={"Cache-Control":"no-store","X-Content-Type-Options":"nosniff","Content-Security-Policy":"default-src 'self';script-src 'self' 'unsafe-inline';style-src 'self' 'unsafe-inline';object-src 'none';base-uri 'none';frame-ancestors 'none'"}
     @api.get("/")
     def page():return HTMLResponse(HTML,headers=headers)
+    @api.get("/assets/{name}")
+    def asset(name:str):
+        names={"note.ttf":("caveat-f84acf2c.ttf","font/ttf"),"OFL.txt":("OFL.txt","text/plain")}
+        if name not in names:return Response(status_code=404)
+        file,kind=names[name];raw=(Path("/opt/notebook-static")/file).read_bytes()
+        return Response(raw,media_type=kind,headers={**headers,"Cache-Control":"public,max-age=31536000,immutable"})
     @api.get("/health")
     def health():return {"status":"ok","study_id":"direct-evidence-v14","ui_revision":os.environ.get("EVIDENCE_UI_SHA")}
     @api.get("/api/evidence-v14")

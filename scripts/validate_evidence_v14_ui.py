@@ -1,13 +1,16 @@
 """PNG-only validation on actual paired-study artifacts, never synthetic learning curves."""
-import hashlib,http.server,json,os,pathlib,threading
+import hashlib,http.server,json,os,pathlib,threading,urllib.request
 from playwright.sync_api import sync_playwright
 from compute_forecast.evidence_ui_v14 import HTML
 root=pathlib.Path("artifacts/evidence-v14-ui");root.mkdir(parents=True,exist_ok=True)
 pointer=json.loads(pathlib.Path("results/evidence-v14/latest.json").read_text());raw=pathlib.Path(pointer["report_path"]).read_bytes()
 assert hashlib.sha256(raw).hexdigest()==pointer["report_sha256"];report=json.loads(raw);state={"error":False}
+font=urllib.request.urlopen("https://raw.githubusercontent.com/google/fonts/a85fc09e44c70c7159761adfdc9d5dd007792c15/ofl/caveat/Caveat%5Bwght%5D.ttf",timeout=60).read()
+assert hashlib.sha1(b"blob "+str(len(font)).encode()+b"\0"+font).hexdigest()=="f84acf2ce2d1b3329b194749530dbaec047e6df6"
 class Handler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
         if self.path=="/":raw=HTML.encode();status=200;kind="text/html"
+        elif self.path=="/assets/note.ttf":raw=font;status=200;kind="font/ttf"
         elif self.path=="/api/evidence-v14":raw=json.dumps(report).encode();status=503 if state["error"] else 200;kind="application/json"
         else:self.send_response(404);self.end_headers();return
         self.send_response(status);self.send_header("Content-Type",kind);self.end_headers();self.wfile.write(raw)
@@ -36,6 +39,7 @@ with sync_playwright() as p:
             page.locator("#learning circle").first.focus();page.keyboard.press("Enter")
             assert page.locator("#updates button[aria-pressed=true]").count()==1
         assert not errors,errors
+        assert page.evaluate("async()=>{await document.fonts.ready;return document.fonts.check('24px Caveat')}"),"Annotation font unavailable"
         page.screenshot(path=str(root/(name+".png")),full_page=True)
         state["error"]=True;page.locator("#refresh").click();page.wait_for_function("document.querySelector('#status').textContent.includes('unavailable')")
         state["error"]=False;page.locator("#refresh").click();page.wait_for_function("!document.querySelector('#status').textContent.startsWith('Loading')")
