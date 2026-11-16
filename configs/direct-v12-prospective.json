@@ -1,0 +1,53 @@
+{
+  "study_id": "direct-v12-prospective",
+  "registered_at": "2026-11-16",
+  "parent_protocol_sha256": "de86b58b672ce746e907123d98e9a42ecd2a442c09b37288de32803578fc6e0a",
+  "classification": "New individual-contract transfer cohort, distinct from Pacific aggregate targets",
+  "source": "https://gpurentalprices.com/api/latest.json",
+  "health": "https://gpurentalprices.com/api/health.json",
+  "permission": "https://gpurentalprices.com/data",
+  "license": "CC BY 4.0",
+  "cohort_rule": "Same normalized exact-contract identities as signals-v6; freeze the first retained eligible cohort, no replacements",
+  "snapshot_window_utc": [
+    "17:55:00",
+    "21:00:00"
+  ],
+  "target_definition": "First verified current-day collector snapshot retained within the registered UTC capture window; advertised individual-contract USD per GPU-hour",
+  "first_eligible_date": "2026-11-17",
+  "history_calendar_days": 42,
+  "min_price_days": 20,
+  "origin_rule": "Sunday 23:59:59 UTC",
+  "issuance_deadline_minutes_after_origin": 30,
+  "operational_seed": 17,
+  "checkpoint_selection": "Use the original development-selected seed17 checkpoint; no selection on prospective outcomes",
+  "horizons": [
+    1,
+    3,
+    7
+  ],
+  "quantiles": [
+    0.1,
+    0.5,
+    0.9
+  ],
+  "samples": 64,
+  "model_update_rule": "Frozen weights; no new training in this panel",
+  "primary_endpoint": "7-day paired quantile pinball loss against unadapted same-model control",
+  "references": [
+    "last_value",
+    "last_value_empirical",
+    "drift",
+    "seasonal_naive"
+  ],
+  "missingness": "Missing source days stay missing; no target substitution or carry-forward truth",
+  "first_analysis_after_weekly_origins": 12,
+  "stopping": "Fixed first 12 eligible issued weekly origins; inspect operational failures without promoting from interim scores",
+  "dependence": "Origins, contracts and overlapping horizons can remain dependent; report counts and paired differences without treating offers as independent",
+  "limits": {
+    "capture_timeout_seconds": 45,
+    "inference_timeout_seconds": 900,
+    "parallel_tasks": 4,
+    "max_capture_response_bytes": 2000000
+  },
+  "existing_commitments_and_Nov23_gate": "unchanged"
+}

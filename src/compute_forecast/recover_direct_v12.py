@@ -1,6 +1,6 @@
 """Finish interrupted checkpoint evaluation without repeating optimizer updates."""
 from __future__ import annotations
-import argparse,asyncio,hashlib,json,os,pathlib,statistics,time
+import argparse,asyncio,hashlib,json,os,pathlib,statistics,time,urllib.request
 from datetime import datetime,timezone
 from .direct_forecast_v12 import digest,summarize,matched
 from .train_direct_v12 import evaluate,reference_cells,write,now,cfg
@@ -10,6 +10,22 @@ async def recover(inputs,output,seed):
     p=cfg();root=pathlib.Path(inputs);out=pathlib.Path(output);out.mkdir(parents=True,exist_ok=True)
     dataset=json.loads((root/"dataset.json").read_text());audit=json.loads((root/"audit.json").read_text())
     assert digest(dataset)==audit["dataset_sha256"] and dataset["protocol_sha256"]==digest(p)
+    # Reuse an already published evaluation rather than repeating sampling.
+    public_base="https://raw.githubusercontent.com/howdymary/mochi-demo/compute-observatory/"
+    try:
+        with urllib.request.urlopen(public_base+"results/direct-v12/latest.json",timeout=15) as response:index=json.load(response)
+        with urllib.request.urlopen(public_base+index["report_path"],timeout=15) as response:published=json.load(response)
+        existing=next((r for r in published.get("runs",[]) if r["seed"]==seed and r["protocol_sha256"]==digest(p) and r["dataset_sha256"]==digest(dataset)),None)
+        if existing:
+            directory=index["report_path"].rsplit("/",1)[0]+"/seed-"+str(seed)+"/"
+            names=["result.json","progress.json","selection.json","evaluation-selected.json","evaluation-base.json"]+["development-"+str(c["update"])+".json" for c in existing["checkpoints"]]
+            for name in names:
+                with urllib.request.urlopen(public_base+directory+name,timeout=30) as response:value=json.load(response)
+                write(out/name,value)
+            print("DIRECT_EVALUATION_REUSED "+json.dumps({"seed":seed,"new_optimizer_updates":0,"new_samples":0}),flush=True)
+            return
+    except Exception:
+        pass
     progress=next(f for f in root.rglob("progress.json") if json.loads(f.read_text()).get("seed")==seed)
     state=json.loads(progress.read_text())
     assert state["optimizer_updates"]==p["model"]["max_updates"]==100,"Recovery never repeats missing optimization"
