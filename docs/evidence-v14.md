@@ -49,3 +49,7 @@ The BLS block can identify calendar position as well as operating economics. A m
 The base model’s complete pretraining history is not verified. Supplying origin-safe inputs does not prove that all historical public outcomes were absent from pretraining. Both arms share the same base model; genuinely later observations remain necessary.
 
 The separate [prospective protocol](../configs/evidence-v14-prospective.json) requires a checkpoint lock, compatible retained source history, advance issuance and matured outcomes. It is registered, with no forecasts issued in this study yet. Existing collection and November23 gates remain unchanged.
+
+## Resource-accounting convention
+
+The frozen trainer's `completion_tokens` field stores normalized loss-weight mass, not a token count. The corrected resource audit separately counts positive-weight supervised token positions, full training sequence tokens and loss-weight mass. It reconstructs the registered batches and checks their mass against completed optimizer updates. The earlier audit is retained with its correction identified; model training, sampled forecasts and scores are unchanged. Neither reconstruction nor elapsed runtime is a provider billing receipt.

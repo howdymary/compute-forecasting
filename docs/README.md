@@ -59,8 +59,4 @@ The earlier pricing/notebook guides describe their original release state. Histo
 
 ## Matched price and BLS models
 
-[Methods](direct-evidence-v14.md) · [Measured findings](evidence-v14-findings.md) · [Versioned artifacts](../results/evidence-v14/README.md). This matched two-arm study preserves the earlier direct and selector studies.
-
-## Matched price and BLS models
-
 [Methods](evidence-v14.md) · [Measured findings](evidence-v14-findings.md) · [Versioned artifacts](../results/evidence-v14/README.md). This matched two-arm study preserves the earlier direct and selector studies.

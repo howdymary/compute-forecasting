@@ -51,7 +51,7 @@ def build(inputs,output):
         for (arm,seed,update),value in sorted(development.items()):
             found=next(r for r in value["tasks"] if r["task_id"]==t["task_id"])
             forecasts.append({"arm":arm,"seed":seed,"update":update,"cells":found["cells"],"distinct_vectors":found["distinct_vectors"],"valid_samples":found["valid_samples"],"fallback":found["fallback"],"source_artifact":arm+"/seed-"+str(seed)+"/development-"+str(update)+".json"})
-        cases.append({"task_id":t["task_id"],"series_id":t["series_id"],"origin":t["origin"],"metadata":t["metadata"],"history":t["context"],"history_sha256":digest(t["context"]),"anchor":t["anchor"],"bls":t["bls"],"target_dates":t["target_dates"],"outcomes":t["outcomes"],"forecasts":forecasts,"classification":"Development case; first case selected lexicographically, not by performance"})
+        cases.append({"task_id":t["task_id"],"series_id":t["series_id"],"origin":t["origin"],"metadata":t["metadata"],"history":t["context"],"history_sha256":digest(t["context"]),"anchor":t["anchor"],"bls":t["bls"],"target_dates":t["target_dates"],"outcomes":t["outcomes"],"forecasts":forecasts,"classification":"Development illustration; default is first lexicographic changed-price case, independent of model performance"})
     incomplete=[]
     for arm in p["arms"]:
         for seed in p["model"]["seeds"]:
@@ -83,8 +83,23 @@ def build(inputs,output):
     if memory_files:
         f=memory_files[-1];value=load(f)
         memory={"path":str(f),"sha256":hashlib.sha256(f.read_bytes()).hexdigest(),"status":value["status"],"eligibility":value["eligibility"],"changed_after_criticism":value["changed_after_criticism"],"decisions":value["decisions"],"actual_diagnostics":value["actual_diagnostics"]}
+    resources=None
+    profiles=sorted(pathlib.Path("results/evidence-v14/audits").glob("*/resource-profile.json"),key=lambda f:int(f.parent.name))
+    if profiles:
+        f=profiles[-1];profile=load(f)
+        if profile.get("schema_version")==2:
+            assert profile["protocol_sha256"]==digest(p) and profile["dataset_sha256"]==digest(dataset)
+            reconciled=[]
+            for state in states:
+                expected=next(r for r in profile["runs"] if r["arm"]==state["arm"] and r["seed"]==state["seed"])
+                assert len(state["updates"])==state["optimizer_updates"]==expected["optimizer_updates"]
+                for actual,predicted in zip(state["updates"],expected["per_update"]):
+                    assert actual["update"]==predicted["update"]
+                    assert abs(actual["completion_tokens"]-predicted["loss_weight_mass"])<1e-5
+                reconciled.append({k:expected[k] for k in ("arm","seed","optimizer_updates","example_presentations","training_sequence_tokens","supervised_tokens","loss_weight_mass","batch_task_order_sha256")})
+            resources={"path":str(f),"sha256":hashlib.sha256(f.read_bytes()).hexdigest(),"completed_run_reconciliation":reconciled,"scope":profile["scope"],"provider_cost_usd":None,"note":"Frozen run field completion_tokens is normalized loss-weight mass, not token count. Positive-weight token counts are reconstructed with identical locked inputs and client versions."}
     default_case=next((c for c in cases if any(v!=c["anchor"] for v in c["outcomes"])),cases[0] if cases else None)
-    report={"study_id":p["study_id"],"schema_version":14,"status":status,"created_at":datetime.now(timezone.utc).isoformat(),"protocol":p,"protocol_sha256":digest(p),"dataset_sha256":digest(dataset),"audit":audit,"runs":states,"development_cases":cases,"default_case_id":default_case["task_id"] if default_case else None,"visual_case_rule":"First lexicographic development case with an observed price change, independent of model performance","comparisons":comparisons,"paired_summary":paired_summary,"expected_runs":6,"incomplete_runs":incomplete,"execution":execution,"memory":memory,"task_anchors":{t["task_id"]:t["anchor"] for phase in ("development","retrospective") for t in dataset["groups"][phase]},"news_used":False,"infrastructure_used":False,"source_attribution":"Pacific Machines(2026), gpu-price-pack v0.1.1-handover, approved CC BY4.0 source derivatives; US Bureau of Labor Statistics, original archived monthly PPI releases","interpretation":"Price versus price+BLS; retrospective. Three dependent evaluation dates and seed replicates do not establish prospective accuracy or a news benefit.","prospective":{"status":"pending","outcomes_loaded":False,"protocol":"configs/evidence-v14-prospective.json"}}
+    report={"study_id":p["study_id"],"schema_version":14,"status":status,"created_at":datetime.now(timezone.utc).isoformat(),"protocol":p,"protocol_sha256":digest(p),"dataset_sha256":digest(dataset),"audit":audit,"runs":states,"development_cases":cases,"default_case_id":default_case["task_id"] if default_case else None,"visual_case_rule":"First lexicographic development case with an observed price change, independent of model performance","comparisons":comparisons,"paired_summary":paired_summary,"expected_runs":6,"incomplete_runs":incomplete,"execution":execution,"memory":memory,"resource_accounting":resources,"task_anchors":{t["task_id"]:t["anchor"] for phase in ("development","retrospective") for t in dataset["groups"][phase]},"news_used":False,"infrastructure_used":False,"source_attribution":"Pacific Machines(2026), gpu-price-pack v0.1.1-handover, approved CC BY4.0 source derivatives; US Bureau of Labor Statistics, original archived monthly PPI releases","interpretation":"Price versus price+BLS; retrospective. Three dependent evaluation dates and seed replicates do not establish prospective accuracy or a news benefit.","prospective":{"status":"pending","outcomes_loaded":False,"protocol":"configs/evidence-v14-prospective.json"}}
     for name,raw in files.items():
         f=out/name;f.parent.mkdir(parents=True,exist_ok=True);f.write_text(raw)
     for name,value in (("report.json",report),("audit.json",audit),("bls-vintages.json",load(next(root.rglob("bls-vintages.json"))))):

@@ -169,3 +169,10 @@ Built for Track 5, Open Track, during the November 2026 research hackathon. Moch
 The GPU rental forecasting study remains on compute-observatory. [Measured findings](docs/price-dynamics-v8-findings.md), [methods and reproduction](docs/price-dynamics-v8.md), and the [live observatory](https://howdymary--compute-forecast-observatory-web.us-east.modal.run) document the fixed six-arm study, retained negative results and pending prospective panel.
 
 [Single H100 price canvas](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/terminal) · [Earlier dark-terminal walkthrough at 2×](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/terminal/media/43801934433/terminal-30s.mp4) · [Canvas methods](docs/price-canvas-v11.md) · [Advanced terminal](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/terminal/advanced).
+
+
+### Direct forecasting: price history versus BLS
+
+[Interactive paired study](https://howdymary--compute-forecast-evidence-v14-web.us-east.modal.run) · [Registered methods](docs/evidence-v14.md) · [Measured findings](docs/evidence-v14-findings.md) · [Immutable artifacts](results/evidence-v14/README.md).
+
+Six matched Tinker LoRA runs directly predict GPU rental-price changes, comparing price history alone with original-release electricity-distribution PPI features. The historical comparison is retrospective; news and infrastructure are excluded. The future comparison is separately registered and has not established prospective accuracy.
