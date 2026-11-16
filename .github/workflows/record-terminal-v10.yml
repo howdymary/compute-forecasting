@@ -1,0 +1,54 @@
+name: Record requested GPU terminal walkthrough
+on:
+  workflow_dispatch:
+  push:
+    branches: [compute-observatory]
+    paths: [configs/terminal-v10-video.json]
+permissions:
+  contents: write
+concurrency:
+  group: terminal-v10-requested-video
+  cancel-in-progress: false
+jobs:
+  capture:
+    if: github.ref == 'refs/heads/compute-observatory'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Fetch exact capture source remotely
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$GITHUB_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install remote browser and encoding tools
+        run: |
+          python -m pip install -e . playwright pillow modal==1.6.4
+          python -m playwright install --with-deps chromium
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
+      - name: Capture 60 seconds and export 30 seconds at 2x
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: python -m compute_forecast.record_terminal_v10
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: terminal-v10-video-${{ github.run_id }}
+          path: artifacts/terminal-v10-video/
+          retention-days: 90
+      - name: Publish versioned video evidence
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          from compute_forecast.publication_terminal_v10 import publish
+          root=Path('artifacts/terminal-v10-video')
+          names=('manifest.json','publication.json','contact-sheet.png','poster.png')
+          prefix='results/terminal-v10/runs/'+os.environ['GITHUB_RUN_ID']+'/video/'
+          print('T10_VIDEO_PUBLICATION:'+publish({prefix+n:(root/n).read_bytes() for n in names}),flush=True)
+          PY
