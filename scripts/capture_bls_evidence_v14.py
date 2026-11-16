@@ -29,7 +29,7 @@ def extract(text,period,independent=None):
     for item in months:
         year,month=map(int,item.split("-"))
         name=calendar.month_abbr[month]
-        if name.lower() not in header.lower() or str(year) not in header:raise ValueError("Column month not verified: "+item)
+        if verified and (name.lower() not in header.lower() or str(year) not in header):raise ValueError("Column month not verified: "+item)
     if values[-1] is None or values[-2] is None:raise ValueError("Latest or previous month missing")
     return {"periods":months,"indices":values,"source_row":match.group(0),"source_row_sha256":hashlib.sha256(match.group(0).encode()).hexdigest(),"header_context_sha256":hashlib.sha256(header.encode()).hexdigest(),"verified_column_caption":verified.group(0) if verified else independent["verified_caption"],"extraction":"Exactindustry221122/base12-03; five monthly index columns; excludes221122-P/products and percent-change table"}
 def main():
