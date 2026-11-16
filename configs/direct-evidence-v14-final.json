@@ -1,0 +1,162 @@
+{
+  "schema_version": 14,
+  "study_id": "direct-evidence-v14",
+  "registered_date": "2026-11-16",
+  "classification": "post-event retrospective development with separate prospective commitments",
+  "hypotheses": {
+    "primary": "The same direct forecasting model trained with origin-safe archived electricity-distribution PPI features has lower seven-day quantile pinball than a freshly trained matched price-only model",
+    "secondary": "Fine-tuning and evidence input effects are reported separately; no positive-result requirement"
+  },
+  "model": {
+    "base": "Qwen/Qwen3.5-4B",
+    "renderer": "qwen3_5_disable_thinking",
+    "rank": 16,
+    "learning_rate": 0.00005,
+    "batch_size": 16,
+    "seeds": [
+      17,
+      29,
+      43
+    ],
+    "max_updates": 100,
+    "checkpoints": [
+      0,
+      20,
+      50,
+      100
+    ],
+    "max_context_tokens": 6144,
+    "renderer_reason": "Official supported non-thinking renderer; identical SFT and sampling template for bounded numeric JSON"
+  },
+  "data": {
+    "source_ids": [
+      "afhubbard",
+      "gpurentalprices",
+      "fastgpu_daily"
+    ],
+    "table": "daily_statistics",
+    "gpu_prefixes": [
+      "A100",
+      "H100"
+    ],
+    "context_calendar_days": 42,
+    "min_context_observations": 20,
+    "train_labels_through": "2026-09-19",
+    "train_origins_through": "2026-09-12",
+    "development_origins": [
+      "2026-09-27",
+      "2026-10-04"
+    ],
+    "retrospective_origins": [
+      "2026-10-11",
+      "2026-10-18",
+      "2026-10-25"
+    ],
+    "history_cutoff": "2026-11-06",
+    "max_series": 12,
+    "series_selection": "First two lexicographic exact headline daily-statistic series per approved source and GPU family, capped at 12; no performance-based selection",
+    "horizons": [
+      1,
+      3,
+      7
+    ],
+    "unit": "USD per GPU-hour",
+    "max_training_windows_per_series": 160,
+    "max_per_source_family": 2,
+    "instrument_classes": [
+      "hyperscaler_spot",
+      "neocloud_rate_card"
+    ],
+    "permission_rule": "CC-BY-4.0 catalog sources restricted to approved hyperscaler spot and neocloud rate-card derivatives; marketplace asks excluded regardless of compilation license"
+  },
+  "sampling": {
+    "samples": 64,
+    "min_valid": 48,
+    "temperature": 0.8,
+    "max_tokens": 128,
+    "quantile_method": "linear",
+    "seed_base": 140000,
+    "concurrency": 4,
+    "parse_keys": [
+      "r1",
+      "r3",
+      "r7"
+    ],
+    "min_log_return": -20,
+    "max_log_return": 20,
+    "fallback": "official last_value; report validity separately",
+    "seed": null,
+    "reason": "No fixed request seed; retain all actual stochastic samples, parsing failures and hashes"
+  },
+  "evaluation": {
+    "primary_horizon": 7,
+    "quantiles": [
+      0.1,
+      0.5,
+      0.9
+    ],
+    "references": [
+      "last_value",
+      "last_value_empirical",
+      "drift",
+      "seasonal_naive"
+    ],
+    "selection": "Lowest development 7-day mean USD quantile pinball; earliest update wins exact ties; checkpoint zero eligible",
+    "eligible": "Origin observation exists, at least 20 context observations, and all 1/3/7-day labels exist; locked before candidate evaluation",
+    "uncertainty": "Origin-level paired differences and range; three dependent retrospective origins are insufficient for population significance",
+    "official_export_sha256": "67a043255a716db6bc9b73cd28f9258c30fb299fd8671a9ee3430c0d94cadd80"
+  },
+  "gates": {
+    "min_training_windows": 64,
+    "min_distinct_training_origins": 28,
+    "min_development_tasks": 2,
+    "min_retrospective_tasks": 2,
+    "min_evidence_releases": 3,
+    "evidence": "All registered monthly rows qualified; >=90% training-origin availability; >=3 distinct releases; exact reference series and captions verified",
+    "rl": "Separate unlaunched experiment; proper reward and verified credit assignment required"
+  },
+  "limits": {
+    "total_hours": 2,
+    "parallel_training_runs": 2,
+    "max_new_optimizer_updates": 600,
+    "max_persistent_checkpoints": 18,
+    "max_storage_bytes": 30000000000,
+    "max_new_rl_updates": 0
+  },
+  "prospective": {
+    "registration": "configs/evidence-v14-prospective.json",
+    "scope": "New individual-contract transfer cohort, separate from competition medians",
+    "status": "pending actual inputs and advance forecast commitments",
+    "existing_panels": "unchanged"
+  },
+  "preservation": {
+    "protected_outcomes_loaded": false,
+    "official_export_unchanged": true,
+    "existing_studies_unchanged": true,
+    "existing_future_gates_unchanged": true
+  },
+  "arms": [
+    "price_only",
+    "price_evidence"
+  ],
+  "arm_labels": {
+    "price_only": "Price history",
+    "price_evidence": "Price + BLS"
+  },
+  "evidence": {
+    "source_registry": "configs/evidence-v14-bls-sources.json",
+    "series_id": "PCU221122221122",
+    "features": [
+      "latest_available_index",
+      "month_over_month_log_change",
+      "days_since_release"
+    ],
+    "availability": "Original monthly government PDF vintage; actual8:30America/New_York release converted toUTC; first_observed_at remains current retrieval",
+    "news": "Excluded: no origin-safe archived event feature table qualified",
+    "min_vintages": 3,
+    "min_origin_coverage": 0.9,
+    "require_all_registered_vintages": true,
+    "interpretation": "PPI is not a datacenter electricity tariff; monthly global features do not identify a provider-specific energy-price mechanism"
+  },
+  "selection_data_note": "Development origins select each arm/checkpoint independently by the same fixed rule. Previously opened retrospective dates remain descriptive, not an untouched test."
+}
