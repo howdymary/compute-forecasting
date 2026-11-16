@@ -14,13 +14,22 @@ def extract(text,period):
     match=matches[0];tokens=match.group(1).split();values=[None if v in ("–","—","-") else float(v) for v in tokens]
     months=[period_shift(period,n) for n in (-4,-3,-2,-1,0)]
     header=flat[max(0,match.start()-16000):match.start()]
-    if "Unadjusted index" not in header:raise ValueError("Table11 index header not retained")
+    # Exa may omit the repeated "Unadjusted index" label while preserving the
+    # five ordered month/year captions. Verify the actual captions and industry.
+    captions=[]
+    for item in months:
+        year,month=map(int,item.split("-"))
+        captions.append(calendar.month_abbr[month]+r"[a-z]*\.?\s+"+str(year)+r"(?:\s*p)?")
+    if not re.search(r"\s+".join(captions),header,re.I):
+        raise ValueError("Ordered five-month captions not verified")
+    if "Electric power distribution" not in flat[max(0,match.start()-400):match.start()]:
+        raise ValueError("Exact industry title missing")
     for item in months:
         year,month=map(int,item.split("-"))
         name=calendar.month_abbr[month]
         if name.lower() not in header.lower() or str(year) not in header:raise ValueError("Column month not verified: "+item)
     if values[-1] is None or values[-2] is None:raise ValueError("Latest or previous month missing")
-    return {"periods":months,"indices":values,"source_row":match.group(0),"source_row_sha256":hashlib.sha256(match.group(0).encode()).hexdigest(),"header_context_sha256":hashlib.sha256(header.encode()).hexdigest(),"extraction":"Exactindustry221122/base12-03; five monthly index columns; excludes221122-P/products and percent-change table"}
+    return {"periods":months,"indices":values,"source_row":match.group(0),"source_row_sha256":hashlib.sha256(match.group(0).encode()).hexdigest(),"header_context_sha256":hashlib.sha256(header.encode()).hexdigest(),"verified_column_caption":re.search(r"\s+".join(captions),header,re.I).group(0),"extraction":"Exactindustry221122/base12-03; five monthly index columns; excludes221122-P/products and percent-change table"}
 def main():
     cfg=json.loads(pathlib.Path("configs/evidence-v14-bls-sources.json").read_text())
     out=pathlib.Path("artifacts/evidence-v14-audit");out.mkdir(parents=True,exist_ok=True);records=[];usage=[]
