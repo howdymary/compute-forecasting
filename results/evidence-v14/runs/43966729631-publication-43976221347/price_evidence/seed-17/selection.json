@@ -1,0 +1,51 @@
+{
+  "eligible_updates": [
+    0,
+    20,
+    50,
+    100
+  ],
+  "locked_before_retrospective_evaluation": true,
+  "rule": "Lowest development 7-day mean USD quantile pinball; earliest update wins exact ties; checkpoint zero eligible",
+  "selected": {
+    "checkpoint_id": "9624b6947c84eb7ccf1e4d72",
+    "development": {
+      "by_horizon": {
+        "1": {
+          "coverage": 0.75,
+          "n_cells": 20,
+          "pinball": 0.0025808077434591216,
+          "width": 0.002649232303773552
+        },
+        "3": {
+          "coverage": 0.35,
+          "n_cells": 20,
+          "pinball": 0.02692816293641784,
+          "width": 0.03664345061256953
+        },
+        "7": {
+          "coverage": 0.4,
+          "n_cells": 20,
+          "pinball": 0.05717151012313126,
+          "width": 0.1391200879091349
+        }
+      },
+      "coverage": 0.5,
+      "fallback_cells": 0,
+      "n_cells": 60,
+      "n_origins": 2,
+      "n_series": 10,
+      "n_tasks": 20,
+      "origins": [
+        "2026-09-27",
+        "2026-10-04"
+      ],
+      "pinball": 0.02889349360100274,
+      "primary_pinball": 0.05717151012313126,
+      "width": 0.05947092360849266
+    },
+    "is_base": false,
+    "update": 50
+  },
+  "selected_at": "2026-11-16T22:27:58.546403+00:00"
+}
