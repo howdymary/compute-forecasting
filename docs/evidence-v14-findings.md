@@ -43,6 +43,11 @@ Mean across3 paired seed runs: -0.00011839. Descriptive origin-level difference 
 - 2026-10-18: -0.00177694 BLS-minus-price seven-day loss, averaged over available paired seeds.
 - 2026-10-25: 0.00440537 BLS-minus-price seven-day loss, averaged over available paired seeds.
 
+## What training accomplished
+
+Fine-tuning increased seven-day retrospective loss versus the corresponding unadapted model in6/6 completed runs. Development checkpoint selection did not establish an out-of-sample training benefit. The tiny average BLS-input difference must be read alongside this negative result and the strong numerical controls.
+
+
 ## Strong numerical references
 
 | Reference |7-day loss | Coverage | Width |
