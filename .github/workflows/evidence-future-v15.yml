@@ -5,6 +5,10 @@ on:
   push:
     branches: [compute-observatory]
     paths: [.github/workflows/evidence-future-v15.yml]
+  workflow_run:
+    workflows: [Qualify the current original BLS release for future inference v15]
+    types: [completed]
+    branches: [compute-observatory]
   workflow_dispatch:
 permissions:
   contents: write
@@ -13,6 +17,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   deploy:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -20,7 +25,10 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           SOURCE_SHA: ${{ github.sha }}
-        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+        run: |
+          SOURCE_SHA=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/compute-observatory" --jq .object.sha)
+          gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+          echo "GITHUB_SHA=$SOURCE_SHA" >> "$GITHUB_ENV"
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -38,6 +46,18 @@ jobs:
           root=Path('inputs/evidence-future-v15');root.mkdir(parents=True,exist_ok=True)
           for name in ('bls-vintages.json','model-lock.json'):
               (root/name).write_bytes((Path(p['report_path']).parent/name).read_bytes())
+          vintages=json.loads((root/'bls-vintages.json').read_text())
+          present={r['reference_period']:r for r in vintages['records']}
+          for source in sorted(Path('results/evidence-v14/audits').glob('*/future-bls-vintage.json')):
+              qualified=json.loads(source.read_text())
+              assert qualified['study_id']=='direct-evidence-v14-prospective' and qualified['ready']
+              for row in qualified['records']:
+                  assert row['independent_pdf_check_completed'] and row['status']=='qualified_pending_spot_check'
+                  if row['reference_period'] in present:
+                      assert present[row['reference_period']]['values']==row['values'],'Original release row changed'
+                  else:present[row['reference_period']]=row
+          vintages['records']=list(present.values());vintages['future_only_supplement']=True
+          (root/'bls-vintages.json').write_text(json.dumps(vintages,indent=2)+'\\n')
           PY
       - name: Store only the existing Tinker inference credential
         env:
