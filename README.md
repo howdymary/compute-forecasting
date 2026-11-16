@@ -167,3 +167,5 @@ Built for Track 5, Open Track, during the November 2026 research hackathon. Moch
 ## Compute Forecast research archive
 
 The GPU rental forecasting study remains on compute-observatory. [Measured findings](docs/price-dynamics-v8-findings.md), [methods and reproduction](docs/price-dynamics-v8.md), and the [live observatory](https://howdymary--compute-forecast-observatory-web.us-east.modal.run) document the fixed six-arm study, retained negative results and pending prospective panel.
+
+[Full-screen GPU pricing terminal](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/terminal) · [30-second walkthrough at 2×](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/terminal/media/43801934433/terminal-30s.mp4) · [Terminal methods and verification](docs/terminal-v10.md).

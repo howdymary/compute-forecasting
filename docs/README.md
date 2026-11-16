@@ -32,6 +32,8 @@ Current prospective extension: [Signals v6](prospective-signals-v6.md) · [Versi
 
 ## Product and operation
 
+[GPU pricing terminal v10](terminal-v10.md): dark chart workspace, source-separated watchlist, right-side scenario variables, and the verified 30-second walkthrough.
+
 [Institutional pricing dashboard v9](terminal-v9.md): current visual system, source-bound price statistics, range controls and published desktop/mobile verification.
 
 [Pricing controls and formulas](pricing-observatory.md) · [Notebook interactions](notebook-experience.md) · [Contribution guide](../CONTRIBUTING.md)
