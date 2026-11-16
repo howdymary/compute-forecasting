@@ -6,6 +6,8 @@ Data: 326 training tasks; 20 development tasks; 22 retrospective tasks. A task c
 
 | Seed | Updates | Selected update | 7-day base loss | 7-day selected loss |
 | --- | ---: | ---: | ---: | ---: |
+| 17 | 100 | 50 | 0.05900519 | 0.05317809 |
+| 29 | 100 | 20 | 0.06167626 | 0.06259394 |
 
 Different collectors, configurations and instruments retain separate IDs. The primary loss is USD-per-GPU-hour quantile pinball; lower is better. Source windows overlap and the three evaluation origins are dependent.
 
