@@ -105,7 +105,7 @@ def enhance(html):
         body=body.replace(old,new)
         html=before+'buildPlot=function(){\n if(S.mode!==\'benchmark\')return t7PrevBuild();'+body+'\ndrawCursor=function(){'+after
     tick_contract="ticks.forEach((t,i)=>{body+='<text x=\"'+x(t)"
-    tick_replacement="ticks.forEach((t,i)=>{if(i>0&&i<ticks.length-1&&x(ticks[ticks.length-1])-x(t)<50)return;body+='<text class=\"q9-date-tick\" x=\"'+x(t)"
+    tick_replacement="ticks.forEach((t,i)=>{if(i>0&&i<ticks.length-1&&x(ticks[ticks.length-1])-x(t)<65)return;body+='<text class=\"q9-date-tick\" x=\"'+x(t)"
     if html.count(tick_contract)!=1:raise ValueError("Timeline date-label contract changed")
     html=html.replace(tick_contract,tick_replacement)
     html=html.replace('<small>AN OPEN COMPUTE NOTEBOOK</small>','<small>GPU MARKET RESEARCH</small>')
