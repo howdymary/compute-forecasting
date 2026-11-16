@@ -17,7 +17,7 @@ def audit():
     hist,cat,_,_=build_history(root,work,"2026-11-06")
     c=duckdb.connect()
     pattern=str(root/"rental_observations"/"*"/"*"/"*.parquet")
-    c.execute("CREATE VIEW offers AS SELECT * FROM read_parquet(?,hive_partitioning=false)",[pattern])
+    c.execute("CREATE VIEW offers AS SELECT * FROM read_parquet(\'"+pattern.replace("\'","\'\'")+"\',hive_partitioning=false)")
     schema=c.execute("DESCRIBE offers").fetchall()
     selected=[r for r in cat if r.get("table")=="daily_statistics" and r.get("statistic")=="median" and r.get("gpu_model","").upper().startswith(("H100","A100"))]
     groups=c.execute("SELECT source_id,instrument_class,gpu_model,pricing_tier,count(*),min(dt),max(dt) FROM offers WHERE CAST(dt AS DATE)<=DATE '2026-11-06' AND usd_per_gpu_hour>0 GROUP BY ALL ORDER BY 1,2,3,4").fetchall()

@@ -22,7 +22,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - run: python -m pip install -e . modal
+      - run: python -m pip install -e . modal duckdb==1.2.2
       - name: Inspect immutable pack
         env:
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
