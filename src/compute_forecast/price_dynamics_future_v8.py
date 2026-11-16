@@ -8,10 +8,11 @@ from urllib.request import Request,urlopen
 import xml.etree.ElementTree as ET
 import modal
 from .price_dynamics_v8 import digest,pooled,replay,calibrate,loss,validate_commitment
-from .price_dynamics_remote_v8 import image,data,public,put,encoded
+from .price_dynamics_remote_v8 import data,public,put,encoded
 from .starter_probe import PACK_NAME
 from .pacific_value_v5 import invoke,write_csv,rows
 app=modal.App("compute-forecast-price-dynamics-future-v8")
+image=(modal.Image.debian_slim(python_version="3.11").pip_install("duckdb==1.2.2","pandas==2.3.1","numpy==2.2.6","pyarrow>=16,<24").env({"GITHUB_SHA":os.environ.get("GITHUB_SHA","unknown")}).add_local_file("configs/price-dynamics-v8-future.json","/root/configs/price-dynamics-v8-future.json",copy=True).add_local_python_source("compute_forecast"))
 BASE="https://hubbard-gpu-price-data.s3.amazonaws.com/"
 LICENSE="https://raw.githubusercontent.com/alex-hubbard/gpu_price_tracker/ac287bacc95f3b2ceaa97af10a50031ee0abcacf/DATA_LICENSE"
 ROOT=Path("/data/price-dynamics-v8/future")
@@ -135,12 +136,12 @@ def evaluate(at):
             truth=vs[r["series_id"]][r["target"]]
             scored.append({**r,"truth":truth,"loss":loss(r["quantiles"],truth),"commitment_sha256":digest(c)})
     return {"scored":scored,"pending_cells":pending,"analysis_at":"2027-04-06T00:00:00+00:00","accuracy_established":False,"interpretation":"No promotion before fixed analysis; compatible matured observations required"}
-@app.function(image=image.add_local_file("configs/price-dynamics-v8-future.json","/root/configs/price-dynamics-v8-future.json",copy=True),cpu=2,memory=4096,timeout=900,max_containers=1,volumes={"/data":data,"/public":public},schedule=modal.Cron("5 0 * * *"))
+@app.function(image=image,cpu=2,memory=4096,timeout=900,max_containers=1,volumes={"/data":data,"/public":public},schedule=modal.Cron("5 0 * * *"))
 def tick():
     at=now()
-    if at>=datetime(2027,4,6,tzinfo=timezone.utc):return {"status":"scheduled_capture_ended","external_requests":0}
+    if at>=datetime(2027,4,7,tzinfo=timezone.utc):return {"status":"scheduled_capture_ended","external_requests":0}
     ROOT.mkdir(parents=True,exist_ok=True)
-    try:cap=capture(at)
+    try:cap=capture(at) if at<datetime(2027,4,6,tzinfo=timezone.utc) else {"status":"capture_window_closed","fresh_compatible_prices":False}
     except Exception as e:cap={"captured_at":at.isoformat(),"status":"capture_failed","error":type(e).__name__,"detail":str(e)[:300],"fresh_compatible_prices":False}
     issuance=issue(now());evaluation=evaluate(now())
     result={"schema_version":8,"study_id":"price-dynamics-v8-future","created_at":at.isoformat(),"status":issuance["status"] if cap.get("fresh_compatible_prices") else "pending_fresh_compatible_aggregate_capture","capture":cap,"issuance":issuance,"evaluation":evaluation,"forecast_commitments":len(list((ROOT/"commitments").glob("*.json"))),"accuracy_established":False}

@@ -56,9 +56,14 @@ def run():
     root=Path("/public/price-dynamics-v8");public.reload()
     study=json.loads((root/"index.json").read_bytes())
     old=json.loads((root/"news.json").read_bytes()) if (root/"news.json").exists() else None
-    news=capture(Path("/data/price-dynamics-v8/evidence"),old);data.commit()
-    try:m=asyncio.run(memory(study,news))
+    previous=json.loads((root/"memory.json").read_bytes()) if (root/"memory.json").exists() else None
+    news=old if old else capture(Path("/data/price-dynamics-v8/evidence"),old);data.commit()
+    try:m=previous if previous and previous.get("study_sha256")==digest(study) else asyncio.run(memory(study,news))
     except Exception as e:m={"schema_version":8,"status":"failed","error":type(e).__name__,"detail":str(e)[:300],"reads":[],"final_decision":"No successful recall is claimed; use immutable audit artifacts"}
+    for read in m.get("reads",[]):
+        ids=read.get("returned_source_ids",[]);read["out_of_namespace_ids_not_published"]=sum(not x.startswith(m["namespace"]) for x in ids)
+        read["returned_source_ids"]=[x for x in ids if x.startswith(m["namespace"])]
+        read["delivery"]="Required source ID verified in past.dev response; exact numerical payload resolved from canonical record by that returned ID" if read.get("verified_cross_role_use") else "Explicit canonical fallback, not a successful recall"
     for name,value in (("news",news),("memory",m)):
         put(root/(name+"-artifacts")/(digest(value)+".json"),value);tmp=root/(name+".pending");tmp.write_bytes(encoded(value));tmp.replace(root/(name+".json"))
     public.commit();return {"news":news,"memory":m}
