@@ -1,0 +1,41 @@
+{
+  "schema_version": 8,
+  "study_id": "price-dynamics-v8-future",
+  "registered_at": "2026-11-16T01:20:59+00:00",
+  "amendment": "Before any issuance, extend the placeholder Feb14 endpoint to March28: 56-day capture warmup starting Nov16 would otherwise permit at most six weekly origins, fewer than the eight-origin minimum. Historical six-arm configuration is unchanged.",
+  "first_origin": "2026-11-22",
+  "last_origin": "2027-03-28",
+  "analysis_at": "2027-04-06T00:00:00+00:00",
+  "minimum_origins": 8,
+  "minimum_retained_days": 56,
+  "primary_origins": "Sundays",
+  "calibration_shadow_origins": "Other days; immutable issuance before target resolution, never counted as independent weekly tests",
+  "cutoff": "Origin 23:59:59 UTC",
+  "deadline": "Following day 00:30:00 UTC",
+  "capture_schedule": "00:05 UTC daily until Apr6; bounded 900s, single container, finite byte/page/storage limits",
+  "targets": [
+    "v8.hubbard.hyperscaler_spot.A100_40GB.spot.median",
+    "v8.hubbard.hyperscaler_spot.A100_80GB_unspecified_form.spot.median",
+    "v8.hubbard.hyperscaler_spot.H100_80GB_unspecified_form.spot.median"
+  ],
+  "target_definition": "Rounded four-decimal median USD/GPU-hour over all positive quality-ok observed AWS/Azure/GCP spot rows per UTC day in one licensed source object; all observed regions, form factor as identified by memory only. Split-object days gated until union adapter audited. First captured observation vintage retained; revisions separately recorded.",
+  "identity_warning": "Independent source IDs; not asserted identical to competition targets or signals-v6 individual contracts",
+  "arms": {
+    "A": "Unmodified starter drift",
+    "B": "A plus v8 matured-error calibration",
+    "C": "v8 pooled changes",
+    "D": "C plus v8 calibration",
+    "E": "Fallback to A until aggregate offer identity/union reconstruction verified",
+    "F": "E plus v8 calibration"
+  },
+  "parameters": "Identical v8 pooled/calibration parameters; no future-outcome tuning",
+  "scoring": "Seven-day primary quantile pinball; 1/3 secondary. Paired origin aggregates, four-origin block bootstrap at fixed analysis; coverage/width/failures alongside loss. Same eligible cells across arms; fallback counted.",
+  "promotion": "At fixed analysis only, minimum eight eligible weekly origins and paired 95% interval below zero against drift with Holm correction for two modeling and three calibration comparisons; otherwise no promotion. No claim that all components helped.",
+  "preserve": [
+    "signals-v6",
+    "existing November commitments",
+    "November23 gate",
+    "official CSV"
+  ],
+  "current_accuracy": "pending"
+}

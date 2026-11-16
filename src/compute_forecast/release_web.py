@@ -249,6 +249,38 @@ def web():
         if digest(value)!=name[:-5]:return Response(status_code=503,headers=headers)
         return Response(raw,media_type="application/json",headers={**headers,"ETag":hashlib.sha256(raw).hexdigest()})
 
+
+    @api.get("/api/price-dynamics-v8")
+    def price_dynamics_v8_index():
+        with lock:
+            public.reload();path=Path("/public/price-dynamics-v8/index.json")
+            if not path.is_file():return JSONResponse({"error":"Six-arm study awaits verified publication"},status_code=503,headers=headers)
+            raw=path.read_bytes()
+        from .public_results import private_guard
+        value=json.loads(raw);private_guard(value)
+        if value.get("schema_version")!=8 or value.get("study_id")!="price-dynamics-v8" or value.get("protected_outcomes_loaded"):return Response(status_code=503,headers=headers)
+        value["stored_artifact_sha256"]=hashlib.sha256(raw).hexdigest()
+        return JSONResponse(value,headers=headers)
+    @api.get("/api/price-dynamics-v8/extra/{name}")
+    def price_dynamics_v8_extra(name:str):
+        if name not in ("future","news","memory"):return Response(status_code=404,headers=headers)
+        with lock:
+            public.reload();path=Path("/public/price-dynamics-v8")/(name+".json")
+            if not path.is_file():return JSONResponse({"schema_version":8,"status":"pending","reads":[]},headers=headers)
+            raw=path.read_bytes()
+        from .public_results import private_guard
+        private_guard(json.loads(raw));return Response(raw,media_type="application/json",headers=headers)
+    @api.get("/api/price-dynamics-v8/artifacts/{name}")
+    def price_dynamics_v8_artifact(name:str):
+        import re
+        if not re.fullmatch(r"[0-9a-f]{64}\.json",name):return Response(status_code=404,headers=headers)
+        with lock:
+            public.reload();path=Path("/public/price-dynamics-v8/artifacts")/name
+            if not path.is_file():return Response(status_code=404,headers=headers)
+            raw=path.read_bytes()
+        if hashlib.sha256(raw).hexdigest()!=name[:-5]:return Response(status_code=503,headers=headers)
+        return Response(raw,media_type="application/json",headers=headers)
+
     @api.get("/health")
     def health():
         raw=read("results.json");r=json.loads(raw) if raw else None

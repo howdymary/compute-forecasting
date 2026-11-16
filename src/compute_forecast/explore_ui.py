@@ -226,3 +226,6 @@ HTML = enhance_signals_v6(HTML)
 
 from .timeline_ui_v7 import enhance as enhance_timeline_v7
 HTML = enhance_timeline_v7(HTML)
+
+from .dynamics_ui_v8 import enhance as enhance_dynamics_v8
+HTML = enhance_dynamics_v8(HTML)

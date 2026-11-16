@@ -1,0 +1,59 @@
+name: Capture v8 evidence and register future aggregate operations
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/price-dynamics-operations-v8.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: price-dynamics-operations-v8
+  cancel-in-progress: false
+jobs:
+  operations:
+    if: github.ref == 'refs/heads/compute-observatory'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Fetch exact remote source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/${{ github.sha }}" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: |
+          python -m pip install -e '.[dev]' modal==1.6.4
+          python -m compileall -q src
+          python -m pytest tests/test_price_dynamics_v8.py
+      - name: Wait for original registered numerical run; never duplicate it
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run watch 43785185915 --repo "$GITHUB_REPOSITORY" --exit-status --interval 30
+      - name: Capture evidence, verify actual memory use and inspect future source
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: |
+          python -m compute_forecast.price_dynamics_operations_v8
+          python -m compute_forecast.price_dynamics_future_v8
+          modal deploy -m compute_forecast.price_dynamics_future_v8
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: price-dynamics-v8-operations-${{ github.run_id }}
+          path: artifacts/price-dynamics-v8-operations
+          retention-days: 90
+      - name: Publish append-only capture and memory evidence
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          from compute_forecast.publication_v8 import publish
+          root=Path('artifacts/price-dynamics-v8-operations')
+          files={'results/price-dynamics-v8/runs/'+os.environ['GITHUB_RUN_ID']+'/'+str(p.relative_to(root)):p.read_bytes() for p in root.rglob('*') if p.is_file()}
+          print('V8_OPERATIONS_COMMIT:'+publish(files),flush=True)
+          PY
