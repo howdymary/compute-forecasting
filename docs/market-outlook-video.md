@@ -2,6 +2,11 @@
 
 Updated 16 November 2026, after the event. This is a presentation and provenance release, not a new model study.
 
+[Interactive figure](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/terminal/media/43928225324/replay.html) · [30-second MP4](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/terminal/media/43928225324/terminal-30s.mp4) · [Preview](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/terminal/media/43928225324/poster.png) · [Manifest](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/terminal/media/43928225324/manifest.json) · [Render checks](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/terminal/media/43928225324/validation.json)
+
+Published presentation: run [43928225324](https://github.com/howdymary/mochi-demo/actions/runs/43928225324), implementation [868838f](https://github.com/howdymary/mochi-demo/commit/868838fd37f062b85f708fc1e5c3e59dc557a39a). Public interactive-page and real-time playback checks use the separate [validation workflow](../.github/workflows/validate-market-media.yml). The font-policy correction is scoped to the replay media page.
+
+
 The figure answers the market question first: what happened to the selected GPU rental price, what was actually submitted, and which longer-term outcomes depend on assumptions? Training diagnostics answer a different question: how did the learned experiment selector change its decisions?
 
 ## Chart justification
@@ -121,6 +126,8 @@ python -m compute_forecast.record_market_outlook --no-publish
 Verification and rendering read public, permitted retained artifacts and require no model API credentials. Publication additionally uses GitHub and Modal credentials held as Actions secrets. No training, new numerical fitting, protected-truth retrieval or canonical publication replacement occurs.
 
 The output is exactly 900 frames, 1920×1080, 30 fps, 30 seconds, H.264/yuv420p with fast-start. The report checks exact plotted coordinates, 234 observations, 9 official quantiles, 36 checkpoint quantiles, 24 learning checkpoints, original selections, 111 scenario calculations, timing on every frame, full encoded decode, clipping and keyboard interaction.
+
+The public-UI validator loads the served HTML, verifies every public file hash, exercises chapter/keyboard/mobile controls and plays the actual encoded MP4 through all 30 seconds. It retains real-time screenshots and playback/drop counters. It waits for the deployed font policy before testing the embedded font; the font assertion remains strict.
 
 A versioned run publishes the MP4, preview, playable HTML, manifest and validation through existing media storage; source/provenance, full-resolution encoded PNGs, transition contact sheet, frame ledger and reproduction outputs are committed under `results/terminal-v10/runs/<run_id>/market-outlook/`.
 
