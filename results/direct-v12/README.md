@@ -1,6 +1,6 @@
 # Direct GPU-price forecasts v12
 
-[Current report](runs/43952200479-publication-43959603396/report.json) · [Findings](../../docs/direct-v12-findings.md) · [Methods](../../docs/direct-forecast-v12.md) · [Protocol](../../configs/direct-forecast-v12.json)
+[Current report](runs/43952200479-publication-43959881653/report.json) · [Findings](../../docs/direct-v12-findings.md) · [Methods](../../docs/direct-forecast-v12.md) · [Protocol](../../configs/direct-forecast-v12.json)
 
 The model learns observed future log-price vectors through Tinker SFT. Quantiles derive from 64 fixed-budget samples. The retrospective study does not establish prospective accuracy or supplementary-signal value.
 

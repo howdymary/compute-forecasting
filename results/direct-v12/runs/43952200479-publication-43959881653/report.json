@@ -1,0 +1,997 @@
+{
+  "audit": {
+    "catalog_sha256": "803f0141103b2601a40e7877a44391784e9138981cd8c5b5fad80404d027b31a",
+    "changed_training_vectors": 172,
+    "created_at": "2026-11-16T20:38:43.257352+00:00",
+    "dataset_sha256": "4e19e019f470fc4d17010d74164b1dbc5bfedfea515988895d306b5008e116a2",
+    "distinct_training_origins": 125,
+    "evidence_gate_reason": "No origin-safe varying supplementary feature table registered yet; current-news retrieval cannot enter historical examples",
+    "evidence_ready": false,
+    "history_sha256": "a8dc0830ab395b40fdeced6677b4c71d2ea6d30933689ddb56f1761cf3dcd321",
+    "manifest_entries": 672,
+    "modal_call_id": null,
+    "pack_sha256": "f0b52af28c52545732208bcc4905facd9b941aa5779da683e1d9884c283b7c7c",
+    "permission": "Approved source-derived history under Pacific CC BY 4.0; source attribution retained",
+    "phase_cells": {
+      "development": 60,
+      "retrospective": 66,
+      "training": 978
+    },
+    "phase_origins": {
+      "development": [
+        "2026-09-27",
+        "2026-10-04"
+      ],
+      "retrospective": [
+        "2026-10-11",
+        "2026-10-18",
+        "2026-10-25"
+      ],
+      "training": [
+        "2026-02-01",
+        "2026-02-02",
+        "2026-02-14",
+        "2026-02-15",
+        "2026-02-16",
+        "2026-02-17",
+        "2026-02-18",
+        "2026-02-19",
+        "2026-02-20",
+        "2026-02-22",
+        "2026-02-23",
+        "2026-02-24",
+        "2026-02-26",
+        "2026-03-01",
+        "2026-03-02",
+        "2026-05-26",
+        "2026-05-27",
+        "2026-05-28",
+        "2026-05-29",
+        "2026-05-30",
+        "2026-05-31",
+        "2026-06-01",
+        "2026-06-02",
+        "2026-06-03",
+        "2026-06-04",
+        "2026-06-05",
+        "2026-06-06",
+        "2026-06-07",
+        "2026-06-08",
+        "2026-06-09",
+        "2026-06-10",
+        "2026-06-11",
+        "2026-06-12",
+        "2026-06-13",
+        "2026-06-14",
+        "2026-06-15",
+        "2026-06-16",
+        "2026-06-17",
+        "2026-06-18",
+        "2026-06-19",
+        "2026-06-20",
+        "2026-06-21",
+        "2026-06-22",
+        "2026-06-23",
+        "2026-06-24",
+        "2026-06-25",
+        "2026-06-26",
+        "2026-06-27",
+        "2026-06-28",
+        "2026-06-29",
+        "2026-06-30",
+        "2026-07-01",
+        "2026-07-02",
+        "2026-07-03",
+        "2026-07-04",
+        "2026-07-05",
+        "2026-07-06",
+        "2026-07-07",
+        "2026-07-08",
+        "2026-07-09",
+        "2026-07-10",
+        "2026-07-11",
+        "2026-07-12",
+        "2026-07-13",
+        "2026-07-14",
+        "2026-07-15",
+        "2026-07-16",
+        "2026-07-17",
+        "2026-07-18",
+        "2026-07-19",
+        "2026-07-20",
+        "2026-07-21",
+        "2026-07-22",
+        "2026-07-23",
+        "2026-07-24",
+        "2026-07-25",
+        "2026-07-26",
+        "2026-07-27",
+        "2026-07-28",
+        "2026-07-29",
+        "2026-07-30",
+        "2026-07-31",
+        "2026-08-01",
+        "2026-08-02",
+        "2026-08-03",
+        "2026-08-04",
+        "2026-08-05",
+        "2026-08-06",
+        "2026-08-07",
+        "2026-08-08",
+        "2026-08-09",
+        "2026-08-10",
+        "2026-08-11",
+        "2026-08-12",
+        "2026-08-13",
+        "2026-08-14",
+        "2026-08-15",
+        "2026-08-16",
+        "2026-08-17",
+        "2026-08-18",
+        "2026-08-19",
+        "2026-08-20",
+        "2026-08-21",
+        "2026-08-22",
+        "2026-08-23",
+        "2026-08-24",
+        "2026-08-25",
+        "2026-08-26",
+        "2026-08-27",
+        "2026-08-28",
+        "2026-08-29",
+        "2026-08-30",
+        "2026-08-31",
+        "2026-09-01",
+        "2026-09-02",
+        "2026-09-03",
+        "2026-09-04",
+        "2026-09-05",
+        "2026-09-06",
+        "2026-09-07",
+        "2026-09-08",
+        "2026-09-09",
+        "2026-09-10",
+        "2026-09-11",
+        "2026-09-12"
+      ]
+    },
+    "phase_tasks": {
+      "development": 20,
+      "retrospective": 22,
+      "training": 326
+    },
+    "price_only_ready": true,
+    "private_dataset_exposed": false,
+    "prospective_accuracy": "pending",
+    "protected_outcomes_loaded": false,
+    "protocol_sha256": "de86b58b672ce746e907123d98e9a42ecd2a442c09b37288de32803578fc6e0a",
+    "provider_cost_usd": null,
+    "runtime_seconds": 34.269415092,
+    "series": [
+      {
+        "first_date": "2026-01-12",
+        "history_sha256": "396dc7cd5d16ecac6c3c232edcf6bb56e2b84abe853cae786fb6efacbf9d92ca",
+        "last_date": "2026-11-06",
+        "metadata": {
+          "as_of": "2026-11-06",
+          "az_global_id": "",
+          "benchmark_contract": "hyperscaler_spot; A100 40GB; spot; median USD per GPU-hour over the shipped offers of collector afhubbard on the UTC day; all regions pooled; no commitment term unless the tier says so",
+          "first_date": "2026-01-12",
+          "gpu_model": "A100 40GB",
+          "instance_type": "",
+          "instrument_class": "hyperscaler_spot",
+          "last_date": "2026-11-06",
+          "last_date_to_as_of": "2026-11-06",
+          "last_value_to_as_of": "1.9891",
+          "licence_id": "CC-BY-4.0",
+          "median_n_providers": "3.0",
+          "members": "",
+          "min_n_providers": "3",
+          "n_calendar_days": "299",
+          "n_days": "234",
+          "n_days_to_as_of": "234",
+          "n_distinct_values_90d": "7",
+          "n_filled_days": "0",
+          "pricing_tier": "spot",
+          "product_description": "",
+          "series_id": "afhubbard.hyperscaler_spot.A100_40GB.spot.median",
+          "source_id": "afhubbard",
+          "source_url": "https://hubbard-gpu-price-data.s3.amazonaws.com/?list-type=2&prefix=prices/",
+          "statistic": "median_usd_per_gpu_hour",
+          "table": "daily_statistics",
+          "tier": "headline",
+          "tier_reason": "ok",
+          "truth_availability": "daily; recomputed from the collectors' shipped rows after the Vast.ai/RunPod filter (refresh.py); the trailing day of tanod and gpurentalprices can be revised upstream"
+        },
+        "observations": 234,
+        "price_steps": 16,
+        "series_id": "afhubbard.hyperscaler_spot.A100_40GB.spot.median",
+        "training_windows": 121
+      },
+      {
+        "first_date": "2026-01-12",
+        "history_sha256": "f89b57612df8af6372dbadcc81ea10f9d1b3dd0a2a3810e3d2bf90d1615fb591",
+        "last_date": "2026-11-06",
+        "metadata": {
+          "as_of": "2026-11-06",
+          "az_global_id": "",
+          "benchmark_contract": "hyperscaler_spot; A100 SXM 80GB; spot; median USD per GPU-hour over the shipped offers of collector afhubbard on the UTC day; all regions pooled; no commitment term unless the tier says so",
+          "first_date": "2026-01-12",
+          "gpu_model": "A100 SXM 80GB",
+          "instance_type": "",
+          "instrument_class": "hyperscaler_spot",
+          "last_date": "2026-11-06",
+          "last_date_to_as_of": "2026-11-06",
+          "last_value_to_as_of": "1.8818",
+          "licence_id": "CC-BY-4.0",
+          "median_n_providers": "3.0",
+          "members": "",
+          "min_n_providers": "3",
+          "n_calendar_days": "299",
+          "n_days": "234",
+          "n_days_to_as_of": "234",
+          "n_distinct_values_90d": "17",
+          "n_filled_days": "0",
+          "pricing_tier": "spot",
+          "product_description": "",
+          "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+          "source_id": "afhubbard",
+          "source_url": "https://hubbard-gpu-price-data.s3.amazonaws.com/?list-type=2&prefix=prices/",
+          "statistic": "median_usd_per_gpu_hour",
+          "table": "daily_statistics",
+          "tier": "headline",
+          "tier_reason": "ok",
+          "truth_availability": "daily; recomputed from the collectors' shipped rows after the Vast.ai/RunPod filter (refresh.py); the trailing day of tanod and gpurentalprices can be revised upstream"
+        },
+        "observations": 234,
+        "price_steps": 26,
+        "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+        "training_windows": 121
+      },
+      {
+        "first_date": "2026-09-08",
+        "history_sha256": "a68e79dbe97c0c32d7b533ad5c89c43181edef8b4a56a44fa2c3aeb6bd718df9",
+        "last_date": "2026-11-06",
+        "metadata": {
+          "as_of": "2026-11-06",
+          "az_global_id": "",
+          "benchmark_contract": "hyperscaler_spot; A100 80GB; spot; median USD per GPU-hour over the shipped offers of collector fastgpu_daily on the UTC day; all regions pooled; no commitment term unless the tier says so",
+          "first_date": "2026-09-08",
+          "gpu_model": "A100 80GB",
+          "instance_type": "",
+          "instrument_class": "hyperscaler_spot",
+          "last_date": "2026-11-06",
+          "last_date_to_as_of": "2026-11-06",
+          "last_value_to_as_of": "1.757",
+          "licence_id": "CC-BY-4.0",
+          "median_n_providers": "3.0",
+          "members": "",
+          "min_n_providers": "3",
+          "n_calendar_days": "60",
+          "n_days": "60",
+          "n_days_to_as_of": "60",
+          "n_distinct_values_90d": "32",
+          "n_filled_days": "0",
+          "pricing_tier": "spot",
+          "product_description": "",
+          "series_id": "fastgpu_daily.hyperscaler_spot.A100_80GB.spot.median",
+          "source_id": "fastgpu_daily",
+          "source_url": "https://huggingface.co/datasets/fastgpu/cloud-gpu-prices",
+          "statistic": "median_usd_per_gpu_hour",
+          "table": "daily_statistics",
+          "tier": "headline",
+          "tier_reason": "ok",
+          "truth_availability": "daily; recomputed from the collectors' shipped rows after the Vast.ai/RunPod filter (refresh.py); the trailing day of tanod and gpurentalprices can be revised upstream"
+        },
+        "observations": 60,
+        "price_steps": 31,
+        "series_id": "fastgpu_daily.hyperscaler_spot.A100_80GB.spot.median",
+        "training_windows": 0
+      },
+      {
+        "first_date": "2026-09-08",
+        "history_sha256": "51a6e7949304bc11b08d2148acd5ff13dd7d763f2c54994bb9ea2767f33f9a36",
+        "last_date": "2026-11-06",
+        "metadata": {
+          "as_of": "2026-11-06",
+          "az_global_id": "",
+          "benchmark_contract": "neocloud_rate_card; A100 40GB; on_demand; median USD per GPU-hour over the shipped offers of collector fastgpu_daily on the UTC day; all regions pooled; no commitment term unless the tier says so",
+          "first_date": "2026-09-08",
+          "gpu_model": "A100 40GB",
+          "instance_type": "",
+          "instrument_class": "neocloud_rate_card",
+          "last_date": "2026-11-06",
+          "last_date_to_as_of": "2026-11-06",
+          "last_value_to_as_of": "1.8155",
+          "licence_id": "CC-BY-4.0",
+          "median_n_providers": "4.0",
+          "members": "",
+          "min_n_providers": "3",
+          "n_calendar_days": "60",
+          "n_days": "60",
+          "n_days_to_as_of": "60",
+          "n_distinct_values_90d": "33",
+          "n_filled_days": "0",
+          "pricing_tier": "on_demand",
+          "product_description": "",
+          "series_id": "fastgpu_daily.neocloud_rate_card.A100_40GB.on_demand.median",
+          "source_id": "fastgpu_daily",
+          "source_url": "https://huggingface.co/datasets/fastgpu/cloud-gpu-prices",
+          "statistic": "median_usd_per_gpu_hour",
+          "table": "daily_statistics",
+          "tier": "headline",
+          "tier_reason": "ok",
+          "truth_availability": "daily; recomputed from the collectors' shipped rows after the Vast.ai/RunPod filter (refresh.py); the trailing day of tanod and gpurentalprices can be revised upstream"
+        },
+        "observations": 60,
+        "price_steps": 32,
+        "series_id": "fastgpu_daily.neocloud_rate_card.A100_40GB.on_demand.median",
+        "training_windows": 0
+      },
+      {
+        "first_date": "2026-09-08",
+        "history_sha256": "a4f079cd2422f9e2e4a254ef6c8e0c5c6997ad35dea91a62ad46d94af8b6a31d",
+        "last_date": "2026-11-06",
+        "metadata": {
+          "as_of": "2026-11-06",
+          "az_global_id": "",
+          "benchmark_contract": "neocloud_rate_card; H100 PCIe 80GB; on_demand; median USD per GPU-hour over the shipped offers of collector fastgpu_daily on the UTC day; all regions pooled; no commitment term unless the tier says so",
+          "first_date": "2026-09-08",
+          "gpu_model": "H100 PCIe 80GB",
+          "instance_type": "",
+          "instrument_class": "neocloud_rate_card",
+          "last_date": "2026-11-06",
+          "last_date_to_as_of": "2026-11-06",
+          "last_value_to_as_of": "2.79",
+          "licence_id": "CC-BY-4.0",
+          "median_n_providers": "3.0",
+          "members": "",
+          "min_n_providers": "2",
+          "n_calendar_days": "60",
+          "n_days": "60",
+          "n_days_to_as_of": "60",
+          "n_distinct_values_90d": "5",
+          "n_filled_days": "0",
+          "pricing_tier": "on_demand",
+          "product_description": "",
+          "series_id": "fastgpu_daily.neocloud_rate_card.H100_PCIe_80GB.on_demand.median",
+          "source_id": "fastgpu_daily",
+          "source_url": "https://huggingface.co/datasets/fastgpu/cloud-gpu-prices",
+          "statistic": "median_usd_per_gpu_hour",
+          "table": "daily_statistics",
+          "tier": "headline",
+          "tier_reason": "ok",
+          "truth_availability": "daily; recomputed from the collectors' shipped rows after the Vast.ai/RunPod filter (refresh.py); the trailing day of tanod and gpurentalprices can be revised upstream"
+        },
+        "observations": 60,
+        "price_steps": 5,
+        "series_id": "fastgpu_daily.neocloud_rate_card.H100_PCIe_80GB.on_demand.median",
+        "training_windows": 0
+      },
+      {
+        "first_date": "2026-09-08",
+        "history_sha256": "560a1b213bb96f3dd66d36a96a5b4882183ab1828047034572e238abc85cdd9b",
+        "last_date": "2026-11-06",
+        "metadata": {
+          "as_of": "2026-11-06",
+          "az_global_id": "",
+          "benchmark_contract": "neocloud_rate_card; H100 SXM 80GB; on_demand; median USD per GPU-hour over the shipped offers of collector fastgpu_daily on the UTC day; all regions pooled; no commitment term unless the tier says so",
+          "first_date": "2026-09-08",
+          "gpu_model": "H100 SXM 80GB",
+          "instance_type": "",
+          "instrument_class": "neocloud_rate_card",
+          "last_date": "2026-11-06",
+          "last_date_to_as_of": "2026-11-06",
+          "last_value_to_as_of": "3.949",
+          "licence_id": "CC-BY-4.0",
+          "median_n_providers": "17.0",
+          "members": "",
+          "min_n_providers": "13",
+          "n_calendar_days": "60",
+          "n_days": "60",
+          "n_days_to_as_of": "60",
+          "n_distinct_values_90d": "6",
+          "n_filled_days": "0",
+          "pricing_tier": "on_demand",
+          "product_description": "",
+          "series_id": "fastgpu_daily.neocloud_rate_card.H100_SXM_80GB.on_demand.median",
+          "source_id": "fastgpu_daily",
+          "source_url": "https://huggingface.co/datasets/fastgpu/cloud-gpu-prices",
+          "statistic": "median_usd_per_gpu_hour",
+          "table": "daily_statistics",
+          "tier": "headline",
+          "tier_reason": "ok",
+          "truth_availability": "daily; recomputed from the collectors' shipped rows after the Vast.ai/RunPod filter (refresh.py); the trailing day of tanod and gpurentalprices can be revised upstream"
+        },
+        "observations": 60,
+        "price_steps": 9,
+        "series_id": "fastgpu_daily.neocloud_rate_card.H100_SXM_80GB.on_demand.median",
+        "training_windows": 0
+      },
+      {
+        "first_date": "2026-08-04",
+        "history_sha256": "dd1120380d24fdfd33aa5a70e3aab15699e2fd7361dda3a44ebfcfe46c80f7ba",
+        "last_date": "2026-11-06",
+        "metadata": {
+          "as_of": "2026-11-06",
+          "az_global_id": "",
+          "benchmark_contract": "neocloud_rate_card; A100 40GB; on_demand; median USD per GPU-hour over the shipped offers of collector gpurentalprices on the UTC day; all regions pooled; no commitment term unless the tier says so",
+          "first_date": "2026-08-04",
+          "gpu_model": "A100 40GB",
+          "instance_type": "",
+          "instrument_class": "neocloud_rate_card",
+          "last_date": "2026-11-06",
+          "last_date_to_as_of": "2026-11-06",
+          "last_value_to_as_of": "1.99",
+          "licence_id": "CC-BY-4.0",
+          "median_n_providers": "3.0",
+          "members": "",
+          "min_n_providers": "2",
+          "n_calendar_days": "95",
+          "n_days": "89",
+          "n_days_to_as_of": "89",
+          "n_distinct_values_90d": "9",
+          "n_filled_days": "0",
+          "pricing_tier": "on_demand",
+          "product_description": "",
+          "series_id": "gpurentalprices.neocloud_rate_card.A100_40GB.on_demand.median",
+          "source_id": "gpurentalprices",
+          "source_url": "https://gpurentalprices.com/data",
+          "statistic": "median_usd_per_gpu_hour",
+          "table": "daily_statistics",
+          "tier": "headline",
+          "tier_reason": "ok",
+          "truth_availability": "daily; recomputed from the collectors' shipped rows after the Vast.ai/RunPod filter (refresh.py); the trailing day of tanod and gpurentalprices can be revised upstream"
+        },
+        "observations": 89,
+        "price_steps": 8,
+        "series_id": "gpurentalprices.neocloud_rate_card.A100_40GB.on_demand.median",
+        "training_windows": 21
+      },
+      {
+        "first_date": "2026-08-04",
+        "history_sha256": "548fde2378a4389c24287b839e33d8195b431039760a8e26a186ff28af533961",
+        "last_date": "2026-11-06",
+        "metadata": {
+          "as_of": "2026-11-06",
+          "az_global_id": "",
+          "benchmark_contract": "neocloud_rate_card; A100 SXM 80GB; on_demand; median USD per GPU-hour over the shipped offers of collector gpurentalprices on the UTC day; all regions pooled; no commitment term unless the tier says so",
+          "first_date": "2026-08-04",
+          "gpu_model": "A100 SXM 80GB",
+          "instance_type": "",
+          "instrument_class": "neocloud_rate_card",
+          "last_date": "2026-11-06",
+          "last_date_to_as_of": "2026-11-06",
+          "last_value_to_as_of": "1.95",
+          "licence_id": "CC-BY-4.0",
+          "median_n_providers": "5.0",
+          "members": "",
+          "min_n_providers": "4",
+          "n_calendar_days": "95",
+          "n_days": "89",
+          "n_days_to_as_of": "89",
+          "n_distinct_values_90d": "37",
+          "n_filled_days": "0",
+          "pricing_tier": "on_demand",
+          "product_description": "",
+          "series_id": "gpurentalprices.neocloud_rate_card.A100_SXM_80GB.on_demand.median",
+          "source_id": "gpurentalprices",
+          "source_url": "https://gpurentalprices.com/data",
+          "statistic": "median_usd_per_gpu_hour",
+          "table": "daily_statistics",
+          "tier": "headline",
+          "tier_reason": "ok",
+          "truth_availability": "daily; recomputed from the collectors' shipped rows after the Vast.ai/RunPod filter (refresh.py); the trailing day of tanod and gpurentalprices can be revised upstream"
+        },
+        "observations": 89,
+        "price_steps": 37,
+        "series_id": "gpurentalprices.neocloud_rate_card.A100_SXM_80GB.on_demand.median",
+        "training_windows": 21
+      },
+      {
+        "first_date": "2026-08-04",
+        "history_sha256": "49f1619bb7d908a58a71fdd3d94bedfae3590ae16ee7290e6c17e602c3b9abe6",
+        "last_date": "2026-11-06",
+        "metadata": {
+          "as_of": "2026-11-06",
+          "az_global_id": "",
+          "benchmark_contract": "neocloud_rate_card; H100 80GB; on_demand; median USD per GPU-hour over the shipped offers of collector gpurentalprices on the UTC day; all regions pooled; no commitment term unless the tier says so",
+          "first_date": "2026-08-04",
+          "gpu_model": "H100 80GB",
+          "instance_type": "",
+          "instrument_class": "neocloud_rate_card",
+          "last_date": "2026-11-06",
+          "last_date_to_as_of": "2026-11-06",
+          "last_value_to_as_of": "3.885",
+          "licence_id": "CC-BY-4.0",
+          "median_n_providers": "12.0",
+          "members": "",
+          "min_n_providers": "11",
+          "n_calendar_days": "95",
+          "n_days": "89",
+          "n_days_to_as_of": "89",
+          "n_distinct_values_90d": "43",
+          "n_filled_days": "0",
+          "pricing_tier": "on_demand",
+          "product_description": "",
+          "series_id": "gpurentalprices.neocloud_rate_card.H100_80GB.on_demand.median",
+          "source_id": "gpurentalprices",
+          "source_url": "https://gpurentalprices.com/data",
+          "statistic": "median_usd_per_gpu_hour",
+          "table": "daily_statistics",
+          "tier": "headline",
+          "tier_reason": "ok",
+          "truth_availability": "daily; recomputed from the collectors' shipped rows after the Vast.ai/RunPod filter (refresh.py); the trailing day of tanod and gpurentalprices can be revised upstream"
+        },
+        "observations": 89,
+        "price_steps": 50,
+        "series_id": "gpurentalprices.neocloud_rate_card.H100_80GB.on_demand.median",
+        "training_windows": 21
+      },
+      {
+        "first_date": "2026-08-04",
+        "history_sha256": "ee0ad87a1192fcc91e1b3205fc3fb599103a90e9796521c7e94e4313a3d84aad",
+        "last_date": "2026-11-06",
+        "metadata": {
+          "as_of": "2026-11-06",
+          "az_global_id": "",
+          "benchmark_contract": "neocloud_rate_card; H100 SXM 80GB; on_demand; median USD per GPU-hour over the shipped offers of collector gpurentalprices on the UTC day; all regions pooled; no commitment term unless the tier says so",
+          "first_date": "2026-08-04",
+          "gpu_model": "H100 SXM 80GB",
+          "instance_type": "",
+          "instrument_class": "neocloud_rate_card",
+          "last_date": "2026-11-06",
+          "last_date_to_as_of": "2026-11-06",
+          "last_value_to_as_of": "3.5539",
+          "licence_id": "CC-BY-4.0",
+          "median_n_providers": "6.0",
+          "members": "",
+          "min_n_providers": "5",
+          "n_calendar_days": "95",
+          "n_days": "89",
+          "n_days_to_as_of": "89",
+          "n_distinct_values_90d": "34",
+          "n_filled_days": "0",
+          "pricing_tier": "on_demand",
+          "product_description": "",
+          "series_id": "gpurentalprices.neocloud_rate_card.H100_SXM_80GB.on_demand.median",
+          "source_id": "gpurentalprices",
+          "source_url": "https://gpurentalprices.com/data",
+          "statistic": "median_usd_per_gpu_hour",
+          "table": "daily_statistics",
+          "tier": "headline",
+          "tier_reason": "ok",
+          "truth_availability": "daily; recomputed from the collectors' shipped rows after the Vast.ai/RunPod filter (refresh.py); the trailing day of tanod and gpurentalprices can be revised upstream"
+        },
+        "observations": 89,
+        "price_steps": 35,
+        "series_id": "gpurentalprices.neocloud_rate_card.H100_SXM_80GB.on_demand.median",
+        "training_windows": 21
+      }
+    ],
+    "source_sha": "121b1744085828cf3ca1a26f2279adb70e087d52",
+    "study_id": "direct-forecast-v12"
+  },
+  "cases": [],
+  "created_at": "2026-11-16T21:25:24.943367+00:00",
+  "incomplete_runs": [
+    {
+      "checkpoints": [
+        {
+          "checkpoint_id": "base-f2da2d4fd266693adb83",
+          "development": {
+            "by_horizon": {
+              "1": {
+                "coverage": 0.45,
+                "n_cells": 20,
+                "pinball": 0.006533114143281604,
+                "width": 0.0
+              },
+              "3": {
+                "coverage": 0.05,
+                "n_cells": 20,
+                "pinball": 0.056355679924031156,
+                "width": 0.0
+              },
+              "7": {
+                "coverage": 0.05,
+                "n_cells": 20,
+                "pinball": 0.12473796604092319,
+                "width": 0.0
+              }
+            },
+            "coverage": 0.18333333333333332,
+            "fallback_cells": 3,
+            "n_cells": 60,
+            "n_origins": 2,
+            "n_series": 10,
+            "n_tasks": 20,
+            "origins": [
+              "2026-09-27",
+              "2026-10-04"
+            ],
+            "pinball": 0.06254225336941198,
+            "primary_pinball": 0.12473796604092319,
+            "width": 0.0
+          },
+          "is_base": true,
+          "update": 0
+        },
+        {
+          "checkpoint_id": "7b99a1d4b23d89dbdbc6a151",
+          "development": {
+            "by_horizon": {
+              "1": {
+                "coverage": 0.75,
+                "n_cells": 20,
+                "pinball": 0.0029190299244030438,
+                "width": 0.0
+              },
+              "3": {
+                "coverage": 0.15,
+                "n_cells": 20,
+                "pinball": 0.04200132556583137,
+                "width": 0.0
+              },
+              "7": {
+                "coverage": 0.05,
+                "n_cells": 20,
+                "pinball": 0.09211234742222399,
+                "width": 0.0
+              }
+            },
+            "coverage": 0.31666666666666665,
+            "fallback_cells": 0,
+            "n_cells": 60,
+            "n_origins": 2,
+            "n_series": 10,
+            "n_tasks": 20,
+            "origins": [
+              "2026-09-27",
+              "2026-10-04"
+            ],
+            "pinball": 0.04567756763748613,
+            "primary_pinball": 0.09211234742222399,
+            "width": 0.0
+          },
+          "is_base": false,
+          "update": 20
+        },
+        {
+          "checkpoint_id": "79c949e02d6ad54cc544bc3b",
+          "development": {
+            "by_horizon": {
+              "1": {
+                "coverage": 0.75,
+                "n_cells": 20,
+                "pinball": 0.002935794945513165,
+                "width": 0.0
+              },
+              "3": {
+                "coverage": 0.15,
+                "n_cells": 20,
+                "pinball": 0.03661233318656161,
+                "width": 0.0
+              },
+              "7": {
+                "coverage": 0.05,
+                "n_cells": 20,
+                "pinball": 0.07931211730671564,
+                "width": 0.0
+              }
+            },
+            "coverage": 0.31666666666666665,
+            "fallback_cells": 0,
+            "n_cells": 60,
+            "n_origins": 2,
+            "n_series": 10,
+            "n_tasks": 20,
+            "origins": [
+              "2026-09-27",
+              "2026-10-04"
+            ],
+            "pinball": 0.039620081812930134,
+            "primary_pinball": 0.07931211730671564,
+            "width": 0.0
+          },
+          "is_base": false,
+          "update": 50
+        }
+      ],
+      "optimizer_updates": 100,
+      "reason": "Original workflow stopped at the persistent checkpoint-storage limit; no final evaluation claimed",
+      "seed": 17,
+      "status": "evaluation_blocked"
+    },
+    {
+      "checkpoints": [
+        {
+          "checkpoint_id": "base-f2da2d4fd266693adb83",
+          "development": {
+            "by_horizon": {
+              "1": {
+                "coverage": 0.5,
+                "n_cells": 20,
+                "pinball": 0.011383430823257207,
+                "width": 0.0
+              },
+              "3": {
+                "coverage": 0.15,
+                "n_cells": 20,
+                "pinball": 0.03666828316389565,
+                "width": 0.0
+              },
+              "7": {
+                "coverage": 0.1,
+                "n_cells": 20,
+                "pinball": 0.07063496709692829,
+                "width": 0.0
+              }
+            },
+            "coverage": 0.25,
+            "fallback_cells": 0,
+            "n_cells": 60,
+            "n_origins": 2,
+            "n_series": 10,
+            "n_tasks": 20,
+            "origins": [
+              "2026-09-27",
+              "2026-10-04"
+            ],
+            "pinball": 0.03956222702802705,
+            "primary_pinball": 0.07063496709692829,
+            "width": 0.0
+          },
+          "is_base": true,
+          "update": 0
+        },
+        {
+          "checkpoint_id": "3fcd8536e137168136bbc064",
+          "development": {
+            "by_horizon": {
+              "1": {
+                "coverage": 0.7,
+                "n_cells": 20,
+                "pinball": 0.003113200043730696,
+                "width": 0.0
+              },
+              "3": {
+                "coverage": 0.2,
+                "n_cells": 20,
+                "pinball": 0.026065406838827326,
+                "width": 0.0
+              },
+              "7": {
+                "coverage": 0.1,
+                "n_cells": 20,
+                "pinball": 0.06010079940130828,
+                "width": 0.0
+              }
+            },
+            "coverage": 0.3333333333333333,
+            "fallback_cells": 0,
+            "n_cells": 60,
+            "n_origins": 2,
+            "n_series": 10,
+            "n_tasks": 20,
+            "origins": [
+              "2026-09-27",
+              "2026-10-04"
+            ],
+            "pinball": 0.0297598020946221,
+            "primary_pinball": 0.06010079940130828,
+            "width": 0.0
+          },
+          "is_base": false,
+          "update": 20
+        },
+        {
+          "checkpoint_id": "75e9bdd8d9a40d8a89516c6c",
+          "development": {
+            "by_horizon": {
+              "1": {
+                "coverage": 0.75,
+                "n_cells": 20,
+                "pinball": 0.0027329237676693595,
+                "width": 0.0
+              },
+              "3": {
+                "coverage": 0.25,
+                "n_cells": 20,
+                "pinball": 0.027546873505726877,
+                "width": 0.0
+              },
+              "7": {
+                "coverage": 0.2,
+                "n_cells": 20,
+                "pinball": 0.061419960092080006,
+                "width": 0.0
+              }
+            },
+            "coverage": 0.4,
+            "fallback_cells": 0,
+            "n_cells": 60,
+            "n_origins": 2,
+            "n_series": 10,
+            "n_tasks": 20,
+            "origins": [
+              "2026-09-27",
+              "2026-10-04"
+            ],
+            "pinball": 0.03056658578849208,
+            "primary_pinball": 0.061419960092080006,
+            "width": 0.0
+          },
+          "is_base": false,
+          "update": 50
+        }
+      ],
+      "optimizer_updates": 100,
+      "reason": "Original workflow stopped at the persistent checkpoint-storage limit; no final evaluation claimed",
+      "seed": 29,
+      "status": "evaluation_blocked"
+    },
+    {
+      "checkpoints": [],
+      "optimizer_updates": 0,
+      "reason": "Original training client could not be created because checkpoint storage was full",
+      "seed": 43,
+      "status": "training_blocked"
+    }
+  ],
+  "prospective": {
+    "reason": "Registered weekly panel requires fresh compatible retained price history and forecasts committed before outcomes. No prospective accuracy established.",
+    "status": "pending"
+  },
+  "protocol": {
+    "classification": "post-event retrospective development with separate prospective commitments",
+    "data": {
+      "context_calendar_days": 42,
+      "development_origins": [
+        "2026-09-27",
+        "2026-10-04"
+      ],
+      "gpu_prefixes": [
+        "A100",
+        "H100"
+      ],
+      "history_cutoff": "2026-11-06",
+      "horizons": [
+        1,
+        3,
+        7
+      ],
+      "instrument_classes": [
+        "hyperscaler_spot",
+        "neocloud_rate_card"
+      ],
+      "max_per_source_family": 2,
+      "max_series": 12,
+      "max_training_windows_per_series": 160,
+      "min_context_observations": 20,
+      "permission_rule": "CC-BY-4.0 catalog sources restricted to approved hyperscaler spot and neocloud rate-card derivatives; marketplace asks excluded regardless of compilation license",
+      "retrospective_origins": [
+        "2026-10-11",
+        "2026-10-18",
+        "2026-10-25"
+      ],
+      "series_selection": "First two lexicographic exact headline daily-statistic series per approved source and GPU family, capped at 12; no performance-based selection",
+      "source_ids": [
+        "afhubbard",
+        "gpurentalprices",
+        "fastgpu_daily"
+      ],
+      "table": "daily_statistics",
+      "train_labels_through": "2026-09-19",
+      "train_origins_through": "2026-09-12",
+      "unit": "USD per GPU-hour"
+    },
+    "evaluation": {
+      "eligible": "Origin observation exists, at least 20 context observations, and all 1/3/7-day labels exist; locked before candidate evaluation",
+      "official_export_sha256": "67a043255a716db6bc9b73cd28f9258c30fb299fd8671a9ee3430c0d94cadd80",
+      "primary_horizon": 7,
+      "quantiles": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "references": [
+        "last_value",
+        "last_value_empirical",
+        "drift",
+        "seasonal_naive"
+      ],
+      "selection": "Lowest development 7-day mean USD quantile pinball; earliest update wins exact ties; checkpoint zero eligible",
+      "uncertainty": "Origin-level paired differences and range; three dependent retrospective origins are insufficient for population significance"
+    },
+    "gates": {
+      "evidence": "Require frozen origin-safe sources with verified availability and varying features across training; current retrieval alone is ineligible",
+      "min_development_tasks": 2,
+      "min_distinct_training_origins": 28,
+      "min_evidence_releases": 3,
+      "min_retrospective_tasks": 2,
+      "min_training_windows": 64,
+      "rl": "Separate unlaunched experiment; proper reward and verified credit assignment required"
+    },
+    "hypotheses": {
+      "primary": "A LoRA-trained model directly predicts rental log-price changes competitively with official numerical controls",
+      "secondary": "Origin-safe supplementary evidence improves the matched direct model"
+    },
+    "limits": {
+      "max_new_rl_updates": 50,
+      "max_storage_bytes": 1073741824,
+      "parallel_training_runs": 2,
+      "total_hours": 12
+    },
+    "model": {
+      "base": "Qwen/Qwen3.5-4B",
+      "batch_size": 16,
+      "checkpoints": [
+        0,
+        20,
+        50,
+        100
+      ],
+      "learning_rate": 5e-05,
+      "max_context_tokens": 6144,
+      "max_updates": 100,
+      "rank": 16,
+      "renderer": "qwen3_5_disable_thinking",
+      "renderer_reason": "Official supported non-thinking renderer; identical SFT and sampling template for bounded numeric JSON",
+      "seeds": [
+        17,
+        29,
+        43
+      ]
+    },
+    "preservation": {
+      "existing_future_gates_unchanged": true,
+      "existing_studies_unchanged": true,
+      "official_export_unchanged": true,
+      "protected_outcomes_loaded": false
+    },
+    "prospective": {
+      "cohort": "Exact existing signals-v6 contract IDs; separate transfer cohort from competition medians",
+      "first_origin": "2026-11-22",
+      "horizons": [
+        1,
+        3,
+        7
+      ],
+      "issuance_deadline": "2026-11-23T00:30:00+00:00",
+      "origin_frequency": "weekly Sunday 23:59:59 UTC",
+      "resolution": "Compatible verified outcomes only; pending until labels mature",
+      "training_update": "Frozen selected checkpoint; no prequential retraining in first panel"
+    },
+    "registered_date": "2026-11-16",
+    "sampling": {
+      "concurrency": 4,
+      "fallback": "official last_value; report validity separately",
+      "max_log_return": 20,
+      "max_tokens": 128,
+      "min_log_return": -20,
+      "min_valid": 48,
+      "parse_keys": [
+        "r1",
+        "r3",
+        "r7"
+      ],
+      "quantile_method": "linear",
+      "samples": 64,
+      "seed_base": 120000,
+      "temperature": 0.8
+    },
+    "schema_version": 12,
+    "study_id": "direct-forecast-v12"
+  },
+  "protocol_sha256": "de86b58b672ce746e907123d98e9a42ecd2a442c09b37288de32803578fc6e0a",
+  "publication_source_sha": "0c8abf968aad7a79728e0f6c4e779292811e0d42",
+  "runs": [],
+  "schema_version": 12,
+  "scientific_boundary": "Historical dates were previously accessible; results are additional retrospective analyses. These weights predict prices directly, separate from the earlier experiment selector.",
+  "source_attribution": "Pacific Machines (2026), gpu-price-pack v0.1.1-handover. CC BY 4.0 compilation; exact component source and contract metadata retained. Marketplace asks excluded.",
+  "status": "evaluation_blocked",
+  "study_id": "direct-forecast-v12",
+  "supplementary": null,
+  "training_workflow_run_id": "43952200479"
+}
