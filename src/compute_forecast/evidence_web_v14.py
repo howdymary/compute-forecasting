@@ -1,13 +1,14 @@
 """Read-only paired-study web service; no private data or model credentials."""
-import hashlib,json,os,threading,time,urllib.request
+import hashlib,json,os,re,threading,time,urllib.request
 from pathlib import Path
 import modal
 STATIC_ASSET_BUILD="python - <<'PY'\nfrom pathlib import Path\nfrom urllib.request import urlopen\nimport hashlib\nbase=\"https://raw.githubusercontent.com/google/fonts/a85fc09e44c70c7159761adfdc9d5dd007792c15/ofl/caveat/\"\nroot=Path(\"/opt/notebook-static\");root.mkdir(parents=True,exist_ok=True)\nfor source,name,expected in [(\"Caveat%5Bwght%5D.ttf\",\"caveat-f84acf2c.ttf\",\"f84acf2ce2d1b3329b194749530dbaec047e6df6\"),(\"OFL.txt\",\"OFL.txt\",\"6e5220c9576d98dfc684e550ddf0d87f68b3edc5\")]:\n    raw=urlopen(base+source,timeout=60).read()\n    assert hashlib.sha1(b\"blob \"+str(len(raw)).encode()+b\"\\0\"+raw).hexdigest()==expected,\"Unverified static asset\"\n    (root/name).write_bytes(raw)\nPY"
 from .evidence_ui_v14 import HTML
 app=modal.App("compute-forecast-evidence-v14")
+future_public=modal.Volume.from_name("compute-forecast-public",create_if_missing=False,version=2)
 image=modal.Image.debian_slim(python_version="3.11").pip_install("fastapi[standard]>=0.115,<1").run_commands(STATIC_ASSET_BUILD).env({"EVIDENCE_UI_SHA":os.environ.get("GITHUB_SHA","unknown")}).add_local_python_source("compute_forecast")
 BASE="https://raw.githubusercontent.com/howdymary/mochi-demo/compute-observatory/"
-@app.function(image=image,cpu=.5,memory=512,timeout=120,max_containers=4)
+@app.function(image=image,cpu=.5,memory=512,timeout=120,max_containers=4,volumes={"/public":future_public})
 @modal.concurrent(max_inputs=8)
 @modal.asgi_app()
 def web():
@@ -39,4 +40,20 @@ def web():
                 if value.get("study_id")!="direct-evidence-v14" or value.get("news_used"):raise ValueError("Study boundary mismatch")
                 cache.update(at=time.monotonic(),value=value);return JSONResponse(value,headers=headers)
             except Exception as error:return JSONResponse({"status":"unavailable","error_type":type(error).__name__},status_code=503,headers=headers)
+    @api.get("/api/evidence-future")
+    def future_index():
+        try:
+            future_public.reload();path=Path("/public/evidence-v14-future/index.json")
+            if not path.exists():return JSONResponse({"status":"pending_initial_readiness_audit","issued_origins":0},headers=headers)
+            value=json.loads(path.read_bytes());assert value["study_id"]=="direct-evidence-v14-prospective"
+            return JSONResponse(value,headers=headers)
+        except Exception as error:return JSONResponse({"status":"unavailable","error_type":type(error).__name__},status_code=503,headers=headers)
+    @api.get("/api/evidence-future/artifacts/{identity}.json")
+    def future_artifact(identity:str):
+        if not re.fullmatch("[0-9a-f]{64}",identity):return Response(status_code=404)
+        future_public.reload();path=Path("/public/evidence-v14-future/artifacts")/(identity+".json")
+        if not path.exists():return Response(status_code=404)
+        raw=path.read_bytes()
+        if hashlib.sha256(raw).hexdigest()!=identity:return Response(status_code=503)
+        return Response(raw,media_type="application/json",headers=headers)
     return api
