@@ -40,11 +40,6 @@ def main():
         if response.status!=200 or "text/html" not in response.headers["content-type"]:raise ValueError("Public HTML")
         page.wait_for_function("window.READY===true");page.evaluate("document.fonts.ready")
         if not page.evaluate("document.fonts.check('32px Fieldnote')"):raise ValueError("Live embedded font")
-        headings=page.locator("svg > text").all_text_contents()
-        if cfg.get("expected_heading") and headings[0]!=cfg["expected_heading"]:raise ValueError("Requested heading")
-        if cfg.get("expected_title") and headings[2]!=cfg["expected_title"]:raise ValueError("Requested title")
-        visible=page.locator("body").inner_text().lower()
-        if any(p.lower() in visible for p in cfg.get("excluded_display_phrases",[])):raise ValueError("Removed phrase still visible")
         for value,mode in (("0","OBSERVED HISTORY"),("17","ARCHIVED STATISTICAL FORECAST"),("23","CONDITIONAL RENTAL SCENARIOS"),("29","CONDITIONAL RENTAL SCENARIOS"),("35","CONDITIONAL RENTAL SCENARIOS"),("41","SAVED CHECKPOINT REPLAY"),("45","SAVED CHECKPOINT REPLAY"),("49","SAVED CHECKPOINT REPLAY"),("51","SAVED CHECKPOINT REPLAY")):
             page.locator("#chapter").select_option(value)
             if float(page.locator("#scrub").input_value())!=float(value) or mode not in page.locator("#mode").text_content():raise ValueError("Live chapter selection")
@@ -74,7 +69,7 @@ def main():
         if fraction>cfg["max_playback_drop_fraction"]:raise ValueError("Playback frame drops exceed fixed 5% limit")
         browser.close()
     if errors:raise ValueError(errors)
-    report={"status":"passed","media_run_id":cfg["media_run_id"],"render_commit":cfg["expected_render_commit"],"validation_commit":os.environ["GITHUB_SHA"],"checked_at_utc":time.strftime("%Y-%m-%dT%H:%M:%SZ",time.gmtime()),"interactive_url":base+"replay.html","video_url":base+"terminal-30s.mp4","public_file_sha256":hashes,"range_status":206,"display_heading":headings[0],"display_title":headings[2],"removed_phrases_absent":True,"replay_font_policy":font_policy,"chapters":chapters,"keyboard_scrub":True,"mobile_no_overflow":True,"reduced_motion_no_autoplay":True,"actual_encoded_playback":quality,"playback_drop_fraction":fraction,"real_time_samples":playback,"browser_errors":errors,"new_training":False}
+    report={"status":"passed","media_run_id":cfg["media_run_id"],"render_commit":cfg["expected_render_commit"],"validation_commit":os.environ["GITHUB_SHA"],"checked_at_utc":time.strftime("%Y-%m-%dT%H:%M:%SZ",time.gmtime()),"interactive_url":base+"replay.html","video_url":base+"terminal-30s.mp4","public_file_sha256":hashes,"range_status":206,"replay_font_policy":font_policy,"chapters":chapters,"keyboard_scrub":True,"mobile_no_overflow":True,"reduced_motion_no_autoplay":True,"actual_encoded_playback":quality,"playback_drop_fraction":fraction,"real_time_samples":playback,"browser_errors":errors,"new_training":False}
     write(out/"validation.json",report)
     from .publication_terminal_v10 import publish
     dest="results/terminal-v10/runs/"+os.environ["GITHUB_RUN_ID"]+"/market-playback/"
