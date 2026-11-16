@@ -1,0 +1,947 @@
+{
+  "study_id": "direct-evidence-v14-memory",
+  "created_at": "2026-11-16T22:17:45.807747+00:00",
+  "namespace": "cf-e14-c330af786ee542bc",
+  "classification": "Current research planning about retained historical evidence; not historical benchmark memory",
+  "protocol_sha256": "927d60615f2d7ec60e3f2255f8f55e7854dfa7e3d9c3a9e60f27b4e0eed8e640",
+  "source_sha": "f67c31b7309f5da26ab0b7fbd3a47e82acb98073",
+  "source_manifest_sha256": "7c0cf373b58936393dfd35423babcecb9099961ebfe8f4ab84a380612ff9c4b3",
+  "records": [
+    {
+      "record_id": "cf-e14-c330af786ee542bc-0",
+      "author": "cf-e14-c330af786ee542bc-researcher",
+      "role": "researcher",
+      "created_at": "2026-11-16T22:17:53.310012+00:00",
+      "content_sha256": "703f0fe232e1379e6616394d3f266c1293942055c6702bc8b83fddfd059ddee4",
+      "ingestion_id": "c6ce10a9-6957-4d99-ac4f-c1f1964f5e31",
+      "ingestion_completed": true
+    },
+    {
+      "record_id": "cf-e14-c330af786ee542bc-1",
+      "author": "cf-e14-c330af786ee542bc-scientist",
+      "role": "scientist",
+      "created_at": "2026-11-16T22:18:22.218548+00:00",
+      "content_sha256": "7dccfbc8fc6f89f28565d9b9ffdfd045adc4f5ed1fbffd6bd3f62e9d53188897",
+      "ingestion_id": "b2de49a6-276d-4553-9d99-27da4f760c54",
+      "ingestion_completed": true
+    },
+    {
+      "record_id": "cf-e14-c330af786ee542bc-2",
+      "author": "cf-e14-c330af786ee542bc-skeptic",
+      "role": "skeptic",
+      "created_at": "2026-11-16T22:18:45.074811+00:00",
+      "content_sha256": "9ee49a56da397a58f973a34595cab7f8526fa5d9e3335ccd1b9654c373e8485c",
+      "ingestion_id": "ef910633-7cab-4e58-87f1-decfaedd2c5c",
+      "ingestion_completed": true
+    },
+    {
+      "record_id": "cf-e14-c330af786ee542bc-3",
+      "author": "cf-e14-c330af786ee542bc-scientist",
+      "role": "scientist",
+      "created_at": "2026-11-16T22:18:56.783815+00:00",
+      "content_sha256": "85971339017a6402e09657f16ae65901d05b6c5043c0fb49c1b6fec7907e9a54",
+      "ingestion_id": "c1bc4b47-3657-45fd-bb2d-d97d4699d320",
+      "ingestion_completed": false
+    },
+    {
+      "record_id": "cf-e14-c330af786ee542bc-4",
+      "author": "cf-e14-c330af786ee542bc-researcher",
+      "role": "researcher",
+      "created_at": "2026-11-16T22:20:00.664815+00:00",
+      "content_sha256": "56ab2d24d84558078bd11fc19e7714b8f131367b33f4dae1e110a129848f51bc",
+      "ingestion_id": "e9cb5b7f-abc1-49e0-b1ac-e0a0189a1e2e",
+      "ingestion_completed": false
+    }
+  ],
+  "reads": [
+    {
+      "reader": "cf-e14-c330af786ee542bc-scientist",
+      "reader_role": "scientist",
+      "writer_role": "researcher",
+      "required_source_id": "cf-e14-c330af786ee542bc-0",
+      "returned_source_ids": [
+        "boundforge-43670325538-proposer-failed-neighborhoods",
+        "boundforge-43670325538-verifier-baseline",
+        "boundforge-43670325538-verifier-review",
+        "boundforge-43670827227-proposer-precision-plan-0",
+        "boundforge-43670827227-proposer-precision-plan-1",
+        "boundforge-43670827227-proposer-precision-plan-2",
+        "boundforge-43670827227-proposer-precision-plan-3",
+        "boundforge-43670827227-proposer-precision-plan-4",
+        "boundforge-43670827227-proposer-precision-plan-5",
+        "boundforge-43671271112-proposer-precision-plan-0",
+        "boundforge-43671271112-proposer-precision-plan-1",
+        "boundforge-43671271112-proposer-precision-plan-2",
+        "boundforge-43671271112-proposer-precision-plan-3",
+        "boundforge-43671444344-proposer-precision-plan-0",
+        "boundforge-43671444344-proposer-precision-plan-2",
+        "boundforge-43671753698-proposer-precision-plan-0",
+        "boundforge-43671753698-proposer-precision-plan-1",
+        "boundforge-43671753698-proposer-precision-plan-2",
+        "boundforge-43671753698-proposer-precision-plan-3",
+        "boundforge-43675810337-literature-v2-review",
+        "boundforge-43675810337-proposer-v2-development",
+        "boundforge-43675810337-verifier-v2-guard",
+        "boundforge-c49-43679780777-experimenter",
+        "boundforge-c49-43679935507-controller",
+        "boundforge-methods-v3-validated-failures-43749410835",
+        "cf-e14-c330af786ee542bc-0"
+      ],
+      "verified_cross_role_use": true,
+      "canonical_fallback": false,
+      "consumed_content_sha256": "703f0fe232e1379e6616394d3f266c1293942055c6702bc8b83fddfd059ddee4",
+      "resolution": "Exact numeric payload resolved by returned source ID"
+    },
+    {
+      "reader": "cf-e14-c330af786ee542bc-skeptic",
+      "reader_role": "skeptic",
+      "writer_role": "scientist",
+      "required_source_id": "cf-e14-c330af786ee542bc-1",
+      "returned_source_ids": [
+        "boundforge-43670325538-proposer-failed-neighborhoods",
+        "boundforge-43670325538-verifier-baseline",
+        "boundforge-43670325538-verifier-review",
+        "boundforge-43670827227-proposer-precision-plan-0",
+        "boundforge-43670827227-proposer-precision-plan-1",
+        "boundforge-43670827227-proposer-precision-plan-2",
+        "boundforge-43670827227-proposer-precision-plan-3",
+        "boundforge-43670827227-proposer-precision-plan-4",
+        "boundforge-43670827227-proposer-precision-plan-5",
+        "boundforge-43671271112-proposer-precision-plan-1",
+        "boundforge-43671271112-proposer-precision-plan-2",
+        "boundforge-43671271112-proposer-precision-plan-3",
+        "boundforge-43671444344-proposer-precision-plan-0",
+        "boundforge-43671444344-proposer-precision-plan-2",
+        "boundforge-43671753698-proposer-precision-plan-0",
+        "boundforge-43671753698-proposer-precision-plan-1",
+        "boundforge-43671753698-proposer-precision-plan-2",
+        "boundforge-43671753698-proposer-precision-plan-3",
+        "boundforge-43675810337-literature-v2-review",
+        "boundforge-43675810337-proposer-v2-development",
+        "boundforge-43675810337-verifier-v2-guard",
+        "boundforge-c49-43679780777-experimenter",
+        "boundforge-c49-43679935507-controller",
+        "boundforge-methods-v3-validated-failures-43749410835",
+        "cf-e14-c330af786ee542bc-0",
+        "cf-e14-c330af786ee542bc-1"
+      ],
+      "verified_cross_role_use": true,
+      "canonical_fallback": false,
+      "consumed_content_sha256": "7dccfbc8fc6f89f28565d9b9ffdfd045adc4f5ed1fbffd6bd3f62e9d53188897",
+      "resolution": "Exact numeric payload resolved by returned source ID"
+    },
+    {
+      "reader": "cf-e14-c330af786ee542bc-skeptic",
+      "reader_role": "skeptic",
+      "writer_role": "researcher",
+      "required_source_id": "cf-e14-c330af786ee542bc-0",
+      "returned_source_ids": [
+        "boundforge-43670325538-proposer-failed-neighborhoods",
+        "boundforge-43670325538-verifier-baseline",
+        "boundforge-43670325538-verifier-review",
+        "boundforge-43670827227-proposer-precision-plan-0",
+        "boundforge-43670827227-proposer-precision-plan-1",
+        "boundforge-43670827227-proposer-precision-plan-2",
+        "boundforge-43670827227-proposer-precision-plan-3",
+        "boundforge-43670827227-proposer-precision-plan-4",
+        "boundforge-43670827227-proposer-precision-plan-5",
+        "boundforge-43671271112-proposer-precision-plan-0",
+        "boundforge-43671271112-proposer-precision-plan-1",
+        "boundforge-43671271112-proposer-precision-plan-2",
+        "boundforge-43671271112-proposer-precision-plan-3",
+        "boundforge-43671444344-proposer-precision-plan-0",
+        "boundforge-43671444344-proposer-precision-plan-2",
+        "boundforge-43671753698-proposer-precision-plan-0",
+        "boundforge-43671753698-proposer-precision-plan-1",
+        "boundforge-43671753698-proposer-precision-plan-2",
+        "boundforge-43671753698-proposer-precision-plan-3",
+        "boundforge-43675810337-literature-v2-review",
+        "boundforge-43675810337-proposer-v2-development",
+        "boundforge-43675810337-verifier-v2-guard",
+        "boundforge-c49-43679780777-experimenter",
+        "boundforge-c49-43679935507-controller",
+        "boundforge-methods-v3-validated-failures-43749410835",
+        "cf-e14-c330af786ee542bc-0",
+        "cf-e14-c330af786ee542bc-1"
+      ],
+      "verified_cross_role_use": true,
+      "canonical_fallback": false,
+      "consumed_content_sha256": "703f0fe232e1379e6616394d3f266c1293942055c6702bc8b83fddfd059ddee4",
+      "resolution": "Exact numeric payload resolved by returned source ID"
+    },
+    {
+      "reader": "cf-e14-c330af786ee542bc-scientist",
+      "reader_role": "scientist",
+      "writer_role": "skeptic",
+      "required_source_id": "cf-e14-c330af786ee542bc-2",
+      "returned_source_ids": [
+        "boundforge-43670325538-proposer-failed-neighborhoods",
+        "boundforge-43670325538-verifier-baseline",
+        "boundforge-43670325538-verifier-review",
+        "boundforge-43670827227-proposer-precision-plan-0",
+        "boundforge-43670827227-proposer-precision-plan-1",
+        "boundforge-43670827227-proposer-precision-plan-2",
+        "boundforge-43670827227-proposer-precision-plan-3",
+        "boundforge-43670827227-proposer-precision-plan-4",
+        "boundforge-43670827227-proposer-precision-plan-5",
+        "boundforge-43671271112-proposer-precision-plan-0",
+        "boundforge-43671271112-proposer-precision-plan-1",
+        "boundforge-43671271112-proposer-precision-plan-2",
+        "boundforge-43671271112-proposer-precision-plan-3",
+        "boundforge-43671444344-proposer-precision-plan-0",
+        "boundforge-43671444344-proposer-precision-plan-2",
+        "boundforge-43671753698-proposer-precision-plan-0",
+        "boundforge-43671753698-proposer-precision-plan-1",
+        "boundforge-43671753698-proposer-precision-plan-2",
+        "boundforge-43671753698-proposer-precision-plan-3",
+        "boundforge-43675810337-literature-v2-review",
+        "boundforge-43675810337-proposer-v2-development",
+        "boundforge-43675810337-verifier-v2-guard",
+        "boundforge-c49-43679780777-experimenter",
+        "boundforge-c49-43679935507-controller",
+        "boundforge-methods-v3-validated-failures-43749410835",
+        "cf-e14-c330af786ee542bc-0",
+        "cf-e14-c330af786ee542bc-1",
+        "cf-e14-c330af786ee542bc-2"
+      ],
+      "verified_cross_role_use": true,
+      "canonical_fallback": false,
+      "consumed_content_sha256": "9ee49a56da397a58f973a34595cab7f8526fa5d9e3335ccd1b9654c373e8485c",
+      "resolution": "Exact numeric payload resolved by returned source ID"
+    },
+    {
+      "reader": "cf-e14-c330af786ee542bc-researcher",
+      "reader_role": "researcher",
+      "writer_role": "scientist",
+      "required_source_id": "cf-e14-c330af786ee542bc-3",
+      "returned_source_ids": [
+        "boundforge-43670325538-proposer-failed-neighborhoods",
+        "boundforge-43670325538-verifier-baseline",
+        "boundforge-43670325538-verifier-review",
+        "boundforge-43670827227-proposer-precision-plan-0",
+        "boundforge-43670827227-proposer-precision-plan-1",
+        "boundforge-43670827227-proposer-precision-plan-2",
+        "boundforge-43670827227-proposer-precision-plan-3",
+        "boundforge-43670827227-proposer-precision-plan-4",
+        "boundforge-43670827227-proposer-precision-plan-5",
+        "boundforge-43671271112-proposer-precision-plan-0",
+        "boundforge-43671271112-proposer-precision-plan-1",
+        "boundforge-43671271112-proposer-precision-plan-2",
+        "boundforge-43671271112-proposer-precision-plan-3",
+        "boundforge-43671444344-proposer-precision-plan-0",
+        "boundforge-43671444344-proposer-precision-plan-2",
+        "boundforge-43671753698-proposer-precision-plan-0",
+        "boundforge-43671753698-proposer-precision-plan-1",
+        "boundforge-43671753698-proposer-precision-plan-2",
+        "boundforge-43671753698-proposer-precision-plan-3",
+        "boundforge-43675810337-literature-v2-review",
+        "boundforge-43675810337-proposer-v2-development",
+        "boundforge-43675810337-verifier-v2-guard",
+        "boundforge-c49-43679780777-experimenter",
+        "boundforge-c49-43679935507-controller",
+        "boundforge-methods-v3-validated-failures-43749410835",
+        "cf-e14-c330af786ee542bc-0",
+        "cf-e14-c330af786ee542bc-1",
+        "cf-e14-c330af786ee542bc-2",
+        "cf-e14-c330af786ee542bc-3"
+      ],
+      "verified_cross_role_use": true,
+      "canonical_fallback": false,
+      "consumed_content_sha256": "85971339017a6402e09657f16ae65901d05b6c5043c0fb49c1b6fec7907e9a54",
+      "resolution": "Exact numeric payload resolved by returned source ID"
+    }
+  ],
+  "decisions": [
+    {
+      "role": "researcher",
+      "question": "Which evidence qualification is most consequential?",
+      "choice": "original_release_vintage",
+      "distribution": {
+        "original_release_vintage": 0.4718243181705475,
+        "exact_electricity_series": 0.05635137856006622,
+        "monthly_signal_variation": 0.4718243181705475
+      },
+      "used_record_ids": [],
+      "context_sha256": "569b15dedddd509c16d404756e82898fb229d77f250359f30550560ac42cb7bf",
+      "at": "2026-11-16T22:17:53.309988+00:00"
+    },
+    {
+      "role": "scientist",
+      "question": "Choose the first diagnostic to retain with the matched study.",
+      "choice": "breakdown_by_monthly_vintage",
+      "distribution": {
+        "breakdown_by_monthly_vintage": 0.6897734999656677,
+        "breakdown_by_gpu_family": 0.13582445681095123,
+        "breakdown_by_price_change": 0.17440205812454224
+      },
+      "used_record_ids": [
+        "cf-e14-c330af786ee542bc-0"
+      ],
+      "context_sha256": "703f0fe232e1379e6616394d3f266c1293942055c6702bc8b83fddfd059ddee4",
+      "at": "2026-11-16T22:18:22.218176+00:00"
+    },
+    {
+      "role": "skeptic",
+      "question": "Which limitation most restricts interpretation?",
+      "choice": "ppi_is_not_a_provider_tariff",
+      "distribution": {
+        "monthly_releases_are_not_independent_daily_cases": 0.21870218217372894,
+        "small_h100_training_cohort": 0.017952168360352516,
+        "ppi_is_not_a_provider_tariff": 0.7633455991744995
+      },
+      "used_record_ids": [
+        "cf-e14-c330af786ee542bc-0",
+        "cf-e14-c330af786ee542bc-1"
+      ],
+      "context_sha256": "027936ed91cd786c02a9e8304de3122cedd85361c22b9dbc9a3bd488da431b02",
+      "at": "2026-11-16T22:18:45.074792+00:00"
+    },
+    {
+      "role": "scientist",
+      "question": "Choose the next useful diagnostic after the recalled criticism.",
+      "choice": "breakdown_by_price_change",
+      "distribution": {
+        "breakdown_by_monthly_vintage": 0.3182401955127716,
+        "breakdown_by_gpu_family": 0.21872307360172272,
+        "breakdown_by_price_change": 0.46303674578666687
+      },
+      "used_record_ids": [
+        "cf-e14-c330af786ee542bc-1",
+        "cf-e14-c330af786ee542bc-2"
+      ],
+      "context_sha256": "c76268a325c0748d8cb58bf1e28a85985563364c0f9edd90f17b6fa2c6ba286b",
+      "at": "2026-11-16T22:18:56.783424+00:00"
+    }
+  ],
+  "calls": [
+    {
+      "method": "PUT",
+      "kind": "audiences",
+      "status": 201,
+      "at": "2026-11-16T22:17:50.639397+00:00"
+    },
+    {
+      "method": "POST",
+      "kind": "ingest",
+      "status": 202,
+      "at": "2026-11-16T22:17:53.535557+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:17:53.615343+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:17:55.696557+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:17:57.825494+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:17:59.947738+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:18:02.058789+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:18:04.153813+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:18:06.249224+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:18:08.346302+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:18:10.445076+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:18:12.542269+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:18:14.646988+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:18:16.753030+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:18:18.913311+00:00"
+    },
+    {
+      "method": "POST",
+      "kind": "recall",
+      "status": 200,
+      "at": "2026-11-16T22:18:19.782075+00:00"
+    },
+    {
+      "method": "POST",
+      "kind": "ingest",
+      "status": 202,
+      "at": "2026-11-16T22:18:22.493422+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:18:22.743255+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:18:24.850604+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:18:26.943658+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:18:29.035686+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:18:31.129437+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:18:33.219587+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:18:35.312653+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:18:37.443409+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:18:39.566007+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:18:41.673364+00:00"
+    },
+    {
+      "method": "POST",
+      "kind": "recall",
+      "status": 200,
+      "at": "2026-11-16T22:18:42.204596+00:00"
+    },
+    {
+      "method": "POST",
+      "kind": "recall",
+      "status": 200,
+      "at": "2026-11-16T22:18:42.651496+00:00"
+    },
+    {
+      "method": "POST",
+      "kind": "ingest",
+      "status": 202,
+      "at": "2026-11-16T22:18:45.331121+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:18:45.433382+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:18:47.521521+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:18:49.632842+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:18:51.710842+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:18:53.854569+00:00"
+    },
+    {
+      "method": "POST",
+      "kind": "recall",
+      "status": 200,
+      "at": "2026-11-16T22:18:54.387296+00:00"
+    },
+    {
+      "method": "POST",
+      "kind": "ingest",
+      "status": 202,
+      "at": "2026-11-16T22:18:57.124366+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:18:57.223668+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:18:59.305769+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:19:01.403674+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:19:03.517215+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:19:05.596689+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:19:07.675250+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:19:09.755542+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:19:11.834265+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:19:13.949657+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:19:16.027501+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:19:18.125165+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:19:20.205820+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:19:22.285911+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:19:24.478553+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:19:26.591832+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:19:28.671497+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:19:30.755722+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:19:32.859196+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:19:34.940423+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:19:37.023468+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:19:39.127031+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:19:41.211243+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:19:43.331409+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:19:45.431667+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:19:47.547573+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:19:49.626627+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:19:51.705070+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:19:53.799661+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:19:56.053387+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:19:58.178964+00:00"
+    },
+    {
+      "method": "POST",
+      "kind": "recall",
+      "status": 200,
+      "at": "2026-11-16T22:20:00.664411+00:00"
+    },
+    {
+      "method": "POST",
+      "kind": "ingest",
+      "status": 202,
+      "at": "2026-11-16T22:20:01.026393+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:20:01.111574+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:20:03.198228+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:20:05.282600+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:20:07.375974+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:20:09.453831+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:20:11.533116+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:20:13.639818+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:20:15.724439+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:20:17.870128+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:20:19.951296+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:20:22.030931+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:20:24.142247+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:20:26.230650+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:20:28.411938+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:20:30.539602+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:20:32.620112+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:20:34.706704+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:20:36.784689+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:20:38.878086+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:20:40.959604+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:20:43.052772+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:20:45.144734+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:20:47.223376+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:20:49.302170+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:20:51.380556+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:20:53.460418+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:20:55.546085+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:20:57.630275+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:20:59.787571+00:00"
+    },
+    {
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-16T22:21:01.900243+00:00"
+    }
+  ],
+  "new_optimizer_updates": 0,
+  "accuracy_improvement": null,
+  "provider_cost_usd": null,
+  "changed_after_criticism": true,
+  "actual_diagnostics": [
+    {
+      "diagnostic": "breakdown_by_monthly_vintage",
+      "training_counts": {
+        "2025-12": 26,
+        "2026-01": 4,
+        "2026-04": 32,
+        "2026-05": 68,
+        "2026-06": 58,
+        "2026-07": 120,
+        "2026-08": 18
+      },
+      "classification": "Input-readiness diagnostic, not forecast improvement"
+    },
+    {
+      "diagnostic": "breakdown_by_price_change",
+      "training_counts": {
+        "changed": 172,
+        "unchanged": 154
+      },
+      "classification": "Input-readiness diagnostic, not forecast improvement"
+    }
+  ],
+  "eligibility": {
+    "writers": 3,
+    "readers": 3,
+    "cross_role_uses": 5,
+    "requirements_met": true
+  },
+  "status": "verified",
+  "completed_at": "2026-11-16T22:21:03.903258+00:00"
+}
