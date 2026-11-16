@@ -49,3 +49,5 @@ The [future-only BLS qualification](../results/evidence-v14/audits/43977825560/f
 At audit time, current evidence is qualified. Issuance remains pending the first registered origin and sufficient compatible price history. Reasons associated with the preceding, unregistered November15 origin are retained separately from present evidence readiness.
 
 [Successful prospective deployment and tests](https://github.com/howdymary/mochi-demo/actions/runs/43977962380) · [Original BLS release](https://www.bls.gov/ppi/detailed-report/ppi-detailed-report-october-2026.pdf).
+
+The scheduled worker explicitly reloads both shared volumes before opening files. Its single-container, single-input execution prevents overlapping writes in this namespace. This ensures that a reused container sees later collector commits instead of continuing to read its startup snapshot.
