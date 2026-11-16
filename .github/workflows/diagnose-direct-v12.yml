@@ -1,0 +1,54 @@
+name: Diagnose direct model sampling and sources v12
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/diagnose-direct-v12.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: direct-v12-bounded-diagnostic
+  cancel-in-progress: false
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Fetch immutable diagnostic code
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Retrieve original permission-filtered data and SDK lock
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run download 43952200479 --repo "$GITHUB_REPOSITORY" --name direct-v12-inputs-43952200479 --dir inputs/direct-v12
+      - name: Install unchanged client versions
+        run: |
+          python -m pip install --extra-index-url https://download.pytorch.org/whl/cpu -r inputs/direct-v12/requirements-lock.txt
+          python -m pip install -e . modal --no-deps
+      - name: Compare sampling modes without training
+        env:
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+        run: python scripts/diagnose_direct_sampling_v12.py
+      - name: Probe archived source from Modal egress
+        if: always()
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: modal run -m compute_forecast.direct_source_probe_v12
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: direct-v12-diagnostics-${{ github.run_id }}
+          path: artifacts/direct-v12-diagnostics
+          retention-days: 30
+      - name: Publish retained public diagnostics
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/publish_direct_diagnostics_v12.py
