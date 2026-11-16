@@ -1,0 +1,24 @@
+{
+  "study_id": "direct-evidence-v14-visual",
+  "registered_at": "2026-11-16",
+  "dataset_sha256": "5dfcc775bf03025d8be7330d240a595a30c35e8a67947d44ef31a4cf407e4c12",
+  "scope": "Presentation only; numerical training and selection protocol unchanged",
+  "default_case_rule": "Lexicographically first development case with any observed1/3/7-day price change; if none, first development case. Chosen independently of model forecasts or scores.",
+  "interpretation": "Illustrative development case selected to show an actual price movement, not a representative final-test endpoint",
+  "charts": [
+    {
+      "name": "learning",
+      "question": "Did training and BLS input change development forecast loss?",
+      "source": "Saved development0/20/50/100 prediction artifacts",
+      "form": "Measured points with straight visual guides, common axes, grouped exact overlaps",
+      "risk": "Development curves do not establish final or future accuracy"
+    },
+    {
+      "name": "price",
+      "question": "What numerical forecast did the displayed checkpoint produce?",
+      "source": "Same frozen development task, actual sampled quantiles, compatible history and outcomes",
+      "form": "History plus q10/q50/q90 at1/3/7days; fixed axes over checkpoint selection",
+      "risk": "A chosen case can disagree with aggregate results; connecting horizons does not create daily forecasts"
+    }
+  ]
+}

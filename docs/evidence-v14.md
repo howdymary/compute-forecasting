@@ -28,7 +28,7 @@ The structured evidence block contains index level, month-over-month log change 
 
 The learning chart answers whether development forecasting quality changed at measured optimizer checkpoints. It plots saved seven-day pinball observations and original selection markers; connecting lines are guides. Six runs remain identifiable, including exact overlaps.
 
-The linked price chart answers what each checkpoint actually forecast on a source-bound development case. It combines compatible history, fixed origin, actual quantiles and development outcomes with fixed axes across checkpoints. The first case is selected lexicographically, independent of performance. It is not a representative final-test case.
+The linked price chart answers what each checkpoint actually forecast on a source-bound development case. It combines compatible history, fixed origin, actual quantiles and development outcomes with fixed axes across checkpoints. The default is the lexicographically first development case with an observed price change, selected independently of model forecasts or scores. This helps explain a real price movement. It is not a representative final-test case. The separate visual configuration records the rule; it does not change training or checkpoint selection.
 
 ## Reproduction
 
@@ -41,3 +41,11 @@ PYTHONPATH=src python -m compute_forecast.verify_evidence_v14 --results RESULTS_
 Exact stochastic regeneration need not match. Retained sample vectors, source hashes and deterministic arithmetic reproduce published scores. Numerical reruns need the unchanged Pacific pack; weight training needs Tinker credentials. Provider-reported charges remain unknown when no receipt is available.
 
 [Findings](evidence-v14-findings.md) · [Public artifacts](../results/evidence-v14/README.md) · [Checkpoint retention](checkpoint-retention-2026-11-16.md).
+
+## Interpretation limits
+
+The BLS block can identify calendar position as well as operating economics. A measured difference would support this input condition, not a causal electricity-cost mechanism. Provider geography and global monthly release alignment remain limitations. The evidence arm uses more input tokens, so equal optimizer/sample budgets are not identical token charges.
+
+The base model’s complete pretraining history is not verified. Supplying origin-safe inputs does not prove that all historical public outcomes were absent from pretraining. Both arms share the same base model; genuinely later observations remain necessary.
+
+The separate [prospective protocol](../configs/evidence-v14-prospective.json) requires a checkpoint lock, compatible retained source history, advance issuance and matured outcomes. It is registered, with no forecasts issued in this study yet. Existing collection and November23 gates remain unchanged.
