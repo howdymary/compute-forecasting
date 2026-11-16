@@ -1,0 +1,42 @@
+name: Deploy direct GPU forecasting study v12
+on:
+  workflow_run:
+    workflows: [Publish direct GPU forecasting research v12]
+    types: [completed]
+    branches: [compute-observatory]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: direct-v12-web-deployment
+  cancel-in-progress: false
+jobs:
+  deploy:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Fetch current publication source
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e . modal
+      - name: Deploy read-only study view
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: modal deploy -m compute_forecast.direct_web_v12
+      - name: Verify deployed scientific view
+        run: |
+          python - <<'PY'
+          import json,urllib.request
+          url='https://howdymary--compute-forecast-direct-v12-web.us-east.modal.run'
+          with urllib.request.urlopen(url+'/health',timeout=90) as r:health=json.load(r)
+          assert health['study_id']=='direct-forecast-v12'
+          with urllib.request.urlopen(url+'/api/direct-v12',timeout=90) as r:report=json.load(r)
+          assert report['study_id']=='direct-forecast-v12' and not report['audit']['protected_outcomes_loaded']
+          PY
