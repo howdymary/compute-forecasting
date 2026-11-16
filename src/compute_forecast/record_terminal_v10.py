@@ -9,11 +9,17 @@ def run():
     config=json.loads(Path("configs/terminal-v10-video.json").read_text())
     assert config["source_seconds"]==60 and config["speed"]==2 and config["output_seconds"]==30
     out=Path("artifacts/terminal-v10-video");out.mkdir(parents=True,exist_ok=True)
-    health=json.loads(urllib.request.urlopen(URL+"/health",timeout=90).read())
-    assert health["ui_revision"]==config["ui_revision"],("UI revision changed",health)
+    health={}
+    for attempt in range(30):
+        health=json.loads(urllib.request.urlopen(URL+"/health",timeout=90).read())
+        if health["ui_revision"]==config["ui_revision"]:break
+        time.sleep(3)
+    assert health.get("ui_revision")==config["ui_revision"],("UI revision changed",health)
     snapshots={}
     for endpoint in ("/api/pricing","/api/value-v5"):
         raw=urllib.request.urlopen(URL+endpoint,timeout=90).read();snapshots[endpoint]={"raw":raw,"sha256":digest(raw)}
+    inputs=out/"inputs";inputs.mkdir(exist_ok=True)
+    for endpoint,obj in snapshots.items():(inputs/(endpoint.rsplit("/",1)[1]+".json")).write_bytes(obj["raw"])
     pricing=json.loads(snapshots["/api/pricing"]["raw"]);history=json.loads(snapshots["/api/value-v5"]["raw"])
     assert pricing["forecast_csv_sha256"]=="67a043255a716db6bc9b73cd28f9258c30fb299fd8671a9ee3430c0d94cadd80"
     assert len(pricing["series"])==37
