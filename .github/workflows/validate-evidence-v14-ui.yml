@@ -36,6 +36,12 @@ jobs:
           python -m compileall -q src scripts
           python -m pytest --junitxml=artifacts/evidence-v14-ui-tests.xml
           python - <<'PY'
+          import json,subprocess
+          from pathlib import Path
+          index=json.loads(Path('results/evidence-v14/latest.json').read_text())
+          subprocess.run(['python','-m','compute_forecast.verify_evidence_v14','--results',str(Path(index['report_path']).parent)],check=True)
+          PY
+          python - <<'PY'
           from pathlib import Path
           from compute_forecast.evidence_ui_v14 import HTML
           root=Path('artifacts/evidence-v14-ui');root.mkdir(parents=True,exist_ok=True)

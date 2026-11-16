@@ -1,6 +1,6 @@
 """PNG-only validation on actual paired-study artifacts, never synthetic learning curves."""
-import hashlib,http.server,json,os,pathlib,threading,urllib.request
-from playwright.sync_api import sync_playwright
+import hashlib,http.server,json,os,pathlib,re,threading,time,urllib.request
+from playwright.sync_api import sync_playwright,expect
 from compute_forecast.evidence_ui_v14 import HTML
 root=pathlib.Path("artifacts/evidence-v14-ui");root.mkdir(parents=True,exist_ok=True)
 pointer=json.loads(pathlib.Path("results/evidence-v14/latest.json").read_text());raw=pathlib.Path(pointer["report_path"]).read_bytes()
@@ -21,7 +21,7 @@ with sync_playwright() as p:
     for name,width,height,touch in (("desktop",1440,1050,False),("mobile",390,844,True)):
         context=browser.new_context(viewport={"width":width,"height":height},has_touch=touch,reduced_motion="reduce");page=context.new_page();errors=[];page.on("pageerror",lambda e:errors.append(str(e)))
         response=page.goto("http://127.0.0.1:"+str(server.server_port));assert response.status==200
-        page.wait_for_function("!document.querySelector('#status').textContent.startsWith('Loading')")
+        expect(page.locator("#status")).not_to_have_text(re.compile("^Loading"),timeout=90000)
         assert page.evaluate("document.documentElement.scrollWidth<=innerWidth"),"Page overflow"
         assert page.locator("#case option").count()==len(report["development_cases"])
         assert page.locator("#prices circle").count()>0
@@ -31,7 +31,7 @@ with sync_playwright() as p:
         page.locator("#seed").select_option("29");page.get_by_role("button",name="Inspect optimizer update 50",exact=True).click()
         assert page.locator("#pins li").first.get_attribute("data-snapshot")==pinned,"Pin mutated"
         before=page.locator("#case").input_value();page.locator("details").first.locator("summary").click()
-        page.locator("#refresh").click();page.wait_for_function("!document.querySelector('#status').textContent.startsWith('Loading')")
+        page.locator("#refresh").click();expect(page.locator("#status")).not_to_have_text(re.compile("^Loading"),timeout=90000)
         assert page.locator("#seed").input_value()=="29" and page.locator("#case").input_value()==before
         assert page.locator("details").first.get_attribute("open") is not None
         if report["runs"]:
@@ -41,23 +41,26 @@ with sync_playwright() as p:
         assert not errors,errors
         assert page.evaluate("async()=>{await document.fonts.ready;return document.fonts.check('24px Caveat')}"),"Annotation font unavailable"
         page.screenshot(path=str(root/(name+".png")),full_page=True)
-        state["error"]=True;page.locator("#refresh").click();page.wait_for_function("document.querySelector('#status').textContent.includes('unavailable')")
-        state["error"]=False;page.locator("#refresh").click();page.wait_for_function("!document.querySelector('#status').textContent.startsWith('Loading')")
+        state["error"]=True;page.locator("#refresh").click();expect(page.locator("#status")).to_contain_text("unavailable",timeout=90000)
+        state["error"]=False;page.locator("#refresh").click();expect(page.locator("#status")).not_to_have_text(re.compile("^Loading"),timeout=90000)
         context.close()
     # Inspect the deployed application against the current immutable public report.
     live_base="https://howdymary--compute-forecast-evidence-v14-web.us-east.modal.run"
-    live_raw=urllib.request.urlopen(live_base+"/api/evidence-v14",timeout=90).read()
-    live_report=json.loads(live_raw)
-    live_pointer=json.load(urllib.request.urlopen("https://raw.githubusercontent.com/howdymary/mochi-demo/compute-observatory/results/evidence-v14/latest.json",timeout=60))
-    canonical=urllib.request.urlopen("https://raw.githubusercontent.com/howdymary/mochi-demo/compute-observatory/"+live_pointer["report_path"],timeout=90).read()
-    assert hashlib.sha256(canonical).hexdigest()==live_pointer["report_sha256"]
-    assert live_report==json.loads(canonical),"Deployed report is not the current source artifact"
+    for attempt in range(18):
+        live_raw=urllib.request.urlopen(live_base+"/api/evidence-v14",timeout=90).read()
+        live_report=json.loads(live_raw)
+        live_pointer=json.load(urllib.request.urlopen("https://raw.githubusercontent.com/howdymary/mochi-demo/compute-observatory/results/evidence-v14/latest.json",timeout=60))
+        canonical=urllib.request.urlopen("https://raw.githubusercontent.com/howdymary/mochi-demo/compute-observatory/"+live_pointer["report_path"],timeout=90).read()
+        assert hashlib.sha256(canonical).hexdigest()==live_pointer["report_sha256"]
+        if live_report==json.loads(canonical):break
+        time.sleep(5)
+    else:raise AssertionError("Deployed report is not the current source artifact after cache expiry")
     assert live_report["dataset_sha256"]==report["dataset_sha256"],"Deployed dataset identity changed"
     for name,width,height,touch in (("live-desktop",1440,1050,False),("live-mobile",390,844,True)):
         context=browser.new_context(viewport={"width":width,"height":height},has_touch=touch,reduced_motion="reduce")
         page=context.new_page();errors=[];page.on("pageerror",lambda e:errors.append(str(e)))
         response=page.goto(live_base,wait_until="domcontentloaded",timeout=90000);assert response.status==200
-        page.wait_for_function("!document.querySelector('#status').textContent.startsWith('Loading')",timeout=90000)
+        expect(page.locator("#status")).not_to_have_text(re.compile("^Loading"),timeout=90000)
         assert page.locator("#case option").count()==len(live_report["development_cases"])
         assert page.locator("#prices circle").count()>0 and page.evaluate("document.documentElement.scrollWidth<=innerWidth")
         page.locator("#seed").select_option("17");page.get_by_role("button",name="Inspect optimizer update 50",exact=True).click()
