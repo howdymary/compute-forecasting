@@ -14,7 +14,7 @@ public=modal.Volume.from_name("compute-forecast-public",create_if_missing=False,
 secret=modal.Secret.from_name("compute-forecast-evidence-future-v15",required_keys=["TINKER_API_KEY"])
 image=(modal.Image.debian_slim(python_version="3.11")
  .pip_install("tinker==0.39.1","tinker-cookbook==0.6.1","tml-renderers==0.4.1","torch==2.15.0+cpu","transformers==5.23.0","tokenizers==0.23.3","numpy==2.2.6","pandas==2.3.1","duckdb==1.2.2","pyarrow>=16,<24",extra_index_url="https://download.pytorch.org/whl/cpu")
- .env({"GITHUB_SHA":os.environ.get("GITHUB_SHA","unknown")})
+ .env({"EVIDENCE_FUTURE_SOURCE_SHA":os.environ.get("EVIDENCE_FUTURE_SOURCE_SHA",os.environ.get("GITHUB_SHA","unknown"))})
  .add_local_dir("configs","/root/configs",copy=True)
  .add_local_dir("inputs/evidence-future-v15","/root/inputs/evidence-future-v15",copy=True)
  .add_local_python_source("compute_forecast"))
@@ -90,7 +90,7 @@ def tick():
     p=load(pathlib.Path("/root/configs/evidence-v14-prospective.json"));parent=load(pathlib.Path("/root/configs/direct-evidence-v14-final.json"))
     source=pathlib.Path("/data/signals-v6");root=pathlib.Path("/data/evidence-v14-future");root.mkdir(parents=True,exist_ok=True)
     engine=digest({name:hashlib.sha256(pathlib.Path(__file__).with_name(name).read_bytes()).hexdigest() for name in ("evidence_future_v15.py","evidence_future_remote_v15.py","prospective_evidence_v14.py","direct_future_v12.py","direct_forecast_v12.py","evidence_v14.py","signals_remote_v6.py","starter_probe.py","review_v4.py")})
-    registration={"protocol_sha256":digest(p),"engine_sha256":engine,"source_sha":os.environ.get("GITHUB_SHA"),"first_registered_at":at}
+    registration={"protocol_sha256":digest(p),"engine_sha256":engine,"source_sha":os.environ.get("EVIDENCE_FUTURE_SOURCE_SHA",os.environ.get("GITHUB_SHA")),"first_registered_at":at}
     registration_path=root/"registration.json"
     if registration_path.exists():
         previous=load(registration_path);assert previous["protocol_sha256"]==digest(p),"Registered protocol changed"
