@@ -1,0 +1,58 @@
+{
+  "study_id": "direct-evidence-v14-prospective",
+  "registered_at": "2026-11-16",
+  "parent_protocol": "configs/direct-evidence-v14-final.json",
+  "classification": "New exact-provider-contract transfer cohort; not the Pacific aggregate medians",
+  "question": "Does the frozen price+BLS direct model outperform the frozen price-only direct model on subsequently collected prices?",
+  "source_protocol": "configs/prospective-signals-v6.json",
+  "capture": "Read existing immutable signals-v6 daily snapshots; no modification of that study or duplication of collection",
+  "target_definition": "First verified same-day exact-contract snapshot retained between17:00and19:00UTC; USD per GPU-hour, advertised on-demand",
+  "cohort": "Freeze the first eligible source cohort; retain exact source IDs and contract hashes; no replacements",
+  "first_eligible_origin": "2026-12-06",
+  "origin_rule": "Weekly Sunday23:59:59UTC",
+  "issuance_deadline_minutes_after_origin": 30,
+  "min_price_days": 20,
+  "history_calendar_days": 42,
+  "horizons": [
+    1,
+    3,
+    7
+  ],
+  "quantiles": [
+    0.1,
+    0.5,
+    0.9
+  ],
+  "operational_seed": 17,
+  "model_lock": "Public separate model-lock artifact must bind original development-selected seed17 checkpoints for both arms before issuance; never choose by retrospective or prospective scores",
+  "evidence": "Original BLS released vintage available by origin; preserve first-observed capture and revisions. Missing release timestamp, vintage or current qualified evidence gates both learned-arm primary issuance.",
+  "references": [
+    "same unadapted price-only model",
+    "same unadapted evidence-input model",
+    "native last_value",
+    "native last_value_empirical",
+    "native drift",
+    "native seasonal_naive"
+  ],
+  "sampling": {
+    "samples": 64,
+    "seed": null,
+    "temperature": 0.8,
+    "max_tokens": 128,
+    "min_valid": 48
+  },
+  "primary_endpoint": "Seven-day paired quantile pinball, price_evidence minus price_only",
+  "selection_and_updates": "Frozen model weights; no promotion, feature search or refitting inside the first12eligible weekly origins",
+  "analysis": "One primary analysis after12fully matured eligible weekly origins; descriptive failures may be inspected without promotion. Correlated contracts and weekly origins can remain dependent.",
+  "missingness": "No carry-forward target truth or assumed prices; missing incompatible outcomes remain pending",
+  "commitments": "Immutable snapshots, model/configuration hashes, actual issuance time, sampled vectors, fallback metadata and quantiles must be retained before outcomes. No prospective accuracy claim without advance commitments.",
+  "limits": {
+    "max_weekly_origins": 12,
+    "max_targets": 4,
+    "optimizer_updates": 0,
+    "max_sampling_vectors_per_origin": 1024,
+    "timeout_seconds": 1800
+  },
+  "existing_panels_and_Nov23_gate": "unchanged",
+  "current_status": "registered; no forecasts issued; current outcomes pending"
+}

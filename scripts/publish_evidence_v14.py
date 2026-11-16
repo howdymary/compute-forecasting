@@ -9,7 +9,7 @@ def api(path,body=None,method=None):
 payloads={"results/evidence-v14/runs/"+run+"/"+str(p.relative_to(root)):p.read_text() for p in root.rglob("*") if p.is_file()}
 report=json.loads((root/"report.json").read_text())
 payloads["results/evidence-v14/latest.json"]=json.dumps({"study_id":"direct-evidence-v14","run_id":run,"status":report["status"],"report_path":"results/evidence-v14/runs/"+run+"/report.json","report_sha256":hashlib.sha256((root/"report.json").read_bytes()).hexdigest()},indent=2)+"\n"
-payloads["results/evidence-v14/README.md"]="# Direct GPU-price forecasts v12\n\n[Current report](runs/"+run+"/report.json) · [Findings](../../docs/evidence-v14-findings.md) · [Methods](../../docs/direct-evidence-v14.md) · [Protocol](../../configs/direct-evidence-v14.json)\n\nFresh matched Tinker LoRA models predict GPU-price returns with price history alone or original BLS release-vintage features. Quantiles derive from64 unseeded stochastic samples. Results remain retrospective; news and infrastructure are excluded.\n\nApproved Pacific component derivatives only, with source metadata and CC BY 4.0 attribution. Raw offers, marketplace-ask histories and private model resources are excluded.\n"
+payloads["results/evidence-v14/README.md"]="# Matched price and BLS forecasts\n\n[Current report](runs/"+run+"/report.json) · [Findings](../../docs/evidence-v14-findings.md) · [Methods](../../docs/evidence-v14.md) · [Protocol](../../configs/direct-evidence-v14-final.json)\n\nFresh matched Tinker LoRA models predict GPU-price returns with price history alone or original BLS release-vintage features. Quantiles derive from64 unseeded stochastic samples. Results remain retrospective; news and infrastructure are excluded.\n\nApproved Pacific component derivatives only, with source metadata and CC BY 4.0 attribution. Raw offers, marketplace-ask histories and private model resources are excluded.\n"
 payloads["docs/evidence-v14-findings.md"]=(root/"findings.md").read_text()
 for attempt in range(4):
     branch=api("git/ref/heads/compute-observatory");head=branch["object"]["sha"];commit=api("git/commits/"+head)
@@ -23,8 +23,8 @@ for attempt in range(4):
     entries=[{"path":p,"mode":"100644","type":"blob","content":s} for p,s in payloads.items()]
     index=api("contents/docs/README.md?ref="+head)
     text=base64.b64decode(index["content"]).decode()
-    link="\n## Matched price and BLS models\n\n[Methods](direct-evidence-v14.md) · [Measured findings](evidence-v14-findings.md) · [Versioned artifacts](../results/evidence-v14/README.md). This matched two-arm study preserves the earlier direct and selector studies.\n"
-    if "[Methods](direct-evidence-v14.md)" not in text:entries.append({"path":"docs/README.md","mode":"100644","type":"blob","content":text+link})
+    link="\n## Matched price and BLS models\n\n[Methods](evidence-v14.md) · [Measured findings](evidence-v14-findings.md) · [Versioned artifacts](../results/evidence-v14/README.md). This matched two-arm study preserves the earlier direct and selector studies.\n"
+    if "[Methods](evidence-v14.md)" not in text:entries.append({"path":"docs/README.md","mode":"100644","type":"blob","content":text+link})
     tree=api("git/trees",{"base_tree":commit["tree"]["sha"],"tree":entries},"POST")
     made=api("git/commits",{"message":"Publish matched price and BLS forecasting study","tree":tree["sha"],"parents":[head]},"POST")
     if api("git/ref/heads/compute-observatory")["object"]["sha"]!=head:continue
