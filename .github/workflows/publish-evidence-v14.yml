@@ -1,0 +1,60 @@
+name: Publish matched evidence forecasting research v14
+on:
+  workflow_run:
+    workflows: [Train matched price and BLS forecasting models v14]
+    types: [completed]
+    branches: [compute-observatory]
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/publish-evidence-v14.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: evidence-v14-publication
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      TRAINING_RUN_ID: '43966729631'
+      PUBLICATION_ID: ${{ github.event.workflow_run.id || '43966729631' }}-publication-${{ github.run_id }}
+    steps:
+      - name: Fetch current verified publication code
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Retrieve frozen inputs and any retained completed runs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import os,subprocess,time
+          for attempt in range(90):
+              command=['gh','run','download',os.environ['TRAINING_RUN_ID'],'--repo',os.environ['GITHUB_REPOSITORY'],'--name','evidence-v14-inputs-'+os.environ['TRAINING_RUN_ID'],'--dir','inputs/publication/input']
+              p=subprocess.run(command,capture_output=True)
+              if p.returncode==0:break
+              time.sleep(5)
+          else:raise RuntimeError('Qualified paired dataset was not retained; no fabricated report')
+          subprocess.run(['gh','run','download',os.environ['TRAINING_RUN_ID'],'--repo',os.environ['GITHUB_REPOSITORY'],'--pattern','evidence-v14-*-seed-*','--dir','inputs/publication/runs'],capture_output=True)
+          PY
+      - name: Reconstruct source-bound summaries
+        run: |
+          PYTHONPATH=src python scripts/assemble_evidence_v14.py --inputs inputs/publication --output artifacts/evidence-v14-public
+          PYTHONPATH=src python -m compute_forecast.verify_evidence_v14 --results artifacts/evidence-v14-public
+      - name: Publish new version without replacing prior studies
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: PYTHONPATH=src python scripts/publish_evidence_v14.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: evidence-v14-publication-${{ github.run_id }}
+          path: artifacts/evidence-v14-public
+          retention-days: 30
