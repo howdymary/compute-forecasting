@@ -1,7 +1,7 @@
 name: Publish direct GPU forecasting research v12
 on:
   workflow_run:
-    workflows: [Train direct GPU price forecasts v12, Recover direct forecasting evaluations v12, Finalize retained direct forecasts v12]
+    workflows: [Train direct GPU price forecasts v12, Recover direct forecasting evaluations v12, Finalize retained direct forecasts v12, Complete direct forecast seed43 v12]
     types: [completed]
     branches: [compute-observatory]
   push:
@@ -41,7 +41,7 @@ jobs:
           python - <<'PY'
           import json,os,subprocess
           r=json.loads(subprocess.check_output(['gh','api','repos/'+os.environ['GITHUB_REPOSITORY']+'/actions/runs/'+os.environ['SOURCE_RUN_ID']],text=True))
-          assert r['head_branch']=='compute-observatory' and r['name'] in ('Train direct GPU price forecasts v12','Recover direct forecasting evaluations v12','Finalize retained direct forecasts v12')
+          assert r['head_branch']=='compute-observatory' and r['name'] in ('Train direct GPU price forecasts v12','Recover direct forecasting evaluations v12','Finalize retained direct forecasts v12','Complete direct forecast seed43 v12')
           with open(os.environ['GITHUB_OUTPUT'],'a') as f:f.write('ready='+str(r['status']=='completed').lower()+'\n')
           PY
       - name: Retrieve immutable inputs and retained successful or failed outputs
@@ -63,6 +63,7 @@ jobs:
           TRAINING_RUN_ID: '43952200479'
           SOURCE_RUN_ID: ${{ github.event.workflow_run.id || '43952200479' }}
         run: |
+          python scripts/merge_published_direct_v12.py
           PYTHONPATH=src python scripts/assemble_direct_v12.py --inputs inputs/publication --output artifacts/direct-v12-public
           PYTHONPATH=src python -m compute_forecast.verify_direct_v12 --results artifacts/direct-v12-public
       - name: Publish versioned research without force updates

@@ -48,7 +48,7 @@ async def evaluate(tasks,sampler,renderer,protocol,seed,arm,label,output):
     tasks_out=await asyncio.gather(*(one(t) for t in tasks));cells=[c for t in tasks_out for c in t["cells"]]
     result={"label":label,"scope":"retrospective_development" if label.startswith("dev") else "additional_retrospective_evaluation","summary":summarize(cells),"cells":cells,"tasks":tasks_out,"samples_requested":sum(t["requested_samples"] for t in tasks_out),"output_tokens":sum(t["output_tokens"] for t in tasks_out),"created_at":now()}
     write(output,result);return result
-async def run(inputs,output,seed,arm):
+async def run(inputs,output,seed,arm,storage_mode="paired"):
     import tinker
     import numpy as np
     from tinker_cookbook.renderers import get_renderer,TrainOnWhat
@@ -73,7 +73,12 @@ async def run(inputs,output,seed,arm):
         page=await rest.list_training_runs(limit=100,offset=offset)
         prior.extend(r for r in page.training_runs if (r.user_metadata or {}).get("study_id")==p["study_id"] and (r.user_metadata or {}).get("protocol_sha256")==digest(p) and (r.user_metadata or {}).get("seed")==str(seed) and (r.user_metadata or {}).get("arm")==arm)
         if len(page.training_runs)<100:break
-    if prior:raise ValueError("Existing matching Tinker run found; inspect and resume it rather than duplicating optimization")
+    if prior:
+        empty_failed_seed43=storage_mode=="state_only" and seed==43
+        if empty_failed_seed43:
+            for r in prior:
+                if (await rest.list_checkpoints(r.training_run_id)).checkpoints:empty_failed_seed43=False
+        if not empty_failed_seed43:raise ValueError("Existing matching Tinker run found; inspect and resume it rather than duplicating optimization")
     trainer=await client.create_lora_training_client(base_model=p["model"]["base"],rank=p["model"]["rank"],seed=seed,user_metadata=meta)
     tokenizer=trainer.get_tokenizer();renderer=get_renderer(p["model"]["renderer"],tokenizer)
     datums=[]
@@ -82,13 +87,15 @@ async def run(inputs,output,seed,arm):
         if datum is None:raise ValueError("Training example exceeds registered token budget")
         datums.append(datum)
     state={"study_id":p["study_id"],"status":"training","arm":arm,"seed":seed,"protocol_sha256":digest(p),"dataset_sha256":digest(dataset),"source_sha":os.environ["GITHUB_SHA"],"github_run_id":os.environ["GITHUB_RUN_ID"],"model":p["model"]["base"],"renderer":p["model"]["renderer"],"method":"LoRA supervised likelihood of realized future log-price vectors","training_tasks":len(train),"training_origins":audit["distinct_training_origins"],"optimizer_updates":0,"checkpoints":[],"updates":[],"started_at":now(),"provider_cost_usd":None,"prospective_accuracy":"pending","evidence_effect":"not_established","packages":{n:importlib.metadata.version(n) for n in ("tinker","tinker-cookbook","torch","transformers","numpy")},"resource_storage":"Private Tinker checkpoints with study/configuration/seed metadata; no resource paths in public output","protected_outcomes_loaded":False}
+    state["checkpoint_storage_mode"]=storage_mode
     write(out/"progress.json",state);print("DIRECT_TRAINING_STARTED "+json.dumps({k:state[k] for k in ("study_id","seed","arm","training_tasks","model")}),flush=True)
     base=await client.create_sampling_client(base_model=p["model"]["base"])
     dev_base=await evaluate(dev,base,renderer,p,seed,arm,"dev_base",out/"development-0.json")
     state["checkpoints"].append({"update":0,"checkpoint_id":"base-"+digest(p["model"]["base"])[:20],"development":dev_base["summary"],"is_base":True})
     # Checkpoint zero is the actual unadapted model, not a favorable warmup.
-    await trainer.save_state(tag+"-0",user_metadata={**meta,"update":"0"},ttl_seconds=30*86400)
-    await trainer.save_weights_for_sampler(tag+"-0",user_metadata={**meta,"update":"0"},ttl_seconds=30*86400)
+    if storage_mode=="paired":
+        await trainer.save_state(tag+"-0",user_metadata={**meta,"update":"0"},ttl_seconds=30*86400)
+        await trainer.save_weights_for_sampler(tag+"-0",user_metadata={**meta,"update":"0"},ttl_seconds=30*86400)
     paths={}
     write(out/"progress.json",state)
     for step in range(1,p["model"]["max_updates"]+1):
@@ -104,22 +111,35 @@ async def run(inputs,output,seed,arm):
         if step==1 or step%10==0:print("DIRECT_OPTIMIZER_UPDATE "+json.dumps({"seed":seed,"update":step,"completion_cross_entropy":loss}),flush=True)
         if step in p["model"]["checkpoints"]:
             name=tag+"-"+str(step)
-            saved=await trainer.save_state(name,user_metadata={**meta,"update":str(step)},ttl_seconds=30*86400)
-            weights=await trainer.save_weights_for_sampler(name,user_metadata={**meta,"update":str(step)},ttl_seconds=30*86400)
-            paths[step]=weights.path
-            sampler=await client.create_sampling_client(model_path=weights.path)
+            if storage_mode=="state_only":
+                # Snapshot before the final persistent save; storage may close the
+                # TrainingClient at its limit. Existing fixed samplers remain separate.
+                sampler=await trainer.save_weights_and_get_sampling_client()
+                saved=await trainer.save_state(name,user_metadata={**meta,"update":str(step)},ttl_seconds=30*86400)
+                identity=saved.path;paths[step]=sampler
+            else:
+                saved=await trainer.save_state(name,user_metadata={**meta,"update":str(step)},ttl_seconds=30*86400)
+                weights=await trainer.save_weights_for_sampler(name,user_metadata={**meta,"update":str(step)},ttl_seconds=30*86400)
+                identity=weights.path;paths[step]=weights.path
+                sampler=await client.create_sampling_client(model_path=weights.path)
             scored=await evaluate(dev,sampler,renderer,p,seed,arm,"dev_update_"+str(step),out/("development-"+str(step)+".json"))
-            row={"update":step,"checkpoint_id":hashlib.sha256(weights.path.encode()).hexdigest()[:24],"development":scored["summary"],"is_base":False}
+            row={"update":step,"checkpoint_id":hashlib.sha256(identity.encode()).hexdigest()[:24],"development":scored["summary"],"is_base":False}
             state["checkpoints"].append(row);write(out/"progress.json",state)
             print("DIRECT_CHECKPOINT "+json.dumps({"seed":seed,"update":step,"primary_pinball":scored["summary"]["primary_pinball"]}),flush=True)
     selected=min(state["checkpoints"],key=lambda c:(c["development"]["primary_pinball"],c["update"]))
     write(out/"selection.json",{"selected":selected,"rule":p["evaluation"]["selection"],"locked_before_retrospective_evaluation":True,"selected_at":now(),"eligible_updates":[r["update"] for r in state["checkpoints"]]})
-    sampler=base if selected["update"]==0 else await client.create_sampling_client(model_path=paths[selected["update"]])
+    sampler=base if selected["update"]==0 else paths[selected["update"]] if storage_mode=="state_only" else await client.create_sampling_client(model_path=paths[selected["update"]])
     measured=await evaluate(test,sampler,renderer,p,seed,arm,"selected_direct",out/"evaluation-selected.json")
     initial=await evaluate(test,base,renderer,p,seed,arm,"base_direct",out/"evaluation-base.json")
+    reference_rows=dataset["baselines"]
+    repair_path=root/"reference-repair.json"
+    if repair_path.exists():
+        repair=json.loads(repair_path.read_text())
+        if repair["original_rows_sha256"]!=digest(reference_rows) or not repair["existing_rows_unchanged"]:raise ValueError("Invalid reference correction")
+        reference_rows=repair["rows"];state["reference_coverage_repair"]=repair
     references={}
     for method in p["evaluation"]["references"]:
-        cells=reference_cells(test,dataset["baselines"],method)
+        cells=reference_cells(test,reference_rows,method)
         references[method]={"summary":summarize(cells),"cells":cells,"comparison":matched(measured["cells"],cells)}
     state.update(status="completed",completed_at=now(),selected=selected,retrospective=measured["summary"],base=initial["summary"],comparison_to_base=matched(measured["cells"],initial["cells"]),references=references,elapsed_seconds=time.monotonic()-started,sample_tasks=sum(len(json.loads(f.read_text()).get("tasks",[])) for f in out.glob("development-*.json"))+len(test)*2,source_attribution="Pacific Machines (2026), gpu-price-pack v0.1.1-handover, CC BY 4.0 compilation. Approved component metadata and source-specific target identities retained.")
     # The illustrated task is selected by identity, not by its improvement.
@@ -128,6 +148,6 @@ async def run(inputs,output,seed,arm):
     write(out/"result.json",state);write(out/"progress.json",state)
     print("DIRECT_STUDY_COMPLETED "+json.dumps({"seed":seed,"updates":state["optimizer_updates"],"selected_update":selected["update"],"evaluation":measured["summary"]}),flush=True)
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument("--inputs",required=True);parser.add_argument("--output",required=True);parser.add_argument("--seed",type=int,required=True);parser.add_argument("--arm",default="price_only",choices=["price_only","price_evidence"]);args=parser.parse_args()
-    asyncio.run(run(args.inputs,args.output,args.seed,args.arm))
+    parser=argparse.ArgumentParser();parser.add_argument("--inputs",required=True);parser.add_argument("--output",required=True);parser.add_argument("--seed",type=int,required=True);parser.add_argument("--arm",default="price_only",choices=["price_only","price_evidence"]);parser.add_argument("--storage-mode",choices=["paired","state_only"],default="paired");args=parser.parse_args()
+    asyncio.run(run(args.inputs,args.output,args.seed,args.arm,args.storage_mode))
 if __name__=="__main__":main()

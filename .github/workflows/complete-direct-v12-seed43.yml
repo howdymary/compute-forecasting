@@ -1,0 +1,57 @@
+name: Complete direct forecast seed43 v12
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/complete-direct-v12-seed43.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: direct-v12-seed43-completion
+  cancel-in-progress: false
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - name: Fetch registered source and storage-only amendment
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Retrieve unchanged inputs and corrected native references
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run download 43952200479 --repo "$GITHUB_REPOSITORY" --name direct-v12-inputs-43952200479 --dir inputs/direct-v12
+          python - <<'PY'
+          import json,os,subprocess,time
+          for attempt in range(90):
+              runs=json.loads(subprocess.check_output(['gh','api','repos/'+os.environ['GITHUB_REPOSITORY']+'/actions/runs?branch=compute-observatory&per_page=50'],text=True))['workflow_runs']
+              found=False
+              for r in runs:
+                  if r['name']!='Finalize retained direct forecasts v12':continue
+                  p=subprocess.run(['gh','run','download',str(r['id']),'--repo',os.environ['GITHUB_REPOSITORY'],'--name','direct-v12-reference-'+str(r['id']),'--dir','inputs/direct-v12'],capture_output=True)
+                  if p.returncode==0:found=True;break
+              if found:break
+              time.sleep(10)
+          else:raise RuntimeError('Corrected native reference artifact unavailable')
+          PY
+      - name: Install original matched SDK environment
+        run: |
+          python -m pip install --extra-index-url https://download.pytorch.org/whl/cpu -r inputs/direct-v12/requirements-lock.txt
+          python -m pip install -e . --no-deps
+      - name: Complete the never-started seed with retained optimizer states
+        env:
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+        run: python -m compute_forecast.train_direct_v12 --inputs inputs/direct-v12 --output artifacts/direct-v12/seed-43 --seed 43 --arm price_only --storage-mode state_only
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: direct-v12-recovered-seed-43-${{ github.run_id }}
+          path: artifacts/direct-v12/seed-43
+          retention-days: 30
