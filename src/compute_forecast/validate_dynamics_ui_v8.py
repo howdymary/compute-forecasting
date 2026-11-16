@@ -16,6 +16,7 @@ def main():
             page.wait_for_selector("#price-chart",timeout=90000)
             page.wait_for_function("() => D8!==null && D!==undefined",timeout=90000)
             health=page.request.get(URL+"/health");assert health.ok
+            report["ui_revision"]=health.json()["ui_revision"]
             if os.environ.get("SOURCE_SHA"):assert health.json()["ui_revision"]==os.environ["SOURCE_SHA"]
             response=page.request.get(URL+"/api/price-dynamics-v8");assert response.ok
             v=response.json();assert len(v["cells"])==2432 and v["cohort"]["eligible_cells"]==304
@@ -61,7 +62,7 @@ def main():
         page.wait_for_selector("#d8-h",timeout=90000)
         report["independent_pricing_loading_error_retry"]=True
         context.close();browser.close()
-    report["status"]="passed";report["ui_revision"]=health.json()["ui_revision"]
+    report["status"]="passed"
     (out/"report.json").write_text(json.dumps(report,indent=2))
     print("V8_UI_VALIDATION:"+json.dumps(report),flush=True)
     for path in sorted(out.glob("*.png")):
