@@ -1,0 +1,50 @@
+name: Recover direct forecasting evaluations v12
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/recover-direct-v12.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: direct-v12-evaluation-recovery
+  cancel-in-progress: false
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        seed: [17, 29]
+    steps:
+      - name: Fetch immutable recovery code
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Retrieve exact original inputs and completed optimizer traces
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run download 43952200479 --repo "$GITHUB_REPOSITORY" --name direct-v12-inputs-43952200479 --dir inputs/direct-v12
+          gh run download 43952200479 --repo "$GITHUB_REPOSITORY" --name direct-v12-seed-${{ matrix.seed }}-43952200479 --dir inputs/direct-v12/original/seed-${{ matrix.seed }}
+      - name: Install original matched SDK versions
+        run: |
+          python -m pip install --extra-index-url https://download.pytorch.org/whl/cpu -r inputs/direct-v12/requirements-lock.txt
+          python -m pip install -e . --no-deps
+      - name: Evaluate saved update 100 without new optimizer updates
+        env:
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+        run: python -m compute_forecast.recover_direct_v12 --inputs inputs/direct-v12 --output artifacts/direct-v12/seed-${{ matrix.seed }} --seed ${{ matrix.seed }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: direct-v12-recovered-seed-${{ matrix.seed }}-${{ github.run_id }}
+          path: artifacts/direct-v12/seed-${{ matrix.seed }}
+          retention-days: 30

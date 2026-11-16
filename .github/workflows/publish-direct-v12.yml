@@ -1,7 +1,7 @@
 name: Publish direct GPU forecasting research v12
 on:
   workflow_run:
-    workflows: [Train direct GPU price forecasts v12]
+    workflows: [Train direct GPU price forecasts v12, Recover direct forecasting evaluations v12]
     types: [completed]
     branches: [compute-observatory]
   push:
@@ -31,27 +31,34 @@ jobs:
         id: ready
         env:
           GH_TOKEN: ${{ github.token }}
-          TRAINING_RUN_ID: ${{ github.event.workflow_run.id || '43952200479' }}
+          TRAINING_RUN_ID: '43952200479'
+          SOURCE_RUN_ID: ${{ github.event.workflow_run.id || '43952200479' }}
           PUBLICATION_ID: ${{ github.event.workflow_run.id || '43952200479' }}-publication-${{ github.run_id }}
         run: |
           python - <<'PY'
           import json,os,subprocess
-          r=json.loads(subprocess.check_output(['gh','api','repos/'+os.environ['GITHUB_REPOSITORY']+'/actions/runs/'+os.environ['TRAINING_RUN_ID']],text=True))
-          assert r['head_branch']=='compute-observatory' and r['name']=='Train direct GPU price forecasts v12'
+          r=json.loads(subprocess.check_output(['gh','api','repos/'+os.environ['GITHUB_REPOSITORY']+'/actions/runs/'+os.environ['SOURCE_RUN_ID']],text=True))
+          assert r['head_branch']=='compute-observatory' and r['name'] in ('Train direct GPU price forecasts v12','Recover direct forecasting evaluations v12')
           with open(os.environ['GITHUB_OUTPUT'],'a') as f:f.write('ready='+str(r['status']=='completed').lower()+'\n')
           PY
       - name: Retrieve immutable inputs and retained successful or failed outputs
         if: steps.ready.outputs.ready == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
-          TRAINING_RUN_ID: ${{ github.event.workflow_run.id || '43952200479' }}
+          TRAINING_RUN_ID: '43952200479'
+          SOURCE_RUN_ID: ${{ github.event.workflow_run.id || '43952200479' }}
         run: |
           gh run download "$TRAINING_RUN_ID" --repo "$GITHUB_REPOSITORY" --name "direct-v12-inputs-$TRAINING_RUN_ID" --dir inputs/publication/input
-          gh run download "$TRAINING_RUN_ID" --repo "$GITHUB_REPOSITORY" --pattern "direct-v12-seed-*" --dir inputs/publication/runs
+          if [ "$SOURCE_RUN_ID" = "$TRAINING_RUN_ID" ]; then
+            gh run download "$SOURCE_RUN_ID" --repo "$GITHUB_REPOSITORY" --pattern "direct-v12-seed-*" --dir inputs/publication/runs
+          else
+            gh run download "$SOURCE_RUN_ID" --repo "$GITHUB_REPOSITORY" --pattern "direct-v12-recovered-seed-*" --dir inputs/publication/runs
+          fi
       - name: Reconstruct and verify every published numerical claim
         if: steps.ready.outputs.ready == 'true'
         env:
-          TRAINING_RUN_ID: ${{ github.event.workflow_run.id || '43952200479' }}
+          TRAINING_RUN_ID: '43952200479'
+          SOURCE_RUN_ID: ${{ github.event.workflow_run.id || '43952200479' }}
         run: |
           PYTHONPATH=src python scripts/assemble_direct_v12.py --inputs inputs/publication --output artifacts/direct-v12-public
           PYTHONPATH=src python -m compute_forecast.verify_direct_v12 --results artifacts/direct-v12-public
@@ -59,7 +66,8 @@ jobs:
         if: steps.ready.outputs.ready == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
-          TRAINING_RUN_ID: ${{ github.event.workflow_run.id || '43952200479' }}
+          TRAINING_RUN_ID: '43952200479'
+          SOURCE_RUN_ID: ${{ github.event.workflow_run.id || '43952200479' }}
         run: PYTHONPATH=src python scripts/publish_direct_v12.py
       - uses: actions/upload-artifact@v4
         if: always()
