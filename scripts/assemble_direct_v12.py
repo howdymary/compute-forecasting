@@ -60,11 +60,17 @@ def assemble(inputs,output):
         target=out/name;target.parent.mkdir(parents=True,exist_ok=True);target.write_text(raw)
     (out/"audit.json").write_text(json.dumps(audit,indent=2)+"\n")
     manifest={"study_id":p["study_id"],"files":[{"path":str(f.relative_to(out)),"sha256":hashlib.sha256(f.read_bytes()).hexdigest(),"bytes":f.stat().st_size} for f in sorted(out.rglob("*")) if f.is_file()]}
-    (out/"manifest.json").write_text(json.dumps(manifest,indent=2)+"\n")
     lines=["# Direct GPU-price forecasting v12 findings","","Additional post-event retrospective study. Prospective improvement is not established.","",f"Data: {audit['phase_tasks']['training']} training tasks; {audit['phase_tasks']['development']} development tasks; {audit['phase_tasks']['retrospective']} retrospective tasks. A task contains three dependent horizon cells.","","| Seed | Updates | Selected update | 7-day base loss | 7-day selected loss |","| --- | ---: | ---: | ---: | ---: |"]
     for s in states:lines.append(f"| {s['seed']} | {s['optimizer_updates']} | {s['selected']['update']} | {s['base']['primary_pinball']:.8f} | {s['retrospective']['primary_pinball']:.8f} |")
     lines+=["","Different collectors, configurations and instruments retain separate IDs. The primary loss is USD-per-GPU-hour quantile pinball; lower is better. Source windows overlap and the three evaluation origins are dependent.","","Checkpoint selection uses development only and includes the unadapted base at update zero. A selected base means trained checkpoints did not earn promotion. Additional RL is not established.","","Supplementary evidence accuracy is not established. Current source access and archived-vintage eligibility are separate from forecasting value.","","[Protocol](../configs/direct-forecast-v12.json) · [Methods](direct-forecast-v12.md) · [Public artifacts](../results/direct-v12/README.md)"]
+    lines+=["","## Uncertainty and numerical controls",""]
+    for s in states:
+        lines.append(f"Seed {s['seed']}: selected-model seven-day coverage {s['retrospective']['by_horizon']['7']['coverage']:.1%}, mean interval width {s['retrospective']['by_horizon']['7']['width']:.8f} USD/GPU-hour. Native drift seven-day loss {s['references']['drift']['summary']['primary_pinball']:.8f}; empirical-last-value loss {s['references']['last_value_empirical']['summary']['primary_pinball']:.8f}.")
+    if states and all(s["retrospective"]["width"]==0 for s in states):
+        lines+=["","All published selected-model intervals have zero width. Repeated sampled vectors do not provide useful distributional uncertainty. Sampling-mode diagnostics are separate from this frozen accuracy comparison; no post-hoc correction has replaced these forecasts."]
     (out/"findings.md").write_text("\n".join(lines)+"\n")
+    manifest={"study_id":p["study_id"],"files":[{"path":str(f.relative_to(out)),"sha256":hashlib.sha256(f.read_bytes()).hexdigest(),"bytes":f.stat().st_size} for f in sorted(out.rglob("*")) if f.is_file() and f.name!="manifest.json"]}
+    (out/"manifest.json").write_text(json.dumps(manifest,indent=2)+"\n")
     print(json.dumps({"status":status,"completed_seeds":[s["seed"] for s in states],"tasks":audit["phase_tasks"],"report_sha256":hashlib.sha256(report_raw.encode()).hexdigest()}))
 def main():
     q=argparse.ArgumentParser();q.add_argument("--inputs",required=True);q.add_argument("--output",required=True);a=q.parse_args();assemble(a.inputs,a.output)
