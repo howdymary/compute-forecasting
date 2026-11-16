@@ -2,7 +2,7 @@ name: Audit direct GPU forecaster data v12
 on:
   push:
     branches: [compute-observatory]
-    paths: [.github/workflows/audit-direct-v12.yml]
+    paths: [.github/workflows/audit-direct-v12.yml, configs/direct-forecast-v12.json]
   workflow_dispatch:
 permissions:
   contents: read

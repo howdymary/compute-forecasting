@@ -13,3 +13,11 @@ Supplementary candidates: [Price of Compute](https://priceofcompute.com/api), [v
 SFT follows the [official Tinker tutorial](https://tinker-docs.thinkingmachines.ai/tutorials/basics/first-sft/). [Thinking Machines' direct time-series example](https://thinkingmachines.ai/news/inkling-2-small/) is a precedent, not evidence of GPU-price performance. Actual future outcomes train return-vector likelihood; empirical quantiles come from fixed-budget samples. A single observed value is not labeled as three true quantiles. RL remains separately gated.
 
 Raw pack data, secrets and model paths stay private. Approved numerical derivatives retain Pacific and component attribution. Protected November 7–13 outcomes are excluded; existing November 23 gates are unchanged.
+
+## Registered implementation
+
+The official non-thinking renderer is locked before training. A fixed 64-sample budget produces the three forecast quantiles; invalid outputs trigger the registered last-value fallback and remain counted. Optimizer and sampler checkpoints are retained privately in Tinker for 30 days, with study/configuration/seed metadata discoverable through the authenticated RestClient. Private paths are never written into public run artifacts.
+
+The source audit requires both the collector and instrument class. Marketplace asks are excluded. Data windows are approved, attributed numerical derivatives, not raw offer tables. The hosted preparation path is available when Modal authentication expires.
+
+The evidence-augmented arm remains gated until a varying, origin-safe supplementary table is registered. The price-only model can train independently. This does not establish an effect of news, infrastructure or BLS features.

@@ -1,0 +1,81 @@
+name: Train direct GPU price forecasts v12
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/train-direct-v12.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: direct-v12-training
+  cancel-in-progress: false
+jobs:
+  prepare:
+    if: github.ref == 'refs/heads/compute-observatory'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install CPU client and resolve supported SDKs
+        run: |
+          python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -e '.[remote,dev]' 'numpy==2.2.6'
+      - name: Validate direct forecasting and protected contracts
+        run: |
+          python -m compileall -q src
+          python -m pytest --junitxml=artifacts/direct-v12-tests.xml
+      - name: Bind permission-filtered data and lock the client environment
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/resolve_direct_v12_inputs.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: direct-v12-inputs-${{ github.run_id }}
+          path: inputs/direct-v12
+          retention-days: 30
+  train:
+    needs: prepare
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        seed: [17, 29, 43]
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/download-artifact@v4
+        with:
+          name: direct-v12-inputs-${{ github.run_id }}
+          path: inputs/direct-v12
+      - name: Install exact matched client versions
+        run: |
+          python -m pip install --extra-index-url https://download.pytorch.org/whl/cpu -r inputs/direct-v12/requirements-lock.txt
+          python -m pip install -e . --no-deps
+      - name: Train actual return-vector likelihood with Tinker
+        env:
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+          TOKENIZERS_PARALLELISM: 'false'
+        run: python -m compute_forecast.train_direct_v12 --inputs inputs/direct-v12 --output artifacts/direct-v12/seed-${{ matrix.seed }} --seed ${{ matrix.seed }} --arm price_only
+      - name: Retain completed and failed runs without private model paths
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: direct-v12-seed-${{ matrix.seed }}-${{ github.run_id }}
+          path: artifacts/direct-v12/seed-${{ matrix.seed }}
+          retention-days: 30
