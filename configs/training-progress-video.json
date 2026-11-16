@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "requested_at_client_date": "2026-11-15",
+  "output_seconds": 30,
+  "viewport": {
+    "width": 1920,
+    "height": 1080
+  },
+  "study": "campaign-v2",
+  "replay_origin": "2026-08-22",
+  "policy": {
+    "mode": "sft",
+    "objective": "soft",
+    "seed": 17,
+    "updates": [
+      0,
+      20,
+      50,
+      100
+    ]
+  },
+  "include_all_six_sft_runs": true,
+  "replay_only": true,
+  "no_new_training": true,
+  "no_new_numerical_fits": true,
+  "canonical_source_sha": "0cb5bb58d1b163032367a305dee5e7ee632c33b2"
+}
