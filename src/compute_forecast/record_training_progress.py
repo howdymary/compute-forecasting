@@ -26,7 +26,7 @@ def retained_forecasts(request):
     catalog=next(r for r in summary["catalog"] if r["series_id"]==sid)
     result={"catalog":catalog,"origin":request["origin"],"series_id":sid,"forecasts":{},"file_hashes":{}}
     for config in sorted(set(request["configs"])):
-        if not re.fullmatch(r"[A-Za-z0-9_]+",config):raise ValueError("Unsafe configuration")
+        if config not in {m["config_id"] for m in summary["methods"]} or not re.fullmatch(r"[A-Za-z0-9_.-]+",config):raise ValueError("Unregistered or unsafe configuration")
         file=root/(config+".csv");raw=file.read_bytes();result["file_hashes"][file.name]=sha(raw)
         rows=[r for r in csv.DictReader(io.StringIO(raw.decode())) if r["series_id"]==sid]
         if sorted(int(r["horizon_days"]) for r in rows)!=[1,3,7]:raise ValueError("Forecast cell mismatch")
@@ -56,7 +56,7 @@ aside{padding:8px 1px}h2{font:500 29px Georgia,serif;line-height:1.25;margin:12p
 footer{display:flex;justify-content:space-between;margin-top:12px;padding-top:14px;border-top:1px solid var(--line);font-size:16px;color:var(--muted)}.small{font-size:15px;color:var(--muted)}.trail{height:3px;background:#dedfce;margin-top:16px}.trail div{height:3px;background:var(--blue);width:0}.tag{font-size:16px;margin:15px 0}.fade{animation:arrive .35s ease-out}@keyframes arrive{from{opacity:.25;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}} 
 </style></head><body><div class="wrap"><div class="nav"><div class="brand">↗ COMPUTE FORECAST <span style="font-weight:400;color:var(--muted);margin-left:16px">Research notebook</span></div><div class="badge">Tinker checkpoint replay · actual saved results</div></div>
 <header><div><h1 id="title">Learning which forecast to try next.</h1><div class="sub" id="subtitle">One A100 case. Four checkpoints. The regressions stay in.</div></div><div class="totals"><div><b>6</b><span>SFT runs</span></div><div><b>600</b><span>optimizer updates</span></div><div><b>42</b><span>candidate configurations</span></div></div></header>
-<main><section class="sheet"><div class="sheethead"><div class="eyebrow" id="scope">A100 SXM 80GB · advertised rental median</div><div class="legend" id="legend"></div></div><div class="note" id="annotation"></div><div class="chart" id="chart"></div><div class="chartfoot"><span id="axisnote"></span><span id="seriesnote"></span></div></section>
+<main><section class="sheet"><div class="sheethead"><div class="eyebrow" id="scope">A100 SXM 80GB · hyperscaler spot median</div><div class="legend" id="legend"></div></div><div class="note" id="annotation"></div><div class="chart" id="chart"></div><div class="chartfoot"><span id="axisnote"></span><span id="seriesnote"></span></div></section>
 <aside id="panel"></aside></main><div class="steps" id="steps"></div><footer><span id="foot"></span><span>Saved artifacts · no live inference · prospective accuracy pending</span></footer><div class="trail"><div id="progress"></div></div></div>
 <script>
 const D=__DATA__;const BLUE='#355fc4',INK='#52645e',GREEN='#327c68',AMBER='#b38238';let STAGE=-1;
@@ -102,7 +102,7 @@ function renderStage(k){
  if(k<4){
  const a=D.states[k],base=D.states[0].development_pinball,delta=(a.development_pinball/base-1)*100;
  el('title').textContent='Learning which forecast to try next.';el('subtitle').textContent='One A100 case. Four checkpoints. The regressions stay in.';
- el('scope').textContent='A100 SXM 80GB · advertised rental median';el('legend').innerHTML='<span><i class="dot" style="background:'+INK+'"></i>History</span><span><i class="dot" style="background:'+BLUE+'"></i>q10 / q50 / q90</span><span><i class="dot" style="background:'+AMBER+'"></i>Archived outcomes</span>';
+ el('scope').textContent='A100 SXM 80GB · hyperscaler spot median';el('legend').innerHTML='<span><i class="dot" style="background:'+INK+'"></i>History</span><span><i class="dot" style="background:'+BLUE+'"></i>q10 / q50 / q90</span><span><i class="dot" style="background:'+AMBER+'"></i>Archived outcomes</span>';
  el('annotation').textContent=['Start with the untrained selector.','An early checkpoint gets worse.','The selected forecast changes again.','The development-selected checkpoint.'][k];el('chart').innerHTML=price(k);
  el('axisnote').textContent='USD per GPU-hour · 1, 3 and 7-day forecast points';el('seriesnote').textContent='Dashed joins are guides; no daily forecasts are implied.';
  el('panel').innerHTML='<div class="eyebrow">Operational run · soft targets · seed 17</div><h2>Checkpoint '+a.update+'</h2><div class="metriclabel">Development pinball loss · lower is better</div><div class="big">'+loss(a.development_pinball)+'</div><div class="change" style="'+(delta>0?'background:#f2e8d7;color:#9d6c27':'')+'">'+(k===0?'Starting checkpoint':Math.abs(delta).toFixed(1)+'% '+(delta>0?'higher':'lower')+' than start')+'</div><div class="detail">Score covers the full development cohort. The chart shows one fixed case.</div><div class="ruled"></div><div class="eyebrow">Chosen numerical forecaster</div><div class="config">'+a.config+'</div><div class="small">Tinker trains the selector. Numerical models produce the price quantiles.</div><div class="tag">Qwen3.5-4B · LoRA rank 16</div>';
