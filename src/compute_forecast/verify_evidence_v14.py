@@ -85,6 +85,20 @@ def verify(root):
         if "mean_candidate_primary_pinball" in summary:
             assert summary["mean_candidate_primary_pinball"]==statistics.mean(summarize(cells[("price_evidence",c["seed"])])["primary_pinball"] for c in report["comparisons"])
             assert summary["mean_reference_primary_pinball"]==statistics.mean(summarize(cells[("price_only",c["seed"])])["primary_pinball"] for c in report["comparisons"])
+    lock=report.get("operational_model_lock")
+    if lock:
+        assert lock==json.loads((root/"model-lock.json").read_text())
+        for row in lock["records"]:
+            run=next(r for r in report["runs"] if r["arm"]==row["arm"] and r["seed"]==row["seed"])
+            assert run["selected"]["update"]==row["selected_update"]
+            if row["selected_update"]:assert run["selected"]["checkpoint_id"]==row["checkpoint_id"]
+    resources=report.get("resource_accounting")
+    if resources:
+        raw=(root/"resource-profile.json").read_bytes();assert hashlib.sha256(raw).hexdigest()==resources["sha256"]
+        for reconstructed in resources["completed_run_reconciliation"]:
+            run=next(r for r in report["runs"] if r["arm"]==reconstructed["arm"] and r["seed"]==reconstructed["seed"])
+            assert run["optimizer_updates"]==reconstructed["optimizer_updates"]
+            assert abs(sum(u["completion_tokens"] for u in run["updates"])-reconstructed["loss_weight_mass"])<1e-5
     assert not report["audit"]["protected_outcomes_loaded"] and not report["news_used"]
     print(json.dumps({"status":"verified","runs":len(report["runs"]),"matched_seeds":len(report["comparisons"]),"prospective_accuracy":"pending"}))
 if __name__=="__main__":
