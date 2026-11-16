@@ -1,11 +1,13 @@
 """Execution contracts for the registered paired future panel; no historical retuning."""
 from __future__ import annotations
-import math
+import hashlib,json,math
 from datetime import datetime,date,timedelta,timezone
 from .direct_forecast_v12 import digest
 from .direct_future_v12 import utc,tasks_at,issuance_status
 from .evidence_v14 import feature_at
 from .prospective_evidence_v14 import validate_commitment,evaluate
+def fingerprint(value):
+    return hashlib.sha256(json.dumps(value,sort_keys=True,default=str,separators=(",",":"),allow_nan=True).encode()).hexdigest()
 def source_snapshots(records,at):
     accepted=[];excluded=[]
     for s in sorted(records,key=lambda s:s.get("captured_at","")):
@@ -28,7 +30,7 @@ def source_snapshots(records,at):
             assert rows
             accepted.append({"eligible":True,"captured_at":s["captured_at"],"source_snapshot_sha256":digest(s),"prices":s["prices"],"bls":s.get("bls")})
         except (AssertionError,KeyError,ValueError,TypeError):
-            excluded.append({"captured_at":s.get("captured_at"),"source_snapshot_sha256":digest(s),"reason":"incompatible_capture_window_identity_unit_or_freshness"})
+            excluded.append({"captured_at":s.get("captured_at"),"source_snapshot_sha256":fingerprint(s),"reason":"incompatible_capture_window_identity_unit_or_freshness"})
     return accepted,excluded
 def origin_number(origin,p):
     first=date.fromisoformat(p["first_eligible_origin"]);day=date.fromisoformat(origin)
@@ -60,6 +62,8 @@ def validate(value,p,lock):
     keys=[(r["method"],r["series_id"],r["horizon_days"]) for r in value["rows"]]
     assert len(keys)==len(set(keys)),"Duplicate method/target/horizon"
     primary={(r["series_id"],r["horizon_days"]) for r in value["rows"] if r["method"]=="price_only"}
+    assert {r["method"] for r in value["rows"]}=={"price_only","price_evidence","base_price_only","base_price_evidence","last_value","last_value_empirical","drift","seasonal_naive"}
+    assert value["information_cutoff"]==value["origin"]+"T23:59:59+00:00"
     for name in ("price_only","price_evidence","base_price_only","base_price_evidence","last_value","last_value_empirical","drift","seasonal_naive"):
         rows=[r for r in value["rows"] if r["method"]==name]
         assert {(r["series_id"],r["horizon_days"]) for r in rows}==primary,"Unmatched arm or reference cells"
