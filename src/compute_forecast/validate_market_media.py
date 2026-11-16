@@ -16,6 +16,13 @@ def main():
             time.sleep(5)
     if manifest["implementation_commit"]!=cfg["expected_render_commit"]:raise ValueError("Render revision")
     if (manifest["source_seconds"],manifest["output_seconds"],manifest["playback_speed"],manifest["frames"])!=(60,30,2,900):raise ValueError("Video timing")
+    # Wait for the serving-only font fix before asserting actual browser behavior.
+    while True:
+        served=urllib.request.urlopen(base+"replay.html",timeout=90)
+        font_policy=served.headers.get("Content-Security-Policy","");served.read()
+        if "font-src 'self' data:" in font_policy:break
+        if time.monotonic()>=deadline:raise ValueError("Serving font policy did not become ready")
+        time.sleep(5)
     hashes={}
     for name in ("replay.html","terminal-30s.mp4","poster.png","validation.json","horizon-audit.json"):
         raw=get(name);hashes[name]=sha(raw)
@@ -62,7 +69,7 @@ def main():
         if fraction>cfg["max_playback_drop_fraction"]:raise ValueError("Playback frame drops exceed fixed 5% limit")
         browser.close()
     if errors:raise ValueError(errors)
-    report={"status":"passed","media_run_id":cfg["media_run_id"],"render_commit":cfg["expected_render_commit"],"validation_commit":os.environ["GITHUB_SHA"],"checked_at_utc":time.strftime("%Y-%m-%dT%H:%M:%SZ",time.gmtime()),"interactive_url":base+"replay.html","video_url":base+"terminal-30s.mp4","public_file_sha256":hashes,"range_status":206,"chapters":chapters,"keyboard_scrub":True,"mobile_no_overflow":True,"reduced_motion_no_autoplay":True,"actual_encoded_playback":quality,"playback_drop_fraction":fraction,"real_time_samples":playback,"browser_errors":errors,"new_training":False}
+    report={"status":"passed","media_run_id":cfg["media_run_id"],"render_commit":cfg["expected_render_commit"],"validation_commit":os.environ["GITHUB_SHA"],"checked_at_utc":time.strftime("%Y-%m-%dT%H:%M:%SZ",time.gmtime()),"interactive_url":base+"replay.html","video_url":base+"terminal-30s.mp4","public_file_sha256":hashes,"range_status":206,"replay_font_policy":font_policy,"chapters":chapters,"keyboard_scrub":True,"mobile_no_overflow":True,"reduced_motion_no_autoplay":True,"actual_encoded_playback":quality,"playback_drop_fraction":fraction,"real_time_samples":playback,"browser_errors":errors,"new_training":False}
     write(out/"validation.json",report)
     from .publication_terminal_v10 import publish
     dest="results/terminal-v10/runs/"+os.environ["GITHUB_RUN_ID"]+"/market-playback/"
