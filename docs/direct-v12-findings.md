@@ -16,3 +16,10 @@ Checkpoint selection uses development only and includes the unadapted base at up
 Supplementary evidence accuracy is not established. Current source access and archived-vintage eligibility are separate from forecasting value.
 
 [Protocol](../configs/direct-forecast-v12.json) · [Methods](direct-forecast-v12.md) · [Public artifacts](../results/direct-v12/README.md)
+
+## Uncertainty and numerical controls
+
+Seed 17: selected-model seven-day coverage 18.2%, mean interval width 0.00000000 USD/GPU-hour. Native drift seven-day loss 0.04647507; empirical-last-value loss 0.04528235.
+Seed 29: selected-model seven-day coverage 18.2%, mean interval width 0.00000000 USD/GPU-hour. Native drift seven-day loss 0.04647507; empirical-last-value loss 0.04528235.
+
+All published selected-model intervals have zero width. Repeated sampled vectors do not provide useful distributional uncertainty. Sampling-mode diagnostics are separate from this frozen accuracy comparison; no post-hoc correction has replaced these forecasts.
