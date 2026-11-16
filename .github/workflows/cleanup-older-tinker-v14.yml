@@ -1,0 +1,40 @@
+name: Remove user-authorized older Tinker checkpoints
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/cleanup-older-tinker-v14.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: tinker-date-scoped-cleanup
+  cancel-in-progress: false
+jobs:
+  clean:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Fetch date-scoped cleanup implementation
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'tinker==0.39.1'
+      - name: Verify dates and remove only authorized older resources
+        env:
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+        run: python scripts/cleanup_older_tinker_v14.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: older-checkpoint-cleanup-${{ github.run_id }}
+          path: artifacts/evidence-v14-audit
+          retention-days: 30
+      - name: Publish hash-only cleanup receipt
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/publish_evidence_audit_v14.py
