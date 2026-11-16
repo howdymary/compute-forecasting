@@ -35,6 +35,11 @@ def build(inputs,output):
             selected=load(directory/"evaluation-selected.json");base=load(directory/"evaluation-base.json")
             for value in (selected,base):verify_prediction(value)
             assert selected["summary"]==state["retrospective"] and base["summary"]==state["base"]
+            anchors={t["task_id"]:t["anchor"] for phase in ("development","retrospective") for t in dataset["groups"][phase]}
+            for value in [selected,base]+[development[(arm,seed,c["update"])] for c in state["checkpoints"]]:
+                for task in value["tasks"]:
+                    expected=price_quantiles(task["sample_returns"],anchors[task["task_id"]]) if not task["fallback"] else [[anchors[task["task_id"]]]*3 for _ in (1,3,7)]
+                    assert expected==[[r[k] for k in ("q10","q50","q90")] for r in task["cells"]]
             assert matched(selected["cells"],base["cells"])==state["comparison_to_base"]
             states.append(state);results[(arm,seed)]=selected
             for f in directory.glob("*.json"):
@@ -54,7 +59,7 @@ def build(inputs,output):
             primary=matched([r for r in a["cells"] if r["horizon_days"]==7],[r for r in b["cells"] if r["horizon_days"]==7])
             comparisons.append({"seed":seed,"candidate":"price_evidence","reference":"price_only","all_horizons":matched(a["cells"],b["cells"]),"seven_day":primary})
     status="completed" if len(states)==6 else "partial" if states else "awaiting_training"
-    report={"study_id":p["study_id"],"schema_version":14,"status":status,"created_at":datetime.now(timezone.utc).isoformat(),"protocol":p,"protocol_sha256":digest(p),"dataset_sha256":digest(dataset),"audit":audit,"runs":states,"development_cases":cases,"comparisons":comparisons,"expected_runs":6,"news_used":False,"infrastructure_used":False,"source_attribution":"Pacific Machines(2026), gpu-price-pack v0.1.1-handover, approved CC BY4.0 source derivatives; US Bureau of Labor Statistics, original archived monthly PPI releases","interpretation":"Price versus price+BLS; retrospective. Three dependent evaluation dates and seed replicates do not establish prospective accuracy or a news benefit.","prospective":{"status":"pending","outcomes_loaded":False,"protocol":"configs/evidence-v14-prospective.json"}}
+    report={"study_id":p["study_id"],"schema_version":14,"status":status,"created_at":datetime.now(timezone.utc).isoformat(),"protocol":p,"protocol_sha256":digest(p),"dataset_sha256":digest(dataset),"audit":audit,"runs":states,"development_cases":cases,"comparisons":comparisons,"expected_runs":6,"task_anchors":{t["task_id"]:t["anchor"] for phase in ("development","retrospective") for t in dataset["groups"][phase]},"news_used":False,"infrastructure_used":False,"source_attribution":"Pacific Machines(2026), gpu-price-pack v0.1.1-handover, approved CC BY4.0 source derivatives; US Bureau of Labor Statistics, original archived monthly PPI releases","interpretation":"Price versus price+BLS; retrospective. Three dependent evaluation dates and seed replicates do not establish prospective accuracy or a news benefit.","prospective":{"status":"pending","outcomes_loaded":False,"protocol":"configs/evidence-v14-prospective.json"}}
     for name,raw in files.items():
         f=out/name;f.parent.mkdir(parents=True,exist_ok=True);f.write_text(raw)
     for name,value in (("report.json",report),("audit.json",audit),("bls-vintages.json",load(next(root.rglob("bls-vintages.json"))))):

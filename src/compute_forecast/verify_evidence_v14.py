@@ -19,7 +19,7 @@ def verify(root):
                 # Recover anchor from source-bound development case, or retained forecast inverse.
                 if case:anchor=case["anchor"]
                 else:
-                    row=task["cells"][0];anchor=task.get("anchor")
+                    anchor=report["task_anchors"][task["task_id"]]
                 for row in task["cells"]:
                     assert abs(cell_loss(row["outcome"],[row["q10"],row["q50"],row["q90"]])-row["loss"])<1e-12
                 if anchor is not None and not task["fallback"]:
