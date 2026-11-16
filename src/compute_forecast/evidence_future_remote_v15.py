@@ -13,7 +13,7 @@ data=modal.Volume.from_name("compute-forecast-data",create_if_missing=False,vers
 public=modal.Volume.from_name("compute-forecast-public",create_if_missing=False,version=2)
 secret=modal.Secret.from_name("compute-forecast-evidence-future-v15",required_keys=["TINKER_API_KEY"])
 image=(modal.Image.debian_slim(python_version="3.11")
- .pip_install("tinker==0.39.1","tinker-cookbook==0.6.1","transformers==5.23.0","numpy==2.2.6","pandas==2.3.1","duckdb==1.2.2","pyarrow>=16,<24")
+ .pip_install("tinker==0.39.1","tinker-cookbook==0.6.1","tml-renderers==0.4.1","torch==2.15.0+cpu","transformers==5.23.0","tokenizers==0.23.3","numpy==2.2.6","pandas==2.3.1","duckdb==1.2.2","pyarrow>=16,<24",extra_index_url="https://download.pytorch.org/whl/cpu")
  .env({"GITHUB_SHA":os.environ.get("GITHUB_SHA","unknown")})
  .add_local_dir("configs","/root/configs",copy=True)
  .add_local_dir("inputs/evidence-future-v15","/root/inputs/evidence-future-v15",copy=True)
@@ -87,7 +87,7 @@ def tick():
     if utc(at)>utc("2027-03-03T00:00:00Z"):return {"study_id":"direct-evidence-v14-prospective","readiness":{"reasons":["finite_panel_complete"]},"issued_origins":None,"new_optimizer_updates":0}
     p=load(pathlib.Path("/root/configs/evidence-v14-prospective.json"));parent=load(pathlib.Path("/root/configs/direct-evidence-v14-final.json"))
     source=pathlib.Path("/data/signals-v6");root=pathlib.Path("/data/evidence-v14-future");root.mkdir(parents=True,exist_ok=True)
-    engine=digest({name:hashlib.sha256(pathlib.Path(__file__).with_name(name).read_bytes()).hexdigest() for name in ("evidence_future_v15.py","evidence_future_remote_v15.py","prospective_evidence_v14.py","direct_future_v12.py","direct_forecast_v12.py","evidence_v14.py")})
+    engine=digest({name:hashlib.sha256(pathlib.Path(__file__).with_name(name).read_bytes()).hexdigest() for name in ("evidence_future_v15.py","evidence_future_remote_v15.py","prospective_evidence_v14.py","direct_future_v12.py","direct_forecast_v12.py","evidence_v14.py","signals_remote_v6.py","starter_probe.py")})
     registration={"protocol_sha256":digest(p),"engine_sha256":engine,"source_sha":os.environ.get("GITHUB_SHA"),"first_registered_at":at}
     registration_path=root/"registration.json"
     if registration_path.exists():
@@ -138,7 +138,7 @@ def tick():
         retain(root,"evaluations",result);evaluations.append(result)
     readiness={k:v for k,v in state.items() if k not in ("tasks","snapshots")}
     readiness["eligible_tasks"]=len(state["tasks"]);readiness["task_ids"]=[t["series_id"] for t in state["tasks"]]
-    index={"study_id":p["study_id"],"updated_at":now(),"registration":registration,"model_lock":lock,"readiness":readiness,"issued_origins":len(commitments),"primary_analysis_required_eligible_origins":12,"prospective_accuracy":"not_established","publication_boundary":"Public Modal artifacts are timestamped and hash-addressed. This is not an independently trusted timestamp or an automatic GitHub anchor.","new_optimizer_updates":0,"provider_cost_usd":None,"ledger":[{"origin":c["origin"],"issued_at":c["issued_at"],"commitment_sha256":digest(c),"rows":len(c["rows"]),"target_dates":sorted({r["target_date"] for r in c["rows"]}),"publication_receipt":next((r for r in publication_receipts if r["commitment_sha256"]==digest(c)),None),"evaluation":next((e["status"] for e in evaluations if e["commitment_sha256"]==digest(c)),"not_publicly_committed_within_deadline")} for c in commitments]}
+    index={"study_id":p["study_id"],"updated_at":now(),"registration":registration,"model_lock":lock,"readiness":readiness,"issued_origins":len(commitments),"primary_analysis_required_eligible_origins":12,"prospective_accuracy":"not_established","publication_boundary":"Public Modal artifacts are timestamped and hash-addressed. This is not an independently trusted timestamp or an automatic GitHub anchor.","source_attribution":"GPU Rental Prices, exact provider contract quotes, CC BY 4.0: https://gpurentalprices.com/data. US BLS original PPI releases. Pacific pack supplied the prior frozen training, not prospective truth.","new_optimizer_updates":0,"provider_cost_usd":None,"ledger":[{"origin":c["origin"],"issued_at":c["issued_at"],"commitment_sha256":digest(c),"rows":len(c["rows"]),"target_dates":sorted({r["target_date"] for r in c["rows"]}),"publication_receipt":next((r for r in publication_receipts if r["commitment_sha256"]==digest(c)),None),"evaluation":next((e["status"] for e in evaluations if e["commitment_sha256"]==digest(c)),"not_publicly_committed_within_deadline")} for c in commitments]}
     if utc(now())>utc("2027-03-03T00:00:00Z"):index["schedule_status"]="completed_finite_panel"
     destination=pathlib.Path("/public/evidence-v14-future");destination.mkdir(parents=True,exist_ok=True)
     for kind,values in (("commitments",commitments),("evaluations",evaluations)):

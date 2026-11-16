@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib,json,math
 from datetime import datetime,date,timedelta,timezone
 from .direct_forecast_v12 import digest
+from .review_v4 import digest as source_digest
 from .direct_future_v12 import utc,tasks_at,issuance_status
 from .evidence_v14 import feature_at
 from .prospective_evidence_v14 import validate_commitment,evaluate
@@ -15,22 +16,22 @@ def source_snapshots(records,at):
             stamp=utc(s["captured_at"]);day=s["prices"]["date"]
             assert stamp<=utc(at) and stamp.date().isoformat()==day
             assert datetime.fromisoformat(day).date()>date(2026,11,13)
-            assert 17<=stamp.hour<19
+            assert 17<=stamp.hour<19,"outside_registered_17_to_19_UTC_capture_window"
             assert s["prices"]["license"]=="CC BY 4.0"
             assert not s.get("protected_outcomes_loaded")
             rows=[]
             for row in s["prices"]["rows"]:
                 assert row["date"]==day and row["unit"]=="USD per GPU-hour"
-                assert row["id"]=="grp-v6-"+digest(row["contract"])[:20]
+                assert row["id"]=="grp-v6-"+source_digest(row["contract"])[:20],"original_source_contract_id_mismatch"
                 assert row["family"] in ("A100","H100")
                 assert utc(row["fetched_at"]).date().isoformat()==day
                 assert utc(row["fetched_at"])<=stamp
                 assert math.isfinite(row["value"]) and row["value"]>0
                 rows.append(row)
             assert rows
-            accepted.append({"eligible":True,"captured_at":s["captured_at"],"source_snapshot_sha256":digest(s),"prices":s["prices"],"bls":s.get("bls")})
-        except (AssertionError,KeyError,ValueError,TypeError):
-            excluded.append({"captured_at":s.get("captured_at"),"source_snapshot_sha256":fingerprint(s),"reason":"incompatible_capture_window_identity_unit_or_freshness"})
+            accepted.append({"eligible":True,"captured_at":s["captured_at"],"source_snapshot_sha256":source_digest(s),"prices":s["prices"],"bls":s.get("bls")})
+        except (AssertionError,KeyError,ValueError,TypeError) as error:
+            excluded.append({"captured_at":s.get("captured_at"),"source_snapshot_sha256":fingerprint(s),"reason":str(error) or type(error).__name__})
     return accepted,excluded
 def origin_number(origin,p):
     first=date.fromisoformat(p["first_eligible_origin"]);day=date.fromisoformat(origin)

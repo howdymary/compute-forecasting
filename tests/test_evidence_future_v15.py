@@ -1,7 +1,7 @@
 """Synthetic future-panel contracts; no values are actual market observations."""
 import copy
 import pytest
-from compute_forecast.direct_forecast_v12 import digest
+from compute_forecast.review_v4 import digest
 from compute_forecast.evidence_future_v15 import source_snapshots,origin_number,prepare
 def protocol():
     return {"study_id":"synthetic","first_eligible_origin":"2026-12-06","history_calendar_days":42,"min_price_days":20,"horizons":[1,3,7],"issuance_deadline_minutes_after_origin":30,"limits":{"max_weekly_origins":12,"max_targets":4}}
@@ -16,7 +16,7 @@ def test_future_row_poisoning_is_excluded():
     a=snapshot();a["prices"]["rows"][0]["contract"]["provider"]="changed"
     b=snapshot();b["prices"]["rows"][0]["unit"]="USD per instance-hour"
     c=snapshot();c["prices"]["rows"][0]["value"]=float("inf")
-    for s in (a,b):
+    for s in (a,b,c):
         assert not source_snapshots([s],"2026-11-16T22:00:00Z")[0]
 def test_exact_registered_weekly_window_and_finite_limit():
     p=protocol();assert origin_number("2026-12-06",p)==0 and origin_number("2027-02-21",p)==11
