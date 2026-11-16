@@ -7,6 +7,8 @@ from .release_payload import build,validate
 from .explore_ui import HTML
 from .terminal_ui_v10 import HTML as TERMINAL_HTML
 from .price_canvas_v11 import HTML as PRICE_CANVAS_HTML
+from .direct_ui_v12 import HTML as DIRECT_HTML
+from .direct_public_v12 import read_report as read_direct_report
 from .experimental_ui_v2 import HTML as EXPERIMENTAL_HTML
 from .pricing_contract import validate as validate_pricing
 app=modal.App("compute-forecast-observatory")
@@ -46,6 +48,12 @@ def web():
             return raw
     @api.get("/")
     def index():return HTMLResponse(HTML,headers=headers)
+    @api.get("/direct")
+    def direct_index():return HTMLResponse(DIRECT_HTML,headers=headers)
+    @api.get("/api/direct-v12")
+    def direct_research():
+        try:return JSONResponse(read_direct_report(),headers=headers)
+        except Exception as error:return JSONResponse({"status":"unavailable","error_type":type(error).__name__},status_code=503,headers=headers)
     @api.get("/terminal")
     def terminal_index(request:Request):
         # Keep the already requested v10 capture path bound to its original interface.
