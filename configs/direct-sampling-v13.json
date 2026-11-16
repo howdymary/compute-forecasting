@@ -1,0 +1,45 @@
+{
+  "schema_version": 13,
+  "study_id": "direct-sampling-v13",
+  "registered_at": "2026-11-16",
+  "parent_study": "direct-forecast-v12",
+  "parent_protocol_sha256": "de86b58b672ce746e907123d98e9a42ecd2a442c09b37288de32803578fc6e0a",
+  "reason": "A bounded development diagnostic found 1 distinct vector in fixed-seed multi-sample requests and 4–5 vectors without the fixed seed. Preserve v12 and evaluate an explicit sampling correction.",
+  "hypothesis": "Removing the repeated request seed restores predictive-sample diversity; forecast accuracy is not assumed to improve.",
+  "weights": "Reuse existing direct-v12 weights, with no optimizer updates, no retraining, and no new persistent checkpoints",
+  "selection": "Freeze the original development-selected checkpoint separately for each original seed. Do not reselect checkpoints using corrected samples or retrospective outcomes.",
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "dataset_sha256": "4e19e019f470fc4d17010d74164b1dbc5bfedfea515988895d306b5008e116a2",
+  "evaluation": "Exactly the 22 original retrospective tasks / 66 horizon cells / three reused dependent October origins",
+  "sampling": {
+    "samples": 64,
+    "min_valid": 48,
+    "temperature": 0.8,
+    "max_tokens": 128,
+    "seed": null,
+    "reason": "Unset request seed; actual samples and hashes retained. Reproduction reconstructs retained stochastic samples, not byte-identical regeneration.",
+    "concurrency": 4,
+    "quantile_method": "linear",
+    "fallback": "Last value if fewer than48 valid vectors; no favorable resampling"
+  },
+  "comparators": [
+    "same unadapted base with corrected sampling",
+    "official last_value",
+    "official last_value_empirical",
+    "official multiplicative drift",
+    "official seasonal_naive"
+  ],
+  "primary_endpoint": "Seven-day quantile pinball; report loss, coverage, width and sample diversity together",
+  "limits": {
+    "hours_per_seed": 1,
+    "parallel_seeds": 2,
+    "max_optimizer_updates": 0,
+    "max_persistent_checkpoints": 0
+  },
+  "interpretation": "Additional retrospective implementation-control study. No supplementary evidence, RL or prospective accuracy claim.",
+  "provenance": "results/direct-v12/diagnostics/43961668575/sampling.json"
+}
