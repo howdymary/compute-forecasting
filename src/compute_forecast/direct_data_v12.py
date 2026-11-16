@@ -81,8 +81,7 @@ def prepare():
     put(out/"audit.json",audit)
     if not os.environ.get("DIRECT_V12_DATA_ROOT"):data.commit()
     return audit
-@app.local_entrypoint()
-def main(hosted:bool=False):
+def emit_report(hosted:bool=False):
     report=prepare.local() if hosted else prepare.remote();dest=Path("artifacts/direct-v12");dest.mkdir(parents=True,exist_ok=True)
     if hosted:
         source=Path(os.environ["DIRECT_V12_DATA_ROOT"])/"direct-forecast-v12"/report["protocol_sha256"]/"dataset.json"
@@ -90,3 +89,10 @@ def main(hosted:bool=False):
         (dest/"ATTRIBUTION.txt").write_text("Pacific Machines (2026), gpu-price-pack v0.1.1-handover. CC BY 4.0 compilation. Approved source-derived target windows only; no raw offers or restricted marketplace sources. Component source_id and exact contract metadata are retained in each task. Source permissions: docs/DATA_SOURCES.md.\n")
     (dest/"audit.json").write_text(json.dumps(report,indent=2,allow_nan=False)+"\n")
     print(json.dumps(report,indent=2,allow_nan=False))
+
+def hosted():
+    return emit_report(True)
+
+@app.local_entrypoint()
+def main():
+    return emit_report(False)
