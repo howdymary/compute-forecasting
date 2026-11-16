@@ -1,0 +1,36 @@
+name: Audit authorized Tinker checkpoint cleanup
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/manage-tinker-storage-v12.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: tinker-authorized-storage-cleanup
+  cancel-in-progress: false
+jobs:
+  storage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Fetch immutable cleanup code
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'tinker==0.39.1'
+      - name: Identify only explicitly authorized project checkpoints
+        env:
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+          APPLY_DELETE: 'false'
+        run: python scripts/manage_tinker_storage_v12.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: tinker-authorized-storage-${{ github.run_id }}
+          path: artifacts/tinker-storage-v12
+          retention-days: 30
