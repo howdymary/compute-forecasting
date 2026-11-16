@@ -229,3 +229,6 @@ HTML = enhance_timeline_v7(HTML)
 
 from .dynamics_ui_v8 import enhance as enhance_dynamics_v8
 HTML = enhance_dynamics_v8(HTML)
+
+from .terminal_ui_v9 import enhance as enhance_terminal_v9
+HTML = enhance_terminal_v9(HTML)
