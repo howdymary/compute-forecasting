@@ -32,8 +32,11 @@ def run():
     with sync_playwright() as pw:
         browser=pw.chromium.launch()
         context=browser.new_context(viewport={"width":1920,"height":1080},device_scale_factor=1,record_video_dir=str(out/"raw"),record_video_size={"width":1920,"height":1080},reduced_motion="reduce")
+        def cached_response(raw):
+            def handler(route):route.fulfill(status=200,content_type="application/json",body=raw)
+            return handler
         for path,obj in snapshots.items():
-            context.route("**"+path,lambda route,raw=obj["raw"]:route.fulfill(status=200,content_type="application/json",body=raw))
+            context.route("**"+path,cached_response(obj["raw"]))
         page_start=time.perf_counter();page=context.new_page();errors=[];page.on("pageerror",lambda e:errors.append(str(e)))
         page.goto(URL+"/terminal?capture=1",wait_until="domcontentloaded",timeout=90000)
         page.wait_for_function("()=>document.body.dataset.ready==='true' && V10!==null",timeout=90000)
