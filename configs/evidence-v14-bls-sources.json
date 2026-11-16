@@ -1,0 +1,88 @@
+{
+  "study_id": "direct-evidence-v14-source-capture",
+  "series_id": "PCU221122221122",
+  "title": "Electric power distribution",
+  "base": "December2003=100, not seasonally adjusted",
+  "source_registry": "https://www.bls.gov/ppi/detailed-report/",
+  "permission_url": "https://www.bls.gov/bls/linksite.htm",
+  "permission": "BLS federal statistical data; acknowledge BLS and original release",
+  "acquisition": "Exa official-PDF content retrieval after direct XLSX403; full extracted-text hash retained; not a binary PDF hash",
+  "vintages": [
+    {
+      "period": "2025-12",
+      "release_date": "2026-01-30",
+      "release_timezone": "America/New_York",
+      "release_time": "08:30:00"
+    },
+    {
+      "period": "2026-01",
+      "release_date": "2026-02-27",
+      "release_timezone": "America/New_York",
+      "release_time": "08:30:00"
+    },
+    {
+      "period": "2026-02",
+      "release_date": "2026-03-18",
+      "release_timezone": "America/New_York",
+      "release_time": "08:30:00"
+    },
+    {
+      "period": "2026-03",
+      "release_date": "2026-04-14",
+      "release_timezone": "America/New_York",
+      "release_time": "08:30:00"
+    },
+    {
+      "period": "2026-04",
+      "release_date": "2026-05-13",
+      "release_timezone": "America/New_York",
+      "release_time": "08:30:00"
+    },
+    {
+      "period": "2026-05",
+      "release_date": "2026-06-11",
+      "release_timezone": "America/New_York",
+      "release_time": "08:30:00"
+    },
+    {
+      "period": "2026-06",
+      "release_date": "2026-07-15",
+      "release_timezone": "America/New_York",
+      "release_time": "08:30:00"
+    },
+    {
+      "period": "2026-07",
+      "release_date": "2026-08-13",
+      "release_timezone": "America/New_York",
+      "release_time": "08:30:00"
+    },
+    {
+      "period": "2026-08",
+      "release_date": "2026-09-10",
+      "release_timezone": "America/New_York",
+      "release_time": "08:30:00"
+    },
+    {
+      "period": "2026-09",
+      "release_date": "2026-10-15",
+      "release_timezone": "America/New_York",
+      "release_time": "08:30:00"
+    }
+  ],
+  "release_calendar_basis": "Original July2026 PPI detailed report, front matter pageii; all2026 dates cross-checked before training",
+  "limits": {
+    "max_urls": 10,
+    "max_characters_per_pdf": 3500000,
+    "http_timeout_seconds": 120
+  },
+  "features": [
+    "latest_available_index",
+    "month_over_month_log_change",
+    "days_since_release"
+  ],
+  "exclusions": [
+    "Electricitygenerationandtransmissionarenottheexactdistributionseries",
+    "Currentrevisedhistorycannotreplaceoriginalreleases",
+    "PPIisnotatariff"
+  ]
+}
