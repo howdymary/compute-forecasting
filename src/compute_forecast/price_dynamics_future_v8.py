@@ -95,6 +95,23 @@ def native(panels,origin):
     invoke(root,out,"native",["baselines.py","--history",out/"history.csv","--origin",origin,"--method","drift","--series-ids",",".join(panels),"--horizons","1,3,7","--frozen","--out",out/"drift.csv"])
     for r in rows(out/"drift.csv"):result[(r["series_id"],int(r["horizon_days"]))]=[float(r[k]) for k in ("q10","q50","q90")]
     return result
+def configuration_hash():
+    return digest({"protocol":hashlib.sha256(Path("configs/price-dynamics-v8-future.json").read_bytes()).hexdigest(),"engine":hashlib.sha256(Path(__file__).with_name("price_dynamics_v8.py").read_bytes()).hexdigest(),"adapter":hashlib.sha256(Path(__file__).read_bytes()).hexdigest()})
+def verify_bound_commitment(c,at):
+    validate_commitment(c,at)
+    if c["study_id"]!="price-dynamics-v8-future" or c["configuration_sha256"]!=configuration_hash():raise ValueError("Prospective configuration mismatch")
+    if not "2026-11-22"<=c["origin"]<="2027-03-28":raise ValueError("Unregistered origin")
+    if (c["kind"]=="primary_weekly")!=(date.fromisoformat(c["origin"]).weekday()==6):raise ValueError("Wrong prospective cohort")
+    path=ROOT/"issuance-inputs"/(c["snapshot_sha256"]+".json")
+    if not path.is_file() or digest(json.loads(path.read_bytes()))!=c["snapshot_sha256"]:raise ValueError("Immutable issuance input missing or changed")
+    seen=set()
+    for r in c["forecasts"]:
+        key=(r["series_id"],r["horizon"],r["method"])
+        if key in seen or r["method"] not in "ABCDEF" or r["horizon"] not in (1,3,7):raise ValueError("Invalid or duplicate arm")
+        seen.add(key)
+        if r["origin"]!=c["origin"] or r["target"]!=(date.fromisoformat(c["origin"])+timedelta(days=r["horizon"])).isoformat():raise ValueError("Target date mismatch")
+    return True
+
 def issue(at):
     # Daily shadow commitments supply genuinely issued calibration histories.
     # Sunday origins alone comprise the registered primary evaluation panel.
@@ -123,13 +140,14 @@ def issue(at):
                 allarms[cal]=calibrate(base[raw][0],past,origin,h)
             target=(date.fromisoformat(origin)+timedelta(days=h)).isoformat()
             for m,(q,diag) in allarms.items():forecasts.append({"method":m,"series_id":sid,"origin":origin,"target":target,"horizon":h,"resolution_at":(date.fromisoformat(target)+timedelta(days=1)).isoformat()+"T00:00:00+00:00","quantiles":q,"diagnostic":diag})
-    commit={"study_id":"price-dynamics-v8-future","kind":"primary_weekly" if date.fromisoformat(origin).weekday()==6 else "calibration_shadow","origin":origin,"cutoff":cutoff.isoformat(),"issued_at":at.isoformat(),"deadline":deadline.isoformat(),"snapshot_sha256":digest(panels),"configuration_sha256":digest({"protocol":hashlib.sha256(Path("configs/price-dynamics-v8-future.json").read_bytes()).hexdigest(),"engine":hashlib.sha256(Path(__file__).with_name("price_dynamics_v8.py").read_bytes()).hexdigest()}),"source_sha":os.environ.get("GITHUB_SHA"),"forecasts":forecasts}
+    put(ROOT/"issuance-inputs"/(digest(panels)+".json"),panels)
+    commit={"study_id":"price-dynamics-v8-future","kind":"primary_weekly" if date.fromisoformat(origin).weekday()==6 else "calibration_shadow","origin":origin,"cutoff":cutoff.isoformat(),"issued_at":at.isoformat(),"deadline":deadline.isoformat(),"snapshot_sha256":digest(panels),"configuration_sha256":configuration_hash(),"source_sha":os.environ.get("GITHUB_SHA"),"forecasts":forecasts}
     validate_commitment(commit,at);put(existing,commit)
     return {"status":"issued","commitment_sha256":digest(commit),"rows":len(forecasts),"resolution_dates":sorted({r["target"] for r in forecasts})}
 def evaluate(at):
     vs=observations();scored=[];pending=0
     for f in sorted((ROOT/"commitments").glob("*.json")):
-        c=json.loads(f.read_bytes());validate_commitment(c,at)
+        c=json.loads(f.read_bytes());verify_bound_commitment(c,at)
         if c["kind"]!="primary_weekly":continue
         for r in c["forecasts"]:
             if datetime.fromisoformat(r["resolution_at"])>at or r["target"] not in vs.get(r["series_id"],{}):pending+=1;continue

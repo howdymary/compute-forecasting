@@ -1,5 +1,5 @@
 name: Capture v8 evidence and register future aggregate operations
-# Reuse successful receipts; publish the verified public-URL exception and deploy the locked final evaluator with credential-guard regression tests.
+# Verify immutable future snapshots and reuse successful source/memory receipts.
 on:
   push:
     branches: [compute-observatory]
@@ -27,7 +27,7 @@ jobs:
       - run: |
           python -m pip install -e '.[dev]' modal==1.6.4
           python -m compileall -q src
-          python -m pytest tests/test_price_dynamics_v8.py
+          python -m pytest tests/test_price_dynamics_v8.py tests/test_price_dynamics_future_v8.py
       - name: Wait for original registered numerical run; never duplicate it
         env:
           GH_TOKEN: ${{ github.token }}
