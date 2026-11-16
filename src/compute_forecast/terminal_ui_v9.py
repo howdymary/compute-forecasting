@@ -44,6 +44,7 @@ main{padding:17px 3vw 36px}.leadrow{margin:0 0 14px}.leadrow .eyebrow{font:9px u
 .timeline-readout{padding:14px 13px;grid-template-columns:1fr;gap:15px}.timeline-readout .margin-note{border-left:0;border-top:1px solid #dce5f0;padding:12px 0 0}.timeline-meta{padding:0 13px 13px}.timeline-readout .pointvalue .value{font-size:22px}.timeline-readout .pointvalues{gap:14px}.timeline-sheet .chart-note{font-size:9px}.timeline-sheet .plotfoot{font-size:8px}.timeline-overview-labels{font-size:8px}.contextrow{gap:15px}.contextrow h3{font-size:12px}.contextrow p{font-size:10px}.settings{padding:18px}.plotpanel{padding:18px 13px}.plothead h2{font-size:21px}.cursorbar label{font:500 10px var(--q9-font)}
 .d8-header h2{font-size:25px}.d8-sheet{padding:16px}.d8-grid{gap:15px}.d8-controls{gap:10px}.d8-small{font-size:11px}.d8-sheet h3{font-size:15px}
 }
+@media(max-width:360px){main{padding-top:13px}.timeline-tools{padding-block:9px}.timeline-summary.q9-quote-strip{grid-template-columns:1.2fr .8fr!important;padding-block:10px}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.timeline-sheet *,nav *{transition:none!important;animation:none!important}}
 """
 JS=r"""
@@ -60,7 +61,7 @@ explore=function(){
  if(S.mode!=='benchmark')return html;
  const s=series(),h=t7History(),last=h?.points.filter(p=>p.date<=P.origin_date).at(-1),fc=s.forecasts.find(p=>p.horizon_days===S.forecastHorizon);
  const delta=last?fc.q50/last.value-1:null;
- const quotes=q9Quote('LAST OBSERVED',last?money(last.value):(!V5?'Loading…':'Not published'),last?esc(shortDate(last.date)+' · '+s.unit):(!V5?'Matching history loading':'Matching history unavailable'),last?'':'q9-unavailable',last?.value??null)+q9Quote('+'+S.forecastHorizon+'D QUANTILE INTERVAL',money(fc.q10)+' – '+money(fc.q90),'q10 / q90 · '+esc(s.unit),'q9-interval')+q9Quote('FORECAST / LAST OBSERVED',delta===null?'—':(delta>0?'+':'')+pct(delta),'Median change · not a realized return','',delta);
+ const quotes=q9Quote('LAST OBSERVED',last?money(last.value):(!V5?(V5Error?'Unavailable':'Loading…'):'Not published'),last?esc(shortDate(last.date)+' · '+s.unit):(!V5?(V5Error?'Retry history below':'Matching history loading'):'Matching history unavailable'),last?'':'q9-unavailable',last?.value??null)+q9Quote('+'+S.forecastHorizon+'D QUANTILE INTERVAL',money(fc.q10)+' – '+money(fc.q90),'q10 / q90 · '+esc(s.unit),'q9-interval')+q9Quote('FORECAST / LAST OBSERVED',delta===null?'—':(delta>0?'+':'')+pct(delta),'Median change · not a realized return','',delta);
  html=html.replace('class="timeline-summary"','class="timeline-summary q9-quote-strip"').replace('<div class="timeline-hand">The past, then a forecast.<br>Keep the two in view.</div>',quotes);
  html=html.replace(/<div class="seg" aria-label="Forecast date range">[\s\S]*?<\/div>/,match=>'<div class="q9-toolset">'+q9ScaleButtons()+match+'</div>');
  html=html.replace('<div id="plot"></div>','<div id="plot"></div><div id="q9-axis-note" class="q9-axis-note">'+(Q9.scale==='fit'?'Y-AXIS: FITTED TO VISIBLE PRICES':'Y-AXIS: ZERO BASELINE')+' · USD / GPU-HOUR</div>');
@@ -72,6 +73,20 @@ const q9PreviousBuild=buildPlot;
 buildPlot=function(){q9PreviousBuild();const chart=$('#price-chart');if(S.mode==='benchmark'&&chart){chart.dataset.axisMode=Q9.scale;chart.dataset.axisMinimum=String(plotGeom.low);chart.dataset.axisMaximum=String(plotGeom.top)}};
 const q9PreviousRender=render;
 render=function(){const focused=document.activeElement?.id;q9PreviousRender();if(focused?.startsWith('q9-scale'))$('#'+focused)?.focus({preventScroll:true})};
+
+const q9OriginalBindAtlas=bindAtlas;
+bindAtlas=function(){
+ q9OriginalBindAtlas();const button=$('#refresh-atlas');if(!button)return;
+ button.disabled=!!Q9.atlasLoading;button.setAttribute('aria-busy',String(!!Q9.atlasLoading));
+ const status=document.createElement('span');status.id='q9-atlas-status';status.className='q9-axis-note';status.setAttribute('role','status');status.textContent=Q9.atlasStatus||'';button.after(status);
+ button.onclick=async()=>{
+  if(Q9.atlasLoading)return;Q9.atlasLoading=true;button.disabled=true;button.setAttribute('aria-busy','true');status.textContent='Refreshing verified artifacts…';
+  const results=await Promise.allSettled([fetchJson('/api/experimental'),fetchJson('/api/notebook')]);
+  if(results.every(r=>r.status==='fulfilled')){X=results[0].value;N=results[1].value;expandedError=null;notebookError=null;Q9.atlasStatus='Verified artifacts refreshed.'}
+  else{Q9.atlasStatus='Refresh failed. Prior verified artifacts remain visible; retry is available.';if(results[0].status==='rejected')expandedError=results[0].reason;if(results[1].status==='rejected')notebookError=results[1].reason}
+  Q9.atlasLoading=false;if(P&&view==='research'&&researchTab==='visual')render()
+ };
+};
 """
 def enhance(html):
     original='const raw=maximum*1.15,mag=Math.pow(10,Math.floor(Math.log10(raw))),top=Math.ceil(raw/mag*4)/4*mag,x=v=>L+(v-minX)/(maxX-minX)*(w-L-R),y=v=>T+(1-v/top)*(height-T-B);'

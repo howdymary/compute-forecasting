@@ -84,7 +84,7 @@ def main():
                 assert close(float(mark.get_attribute("data-development-score")),cp["development_pinball"])
             details=page.locator(".research-figure details").first;details.locator("summary").click()
             page.locator("#refresh-atlas").focus();page.locator("#refresh-atlas").click()
-            page.wait_for_timeout(1500)
+            expect(page.locator("#refresh-atlas")).to_be_enabled(timeout=90000)
             assert page.locator("#refresh-atlas").evaluate("(el)=>el===document.activeElement")
             assert page.locator(".research-figure details").first.get_attribute("open") is not None
             for scope,denom in (("h:3",4),("s:afhubbard.hyperscaler_spot.A100_40GB.spot.median",3),("all",12)):
