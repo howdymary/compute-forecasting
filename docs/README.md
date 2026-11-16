@@ -32,6 +32,8 @@ Current prospective extension: [Signals v6](prospective-signals-v6.md) · [Versi
 
 ## Product and operation
 
+[Single H100 price canvas v11](price-canvas-v11.md): the current cream pricing view, focused on one historical series and its unchanged archived forecast.
+
 [GPU pricing terminal v10](terminal-v10.md): dark chart workspace, source-separated watchlist, right-side scenario variables, and the verified 30-second walkthrough.
 
 [Institutional pricing dashboard v9](terminal-v9.md): current visual system, source-bound price statistics, range controls and published desktop/mobile verification.

@@ -1,6 +1,6 @@
 # GPU pricing terminal v10
 
-The [full-screen terminal](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/terminal) follows the supplied dark financial-chart reference: a source-separated GPU watchlist, dominant precise price chart, derived lower panels and a right-side variable panel. The original Explore/Research views remain available from Overview.
+The [full-screen terminal](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/terminal/advanced) follows the supplied dark financial-chart reference: a source-separated GPU watchlist, dominant precise price chart, derived lower panels and a right-side variable panel. The original Explore/Research views remain available from Overview.
 
 The terminal reads only the existing verified pricing and approved history APIs. Actual submitted q10/q50/q90 values, the November 6 cutoff, missing historical days, units and exact target identity are preserved. Daily price changes require consecutive observations; there is no volume or OHLC fabrication. The optional EMA 20 is descriptive, resets at gaps and requires 20 consecutive observations. It does not change forecasts.
 
@@ -18,7 +18,7 @@ Implementation references: [Playwright Python video recording](https://playwrigh
 
 ## Verified delivery — 15 November 2026 PT
 
-[Open the terminal](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/terminal) · [Watch / download the MP4](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/terminal/media/43801934433/terminal-30s.mp4) · [Video manifest](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/terminal/media/43801934433/manifest.json) · [Frame contact sheet](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/terminal/media/43801934433/contact-sheet.png).
+[Open the terminal](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/terminal/advanced) · [Watch / download the MP4](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/terminal/media/43801934433/terminal-30s.mp4) · [Video manifest](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/terminal/media/43801934433/manifest.json) · [Frame contact sheet](https://howdymary--compute-forecast-observatory-web.us-east.modal.run/terminal/media/43801934433/contact-sheet.png).
 
 The exported film is exactly **30.0 seconds**, **1920×1080**, **30 fps**, H.264, silent, at **2×** the actual 60-second exploration. All **37 submitted series** were visited. Right-side controls change rental assumptions, horizon, historical anchor, GPU-hours and the separate hardware-resale index. The 58-entry trace retains their exact timing and states. All video inputs are public API snapshots; their hashes and the unchanged official CSV hash are retained. The input responses and original browser recording are included in the [remote run artifact](https://github.com/howdymary/mochi-demo/actions/runs/43801934433).
 
@@ -31,3 +31,7 @@ The terminal passed exact forecast agreement, historical identity/cutoff/gap che
 The first capture request failed before recording because its response callback received the request argument in place of snapshot bytes. [That failed run](https://github.com/howdymary/mochi-demo/actions/runs/43801726740) remains retained; the corrected request is separately versioned. No research experiments or training were rerun.
 
 All eleven browser-validation workflows passed on the deployed source. The earlier Research navigation and memory-panel timeouts were retained and passed one bounded rerun each; numerical and HTTP assertions were not weakened. [Versioned release manifest](../results/terminal-v10/release-2026-11-15.json).
+
+## Current entry point
+
+The main `/terminal` entry is now the [single H100 price canvas](price-canvas-v11.md). This document and its film describe the retained advanced terminal. The earlier capture query keeps that interface; no replacement recording is launched by the canvas release.
