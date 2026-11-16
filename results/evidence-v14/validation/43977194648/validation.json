@@ -1,0 +1,45 @@
+{
+  "source_sha": "6cd7a05bc00e8fba39aee30746dc5e4c6e71eb0d",
+  "study_id": "direct-evidence-v14",
+  "real_completed_runs": 6,
+  "synthetic_market_data": false,
+  "video_recorded": false,
+  "screenshots": [
+    {
+      "path": "desktop.png",
+      "bytes": 372069,
+      "sha256": "a5ad312f26b4fb4be1437d07f37d670b1b334d8a28d20d0050ee8c1f2addd32c"
+    },
+    {
+      "path": "live-desktop.png",
+      "bytes": 289819,
+      "sha256": "e496f2496f4bbd727556fcf06b2650f430325bb70c0ad1ea0c9292e54b325c81"
+    },
+    {
+      "path": "live-mobile.png",
+      "bytes": 253901,
+      "sha256": "a4d0149b563eab6fc31949e8b5b209235016b642a42012041f614353aa9753da"
+    },
+    {
+      "path": "mobile.png",
+      "bytes": 314045,
+      "sha256": "b4a319f98ded2871db6dfcabf0146e815900af445aef971549c9b17246e88258"
+    }
+  ],
+  "live_report_sha256": "e10757fc1f97eaca7cda52e7a355a355c556d27ee601f5c027ab5210d671f852",
+  "live_completed_runs": 6,
+  "checks": [
+    "deployed HTTP and canonical artifact identity",
+    "live desktop/mobile PNGs",
+    "strict HTTP",
+    "actual source-bound prices",
+    "matched report",
+    "mobile axes>=11px",
+    "no page overflow",
+    "keyboard checkpoint selection",
+    "immutable pins",
+    "selection and disclosure preservation",
+    "503/retry",
+    "reduced motion"
+  ]
+}
