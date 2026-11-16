@@ -39,6 +39,9 @@ def main():
             page.locator("#d8-provenance summary").click()
             page.evaluate("render()")
             assert page.locator("#d8-provenance").evaluate("(e)=>e.open")
+            assert page.locator("#d8-provenance p").first.evaluate("(e)=>e.scrollWidth<=e.clientWidth"),"Provenance text clipped"
+            for text in page.locator(".d8-sheet svg text").all():
+                assert text.evaluate("(e)=>parseFloat(getComputedStyle(e).fontSize)*Math.hypot(e.getScreenCTM().a,e.getScreenCTM().b)")>=9.5,"Unreadable chart label"
             page.locator('nav [data-view="explore"]').click()
             page.wait_for_selector("#price-chart")
             page.locator('nav [data-view="research"]').click()
