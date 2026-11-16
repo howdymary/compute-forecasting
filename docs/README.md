@@ -60,3 +60,5 @@ The earlier pricing/notebook guides describe their original release state. Histo
 ## Matched price and BLS models
 
 [Methods](evidence-v14.md) · [Measured findings](evidence-v14-findings.md) · [Versioned artifacts](../results/evidence-v14/README.md). This matched two-arm study preserves the earlier direct and selector studies.
+
+[Execution of the frozen paired prospective panel](evidence-future-v15.md): source freshness, locked checkpoint identities, scheduled inference, public commitment receipts and maturity-gated scoring. No new optimization or prospective accuracy claim.

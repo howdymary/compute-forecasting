@@ -87,7 +87,7 @@ def tick():
     if utc(at)>utc("2027-03-03T00:00:00Z"):return {"study_id":"direct-evidence-v14-prospective","readiness":{"reasons":["finite_panel_complete"]},"issued_origins":None,"new_optimizer_updates":0}
     p=load(pathlib.Path("/root/configs/evidence-v14-prospective.json"));parent=load(pathlib.Path("/root/configs/direct-evidence-v14-final.json"))
     source=pathlib.Path("/data/signals-v6");root=pathlib.Path("/data/evidence-v14-future");root.mkdir(parents=True,exist_ok=True)
-    engine=digest({name:hashlib.sha256(pathlib.Path(__file__).with_name(name).read_bytes()).hexdigest() for name in ("evidence_future_v15.py","evidence_future_remote_v15.py","prospective_evidence_v14.py","direct_future_v12.py","direct_forecast_v12.py","evidence_v14.py","signals_remote_v6.py","starter_probe.py")})
+    engine=digest({name:hashlib.sha256(pathlib.Path(__file__).with_name(name).read_bytes()).hexdigest() for name in ("evidence_future_v15.py","evidence_future_remote_v15.py","prospective_evidence_v14.py","direct_future_v12.py","direct_forecast_v12.py","evidence_v14.py","signals_remote_v6.py","starter_probe.py","review_v4.py")})
     registration={"protocol_sha256":digest(p),"engine_sha256":engine,"source_sha":os.environ.get("GITHUB_SHA"),"first_registered_at":at}
     registration_path=root/"registration.json"
     if registration_path.exists():

@@ -49,6 +49,16 @@ with sync_playwright() as p:
         context.close()
     # Inspect the deployed application against the current immutable public report.
     live_base="https://howdymary--compute-forecast-evidence-v14-web.us-east.modal.run"
+    from concurrent.futures import ThreadPoolExecutor
+    def future_probe(_):
+        with urllib.request.urlopen(live_base+"/api/evidence-future",timeout=90) as response:
+            assert response.status==200
+            value=json.load(response)
+            assert value.get("study_id")=="direct-evidence-v14-prospective" or value.get("status")=="pending_initial_readiness_audit"
+            return value
+    with ThreadPoolExecutor(max_workers=6) as pool:
+        future_probes=list(pool.map(future_probe,range(12)))
+    assert all(v.get("issued_origins",0)>=0 for v in future_probes)
     for attempt in range(18):
         live_raw=urllib.request.urlopen(live_base+"/api/evidence-v14",timeout=90).read()
         live_report=json.loads(live_raw)
