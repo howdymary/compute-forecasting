@@ -1,0 +1,56 @@
+name: Validate paired forecasting figures without recording v14
+on:
+  push:
+    branches: [compute-observatory]
+    paths: ['src/compute_forecast/evidence_ui_v14.py', 'src/compute_forecast/evidence_web_v14.py', 'scripts/validate_evidence_v14_ui.py', 'results/evidence-v14/latest.json', '.github/workflows/validate-evidence-v14-ui.yml']
+  workflow_run:
+    workflows: [Publish matched evidence forecasting research v14]
+    types: [completed]
+    branches: [compute-observatory]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: evidence-v14-png-validation
+  cancel-in-progress: false
+jobs:
+  ui:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Fetch current paired-study source and artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          SOURCE_SHA=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/compute-observatory" --jq .object.sha)
+          gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: |
+          python -m pip install -e '.[dev]' modal numpy playwright
+          python -m playwright install --with-deps chromium
+      - name: Validate scientific contracts and browser syntax
+        run: |
+          python -m compileall -q src scripts
+          python -m pytest --junitxml=artifacts/evidence-v14-ui-tests.xml
+          python - <<'PY'
+          from pathlib import Path
+          from compute_forecast.evidence_ui_v14 import HTML
+          root=Path('artifacts/evidence-v14-ui');root.mkdir(parents=True,exist_ok=True)
+          (root/'script.js').write_text(HTML.split('<script>',1)[1].split('</script>',1)[0])
+          PY
+          node --check artifacts/evidence-v14-ui/script.js
+      - name: Validate actual desktop and mobile interactions
+        run: PYTHONPATH=src python scripts/validate_evidence_v14_ui.py
+      - name: Publish PNG evidence
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/publish_evidence_v14_pngs.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: evidence-v14-ui-${{ github.run_id }}
+          path: artifacts/evidence-v14-ui
+          retention-days: 30

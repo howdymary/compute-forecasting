@@ -25,7 +25,7 @@ with sync_playwright() as p:
         assert page.locator("#prices text").first.evaluate("(e)=>parseFloat(getComputedStyle(e).fontSize)*e.getScreenCTM().a")>=11,"Mobile axes unreadable"
         first=page.locator("#prices circle").first;first.focus();page.keyboard.press("Enter")
         page.locator("#pin").click();pinned=page.locator("#pins li").first.get_attribute("data-snapshot")
-        page.locator("#seed").select_option("29");page.get_by_role("button",name="Inspect optimizer update50",exact=True).click()
+        page.locator("#seed").select_option("29");page.get_by_role("button",name="Inspect optimizer update 50",exact=True).click()
         assert page.locator("#pins li").first.get_attribute("data-snapshot")==pinned,"Pin mutated"
         before=page.locator("#case").input_value();page.locator("details").first.locator("summary").click()
         page.locator("#refresh").click();page.wait_for_function("!document.querySelector('#status').textContent.startsWith('Loading')")
