@@ -57,3 +57,20 @@ Preparation took 229.24 seconds. The three horizon workers took 3.40, 4.87, 5.84
 ## Supported public claim
 
 We implemented and audited three peer-inspired forecasting mechanisms under matched, fixed controls, reproduced every published score with the official scorer, and retained negative results and failed replay gates. The experiment explains why wider or more complex forecasts need not improve loss. Prospective improvement is not yet established.
+
+## Release validation
+
+The final deployed interface revision is 36fcdb793ad8c47ab0618d113e6219321b8cab28. All nine remote UI suites passed, including 1512-, 390- and 320-pixel layouts; mouse/touch and keyboard selection; immutable pins; preserved navigation/disclosures; independent pricing loading; error/retry behavior; and source-metric agreement. The last pass additionally checks rendered chart-text size and unclipped provenance. Desktop and mobile PNGs were inspected.
+
+- [Deployment and full suite: 165 passed, 3 skipped](https://github.com/howdymary/mochi-demo/actions/runs/43788491453)
+- [New notebook validation and PNGs](https://github.com/howdymary/mochi-demo/actions/runs/43788633381)
+- [Future binding, capture and memory publication: 15 focused tests passed](https://github.com/howdymary/mochi-demo/actions/runs/43787746522)
+- [Credential-free arithmetic verification](https://github.com/howdymary/mochi-demo/actions/runs/43786426148)
+- [Versioned release index](../results/price-dynamics-v8/release-2026-11-16.json)
+- [Preserved original configuration/export hashes](../results/price-dynamics-v8/preservation-f9d4-to-3047.json)
+
+The supplementary rounding audit matched 207/234 dates using Python scalar rounding and 221/234 using NumPy rounding. Thirteen source-generation differences remain unresolved; these are retained rather than changing the official target. Replay gates and all canonical scores remain unchanged.
+
+Future forecast commitments now bind an immutable saved input snapshot and the exact protocol, numerical engine and adapter hashes. The evaluator rejects altered input/configuration identities, duplicate arm keys, wrong origin/target dates and unmatured outcomes. No eligible fresh aggregate observation or new future forecast was available at release.
+
+The repository's original URL redirects to howdymary/mochi-demo, the same repository ID. Changes remain on compute-observatory; the Mochi project and other branches were preserved.

@@ -72,3 +72,7 @@ Data: Pacific Machines (2026), gpu-price-pack v0.1.1-handover, cutoff November 6
 Implementation uses Modal's documented bounded scaling and starmap interfaces: https://modal.com/docs/guide/scale and https://modal.com/docs/reference/modal.Function.
 
 [Measured findings and limitations](price-dynamics-v8-findings.md). The initial placeholder future duration in the historical config is superseded only by the separate pre-issuance future-panel protocol; the six-arm retrospective config is unchanged.
+
+Canonical completed configurations are protected against accidental duplicate execution. The public arithmetic command in the findings requires no service credentials. Independent full numerical regeneration requires an isolated authorized Modal environment with the unchanged pack; repeating the canonical run is intentionally refused. This distinction prevents a cached verification from being described as a fresh numerical rerun.
+
+[Final release verification and screenshots](../results/price-dynamics-v8/release-2026-11-16.json). Prospectively issued inputs are retained under immutable hashes and checked by the locked evaluator; no outcome is promoted before the registered fixed analysis.

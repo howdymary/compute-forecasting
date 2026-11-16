@@ -1,0 +1,194 @@
+{
+  "schema_version": 8,
+  "study_id": "price-dynamics-v8",
+  "released_at": "2026-11-16T01:53:13+00:00",
+  "classification": "post-event retrospective study, separate future panel pending",
+  "implementation_commit": "36fcdb793ad8c47ab0618d113e6219321b8cab28",
+  "future_binding_commit": "83f6963db2af2a9ddbed247eff2e7d01853db9a6",
+  "live_url": "https://howdymary--compute-forecast-observatory-web.us-east.modal.run",
+  "navigation": "Research → Price dynamics",
+  "official_forecast_sha256": "67a043255a716db6bc9b73cd28f9258c30fb299fd8671a9ee3430c0d94cadd80",
+  "study_artifact": "results/price-dynamics-v8/runs/43785185915/study.json",
+  "study_sha256": "f14658cc1f595cf7494e4fe907f5af6aa22f8e7cb3be5c444ab6318a2068e4c7",
+  "protocol": "configs/price-dynamics-v8.json",
+  "protocol_sha256": "a68e4ddd72002e3b87f946ca2f27f7e6e963096c6d5e4c252f6b85512ed146e1",
+  "retrospective": {
+    "series": 8,
+    "temporal_origins": 13,
+    "eligible_cells": 304,
+    "missing_target_pairs": 8,
+    "primary_cells": 104,
+    "official_verified_forecast_scores": 2432,
+    "primary_improvement_established": false
+  },
+  "replay": {
+    "status": "fallback_only",
+    "reason": "Unverified persistent identities, daily target reconstruction and collection completeness"
+  },
+  "future": {
+    "protocol": "configs/price-dynamics-v8-future.json",
+    "source_last_listed_partition": "2026-11-08",
+    "protected_objects_downloaded": false,
+    "new_retained_observations": 0,
+    "forecasts_issued": 0,
+    "resolution_dates": [],
+    "analysis_at": "2027-04-06T00:00:00+00:00",
+    "status": "pending_fresh_compatible_aggregate_capture",
+    "operations_run": 43787746522
+  },
+  "memory": {
+    "artifact": "results/price-dynamics-v8/runs/43787746522/memory.json",
+    "roles": 3,
+    "writes": 4,
+    "verified_cross_role_uses": 4,
+    "delivery": "past.dev returned source IDs; exact numerical payloads resolved by those IDs from canonical records",
+    "accuracy_benefit_established": false
+  },
+  "news": {
+    "artifact": "results/price-dynamics-v8/runs/43787746522/news.json",
+    "discovery_count": 24,
+    "cap": 24,
+    "cap_reached": true,
+    "rss_document_items": 20,
+    "market_wide_coverage": "unknown",
+    "forecasting_value_tested": false
+  },
+  "rounding": {
+    "artifact": "results/price-dynamics-v8/runs/43788633381/rounding.json",
+    "days": 234,
+    "scalar_matches": 207,
+    "numpy_matches": 221,
+    "remaining_discrepancies": 13,
+    "canonical_forecasts_changed": false
+  },
+  "validation": {
+    "deployment_run": 43788491453,
+    "full_tests": {
+      "passed": 165,
+      "skipped": 3
+    },
+    "future_focused_tests": {
+      "passed": 15,
+      "run": 43787746522
+    },
+    "ui_report": {
+      "status": "passed",
+      "recording": false,
+      "widths": [
+        {
+          "width": 1512,
+          "no_overflow": true,
+          "metric_agreement": true,
+          "keyboard": true,
+          "pins_immutable": true,
+          "navigation_and_disclosures": true
+        },
+        {
+          "width": 390,
+          "no_overflow": true,
+          "metric_agreement": true,
+          "keyboard": true,
+          "pins_immutable": true,
+          "navigation_and_disclosures": true
+        },
+        {
+          "width": 320,
+          "no_overflow": true,
+          "metric_agreement": true,
+          "keyboard": true,
+          "pins_immutable": true,
+          "navigation_and_disclosures": true
+        }
+      ],
+      "ui_revision": "36fcdb793ad8c47ab0618d113e6219321b8cab28",
+      "independent_pricing_loading_error_retry": true
+    },
+    "screenshots": [
+      {
+        "name": "1512.png",
+        "sha256": "125810564995755fb4b5534610c8da878bafa14079230a5da831530b73a5f08b",
+        "chunks": 42,
+        "path": "results/price-dynamics-v8/runs/43788633381/1512.png"
+      },
+      {
+        "name": "320.png",
+        "sha256": "46d6bcb85fb97fb664d750684d1d8d8dd3f590c7b05678fbbca3ef486417a8d0",
+        "chunks": 35,
+        "path": "results/price-dynamics-v8/runs/43788633381/320.png"
+      },
+      {
+        "name": "390.png",
+        "sha256": "06f4e886562e85dd904132c93bea2edd27e76d2ea35241b16057e41bff8ab5b2",
+        "chunks": 35,
+        "path": "results/price-dynamics-v8/runs/43788633381/390.png"
+      }
+    ],
+    "ui_runs": [
+      {
+        "name": "Validate interactive notebook without recording",
+        "id": 43788633331,
+        "conclusion": "success",
+        "url": "https://github.com/howdymary/mochi-demo/actions/runs/43788633331"
+      },
+      {
+        "name": "Validate prospective signal notebook without recording",
+        "id": 43788633375,
+        "conclusion": "success",
+        "url": "https://github.com/howdymary/mochi-demo/actions/runs/43788633375"
+      },
+      {
+        "name": "Validate experimental research UI",
+        "id": 43788633428,
+        "conclusion": "success",
+        "url": "https://github.com/howdymary/mochi-demo/actions/runs/43788633428"
+      },
+      {
+        "name": "Validate review findings without recording",
+        "id": 43788633394,
+        "conclusion": "success",
+        "url": "https://github.com/howdymary/mochi-demo/actions/runs/43788633394"
+      },
+      {
+        "name": "Validate pricing UI",
+        "id": 43788633395,
+        "conclusion": "success",
+        "url": "https://github.com/howdymary/mochi-demo/actions/runs/43788633395"
+      },
+      {
+        "name": "Validate research explorer without recording",
+        "id": 43788633464,
+        "conclusion": "success",
+        "url": "https://github.com/howdymary/mochi-demo/actions/runs/43788633464"
+      },
+      {
+        "name": "Validate GPU value and shared memory without recording",
+        "id": 43788633354,
+        "conclusion": "success",
+        "url": "https://github.com/howdymary/mochi-demo/actions/runs/43788633354"
+      },
+      {
+        "name": "Validate historical forecast timeline without recording",
+        "id": 43788633283,
+        "conclusion": "success",
+        "url": "https://github.com/howdymary/mochi-demo/actions/runs/43788633283"
+      },
+      {
+        "name": "Validate six-arm research notebook without recording",
+        "id": 43788633381,
+        "conclusion": "success",
+        "url": "https://github.com/howdymary/mochi-demo/actions/runs/43788633381"
+      },
+      {
+        "name": "Validate research foundation",
+        "id": 43788491447,
+        "conclusion": "success",
+        "url": "https://github.com/howdymary/mochi-demo/actions/runs/43788491447"
+      }
+    ],
+    "public_reconstruction_run": 43786426148,
+    "pngs_visually_inspected": true,
+    "recording": false
+  },
+  "reproduction_command": "python -m compute_forecast.verify_price_dynamics_v8 results/price-dynamics-v8/runs/43785185915/study.json",
+  "supported_claim": "A matched, auditable retrospective comparison found no primary gain for these configurations; replay is gated and prospective improvement is not yet established."
+}

@@ -162,3 +162,8 @@ Built for Track 5, Open Track, during the November 2026 research hackathon. Moch
 [project-readme]: https://github.com/howdymary/mochi-demo/blob/mochi-hackathon/mochi/README.md
 
 [walkthrough]: https://www.loom.com/share/39e28d8b88ff4773a98e799f9a02f0e6?t=4
+
+
+## Compute Forecast research archive
+
+The GPU rental forecasting study remains on compute-observatory. [Measured findings](docs/price-dynamics-v8-findings.md), [methods and reproduction](docs/price-dynamics-v8.md), and the [live observatory](https://howdymary--compute-forecast-observatory-web.us-east.modal.run) document the fixed six-arm study, retained negative results and pending prospective panel.
