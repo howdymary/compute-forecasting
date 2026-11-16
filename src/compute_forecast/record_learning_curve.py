@@ -104,14 +104,14 @@ function tx(parent,x,y,t,size=18,color='#6f8076',more={}){return add(parent,'tex
 for(let i=0;i<=6;i++){const v=.008+i*.002,yy=Y(v);add('axes','line',{x1:200,x2:1430,y1:yy,y2:yy,stroke:'#dce0d5','stroke-width':1,opacity:i===0?.85:.65});tx('axes',175,yy+6,v.toFixed(3),18,'#7b8980',{'text-anchor':'end'})}
 for(const u of [0,20,50,100]){add('axes','line',{x1:X(u),x2:X(u),y1:240,y2:825,stroke:'#dce0d5','stroke-width':1,opacity:.45,'stroke-dasharray':'2 7'});tx('axes',X(u),862,String(u),22,'#586e63',{'text-anchor':'middle'})}
 const groupBy=Object.fromEntries(D.groups.map(g=>[g.id,g]));
-for(const id of ['hard','soft-17','soft-29','soft-43']){const g=groupBy[id],path=g.points.map((p,i)=>(i?'L':'M')+X(p.update)+','+Y(p.loss)).join(' ');add('paths','path',{id:'path-'+id,d:path,stroke:C[id],'stroke-width':id==='hard'?6:id==='soft-17'?4.7:3,'stroke-dasharray':id==='soft-43'?'5 10':id==='hard'?'2 7':'',opacity:id==='hard'?.55:1,class:'guide','data-members':g.runs.join(',')})}
+for(const id of ['hard','soft-17','soft-29','soft-43']){const g=groupBy[id],path=g.points.map((p,i)=>(i?'L':'M')+X(p.update)+','+Y(p.loss)).join(' ');add('paths','path',{id:'path-'+id,d:path,stroke:C[id],'stroke-width':id==='hard'?6:id==='soft-17'?4.7:3,'stroke-dasharray':id==='soft-43'?'5 10':id==='hard'?'2 7':'',opacity:1,class:'guide','data-members':g.runs.join(',')})}
 const pts=[],sels=[];
 for(const g of D.groups){for(const p of g.points){const e=add('points','circle',{cx:X(p.update),cy:Y(p.loss),r:g.id==='soft-17'?5.8:4.3,stroke:C[g.id],'stroke-width':2.2,class:'dot',opacity:0,'data-update':p.update,'data-loss':p.loss,'data-members':g.runs.join(',')});pts.push({e,p,id:g.id});}const p=g.points.find(p=>p.update===g.selected);const e=add('selected','circle',{cx:X(p.update),cy:Y(p.loss),r:8,stroke:C[g.id],class:'select',opacity:0,'data-update':p.update,'data-loss':p.loss,'data-members':g.runs.join(',')});sels.push({e,p,id:g.id});}
 const keydefs=[['hard',200,'Hard · seeds 17 / 29 / 43'],['soft-17',629,'Soft · seed 17'],['soft-29',925,'Soft · seed 29'],['soft-43',1225,'Soft · seed 43']];
 for(const[id,x,label]of keydefs){add('earlykey','line',{x1:x,x2:x+28,y1:197,y2:197,stroke:C[id],'stroke-width':id==='hard'?4:3,'stroke-dasharray':id==='soft-43'?'4 5':id==='hard'?'2 5':''});tx('earlykey',x+40,203,label,17,C[id])}
 const labels=[{id:'hard',y:576,title:'Hard · seeds 17 / 29 / 43',sub:'identical path · kept update 20'},{id:'soft-29',y:641,title:'Soft · seed 29',sub:'kept update 20'},{id:'soft-43',y:706,title:'Soft · seed 43',sub:'kept update 50'},{id:'soft-17',y:790,title:'Soft · seed 17',sub:'kept update 100 · operational'}];
 for(const a of labels){const g=groupBy[a.id],end=g.points.at(-1),yy=Y(end.loss);const layer=add('labels','g',{id:'label-'+a.id,opacity:0});const append=(tag,attrs,t)=>{const e=document.createElementNS(S,tag);for(const[k,v]of Object.entries(attrs))e.setAttribute(k,v);if(t)e.textContent=t;layer.appendChild(e);return e};append('path',{d:'M'+(X(100)+10)+','+yy+' L1463,'+yy+' L1500,'+(a.y-7)+' L1515,'+(a.y-7),stroke:C[a.id],'stroke-width':1.4,fill:'none',opacity:.7});append('text',{x:1530,y:a.y,fill:C[a.id],'font-size':a.id==='hard'?22:25},a.title);append('text',{x:1530,y:a.y+26,fill:'#7b8980','font-size':17},a.sub);}
-const values=[{u:0,v:D.runs[0].points[0].loss,x:219,y:475,anchor:'start',id:'v0'},{u:20,v:groupBy['soft-17'].points[1].loss,x:441,y:309,anchor:'middle',id:'v20'},{u:50,v:groupBy['soft-17'].points[2].loss,x:815,y:697,anchor:'middle',id:'v50'},{u:100,v:groupBy['soft-17'].points[3].loss,x:1416,y:738,anchor:'end',id:'v100'}];
+const values=[{u:0,v:D.runs[0].points[0].loss,x:178,y:501,anchor:'end',id:'v0'},{u:20,v:groupBy['soft-17'].points[1].loss,x:441,y:309,anchor:'middle',id:'v20'},{u:50,v:groupBy['soft-17'].points[2].loss,x:815,y:697,anchor:'middle',id:'v50'},{u:100,v:groupBy['soft-17'].points[3].loss,x:1416,y:738,anchor:'end',id:'v100'}];
 for(const v of values)tx('pointvalues',v.x,v.y,v.v.toFixed(6),20,v.u===100?'#315dc1':'#697c72',{'text-anchor':v.anchor,id:v.id,opacity:0});
 const noteSpecs=[{id:'n0',text:'Start together. Let the experiments separate them.',a:0,b:.9,c:2.5,d:3.1},{id:'n1',text:'Two soft-target runs regress at update 20.',a:6,b:6.6,c:8.4,d:8.9},{id:'n2',text:'At update 50, all six have the same development loss.',a:11.7,b:12.2,c:13.3,d:13.8},{id:'n3',text:'Rings mark the checkpoints originally kept.',a:18,b:18.6,c:23.8,d:24.4},{id:'n4',text:'Improvement is not a straight line.',a:24.3,b:25,c:31,d:32}];
 for(const n of noteSpecs)tx('notes',960,955,n.text,37,'#315dc1',{class:'hand',id:n.id,opacity:0});
@@ -164,9 +164,20 @@ def validate_page(page,payload):
     for i,a in enumerate(labels):
         for b in labels[i+1:]:
             if min(a["b"]["right"],b["b"]["right"])>max(a["b"]["left"],b["b"]["left"]) and min(a["b"]["bottom"],b["b"]["bottom"])>max(a["b"]["top"],b["b"]["top"]):raise ValueError("Direct label collision")
+    overlaps=page.evaluate("""()=>{
+      const paths=[...document.querySelectorAll('#paths path')];
+      return [...document.querySelectorAll('#pointvalues text')].filter(e=>{
+        const b=e.getBBox();
+        for(let x=b.x;x<=b.x+b.width;x+=2)for(let y=b.y;y<=b.y+b.height;y+=2){
+          if(paths.some(p=>p.isPointInStroke(new DOMPoint(x,y))))return true;
+        }
+        return false;
+      }).map(e=>e.textContent);
+    }""")
+    if overlaps:raise ValueError(("Numeric annotation touches a data path",overlaps))
     font=page.evaluate("document.fonts.check('32px Fieldnote')")
     if not font:raise ValueError("Handwritten font failed")
-    return {"status":"passed","source_checkpoints":24,"visible_full_trajectory_groups":4,"represented_runs":6,"selected_markers_verified":6,"geometry_samples":121,"fixed_axes":True,"point_geometry_immutable":True,"numeric_score_interpolation":False,"label_collisions":[],"page_clipping":[],"embedded_font_loaded":font,"animation_schedule":{"0-2.8":"common starting checkpoint","2.8-6":"reveal to update 20","6-8.7":"hold early regressions","8.7-11.7":"reveal to update 50","11.7-13.6":"hold six-way equal score","13.6-17.8":"reveal to update 100","18-24.6":"original selection rings and direct labels","24.6-30":"hold completed chart and development-only reduction"}}
+    return {"status":"passed","source_checkpoints":24,"visible_full_trajectory_groups":4,"represented_runs":6,"selected_markers_verified":6,"geometry_samples":121,"fixed_axes":True,"point_geometry_immutable":True,"numeric_score_interpolation":False,"label_collisions":[],"numeric_annotation_path_collisions":[],"page_clipping":[],"embedded_font_loaded":font,"animation_schedule":{"0-2.8":"common starting checkpoint","2.8-6":"reveal to update 20","6-8.7":"hold early regressions","8.7-11.7":"reveal to update 50","11.7-13.6":"hold six-way equal score","13.6-17.8":"reveal to update 100","18-24.6":"original selection rings and direct labels","24.6-30":"hold completed chart and development-only reduction"}}
 
 def main():
     parser=argparse.ArgumentParser();parser.add_argument("--no-publish",action="store_true");args=parser.parse_args()
