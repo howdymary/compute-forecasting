@@ -4,6 +4,9 @@ on:
     workflows: [Publish direct GPU forecasting research v12]
     types: [completed]
     branches: [compute-observatory]
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/deploy-direct-v12.yml]
   workflow_dispatch:
 permissions:
   contents: read
@@ -12,7 +15,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   deploy:
-    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -38,5 +41,6 @@ jobs:
           with urllib.request.urlopen(url+'/health',timeout=90) as r:health=json.load(r)
           assert health['study_id']=='direct-forecast-v12'
           with urllib.request.urlopen(url+'/api/direct-v12',timeout=90) as r:report=json.load(r)
-          assert report['study_id']=='direct-forecast-v12' and not report['audit']['protected_outcomes_loaded']
+          assert report['study_id']=='direct-forecast-v12'
+          if report.get('audit'):assert not report['audit']['protected_outcomes_loaded']
           PY

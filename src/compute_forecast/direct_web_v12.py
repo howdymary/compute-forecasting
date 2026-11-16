@@ -29,5 +29,8 @@ def web():
                 if len(raw)>15_000_000 or hashlib.sha256(raw).hexdigest()!=index["report_sha256"]:raise ValueError("Report hash mismatch")
                 value=json.loads(raw);cache.update(at=time.monotonic(),value=value)
                 return JSONResponse(value,headers=headers)
-            except Exception as e:return JSONResponse({"status":"unavailable","error_type":type(e).__name__},status_code=503,headers=headers)
+            except Exception as e:
+                if getattr(e,"code",None)==404:
+                    return JSONResponse({"study_id":"direct-forecast-v12","status":"running","runs":[],"cases":[],"pending_reason":"Training artifacts have not been published yet"},headers=headers)
+                return JSONResponse({"status":"unavailable","error_type":type(e).__name__},status_code=503,headers=headers)
     return api

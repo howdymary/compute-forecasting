@@ -41,7 +41,7 @@ with sync_playwright() as p:
             assert page.locator("#chart circle").count()==sum(len(r["checkpoints"]) for r in report["runs"])
             page.screenshot(path=str(root/(name+"-learning.png")),full_page=True)
             page.get_by_role("button",name="Price forecast",exact=True).click()
-        else:assert "No completed checkpoint" in page.locator("#chart").inner_text()
+        else:assert "No completed checkpoint" in page.locator("#chart").text_content()
         page.screenshot(path=str(root/(name+"-price.png")),full_page=True)
         state["error"]=True;page.get_by_role("button",name="Refresh research results").click()
         page.wait_for_function("document.querySelector('#status').textContent.includes('unavailable')")
