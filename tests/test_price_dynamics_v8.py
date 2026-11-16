@@ -59,3 +59,9 @@ def test_notebook_renderer_integration():
     assert HTML.count("function dynamicsPage()")==1
     assert HTML.count('<script>')==1 and HTML.count('</script>')==1
     assert "dynamics:dynamicsPage" in HTML
+
+def test_exact_public_url_exception_does_not_allow_credentials():
+    from compute_forecast.public_results import private_guard,VERIFIED_PUBLIC_URL_EXCEPTIONS
+    for url in VERIFIED_PUBLIC_URL_EXCEPTIONS:private_guard({"source_url":url})
+    with pytest.raises(ValueError):private_guard({"source_url":"https://example.com/sk-proj-"+"A"*30})
+    with pytest.raises(ValueError):private_guard({"note":"sk-"+"A"*30})

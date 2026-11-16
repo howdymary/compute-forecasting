@@ -263,7 +263,7 @@ def web():
         return JSONResponse(value,headers=headers)
     @api.get("/api/price-dynamics-v8/extra/{name}")
     def price_dynamics_v8_extra(name:str):
-        if name not in ("future","news","memory"):return Response(status_code=404,headers=headers)
+        if name not in ("future","news","memory","rounding"):return Response(status_code=404,headers=headers)
         with lock:
             public.reload();path=Path("/public/price-dynamics-v8")/(name+".json")
             if not path.is_file():return JSONResponse({"schema_version":8,"status":"pending","reads":[]},headers=headers)

@@ -30,6 +30,9 @@ SCREENSHOTS={
 }
 def sha(raw):return hashlib.sha256(raw).hexdigest()
 def encoded(value):return (json.dumps(value,indent=2,allow_nan=False)+"\n").encode()
+# Exact verified public article URL: its SK Telecom slug is not an API key.
+# All other token-pattern strings, including other URLs, remain rejected.
+VERIFIED_PUBLIC_URL_EXCEPTIONS={"https://nvidianews.nvidia.com/news/nvidia-rebellions-and-sk-telecom-announce-collaboration-to-advance-sovereign-ai-infrastructure-with-nvidia-nvlink-fusion"}
 def private_guard(value):
     if isinstance(value,dict):
         forbidden={"state_path","sampler_path","weights_access_token","api_key","access_token","refresh_token","authorization","raw_response","permitted_private_method_context"}
@@ -37,7 +40,7 @@ def private_guard(value):
         for v in value.values():private_guard(v)
     elif isinstance(value,list):
         for v in value:private_guard(v)
-    elif isinstance(value,str) and (value.startswith("tinker://") or re.search(r"\b(?:sk-(?:proj-)?[A-Za-z0-9_-]{20,}|hf_[A-Za-z0-9]{24,}|gh[pousr]_[A-Za-z0-9]{24,})",value)):raise ValueError("Excluded private credential or checkpoint URI")
+    elif isinstance(value,str) and value not in VERIFIED_PUBLIC_URL_EXCEPTIONS and (value.startswith("tinker://") or re.search(r"\b(?:sk-(?:proj-)?[A-Za-z0-9_-]{20,}|hf_[A-Za-z0-9]{24,}|gh[pousr]_[A-Za-z0-9]{24,})",value)):raise ValueError("Excluded private credential or checkpoint URI")
 def check_bundle(raw):
     if set(raw)!=set(ENDPOINTS):raise ValueError("Unexpected public artifact set")
     for name,data in raw.items():
