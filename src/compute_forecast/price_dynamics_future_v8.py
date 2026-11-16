@@ -7,7 +7,7 @@ from urllib.parse import urlencode,quote
 from urllib.request import Request,urlopen
 import xml.etree.ElementTree as ET
 import modal
-from .price_dynamics_v8 import digest,pooled,replay,calibrate,loss,validate_commitment
+from .price_dynamics_v8 import digest,pooled,replay,calibrate,loss,validate_commitment,paired,summarize
 from .price_dynamics_remote_v8 import data,public,put,encoded
 from .starter_probe import PACK_NAME
 from .pacific_value_v5 import invoke,write_csv,rows
@@ -135,7 +135,34 @@ def evaluate(at):
             if datetime.fromisoformat(r["resolution_at"])>at or r["target"] not in vs.get(r["series_id"],{}):pending+=1;continue
             truth=vs[r["series_id"]][r["target"]]
             scored.append({**r,"truth":truth,"loss":loss(r["quantiles"],truth),"commitment_sha256":digest(c)})
-    return {"scored":scored,"pending_cells":pending,"analysis_at":"2027-04-06T00:00:00+00:00","accuracy_established":False,"interpretation":"No promotion before fixed analysis; compatible matured observations required"}
+    result={"scored":scored,"pending_cells":pending,"analysis_at":"2027-04-06T00:00:00+00:00","accuracy_established":False,"interpretation":"No promotion before fixed analysis; compatible matured observations required"}
+    if at<datetime(2027,4,6,tzinfo=timezone.utc):return result
+    origins=sorted({r["origin"] for r in scored if r["horizon"]==7})
+    if len(origins)<8:
+        result["final_status"]="insufficient_eligible_origins";return result
+    import random
+    comparisons=[];rng=random.Random(17)
+    for candidate,reference in (("C","A"),("E","A"),("B","A"),("D","C"),("F","E")):
+        comparison=paired(scored,candidate,reference,7)
+        aa={(r["series_id"],r["origin"]):r for r in scored if r["method"]==candidate and r["horizon"]==7}
+        bb={(r["series_id"],r["origin"]):r for r in scored if r["method"]==reference and r["horizon"]==7}
+        ds=[statistics.mean(aa[k]["loss"]-bb[k]["loss"] for k in aa if k[1]==o) for o in origins]
+        observed=statistics.mean(ds);centered=[x-observed for x in ds];null=[]
+        for _ in range(2000):
+            sample=[]
+            while len(sample)<len(ds):
+                start=rng.randrange(len(ds));sample.extend(centered[(start+j)%len(ds)] for j in range(4))
+            null.append(statistics.mean(sample[:len(ds)]))
+        comparison["one_sided_centered_block_bootstrap_p"]=(1+sum(x<=observed for x in null))/2001
+        comparison["inference_limit"]="Approximate dependent-series block inference; few effective temporal blocks"
+        comparisons.append(comparison)
+    passed=True
+    for rank,c in enumerate(sorted(comparisons,key=lambda r:r["one_sided_centered_block_bootstrap_p"])):
+        threshold=.05/(len(comparisons)-rank)
+        passed=passed and c["one_sided_centered_block_bootstrap_p"]<=threshold
+        c["holm_threshold"]=threshold;c["promotion_eligible"]=passed and c["difference"]<0
+    result.update(final_status="analyzed",summary=[summarize(scored,m,h) for m in "ABCDEF" for h in (1,3,7)],comparisons=comparisons,accuracy_established=any(c["promotion_eligible"] for c in comparisons))
+    return result
 @app.function(image=image,cpu=2,memory=4096,timeout=900,max_containers=1,volumes={"/data":data,"/public":public},schedule=modal.Cron("5 0 * * *"))
 def tick():
     at=now()

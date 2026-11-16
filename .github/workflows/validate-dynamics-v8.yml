@@ -1,0 +1,52 @@
+name: Validate six-arm research notebook without recording
+on:
+  workflow_run:
+    workflows: ["Deploy pricing observatory"]
+    types: [completed]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  validate:
+    if: (github.event_name != 'workflow_run' && github.ref == 'refs/heads/compute-observatory') || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'compute-observatory')
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      SOURCE_SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
+    steps:
+      - name: Fetch exact source remotely
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: |
+          python -m pip install -e '.[dev]' modal==1.6.4 playwright
+          python -m playwright install --with-deps chromium
+          python -m compute_forecast.verify_price_dynamics_v8 results/price-dynamics-v8/runs/43785185915/study.json
+      - name: Explain retained raw-target discrepancies without changing results
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: python -m compute_forecast.target_rounding_v8
+      - name: Verify interaction and render PNGs only
+        run: python -m compute_forecast.validate_dynamics_ui_v8
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dynamics-ui-v8-${{ github.run_id }}
+          path: artifacts/dynamics-ui-v8
+          retention-days: 90
+      - name: Publish verified report, rounding explanation and PNGs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          from compute_forecast.publication_v8 import publish
+          root=Path('artifacts/dynamics-ui-v8')
+          files={'results/price-dynamics-v8/runs/'+os.environ['GITHUB_RUN_ID']+'/'+str(p.relative_to(root)):p.read_bytes() for p in root.rglob('*') if p.is_file()}
+          print('V8_UI_COMMIT:'+publish(files),flush=True)
+          PY

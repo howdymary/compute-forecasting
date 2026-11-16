@@ -53,3 +53,9 @@ def test_news_cap_is_not_frequency():
     from compute_forecast.news_measurement_v8 import measurement
     v=measurement([{"url":"https://example.com/a"}]*6,{"query":"q","numResults":6},"2026-11-16")
     assert v["cap_reached"] and v["deduplicated_events"]==1 and "not no market" in v["zero_means"]
+
+def test_notebook_renderer_integration():
+    from compute_forecast.explore_ui import HTML
+    assert HTML.count("function dynamicsPage()")==1
+    assert HTML.count('<script>')==1 and HTML.count('</script>')==1
+    assert "dynamics:dynamicsPage" in HTML
