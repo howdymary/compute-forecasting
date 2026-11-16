@@ -1,5 +1,5 @@
 name: Audit authorized Tinker checkpoint cleanup
-# Read the current SDK checkpoint identity from its documented resource URI.
+# Apply the explicitly authorized project cleanup after the completed identity audit.
 on:
   push:
     branches: [compute-observatory]
@@ -27,7 +27,7 @@ jobs:
       - name: Identify only explicitly authorized project checkpoints
         env:
           TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
-          APPLY_DELETE: 'false'
+          APPLY_DELETE: 'true'
         run: python scripts/manage_tinker_storage_v12.py
       - uses: actions/upload-artifact@v4
         if: always()
