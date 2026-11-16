@@ -47,7 +47,7 @@ Credential-free arithmetic reconstruction is provided separately. Full numerical
 
 ## Future evaluation
 
-A separate compatible-aggregate panel is registered for weekly Sunday origins November 22–February 14. The existing individual-contract signals-v6 pilots are not repurposed as collector medians. New source IDs retain their own population definition. Cutoff is Sunday 23:59:59 UTC; issuance deadline is Monday 00:30 UTC. Require 56 retained observed days and compatible fresh collection, preserve missingness, and score only truth collected after commitment and after target UTC day close. Fixed analysis February 23 requires at least eight eligible origins. Otherwise accuracy remains pending. The original prospective commitments and November 23 gate are unchanged.
+A separate compatible-aggregate panel is registered for weekly Sunday origins November 22–March 28. The existing individual-contract signals-v6 pilots are not repurposed as collector medians. New source IDs retain their own population definition. Cutoff is Sunday 23:59:59 UTC; issuance deadline is Monday 00:30 UTC. Require 56 retained observed days and compatible fresh collection, preserve missingness, and score only truth collected after commitment and after target UTC day close. The separately registered pre-issuance duration amendment extends warmup coverage; fixed analysis April 6 requires at least eight eligible origins. Otherwise accuracy remains pending. The original prospective commitments and November 23 gate are unchanged.
 
 ## Evidence measurement
 
@@ -70,3 +70,5 @@ Their reported improvements are not our results. No peer source code was copied.
 Data: Pacific Machines (2026), gpu-price-pack v0.1.1-handover, cutoff November 6, CC BY 4.0 compilation; Alex Hubbard GPU Price Tracker, CC BY 4.0 data. Source-specific notices remain in the existing Methods/Downloads source index. Original pack and source licenses remain authoritative.
 
 Implementation uses Modal's documented bounded scaling and starmap interfaces: https://modal.com/docs/guide/scale and https://modal.com/docs/reference/modal.Function.
+
+[Measured findings and limitations](price-dynamics-v8-findings.md). The initial placeholder future duration in the historical config is superseded only by the separate pre-issuance future-panel protocol; the six-arm retrospective config is unchanged.

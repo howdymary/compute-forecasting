@@ -147,6 +147,12 @@ jobs:
           assert len(history['history_context']['series'])==2
           assert comparator['scope']['cells']==12 and comparator['status']=='completed'
           assert comparator['prospective']['outcomes_loaded'] is False
+          dynamics=json.loads(get('/api/price-dynamics-v8'))
+          assert dynamics['schema_version']==8 and len(dynamics['cells'])==2432
+          assert dynamics['cohort']['eligible_cells']==304
+          for name in ('news','memory','future'):
+              extra=json.loads(get('/api/price-dynamics-v8/extra/'+name))
+              assert extra['schema_version']==8
           assert b'See what compute could cost.' in get('/')
           Path('artifacts/pricing-health.json').write_text(json.dumps(health,indent=2))
           with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:f.write('\nLive pricing observatory: '+url+'\n\nAll 37 series verified; frozen CSV unchanged; UI revision '+health['ui_revision']+'.\n')

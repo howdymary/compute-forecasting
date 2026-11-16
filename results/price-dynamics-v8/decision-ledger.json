@@ -1,0 +1,44 @@
+{
+  "schema_version": 8,
+  "study_id": "price-dynamics-v8",
+  "source_artifact": "results/price-dynamics-v8/runs/43785185915/study.json",
+  "iterations": [
+    {
+      "id": "pooling",
+      "hypothesis": "Pooling historical log changes and bounded state conditioning lowers seven-day loss",
+      "candidate": "C",
+      "control": "A",
+      "status": "rejected_primary_gain_claim",
+      "result": "6.16% higher retrospective loss; uncertainty spans zero",
+      "criticism": "Combined mechanism; no individual-effect claim; opened dependent origins",
+      "next_decision": "Keep registered future comparison; no retrospective promotion"
+    },
+    {
+      "id": "calibration",
+      "hypothesis": "Matured-error calibration lowers base-forecast loss",
+      "candidate": "B/D/F",
+      "control": "A/C/E",
+      "status": "rejected_primary_gain_claim",
+      "result": "Coverage increased but primary loss did not improve; secondary three-day drift calibration lower",
+      "criticism": "Do not swap primary endpoint after seeing results",
+      "next_decision": "Retain horizon diagnostics and locked future rule"
+    },
+    {
+      "id": "replay",
+      "hypothesis": "Listing transitions can forecast the official collector median",
+      "candidate": "E/F",
+      "control": "A/B",
+      "status": "gated",
+      "result": "Registered fallbacks on all evaluation cells",
+      "criticism": "Snapshot population, persistent identity and collection completeness do not support a full replay claim",
+      "next_decision": "Require compatible aggregate target and verified collection health"
+    },
+    {
+      "id": "future",
+      "hypothesis": "Any modeling/calibration gain survives later observations",
+      "status": "pending_fresh_compatible_prices",
+      "forecasts_issued": 0,
+      "next_decision": "Retain snapshots and issue only inside the registered window"
+    }
+  ]
+}
