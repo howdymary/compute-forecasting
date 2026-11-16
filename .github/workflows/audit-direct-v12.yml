@@ -24,12 +24,31 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install remote clients
-        run: python -m pip install -e '.[dev]' modal numpy
-      - name: Prepare immutable origin-safe training windows on Modal
+        run: python -m pip install -e '.[dev]' modal numpy gdown
+      - name: Download and verify unchanged pack on hosted runner
         env:
-          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
-          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
-        run: modal run -m compute_forecast.direct_data_v12
+          DIRECT_V12_DATA_ROOT: ${{ runner.temp }}/direct-v12-data
+        run: |
+          python - <<'PY'
+          import gdown,hashlib,os,pathlib,zipfile
+          from compute_forecast.starter_probe import PACK_ID,PACK_SHA256,PACK_NAME,verify_manifest
+          base=pathlib.Path(os.environ['DIRECT_V12_DATA_ROOT'])/'pacific';base.mkdir(parents=True,exist_ok=True)
+          archive=base/'pack.zip';gdown.download(id=PACK_ID,output=str(archive),quiet=True)
+          assert hashlib.file_digest(archive.open('rb'),'sha256').hexdigest()==PACK_SHA256
+          with zipfile.ZipFile(archive) as z:
+              for m in z.infolist():
+                  p=pathlib.PurePosixPath(m.filename)
+                  assert not p.is_absolute() and '..' not in p.parts and (m.external_attr>>16)&0o170000!=0o120000
+              z.extractall(base)
+          manifests=list(base.rglob('MANIFEST.sha256'));assert len(manifests)==1
+          root=manifests[0].parent
+          if root!=base/PACK_NAME:root.rename(base/PACK_NAME)
+          assert verify_manifest(base/PACK_NAME)==672
+          PY
+      - name: Prepare exact targets and matured training windows remotely
+        env:
+          DIRECT_V12_DATA_ROOT: ${{ runner.temp }}/direct-v12-data
+        run: modal run -m compute_forecast.direct_data_v12 --hosted
       - name: Save data audit
         if: always()
         uses: actions/upload-artifact@v4

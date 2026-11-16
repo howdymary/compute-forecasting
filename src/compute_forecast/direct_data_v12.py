@@ -25,9 +25,9 @@ def task(values,meta,origin,p):
     return {"task_id":digest([meta["series_id"],origin])[:24],"series_id":meta["series_id"],"metadata":meta,"origin":origin,"anchor":anchor,"context":context,"context_missing_days":p["data"]["context_calendar_days"]-len(context),"target_dates":targets,"outcomes":[values[d] for d in targets],"returns":[math.log(values[d]/anchor) for d in targets],"evidence":[]}
 @app.function(image=image,cpu=4,memory=8192,timeout=1200,max_containers=1,volumes={"/data":data})
 def prepare():
-    started=time.perf_counter();p=config();root=Path("/data/pacific")/PACK_NAME
+    started=time.perf_counter();p=config();base=Path(os.environ.get("DIRECT_V12_DATA_ROOT","/data"));root=base/"pacific"/PACK_NAME
     count=verify_manifest(root);assert count==672
-    out=Path("/data/direct-forecast-v12")/digest(p);out.mkdir(parents=True,exist_ok=True)
+    out=base/"direct-forecast-v12"/digest(p);out.mkdir(parents=True,exist_ok=True)
     if (out/"audit.json").exists():return json.loads((out/"audit.json").read_text())
     work=Path(tempfile.mkdtemp(prefix="direct-v12-"))
     hist,catalog,history_path,catalog_path=build_history(root,work,p["data"]["history_cutoff"])
@@ -77,11 +77,16 @@ def prepare():
                 if r["series_id"] in panels and int(r["horizon_days"]) in p["data"]["horizons"]:baselines.append({**r,"method":method})
     payload={"protocol_sha256":digest(p),"groups":groups,"baselines":baselines,"coverage":coverage,"historical_availability":"Frozen pack date labels; not proof of original real-time availability","protected_outcomes_loaded":False}
     put(out/"dataset.json",payload)
-    audit={"study_id":p["study_id"],"protocol_sha256":digest(p),"source_sha":os.environ.get("GITHUB_SHA"),"created_at":datetime.now(timezone.utc).isoformat(),"manifest_entries":count,"pack_sha256":PACK_SHA256,"dataset_sha256":digest(payload),"history_sha256":hashlib.sha256(history_path.read_bytes()).hexdigest(),"catalog_sha256":hashlib.sha256(catalog_path.read_bytes()).hexdigest(),"series":coverage,"phase_tasks":{k:len(v) for k,v in groups.items()},"distinct_training_origins":distinct,"phase_origins":{k:sorted({t["origin"] for t in v}) for k,v in groups.items()},"phase_cells":{k:len(v)*3 for k,v in groups.items()},"changed_training_vectors":sum(any(abs(x)>1e-10 for x in t["returns"]) for t in groups["training"]),"price_only_ready":gate,"evidence_ready":False,"evidence_gate_reason":"No origin-safe varying supplementary feature table registered yet; current-news retrieval cannot enter historical examples","prospective_accuracy":"pending","runtime_seconds":time.perf_counter()-started,"provider_cost_usd":None,"modal_call_id":modal.current_function_call_id(),"protected_outcomes_loaded":False,"permission":"Approved source-derived history under Pacific CC BY 4.0; source attribution retained","private_dataset_exposed":False}
-    put(out/"audit.json",audit);data.commit()
+    audit={"study_id":p["study_id"],"protocol_sha256":digest(p),"source_sha":os.environ.get("GITHUB_SHA"),"created_at":datetime.now(timezone.utc).isoformat(),"manifest_entries":count,"pack_sha256":PACK_SHA256,"dataset_sha256":digest(payload),"history_sha256":hashlib.sha256(history_path.read_bytes()).hexdigest(),"catalog_sha256":hashlib.sha256(catalog_path.read_bytes()).hexdigest(),"series":coverage,"phase_tasks":{k:len(v) for k,v in groups.items()},"distinct_training_origins":distinct,"phase_origins":{k:sorted({t["origin"] for t in v}) for k,v in groups.items()},"phase_cells":{k:len(v)*3 for k,v in groups.items()},"changed_training_vectors":sum(any(abs(x)>1e-10 for x in t["returns"]) for t in groups["training"]),"price_only_ready":gate,"evidence_ready":False,"evidence_gate_reason":"No origin-safe varying supplementary feature table registered yet; current-news retrieval cannot enter historical examples","prospective_accuracy":"pending","runtime_seconds":time.perf_counter()-started,"provider_cost_usd":None,"modal_call_id":modal.current_function_call_id() if not os.environ.get("DIRECT_V12_DATA_ROOT") else None,"protected_outcomes_loaded":False,"permission":"Approved source-derived history under Pacific CC BY 4.0; source attribution retained","private_dataset_exposed":False}
+    put(out/"audit.json",audit)
+    if not os.environ.get("DIRECT_V12_DATA_ROOT"):data.commit()
     return audit
 @app.local_entrypoint()
-def main():
-    report=prepare.remote();dest=Path("artifacts/direct-v12");dest.mkdir(parents=True,exist_ok=True)
+def main(hosted:bool=False):
+    report=prepare.local() if hosted else prepare.remote();dest=Path("artifacts/direct-v12");dest.mkdir(parents=True,exist_ok=True)
+    if hosted:
+        source=Path(os.environ["DIRECT_V12_DATA_ROOT"])/"direct-forecast-v12"/report["protocol_sha256"]/"dataset.json"
+        (dest/"dataset.json").write_bytes(source.read_bytes())
+        (dest/"ATTRIBUTION.txt").write_text("Pacific Machines (2026), gpu-price-pack v0.1.1-handover. CC BY 4.0 compilation. Approved source-derived target windows only; no raw offers or restricted marketplace sources. Component source_id and exact contract metadata are retained in each task. Source permissions: docs/DATA_SOURCES.md.\n")
     (dest/"audit.json").write_text(json.dumps(report,indent=2,allow_nan=False)+"\n")
     print(json.dumps(report,indent=2,allow_nan=False))
