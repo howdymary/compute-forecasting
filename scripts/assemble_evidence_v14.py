@@ -52,6 +52,18 @@ def build(inputs,output):
             found=next(r for r in value["tasks"] if r["task_id"]==t["task_id"])
             forecasts.append({"arm":arm,"seed":seed,"update":update,"cells":found["cells"],"distinct_vectors":found["distinct_vectors"],"valid_samples":found["valid_samples"],"fallback":found["fallback"],"source_artifact":arm+"/seed-"+str(seed)+"/development-"+str(update)+".json"})
         cases.append({"task_id":t["task_id"],"series_id":t["series_id"],"origin":t["origin"],"metadata":t["metadata"],"history":t["context"],"history_sha256":digest(t["context"]),"anchor":t["anchor"],"bls":t["bls"],"target_dates":t["target_dates"],"outcomes":t["outcomes"],"forecasts":forecasts,"classification":"Development case; first case selected lexicographically, not by performance"})
+    incomplete=[]
+    for arm in p["arms"]:
+        for seed in p["model"]["seeds"]:
+            if any(r["arm"]==arm and r["seed"]==seed for r in states):continue
+            found=[f for f in root.rglob("progress.json") if load(f).get("study_id")==p["study_id"] and load(f).get("arm")==arm and load(f).get("seed")==seed]
+            progress=load(found[0]) if found else None
+            incomplete.append({"arm":arm,"seed":seed,"optimizer_updates":progress.get("optimizer_updates") if progress else None,"checkpoints":progress.get("checkpoints",[]) if progress else [],"status":"retained_partial_attempt" if progress else "no_retained_attempt_yet"})
+            if found:
+                for f in found[0].parent.glob("*.json"):
+                    raw=f.read_text();assert "tinker://" not in raw
+                    files[arm+"/seed-"+str(seed)+"/"+f.name]=raw
+    execution=load(root/"workflow.json") if (root/"workflow.json").exists() else None
     comparisons=[]
     for seed in p["model"]["seeds"]:
         if all((arm,seed) in results for arm in p["arms"]):
@@ -64,7 +76,7 @@ def build(inputs,output):
     if memory_files:
         f=memory_files[-1];value=load(f)
         memory={"path":str(f),"sha256":hashlib.sha256(f.read_bytes()).hexdigest(),"status":value["status"],"eligibility":value["eligibility"],"changed_after_criticism":value["changed_after_criticism"],"decisions":value["decisions"],"actual_diagnostics":value["actual_diagnostics"]}
-    report={"study_id":p["study_id"],"schema_version":14,"status":status,"created_at":datetime.now(timezone.utc).isoformat(),"protocol":p,"protocol_sha256":digest(p),"dataset_sha256":digest(dataset),"audit":audit,"runs":states,"development_cases":cases,"comparisons":comparisons,"expected_runs":6,"memory":memory,"task_anchors":{t["task_id"]:t["anchor"] for phase in ("development","retrospective") for t in dataset["groups"][phase]},"news_used":False,"infrastructure_used":False,"source_attribution":"Pacific Machines(2026), gpu-price-pack v0.1.1-handover, approved CC BY4.0 source derivatives; US Bureau of Labor Statistics, original archived monthly PPI releases","interpretation":"Price versus price+BLS; retrospective. Three dependent evaluation dates and seed replicates do not establish prospective accuracy or a news benefit.","prospective":{"status":"pending","outcomes_loaded":False,"protocol":"configs/evidence-v14-prospective.json"}}
+    report={"study_id":p["study_id"],"schema_version":14,"status":status,"created_at":datetime.now(timezone.utc).isoformat(),"protocol":p,"protocol_sha256":digest(p),"dataset_sha256":digest(dataset),"audit":audit,"runs":states,"development_cases":cases,"comparisons":comparisons,"expected_runs":6,"incomplete_runs":incomplete,"execution":execution,"memory":memory,"task_anchors":{t["task_id"]:t["anchor"] for phase in ("development","retrospective") for t in dataset["groups"][phase]},"news_used":False,"infrastructure_used":False,"source_attribution":"Pacific Machines(2026), gpu-price-pack v0.1.1-handover, approved CC BY4.0 source derivatives; US Bureau of Labor Statistics, original archived monthly PPI releases","interpretation":"Price versus price+BLS; retrospective. Three dependent evaluation dates and seed replicates do not establish prospective accuracy or a news benefit.","prospective":{"status":"pending","outcomes_loaded":False,"protocol":"configs/evidence-v14-prospective.json"}}
     for name,raw in files.items():
         f=out/name;f.parent.mkdir(parents=True,exist_ok=True);f.write_text(raw)
     for name,value in (("report.json",report),("audit.json",audit),("bls-vintages.json",load(next(root.rglob("bls-vintages.json"))))):

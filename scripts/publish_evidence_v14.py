@@ -20,7 +20,12 @@ for attempt in range(4):
         except subprocess.CalledProcessError:continue
         previous=base64.b64decode(old["content"]).decode()
         if previous!=content:raise RuntimeError("Immutable result conflict: "+path)
-    entries=[{"path":p,"mode":"100644","type":"blob","content":s} for p,s in payloads.items()]
+    entries=[]
+    for path,content in payloads.items():
+        if len(content.encode())>150000:
+            blob=api("git/blobs",{"content":content,"encoding":"utf-8"},"POST")
+            entries.append({"path":path,"mode":"100644","type":"blob","sha":blob["sha"]})
+        else:entries.append({"path":path,"mode":"100644","type":"blob","content":content})
     index=api("contents/docs/README.md?ref="+head)
     text=base64.b64decode(index["content"]).decode()
     link="\n## Matched price and BLS models\n\n[Methods](evidence-v14.md) · [Measured findings](evidence-v14-findings.md) · [Versioned artifacts](../results/evidence-v14/README.md). This matched two-arm study preserves the earlier direct and selector studies.\n"

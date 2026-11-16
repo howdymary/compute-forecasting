@@ -35,7 +35,11 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           python - <<'PY'
-          import os,subprocess,time
+          import os,subprocess,time,json,pathlib
+          execution=json.loads(subprocess.check_output(["gh","api","repos/"+os.environ["GITHUB_REPOSITORY"]+"/actions/runs/"+os.environ["TRAINING_RUN_ID"]],text=True))
+          assert execution["head_branch"]=="compute-observatory" and execution["name"]=="Train matched price and BLS forecasting models v14"
+          pathlib.Path("inputs/publication").mkdir(parents=True,exist_ok=True)
+          pathlib.Path("inputs/publication/workflow.json").write_text(json.dumps({k:execution[k] for k in ("id","name","status","conclusion","head_sha","created_at","updated_at")},indent=2)+"\n")
           for attempt in range(90):
               command=['gh','run','download',os.environ['TRAINING_RUN_ID'],'--repo',os.environ['GITHUB_REPOSITORY'],'--name','evidence-v14-inputs-'+os.environ['TRAINING_RUN_ID'],'--dir','inputs/publication/input']
               p=subprocess.run(command,capture_output=True)
