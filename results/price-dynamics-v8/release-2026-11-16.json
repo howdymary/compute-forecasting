@@ -1,7 +1,7 @@
 {
   "schema_version": 8,
   "study_id": "price-dynamics-v8",
-  "released_at": "2026-11-16T01:53:13+00:00",
+  "released_at": "2026-11-16T01:55:53+00:00",
   "classification": "post-event retrospective study, separate future panel pending",
   "implementation_commit": "36fcdb793ad8c47ab0618d113e6219321b8cab28",
   "future_binding_commit": "83f6963db2af2a9ddbed247eff2e7d01853db9a6",
@@ -177,17 +177,17 @@
         "id": 43788633381,
         "conclusion": "success",
         "url": "https://github.com/howdymary/mochi-demo/actions/runs/43788633381"
-      },
-      {
-        "name": "Validate research foundation",
-        "id": 43788491447,
-        "conclusion": "success",
-        "url": "https://github.com/howdymary/mochi-demo/actions/runs/43788491447"
       }
     ],
     "public_reconstruction_run": 43786426148,
     "pngs_visually_inspected": true,
-    "recording": false
+    "recording": false,
+    "foundation_run": {
+      "name": "Validate research foundation",
+      "id": 43788491447,
+      "conclusion": "success",
+      "url": "https://github.com/howdymary/mochi-demo/actions/runs/43788491447"
+    }
   },
   "reproduction_command": "python -m compute_forecast.verify_price_dynamics_v8 results/price-dynamics-v8/runs/43785185915/study.json",
   "supported_claim": "A matched, auditable retrospective comparison found no primary gain for these configurations; replay is gated and prospective improvement is not yet established."
