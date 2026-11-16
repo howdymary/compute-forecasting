@@ -32,6 +32,9 @@ Current prospective extension: [Signals v6](prospective-signals-v6.md) · [Versi
 
 ## Product and operation
 
+[Price-led outlook film and chart review](market-outlook-video.md): full matching A100 history, unchanged archived quantiles, separate 36-month scenarios and saved-checkpoint replay, choreographed as 60 source seconds at 2× playback.
+
+
 [Single H100 price canvas v11](price-canvas-v11.md): the current cream pricing view, focused on one historical series and its unchanged archived forecast.
 
 [GPU pricing terminal v10](terminal-v10.md): dark chart workspace, source-separated watchlist, right-side scenario variables, and the verified 30-second walkthrough.

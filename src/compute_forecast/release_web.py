@@ -292,7 +292,7 @@ def web():
     @api.get("/terminal/media/{run_id}/{name}")
     def terminal_media(run_id:str,name:str,request:Request):
         import re
-        allowed={"terminal-30s.mp4":"video/mp4","poster.png":"image/png","contact-sheet.png":"image/png","manifest.json":"application/json"}
+        allowed={"terminal-30s.mp4":"video/mp4","poster.png":"image/png","contact-sheet.png":"image/png","manifest.json":"application/json","replay.html":"text/html","validation.json":"application/json","horizon-audit.json":"application/json"}
         if not run_id.isdigit() or name not in allowed:return Response(status_code=404,headers=headers)
         with lock:
             public.reload();path=Path("/public/terminal-v10/media")/run_id/name

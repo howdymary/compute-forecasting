@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "requested_client_date": "2026-11-16",
+  "capture_revision": 1,
+  "source_seconds": 60,
+  "output_seconds": 30,
+  "playback_speed": 2,
+  "fps": 30,
+  "frames": 900,
+  "width": 1920,
+  "height": 1080,
+  "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+  "origin": "2026-11-06",
+  "archived_horizons": [
+    1,
+    3,
+    7
+  ],
+  "new_statistical_forecasts": false,
+  "new_training": false,
+  "new_numerical_fits": false,
+  "source_blobs": {
+    "results/value-v5/runs/43757456253/study.json": "f15dc7afbaaa435825d7ef305c5b1b992f90624a",
+    "results/explorer-v3/series-metadata.json": "b2d76f62fa15be219714e88fadd043f599040991",
+    "results/frozen-v1/outlook-scenarios.json": "a9089722295cbb6cd5ba590de4858ae22d2695e5",
+    "configs/pacific-value-v5.json": "ac3c5bb1f770981916f33f0f4ab7d483559d44e1"
+  },
+  "official_csv_sha256": "67a043255a716db6bc9b73cd28f9258c30fb299fd8671a9ee3430c0d94cadd80",
+  "history_domain": [
+    "2026-01-12",
+    "2026-11-13"
+  ],
+  "history_y_domain": [
+    1.55,
+    2.05
+  ],
+  "close_domain": [
+    "2026-10-23",
+    "2026-11-13"
+  ],
+  "close_y_domain": [
+    1.72,
+    2.02
+  ],
+  "scenario_months": [
+    12,
+    24,
+    36
+  ],
+  "rental_annual_changes": [
+    -0.35,
+    -0.15,
+    0.05
+  ],
+  "research_checkpoint_source_seconds": [
+    40,
+    44,
+    48,
+    50
+  ],
+  "final_hold_source_seconds": [
+    54,
+    60
+  ],
+  "stage_output_seconds": [
+    2,
+    4.5,
+    6.5,
+    9.5,
+    12.5,
+    15.5,
+    18.5,
+    21,
+    23,
+    24.5,
+    26,
+    28.5
+  ],
+  "finite_limits": {
+    "renderer_timeout_minutes": 20,
+    "max_output_bytes": 50000000,
+    "max_optimizer_updates": 0
+  }
+}
