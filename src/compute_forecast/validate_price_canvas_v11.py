@@ -16,6 +16,8 @@ def main():
             page.goto(URL+"/terminal",wait_until="domcontentloaded",timeout=90000)
             page.wait_for_function("()=>document.body.dataset.ready==='true' && C11.history!==null",timeout=90000)
             page.evaluate("document.fonts.load('24px Fieldnote')")
+            expect(page.locator("#canvas-loading")).not_to_be_visible()
+            expect(page.locator("#price-canvas")).to_be_visible()
             health=page.request.get(URL+"/health");assert health.ok;report["ui_revision"]=health.json()["ui_revision"]
             if os.environ.get("SOURCE_SHA"):assert report["ui_revision"]==os.environ["SOURCE_SHA"]
             csv=page.request.get(URL+"/files/forecasts.csv");assert csv.ok
