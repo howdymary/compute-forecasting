@@ -1,0 +1,46 @@
+name: Verify direct forecaster supplementary vintages v12
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/direct-sources-v12.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: direct-v12-source-audit
+  cancel-in-progress: false
+jobs:
+  sources:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Wait for the validated training-input bundle
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import os,subprocess,time
+          repo=os.environ['GITHUB_REPOSITORY']
+          for attempt in range(60):
+              r=subprocess.run(['gh','run','download','43952200479','--repo',repo,'--name','direct-v12-inputs-43952200479','--dir','inputs/direct-v12'],capture_output=True)
+              if r.returncode==0:break
+              time.sleep(10)
+          else:raise RuntimeError('Registered training input bundle unavailable')
+          PY
+      - name: Verify point-in-time BLS and current-source schemas
+        run: PYTHONPATH=src python scripts/capture_direct_v12_sources.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: direct-v12-sources-${{ github.run_id }}
+          path: artifacts/direct-v12-supplementary
+          retention-days: 30

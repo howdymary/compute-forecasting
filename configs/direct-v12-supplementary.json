@@ -1,0 +1,43 @@
+{
+  "study_id": "direct-v12-supplementary-audit",
+  "registered_at": "2026-11-16",
+  "parent_protocol": "configs/direct-forecast-v12.json",
+  "purpose": "Verify genuinely archived BLS vintages and current supplementary-source access before any evidence-arm optimization",
+  "historical_source": {
+    "series_id": "PCU221122221122",
+    "url_template": "https://alfred.stlouisfed.org/graph/alfredgraph.csv?id=PCU221122221122&vintage_date={origin}&cosd=2025-01-01",
+    "expected_header": "PCU221122221122_YYYYMMDD",
+    "information_cutoff": "End of each origin UTC day",
+    "minimum_origin_coverage": 0.9,
+    "minimum_distinct_latest_periods": 3,
+    "features": [
+      "latest_available_index",
+      "month_over_month_change",
+      "latest_observation_period",
+      "age_days_since_observation_period_start"
+    ],
+    "interpretation": "Archived PPI vintages; not an electricity tariff. Retrieval today does not imply retrieval at the historical origin; ALFRED supplies the historical state.",
+    "no_news_accuracy_claim": true
+  },
+  "current_only_sources": [
+    {
+      "url": "https://priceofcompute.com/api/v1/prices/h100-sxm",
+      "role": "source freshness and schema audit only; no historical outcome download"
+    },
+    {
+      "url": "https://gpurentalprices.com/api/latest.json",
+      "role": "current prospective source extension; retain new source-specific IDs"
+    },
+    {
+      "url": "https://gpurentalprices.com/api/health.json",
+      "role": "independent collection-health check"
+    }
+  ],
+  "limits": {
+    "max_csv_requests": 150,
+    "request_spacing_seconds": 0.5,
+    "max_response_bytes": 2000000
+  },
+  "training_gate": "Do not train the evidence arm until vintage headers, origin cutoffs, source permission, coverage and variation checks pass. Preserve price-only configuration, windows, SDK lock and seeds.",
+  "secondary_comparison": "Frozen matched SFT price-only versus price-plus-BLS vintage features; other supplementary features remain prospective until origin-safe histories exist"
+}
