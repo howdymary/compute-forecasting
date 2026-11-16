@@ -1,0 +1,16 @@
+# Direct GPU-price forecasting v12 findings
+
+Additional post-event retrospective study. Prospective improvement is not established.
+
+Data: 326 training tasks; 20 development tasks; 22 retrospective tasks. A task contains three dependent horizon cells.
+
+| Seed | Updates | Selected update | 7-day base loss | 7-day selected loss |
+| --- | ---: | ---: | ---: | ---: |
+
+Different collectors, configurations and instruments retain separate IDs. The primary loss is USD-per-GPU-hour quantile pinball; lower is better. Source windows overlap and the three evaluation origins are dependent.
+
+Checkpoint selection uses development only and includes the unadapted base at update zero. A selected base means trained checkpoints did not earn promotion. Additional RL is not established.
+
+Supplementary evidence accuracy is not established. Current source access and archived-vintage eligibility are separate from forecasting value.
+
+[Protocol](../configs/direct-forecast-v12.json) · [Methods](direct-forecast-v12.md) · [Public artifacts](../results/direct-v12/README.md)

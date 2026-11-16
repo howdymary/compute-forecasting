@@ -52,3 +52,7 @@ The earlier pricing/notebook guides describe their original release state. Histo
 - [Price dynamics v8: six-arm methods, gates, attribution and prospective protocol](price-dynamics-v8.md)
 
 - [Price dynamics v8 measured findings, final validation and remaining gates](price-dynamics-v8-findings.md)
+
+## Direct price model v12
+
+[Methods](direct-forecast-v12.md) · [Measured findings](direct-v12-findings.md) · [Versioned artifacts](../results/direct-v12/README.md). This separately trains forecast outputs, preserving the earlier selector studies.
