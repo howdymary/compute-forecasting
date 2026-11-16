@@ -6,7 +6,7 @@ on:
     branches: [compute-observatory]
   push:
     branches: [compute-observatory]
-    paths: [.github/workflows/deploy-direct-v12.yml]
+    paths: [.github/workflows/deploy-direct-v12.yml, src/compute_forecast/direct_ui_v12.py, src/compute_forecast/direct_web_v12.py, src/compute_forecast/direct_public_v12.py]
   workflow_dispatch:
 permissions:
   contents: read

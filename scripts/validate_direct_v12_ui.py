@@ -30,6 +30,7 @@ with sync_playwright() as p:
         assert page.evaluate("document.documentElement.scrollWidth<=window.innerWidth"),"Horizontal page overflow"
         if report["runs"]:
             assert page.locator("#chart circle").count()>0
+            if width<700:assert page.locator("#chart text").first.evaluate("(e)=>parseFloat(getComputedStyle(e).fontSize)*e.getScreenCTM().a")>=10,"Unreadable mobile chart text"
             assert page.locator("#table tr").count()==6
             first=page.locator("#chart circle").first;first.focus();page.keyboard.press("Enter")
             assert "USD/GPU-hour" in page.locator("#point").inner_text()
@@ -39,6 +40,7 @@ with sync_playwright() as p:
             assert page.locator("#case").input_value()==chosen,"Case selection lost on refresh"
             page.get_by_role("button",name="Learning",exact=True).click()
             assert page.locator("#chart circle").count()==sum(len(r["checkpoints"]) for r in report["runs"])
+            assert not page.locator("#legend").is_visible(),"Price legend leaked into learning view"
             page.screenshot(path=str(root/(name+"-learning.png")),full_page=True)
             page.get_by_role("button",name="Price forecast",exact=True).click()
         else:assert "No completed checkpoint" in page.locator("#chart").text_content()
