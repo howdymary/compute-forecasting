@@ -9,3 +9,5 @@ Fit range uses a linear price axis over the visible observed and forecast values
 Scenarios retain the published annual assumptions and monthly compounding. Research retains the negative primary v8 finding and all denominator/fallback disclosures. No live-data badge, simulated activity, invented historical prices or new forecasting result is introduced.
 
 Remote PNG-only checks cover desktop and mobile views, first-screen chart visibility, source-bound statistics, fit/zero geometry, unchanged source values, scenario arithmetic, navigation, keyboard and pin preservation. Existing required validation suites remain strict.
+
+Refreshes publish the two research responses into the view together. Keyboard focus returns to Refresh when it initiated the operation and the user has not moved elsewhere. Date-axis labels suppress an intermediate tick when it would collide with the end date; dates and cutoff markers remain unchanged.

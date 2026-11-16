@@ -80,11 +80,11 @@ bindAtlas=function(){
  button.disabled=!!Q9.atlasLoading;button.setAttribute('aria-busy',String(!!Q9.atlasLoading));
  const status=document.createElement('span');status.id='q9-atlas-status';status.className='q9-axis-note';status.setAttribute('role','status');status.textContent=Q9.atlasStatus||'';button.after(status);
  button.onclick=async()=>{
-  if(Q9.atlasLoading)return;Q9.atlasLoading=true;button.disabled=true;button.setAttribute('aria-busy','true');status.textContent='Refreshing verified artifacts…';
+  if(Q9.atlasLoading)return;const initiatedWithFocus=document.activeElement===button;Q9.atlasLoading=true;button.disabled=true;button.setAttribute('aria-busy','true');status.textContent='Refreshing verified artifacts…';
   const results=await Promise.allSettled([fetchJson('/api/experimental'),fetchJson('/api/notebook')]);
   if(results.every(r=>r.status==='fulfilled')){X=results[0].value;N=results[1].value;expandedError=null;notebookError=null;Q9.atlasStatus='Verified artifacts refreshed.'}
   else{Q9.atlasStatus='Refresh failed. Prior verified artifacts remain visible; retry is available.';if(results[0].status==='rejected')expandedError=results[0].reason;if(results[1].status==='rejected')notebookError=results[1].reason}
-  Q9.atlasLoading=false;if(P&&view==='research'&&researchTab==='visual')render()
+  Q9.atlasLoading=false;if(P&&view==='research'&&researchTab==='visual'){const restoreRefreshFocus=initiatedWithFocus&&(document.activeElement===button||document.activeElement===document.body);render();if(restoreRefreshFocus)$('#refresh-atlas')?.focus({preventScroll:true})}
  };
 };
 """
@@ -104,6 +104,10 @@ def enhance(html):
         body,after=body.split('\ndrawCursor=function(){',1)
         body=body.replace(old,new)
         html=before+'buildPlot=function(){\n if(S.mode!==\'benchmark\')return t7PrevBuild();'+body+'\ndrawCursor=function(){'+after
+    tick_contract="ticks.forEach((t,i)=>{body+='<text x=\"'+x(t)"
+    tick_replacement="ticks.forEach((t,i)=>{if(i>0&&i<ticks.length-1&&x(ticks[ticks.length-1])-x(t)<50)return;body+='<text class=\"q9-date-tick\" x=\"'+x(t)"
+    if html.count(tick_contract)!=1:raise ValueError("Timeline date-label contract changed")
+    html=html.replace(tick_contract,tick_replacement)
     html=html.replace('<small>AN OPEN COMPUTE NOTEBOOK</small>','<small>GPU MARKET RESEARCH</small>')
     html=html.replace('<span class="mark" aria-hidden="true">↗</span>','<span class="mark" aria-hidden="true">CF</span>')
     return html.replace('</style>',CSS+'</style>').replace('</script>',JS+'</script>')

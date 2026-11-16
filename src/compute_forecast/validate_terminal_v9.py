@@ -32,6 +32,8 @@ def main():
                 expected=page.evaluate("(v)=>plotGeom.y(v)",q50)
                 close(mark.get_attribute("cy"),expected)
                 assert page.evaluate("(v)=>plotGeom.y(v)>=plotGeom.T && plotGeom.y(v)<=plotGeom.h-plotGeom.B",q50)
+            date_boxes=page.locator(".q9-date-tick").evaluate_all("(es)=>es.map(e=>{const b=e.getBoundingClientRect();return {left:b.left,right:b.right}})")
+            assert all(a["right"]+3<=b["left"] for a,b in zip(date_boxes,date_boxes[1:])),("Overlapping date labels",width,date_boxes)
             # Axis changes alter geometry only, never point values, dates or immutable pins.
             chart.focus();page.keyboard.press("Home");page.locator("#pin-point").click()
             pin=page.evaluate("JSON.stringify(S.pins[0])");values=page.locator("[data-timeline-forecast]").evaluate_all("(es)=>es.map(e=>[e.dataset.timelineForecast,e.dataset.q10,e.dataset.q50,e.dataset.q90])")
