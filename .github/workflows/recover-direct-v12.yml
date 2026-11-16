@@ -3,6 +3,10 @@ on:
   push:
     branches: [compute-observatory]
     paths: [.github/workflows/recover-direct-v12.yml]
+  workflow_run:
+    workflows: [Remove approved direct-model base copies v12]
+    types: [completed]
+    branches: [compute-observatory]
   workflow_dispatch:
 permissions:
   contents: read

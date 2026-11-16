@@ -1,0 +1,35 @@
+name: Remove approved direct-model base copies v12
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/cleanup-direct-v12-base-copies.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: tinker-authorized-storage-cleanup
+  cancel-in-progress: false
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Fetch approved exact checkpoint list
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'tinker==0.39.1'
+      - name: Remove only approved untrained copies and verify preservation
+        env:
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+        run: python scripts/cleanup_direct_v12_base_copies.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: direct-v12-base-cleanup-${{ github.run_id }}
+          path: artifacts/direct-v12-base-cleanup
+          retention-days: 30
