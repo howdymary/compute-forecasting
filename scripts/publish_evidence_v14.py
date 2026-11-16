@@ -1,5 +1,6 @@
 """Nonforce publication of new direct-study artifacts; preserves shared branch work."""
 import base64,hashlib,json,os,pathlib,subprocess,time
+from concurrent.futures import ThreadPoolExecutor
 repo=os.environ["GITHUB_REPOSITORY"];run=os.environ["PUBLICATION_ID"];root=pathlib.Path("artifacts/evidence-v14-public")
 def api(path,body=None,method=None):
     command=["gh","api","repos/"+repo+"/"+path]
@@ -11,21 +12,24 @@ report=json.loads((root/"report.json").read_text())
 payloads["results/evidence-v14/latest.json"]=json.dumps({"study_id":"direct-evidence-v14","run_id":run,"status":report["status"],"report_path":"results/evidence-v14/runs/"+run+"/report.json","report_sha256":hashlib.sha256((root/"report.json").read_bytes()).hexdigest()},indent=2)+"\n"
 payloads["results/evidence-v14/README.md"]="# Matched price and BLS forecasts\n\n[Current report](runs/"+run+"/report.json) · [Findings](../../docs/evidence-v14-findings.md) · [Methods](../../docs/evidence-v14.md) · [Protocol](../../configs/direct-evidence-v14-final.json)\n\nFresh matched Tinker LoRA models predict GPU-price returns with price history alone or original BLS release-vintage features. Quantiles derive from64 unseeded stochastic samples. Results remain retrospective; news and infrastructure are excluded.\n\nApproved Pacific component derivatives only, with source metadata and CC BY 4.0 attribution. Raw offers, marketplace-ask histories and private model resources are excluded.\n"
 payloads["docs/evidence-v14-findings.md"]=(root/"findings.md").read_text()
-for attempt in range(4):
+# Content-addressed blobs are independent of the mutable branch head.
+def entry(item):
+    path,content=item
+    if len(content.encode())>150000:
+        blob=api("git/blobs",{"content":content,"encoding":"utf-8"},"POST")
+        return {"path":path,"mode":"100644","type":"blob","sha":blob["sha"]}
+    return {"path":path,"mode":"100644","type":"blob","content":content}
+with ThreadPoolExecutor(max_workers=4) as workers:base_entries=list(workers.map(entry,payloads.items()))
+for attempt in range(6):
     branch=api("git/ref/heads/compute-observatory");head=branch["object"]["sha"];commit=api("git/commits/"+head)
-    # Existing versioned results are immutable; publication may only add missing bytes.
-    for path,content in list(payloads.items()):
-        if "/runs/" not in path:continue
-        try:old=api("contents/"+path+"?ref="+head)
-        except subprocess.CalledProcessError:continue
-        previous=base64.b64decode(old["content"]).decode()
-        if previous!=content:raise RuntimeError("Immutable result conflict: "+path)
-    entries=[]
+    tree_state=api("git/trees/"+commit["tree"]["sha"]+"?recursive=1")
+    assert not tree_state.get("truncated"),"Cannot verify immutable paths in a truncated repository tree"
+    existing={v["path"]:v["sha"] for v in tree_state["tree"] if v["type"]=="blob"}
     for path,content in payloads.items():
-        if len(content.encode())>150000:
-            blob=api("git/blobs",{"content":content,"encoding":"utf-8"},"POST")
-            entries.append({"path":path,"mode":"100644","type":"blob","sha":blob["sha"]})
-        else:entries.append({"path":path,"mode":"100644","type":"blob","content":content})
+        if "/runs/" not in path or path not in existing:continue
+        raw=content.encode();expected=hashlib.sha1(b"blob "+str(len(raw)).encode()+b"\0"+raw).hexdigest()
+        if existing[path]!=expected:raise RuntimeError("Immutable result conflict: "+path)
+    entries=list(base_entries)
     index=api("contents/docs/README.md?ref="+head)
     text=base64.b64decode(index["content"]).decode()
     link="\n## Matched price and BLS models\n\n[Methods](evidence-v14.md) · [Measured findings](evidence-v14-findings.md) · [Versioned artifacts](../results/evidence-v14/README.md). This matched two-arm study preserves the earlier direct and selector studies.\n"

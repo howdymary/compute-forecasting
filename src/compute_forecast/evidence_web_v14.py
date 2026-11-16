@@ -14,7 +14,7 @@ BASE="https://raw.githubusercontent.com/howdymary/mochi-demo/compute-observatory
 def web():
     from fastapi import FastAPI
     from fastapi.responses import HTMLResponse,JSONResponse,Response
-    api=FastAPI(docs_url=None,redoc_url=None,openapi_url=None);cache={};lock=threading.Lock();future_lock=threading.Lock()
+    api=FastAPI(docs_url=None,redoc_url=None,openapi_url=None);cache={};lock=threading.Lock();future_lock=threading.Lock();future_cache={"at":0}
     headers={"Cache-Control":"no-store","X-Content-Type-Options":"nosniff","Content-Security-Policy":"default-src 'self';script-src 'self' 'unsafe-inline';style-src 'self' 'unsafe-inline';object-src 'none';base-uri 'none';frame-ancestors 'none'"}
     @api.get("/")
     def page():return HTMLResponse(HTML,headers=headers)
@@ -44,7 +44,9 @@ def web():
     def future_index():
         try:
             with future_lock:
-                future_public.reload();path=Path("/public/evidence-v14-future/index.json")
+                if time.monotonic()-future_cache["at"]>15:
+                    future_public.reload();future_cache["at"]=time.monotonic()
+                path=Path("/public/evidence-v14-future/index.json")
                 if not path.exists():return JSONResponse({"status":"pending_initial_readiness_audit","issued_origins":0},headers=headers)
                 value=json.loads(path.read_bytes());assert value["study_id"]=="direct-evidence-v14-prospective"
                 return JSONResponse(value,headers=headers)
@@ -53,7 +55,9 @@ def web():
     def future_artifact(identity:str):
         if not re.fullmatch("[0-9a-f]{64}",identity):return Response(status_code=404)
         with future_lock:
-            future_public.reload();path=Path("/public/evidence-v14-future/artifacts")/(identity+".json")
+            if time.monotonic()-future_cache["at"]>15:
+                future_public.reload();future_cache["at"]=time.monotonic()
+            path=Path("/public/evidence-v14-future/artifacts")/(identity+".json")
             if not path.exists():return Response(status_code=404)
             raw=path.read_bytes()
         if hashlib.sha256(raw).hexdigest()!=identity:return Response(status_code=503)

@@ -1,3 +1,4 @@
+# Publish immutable blobs once; verify the fresh tree and use nonforce updates for branch concurrency.
 # Complete artifacts are verified independently; a post-result process exit never triggers repeated optimization.
 # Four completed runs can be reconstructed without waiting for the final pair; optimizer jobs are untouched.
 # Publish only retained completed runs; partial publication never starts or repeats optimization.
