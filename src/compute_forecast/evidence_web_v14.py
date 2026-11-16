@@ -6,7 +6,7 @@ STATIC_ASSET_BUILD="python - <<'PY'\nfrom pathlib import Path\nfrom urllib.reque
 from .evidence_ui_v14 import HTML
 app=modal.App("compute-forecast-evidence-v14")
 future_public=modal.Volume.from_name("compute-forecast-public",create_if_missing=False,version=2)
-image=modal.Image.debian_slim(python_version="3.11").pip_install("fastapi[standard]>=0.115,<1").run_commands(STATIC_ASSET_BUILD).env({"EVIDENCE_UI_SHA":os.environ.get("GITHUB_SHA","unknown")}).add_local_python_source("compute_forecast")
+image=modal.Image.debian_slim(python_version="3.11").pip_install("fastapi[standard]>=0.115,<1").run_commands(STATIC_ASSET_BUILD).env({"EVIDENCE_UI_SHA":os.environ.get("EVIDENCE_SOURCE_SHA",os.environ.get("GITHUB_SHA","unknown"))}).add_local_python_source("compute_forecast")
 BASE="https://raw.githubusercontent.com/howdymary/mochi-demo/compute-observatory/"
 @app.function(image=image,cpu=.5,memory=512,timeout=120,max_containers=4,volumes={"/public":future_public})
 @modal.concurrent(max_inputs=8)
