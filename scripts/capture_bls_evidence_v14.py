@@ -6,7 +6,7 @@ from compute_forecast.direct_forecast_v12 import digest
 def period_shift(period,n):
     year,month=map(int,period.split("-"));count=year*12+month-1+n
     return f"{count//12:04d}-{count%12+1:02d}"
-def extract(text,period):
+def extract(text,period,independent=None):
     flat=re.sub(r"\s+"," ",text.replace("|"," "))
     pattern=r"\b221122\s+12/03\s+((?:(?:\d+\.\d+|[–—-])\s+){4}(?:\d+\.\d+|[–—-]))"
     matches=list(re.finditer(pattern,flat));unique={m.group(1) for m in matches}
@@ -20,8 +20,10 @@ def extract(text,period):
     for item in months:
         year,month=map(int,item.split("-"))
         captions.append(calendar.month_abbr[month]+r"[a-z]*\.?\s+"+str(year)+r"(?:\s*p)?")
-    if not re.search(r"\s+".join(captions),header,re.I):
-        raise ValueError("Ordered five-month captions not verified")
+    verified=re.search(r"\s+".join(captions),header,re.I)
+    if not verified:
+        if not independent or independent["periods"]!=months or independent["indices"]!=values:
+            raise ValueError("Ordered five-month captions not verified")
     if "Electric power distribution" not in flat[max(0,match.start()-400):match.start()]:
         raise ValueError("Exact industry title missing")
     for item in months:
@@ -29,11 +31,18 @@ def extract(text,period):
         name=calendar.month_abbr[month]
         if name.lower() not in header.lower() or str(year) not in header:raise ValueError("Column month not verified: "+item)
     if values[-1] is None or values[-2] is None:raise ValueError("Latest or previous month missing")
-    return {"periods":months,"indices":values,"source_row":match.group(0),"source_row_sha256":hashlib.sha256(match.group(0).encode()).hexdigest(),"header_context_sha256":hashlib.sha256(header.encode()).hexdigest(),"verified_column_caption":re.search(r"\s+".join(captions),header,re.I).group(0),"extraction":"Exactindustry221122/base12-03; five monthly index columns; excludes221122-P/products and percent-change table"}
+    return {"periods":months,"indices":values,"source_row":match.group(0),"source_row_sha256":hashlib.sha256(match.group(0).encode()).hexdigest(),"header_context_sha256":hashlib.sha256(header.encode()).hexdigest(),"verified_column_caption":verified.group(0) if verified else independent["verified_caption"],"extraction":"Exactindustry221122/base12-03; five monthly index columns; excludes221122-P/products and percent-change table"}
 def main():
     cfg=json.loads(pathlib.Path("configs/evidence-v14-bls-sources.json").read_text())
     out=pathlib.Path("artifacts/evidence-v14-audit");out.mkdir(parents=True,exist_ok=True);records=[];usage=[]
+    previous={}
+    prior_url="https://raw.githubusercontent.com/howdymary/mochi-demo/compute-observatory/results/evidence-v14/audits/43966106373/bls-vintages.json"
+    with urllib.request.urlopen(prior_url,timeout=30) as response:
+        prior=json.load(response);previous={r["reference_period"]:r for r in prior["records"] if r["status"]=="qualified_pending_spot_check"}
     for spec in cfg["vintages"]:
+        if spec["period"] in previous:
+            kept=previous[spec["period"]];kept["reused_from_artifact"]=prior_url;records.append(kept);continue
+
         year,month=map(int,spec["period"].split("-"));url=f"https://www.bls.gov/ppi/detailed-report/ppi-detailed-report-{calendar.month_name[month].lower()}-{year}.pdf"
         at=datetime.now(timezone.utc).isoformat();record={"source_url":url,"publisher":"US Bureau of Labor Statistics","series_id":cfg["series_id"],"reference_period":spec["period"],"retrieved_at":at,"first_observed_at":at,"permission_url":cfg["permission_url"],"acquisition":cfg["acquisition"]}
         release=datetime.fromisoformat(spec["release_date"]+"T"+spec["release_time"]).replace(tzinfo=ZoneInfo(spec["release_timezone"])).astimezone(timezone.utc).isoformat();record["available_at"]=release
@@ -42,7 +51,7 @@ def main():
             req=urllib.request.Request("https://api.exa.ai/contents",data=body,headers={"Content-Type":"application/json","x-api-key":os.environ["EXA_API_KEY"]})
             with urllib.request.urlopen(req,timeout=cfg["limits"]["http_timeout_seconds"]) as response:reply=json.load(response)
             result=next(r for r in reply.get("results",[]) if r.get("text"));text=result["text"]
-            record.update(content_sha256=hashlib.sha256(text.encode()).hexdigest(),characters=len(text),exa_request_id=reply.get("requestId"),cost_dollars=reply.get("costDollars"),values=extract(text,spec["period"]),status="qualified_pending_spot_check")
+            record.update(content_sha256=hashlib.sha256(text.encode()).hexdigest(),characters=len(text),exa_request_id=reply.get("requestId"),cost_dollars=reply.get("costDollars"),values=extract(text,spec["period"],cfg.get("independent_pdf_checks",{}).get(spec["period"])),status="qualified_pending_spot_check")
             # Only the exact public index row, headers hashes and original source identity are published.
             usage.append({"request_id":reply.get("requestId"),"cost_dollars":reply.get("costDollars")})
         except Exception as e:record.update(status="unavailable",error_type=type(e).__name__,error_message=str(e)[:180].replace(os.environ["EXA_API_KEY"],"[redacted]"))
