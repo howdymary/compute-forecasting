@@ -1,6 +1,6 @@
 """Nonforce publication of new direct-study artifacts; preserves shared branch work."""
 import base64,hashlib,json,os,pathlib,subprocess,time
-repo=os.environ["GITHUB_REPOSITORY"];run=os.environ.get("TRAINING_RUN_ID","43952200479");root=pathlib.Path("artifacts/direct-v12-public")
+repo=os.environ["GITHUB_REPOSITORY"];run=os.environ.get("PUBLICATION_ID") or os.environ.get("TRAINING_RUN_ID","43952200479");root=pathlib.Path("artifacts/direct-v12-public")
 def api(path,body=None,method=None):
     command=["gh","api","repos/"+repo+"/"+path]
     if method:command+=["-X",method]

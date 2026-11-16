@@ -32,6 +32,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           TRAINING_RUN_ID: ${{ github.event.workflow_run.id || '43952200479' }}
+          PUBLICATION_ID: ${{ github.event.workflow_run.id || '43952200479' }}-publication-${{ github.run_id }}
         run: |
           python - <<'PY'
           import json,os,subprocess

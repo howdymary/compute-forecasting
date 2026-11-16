@@ -44,8 +44,15 @@ def assemble(inputs,output):
             assert b"tinker://" not in raw
             relative="seed-"+str(seed)+"/"+path.name;files[relative]=raw.decode()
     evidence_files=list(root.rglob("source-audit.json"));evidence=load(evidence_files[0]) if evidence_files else None
-    status="completed" if len(states)==len(p["model"]["seeds"]) else "partial" if states else "running"
-    report={"schema_version":12,"study_id":p["study_id"],"status":status,"created_at":datetime.now(timezone.utc).isoformat(),"publication_source_sha":os.environ.get("GITHUB_SHA"),"training_workflow_run_id":os.environ.get("TRAINING_RUN_ID","43952200479"),"protocol":p,"protocol_sha256":digest(p),"audit":audit,"runs":states,"cases":cases,"supplementary":evidence,"prospective":{"status":"pending","reason":"Registered weekly panel requires fresh compatible retained price history and forecasts committed before outcomes. No prospective accuracy established."},"scientific_boundary":"Historical dates were previously accessible; results are additional retrospective analyses. These weights predict prices directly, separate from the earlier experiment selector.","source_attribution":"Pacific Machines (2026), gpu-price-pack v0.1.1-handover. CC BY 4.0 compilation; exact component source and contract metadata retained. Marketplace asks excluded."}
+    incomplete=[]
+    for seed in p["model"]["seeds"]:
+        if any(s["seed"]==seed for s in states):continue
+        candidates=[f for f in root.rglob("progress.json") if load(f).get("seed")==seed]
+        if candidates:
+            s=load(candidates[0]);incomplete.append({"seed":seed,"optimizer_updates":s.get("optimizer_updates",0),"checkpoints":s.get("checkpoints",[]),"status":"evaluation_blocked","reason":"Original workflow stopped at the persistent checkpoint-storage limit; no final evaluation claimed"})
+        else:incomplete.append({"seed":seed,"optimizer_updates":0,"checkpoints":[],"status":"training_blocked","reason":"Original training client could not be created because checkpoint storage was full"})
+    status="completed" if len(states)==len(p["model"]["seeds"]) else "partial" if states else "evaluation_blocked"
+    report={"schema_version":12,"study_id":p["study_id"],"status":status,"created_at":datetime.now(timezone.utc).isoformat(),"publication_source_sha":os.environ.get("GITHUB_SHA"),"training_workflow_run_id":os.environ.get("TRAINING_RUN_ID","43952200479"),"protocol":p,"protocol_sha256":digest(p),"audit":audit,"runs":states,"incomplete_runs":incomplete,"cases":cases,"supplementary":evidence,"prospective":{"status":"pending","reason":"Registered weekly panel requires fresh compatible retained price history and forecasts committed before outcomes. No prospective accuracy established."},"scientific_boundary":"Historical dates were previously accessible; results are additional retrospective analyses. These weights predict prices directly, separate from the earlier experiment selector.","source_attribution":"Pacific Machines (2026), gpu-price-pack v0.1.1-handover. CC BY 4.0 compilation; exact component source and contract metadata retained. Marketplace asks excluded."}
     report_raw=json.dumps(report,sort_keys=True,indent=2,allow_nan=False)+"\n"
     if "tinker://" in report_raw:raise ValueError("Private model resource path in public report")
     (out/"report.json").write_text(report_raw)
