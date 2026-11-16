@@ -39,3 +39,13 @@ Tests use explicitly synthetic data to exercise source-ID corruption, wrong unit
 [Methods](evidence-v14.md) · [Training findings](evidence-v14-findings.md) · [Prospective source and evaluator](../src/compute_forecast/evidence_future_v15.py) · [Remote execution](../src/compute_forecast/evidence_future_remote_v15.py) · [Live readiness API](https://howdymary--compute-forecast-evidence-v14-web.us-east.modal.run/api/evidence-future).
 
 Prospective improvement is not yet established.
+
+## Verified status: November 16, 2026
+
+The [deployed readiness audit](../results/evidence-v14/audits/43977962380/prospective-readiness.json) confirms one accepted quote day, November16. The initial November15 capture was outside the registered17:00–19:00UTC window and is excluded. Twenty retained days are required for each eligible contract; no future forecasts have been issued.
+
+The [future-only BLS qualification](../results/evidence-v14/audits/43977825560/future-bls-vintage.json) verifies the original October2026 report, published November13 at08:30 eastern. The industry221122/base12-03 row and all five month columns were checked against a separate PDF text parser on page184(one-based). October's index is198.898. The extracted-text hash and actual November16 retrieval time are retained. This record supplements only future inference; it does not change the frozen training dataset. Each later release must also pass qualification before use.
+
+At audit time, current evidence is qualified. Issuance remains pending the first registered origin and sufficient compatible price history. Reasons associated with the preceding, unregistered November15 origin are retained separately from present evidence readiness.
+
+[Successful prospective deployment and tests](https://github.com/howdymary/mochi-demo/actions/runs/43977962380) · [Original BLS release](https://www.bls.gov/ppi/detailed-report/ppi-detailed-report-october-2026.pdf).

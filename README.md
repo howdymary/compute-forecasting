@@ -176,3 +176,5 @@ The GPU rental forecasting study remains on compute-observatory. [Measured findi
 [Interactive paired study](https://howdymary--compute-forecast-evidence-v14-web.us-east.modal.run) · [Registered methods](docs/evidence-v14.md) · [Measured findings](docs/evidence-v14-findings.md) · [Immutable artifacts](results/evidence-v14/README.md).
 
 Six matched Tinker LoRA runs directly predict GPU rental-price changes, comparing price history alone with original-release electricity-distribution PPI features. The historical comparison is retrospective; news and infrastructure are excluded. The future comparison is separately registered and has not established prospective accuracy.
+
+[Prospective execution and source readiness](docs/evidence-future-v15.md): frozen direct models, qualified original BLS releases, dated quote captures and maturity-gated evaluation. The new panel has issued no forecasts and has not established future accuracy.

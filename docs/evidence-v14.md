@@ -69,3 +69,9 @@ The prospective registration fixes seed 17 for both input conditions. Both origi
 The seed43 price-only process saved all100 updates, its development-selected update20, both evaluation files and the final result, then aborted during process teardown (exit134). GitHub successfully uploaded all9 result files. The original workflow failure is retained. Numerical publication independently verifies the saved samples, checkpoint selection, baselines and scores; the optimizer was not rerun.
 
 [Prospective execution and readiness](evidence-future-v15.md) describe the separately deployed runner. No future accuracy is inferred from deployment.
+
+## Retained weight and token scope
+
+Unselected new training states retain the registered30-day TTL. The two operational seed17 states have the longer documented retention. Saved sample vectors and public arithmetic remain reproducible after an unselected weight state expires; fresh inference from an expired state does not.
+
+The frozen `training_prompt_tokens` field sums one traversal of the training catalog. It is not the token count across100 sampled batches. The separate resource profile reconstructs the actual registered batch order, counts supervised token positions and reconciles normalized loss-weight mass with all600 completed updates. Provider charges remain unknown without a receipt.
