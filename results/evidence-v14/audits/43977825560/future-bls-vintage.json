@@ -1,0 +1,74 @@
+{
+  "study_id": "direct-evidence-v14-prospective",
+  "capture_version": 15,
+  "source_sha": "a5e4e3c74c79ac3d157657dbb12bcea039df7977",
+  "config_sha256": "5f2ee9dd66d9b15db854a12f8882ee004ecef970e1c35b2e563892fd40188ec8",
+  "classification": "Future-only source capture. Never appended to the frozen historical training dataset.",
+  "ready": true,
+  "records": [
+    {
+      "status": "qualified_pending_spot_check",
+      "independent_pdf_check_completed": true,
+      "source_url": "https://www.bls.gov/ppi/detailed-report/ppi-detailed-report-october-2026.pdf",
+      "publisher": "US Bureau of Labor Statistics",
+      "series_id": "PCU221122221122",
+      "reference_period": "2026-10",
+      "retrieved_at": "2026-11-16T23:16:35.414822+00:00",
+      "first_observed_at": "2026-11-16T23:16:35.414822+00:00",
+      "available_at": "2026-11-13T13:30:00+00:00",
+      "permission_url": "https://www.bls.gov/bls/linksite.htm",
+      "content_sha256": "d5656de7d852b2b5dd068e3d9be1b95c38ad259bd6c80381d76931e11f38ede7",
+      "content_hash_scope": "Full Exa-extracted PDF text, not original binary PDF",
+      "characters": 3427214,
+      "values": {
+        "periods": [
+          "2026-06",
+          "2026-07",
+          "2026-08",
+          "2026-09",
+          "2026-10"
+        ],
+        "indices": [
+          207.557,
+          210.029,
+          209.348,
+          209.27,
+          198.898
+        ],
+        "source_row": "221122 12/03 207.557 210.029 209.348 209.270 198.898",
+        "source_row_sha256": "72febb42a5f4912438ca8c0473aba59f134d97a0983eb63670b29431727e3380",
+        "header_context_sha256": "2fe57442b50b909059738f6f6aaeca19b86673f8a0b0a4953aa2dcd31118cbc2",
+        "verified_column_caption": "June, July, August, September, October 2026; independently parsed original PDF page184(one-based)",
+        "extraction": "Exactindustry221122/base12-03; five monthly index columns; excludes221122-P/products and percent-change table"
+      },
+      "independent_check": {
+        "periods": [
+          "2026-06",
+          "2026-07",
+          "2026-08",
+          "2026-09",
+          "2026-10"
+        ],
+        "indices": [
+          207.557,
+          210.029,
+          209.348,
+          209.27,
+          198.898
+        ],
+        "verified_caption": "June, July, August, September, October 2026; independently parsed original PDF page184(one-based)",
+        "row_pdf_page_one_based": 184,
+        "release_calendar_pdf_page_one_based": 3,
+        "basis": "Independent PDF text parser confirms all five ordered month columns, exact industry221122/base12-03 row, and November13 release at08:30 eastern. Exa omitted a repeated September caption."
+      },
+      "exa_request_id": "350a760f00abaf61ff0981954440cd77",
+      "cost_dollars": {
+        "total": 0.001,
+        "contents": {
+          "text": 0.001
+        }
+      }
+    }
+  ],
+  "protected_GPU_outcomes_loaded": false
+}
