@@ -129,6 +129,9 @@ def build(inputs,output):
         for comparison in comparisons:lines.append(f"| {comparison['seed']} | {comparison['seven_day']['mean_difference']:.8f} | {comparison['seven_day']['n_cells']} |")
         lines+=["",f"Mean across{len(comparisons)} paired seed runs: {paired_summary['mean_seed_primary_difference']:.8f}. Descriptive origin-level difference range: {paired_summary['origin_difference_range'][0]:.8f} to{paired_summary['origin_difference_range'][1]:.8f}. The same market outcomes recur across seeds.",""]
         for origin,delta in paired_summary["origin_mean_differences"].items():lines.append(f"- {origin}: {delta:.8f} BLS-minus-price seven-day loss, averaged over available paired seeds.")
+    if states:
+        worse=sum(s["retrospective"]["primary_pinball"]>s["base"]["primary_pinball"] for s in states)
+        lines+=["","## What training accomplished","",f"Fine-tuning increased seven-day retrospective loss versus the corresponding unadapted model in{worse}/{len(states)} completed runs. Development checkpoint selection did not establish an out-of-sample training benefit. The tiny average BLS-input difference must be read alongside this negative result and the strong numerical controls.",""]
     lines+=["","## Strong numerical references",""]
     if states:
         lines+=["| Reference |7-day loss | Coverage | Width |","| --- | ---: | ---: | ---: |"]
