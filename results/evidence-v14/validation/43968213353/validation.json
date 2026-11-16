@@ -1,0 +1,31 @@
+{
+  "source_sha": "8f7947853461ab06cae2ed48b0cfb2316c77b5ff",
+  "study_id": "direct-evidence-v14",
+  "real_completed_runs": 0,
+  "synthetic_market_data": false,
+  "video_recorded": false,
+  "screenshots": [
+    {
+      "path": "desktop.png",
+      "bytes": 227132,
+      "sha256": "2a1ca7052f4264ef4decd51310d6cebe4571c553c9dab5e2ba5bd3f4393f664e"
+    },
+    {
+      "path": "mobile.png",
+      "bytes": 212695,
+      "sha256": "c7c2b6ea3e0e25bda9301237bd9c6f011693b2150eab75d57428bda705acf773"
+    }
+  ],
+  "checks": [
+    "strict HTTP",
+    "actual source-bound prices",
+    "matched report",
+    "mobile axes>=11px",
+    "no page overflow",
+    "keyboard checkpoint selection",
+    "immutable pins",
+    "selection and disclosure preservation",
+    "503/retry",
+    "reduced motion"
+  ]
+}
