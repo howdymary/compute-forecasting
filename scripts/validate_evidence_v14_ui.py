@@ -44,7 +44,28 @@ with sync_playwright() as p:
         state["error"]=True;page.locator("#refresh").click();page.wait_for_function("document.querySelector('#status').textContent.includes('unavailable')")
         state["error"]=False;page.locator("#refresh").click();page.wait_for_function("!document.querySelector('#status').textContent.startsWith('Loading')")
         context.close()
+    # Inspect the deployed application against the current immutable public report.
+    live_base="https://howdymary--compute-forecast-evidence-v14-web.us-east.modal.run"
+    live_raw=urllib.request.urlopen(live_base+"/api/evidence-v14",timeout=90).read()
+    live_report=json.loads(live_raw)
+    live_pointer=json.load(urllib.request.urlopen("https://raw.githubusercontent.com/howdymary/mochi-demo/compute-observatory/results/evidence-v14/latest.json",timeout=60))
+    canonical=urllib.request.urlopen("https://raw.githubusercontent.com/howdymary/mochi-demo/compute-observatory/"+live_pointer["report_path"],timeout=90).read()
+    assert hashlib.sha256(canonical).hexdigest()==live_pointer["report_sha256"]
+    assert live_report==json.loads(canonical),"Deployed report is not the current source artifact"
+    assert live_report["dataset_sha256"]==report["dataset_sha256"],"Deployed dataset identity changed"
+    for name,width,height,touch in (("live-desktop",1440,1050,False),("live-mobile",390,844,True)):
+        context=browser.new_context(viewport={"width":width,"height":height},has_touch=touch,reduced_motion="reduce")
+        page=context.new_page();errors=[];page.on("pageerror",lambda e:errors.append(str(e)))
+        response=page.goto(live_base,wait_until="domcontentloaded",timeout=90000);assert response.status==200
+        page.wait_for_function("!document.querySelector('#status').textContent.startsWith('Loading')",timeout=90000)
+        assert page.locator("#case option").count()==len(live_report["development_cases"])
+        assert page.locator("#prices circle").count()>0 and page.evaluate("document.documentElement.scrollWidth<=innerWidth")
+        page.locator("#seed").select_option("17");page.get_by_role("button",name="Inspect optimizer update 50",exact=True).click()
+        if live_report["runs"]:assert page.locator("#learning circle").count()>0
+        assert page.evaluate("async()=>{await document.fonts.ready;return document.fonts.check('24px Caveat')}")
+        assert not errors,errors
+        page.screenshot(path=str(root/(name+".png")),full_page=True);context.close()
     browser.close()
 server.shutdown()
-manifest={"source_sha":os.environ["GITHUB_SHA"],"study_id":"direct-evidence-v14","real_completed_runs":len(report["runs"]),"synthetic_market_data":False,"video_recorded":False,"screenshots":[{"path":f.name,"bytes":f.stat().st_size,"sha256":hashlib.sha256(f.read_bytes()).hexdigest()} for f in sorted(root.glob("*.png"))],"checks":["strict HTTP","actual source-bound prices","matched report","mobile axes>=11px","no page overflow","keyboard checkpoint selection","immutable pins","selection and disclosure preservation","503/retry","reduced motion"]}
+manifest={"source_sha":os.environ["GITHUB_SHA"],"study_id":"direct-evidence-v14","real_completed_runs":len(report["runs"]),"synthetic_market_data":False,"video_recorded":False,"screenshots":[{"path":f.name,"bytes":f.stat().st_size,"sha256":hashlib.sha256(f.read_bytes()).hexdigest()} for f in sorted(root.glob("*.png"))],"live_report_sha256":live_pointer["report_sha256"],"live_completed_runs":len(live_report["runs"]),"checks":["deployed HTTP and canonical artifact identity","live desktop/mobile PNGs","strict HTTP","actual source-bound prices","matched report","mobile axes>=11px","no page overflow","keyboard checkpoint selection","immutable pins","selection and disclosure preservation","503/retry","reduced motion"]}
 (root/"validation.json").write_text(json.dumps(manifest,indent=2)+"\n");print(json.dumps(manifest,indent=2))
