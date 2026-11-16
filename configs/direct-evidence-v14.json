@@ -1,0 +1,75 @@
+{
+  "study_id": "direct-evidence-v14",
+  "registered_at": "2026-11-16",
+  "primary_hypothesis": "Origin-available supplementary features lower seven-day quantile pinball versus a freshly trained matched price-only direct forecaster",
+  "classification": "Post-event retrospective study with separate registered prospective comparison",
+  "parent_data_protocol": "configs/direct-forecast-v12.json",
+  "sources": [
+    "Pacific approved daily-statistic derivatives",
+    "BLS original archived PPI detailed reports; pending exact-series/vintage verification"
+  ],
+  "candidate_news": "Primary provider and NVIDIA announcements only after archival content and availability verification; excluded until qualified",
+  "arms": [
+    "price_only",
+    "price_bls_if_verified"
+  ],
+  "model": {
+    "base": "Qwen/Qwen3.5-4B",
+    "renderer": "qwen3_5_disable_thinking",
+    "rank": 16,
+    "seeds": [
+      17,
+      29,
+      43
+    ],
+    "batch_size": 16,
+    "learning_rate": 0.00005,
+    "max_updates": 100,
+    "checkpoints": [
+      0,
+      20,
+      50,
+      100
+    ]
+  },
+  "sampling": {
+    "samples": 64,
+    "min_valid": 48,
+    "temperature": 0.8,
+    "max_tokens": 128,
+    "seed": null,
+    "concurrency": 4
+  },
+  "data": {
+    "same_examples": true,
+    "history_days": 42,
+    "minimum_history_days": 20,
+    "training_labels_end": "2026-09-19",
+    "training_origins_end": "2026-09-12",
+    "development_origins": [
+      "2026-09-27",
+      "2026-10-04"
+    ],
+    "retrospective_origins": [
+      "2026-10-11",
+      "2026-10-18",
+      "2026-10-25"
+    ],
+    "unit": "USD per GPU-hour",
+    "metadata_cutoff": "2026-11-06",
+    "protected_outcomes_loaded": false
+  },
+  "gates": {
+    "evidence": "Verified exact PPI series, original release availability, >=3 distinct eligible monthly vintages, >=90% task-origin coverage; explicit null features otherwise; engineering readiness is not power",
+    "training": "Supported model, reproducible input/SDK/configuration hashes, and checkpoint retention capacity without deleting forecasting resources or changing billing"
+  },
+  "limits": {
+    "parallel_runs": 2,
+    "total_new_optimizer_updates": 600,
+    "hours_per_run": 2,
+    "extra_retries_per_provider_request": 1
+  },
+  "selection": "Lowest development seven-day pinball; earliest checkpoint wins exact ties; zero eligible",
+  "prospective": "Separate new protocol before first issuance; existing panels and gates unchanged",
+  "hypothesis_success": "Paired primary difference below zero, with coverage/width/failures and dependent-origin uncertainty; no positive-result requirement"
+}

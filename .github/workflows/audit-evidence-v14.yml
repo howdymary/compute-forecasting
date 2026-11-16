@@ -1,0 +1,44 @@
+name: Audit historical evidence and training capacity v14
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/audit-evidence-v14.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: evidence-v14-readiness
+  cancel-in-progress: false
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Fetch registered research source
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'tinker==0.39.1'
+      - name: Inspect archived original BLS table cells
+        run: python scripts/inspect_bls_archives_v14.py
+      - name: Verify storage identities and zero-update training access
+        if: always()
+        env:
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+        run: python scripts/preflight_evidence_capacity_v14.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: evidence-v14-readiness-${{ github.run_id }}
+          path: artifacts/evidence-v14-audit
+          retention-days: 30
+      - name: Publish public audit and limitations
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/publish_evidence_audit_v14.py
