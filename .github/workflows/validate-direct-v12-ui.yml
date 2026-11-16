@@ -2,10 +2,10 @@ name: Validate direct forecast figures without recording
 on:
   push:
     branches: [compute-observatory]
-    paths: ['src/compute_forecast/direct_ui_v12.py', 'src/compute_forecast/direct_web_v12.py', 'scripts/validate_direct_v12_ui.py', 'results/direct-v12/**', '.github/workflows/validate-direct-v12-ui.yml']
+    paths: ['src/compute_forecast/direct_ui_v12.py', 'src/compute_forecast/direct_web_v12.py', 'scripts/validate_direct_v12_ui.py', 'results/direct-v12/latest.json', 'results/direct-v12/runs/**/report.json', '.github/workflows/validate-direct-v12-ui.yml']
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
 concurrency:
   group: direct-v12-ui-validation
   cancel-in-progress: false
@@ -40,6 +40,10 @@ jobs:
           node --check artifacts/direct-v12-ui/script.js
       - name: Inspect actual desktop and mobile flows using PNGs only
         run: PYTHONPATH=src python scripts/validate_direct_v12_ui.py
+      - name: Publish verified PNG evidence without recording
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/publish_direct_v12_pngs.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
