@@ -1,0 +1,2234 @@
+{
+  "schema_version": 10,
+  "kind": "recorded_public_ui_exploration",
+  "ui_revision": "5663bb115e510d49210d96bf6f11349335627d27",
+  "recorder_revision": "9bd26d8682beb5571e25f061dfebc1e3787f0633",
+  "run_id": "43801934433",
+  "recorded_at_utc": "2026-11-16T04:08:22Z",
+  "source_seconds": 60,
+  "playback_speed": 2,
+  "output_seconds": 30.0,
+  "width": 1920,
+  "height": 1080,
+  "fps": 30,
+  "codec": "h264",
+  "audio": false,
+  "series_visited": 37,
+  "all_submitted_series": [
+    "afhubbard.hyperscaler_spot.A100_40GB.spot.median",
+    "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+    "afhubbard.hyperscaler_spot.T4.spot.median",
+    "afhubbard.hyperscaler_spot.V100.spot.median",
+    "fastgpu_daily.hyperscaler_spot.A100_80GB.spot.median",
+    "fastgpu_daily.hyperscaler_spot.T4.spot.median",
+    "fastgpu_daily.neocloud_rate_card.A100_40GB.on_demand.median",
+    "fastgpu_daily.neocloud_rate_card.A100_80GB.on_demand.median",
+    "fastgpu_daily.neocloud_rate_card.B200.on_demand.median",
+    "fastgpu_daily.neocloud_rate_card.B300.on_demand.median",
+    "fastgpu_daily.neocloud_rate_card.H100_PCIe_80GB.on_demand.median",
+    "fastgpu_daily.neocloud_rate_card.H100_SXM_80GB.on_demand.median",
+    "fastgpu_daily.neocloud_rate_card.H200.on_demand.median",
+    "fastgpu_daily.neocloud_rate_card.L40S.on_demand.median",
+    "fastgpu_daily.neocloud_rate_card.RTX_6000_Ada.on_demand.median",
+    "fastgpu_daily.neocloud_rate_card.RTX_A6000.on_demand.median",
+    "fastgpu_daily.neocloud_rate_card.RTX_PRO_6000.on_demand.median",
+    "fastgpu_daily.neocloud_spot.A100_80GB.spot.median",
+    "fastgpu_daily.neocloud_spot.B200.spot.median",
+    "fastgpu_daily.neocloud_spot.B300.spot.median",
+    "fastgpu_daily.neocloud_spot.H100_SXM_80GB.spot.median",
+    "fastgpu_daily.neocloud_spot.H200.spot.median",
+    "fastgpu_daily.neocloud_spot.L40S.spot.median",
+    "fastgpu_daily.neocloud_spot.RTX_PRO_6000.spot.median",
+    "gpurentalprices.marketplace_ask.H100_80GB.spot.median",
+    "gpurentalprices.neocloud_rate_card.A100_40GB.on_demand.median",
+    "gpurentalprices.neocloud_rate_card.A100_SXM_80GB.on_demand.median",
+    "gpurentalprices.neocloud_rate_card.B200.on_demand.median",
+    "gpurentalprices.neocloud_rate_card.B300.on_demand.median",
+    "gpurentalprices.neocloud_rate_card.H100_80GB.on_demand.median",
+    "gpurentalprices.neocloud_rate_card.H100_SXM_80GB.on_demand.median",
+    "gpurentalprices.neocloud_rate_card.H200.on_demand.median",
+    "gpurentalprices.neocloud_rate_card.L4.on_demand.median",
+    "gpurentalprices.neocloud_rate_card.L40S.on_demand.median",
+    "gpurentalprices.neocloud_rate_card.RTX_6000_Ada.on_demand.median",
+    "gpurentalprices.neocloud_rate_card.RTX_A6000.on_demand.median",
+    "gpurentalprices.neocloud_rate_card.RTX_PRO_6000.on_demand.median"
+  ],
+  "api_snapshots": {
+    "/api/pricing": {
+      "sha256": "b88dbdf9df9cdfafc6baab8c9b32aac87a500706971edc440b769377398268ba",
+      "bytes": 49107
+    },
+    "/api/value-v5": {
+      "sha256": "a471c10ee918c64bf4d640ea746ce0e35f2b6027068f87b597e345e7e9af25ef",
+      "bytes": 414182
+    }
+  },
+  "official_csv_sha256": "67a043255a716db6bc9b73cd28f9258c30fb299fd8671a9ee3430c0d94cadd80",
+  "trace": [
+    {
+      "source_second": 0.0,
+      "event": "Opening H100 matched history and archived quantiles",
+      "state": {
+        "mode": "benchmark",
+        "series": "gpurentalprices.neocloud_rate_card.H100_80GB.on_demand.median",
+        "range": "all",
+        "horizon": 7,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 3.847055204,
+          "q50": 3.885,
+          "q90": 4.155395335,
+          "value": 3.885,
+          "t": 7,
+          "kind": "forecast"
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 4.0477,
+      "event": "Submitted series 1/37",
+      "state": {
+        "mode": "benchmark",
+        "series": "fastgpu_daily.neocloud_rate_card.H100_PCIe_80GB.on_demand.median",
+        "range": "all",
+        "horizon": 1,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 2.79,
+          "q50": 2.79,
+          "q90": 2.79,
+          "value": 2.79,
+          "t": 1,
+          "kind": "forecast"
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 4.5839,
+      "event": "Submitted series 2/37",
+      "state": {
+        "mode": "benchmark",
+        "series": "fastgpu_daily.neocloud_rate_card.H100_SXM_80GB.on_demand.median",
+        "range": "all",
+        "horizon": 3,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 3.92860587,
+          "q50": 3.949,
+          "q90": 3.980679192,
+          "value": 3.949,
+          "t": 3,
+          "kind": "forecast"
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 5.1343,
+      "event": "Submitted series 3/37",
+      "state": {
+        "mode": "benchmark",
+        "series": "fastgpu_daily.neocloud_spot.H100_SXM_80GB.spot.median",
+        "range": "all",
+        "horizon": 7,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 2.285,
+          "q50": 2.285,
+          "q90": 2.348767442,
+          "value": 2.285,
+          "t": 7,
+          "kind": "forecast"
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 5.6785,
+      "event": "Submitted series 4/37",
+      "state": {
+        "mode": "benchmark",
+        "series": "gpurentalprices.marketplace_ask.H100_80GB.spot.median",
+        "range": "all",
+        "horizon": 1,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 1.603541662,
+          "q50": 1.875,
+          "q90": 2.224421994,
+          "value": 1.875,
+          "t": 1,
+          "kind": "forecast"
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 6.2165,
+      "event": "Submitted series 5/37",
+      "state": {
+        "mode": "benchmark",
+        "series": "gpurentalprices.neocloud_rate_card.H100_80GB.on_demand.median",
+        "range": "all",
+        "horizon": 3,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 3.864664019,
+          "q50": 3.885,
+          "q90": 3.911719395,
+          "value": 3.885,
+          "t": 3,
+          "kind": "forecast"
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 6.7487,
+      "event": "Submitted series 6/37",
+      "state": {
+        "mode": "benchmark",
+        "series": "gpurentalprices.neocloud_rate_card.H100_SXM_80GB.on_demand.median",
+        "range": "all",
+        "horizon": 7,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 3.526350388,
+          "q50": 3.5539,
+          "q90": 3.746700389,
+          "value": 3.5539,
+          "t": 7,
+          "kind": "forecast"
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 7.2835,
+      "event": "Submitted series 7/37",
+      "state": {
+        "mode": "benchmark",
+        "series": "afhubbard.hyperscaler_spot.A100_40GB.spot.median",
+        "range": "all",
+        "horizon": 1,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 1.9891,
+          "q50": 1.9891,
+          "q90": 1.9891,
+          "value": 1.9891,
+          "t": 1,
+          "kind": "forecast"
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 7.8315,
+      "event": "Submitted series 8/37",
+      "state": {
+        "mode": "benchmark",
+        "series": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+        "range": "all",
+        "horizon": 3,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 1.849607979,
+          "q50": 1.8818,
+          "q90": 1.914068126,
+          "value": 1.8818,
+          "t": 3,
+          "kind": "forecast"
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 8.3641,
+      "event": "Submitted series 9/37",
+      "state": {
+        "mode": "benchmark",
+        "series": "fastgpu_daily.hyperscaler_spot.A100_80GB.spot.median",
+        "range": "all",
+        "horizon": 7,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 1.452143213,
+          "q50": 1.757,
+          "q90": 2.11675583,
+          "value": 1.757,
+          "t": 7,
+          "kind": "forecast"
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 8.9161,
+      "event": "Submitted series 10/37",
+      "state": {
+        "mode": "benchmark",
+        "series": "fastgpu_daily.neocloud_rate_card.A100_40GB.on_demand.median",
+        "range": "all",
+        "horizon": 1,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 1.8155,
+          "q50": 1.8155,
+          "q90": 1.83366216,
+          "value": 1.8155,
+          "t": 1,
+          "kind": "forecast"
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 9.4474,
+      "event": "Submitted series 11/37",
+      "state": {
+        "mode": "benchmark",
+        "series": "fastgpu_daily.neocloud_rate_card.A100_80GB.on_demand.median",
+        "range": "all",
+        "horizon": 3,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 2.23337274,
+          "q50": 2.293,
+          "q90": 2.422573667,
+          "value": 2.293,
+          "t": 3,
+          "kind": "forecast"
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 9.9968,
+      "event": "Submitted series 12/37",
+      "state": {
+        "mode": "benchmark",
+        "series": "fastgpu_daily.neocloud_spot.A100_80GB.spot.median",
+        "range": "all",
+        "horizon": 7,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 1.147,
+          "q50": 1.147,
+          "q90": 1.191007753,
+          "value": 1.147,
+          "t": 7,
+          "kind": "forecast"
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 10.5309,
+      "event": "Submitted series 13/37",
+      "state": {
+        "mode": "benchmark",
+        "series": "gpurentalprices.neocloud_rate_card.A100_40GB.on_demand.median",
+        "range": "all",
+        "horizon": 1,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 1.99,
+          "q50": 1.99,
+          "q90": 1.99,
+          "value": 1.99,
+          "t": 1,
+          "kind": "forecast"
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 11.0656,
+      "event": "Submitted series 14/37",
+      "state": {
+        "mode": "benchmark",
+        "series": "gpurentalprices.neocloud_rate_card.A100_SXM_80GB.on_demand.median",
+        "range": "all",
+        "horizon": 3,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 1.940233723,
+          "q50": 1.95,
+          "q90": 2.000102775,
+          "value": 1.95,
+          "t": 3,
+          "kind": "forecast"
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 11.6152,
+      "event": "Submitted series 15/37",
+      "state": {
+        "mode": "benchmark",
+        "series": "afhubbard.hyperscaler_spot.T4.spot.median",
+        "range": "all",
+        "horizon": 7,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 0.3028470512,
+          "q50": 0.3047,
+          "q90": 0.3125566702,
+          "value": 0.3047,
+          "t": 7,
+          "kind": "forecast"
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 12.1473,
+      "event": "Submitted series 16/37",
+      "state": {
+        "mode": "benchmark",
+        "series": "afhubbard.hyperscaler_spot.V100.spot.median",
+        "range": "all",
+        "horizon": 1,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 1.475,
+          "q50": 1.475,
+          "q90": 1.475,
+          "value": 1.475,
+          "t": 1,
+          "kind": "forecast"
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 12.6963,
+      "event": "Submitted series 17/37",
+      "state": {
+        "mode": "benchmark",
+        "series": "fastgpu_daily.hyperscaler_spot.T4.spot.median",
+        "range": "all",
+        "horizon": 3,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 0.08195890105,
+          "q50": 0.089,
+          "q90": 0.09524791997,
+          "value": 0.089,
+          "t": 3,
+          "kind": "forecast"
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 13.2309,
+      "event": "Submitted series 18/37",
+      "state": {
+        "mode": "benchmark",
+        "series": "fastgpu_daily.neocloud_rate_card.B200.on_demand.median",
+        "range": "all",
+        "horizon": 7,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 5.538475947,
+          "q50": 6.3,
+          "q90": 6.930960292,
+          "value": 6.3,
+          "t": 7,
+          "kind": "forecast"
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 13.7809,
+      "event": "Submitted series 19/37",
+      "state": {
+        "mode": "benchmark",
+        "series": "fastgpu_daily.neocloud_rate_card.B300.on_demand.median",
+        "range": "all",
+        "horizon": 1,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 8.49,
+          "q50": 8.49,
+          "q90": 8.575698535,
+          "value": 8.49,
+          "t": 1,
+          "kind": "forecast"
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 14.314,
+      "event": "Submitted series 20/37",
+      "state": {
+        "mode": "benchmark",
+        "series": "fastgpu_daily.neocloud_rate_card.H200.on_demand.median",
+        "range": "all",
+        "horizon": 3,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 4.515136911,
+          "q50": 4.54,
+          "q90": 4.58444699,
+          "value": 4.54,
+          "t": 3,
+          "kind": "forecast"
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 14.8499,
+      "event": "Submitted series 21/37",
+      "state": {
+        "mode": "benchmark",
+        "series": "fastgpu_daily.neocloud_rate_card.L40S.on_demand.median",
+        "range": "all",
+        "horizon": 7,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 1.684277812,
+          "q50": 1.7355,
+          "q90": 1.830866619,
+          "value": 1.7355,
+          "t": 7,
+          "kind": "forecast"
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 15.3964,
+      "event": "Submitted series 22/37",
+      "state": {
+        "mode": "benchmark",
+        "series": "fastgpu_daily.neocloud_rate_card.RTX_6000_Ada.on_demand.median",
+        "range": "all",
+        "horizon": 1,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 1.528,
+          "q50": 1.528,
+          "q90": 1.543615664,
+          "value": 1.528,
+          "t": 1,
+          "kind": "forecast"
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 15.9504,
+      "event": "Submitted series 23/37",
+      "state": {
+        "mode": "benchmark",
+        "series": "fastgpu_daily.neocloud_rate_card.RTX_A6000.on_demand.median",
+        "range": "all",
+        "horizon": 3,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 0.4918918919,
+          "q50": 0.5,
+          "q90": 0.5080819525,
+          "value": 0.5,
+          "t": 3,
+          "kind": "forecast"
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 16.4823,
+      "event": "Submitted series 24/37",
+      "state": {
+        "mode": "benchmark",
+        "series": "fastgpu_daily.neocloud_rate_card.RTX_PRO_6000.on_demand.median",
+        "range": "all",
+        "horizon": 7,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 2.049303111,
+          "q50": 2.1615,
+          "q90": 2.526891484,
+          "value": 2.1615,
+          "t": 7,
+          "kind": "forecast"
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 17.0152,
+      "event": "Submitted series 25/37",
+      "state": {
+        "mode": "benchmark",
+        "series": "fastgpu_daily.neocloud_spot.B200.spot.median",
+        "range": "all",
+        "horizon": 1,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 4.177,
+          "q50": 4.177,
+          "q90": 4.197433,
+          "value": 4.177,
+          "t": 1,
+          "kind": "forecast"
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 17.5502,
+      "event": "Submitted series 26/37",
+      "state": {
+        "mode": "benchmark",
+        "series": "fastgpu_daily.neocloud_spot.B300.spot.median",
+        "range": "all",
+        "horizon": 3,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 4.735,
+          "q50": 4.735,
+          "q90": 4.833648186,
+          "value": 4.735,
+          "t": 3,
+          "kind": "forecast"
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 18.0961,
+      "event": "Submitted series 27/37",
+      "state": {
+        "mode": "benchmark",
+        "series": "fastgpu_daily.neocloud_spot.H200.spot.median",
+        "range": "all",
+        "horizon": 7,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 2.8,
+          "q50": 2.8,
+          "q90": 2.901809561,
+          "value": 2.8,
+          "t": 7,
+          "kind": "forecast"
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 18.6319,
+      "event": "Submitted series 28/37",
+      "state": {
+        "mode": "benchmark",
+        "series": "fastgpu_daily.neocloud_spot.L40S.spot.median",
+        "range": "all",
+        "horizon": 1,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 0.97,
+          "q50": 0.97,
+          "q90": 0.9801147467,
+          "value": 0.97,
+          "t": 1,
+          "kind": "forecast"
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 19.1835,
+      "event": "Submitted series 29/37",
+      "state": {
+        "mode": "benchmark",
+        "series": "fastgpu_daily.neocloud_spot.RTX_PRO_6000.spot.median",
+        "range": "all",
+        "horizon": 3,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 1.4145,
+          "q50": 1.4145,
+          "q90": 1.480767617,
+          "value": 1.4145,
+          "t": 3,
+          "kind": "forecast"
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 19.7187,
+      "event": "Submitted series 30/37",
+      "state": {
+        "mode": "benchmark",
+        "series": "gpurentalprices.neocloud_rate_card.B200.on_demand.median",
+        "range": "all",
+        "horizon": 7,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 7.83315562,
+          "q50": 7.89,
+          "q90": 8.081702344,
+          "value": 7.89,
+          "t": 7,
+          "kind": "forecast"
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 20.2537,
+      "event": "Submitted series 31/37",
+      "state": {
+        "mode": "benchmark",
+        "series": "gpurentalprices.neocloud_rate_card.B300.on_demand.median",
+        "range": "all",
+        "horizon": 1,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 9.730558402,
+          "q50": 9.745,
+          "q90": 9.792679573,
+          "value": 9.745,
+          "t": 1,
+          "kind": "forecast"
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 20.7975,
+      "event": "Submitted series 32/37",
+      "state": {
+        "mode": "benchmark",
+        "series": "gpurentalprices.neocloud_rate_card.H200.on_demand.median",
+        "range": "all",
+        "horizon": 3,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 4.59,
+          "q50": 4.59,
+          "q90": 4.648232895,
+          "value": 4.59,
+          "t": 3,
+          "kind": "forecast"
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 21.3373,
+      "event": "Submitted series 33/37",
+      "state": {
+        "mode": "benchmark",
+        "series": "gpurentalprices.neocloud_rate_card.L4.on_demand.median",
+        "range": "all",
+        "horizon": 7,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 0.8737765786,
+          "q50": 0.8839,
+          "q90": 0.8897166116,
+          "value": 0.8839,
+          "t": 7,
+          "kind": "forecast"
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 21.8803,
+      "event": "Submitted series 34/37",
+      "state": {
+        "mode": "benchmark",
+        "series": "gpurentalprices.neocloud_rate_card.L40S.on_demand.median",
+        "range": "all",
+        "horizon": 1,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 1.6099,
+          "q50": 1.6099,
+          "q90": 1.611386853,
+          "value": 1.6099,
+          "t": 1,
+          "kind": "forecast"
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 22.4301,
+      "event": "Submitted series 35/37",
+      "state": {
+        "mode": "benchmark",
+        "series": "gpurentalprices.neocloud_rate_card.RTX_6000_Ada.on_demand.median",
+        "range": "all",
+        "horizon": 3,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "horizon_days": 3,
+          "date": "2026-11-09",
+          "q10": 1.2515,
+          "q50": 1.2515,
+          "q90": 1.289766852,
+          "value": 1.2515,
+          "t": 3,
+          "kind": "forecast"
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 22.9635,
+      "event": "Submitted series 36/37",
+      "state": {
+        "mode": "benchmark",
+        "series": "gpurentalprices.neocloud_rate_card.RTX_A6000.on_demand.median",
+        "range": "all",
+        "horizon": 7,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 0.711,
+          "q50": 0.711,
+          "q90": 0.7620080037,
+          "value": 0.711,
+          "t": 7,
+          "kind": "forecast"
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 23.4979,
+      "event": "Submitted series 37/37",
+      "state": {
+        "mode": "benchmark",
+        "series": "gpurentalprices.neocloud_rate_card.RTX_PRO_6000.on_demand.median",
+        "range": "all",
+        "horizon": 1,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "horizon_days": 1,
+          "date": "2026-11-07",
+          "q10": 2.3,
+          "q50": 2.3,
+          "q90": 2.322719721,
+          "value": 2.3,
+          "t": 1,
+          "kind": "forecast"
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 24.0806,
+      "event": "A100 historical window",
+      "state": {
+        "mode": "benchmark",
+        "series": "afhubbard.hyperscaler_spot.A100_40GB.spot.median",
+        "range": "30",
+        "horizon": 7,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 1.949907219,
+          "q50": 1.9891,
+          "q90": 2.094166954,
+          "value": 1.9891,
+          "t": 7,
+          "kind": "forecast"
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 26.0652,
+      "event": "Full history with descriptive EMA",
+      "state": {
+        "mode": "benchmark",
+        "series": "afhubbard.hyperscaler_spot.A100_40GB.spot.median",
+        "range": "all",
+        "horizon": 7,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "horizon_days": 7,
+          "date": "2026-11-13",
+          "q10": 1.949907219,
+          "q50": 1.9891,
+          "q90": 2.094166954,
+          "value": 1.9891,
+          "t": 7,
+          "kind": "forecast"
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 28.0517,
+      "event": "Published rental assumptions, index 100",
+      "state": {
+        "mode": "scenario",
+        "series": "gpurentalprices.neocloud_rate_card.H100_80GB.on_demand.median",
+        "range": "all",
+        "horizon": 7,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "t": 36,
+          "date": "2029-11-06",
+          "kind": "scenario",
+          "values": [
+            27.462500000000002,
+            61.412499999999994,
+            115.76250000000002
+          ]
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 32.0116,
+      "event": "Annual rental assumptions change",
+      "state": {
+        "mode": "scenario",
+        "series": "gpurentalprices.neocloud_rate_card.H100_80GB.on_demand.median",
+        "range": "all",
+        "horizon": 7,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "t": 36,
+          "date": "2029-11-06",
+          "kind": "scenario",
+          "values": [
+            27.462500000000002,
+            61.412499999999994,
+            115.76250000000002
+          ]
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 33.0105,
+      "event": "Annual rental assumptions change",
+      "state": {
+        "mode": "scenario",
+        "series": "gpurentalprices.neocloud_rate_card.H100_80GB.on_demand.median",
+        "range": "all",
+        "horizon": 7,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -33,
+            -14,
+            6
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "t": 36,
+          "date": "2029-11-06",
+          "kind": "scenario",
+          "values": [
+            30.07629999999999,
+            63.605599999999995,
+            119.1016
+          ]
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 34.0103,
+      "event": "Annual rental assumptions change",
+      "state": {
+        "mode": "scenario",
+        "series": "gpurentalprices.neocloud_rate_card.H100_80GB.on_demand.median",
+        "range": "all",
+        "horizon": 7,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -31,
+            -13,
+            6
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "t": 36,
+          "date": "2029-11-06",
+          "kind": "scenario",
+          "values": [
+            32.850899999999996,
+            65.85029999999999,
+            119.1016
+          ]
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 35.011,
+      "event": "Annual rental assumptions change",
+      "state": {
+        "mode": "scenario",
+        "series": "gpurentalprices.neocloud_rate_card.H100_80GB.on_demand.median",
+        "range": "all",
+        "horizon": 7,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -29,
+            -12,
+            7
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "t": 36,
+          "date": "2029-11-06",
+          "kind": "scenario",
+          "values": [
+            35.79109999999999,
+            68.1472,
+            122.50430000000001
+          ]
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 36.0115,
+      "event": "Annual rental assumptions change",
+      "state": {
+        "mode": "scenario",
+        "series": "gpurentalprices.neocloud_rate_card.H100_80GB.on_demand.median",
+        "range": "all",
+        "horizon": 7,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -27,
+            -11,
+            8
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "t": 36,
+          "date": "2029-11-06",
+          "kind": "scenario",
+          "values": [
+            38.90169999999999,
+            70.49690000000001,
+            125.97120000000001
+          ]
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 37.0114,
+      "event": "Annual rental assumptions change",
+      "state": {
+        "mode": "scenario",
+        "series": "gpurentalprices.neocloud_rate_card.H100_80GB.on_demand.median",
+        "range": "all",
+        "horizon": 7,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -25,
+            -10,
+            9
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "t": 36,
+          "date": "2029-11-06",
+          "kind": "scenario",
+          "values": [
+            42.1875,
+            72.9,
+            129.5029
+          ]
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 38.0102,
+      "event": "Annual rental assumptions change",
+      "state": {
+        "mode": "scenario",
+        "series": "gpurentalprices.neocloud_rate_card.H100_80GB.on_demand.median",
+        "range": "all",
+        "horizon": 7,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -23,
+            -9,
+            9
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "t": 36,
+          "date": "2029-11-06",
+          "kind": "scenario",
+          "values": [
+            45.6533,
+            75.35710000000002,
+            129.5029
+          ]
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 39.0102,
+      "event": "Annual rental assumptions change",
+      "state": {
+        "mode": "scenario",
+        "series": "gpurentalprices.neocloud_rate_card.H100_80GB.on_demand.median",
+        "range": "all",
+        "horizon": 7,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -21,
+            -8,
+            10
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "t": 36,
+          "date": "2029-11-06",
+          "kind": "scenario",
+          "values": [
+            49.303900000000006,
+            77.86880000000001,
+            133.10000000000005
+          ]
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 40.0113,
+      "event": "Annual rental assumptions change",
+      "state": {
+        "mode": "scenario",
+        "series": "gpurentalprices.neocloud_rate_card.H100_80GB.on_demand.median",
+        "range": "all",
+        "horizon": 7,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -19,
+            -7,
+            11
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "t": 36,
+          "date": "2029-11-06",
+          "kind": "scenario",
+          "values": [
+            53.14410000000001,
+            80.43569999999998,
+            136.76310000000004
+          ]
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 41.0108,
+      "event": "Annual rental assumptions change",
+      "state": {
+        "mode": "scenario",
+        "series": "gpurentalprices.neocloud_rate_card.H100_80GB.on_demand.median",
+        "range": "all",
+        "horizon": 7,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -17,
+            -6,
+            11
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "t": 36,
+          "date": "2029-11-06",
+          "kind": "scenario",
+          "values": [
+            57.17869999999999,
+            83.05839999999999,
+            136.76310000000004
+          ]
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 42.0485,
+      "event": "Dated published dollar anchor, 24 months",
+      "state": {
+        "mode": "scenario",
+        "series": "gpurentalprices.neocloud_rate_card.H100_80GB.on_demand.median",
+        "range": "all",
+        "horizon": 7,
+        "months": 24,
+        "instrument": "rental",
+        "basis": "usd",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -15,
+            -5,
+            12
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "t": 24,
+          "date": "2028-11-06",
+          "kind": "scenario",
+          "values": [
+            2.8069124999999997,
+            3.5062124999999997,
+            4.873344
+          ]
+        },
+        "anchor": 3.885
+      }
+    },
+    {
+      "source_second": 42.0577,
+      "event": "Monthly GPU-hour budget changes",
+      "state": {
+        "mode": "scenario",
+        "series": "gpurentalprices.neocloud_rate_card.H100_80GB.on_demand.median",
+        "range": "all",
+        "horizon": 7,
+        "months": 24,
+        "instrument": "rental",
+        "basis": "usd",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -15,
+            -5,
+            12
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "t": 24,
+          "date": "2028-11-06",
+          "kind": "scenario",
+          "values": [
+            2.8069124999999997,
+            3.5062124999999997,
+            4.873344
+          ]
+        },
+        "anchor": 3.885
+      }
+    },
+    {
+      "source_second": 44.0099,
+      "event": "Monthly GPU-hour budget changes",
+      "state": {
+        "mode": "scenario",
+        "series": "gpurentalprices.neocloud_rate_card.H100_80GB.on_demand.median",
+        "range": "all",
+        "horizon": 7,
+        "months": 24,
+        "instrument": "rental",
+        "basis": "usd",
+        "hours": 2000,
+        "rates": {
+          "rental": [
+            -15,
+            -5,
+            12
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "t": 24,
+          "date": "2028-11-06",
+          "kind": "scenario",
+          "values": [
+            2.8069124999999997,
+            3.5062124999999997,
+            4.873344
+          ]
+        },
+        "anchor": 3.885
+      }
+    },
+    {
+      "source_second": 46.0092,
+      "event": "Monthly GPU-hour budget changes",
+      "state": {
+        "mode": "scenario",
+        "series": "gpurentalprices.neocloud_rate_card.H100_80GB.on_demand.median",
+        "range": "all",
+        "horizon": 7,
+        "months": 24,
+        "instrument": "rental",
+        "basis": "usd",
+        "hours": 3000,
+        "rates": {
+          "rental": [
+            -15,
+            -5,
+            12
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "t": 24,
+          "date": "2028-11-06",
+          "kind": "scenario",
+          "values": [
+            2.8069124999999997,
+            3.5062124999999997,
+            4.873344
+          ]
+        },
+        "anchor": 3.885
+      }
+    },
+    {
+      "source_second": 48.0406,
+      "event": "A100 rental scenarios with its own matched anchor",
+      "state": {
+        "mode": "scenario",
+        "series": "afhubbard.hyperscaler_spot.A100_40GB.spot.median",
+        "range": "all",
+        "horizon": 7,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "usd",
+        "hours": 3900,
+        "rates": {
+          "rental": [
+            -15,
+            -5,
+            12
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "t": 36,
+          "date": "2029-11-06",
+          "kind": "scenario",
+          "values": [
+            1.2215560374999999,
+            1.7054046124999998,
+            2.7945422848000008
+          ]
+        },
+        "anchor": 1.9891
+      }
+    },
+    {
+      "source_second": 54.0094,
+      "event": "Separate hardware resale index",
+      "state": {
+        "mode": "scenario",
+        "series": "afhubbard.hyperscaler_spot.A100_40GB.spot.median",
+        "range": "all",
+        "horizon": 7,
+        "months": 36,
+        "instrument": "resale",
+        "basis": "index",
+        "hours": 3900,
+        "rates": {
+          "rental": [
+            -15,
+            -18,
+            12
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "t": 36,
+          "date": "2029-11-06",
+          "kind": "scenario",
+          "values": [
+            21.599999999999998,
+            42.1875,
+            72.9
+          ]
+        },
+        "anchor": 100
+      }
+    },
+    {
+      "source_second": 58.0644,
+      "event": "Published assumptions restored",
+      "state": {
+        "mode": "scenario",
+        "series": "gpurentalprices.neocloud_rate_card.H100_80GB.on_demand.median",
+        "range": "all",
+        "horizon": 7,
+        "months": 36,
+        "instrument": "rental",
+        "basis": "index",
+        "hours": 1000,
+        "rates": {
+          "rental": [
+            -35,
+            -15,
+            5
+          ],
+          "resale": [
+            40,
+            25,
+            10
+          ]
+        },
+        "inspected": {
+          "t": 36,
+          "date": "2029-11-06",
+          "kind": "scenario",
+          "values": [
+            27.462500000000002,
+            61.412499999999994,
+            115.76250000000002
+          ]
+        },
+        "anchor": 100
+      }
+    }
+  ],
+  "claim": "Archived forecasts and assumption-based calculations; no live inference or new accuracy result.",
+  "files": {
+    "terminal-30s.mp4": {
+      "sha256": "2987075a3212fff54d167a0df7e079ce1f132db4e208a0670f34932b3b4f9ff0",
+      "bytes": 3940145
+    },
+    "poster.png": {
+      "sha256": "94b9380fa9cdfaf155cf9b81f557fa1f401da04ccc3b3ea475fd2825f8c4d799",
+      "bytes": 660931
+    },
+    "contact-sheet.png": {
+      "sha256": "8a15180262196f6bac238faecd8144414fe289c9b8e7b5c4a6cdc1b11ca2ff48",
+      "bytes": 663186
+    }
+  },
+  "sources": {
+    "pricing": "https://howdymary--compute-forecast-observatory-web.us-east.modal.run/api/pricing",
+    "history": "https://howdymary--compute-forecast-observatory-web.us-east.modal.run/api/value-v5"
+  }
+}
