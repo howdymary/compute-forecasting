@@ -1,0 +1,542 @@
+{
+  "schema_version": 4,
+  "study_id": "market-context-v4",
+  "run_id": "b0b88c946f8f402595d70e0f575afa74",
+  "source_sha": "b17abca6958261df21e75a580b6864180989b29b",
+  "available_at": "2026-11-16T06:49:23.678172+00:00",
+  "classification": "Current source-grounded research planning; supplementary prospective context, no historical benchmark features",
+  "sources": [
+    {
+      "id": "nvidia-supply-20261021",
+      "url": "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-and-Supply-Chain-Partners-Expand-Capacity-to-Accelerate-AI-Infrastructure-Buildout/",
+      "published_date": "2026-10-21",
+      "kind": "vendor_capacity_plan",
+      "topic": "supply_pipeline",
+      "summary": "NVIDIA describes supplier expansion across substrates, packaging, testing and optics, with additions scheduled into 2027\u20132028. These are plans rather than verified rentable GPU capacity.",
+      "caveat": "Do not convert announced manufacturing capacity into available GPU-hours or an automatic rental-price decline.",
+      "horizon": "12\u201336 months",
+      "status": "retrieved_primary_source",
+      "retrieved_at": "2026-11-16T06:49:23.792941+00:00",
+      "available_at": "2026-11-16T06:49:23.792944+00:00",
+      "content_sha256": "f3009f84c68b8fea9e979a794f878c1e9f229db6f4a169b8e0f54e30776f2fe9",
+      "publication_scope": "Metadata, links and authored summary only; raw content private",
+      "historical_availability_established": false
+    },
+    {
+      "id": "aws-capacity-20260826",
+      "url": "https://press.aboutamazon.com/aws/2026/8/aws-and-nvidia-to-deliver-2-million-additional-gpus-and-next-generation-infrastructure-for-agentic-and-physical-ai",
+      "published_date": "2026-08-26",
+      "kind": "provider_capacity_plan",
+      "topic": "supply_pipeline",
+      "summary": "AWS and NVIDIA describe additional deployments across 2027\u20132028 and broader infrastructure collaboration. Delivery timing, location and realized utilization remain separate questions.",
+      "caveat": "A deployment announcement is not a transaction, current quote or capacity guarantee.",
+      "horizon": "12\u201336 months",
+      "status": "retrieved_primary_source",
+      "retrieved_at": "2026-11-16T06:49:23.792993+00:00",
+      "available_at": "2026-11-16T06:49:23.792995+00:00",
+      "content_sha256": "5be12caaf3488e4ad9cde36fe1d64d77a42036eaa2bd6a882e8ef584b61a04b7",
+      "publication_scope": "Metadata, links and authored summary only; raw content private",
+      "historical_availability_established": false
+    },
+    {
+      "id": "aws-regions-20260828",
+      "url": "https://aws.amazon.com/about-aws/whats-new/2026/08/amazon-ec2-p6-b300-instances-available-additional-regions/",
+      "published_date": "2026-08-28",
+      "kind": "provider_availability_announcement",
+      "topic": "configuration_substitution",
+      "summary": "AWS announces P6-B300 availability in additional regions and describes its multi-GPU memory and networking configuration. It can motivate a substitution or regional-coverage hypothesis.",
+      "caveat": "An eight-GPU B300 instance cannot be equated with a per-GPU H100/A100 contract without verifying units and configuration.",
+      "horizon": "1\u201312 months",
+      "status": "retrieved_primary_source",
+      "retrieved_at": "2026-11-16T06:49:23.793038+00:00",
+      "available_at": "2026-11-16T06:49:23.793040+00:00",
+      "content_sha256": "089ac1e2cfe746c197231062bdda6758623ac732490609d04f099ff47fb4476e",
+      "publication_scope": "Metadata, links and authored summary only; raw content private",
+      "historical_availability_established": false
+    },
+    {
+      "id": "lbl-queues-2026",
+      "url": "https://emp.lbl.gov/queues",
+      "published_date": null,
+      "published_period": "2026-06",
+      "kind": "national_lab_dataset_description",
+      "topic": "power_constraints",
+      "summary": "Berkeley Lab documents generation and storage projects seeking grid interconnection and emphasizes withdrawals and long development timelines.",
+      "caveat": "Generation/storage queues are not data-center load queues or direct measures of GPU availability.",
+      "horizon": "12\u201336 months",
+      "status": "retrieved_primary_source",
+      "retrieved_at": "2026-11-16T06:49:23.793051+00:00",
+      "available_at": "2026-11-16T06:49:23.793053+00:00",
+      "content_sha256": "39a4d464e0810f721b591437bb08482356c61f2c1f9a4b2b553608b5bd3091bd",
+      "publication_scope": "Metadata, links and authored summary only; raw content private",
+      "historical_availability_established": false
+    },
+    {
+      "id": "lbl-energy-20260618",
+      "url": "https://www.energy.gov/documents/united-states-data-center-energy-usage-report-2025-update",
+      "published_date": "2026-06-18",
+      "kind": "research_scenario_report",
+      "topic": "power_constraints",
+      "summary": "The Berkeley Lab update models data-center electricity consumption under alternative equipment, utilization and deployment assumptions. It supplies scenarios and measurement distinctions for long-run research.",
+      "caveat": "Annual energy consumption, peak power and interconnection requests are different quantities; these scenarios are not rental forecasts.",
+      "horizon": "12\u201336 months",
+      "status": "retrieved_primary_source",
+      "retrieved_at": "2026-11-16T06:49:23.793074+00:00",
+      "available_at": "2026-11-16T06:49:23.793076+00:00",
+      "content_sha256": "b9c4c2cecf6f11ed8b29749cacd9ca4edc398a15f8cc6057be1c615e68fa8037",
+      "publication_scope": "Metadata, links and authored summary only; raw content private",
+      "historical_availability_established": false
+    },
+    {
+      "id": "nvidia-rubin-20260105",
+      "url": "https://nvidianews.nvidia.com/news/rubin-platform-ai-supercomputer",
+      "published_date": "2026-01-05",
+      "kind": "vendor_hardware_announcement",
+      "topic": "hardware_efficiency",
+      "summary": "NVIDIA describes Rubin architecture and workload-specific efficiency claims. Those claims motivate checks on hardware substitution and workload economics.",
+      "caveat": "Vendor performance and cost-per-token claims do not establish GPU-hour rental prices.",
+      "horizon": "6\u201336 months",
+      "status": "retrieved_primary_source",
+      "retrieved_at": "2026-11-16T06:49:23.793115+00:00",
+      "available_at": "2026-11-16T06:49:23.793116+00:00",
+      "content_sha256": "cbd34f8e75d5380aacebda6f851f00562f8972cb49f84899c42c786057a1f3dd",
+      "publication_scope": "Metadata, links and authored summary only; raw content private",
+      "historical_availability_established": false
+    }
+  ],
+  "discovery": [
+    {
+      "url": "https://nvidianews.nvidia.com/news/nvidia-and-oracle-expand-nvidia-vera-rubin-to-multi-gigawatt-scale-and-bring-nvidia-vera-cpu-to-oracle-cloud-infrastructure",
+      "title": "NVIDIA and Oracle Expand NVIDIA Vera Rubin to Multi-Gigawatt Scale and Bring NVIDIA Vera CPU to Oracle Cloud Infrastructure | NVIDIA Newsroom",
+      "published_at": "2026-10-27T00:00:00.000Z",
+      "retrieved_at": "2026-11-16T06:49:24.944794+00:00",
+      "content_sha256": "b5628f5c43ac738c51719b24442f066f58bdf3e17c94eee9913a1da9644b23aa",
+      "status": "discovered_metadata; quantitative claims require verification"
+    },
+    {
+      "url": "https://aws.amazon.com/about-aws/whats-new/2026/11/amazon-g7-additional-regions/",
+      "title": "Amazon EC2 G7 instances now available in additional regions - AWS",
+      "published_at": "2026-11-10T19:30:00.000Z",
+      "retrieved_at": "2026-11-16T06:49:24.944826+00:00",
+      "content_sha256": "e4816eab52a59eb759b19d05dd0d7dbcbcc9d0ebbbf3a876503c17c070b6418d",
+      "status": "discovered_metadata; quantitative claims require verification"
+    },
+    {
+      "url": "https://cloud.google.com/blog/topics/ai-infrastructure/google-cloud-infrastructure-at-nvidia-gtc-berlin-2026/",
+      "title": "Google Cloud infrastructure at NVIDIA GTC Berlin 2026 | Google Cloud Blog",
+      "published_at": "2026-10-21T00:00:00.000Z",
+      "retrieved_at": "2026-11-16T06:49:24.944840+00:00",
+      "content_sha256": "201312bbf9da58b4fa60825b91ff2c3adb7c9f07692952e29ad70862d44b256d",
+      "status": "discovered_metadata; quantitative claims require verification"
+    },
+    {
+      "url": "https://nvidianews.nvidia.com/news/nvidia-introduces-dsx-pod-ai-factories-to-accelerate-europes-infrastructure-deployment",
+      "title": "NVIDIA Introduces DSX POD AI Factories to Accelerate Europe\u2019s Infrastructure Deployment | NVIDIA Newsroom",
+      "published_at": "2026-10-21T00:00:00.000Z",
+      "retrieved_at": "2026-11-16T06:49:24.944855+00:00",
+      "content_sha256": "03e451bef09820f373b428aa114f9d6ad1617af7168ea9db0dcfd6e26da63d10",
+      "status": "discovered_metadata; quantitative claims require verification"
+    },
+    {
+      "url": "https://nvidianews.nvidia.com/news/nvidia-and-supply-chain-partners-expand-capacity-to-accelerate-ai-infrastructure-buildout",
+      "title": "NVIDIA and Supply Chain Partners Expand Capacity to Accelerate AI Infrastructure Buildout | NVIDIA Newsroom",
+      "published_at": "2026-10-21T00:00:00.000Z",
+      "retrieved_at": "2026-11-16T06:49:24.944866+00:00",
+      "content_sha256": "f586d3ef42345144366ff5afcdae9bba0ec618f29d414973259affe009865535",
+      "status": "discovered_metadata; quantitative claims require verification"
+    }
+  ],
+  "memory_records": [
+    {
+      "record_id": "cf-market-v4-b0b88c946f8f402595d70e0f575afa74-0",
+      "author": "cf-market-v4-b0b88c946f8f402595d70e0f575afa74-researcher",
+      "role": "researcher",
+      "content_sha256": "f36dd0603f816f5d8d65261508d098e3a65d3042caa5102f2bc60b77b02ae90e",
+      "created_at": "2026-11-16T06:49:25.884175+00:00",
+      "ingestion_id": "97027871-4be7-4590-a325-4e3eb353c990",
+      "ingestion_completed": true
+    },
+    {
+      "record_id": "cf-market-v4-b0b88c946f8f402595d70e0f575afa74-1",
+      "author": "cf-market-v4-b0b88c946f8f402595d70e0f575afa74-scientist",
+      "role": "scientist",
+      "content_sha256": "985dbeec4df5b6dbddc84a003842af9ac0fa7595b23b20f5ffdae00a6b1c1e46",
+      "created_at": "2026-11-16T06:49:41.747166+00:00",
+      "ingestion_id": "31f96421-a109-48bc-b124-8cfe236c5d6a",
+      "ingestion_completed": true
+    },
+    {
+      "record_id": "cf-market-v4-b0b88c946f8f402595d70e0f575afa74-2",
+      "author": "cf-market-v4-b0b88c946f8f402595d70e0f575afa74-skeptic",
+      "role": "skeptic",
+      "content_sha256": "710b5fc39018cdad3eb16d87bdbf51bb0a148a299af99be31c43f58e2093616b",
+      "created_at": "2026-11-16T06:49:47.148018+00:00",
+      "ingestion_id": "fa22fa06-8545-4462-b4b7-5c54d17bbc35",
+      "ingestion_completed": true
+    },
+    {
+      "record_id": "cf-market-v4-b0b88c946f8f402595d70e0f575afa74-3",
+      "author": "cf-market-v4-b0b88c946f8f402595d70e0f575afa74-scientist",
+      "role": "scientist",
+      "content_sha256": "1b6edc742a4c6cfa74f88a2f7e5b7b2d0baacf1ae767c826b6c76e2f23122157",
+      "created_at": "2026-11-16T06:50:02.952925+00:00",
+      "ingestion_id": "9da1c0fc-9ff2-405d-a852-1975c8c73ed8",
+      "ingestion_completed": true
+    }
+  ],
+  "memory_reads": [
+    {
+      "reader": "cf-market-v4-b0b88c946f8f402595d70e0f575afa74-scientist",
+      "required_source_id": "cf-market-v4-b0b88c946f8f402595d70e0f575afa74-0",
+      "actual_cross_role_use": true,
+      "returned_source_ids": [
+        "boundforge-43670325538-proposer-failed-neighborhoods",
+        "boundforge-43670325538-verifier-baseline",
+        "boundforge-43670325538-verifier-review",
+        "boundforge-43670827227-proposer-precision-plan-0",
+        "boundforge-43670827227-proposer-precision-plan-1",
+        "boundforge-43670827227-proposer-precision-plan-2",
+        "boundforge-43670827227-proposer-precision-plan-3",
+        "boundforge-43670827227-proposer-precision-plan-4",
+        "boundforge-43670827227-proposer-precision-plan-5",
+        "boundforge-43671271112-proposer-precision-plan-0",
+        "boundforge-43671271112-proposer-precision-plan-1",
+        "boundforge-43671271112-proposer-precision-plan-2",
+        "boundforge-43671271112-proposer-precision-plan-3",
+        "boundforge-43671444344-proposer-precision-plan-0",
+        "boundforge-43671444344-proposer-precision-plan-2",
+        "boundforge-43671753698-proposer-precision-plan-2",
+        "boundforge-43675810337-literature-v2-review",
+        "boundforge-43675810337-proposer-v2-development",
+        "boundforge-43675810337-verifier-v2-guard",
+        "boundforge-c49-43679780777-experimenter",
+        "boundforge-c49-43679935507-controller",
+        "boundforge-methods-v3-validated-failures-43749410835",
+        "cf-market-v4-b0b88c946f8f402595d70e0f575afa74-0"
+      ],
+      "canonical_fallback": false
+    },
+    {
+      "reader": "cf-market-v4-b0b88c946f8f402595d70e0f575afa74-skeptic",
+      "required_source_id": "cf-market-v4-b0b88c946f8f402595d70e0f575afa74-1",
+      "actual_cross_role_use": true,
+      "returned_source_ids": [
+        "boundforge-43670325538-proposer-failed-neighborhoods",
+        "boundforge-43670325538-verifier-baseline",
+        "boundforge-43670325538-verifier-review",
+        "boundforge-43670827227-proposer-precision-plan-0",
+        "boundforge-43670827227-proposer-precision-plan-1",
+        "boundforge-43670827227-proposer-precision-plan-4",
+        "boundforge-43670827227-proposer-precision-plan-5",
+        "boundforge-43671271112-proposer-precision-plan-2",
+        "boundforge-43671753698-proposer-precision-plan-0",
+        "boundforge-43671753698-proposer-precision-plan-1",
+        "boundforge-43671753698-proposer-precision-plan-2",
+        "boundforge-43671753698-proposer-precision-plan-3",
+        "boundforge-43675810337-literature-v2-review",
+        "boundforge-43675810337-proposer-v2-development",
+        "boundforge-43675810337-verifier-v2-guard",
+        "boundforge-c49-43679780777-experimenter",
+        "boundforge-c49-43679935507-controller",
+        "boundforge-methods-v3-validated-failures-43749410835",
+        "cf-market-v4-b0b88c946f8f402595d70e0f575afa74-0",
+        "cf-market-v4-b0b88c946f8f402595d70e0f575afa74-1"
+      ],
+      "canonical_fallback": false
+    },
+    {
+      "reader": "cf-market-v4-b0b88c946f8f402595d70e0f575afa74-scientist",
+      "required_source_id": "cf-market-v4-b0b88c946f8f402595d70e0f575afa74-2",
+      "actual_cross_role_use": true,
+      "returned_source_ids": [
+        "boundforge-43670325538-proposer-failed-neighborhoods",
+        "boundforge-43670325538-verifier-baseline",
+        "boundforge-43670325538-verifier-review",
+        "boundforge-43670827227-proposer-precision-plan-0",
+        "boundforge-43670827227-proposer-precision-plan-1",
+        "boundforge-43671271112-proposer-precision-plan-2",
+        "boundforge-43671753698-proposer-precision-plan-2",
+        "boundforge-43675810337-literature-v2-review",
+        "boundforge-43675810337-proposer-v2-development",
+        "boundforge-43675810337-verifier-v2-guard",
+        "boundforge-c49-43679780777-experimenter",
+        "boundforge-c49-43679935507-controller",
+        "boundforge-methods-v3-validated-failures-43749410835",
+        "cf-market-v4-b0b88c946f8f402595d70e0f575afa74-0",
+        "cf-market-v4-b0b88c946f8f402595d70e0f575afa74-1",
+        "cf-market-v4-b0b88c946f8f402595d70e0f575afa74-2"
+      ],
+      "canonical_fallback": false
+    },
+    {
+      "reader": "cf-market-v4-b0b88c946f8f402595d70e0f575afa74-researcher",
+      "required_source_id": "cf-market-v4-b0b88c946f8f402595d70e0f575afa74-3",
+      "actual_cross_role_use": true,
+      "returned_source_ids": [
+        "boundforge-43670325538-proposer-failed-neighborhoods",
+        "boundforge-43670325538-verifier-baseline",
+        "boundforge-43670325538-verifier-review",
+        "boundforge-43670827227-proposer-precision-plan-0",
+        "boundforge-43670827227-proposer-precision-plan-1",
+        "boundforge-43671271112-proposer-precision-plan-2",
+        "boundforge-43671753698-proposer-precision-plan-1",
+        "boundforge-43675810337-literature-v2-review",
+        "boundforge-43675810337-proposer-v2-development",
+        "boundforge-43675810337-verifier-v2-guard",
+        "boundforge-c49-43679780777-experimenter",
+        "boundforge-c49-43679935507-controller",
+        "boundforge-methods-v3-validated-failures-43749410835",
+        "cf-market-v4-b0b88c946f8f402595d70e0f575afa74-0",
+        "cf-market-v4-b0b88c946f8f402595d70e0f575afa74-1",
+        "cf-market-v4-b0b88c946f8f402595d70e0f575afa74-2",
+        "cf-market-v4-b0b88c946f8f402595d70e0f575afa74-3"
+      ],
+      "canonical_fallback": false
+    }
+  ],
+  "service_calls": [
+    {
+      "service": "exa",
+      "kind": "contents",
+      "request_id": "f42825b05d4a2f613391d93558e1a46c",
+      "cost_dollars": {
+        "total": 0.006,
+        "contents": {
+          "text": 0.006
+        }
+      },
+      "at": "2026-11-16T06:49:23.792916+00:00"
+    },
+    {
+      "service": "exa",
+      "kind": "search",
+      "request_id": "9df9738add197dba43e480065a873b88",
+      "query": "Official GPU cloud infrastructure capacity announcements, new regions and GPU supply constraints; explain delivery timing, configuration and availability, excluding rental price history",
+      "cost_dollars": {
+        "total": 0.007,
+        "search": {
+          "neural": 0.007
+        }
+      },
+      "at": "2026-11-16T06:49:24.944774+00:00"
+    },
+    {
+      "service": "past.dev",
+      "method": "PUT",
+      "status_code": 201,
+      "at": "2026-11-16T06:49:25.884026+00:00"
+    },
+    {
+      "service": "past.dev",
+      "method": "POST",
+      "status_code": 202,
+      "at": "2026-11-16T06:49:26.153821+00:00"
+    },
+    {
+      "service": "past.dev",
+      "method": "GET",
+      "status_code": 200,
+      "at": "2026-11-16T06:49:26.238199+00:00"
+    },
+    {
+      "service": "past.dev",
+      "method": "GET",
+      "status_code": 200,
+      "at": "2026-11-16T06:49:28.356224+00:00"
+    },
+    {
+      "service": "past.dev",
+      "method": "GET",
+      "status_code": 200,
+      "at": "2026-11-16T06:49:30.449231+00:00"
+    },
+    {
+      "service": "past.dev",
+      "method": "GET",
+      "status_code": 200,
+      "at": "2026-11-16T06:49:32.532972+00:00"
+    },
+    {
+      "service": "past.dev",
+      "method": "POST",
+      "status_code": 200,
+      "at": "2026-11-16T06:49:33.237625+00:00"
+    },
+    {
+      "service": "past.dev",
+      "method": "POST",
+      "status_code": 202,
+      "at": "2026-11-16T06:49:42.135909+00:00"
+    },
+    {
+      "service": "past.dev",
+      "method": "GET",
+      "status_code": 200,
+      "at": "2026-11-16T06:49:42.223382+00:00"
+    },
+    {
+      "service": "past.dev",
+      "method": "GET",
+      "status_code": 200,
+      "at": "2026-11-16T06:49:44.307333+00:00"
+    },
+    {
+      "service": "past.dev",
+      "method": "GET",
+      "status_code": 200,
+      "at": "2026-11-16T06:49:46.472804+00:00"
+    },
+    {
+      "service": "past.dev",
+      "method": "POST",
+      "status_code": 200,
+      "at": "2026-11-16T06:49:47.147612+00:00"
+    },
+    {
+      "service": "past.dev",
+      "method": "POST",
+      "status_code": 202,
+      "at": "2026-11-16T06:49:47.320501+00:00"
+    },
+    {
+      "service": "past.dev",
+      "method": "GET",
+      "status_code": 200,
+      "at": "2026-11-16T06:49:47.411096+00:00"
+    },
+    {
+      "service": "past.dev",
+      "method": "GET",
+      "status_code": 200,
+      "at": "2026-11-16T06:49:49.496789+00:00"
+    },
+    {
+      "service": "past.dev",
+      "method": "GET",
+      "status_code": 200,
+      "at": "2026-11-16T06:49:51.580325+00:00"
+    },
+    {
+      "service": "past.dev",
+      "method": "GET",
+      "status_code": 200,
+      "at": "2026-11-16T06:49:53.667208+00:00"
+    },
+    {
+      "service": "past.dev",
+      "method": "GET",
+      "status_code": 200,
+      "at": "2026-11-16T06:49:55.778260+00:00"
+    },
+    {
+      "service": "past.dev",
+      "method": "GET",
+      "status_code": 200,
+      "at": "2026-11-16T06:49:57.898271+00:00"
+    },
+    {
+      "service": "past.dev",
+      "method": "GET",
+      "status_code": 200,
+      "at": "2026-11-16T06:49:59.982894+00:00"
+    },
+    {
+      "service": "past.dev",
+      "method": "POST",
+      "status_code": 200,
+      "at": "2026-11-16T06:50:00.492799+00:00"
+    },
+    {
+      "service": "past.dev",
+      "method": "POST",
+      "status_code": 202,
+      "at": "2026-11-16T06:50:03.367950+00:00"
+    },
+    {
+      "service": "past.dev",
+      "method": "GET",
+      "status_code": 200,
+      "at": "2026-11-16T06:50:03.451114+00:00"
+    },
+    {
+      "service": "past.dev",
+      "method": "GET",
+      "status_code": 200,
+      "at": "2026-11-16T06:50:05.568614+00:00"
+    },
+    {
+      "service": "past.dev",
+      "method": "GET",
+      "status_code": 200,
+      "at": "2026-11-16T06:50:07.651541+00:00"
+    },
+    {
+      "service": "past.dev",
+      "method": "POST",
+      "status_code": 200,
+      "at": "2026-11-16T06:50:08.029210+00:00"
+    }
+  ],
+  "plans": [
+    {
+      "selected_question": "audit_configuration_substitution",
+      "distribution": {
+        "collect_new_price_vintage": 0.03098907880485058,
+        "audit_configuration_substitution": 0.7992188930511475,
+        "test_supply_announcement_lags": 0.07433894276618958,
+        "audit_power_constraint_exposure": 0.09545308351516724
+      },
+      "used_memory_records": [
+        "cf-market-v4-b0b88c946f8f402595d70e0f575afa74-0"
+      ],
+      "source_ids": [
+        "nvidia-supply-20261021",
+        "aws-capacity-20260826",
+        "aws-regions-20260828",
+        "lbl-queues-2026",
+        "lbl-energy-20260618",
+        "nvidia-rubin-20260105"
+      ],
+      "created_at": "2026-11-16T06:49:41.747112+00:00",
+      "numerical_execution_status": "pending_registered_data_and_test"
+    },
+    {
+      "selected_question": "audit_configuration_substitution",
+      "distribution": {
+        "collect_new_price_vintage": 0.03770437091588974,
+        "audit_configuration_substitution": 0.6683259606361389,
+        "test_supply_announcement_lags": 0.10249108821153641,
+        "audit_power_constraint_exposure": 0.19147859513759613
+      },
+      "used_memory_records": [
+        "cf-market-v4-b0b88c946f8f402595d70e0f575afa74-0",
+        "cf-market-v4-b0b88c946f8f402595d70e0f575afa74-2"
+      ],
+      "source_ids": [
+        "nvidia-supply-20261021",
+        "aws-capacity-20260826",
+        "aws-regions-20260828",
+        "lbl-queues-2026",
+        "lbl-energy-20260618",
+        "nvidia-rubin-20260105"
+      ],
+      "created_at": "2026-11-16T06:50:02.952862+00:00",
+      "numerical_execution_status": "pending_registered_data_and_test"
+    }
+  ],
+  "historical_benchmark_inputs_changed": false,
+  "forecast_accuracy_result": null,
+  "actual_cross_role_reads": 4,
+  "status": "completed_source_grounded_planning",
+  "completed_at": "2026-11-16T06:50:08.029656+00:00",
+  "runtime_seconds": 44.35151931199999,
+  "actual_tinker_decisions": 2,
+  "decision_changed": false,
+  "cost_usd": null,
+  "limitations": [
+    "Current retrieved sources are unavailable to old historical forecast origins",
+    "Vendor plans and performance claims are attributed, not verified realized capacity",
+    "Changed planning choices do not establish improved forecasting accuracy",
+    "This uses starting model weights for a separate planning task, not evidence of trained selector transfer"
+  ]
+}
