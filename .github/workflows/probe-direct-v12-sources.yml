@@ -1,0 +1,28 @@
+name: Diagnose archived BLS source access v12
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/probe-direct-v12-sources.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Fetch immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python scripts/probe_direct_v12_sources.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: direct-v12-source-probe-${{ github.run_id }}
+          path: artifacts/direct-v12-supplementary-probe
+          retention-days: 30
