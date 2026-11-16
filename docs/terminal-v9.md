@@ -11,3 +11,11 @@ Scenarios retain the published annual assumptions and monthly compounding. Resea
 Remote PNG-only checks cover desktop and mobile views, first-screen chart visibility, source-bound statistics, fit/zero geometry, unchanged source values, scenario arithmetic, navigation, keyboard and pin preservation. Existing required validation suites remain strict.
 
 Refreshes publish the two research responses into the view together. Keyboard focus returns to Refresh when it initiated the operation and the user has not moved elsewhere. Date-axis labels suppress an intermediate tick when it would collide with the end date; dates and cutoff markers remain unchanged.
+
+## Verified release — 16 November 2026
+
+[Live dashboard](https://howdymary--compute-forecast-observatory-web.us-east.modal.run) · [Implementation](https://github.com/howdymary/mochi-demo/commit/2e21c7583b260438173969abd67c843c660818fb) · [Release manifest](../results/terminal-v9/release-2026-11-16.json).
+
+The deployed revision passed 165 tests (3 skipped), the foundation check and all ten browser-validation workflows. The [dashboard report](../results/terminal-v9/runs/43792441901/report.json) verifies desktop 1512px and mobile 390px/320px views. [Desktop chart](../results/terminal-v9/runs/43792441901/1512-benchmark.png), [mobile chart](../results/terminal-v9/runs/43792441901/390-benchmark.png), [Research](../results/terminal-v9/runs/43792441901/1512-research.png) and [scenarios](../results/terminal-v9/runs/43792441901/390-scenarios.png) were inspected as rendered PNGs. Forecast source values, the official export checksum and scenario arithmetic were checked remotely.
+
+This is a post-event presentation release. It adds no forecasting-accuracy result. The original history-publication limits and prospective outcome gates remain in effect.

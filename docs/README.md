@@ -32,6 +32,8 @@ Current prospective extension: [Signals v6](prospective-signals-v6.md) · [Versi
 
 ## Product and operation
 
+[Institutional pricing dashboard v9](terminal-v9.md): current visual system, source-bound price statistics, range controls and published desktop/mobile verification.
+
 [Pricing controls and formulas](pricing-observatory.md) · [Notebook interactions](notebook-experience.md) · [Contribution guide](../CONTRIBUTING.md)
 
 The earlier pricing/notebook guides describe their original release state. Historical context and the Research atlas were added in v3; the current methods supersede older “history unavailable” or “campaign running” status statements. Dated diagnostic snapshots remain historical records rather than being silently rewritten.
