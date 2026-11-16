@@ -102,9 +102,9 @@ HTML=r'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="
 <clipPath id="scenario-clip"><rect id="sc-clip" x="149" y="285" width="1333" height="440"/></clipPath>
 <clipPath id="learning-clip"><rect id="learn-clip" x="168" y="801" width="16" height="151"/></clipPath></defs>
 <rect width="1920" height="1080" fill="#f7f3e9"/><rect width="1920" height="1080" fill="url(#paper)"/>
-<text x="76" y="53" font-size="16" letter-spacing="3" fill="#516963">COMPUTE FORECAST / A MARKET RESEARCH NOTEBOOK</text>
+<text x="76" y="53" font-size="16" letter-spacing="3" fill="#516963">COMPUTE FORECAST</text>
 <text x="1844" y="53" text-anchor="end" font-size="16" fill="#65766f">2× playback</text>
-<text x="76" y="119" font-size="56" class="book" letter-spacing="-1" fill="#263d3e">The price of compute, in context.</text>
+<text x="76" y="119" font-size="56" class="book" letter-spacing="-1" fill="#263d3e">The price of compute</text>
 <text x="78" y="164" font-size="24" fill="#52685f">A100 SXM 80GB · hyperscaler spot · pooled collector median · USD per GPU-hour</text>
 <line x1="76" y1="196" x2="1844" y2="196" stroke="#ccd3c8"/>
 <text id="mode" x="80" y="239" font-size="19" fill="#315dc1" letter-spacing="1.5"></text>
