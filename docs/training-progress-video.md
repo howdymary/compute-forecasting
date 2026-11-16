@@ -2,7 +2,7 @@
 
 A requested 30-second, 1920×1080 silent recording of actual saved checkpoint results. The cream notebook scene is a dedicated evidence replay, rather than a live inference session.
 
-The first 20 seconds hold one A100 SXM 80GB series and the August 22, 2026 development origin fixed while replaying operational soft-target seed 17 checkpoints 0, 20, 50 and 100. Historical prices come from the matching approved public history adapter. Quantile forecasts and compatible archived outcomes are read from existing retained numerical outputs; no numerical fitting or training is launched. Dashed joins guide the eye between actual 1-, 3- and 7-day points.
+The illustrative case was selected retrospectively after inspecting all six development tasks, to show actual price-forecast changes. It is not a registered performance endpoint. The first 20 seconds hold one A100 SXM 80GB series and the August 15, 2026 development origin fixed while replaying operational soft-target seed 17 checkpoints 0, 20, 50 and 100. Historical prices come from the matching approved public history adapter. Quantile forecasts and compatible archived outcomes are read from existing retained numerical outputs; no numerical fitting or training is launched. Dashed joins guide the eye between actual 1-, 3- and 7-day points.
 
 The sidebar reports aggregate development loss, whose scope differs from the single-case price chart. The update-20 regression is retained. The next five seconds show all six SFT runs; the three hard-target trajectories overlap exactly. Rings identify the original development-selected checkpoints.
 

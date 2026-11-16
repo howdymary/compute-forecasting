@@ -17,7 +17,7 @@ def write(path,obj):path.write_text(json.dumps(obj,indent=2,allow_nan=False)+"\n
 def retained_forecasts(request):
     """Read existing numerical files only; never fit, resample, train, or commit."""
     if not re.fullmatch(r"[0-9a-f]{32}",request["run_id"]):raise ValueError("Invalid retained run")
-    if request["origin"]!="2026-08-22":raise ValueError("Fixed development replay origin changed")
+    if request["origin"]!="2026-08-15":raise ValueError("Fixed development replay origin changed")
     root=Path("/data/campaign-v2/experiments")/request["run_id"]
     summary=json.loads((root/"summary.json").read_text())
     if summary["origin"]!=request["origin"] or summary["dataset_sha256"]!=request["dataset_sha256"]:raise ValueError("Retained input identity")
@@ -71,15 +71,15 @@ function price(i){
  const state=D.states[i],pts=D.retained.forecasts[state.config],hist=D.history,truth=D.retained.truth;
  const values=[...hist.map(p=>p.value),...truth.map(p=>p.value),...Object.values(D.retained.forecasts).flatMap(ps=>ps.flatMap(p=>[p.q10,p.q90]))];
  const lo=Math.min(...values),hi=Math.max(...values),pad=Math.max((hi-lo)*.14,.025),mn=Math.max(0,lo-pad),mx=hi+pad;
- const t0=Date.parse(hist[0].date),t1=Date.parse('2026-08-29'),x=p=>75+(Date.parse(p.date)-t0)/(t1-t0)*1095,y=v=>430-(v-mn)/(mx-mn)*360;
+ const t0=Date.parse(hist[0].date),t1=Date.parse('2026-08-22'),x=p=>75+(Date.parse(p.date)-t0)/(t1-t0)*1095,y=v=>430-(v-mn)/(mx-mn)*360;
  let s=frameAxis(mn,mx),originX=x({date:D.origin});s+='<rect x="'+originX+'" y="40" width="'+(1170-originX)+'" height="390" fill="#355fc405"/>';
  const ds=hist.map(p=>({date:p.date,value:p.value}));let part=[];for(let j=0;j<ds.length;j++){if(j&&Date.parse(ds[j].date)-Date.parse(ds[j-1].date)>86400000){s+='<path d="'+seg(part,x,y)+'" fill="none" stroke="'+INK+'" stroke-width="3"/>';part=[]}part.push(ds[j])}s+='<path d="'+seg(part,x,y)+'" fill="none" stroke="'+INK+'" stroke-width="3"/>';
- s+=line(originX,40,originX,440,'#9ca89c','5 6')+txt(originX-10,30,'22 AUG · ORIGIN',13,'#68766f','end');
+ s+=line(originX,40,originX,440,'#9ca89c','5 6')+txt(originX-10,30,'15 AUG · ORIGIN',13,'#68766f','end');
  const band=seg(pts,x,y,'q10')+' '+pts.slice().reverse().map(p=>'L'+x(p)+','+y(p.q90)).join(' ')+' Z';
  s+='<path d="'+band+'" fill="#355fc420"/><path d="'+seg(pts,x,y,'q50')+'" fill="none" stroke="'+BLUE+'" stroke-width="3" stroke-dasharray="7 6"/>';
  pts.forEach(p=>{const xx=x(p);s+=line(xx,y(p.q10),xx,y(p.q90),BLUE)+point(xx,y(p.q50),BLUE,6)});
  truth.forEach(p=>{s+=point(x(p),y(p.value),AMBER,5)});
- [hist[0],hist[Math.floor(hist.length/2)],{date:D.origin},{date:'2026-08-29'}].forEach(p=>s+=txt(x(p),465,p.date.slice(5).replace('-',' / '),15,'#748078','middle'));
+ [hist[0],hist[Math.floor(hist.length/2)],{date:D.origin},{date:'2026-08-22'}].forEach(p=>s+=txt(x(p),465,p.date.slice(5).replace('-',' / '),15,'#748078','middle'));
  return svg(s);
 }
 function curves(){
@@ -103,10 +103,10 @@ function renderStage(k){
  const a=D.states[k],base=D.states[0].development_pinball,delta=(a.development_pinball/base-1)*100;
  el('title').textContent='Learning which forecast to try next.';el('subtitle').textContent='One A100 case. Four checkpoints. The regressions stay in.';
  el('scope').textContent='A100 SXM 80GB · hyperscaler spot median';el('legend').innerHTML='<span><i class="dot" style="background:'+INK+'"></i>History</span><span><i class="dot" style="background:'+BLUE+'"></i>q10 / q50 / q90</span><span><i class="dot" style="background:'+AMBER+'"></i>Archived outcomes</span>';
- el('annotation').textContent=['Start with the untrained selector.','An early checkpoint gets worse.','The selected forecast changes again.','The development-selected checkpoint.'][k];el('chart').innerHTML=price(k);
+ el('annotation').textContent=['Start with the untrained selector.','Overall development loss rises.','Overall loss falls. This case reverses.','The final choice changes this forecast.'][k];el('chart').innerHTML=price(k);
  el('axisnote').textContent='USD per GPU-hour · 1, 3 and 7-day forecast points';el('seriesnote').textContent='Dashed joins are guides; no daily forecasts are implied.';
- el('panel').innerHTML='<div class="eyebrow">Operational run · soft targets · seed 17</div><h2>Checkpoint '+a.update+'</h2><div class="metriclabel">Development pinball loss · lower is better</div><div class="big">'+loss(a.development_pinball)+'</div><div class="change" style="'+(delta>0?'background:#f2e8d7;color:#9d6c27':'')+'">'+(k===0?'Starting checkpoint':Math.abs(delta).toFixed(1)+'% '+(delta>0?'higher':'lower')+' than start')+'</div><div class="detail">Score covers the full development cohort. The chart shows one fixed case.</div><div class="ruled"></div><div class="eyebrow">Chosen numerical forecaster</div><div class="config">'+a.config+'</div><div class="small">Tinker trains the selector. Numerical models produce the price quantiles.</div><div class="tag">Qwen3.5-4B · LoRA rank 16</div>';
- el('foot').textContent='Development replay · forecast origin 22 August 2026 · same case and axes throughout';
+ el('panel').innerHTML='<div class="eyebrow">Operational run · soft targets · seed 17</div><h2>Checkpoint '+a.update+'</h2><div class="metriclabel">Development pinball loss · lower is better</div><div class="big">'+loss(a.development_pinball)+'</div><div class="change" style="'+(delta>0?'background:#f2e8d7;color:#9d6c27':'')+'">'+(k===0?'Starting checkpoint':Math.abs(delta).toFixed(1)+'% '+(delta>0?'higher':'lower')+' than start')+'</div><div class="detail">Aggregate covers all six development tasks. This illustrative case was selected retrospectively.</div><div class="ruled"></div><div class="eyebrow">Chosen numerical forecaster</div><div class="config">'+a.config+'</div><div class="small">Illustrated case loss: '+loss(a.cases.reduce((v,c)=>v+c.loss,0)/a.cases.length)+'<br>Tinker trains the selector; numerical models produce the quantiles.</div><div class="tag">Qwen3.5-4B · LoRA rank 16</div>';
+ el('foot').textContent='Development replay · 15 August 2026 · illustrative case selected retrospectively';
  }else if(k===4){
  el('title').textContent='Six runs. Improvement was uneven.';el('subtitle').textContent='All saved SFT checkpoints, including reversals and plateaus.';el('scope').textContent='Development forecast loss · lower is better';el('legend').innerHTML='<span>Cobalt: soft / 17</span><span>Emerald: soft / 29</span><span>Amber: soft / 43</span>';
  el('annotation').textContent='Circles mark development-selected checkpoints.';el('chart').innerHTML=curves();el('axisnote').textContent='Actual optimizer updates · evaluated at 0, 20, 50 and 100';el('seriesnote').textContent='Three hard-target runs overlap exactly.';
@@ -147,19 +147,19 @@ def build_payload(out):
     states=[]
     for p in op["checkpoints"]:
         doc=read(f'runs/campaign/campaign-v2-policy-soft-17/v2-policy/development-{p["update"]}.json')
-        eligible=[t for t in doc["traces"] if t["origin"]=="2026-08-22" and any("A100_SXM_80GB" in c["series_id"] for c in t["cases"])]
+        eligible=[t for t in doc["traces"] if t["origin"]=="2026-08-15" and any("A100_SXM_80GB" in c["series_id"] for c in t["cases"])]
         if len(eligible)!=1:raise ValueError("Fixed replay task not unique")
         t=eligible[0];ids={c["series_id"] for c in t["cases"]}
         if len(ids)!=1:raise ValueError("Individual series replay requires one series")
         sid=next(iter(ids));states.append({**p,"config":t["selected_config_id"],"cases":t["cases"],"task_id":t["task_id"],"series_id":sid})
     if len({s["series_id"] for s in states})!=1 or len({s["task_id"] for s in states})!=1:raise ValueError("Unmatched checkpoint cases")
-    sid=states[0]["series_id"];origin=next(g for g in grid["origins"] if g["origin"]=="2026-08-22")
+    sid=states[0]["series_id"];origin=next(g for g in grid["origins"] if g["origin"]=="2026-08-15")
     value_raw=fetch(URL+"/api/value-v5");value=json.loads(value_raw)
     permission=next(p for p in value["history"]["publication_decisions"] if p["series_id"]==sid)
     if permission["approved"] is not True:raise ValueError("Matching history publication permission required")
     history=next(s for s in value["history"]["series"] if s["id"]==sid)
-    points=[p for p in history["points"] if "2026-07-11"<=p["date"]<="2026-08-22"]
-    if len(points)<14 or points[-1]["date"]!="2026-08-22" or len({p["date"] for p in points})!=len(points):raise ValueError("History coverage")
+    points=[p for p in history["points"] if "2026-07-11"<=p["date"]<="2026-08-15"]
+    if len(points)<14 or points[-1]["date"]!="2026-08-15" or len({p["date"] for p in points})!=len(points):raise ValueError("History coverage")
     request={"run_id":origin["run_id"],"origin":origin["origin"],"series_id":sid,"configs":[s["config"] for s in states],"dataset_sha256":status["archive"]["dataset_sha256"]}
     retained=retained_forecasts.remote(request)
     truth={p["date"]:p["value"] for p in retained["truth"]}
@@ -171,7 +171,7 @@ def build_payload(out):
             if abs(score-expected)>5.1e-7:raise ValueError(("Raw prediction / retained score mismatch",s["update"],p["horizon"],score,expected))
     ap=next(p for p in analysis["policies"] if p["mode"]=="sft" and p["objective"]=="soft" and p["seed"]==17)
     if abs(ap["candidate_pinball"]-.011569797542840439)>1e-12 or abs(ap["starting_pinball"]-.014995328587716763)>1e-12:raise ValueError("Evaluation score contract")
-    payload={"origin":"2026-08-22","series_id":sid,"history":points,"states":states,"runs":runs,"retained":retained,"eval":{"starting":ap["starting_pinball"],"sft":ap["candidate_pinball"]},"provenance":{"research_archive_sha256":sha(bundle),"value_api_sha256":sha(value_raw),"permission":permission,"history_metadata":{k:v for k,v in history.items() if k!="points"},"checkpoint_source_sha256":sha(Path("docs/campaign-v2-checkpoints.json").read_bytes()),"source_commit":os.environ["GITHUB_SHA"]}}
+    payload={"origin":"2026-08-15","series_id":sid,"history":points,"states":states,"runs":runs,"retained":retained,"eval":{"starting":ap["starting_pinball"],"sft":ap["candidate_pinball"]},"provenance":{"research_archive_sha256":sha(bundle),"value_api_sha256":sha(value_raw),"permission":permission,"history_metadata":{k:v for k,v in history.items() if k!="points"},"checkpoint_source_sha256":sha(Path("docs/campaign-v2-checkpoints.json").read_bytes()),"source_commit":os.environ["GITHUB_SHA"]}}
     write(out/"replay-data.json",payload)
     return payload
 
@@ -211,7 +211,7 @@ def main():
         if sec==17:im.save(out/"poster.png")
         im.thumbnail((640,360));x=i%3*640;y=i//3*384;sheet.paste(im,(x,y));draw.text((x+12,y+364),f"{sec}s / actual saved checkpoint replay",fill="#263d3d")
     sheet.save(out/"contact-sheet.png")
-    manifest={"schema_version":1,"kind":"saved_checkpoint_forecast_replay","recorded_at_utc":time.strftime("%Y-%m-%dT%H:%M:%SZ",time.gmtime()),"source_commit":os.environ["GITHUB_SHA"],"run_id":os.environ["GITHUB_RUN_ID"],"output_seconds":duration,"width":1920,"height":1080,"fps":30,"audio":False,"live_inference":False,"new_training":False,"new_numerical_fits":False,"series_id":payload["series_id"],"development_replay_origin":payload["origin"],"checkpoints":[{k:s[k] for k in ("update","checkpoint_id","development_pinball","config")} for s in payload["states"]],"timeline":timeline,"provenance":payload["provenance"],"replay_data_sha256":sha((out/"replay-data.json").read_bytes()),"raw_numerical_file_hashes":payload["retained"]["file_hashes"],"limitations":["Retrospective development replay; forecast connections are visual guides between actual 1,3,7-day points.","Development aggregate scores and the single-case price chart have different scopes.","Separate 12-cell evaluation used three previously inspected dependent dates and two A100 series.","Additional RL benefit was not established; prospective improvement remains pending."],"files":{p.name:{"sha256":sha(p.read_bytes()),"bytes":p.stat().st_size} for p in (movie,out/"poster.png",out/"contact-sheet.png")}}
+    manifest={"schema_version":1,"kind":"saved_checkpoint_forecast_replay","recorded_at_utc":time.strftime("%Y-%m-%dT%H:%M:%SZ",time.gmtime()),"source_commit":os.environ["GITHUB_SHA"],"run_id":os.environ["GITHUB_RUN_ID"],"output_seconds":duration,"width":1920,"height":1080,"fps":30,"audio":False,"live_inference":False,"new_training":False,"new_numerical_fits":False,"series_id":payload["series_id"],"development_replay_origin":payload["origin"],"illustrative_case_selection":"Selected retrospectively from inspected development cases to show an actual forecast change; not a registered performance endpoint","checkpoints":[{k:s[k] for k in ("update","checkpoint_id","development_pinball","config")} for s in payload["states"]],"timeline":timeline,"provenance":payload["provenance"],"replay_data_sha256":sha((out/"replay-data.json").read_bytes()),"raw_numerical_file_hashes":payload["retained"]["file_hashes"],"limitations":["Retrospective development replay; forecast connections are visual guides between actual 1,3,7-day points.","Development aggregate scores and the single-case price chart have different scopes.","Separate 12-cell evaluation used three previously inspected dependent dates and two A100 series.","Additional RL benefit was not established; prospective improvement remains pending."],"files":{p.name:{"sha256":sha(p.read_bytes()),"bytes":p.stat().st_size} for p in (movie,out/"poster.png",out/"contact-sheet.png")}}
     write(out/"manifest.json",manifest)
     vol=modal.Volume.from_name("compute-forecast-public",create_if_missing=False,version=2)
     prefix="/terminal-v10/media/"+os.environ["GITHUB_RUN_ID"]+"/"
