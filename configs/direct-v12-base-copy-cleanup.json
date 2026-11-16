@@ -1,0 +1,31 @@
+{
+  "study_id": "direct-forecast-v12",
+  "status": "awaiting_user_approval",
+  "purpose": "Remove only redundant untrained update-zero storage copies from the new study; retain base model identity, all sampled baseline forecasts, every learned checkpoint, and all frozen earlier studies",
+  "candidates": [
+    {
+      "seed": 17,
+      "update": 0,
+      "type": "training",
+      "sha256": "eb5a217173d913ed69f43969966d57660605c88722e6544706cf47db44f2b15d"
+    },
+    {
+      "seed": 17,
+      "update": 0,
+      "type": "sampler",
+      "sha256": "545983974abb9f3a16f58c69b93ad4598f05d20c2b3acc9ea200ab1ac0171d72"
+    },
+    {
+      "seed": 29,
+      "update": 0,
+      "type": "training",
+      "sha256": "4e2b84d1fdf7276b5961bd985b64d610cad141a025cedd26e1aeeeb5a3fc0fa4"
+    },
+    {
+      "seed": 29,
+      "update": 0,
+      "type": "sampler",
+      "sha256": "c188efc3183c0ba17b4096c0d0903ef4adbc942a8fc2f95a7b40e046bb3a997b"
+    }
+  ]
+}
