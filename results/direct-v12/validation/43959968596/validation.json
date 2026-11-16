@@ -1,0 +1,28 @@
+{
+  "source_revision": "0a49a6d62cdf5a91627ad33d702b3bd8b6c47f1c",
+  "real_completed_seeds": 0,
+  "is_synthetic": false,
+  "no_video_recorded": true,
+  "screenshots": [
+    {
+      "path": "desktop-price.png",
+      "bytes": 102283,
+      "sha256": "1d4b386d5a1f2791ecf1657b039fd3abb30ff307a6d84ca47ca59687bfc77e76"
+    },
+    {
+      "path": "mobile-price.png",
+      "bytes": 86726,
+      "sha256": "90ed858352ead7351b7ded960545f136617e2d8aac8453d60c5f477a9af3f6a9"
+    }
+  ],
+  "checks": [
+    "strict HTTP",
+    "real retained artifacts or explicit pending state",
+    "desktop and narrow mobile",
+    "no horizontal overflow",
+    "keyboard point inspection",
+    "selection preservation",
+    "retry after 503",
+    "reduced motion"
+  ]
+}
