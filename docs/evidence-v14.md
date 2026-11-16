@@ -59,3 +59,7 @@ The frozen trainer's `completion_tokens` field stores normalized loss-weight mas
 Saved valid return vectors reproduce the empirical quantiles exactly. The frozen trainer retains malformed-sample counts, but not the raw malformed completion text. The public report distinguishes sample diversity, zero-width forecast cells and parsing failures. A zero-width interval can coexist with diverse sampled vectors when at least80% of one horizon's probability mass is concentrated on no change; it is not automatically a request-seed failure.
 
 The price-history control shows21 days by default and can reveal the full42-day model context. It changes the displayed time window, never the model input or score. Axes remain fixed while inspecting checkpoints within the chosen case and window. Pins retain the immutable publication ID and dataset hash along with their original values.
+
+## Frozen operational models
+
+The prospective registration fixes seed17 for both input conditions. Both original development selections were update50. Their hash-only [model lock and retention receipt](../results/evidence-v14/audits/43972363425/model-lock.json) bind the source report and private saved-state identities. Tinker accepted retention through March15,2027, covering the registered panel's intended scoring period. No new checkpoint copies or optimizer updates were needed. This is model availability, not a forecast issuance or evidence of future accuracy.

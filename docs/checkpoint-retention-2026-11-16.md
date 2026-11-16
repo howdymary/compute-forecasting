@@ -5,3 +5,5 @@ The user-authorized age-based cleanup removed87 Tinker checkpoint files created 
 Published forecasts, evaluations, source snapshots, configurations, selection metadata and episode traces were not rewritten. Arithmetic can still be reconstructed from retained public predictions and traces. Repeating inference from the removed older model files is no longer available through those Tinker checkpoints. Rerunning their original training requires the documented data, configuration and authorized model access; stochastic outputs can differ.
 
 The new paired study saves its own states at20/50/100 without redundant copies of the public base model. No billing setting was changed. New states have the registered30-day retention. Private checkpoint paths are excluded from public artifacts.
+
+The new direct-evidence-v14 campaign saves18 learned states at most. A separate [model-lock receipt](../results/evidence-v14/audits/43972363425/model-lock.json) extends only the two development-selected operational seed17 states through March15,2027. This does not restore the older deleted studies, copy checkpoints, change billing, or launch training.
