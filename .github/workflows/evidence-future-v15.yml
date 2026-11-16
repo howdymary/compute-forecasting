@@ -57,7 +57,7 @@ jobs:
                       assert present[row['reference_period']]['values']==row['values'],'Original release row changed'
                   else:present[row['reference_period']]=row
           vintages['records']=list(present.values());vintages['future_only_supplement']=True
-          (root/'bls-vintages.json').write_text(json.dumps(vintages,indent=2)+'\\n')
+          (root/'bls-vintages.json').write_text(json.dumps(vintages,indent=2))
           PY
       - name: Store only the existing Tinker inference credential
         env:

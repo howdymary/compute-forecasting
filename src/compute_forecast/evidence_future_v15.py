@@ -47,6 +47,9 @@ def prepare(records,bls_records,at,p):
     latest_origin=max((s for s in snapshots if s["prices"]["date"]<=origin),key=lambda s:s["captured_at"],default=None)
     current_period=((latest_origin or {}).get("bls") or {}).get("latest_period")
     evidence_ready=bool(feature and utc(feature["first_observed_at"])<=utc(origin+"T23:59:59+00:00") and feature["reference_period"]==current_period)
+    audit_feature=feature_at(bls_records,latest) if latest else None
+    latest_api=((max(snapshots,key=lambda s:s["captured_at"]).get("bls") or {}).get("latest_period") if snapshots else None)
+    current_evidence_qualified=bool(audit_feature and utc(audit_feature["first_observed_at"])<=utc(at) and audit_feature["reference_period"]==latest_api)
     reasons=[]
     number=origin_number(origin,p)
     if number is None:reasons.append("outside_registered_twelve_week_window")
@@ -56,7 +59,7 @@ def prepare(records,bls_records,at,p):
     if not evidence_ready:reasons.append("current_original_BLS_release_vintage_not_qualified")
     for t in tasks:
         t["bls"]=feature;t["metadata"]["benchmark_contract"]=t["metadata"]["contract"]
-    return {"study_id":p["study_id"],"checked_at":at,"origin":origin,"origin_number":number,"eligible":not reasons,"reasons":reasons,"latest_verified_quote_date":latest,"retained_snapshot_count":len(snapshots),"distinct_quote_days":len({s["prices"]["date"] for s in snapshots}),"excluded_snapshots":excluded,"tasks":tasks,"failures":failures,"snapshots":snapshots,"current_api_BLS_period":current_period,"latest_capture_api_BLS_period":((max(snapshots,key=lambda s:s["captured_at"]).get("bls") or {}).get("latest_period") if snapshots else None),"qualified_original_BLS_period":feature["reference_period"] if feature else None,"first_eligible_origin":p["first_eligible_origin"]}
+    return {"study_id":p["study_id"],"checked_at":at,"origin":origin,"origin_number":number,"eligible":not reasons,"reasons":reasons,"latest_verified_quote_date":latest,"retained_snapshot_count":len(snapshots),"distinct_quote_days":len({s["prices"]["date"] for s in snapshots}),"excluded_snapshots":excluded,"tasks":tasks,"failures":failures,"snapshots":snapshots,"current_evidence_qualified_at_audit":current_evidence_qualified,"latest_qualified_capture_BLS_period":audit_feature["reference_period"] if audit_feature else None,"current_api_BLS_period":current_period,"latest_capture_api_BLS_period":((max(snapshots,key=lambda s:s["captured_at"]).get("bls") or {}).get("latest_period") if snapshots else None),"qualified_original_BLS_period":feature["reference_period"] if feature else None,"first_eligible_origin":p["first_eligible_origin"]}
 def validate(value,p,lock):
     validate_commitment(value,p,lock)
     assert origin_number(value["origin"],p) is not None
