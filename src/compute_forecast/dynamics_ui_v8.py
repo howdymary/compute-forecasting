@@ -39,7 +39,7 @@ for(const name of ['future','news','memory'])fetchJson('/api/price-dynamics-v8/e
 loadDynamics();
 """
 def enhance(html):
-    for old,new in [("[['visual','Research atlas'],","[['visual','Research atlas'],['dynamics','Price dynamics'],"),
+    for old,new in [("['visual','Research atlas']","['dynamics','Price dynamics'],['visual','Research atlas']"),
                     ("visual:researchAtlas,results,","visual:researchAtlas,dynamics:dynamicsPage,results,")]:
         if html.count(old)!=1:raise ValueError("Dynamics insertion marker changed: "+old)
         html=html.replace(old,new)
