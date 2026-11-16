@@ -39,3 +39,5 @@ The earlier pricing/notebook guides describe their original release state. Histo
 ## Historical and event records
 
 [Original measured status](measured-status.md), [representation study design](representation-study.md), [hierarchical policy design](hierarchical-policy.md), and [submission evidence](submission-and-prizes.md) preserve the project's earlier stages. Their dates and scopes matter. Current published results are indexed above.
+
+- [Price dynamics v8: six-arm methods, gates, attribution and prospective protocol](price-dynamics-v8.md)
