@@ -106,7 +106,8 @@ def build(inputs,output):
         f=locks[-1];operational_lock=load(f)
         assert operational_lock["protocol_sha256"]==digest(p) and operational_lock["dataset_sha256"]==digest(dataset)
         for locked in operational_lock["records"]:
-            saved=next(s for s in states if s["arm"]==locked["arm"] and s["seed"]==locked["seed"])
+            saved=next((s for s in states if s["arm"]==locked["arm"] and s["seed"]==locked["seed"]),None)
+            assert saved is not None,"Operational model lock requires the retained completed arm; do not publish a regressed partial state"
             assert saved["selected"]["update"]==locked["selected_update"]
             if locked["selected_update"]:assert saved["selected"]["checkpoint_id"]==locked["checkpoint_id"]
         (out/"model-lock.json").write_text(json.dumps(operational_lock,indent=2)+"\n")

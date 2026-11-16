@@ -1,5 +1,5 @@
 """Read-only paired-study web service; no private data or model credentials."""
-import hashlib,json,os,re,threading,time,urllib.request
+import asyncio,hashlib,json,os,re,threading,time,urllib.request
 from pathlib import Path
 import modal
 STATIC_ASSET_BUILD="python - <<'PY'\nfrom pathlib import Path\nfrom urllib.request import urlopen\nimport hashlib\nbase=\"https://raw.githubusercontent.com/google/fonts/a85fc09e44c70c7159761adfdc9d5dd007792c15/ofl/caveat/\"\nroot=Path(\"/opt/notebook-static\");root.mkdir(parents=True,exist_ok=True)\nfor source,name,expected in [(\"Caveat%5Bwght%5D.ttf\",\"caveat-f84acf2c.ttf\",\"f84acf2ce2d1b3329b194749530dbaec047e6df6\"),(\"OFL.txt\",\"OFL.txt\",\"6e5220c9576d98dfc684e550ddf0d87f68b3edc5\")]:\n    raw=urlopen(base+source,timeout=60).read()\n    assert hashlib.sha1(b\"blob \"+str(len(raw)).encode()+b\"\\0\"+raw).hexdigest()==expected,\"Unverified static asset\"\n    (root/name).write_bytes(raw)\nPY"
@@ -14,7 +14,7 @@ BASE="https://raw.githubusercontent.com/howdymary/mochi-demo/compute-observatory
 def web():
     from fastapi import FastAPI
     from fastapi.responses import HTMLResponse,JSONResponse,Response
-    api=FastAPI(docs_url=None,redoc_url=None,openapi_url=None);cache={};lock=threading.Lock();future_lock=threading.Lock();future_cache={"at":0}
+    api=FastAPI(docs_url=None,redoc_url=None,openapi_url=None);cache={};lock=threading.Lock();future_lock=asyncio.Lock();future_cache={"at":0}
     headers={"Cache-Control":"no-store","X-Content-Type-Options":"nosniff","Content-Security-Policy":"default-src 'self';script-src 'self' 'unsafe-inline';style-src 'self' 'unsafe-inline';object-src 'none';base-uri 'none';frame-ancestors 'none'"}
     @api.get("/")
     def page():return HTMLResponse(HTML,headers=headers)
@@ -41,22 +41,22 @@ def web():
                 cache.update(at=time.monotonic(),value=value);return JSONResponse(value,headers=headers)
             except Exception as error:return JSONResponse({"status":"unavailable","error_type":type(error).__name__},status_code=503,headers=headers)
     @api.get("/api/evidence-future")
-    def future_index():
+    async def future_index():
         try:
-            with future_lock:
+            async with future_lock:
                 if time.monotonic()-future_cache["at"]>15:
-                    future_public.reload();future_cache["at"]=time.monotonic()
+                    await future_public.reload.aio();future_cache["at"]=time.monotonic()
                 path=Path("/public/evidence-v14-future/index.json")
                 if not path.exists():return JSONResponse({"status":"pending_initial_readiness_audit","issued_origins":0},headers=headers)
                 value=json.loads(path.read_bytes());assert value["study_id"]=="direct-evidence-v14-prospective"
                 return JSONResponse(value,headers=headers)
         except Exception as error:return JSONResponse({"status":"unavailable","error_type":type(error).__name__},status_code=503,headers=headers)
     @api.get("/api/evidence-future/artifacts/{identity}.json")
-    def future_artifact(identity:str):
+    async def future_artifact(identity:str):
         if not re.fullmatch("[0-9a-f]{64}",identity):return Response(status_code=404)
-        with future_lock:
+        async with future_lock:
             if time.monotonic()-future_cache["at"]>15:
-                future_public.reload();future_cache["at"]=time.monotonic()
+                await future_public.reload.aio();future_cache["at"]=time.monotonic()
             path=Path("/public/evidence-v14-future/artifacts")/(identity+".json")
             if not path.exists():return Response(status_code=404)
             raw=path.read_bytes()

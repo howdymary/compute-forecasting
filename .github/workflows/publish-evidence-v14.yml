@@ -52,7 +52,15 @@ jobs:
               if p.returncode==0:break
               time.sleep(5)
           else:raise RuntimeError('Qualified paired dataset was not retained; no fabricated report')
-          subprocess.run(['gh','run','download',os.environ['TRAINING_RUN_ID'],'--repo',os.environ['GITHUB_REPOSITORY'],'--pattern','evidence-v14-*-seed-*','--dir','inputs/publication/runs'],capture_output=True)
+          for attempt in range(6):
+              destination=pathlib.Path('inputs/publication/runs-attempt-'+str(attempt))
+              process=subprocess.run(['gh','run','download',os.environ['TRAINING_RUN_ID'],'--repo',os.environ['GITHUB_REPOSITORY'],'--pattern','evidence-v14-*-seed-*','--dir',str(destination)],capture_output=True)
+              if process.returncode==0:
+                  destination.rename('inputs/publication/runs');break
+              time.sleep(5)
+          else:raise RuntimeError('Retained training artifacts could not be downloaded; publication refused')
+          if execution['status']=='completed':
+              assert len(list(pathlib.Path('inputs/publication/runs').rglob('result.json')))==6,'Completed campaign requires all six saved results'
           PY
       - name: Reconstruct source-bound summaries
         run: |
