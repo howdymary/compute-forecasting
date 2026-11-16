@@ -1,0 +1,39 @@
+name: Audit direct GPU forecaster data v12
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/audit-direct-v12.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: direct-v12-preparation
+  cancel-in-progress: false
+jobs:
+  audit:
+    if: github.ref == 'refs/heads/compute-observatory'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Fetch immutable source on hosted runner
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install remote clients
+        run: python -m pip install -e '.[dev]' modal numpy
+      - name: Prepare immutable origin-safe training windows on Modal
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: modal run -m compute_forecast.direct_data_v12
+      - name: Save data audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: direct-v12-audit-${{ github.run_id }}
+          path: artifacts/direct-v12
+          retention-days: 30
