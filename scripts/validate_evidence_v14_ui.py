@@ -33,6 +33,9 @@ with sync_playwright() as p:
         before=page.locator("#case").input_value();page.locator("details").first.locator("summary").click()
         page.locator("#refresh").click();expect(page.locator("#status")).not_to_have_text(re.compile("^Loading"),timeout=90000)
         assert page.locator("#seed").input_value()=="29" and page.locator("#case").input_value()==before
+        page.locator("#range").select_option("42");page.locator("#refresh").click()
+        expect(page.locator("#status")).not_to_have_text(re.compile("^Loading"),timeout=90000)
+        assert page.locator("#range").input_value()=="42" and page.locator("#pins li").first.get_attribute("data-snapshot")==pinned
         assert page.locator("details").first.get_attribute("open") is not None
         if report["runs"]:
             assert page.locator("#learning circle").count()>0
@@ -70,5 +73,5 @@ with sync_playwright() as p:
         page.screenshot(path=str(root/(name+".png")),full_page=True);context.close()
     browser.close()
 server.shutdown()
-manifest={"source_sha":os.environ["GITHUB_SHA"],"study_id":"direct-evidence-v14","real_completed_runs":len(report["runs"]),"synthetic_market_data":False,"video_recorded":False,"screenshots":[{"path":f.name,"bytes":f.stat().st_size,"sha256":hashlib.sha256(f.read_bytes()).hexdigest()} for f in sorted(root.glob("*.png"))],"live_report_sha256":live_pointer["report_sha256"],"live_completed_runs":len(live_report["runs"]),"checks":["deployed HTTP and canonical artifact identity","live desktop/mobile PNGs","strict HTTP","actual source-bound prices","matched report","mobile axes>=11px","no page overflow","keyboard checkpoint selection","immutable pins","selection and disclosure preservation","503/retry","reduced motion"]}
+manifest={"source_sha":os.environ.get("VALIDATION_SOURCE_SHA",os.environ["GITHUB_SHA"]),"study_id":"direct-evidence-v14","real_completed_runs":len(report["runs"]),"synthetic_market_data":False,"video_recorded":False,"screenshots":[{"path":f.name,"bytes":f.stat().st_size,"sha256":hashlib.sha256(f.read_bytes()).hexdigest()} for f in sorted(root.glob("*.png"))],"live_report_sha256":live_pointer["report_sha256"],"live_completed_runs":len(live_report["runs"]),"checks":["deployed HTTP and canonical artifact identity","live desktop/mobile PNGs","strict HTTP","actual source-bound prices","matched report","mobile axes>=11px","no page overflow","keyboard checkpoint selection","immutable pins","selection and disclosure preservation","503/retry","reduced motion"]}
 (root/"validation.json").write_text(json.dumps(manifest,indent=2)+"\n");print(json.dumps(manifest,indent=2))

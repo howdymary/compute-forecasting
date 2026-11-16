@@ -57,3 +57,5 @@ The frozen trainer's `completion_tokens` field stores normalized loss-weight mas
 ## Sampling records
 
 Saved valid return vectors reproduce the empirical quantiles exactly. The frozen trainer retains malformed-sample counts, but not the raw malformed completion text. The public report distinguishes sample diversity, zero-width forecast cells and parsing failures. A zero-width interval can coexist with diverse sampled vectors when at least80% of one horizon's probability mass is concentrated on no change; it is not automatically a request-seed failure.
+
+The price-history control shows21 days by default and can reveal the full42-day model context. It changes the displayed time window, never the model input or score. Axes remain fixed while inspecting checkpoints within the chosen case and window. Pins retain the immutable publication ID and dataset hash along with their original values.
