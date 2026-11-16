@@ -77,7 +77,7 @@ def build(inputs,output):
         for comparison in comparisons:
             for origin,delta in comparison["seven_day"]["by_origin"].items():by_origin.setdefault(origin,[]).append(delta)
         origin_means={o:statistics.mean(v) for o,v in sorted(by_origin.items())}
-        paired_summary={"paired_seeds":len(comparisons),"distinct_market_origins":len(origin_means),"mean_seed_primary_difference":statistics.mean(c["seven_day"]["mean_difference"] for c in comparisons),"origin_mean_differences":origin_means,"origin_difference_range":[min(origin_means.values()),max(origin_means.values())],"uncertainty":"Descriptive origin range; no population significance or independent-seed market sample claim"}
+        paired_summary={"paired_seeds":len(comparisons),"distinct_market_origins":len(origin_means),"mean_seed_primary_difference":statistics.mean(c["seven_day"]["mean_difference"] for c in comparisons),"mean_candidate_primary_pinball":statistics.mean(results[("price_evidence",c["seed"])]["summary"]["primary_pinball"] for c in comparisons),"mean_reference_primary_pinball":statistics.mean(results[("price_only",c["seed"])]["summary"]["primary_pinball"] for c in comparisons),"origin_mean_differences":origin_means,"origin_difference_range":[min(origin_means.values()),max(origin_means.values())],"uncertainty":"Descriptive origin range; no population significance or independent-seed market sample claim"}
     status="completed" if len(states)==6 else "partial" if states else "awaiting_training"
     memory_files=sorted(pathlib.Path("results/evidence-v14/audits").glob("*/memory.json"),key=lambda f:int(f.parent.name))
     memory=None

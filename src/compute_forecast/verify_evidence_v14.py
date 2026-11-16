@@ -82,6 +82,9 @@ def verify(root):
         means={o:statistics.mean(ds) for o,ds in sorted(origins.items())}
         assert summary["paired_seeds"]==len(report["comparisons"]) and summary["origin_mean_differences"]==means
         assert summary["mean_seed_primary_difference"]==statistics.mean(c["seven_day"]["mean_difference"] for c in report["comparisons"])
+        if "mean_candidate_primary_pinball" in summary:
+            assert summary["mean_candidate_primary_pinball"]==statistics.mean(summarize(cells[("price_evidence",c["seed"])])["primary_pinball"] for c in report["comparisons"])
+            assert summary["mean_reference_primary_pinball"]==statistics.mean(summarize(cells[("price_only",c["seed"])])["primary_pinball"] for c in report["comparisons"])
     assert not report["audit"]["protected_outcomes_loaded"] and not report["news_used"]
     print(json.dumps({"status":"verified","runs":len(report["runs"]),"matched_seeds":len(report["comparisons"]),"prospective_accuracy":"pending"}))
 if __name__=="__main__":
