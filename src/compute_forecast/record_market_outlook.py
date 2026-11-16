@@ -184,15 +184,15 @@ function modeState(t){return t<22?'archive':t<40?'scenario':'research'}
 function stateIndex(t){return t<44?0:t<48?1:t<50?2:3}
 function render(t){
  t=Math.max(0,Math.min(60,t));const mode=modeState(t),i=stateIndex(t),s=D.case.states[i],month=t<28?12:t<34?24:36;
- op('full',t<6?1:1-ease(ramp(t,6,8)));op('close',t<6?0:t<22?ease(ramp(t,6,8)):1-ease(ramp(t,22,22.6)));
- op('official-forecast',ease(ramp(t,10,11)));op('scenario',t<22?0:t<40?ease(ramp(t,22,22.6)):1-ease(ramp(t,40,40.6)));
- op('research',ease(ramp(t,40,40.6)));op('learning',ease(ramp(t,40,40.6)));
+ op('full',1-ease(ramp(t,6,6.5)));op('close',t<6.5?0:t<21.6?ease(ramp(t,6.5,7)):1-ease(ramp(t,21.6,22)));
+ op('official-forecast',ease(ramp(t,10,11)));op('scenario',t<22?0:t<39.6?ease(ramp(t,22,22.4)):1-ease(ramp(t,39.6,40)));
+ op('research',ease(ramp(t,40,40.4)));op('learning',ease(ramp(t,40,40.4)));
  for(let j=0;j<4;j++){let w=j===i?1:0;if(i>0&&t<[40,44,48,50][i]+.6){const a=ease(ramp(t,[40,44,48,50][i],[40,44,48,50][i]+.6));w=j===i?a:j===i-1?1-a:0}op('case-'+j,w)}
  const weights=[0,1,2,3].map(j=>+G('case-'+j).getAttribute('opacity'));
  const right=G('right'),ex=G('explain');right.replaceChildren();ex.replaceChildren();
  let label,scope,axis,foot;
  if(mode==='archive'){
-  label=t<10?'01 / OBSERVED HISTORY':'02 / ARCHIVED STATISTICAL FORECAST';scope=t<8?'12 Jan – 6 Nov 2026':'Origin · 6 Nov 2026 · cutoff 23:59:59 UTC';
+  label=t<10?'01 / OBSERVED HISTORY':'02 / ARCHIVED STATISTICAL FORECAST';scope=t<6.5?'12 Jan – 6 Nov 2026':'Origin · 6 Nov 2026 · cutoff 23:59:59 UTC';
   axis=t<10?'Gaps remain empty. Lines only join consecutive observed days.':'Only +1, +3 and +7-day quantiles were issued. Dashed joins are visual guides.';
   foot='Archived benchmark · not a live forecast made today';
   if(t<10){txt(right,1540,305,'234',56,C.ink);noteLines(right,1540,349,['observed daily medians','Jan 12 – Nov 6, 2026'],20,C.muted);
@@ -234,7 +234,7 @@ function render(t){
  G('mode').textContent=label;G('scope').textContent=scope;G('axis-note').textContent=axis;G('foot').textContent=foot;
  for(const f of frozen)for(const[k,v]of f.attrs)if(f.e.getAttribute(k)!==v)throw Error('Measured geometry changed');
  G('scrub').value=t;G('clock').textContent=t.toFixed(2)+' source seconds';
- return{source_time:t,output_time:t/2,mode,checkpoint:mode==='research'?s.update:null,config:mode==='research'?s.config:null,case_loss:mode==='research'?s.case_pinball:null,development_loss:mode==='research'?s.development_pinball:null,checkpoint_weights:weights,scenario_month:mode==='scenario'?month:null,scenario_cursor_month:mode==='scenario'?(month===12?12:month===24?12+12*ease(ramp(t,28,28.8)):24+12*ease(ramp(t,34,34.8))):null,scenario_cursor_rates:mode==='scenario'?[0,1,2].map(j=>{const e=G('sc-dot-'+j);return{month:(+e.getAttribute('cx')-150)/1330*36,rate:.4+(710-(+e.getAttribute('cy')))/410*1.9}}):null,scenario_rates:mode==='scenario'?D.scenarios.assumptions.map(a=>a.points[month].rental_rate):null,measured_geometry_immutable:true};
+ return{source_time:t,output_time:t/2,mode,mode_layer_opacities:['full','close','scenario','research'].map(id=>+G(id).getAttribute('opacity')),checkpoint:mode==='research'?s.update:null,config:mode==='research'?s.config:null,case_loss:mode==='research'?s.case_pinball:null,development_loss:mode==='research'?s.development_pinball:null,checkpoint_weights:weights,scenario_month:mode==='scenario'?month:null,scenario_cursor_month:mode==='scenario'?(month===12?12:month===24?12+12*ease(ramp(t,28,28.8)):24+12*ease(ramp(t,34,34.8))):null,scenario_cursor_rates:mode==='scenario'?[0,1,2].map(j=>{const e=G('sc-dot-'+j);return{month:(+e.getAttribute('cx')-150)/1330*36,rate:.4+(710-(+e.getAttribute('cy')))/410*1.9}}):null,scenario_rates:mode==='scenario'?D.scenarios.assumptions.map(a=>a.points[month].rental_rate):null,measured_geometry_immutable:true};
 }
 window.renderFrame=render;let playing=false,current=0,start=0;
 window.prepareCapture=()=>{G('player').style.display='none';playing=false;render(0)};
@@ -248,6 +248,7 @@ render(0);window.READY=true;
 def verify_frame(r,t,d):
     mode="archive" if t<22 else "scenario" if t<40 else "research"
     if r["source_time"]!=t or r["output_time"]!=t/2 or r["mode"]!=mode or not r["measured_geometry_immutable"]:raise ValueError("Deterministic two-times clock/mode")
+    if sum(a>1e-9 for a in r["mode_layer_opacities"])>1:raise ValueError("Incompatible chart modes overlap")
     if mode=="scenario":
         month=12 if t<28 else 24 if t<34 else 36
         if r["scenario_month"]!=month or any(not math.isclose(a,b["points"][month]["rental_rate"],abs_tol=1e-12) for a,b in zip(r["scenario_rates"],d["scenarios"]["assumptions"])):raise ValueError("Scenario cursor/value")
@@ -311,7 +312,7 @@ def validate(page,d):
     page.locator("#scrub").focus();page.keyboard.press("ArrowRight")
     if float(page.locator("#scrub").input_value())<=29:raise ValueError("Keyboard scrub")
     page.evaluate("prepareCapture()")
-    return {"status":"passed","history_observations":234,"missing_calendar_days":65,"history_gap_bridging":False,"official_quantiles_verified":9,"checkpoint_quantiles_verified":36,"learning_checkpoints_verified":24,"original_checkpoint_selections_verified":6,"scenario_monthly_calculations_verified":111,"existing_control_cell_losses_reconstructed":36,"scenario_ruler_formula_checks":True,"case_loss_reconstructions":12,"supported_archived_horizons":[1,3,7],"new_statistical_forecasts":0,"future_Nov7_13_outcomes_loaded":False,"source_seconds":60,"output_seconds":30,"playback_speed":2,"frame_sync_checks":0,"intermediate_forecast_morphing":False,"fixed_axes_within_comparison":True,"native_keyboard_controls":True,"autoplay":False,"new_training":False,"new_numerical_fits":False,"page_clipping":[]}
+    return {"status":"passed","history_observations":234,"missing_calendar_days":65,"history_gap_bridging":False,"official_quantiles_verified":9,"checkpoint_quantiles_verified":36,"learning_checkpoints_verified":24,"original_checkpoint_selections_verified":6,"scenario_monthly_calculations_verified":111,"existing_control_cell_losses_reconstructed":36,"scenario_ruler_formula_checks":True,"case_loss_reconstructions":12,"supported_archived_horizons":[1,3,7],"new_statistical_forecasts":0,"future_Nov7_13_outcomes_loaded":False,"source_seconds":60,"output_seconds":30,"playback_speed":2,"frame_sync_checks":0,"intermediate_forecast_morphing":False,"fixed_axes_within_comparison":True,"incompatible_mode_overlap":False,"native_keyboard_controls":True,"autoplay":False,"new_training":False,"new_numerical_fits":False,"page_clipping":[]}
 
 def main():
     parser=argparse.ArgumentParser();parser.add_argument("--no-publish",action="store_true");parser.add_argument("--verify-only",action="store_true");args=parser.parse_args()
@@ -364,8 +365,8 @@ def main():
         if sec==9.5:im.save(out/"poster.png")
         im.thumbnail((480,270));x=i%4*480;y=i//4*294;sheet.paste(im,(x,y));draw.text((x+12,y+278),f"Output {sec}s / source {2*sec}s",fill="#263d3e")
     sheet.save(out/"contact-sheet.png")
-    transition_times=(3.0,3.5,4.0,5.0,5.25,5.5,11.0,11.15,11.3,14.0,14.2,14.4,17.0,17.2,17.4,20.0,20.15,20.3,22.0,22.15,22.3,24.0,24.15,24.3,25.0,25.15,25.3)
-    motion=Image.new("RGB",(1920,2058),"#f7f3e9");md=ImageDraw.Draw(motion)
+    transition_times=(3.0,3.25,3.5,4.0,5.0,5.25,5.5,10.8,10.9,11.0,11.15,11.3,14.0,14.2,14.4,17.0,17.2,17.4,19.8,19.9,20.0,20.15,20.3,22.0,22.15,22.3,24.0,24.15,24.3,25.0,25.15,25.3)
+    motion=Image.new("RGB",(1920,2352),"#f7f3e9");md=ImageDraw.Draw(motion)
     for i,sec in enumerate(transition_times):
         f=out/f"transition-{i}.png";subprocess.run(["ffmpeg","-y","-ss",str(sec),"-i",str(movie),"-frames:v","1",str(f)],check=True,capture_output=True)
         im=Image.open(f).convert("RGB");im.thumbnail((480,270));x=i%4*480;y=i//4*294;motion.paste(im,(x,y));md.text((x+12,y+274),f"Encoded transition / {sec:.2f}s",fill="#263d3e")
@@ -378,7 +379,7 @@ def main():
     report.update({"encoded_frames":900,"encoded_seconds":duration,"fps":30,"codec":"h264","resolution":[1920,1080],"faststart_verified":True,"complete_decode_errors":[],"browser_errors":errors,"renderer_seconds":time.perf_counter()-started,"final_hold_output_seconds":3,"final_speed_transition_samples":len(transition_times)});write(out/"validation.json",report)
     names=["terminal-30s.mp4","poster.png","contact-sheet.png","motion-strip.png","mobile.png","validation.json","frame-timing.json","market-data.json","horizon-audit.json","replay.html","caption.txt","OFL.txt"]
     names += [f"encoded-{sec}.png" for sec in times]
-    manifest={"schema_version":1,"kind":"price_led_market_outlook_and_training_replay","implementation_commit":os.environ.get("GITHUB_SHA"),"run_id":os.environ.get("GITHUB_RUN_ID"),"created_at_utc":time.strftime("%Y-%m-%dT%H:%M:%SZ",time.gmtime()),"source_seconds":60,"output_seconds":duration,"playback_speed":2,"timing_rule":"source_time = 2 * output_time","fps":30,"frames":900,"resolution":[1920,1080],"new_training":False,"new_numerical_fits":False,"live_inference":False,"case_id":CASE_ID,"archived_origin":"2026-11-06","archived_horizons_days":[1,3,7],"long_term":"Explicit annual rental assumptions -35%, -15%, +5%, compounded to 12/24/36 months; no probabilities","history":{"observations":234,"missing_calendar_days":65,"first":"2026-01-12","last":"2026-11-06","source_vintage":d["market"]["source_vintage"]},"checkpoint_replay":{"origin":d["case"]["origin"],"selection":d["case"]["selection"],"source_seconds":[40,44,48,50],"updates":[0,20,50,100],"case_vs_aggregate_separate":True,"quantile_coordinates_morph":False},"visual_semantics":"Separate chart modes and domains. History gaps are empty. Statistical quantile joins are guides. Scenario interpolation is explicit compounding. Checkpoint transitions crossfade actual saved paths without changing their coordinates.","limitations":["No 14/30-day accuracy claim.","No prospective accuracy claim.","No incremental RL benefit claim.","No actual resale transaction-price series.","Archived Nov7–13 outcomes not retrieved."],"provenance":d["market_provenance"],"research_provenance":d["provenance"],"attribution":d["market"]["permission"],"files":{n:{"sha256":sha((out/n).read_bytes()),"bytes":(out/n).stat().st_size} for n in names}}
+    manifest={"schema_version":1,"kind":"price_led_market_outlook_and_training_replay","implementation_commit":os.environ.get("GITHUB_SHA"),"run_id":os.environ.get("GITHUB_RUN_ID"),"created_at_utc":time.strftime("%Y-%m-%dT%H:%M:%SZ",time.gmtime()),"source_seconds":60,"output_seconds":duration,"playback_speed":2,"timing_rule":"source_time = 2 * output_time","fps":30,"frames":900,"resolution":[1920,1080],"new_training":False,"new_numerical_fits":False,"live_inference":False,"case_id":CASE_ID,"archived_origin":"2026-11-06","archived_horizons_days":[1,3,7],"long_term":"Explicit annual rental assumptions -35%, -15%, +5%, compounded to 12/24/36 months; no probabilities","history":{"observations":234,"missing_calendar_days":65,"first":"2026-01-12","last":"2026-11-06","source_vintage":d["market"]["source_vintage"]},"checkpoint_replay":{"origin":d["case"]["origin"],"selection":d["case"]["selection"],"source_seconds":[40,44,48,50],"updates":[0,20,50,100],"case_vs_aggregate_separate":True,"quantile_coordinates_morph":False},"visual_semantics":"Separate chart modes and domains fade through paper without overlapping incompatible axes. History gaps are empty. Statistical quantile joins are guides. Scenario interpolation is explicit compounding. Checkpoint transitions crossfade actual saved paths without changing their coordinates.","limitations":["No 14/30-day accuracy claim.","No prospective accuracy claim.","No incremental RL benefit claim.","No actual resale transaction-price series.","Archived Nov7–13 outcomes not retrieved."],"provenance":d["market_provenance"],"research_provenance":d["provenance"],"attribution":d["market"]["permission"],"files":{n:{"sha256":sha((out/n).read_bytes()),"bytes":(out/n).stat().st_size} for n in names}}
     write(out/"manifest.json",manifest)
     if args.no_publish:print("MARKET_RENDER:"+json.dumps(report));return
     import modal

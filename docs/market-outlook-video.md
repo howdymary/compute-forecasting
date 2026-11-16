@@ -91,7 +91,7 @@ The broader [Pacific value model](pacific-value-v5.md) separately treats utiliza
 | Source seconds | Output seconds | Meaningful state |
 | --- | --- | --- |
 | 0–6 | 0–3 | Full approved history and its gaps. |
-| 6–10 | 3–5 | Crossfade to the origin close-up. |
+| 6–10 | 3–5 | Fade through paper to the origin close-up. |
 | 10–16 | 5–8 | Actual submitted +1/+3/+7 quantiles. |
 | 16–22 | 8–11 | Seven-day range and explicit longer-horizon boundary. |
 | 22–28 | 11–14 | Separate 12-month rental assumptions. |
@@ -103,7 +103,7 @@ The broader [Pacific value model](pacific-value-v5.md) separately treats utiliza
 | 50–54 | 25–27 | Update 100 and its actual chosen forecast. |
 | 54–60 | 27–30 | Stable final composition; limits remain visible. |
 
-The brief update-50 revisit is unchanged data, not a headline reading state. Headline holds are 2–3 output seconds; the final composition holds for at least three. Statistical paths crossfade; prediction coordinates never morph. Scenario positions are calculated assumptions; the time ruler moves smoothly along the explicitly compounded paths while the selected horizon readout remains tied to its actual 12/24/36-month calculation. Each frame samples `source_time = 2 × output_time`; playback does not change market dates or optimizer counts.
+The brief update-50 revisit is unchanged data, not a headline reading state. Headline holds are 2–3 output seconds; the final composition holds for at least three. Incompatible chart modes fade through paper and never overlap different axes. Checkpoint paths on identical axes crossfade; prediction coordinates never morph. Scenario positions are calculated assumptions; the time ruler moves smoothly along the explicitly compounded paths while the selected horizon readout remains tied to its actual 12/24/36-month calculation. Each frame samples `source_time = 2 × output_time`; playback does not change market dates or optimizer counts.
 
 The HTML figure includes opt-in 2× playback, keyboard-native chapter selection and a source-time scrubber. No autoplay; the player remains usable with reduced motion. Captures hide the controls.
 
