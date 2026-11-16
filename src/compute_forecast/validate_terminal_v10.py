@@ -12,7 +12,7 @@ def main():
         for width,height in ((1920,1080),(1512,1050),(390,844),(320,780)):
             context=browser.new_context(viewport={"width":width,"height":height},is_mobile=width<600,has_touch=width<600,reduced_motion="reduce")
             page=context.new_page();errors=[];page.on("pageerror",lambda e:errors.append(str(e)))
-            page.goto(URL+"/terminal",wait_until="domcontentloaded",timeout=90000)
+            page.goto(URL+"/terminal/advanced",wait_until="domcontentloaded",timeout=90000)
             page.wait_for_function("() => document.body.dataset.ready==='true' && V10!==null",timeout=90000)
             health=page.request.get(URL+"/health");assert health.ok
             report["ui_revision"]=health.json()["ui_revision"]
@@ -70,7 +70,7 @@ def main():
             context.close()
         context=browser.new_context(viewport={"width":1512,"height":1050});page=context.new_page();held=[]
         page.route("**/api/value-v5",lambda r:held.append(r))
-        page.goto(URL+"/terminal",wait_until="domcontentloaded",timeout=90000)
+        page.goto(URL+"/terminal/advanced",wait_until="domcontentloaded",timeout=90000)
         page.wait_for_function("()=>document.body.dataset.ready==='true'",timeout=15000)
         assert page.locator("[data-terminal-forecast]").count()==3 and held
         held[0].fulfill(status=503,content_type="application/json",body='{"error":"synthetic transport outage"}')

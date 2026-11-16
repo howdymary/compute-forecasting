@@ -234,4 +234,4 @@ from .terminal_ui_v9 import enhance as enhance_terminal_v9
 HTML = enhance_terminal_v9(HTML)
 
 # Dedicated chart workspace, with existing research views retained.
-HTML = HTML.replace('<a href="/experimental">', '<a href="/terminal">Quant terminal ↗</a><a href="/experimental">', 1)
+HTML = HTML.replace('<a href="/experimental">', '<a href="/terminal">Price canvas ↗</a><a href="/experimental">', 1)

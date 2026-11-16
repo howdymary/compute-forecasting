@@ -6,6 +6,7 @@ import modal
 from .release_payload import build,validate
 from .explore_ui import HTML
 from .terminal_ui_v10 import HTML as TERMINAL_HTML
+from .price_canvas_v11 import HTML as PRICE_CANVAS_HTML
 from .experimental_ui_v2 import HTML as EXPERIMENTAL_HTML
 from .pricing_contract import validate as validate_pricing
 app=modal.App("compute-forecast-observatory")
@@ -46,7 +47,11 @@ def web():
     @api.get("/")
     def index():return HTMLResponse(HTML,headers=headers)
     @api.get("/terminal")
-    def terminal_index():return HTMLResponse(TERMINAL_HTML,headers=headers)
+    def terminal_index(request:Request):
+        # Keep the already requested v10 capture path bound to its original interface.
+        return HTMLResponse(TERMINAL_HTML if request.query_params.get("capture")=="1" else PRICE_CANVAS_HTML,headers=headers)
+    @api.get("/terminal/advanced")
+    def advanced_terminal_index():return HTMLResponse(TERMINAL_HTML,headers=headers)
     @api.get("/experimental")
     def experimental_index():return HTMLResponse(EXPERIMENTAL_HTML,headers=headers)
     @api.get("/api/experimental")
