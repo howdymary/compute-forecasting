@@ -1,0 +1,87 @@
+name: Finalize retained direct forecasts v12
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/finalize-direct-v12.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: write
+concurrency:
+  group: direct-v12-retained-finalization
+  cancel-in-progress: false
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Fetch immutable correction code
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Retrieve fixed original inputs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run download 43952200479 --repo "$GITHUB_REPOSITORY" --name direct-v12-inputs-43952200479 --dir inputs/direct-v12
+      - name: Stop redundant evaluation recovery after complete predictions were retained
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import json,os,subprocess
+          for identifier in ('43958229102','43958329922'):
+              r=json.loads(subprocess.check_output(['gh','api','repos/'+os.environ['GITHUB_REPOSITORY']+'/actions/runs/'+identifier],text=True))
+              assert r['name']=='Recover direct forecasting evaluations v12' and r['head_branch']=='compute-observatory'
+              if r['status']!='completed':subprocess.run(['gh','api','-X','POST','repos/'+os.environ['GITHUB_REPOSITORY']+'/actions/runs/'+identifier+'/cancel'],check=True)
+          PY
+      - run: python -m pip install -e . modal
+      - name: Build exact fixed-series official references on Modal
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: modal run -m compute_forecast.direct_reference_v12 --inputs inputs/direct-v12
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: direct-v12-reference-${{ github.run_id }}
+          path: artifacts/direct-v12-reference
+          retention-days: 30
+  finalize:
+    needs: repair
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        seed: [17, 29]
+    steps:
+      - name: Fetch immutable reconstruction code
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/download-artifact@v4
+        with:
+          name: direct-v12-reference-${{ github.run_id }}
+          path: inputs/direct-v12
+      - name: Retrieve the original predictions without any new inference
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run download 43952200479 --repo "$GITHUB_REPOSITORY" --name direct-v12-inputs-43952200479 --dir inputs/direct-v12
+          gh run download 43957658444 --repo "$GITHUB_REPOSITORY" --name direct-v12-recovered-seed-${{ matrix.seed }}-43957658444 --dir inputs/direct-v12/retained
+      - name: Reconstruct selection and matched loss from retained records
+        run: PYTHONPATH=src python scripts/finalize_retained_direct_v12.py --inputs inputs/direct-v12 --output artifacts/direct-v12/seed-${{ matrix.seed }} --seed ${{ matrix.seed }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: direct-v12-recovered-seed-${{ matrix.seed }}-${{ github.run_id }}
+          path: artifacts/direct-v12/seed-${{ matrix.seed }}
+          retention-days: 30

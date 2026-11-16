@@ -1,7 +1,7 @@
 name: Publish direct GPU forecasting research v12
 on:
   workflow_run:
-    workflows: [Train direct GPU price forecasts v12, Recover direct forecasting evaluations v12]
+    workflows: [Train direct GPU price forecasts v12, Recover direct forecasting evaluations v12, Finalize retained direct forecasts v12]
     types: [completed]
     branches: [compute-observatory]
   push:
@@ -16,7 +16,10 @@ concurrency:
   cancel-in-progress: false
 jobs:
   publish:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion != 'cancelled'
     runs-on: ubuntu-latest
+    env:
+      PUBLICATION_ID: ${{ github.event.workflow_run.id || '43952200479' }}-publication-${{ github.run_id }}
     timeout-minutes: 25
     steps:
       - name: Fetch publication source
@@ -38,7 +41,7 @@ jobs:
           python - <<'PY'
           import json,os,subprocess
           r=json.loads(subprocess.check_output(['gh','api','repos/'+os.environ['GITHUB_REPOSITORY']+'/actions/runs/'+os.environ['SOURCE_RUN_ID']],text=True))
-          assert r['head_branch']=='compute-observatory' and r['name'] in ('Train direct GPU price forecasts v12','Recover direct forecasting evaluations v12')
+          assert r['head_branch']=='compute-observatory' and r['name'] in ('Train direct GPU price forecasts v12','Recover direct forecasting evaluations v12','Finalize retained direct forecasts v12')
           with open(os.environ['GITHUB_OUTPUT'],'a') as f:f.write('ready='+str(r['status']=='completed').lower()+'\n')
           PY
       - name: Retrieve immutable inputs and retained successful or failed outputs
