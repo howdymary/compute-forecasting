@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "kind": "saved_checkpoint_forecast_replay",
+  "recorded_at_utc": "2026-11-16T06:17:54Z",
+  "source_commit": "c29cd89c20e6a393ffc3dd81f496f7b697ed29f3",
+  "run_id": "43815591384",
+  "output_seconds": 30.0,
+  "width": 1920,
+  "height": 1080,
+  "fps": 30,
+  "audio": false,
+  "live_inference": false,
+  "new_training": false,
+  "new_numerical_fits": false,
+  "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+  "development_replay_origin": "2026-08-15",
+  "illustrative_case_selection": "Selected retrospectively from inspected development cases to show an actual forecast change; not a registered performance endpoint",
+  "checkpoints": [
+    {
+      "update": 0,
+      "checkpoint_id": "ce871ad00d7b34114e32",
+      "development_pinball": 0.01482266973639115,
+      "config": "last_value_empirical"
+    },
+    {
+      "update": 20,
+      "checkpoint_id": "fc12d8e8afba49869a60",
+      "development_pinball": 0.018112047819066727,
+      "config": "seasonal_naive"
+    },
+    {
+      "update": 50,
+      "checkpoint_id": "5d945d63ee653960b70d",
+      "development_pinball": 0.011253870422938421,
+      "config": "last_value_empirical"
+    },
+    {
+      "update": 100,
+      "checkpoint_id": "ef9cf57b88d0bbe9ef3d",
+      "development_pinball": 0.009050336633428241,
+      "config": "ewma_0.2"
+    }
+  ],
+  "timeline": [
+    {
+      "second": 0.0,
+      "stage": 0
+    },
+    {
+      "second": 5.0,
+      "stage": 1
+    },
+    {
+      "second": 10.0,
+      "stage": 2
+    },
+    {
+      "second": 15.0,
+      "stage": 3
+    },
+    {
+      "second": 20.0,
+      "stage": 4
+    },
+    {
+      "second": 25.0,
+      "stage": 5
+    },
+    {
+      "second": 30.0,
+      "stage": 5
+    }
+  ],
+  "provenance": {
+    "research_archive_sha256": "5ec7ef997571dd925ef521895f9b950373f87d85cf8111bfe52adf5937e8c3e5",
+    "value_api_sha256": "b5cde1de8211144874c0c4a050f41d24b434fb60617b716a9cd0e317cec4ccf5",
+    "permission": {
+      "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+      "approved": true,
+      "reason": "CC-BY-4.0 shipped filtered daily statistics, current official compilation grant and source-specific attribution verified",
+      "source_id": "afhubbard",
+      "instrument_class": "hyperscaler_spot",
+      "license": "CC-BY-4.0",
+      "source_url": "https://hubbard-gpu-price-data.s3.amazonaws.com/?list-type=2&prefix=prices/",
+      "attribution": "Hubbard, A. (2026). GPU Price Tracker dataset. https://github.com/alex-hubbard/gpu_price_tracker (CC BY 4.0)"
+    },
+    "history_metadata": {
+      "id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+      "gpu_model": "A100 SXM 80GB",
+      "source_id": "afhubbard",
+      "instrument_class": "hyperscaler_spot",
+      "pricing_tier": "spot",
+      "statistic": "median_usd_per_gpu_hour",
+      "unit": "USD per GPU-hour",
+      "points_sha256": "f53a9d40faf6c1eba0e9ae664cd7bcee0141dbc81e9b49316fc526efddee3b17",
+      "source_url": "https://hubbard-gpu-price-data.s3.amazonaws.com/?list-type=2&prefix=prices/",
+      "attribution": "Hubbard, A. (2026). GPU Price Tracker dataset. https://github.com/alex-hubbard/gpu_price_tracker (CC BY 4.0)",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "catalog": {
+        "series_id": "afhubbard.hyperscaler_spot.A100_SXM_80GB.spot.median",
+        "tier": "headline",
+        "tier_reason": "ok",
+        "table": "daily_statistics",
+        "source_id": "afhubbard",
+        "instrument_class": "hyperscaler_spot",
+        "statistic": "median_usd_per_gpu_hour",
+        "gpu_model": "A100 SXM 80GB",
+        "pricing_tier": "spot",
+        "instance_type": "",
+        "az_global_id": "",
+        "product_description": "",
+        "members": "",
+        "first_date": "2026-01-12",
+        "last_date": "2026-11-06",
+        "n_days": "234",
+        "n_calendar_days": "299",
+        "n_filled_days": "0",
+        "as_of": "2026-11-06",
+        "n_days_to_as_of": "234",
+        "last_date_to_as_of": "2026-11-06",
+        "last_value_to_as_of": "1.8818",
+        "median_n_providers": "3.0",
+        "min_n_providers": "3",
+        "n_distinct_values_90d": "17",
+        "truth_availability": "daily; recomputed from the collectors' shipped rows after the Vast.ai/RunPod filter (refresh.py); the trailing day of tanod and gpurentalprices can be revised upstream",
+        "benchmark_contract": "hyperscaler_spot; A100 SXM 80GB; spot; median USD per GPU-hour over the shipped offers of collector afhubbard on the UTC day; all regions pooled; no commitment term unless the tier says so",
+        "source_url": "https://hubbard-gpu-price-data.s3.amazonaws.com/?list-type=2&prefix=prices/",
+        "licence_id": "CC-BY-4.0"
+      }
+    },
+    "checkpoint_source_sha256": "9e3ab3b1c011b9179896744bc7fde2258bb4610d47c7ef4d2c96469f0f033b01",
+    "source_commit": "c29cd89c20e6a393ffc3dd81f496f7b697ed29f3"
+  },
+  "replay_data_sha256": "84335b23204d99143efa415b46a9b48f4a665ac91d62abead9fdbda2f75f469a",
+  "raw_numerical_file_hashes": {
+    "ewma_0.2.csv": "11b8a364b98b8d974b57d729ef00fc72bdc4589755a5b5d98700b78e22e90f98",
+    "last_value_empirical.csv": "e44fa5bf7d565a9f6491c3a280de3ce7fc2b1c45efae65e673084b9c1363afa7",
+    "seasonal_naive.csv": "9580e4a291ee51796b1d88984347ad308e2b9db612178550942b0d0957c8a331",
+    "truth.csv": "409ce4175d0061e9508e1fda043ed54813913ab9b7877e450d1afa6859ff7d0c"
+  },
+  "limitations": [
+    "Retrospective development replay; forecast connections are visual guides between actual 1,3,7-day points.",
+    "Development aggregate scores and the single-case price chart have different scopes.",
+    "Separate 12-cell evaluation used three previously inspected dependent dates and two A100 series.",
+    "Additional RL benefit was not established; prospective improvement remains pending."
+  ],
+  "files": {
+    "terminal-30s.mp4": {
+      "sha256": "7921ee29a33e86b3fdbddc0e6e8d32e13fd70465368e6217988354920af13e18",
+      "bytes": 1288980
+    },
+    "poster.png": {
+      "sha256": "01eda66e0a149c77f10f5948a3b4c8e27756c49f30682b24f461d62b52413f54",
+      "bytes": 535674
+    },
+    "contact-sheet.png": {
+      "sha256": "c463b3f5f8eb889e24914fbd87806f923ef2c0e88d5d1395582b5847bfe55d59",
+      "bytes": 516878
+    }
+  }
+}
