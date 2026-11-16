@@ -300,6 +300,8 @@ def web():
             if path.stat().st_size>50_000_000:return Response(status_code=503,headers=headers)
             raw=path.read_bytes()
         response_headers={**headers,"Content-Disposition":'inline; filename="'+name+'"',"Accept-Ranges":"bytes","ETag":hashlib.sha256(raw).hexdigest()}
+        if name=="replay.html":
+            response_headers["Content-Security-Policy"]=headers["Content-Security-Policy"]+"; font-src 'self' data:"
         range_header=request.headers.get("range")
         if range_header:
             m=re.fullmatch(r"bytes=(\d+)-(\d*)",range_header)
