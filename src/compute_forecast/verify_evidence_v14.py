@@ -33,6 +33,9 @@ def verify(root):
             value=json.loads((directory/filename).read_text());assert value["summary"]==summarize(value["cells"])
             for task in value["tasks"]:
                 assert task["sampling_seed"] is None
+                assert task["sample_sha256"]==digest(task["sample_returns"])
+                assert task["valid_samples"]==len(task["sample_returns"])
+                assert task["valid_samples"]+task["invalid_samples"]==task["returned_samples"]==task["requested_samples"]
                 assert task["distinct_vectors"]==len({tuple(v) for v in task["sample_returns"]})
                 case=next((c for c in report["development_cases"] if c["task_id"]==task["task_id"]),None)
                 # Recover anchor from source-bound development case, or retained forecast inverse.
@@ -57,6 +60,10 @@ def verify(root):
             assert cohort(reference["cells"])==eligible
             assert summarize(reference["cells"])==reference["summary"]
             assert matched(selected["cells"],reference["cells"])==reference["comparison"]
+        diagnostics=run.get("sampling_diagnostics")
+        if diagnostics:
+            assert diagnostics["valid_samples"]==sum(t["valid_samples"] for t in selected["tasks"])
+            assert diagnostics["zero_width_cells"]==sum(r["q10"]==r["q90"] for r in selected["cells"])
         for case in report["development_cases"]:
             for shown in case["forecasts"]:
                 if (shown["arm"],shown["seed"])!=(arm,seed):continue

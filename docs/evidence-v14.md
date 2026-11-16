@@ -53,3 +53,7 @@ The separate [prospective protocol](../configs/evidence-v14-prospective.json) re
 ## Resource-accounting convention
 
 The frozen trainer's `completion_tokens` field stores normalized loss-weight mass, not a token count. The corrected resource audit separately counts positive-weight supervised token positions, full training sequence tokens and loss-weight mass. It reconstructs the registered batches and checks their mass against completed optimizer updates. The earlier audit is retained with its correction identified; model training, sampled forecasts and scores are unchanged. Neither reconstruction nor elapsed runtime is a provider billing receipt.
+
+## Sampling records
+
+Saved valid return vectors reproduce the empirical quantiles exactly. The frozen trainer retains malformed-sample counts, but not the raw malformed completion text. The public report distinguishes sample diversity, zero-width forecast cells and parsing failures. A zero-width interval can coexist with diverse sampled vectors when at least80% of one horizon's probability mass is concentrated on no change; it is not automatically a request-seed failure.
