@@ -15,6 +15,7 @@ on:
       - src/compute_forecast/value_ui_v5.py
       - src/compute_forecast/signals_ui_v6.py
       - src/compute_forecast/terminal_ui_v9.py
+      - src/compute_forecast/terminal_ui_v10.py
       - src/compute_forecast/dynamics_ui_v8.py
       - src/compute_forecast/timeline_ui_v7.py
       - src/compute_forecast/validate_timeline_v7.py
@@ -62,13 +63,16 @@ jobs:
           from pathlib import Path
           from compute_forecast.freeze_contract import validate_freeze
           from compute_forecast.explore_ui import HTML
+          from compute_forecast.terminal_ui_v10 import HTML as TERMINAL_HTML
           from compute_forecast.experimental_ui_v2 import HTML as EXPERIMENTAL_HTML
           validate_freeze(json.loads(Path('configs/release-freeze.json').read_text()))
           assert HTML.count('<script>')==1 and HTML.count('</script>')==1
           Path('artifacts/explore-ui.js').write_text(HTML.split('<script>',1)[1].split('</script>',1)[0])
           assert EXPERIMENTAL_HTML.count('<script>')==1 and EXPERIMENTAL_HTML.count('</script>')==1
           Path('artifacts/experimental-ui.js').write_text(EXPERIMENTAL_HTML.split('<script>',1)[1].split('</script>',1)[0])
+          Path('artifacts/terminal-ui.js').write_text(TERMINAL_HTML.split('<script>',1)[1].split('</script>',1)[0])
           PY
+          node --check artifacts/terminal-ui.js
           node --check artifacts/explore-ui.js
           node --check artifacts/experimental-ui.js
       - name: Verify protected source and exact metadata provenance

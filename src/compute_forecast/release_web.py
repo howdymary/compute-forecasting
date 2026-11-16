@@ -5,6 +5,7 @@ from pathlib import Path
 import modal
 from .release_payload import build,validate
 from .explore_ui import HTML
+from .terminal_ui_v10 import HTML as TERMINAL_HTML
 from .experimental_ui_v2 import HTML as EXPERIMENTAL_HTML
 from .pricing_contract import validate as validate_pricing
 app=modal.App("compute-forecast-observatory")
@@ -44,6 +45,8 @@ def web():
             return raw
     @api.get("/")
     def index():return HTMLResponse(HTML,headers=headers)
+    @api.get("/terminal")
+    def terminal_index():return HTMLResponse(TERMINAL_HTML,headers=headers)
     @api.get("/experimental")
     def experimental_index():return HTMLResponse(EXPERIMENTAL_HTML,headers=headers)
     @api.get("/api/experimental")
@@ -280,6 +283,26 @@ def web():
             raw=path.read_bytes()
         if hashlib.sha256(raw).hexdigest()!=name[:-5]:return Response(status_code=503,headers=headers)
         return Response(raw,media_type="application/json",headers=headers)
+
+    @api.get("/terminal/media/{run_id}/{name}")
+    def terminal_media(run_id:str,name:str,request:Request):
+        import re
+        allowed={"terminal-30s.mp4":"video/mp4","poster.png":"image/png","contact-sheet.png":"image/png","manifest.json":"application/json"}
+        if not run_id.isdigit() or name not in allowed:return Response(status_code=404,headers=headers)
+        with lock:
+            public.reload();path=Path("/public/terminal-v10/media")/run_id/name
+            if not path.is_file():return Response(status_code=404,headers=headers)
+            if path.stat().st_size>50_000_000:return Response(status_code=503,headers=headers)
+            raw=path.read_bytes()
+        response_headers={**headers,"Content-Disposition":'inline; filename="'+name+'"',"Accept-Ranges":"bytes","ETag":hashlib.sha256(raw).hexdigest()}
+        range_header=request.headers.get("range")
+        if range_header:
+            m=re.fullmatch(r"bytes=(\d+)-(\d*)",range_header)
+            if not m:return Response(status_code=416,headers={**response_headers,"Content-Range":f"bytes */{len(raw)}"})
+            start=int(m.group(1));end=min(int(m.group(2)) if m.group(2) else len(raw)-1,len(raw)-1)
+            if start>end or start>=len(raw):return Response(status_code=416,headers={**response_headers,"Content-Range":f"bytes */{len(raw)}"})
+            return Response(raw[start:end+1],status_code=206,media_type=allowed[name],headers={**response_headers,"Content-Range":f"bytes {start}-{end}/{len(raw)}"})
+        return Response(raw,media_type=allowed[name],headers=response_headers)
 
     @api.get("/health")
     def health():
