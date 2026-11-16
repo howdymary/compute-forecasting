@@ -1,0 +1,43 @@
+name: Render continuous Tinker learning curve
+on:
+  workflow_dispatch:
+  push:
+    branches: [compute-observatory]
+    paths: [configs/learning-curve-video.json]
+permissions:
+  contents: write
+concurrency:
+  group: continuous-learning-curve-video
+  cancel-in-progress: false
+jobs:
+  render:
+    if: github.ref == 'refs/heads/compute-observatory'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Fetch exact render source remotely
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$GITHUB_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install remote rendering tools
+        run: |
+          python -m pip install -e . playwright==1.65.2 pillow==13.0.0 modal==1.6.4
+          python -m playwright install --with-deps chromium
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
+          python -m compileall -q src/compute_forecast/record_learning_curve.py
+      - name: Verify every checkpoint and render 900 deterministic frames
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+          GH_TOKEN: ${{ github.token }}
+        run: python -m compute_forecast.record_learning_curve
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: continuous-learning-curve-${{ github.run_id }}
+          path: artifacts/learning-curve-video/
+          retention-days: 90

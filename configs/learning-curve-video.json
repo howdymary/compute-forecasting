@@ -1,0 +1,39 @@
+{
+  "schema_version": 2,
+  "requested_client_date": "2026-11-15",
+  "capture_revision": 1,
+  "output_seconds": 30,
+  "fps": 30,
+  "frames": 900,
+  "width": 1920,
+  "height": 1080,
+  "source_study": "campaign-v2",
+  "scope": "retrospective development",
+  "model": "Qwen/Qwen3.5-4B",
+  "sft_runs": [
+    "hard-17",
+    "hard-29",
+    "hard-43",
+    "soft-17",
+    "soft-29",
+    "soft-43"
+  ],
+  "updates": [
+    0,
+    20,
+    50,
+    100
+  ],
+  "x_domain": [
+    0,
+    100
+  ],
+  "y_domain": [
+    0.008,
+    0.02
+  ],
+  "source_revision": "07e5e71748c0747b6e695511e4abe2d23ae4e44f",
+  "new_training": false,
+  "new_numerical_experiments": false,
+  "evaluation_scores_plotted": false
+}
