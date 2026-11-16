@@ -56,3 +56,7 @@ The earlier pricing/notebook guides describe their original release state. Histo
 ## Direct price model v12
 
 [Methods](direct-forecast-v12.md) · [Measured findings](direct-v12-findings.md) · [Versioned artifacts](../results/direct-v12/README.md). This separately trains forecast outputs, preserving the earlier selector studies.
+
+## Matched price and BLS models
+
+[Methods](direct-evidence-v14.md) · [Measured findings](evidence-v14-findings.md) · [Versioned artifacts](../results/evidence-v14/README.md). This matched two-arm study preserves the earlier direct and selector studies.
