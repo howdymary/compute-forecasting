@@ -1,0 +1,69 @@
+{
+  "issued_origins": 0,
+  "ledger": [],
+  "model_lock": {
+    "locked_at": "2026-11-16T22:59:46.390620+00:00",
+    "operational_seed": 17,
+    "parent_retention_receipt_sha256": "403cd0753ab25474bf8a7c1a13d3a05314bace78ffa8414170b035a719bff1af",
+    "price_evidence": {
+      "base_model": "Qwen/Qwen3.5-4B",
+      "checkpoint_id": "9624b6947c84eb7ccf1e4d72",
+      "checkpoint_sha256": "9624b6947c84eb7ccf1e4d72441298e3fc9b276c513d0a2e17a2d133dac9834b",
+      "selected_update": 50
+    },
+    "price_only": {
+      "base_model": "Qwen/Qwen3.5-4B",
+      "checkpoint_id": "73dc7a819295970b67d747d3",
+      "checkpoint_sha256": "73dc7a819295970b67d747d3bdff481c82b53a50dbf5305f1f0fd76d760a67cd",
+      "selected_update": 50
+    },
+    "protocol_sha256": "52d898c44fc83b35892068d9f8ac06892645eaf19a9fa63ec51b9887290408c0",
+    "study_id": "direct-evidence-v14-prospective"
+  },
+  "new_optimizer_updates": 0,
+  "primary_analysis_required_eligible_origins": 12,
+  "prospective_accuracy": "not_established",
+  "provider_cost_usd": null,
+  "publication_boundary": "Public Modal artifacts are timestamped and hash-addressed. This is not an independently trusted timestamp or an automatic GitHub anchor.",
+  "readiness": {
+    "checked_at": "2026-11-16T23:28:42.445181+00:00",
+    "current_api_BLS_period": null,
+    "current_evidence_qualified_at_audit": true,
+    "distinct_quote_days": 1,
+    "eligible": false,
+    "eligible_tasks": 0,
+    "excluded_snapshots": [
+      {
+        "captured_at": "2026-11-15T21:30:18.418786+00:00",
+        "reason": "outside_registered_17_to_19_UTC_capture_window",
+        "source_snapshot_sha256": "9069534cd481e169d73dda09049942fe3ebbf6e7676fde3231aae8c03ef38a8d"
+      }
+    ],
+    "failures": [],
+    "first_eligible_origin": "2026-12-06",
+    "latest_capture_api_BLS_period": "2026-10",
+    "latest_qualified_capture_BLS_period": "2026-10",
+    "latest_verified_quote_date": "2026-11-16",
+    "origin": "2026-11-15",
+    "origin_number": null,
+    "qualified_original_BLS_period": "2026-10",
+    "reasons": [
+      "outside_registered_twelve_week_window",
+      "missed_issuance_deadline",
+      "no_contract_has_required_origin_and_twenty_retained_days",
+      "current_original_BLS_release_vintage_not_qualified"
+    ],
+    "retained_snapshot_count": 1,
+    "study_id": "direct-evidence-v14-prospective",
+    "task_ids": []
+  },
+  "registration": {
+    "engine_sha256": "753337260540412ba2ca8ae93b5d5c6dfe5e5796d3eb7f406d4dd1b480e78eb1",
+    "first_registered_at": "2026-11-16T23:28:42.445181+00:00",
+    "protocol_sha256": "52d898c44fc83b35892068d9f8ac06892645eaf19a9fa63ec51b9887290408c0",
+    "source_sha": "ae6674e32333012d838b06b28f55b8e3b824d62e"
+  },
+  "source_attribution": "GPU Rental Prices, exact provider contract quotes, CC BY 4.0: https://gpurentalprices.com/data. US BLS original PPI releases. Pacific pack supplied the prior frozen training, not prospective truth.",
+  "study_id": "direct-evidence-v14-prospective",
+  "updated_at": "2026-11-16T23:28:47.660696+00:00"
+}
