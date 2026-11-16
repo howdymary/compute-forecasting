@@ -15,7 +15,7 @@ def classify(run,session,checkpoint):
         for k,v in (getattr(obj,"user_metadata",None) or {}).items():
             # Repository names are deliberately excluded: this GPU project shares mochi-demo.
             if k.lower() in META_KEYS:fields.append((prefix+".metadata."+k,str(v)))
-    checkpoint_name=str(getattr(checkpoint,"checkpoint_id",""))
+    checkpoint_name=str(getattr(checkpoint,"checkpoint_id",None) or checkpoint.tinker_path.rsplit("/",1)[-1])
     if checkpoint_name:fields.append(("checkpoint.name",checkpoint_name))
     if any(PROTECTED.search(value) for _,value in fields):return None,"forecasting_protected",[]
     matches=[]
@@ -36,7 +36,7 @@ async def main():
     else:raise RuntimeError("Inventory exceeds registered 2000-checkpoint safety bound")
     runs={};sessions={};records=[];private={}
     for c in checkpoints:
-        rid=c.training_run_id
+        rid=getattr(c,"training_run_id",None) or c.tinker_path.split("/")[2]
         if rid not in runs:runs[rid]=await rest.get_training_run(rid)
         run=runs[rid];sid=getattr(run,"session_id",None) or rid.split(":train:")[0]
         if sid not in sessions:
