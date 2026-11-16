@@ -54,6 +54,8 @@ def main():
             page.evaluate("document.activeElement.blur();document.querySelector('#chart-tooltip').style.display='none';scrollTo(0,0)")
             page.screenshot(path=str(out/(str(width)+"-benchmark.png")))
             page.get_by_role("button",name="Long-term scenarios",exact=True).click()
+            assert page.locator(".q9-heading").count()==1
+            assert page.locator(".value-small").filter(has_text="New: matching history").count()==0
             vals=page.locator("[data-point-value]").evaluate_all("(es)=>es.map(e=>+e.dataset.value)")
             for a,b in zip(vals,[27.4625,61.4125,115.7625]):close(a,b)
             page.locator("#rate-0").evaluate("(e)=>{e.value='-20';e.dispatchEvent(new Event('input',{bubbles:true}))}")

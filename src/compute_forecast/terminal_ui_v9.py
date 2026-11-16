@@ -57,6 +57,7 @@ function q9ScaleButtons(){return '<div class="seg q9-scale" aria-label="Price ax
 const q9PreviousExplore=explore;
 explore=function(){
  let html=q9PreviousExplore();
+ html=html.replace('<p class="value-small"><a href="#value" data-jump="value">New: matching history and 24–36-month GPU economics ↗</a></p>','');
  html=html.replace(/<div class="leadrow">[\s\S]*?<\/div><div class="modebar">/,q9Heading()+'<div class="modebar">');
  if(S.mode!=='benchmark')return html;
  const s=series(),h=t7History(),last=h?.points.filter(p=>p.date<=P.origin_date).at(-1),fc=s.forecasts.find(p=>p.horizon_days===S.forecastHorizon);
