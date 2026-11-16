@@ -61,6 +61,21 @@ Strong controls for any extension remain official last_value, last_value_empiric
 
 This exact series ends Nov 6. The Nov 15 signals pilot has genuinely later individual-provider quotes, but different PCIe/on-demand contracts and one retained day. It cannot extend this SXM spot aggregate by stitching. No new statistical forecast is issued by the renderer.
 
+
+### Retained interval evidence for the selected series
+
+The report reconstructs all four official baseline controls on the exact A100 SXM80 subset: Aug 29, Sep 5 and Sep 12, three cells per horizon. It checks each cell's quantile loss, target date, coverage and width; no model is fit or selected again.
+
+For official multiplicative drift:
+
+| Horizon | Cells | Mean pinball | Coverage | Mean q10–q90 width, USD/GPU-hour |
+| --- | ---: | ---: | ---: | ---: |
+| 1 day | 3 | 0 | 100% | 0 |
+| 3 days | 3 | 0.030074 | 33.3% | 0.012218 |
+| 7 days | 3 | 0.020449 | 33.3% | 0.140420 |
+
+These are tiny reused, dependent cohorts. The zero one-day reference loss makes relative skill undefined. There are no failed cells in these retained matched outputs; that is not a claim that all earlier operations succeeded. These diagnostics support showing the actual quantiles with a calibration caveat, not a claim of reliable 80% coverage or validation at longer horizons. The full four-control table and exact arithmetic are in the versioned horizon audit.
+
 ## Scenario arithmetic and economic boundaries
 
 For month m, rental rate = $1.8818 × (1 + annual change)^(m/12). The three annual assumptions are -35%, -15%, +5%; monthly positions are explicit compounding.
@@ -88,7 +103,7 @@ The broader [Pacific value model](pacific-value-v5.md) separately treats utiliza
 | 50–54 | 25–27 | Update 100 and its actual chosen forecast. |
 | 54–60 | 27–30 | Stable final composition; limits remain visible. |
 
-The brief update-50 revisit is unchanged data, not a headline reading state. Headline holds are 2–3 output seconds; the final composition holds for at least three. Statistical paths crossfade; prediction coordinates never morph. Scenario positions are calculated assumptions. Each frame samples `source_time = 2 × output_time`; playback does not change market dates or optimizer counts.
+The brief update-50 revisit is unchanged data, not a headline reading state. Headline holds are 2–3 output seconds; the final composition holds for at least three. Statistical paths crossfade; prediction coordinates never morph. Scenario positions are calculated assumptions; the time ruler moves smoothly along the explicitly compounded paths while the selected horizon readout remains tied to its actual 12/24/36-month calculation. Each frame samples `source_time = 2 × output_time`; playback does not change market dates or optimizer counts.
 
 The HTML figure includes opt-in 2× playback, keyboard-native chapter selection and a source-time scrubber. No autoplay; the player remains usable with reduced motion. Captures hide the controls.
 

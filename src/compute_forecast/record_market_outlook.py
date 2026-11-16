@@ -55,6 +55,24 @@ def load_inputs(out):
                 p=path[r["years"]*12]
                 if not math.isclose(p["rental_index"],r["rental_index"],abs_tol=1e-10) or not math.isclose(p["resale_index"],r["resale_index"],abs_tol=1e-10):raise ValueError("Published scenario arithmetic")
         assumptions.append({**a,"label":labels[a["scenario"]],"points":path})
+
+    # Reconstruct existing exact-series horizon diagnostics; this is not a new fit.
+    existing_controls=[]
+    for method in study["baseline_audit"]["methods"]:
+        reports=[]
+        for h in (1,3,7):
+            cells=[c for c in method["cells"] if c["series_id"]==CASE_ID and int(c["horizon_days"])==h]
+            if len(cells)!=3 or {c["origin_date"] for c in cells}!={"2026-08-29","2026-09-05","2026-09-12"}:raise ValueError("Retained horizon audit cohort")
+            for c in cells:
+                q=[float(c[k]) for k in ("q10","q50","q90")];actual=float(c["y"])
+                if q!=sorted(q) or q[0]<=0 or (date.fromisoformat(c["origin_date"])+timedelta(days=h)).isoformat()!=c["target_date"]:raise ValueError("Retained interval/date")
+                loss=sum(max(a*(actual-v),(a-1)*(actual-v)) for a,v in zip((.1,.5,.9),q))/3
+                if not math.isclose(loss,float(c["loss"]),abs_tol=1e-12):raise ValueError("Retained official pinball")
+            avg=lambda key:sum(float(c[key]) for c in cells)/len(cells)
+            loss=avg("loss");baseline=avg("baseline_loss")
+            reports.append({"horizon_days":h,"cells":len(cells),"distinct_origins":3,"pinball":loss,"reference_pinball":baseline,"skill":None if baseline==0 else 1-loss/baseline,"coverage":sum(float(c["q10"])<=float(c["y"])<=float(c["q90"]) for c in cells)/len(cells),"mean_interval_width":sum(float(c["q90"])-float(c["q10"]) for c in cells)/len(cells),"retained_cell_failures":sum(c["status"]!="scored" for c in cells)})
+        existing_controls.append({"method":method["method"],"horizons":reports})
+
     bydate={p["date"]:p["value"] for p in points}
     saturdays=[p["date"] for p in points if p["date"]>="2026-07-15" and date.fromisoformat(p["date"]).weekday()==5]
     horizon=[]
@@ -67,7 +85,7 @@ def load_inputs(out):
     econ["active_gpu_w"]=400
     econ["active_gpu_w_note"]="Explicit A100 SXM 80GB power assumption, separate from the published H100-default 700W; does not affect rental-rate paths."
     econ["rental_rate_dependence"]="Only annual rental-rate assumption changes the plotted rental path. Utilization, energy, life, discounting and residual assumptions belong to a separate income calculation."
-    d.update({"market":{"metadata":{k:v for k,v in s.items() if k!="points"},"history":points,"forecasts":forecasts,"permission":permission,"anchor":anchor,"origin":cfg["origin"],"origin_cutoff_utc":pricing["origin_cutoff_utc"],"missing_calendar_days":gaps,"source_vintage":study["history"]["source_vintage"]},"scenarios":{"kind":"assumption_driven_not_trained_forecast","anchor":anchor,"anchor_date":cfg["origin"],"months":[12,24,36],"assumptions":assumptions,"formula":"rental_rate(m) = 1.8818 * (1 + annual_change) ** (m / 12)","probabilities":None,"confidence_interval":False,"resale_reference":"Separate hypothetical resale index 100; no dollar resale anchor","economic_assumptions":econ},"horizon_audit":{"kind":"Descriptive coverage, not a backtest or tuning result","series_id":CASE_ID,"rows":horizon,"longest_issued_statistical_horizon_days":7,"longest_scenario_months":36,"decision":"Retain actual 1/3/7-day archive. Do not create 14/30/90-day forecasts just for motion.","freshness":"This exact target has history through Nov6 only. Nov15 provider-contract pilot quotes exist but have different identities and one retained day; no new model issuance."},"timing":cfg,"market_provenance":{"implementation_commit":os.environ.get("GITHUB_SHA"),"config_sha256":sha(raw),"source_sha256":prov,"source_git_blobs":cfg["source_blobs"],"official_csv_sha256":sha(official),"protected_Nov7_13_outcomes_loaded":False,"new_training":False,"new_numerical_fits":False}})
+    d.update({"market":{"metadata":{k:v for k,v in s.items() if k!="points"},"history":points,"forecasts":forecasts,"permission":permission,"anchor":anchor,"origin":cfg["origin"],"origin_cutoff_utc":pricing["origin_cutoff_utc"],"missing_calendar_days":gaps,"source_vintage":study["history"]["source_vintage"]},"scenarios":{"kind":"assumption_driven_not_trained_forecast","anchor":anchor,"anchor_date":cfg["origin"],"months":[12,24,36],"assumptions":assumptions,"formula":"rental_rate(m) = 1.8818 * (1 + annual_change) ** (m / 12)","probabilities":None,"confidence_interval":False,"resale_reference":"Separate hypothetical resale index 100; no dollar resale anchor","economic_assumptions":econ},"horizon_audit":{"kind":"Descriptive coverage plus reconstruction of previously published retrospective controls; not a new backtest or tuning result","series_id":CASE_ID,"rows":horizon,"retained_control_diagnostics":existing_controls,"retained_control_scope":"Exact A100 SXM80 series, three reused origins Aug29/Sep5/Sep12, three cells per horizon; no independent calibration claim","longest_issued_statistical_horizon_days":7,"longest_scenario_months":36,"decision":"Retain actual 1/3/7-day archive. Do not create 14/30/90-day forecasts just for motion.","freshness":"This exact target has history through Nov6 only. Nov15 provider-contract pilot quotes exist but have different identities and one retained day; no new model issuance."},"timing":cfg,"market_provenance":{"implementation_commit":os.environ.get("GITHUB_SHA"),"config_sha256":sha(raw),"source_sha256":prov,"source_git_blobs":cfg["source_blobs"],"official_csv_sha256":sha(official),"protected_Nov7_13_outcomes_loaded":False,"new_training":False,"new_numerical_fits":False}})
     write(out/"market-data.json",d);write(out/"horizon-audit.json",d["horizon_audit"])
     return d,font
 
@@ -132,7 +150,7 @@ axes(G('close'),CX,CY,[['2026-10-23','Oct 23'],['2026-10-30','Oct 30'],['2026-11
 hist(G('close'),closeHistory,CX,CY,'close-history');origin(G('close'),CX(D.market.origin),'Forecast origin');
 forecast(G('close'),D.market.forecasts,CX,CY,'official-forecast');
 for(const p of D.market.forecasts)txt(G('official-forecast'),CX(p.date),CY(p.q90)-17,'+'+p.horizon_days+'d',18,C.blue,{'text-anchor':'middle'});
-txt(G('official-forecast'),CX('2026-11-09'),CY(1.8818)+34,'Median stays $1.8818',19,C.blue,{'text-anchor':'middle'});
+// The flat median is explained outside the band to keep quantile edges unobstructed.
 const SX=m=>150+m/36*1330,SY=scalePrice([.4,2.3]),sc=G('scenario');
 for(const v of [.5,1,1.5,2]){line(sc,150,SY(v),1480,SY(v));txt(sc,125,SY(v)+7,'$'+v.toFixed(2),20,C.muted,{'text-anchor':'end'})}
 for(const m of [0,12,24,36]){line(sc,SX(m),710,SX(m),719,{stroke:'#a8b5a7'});txt(sc,SX(m),746,m===0?'Nov 2026':m+' months',19,C.muted,{'text-anchor':'middle'})}
@@ -192,9 +210,9 @@ function render(t){
   label='03 / CONDITIONAL RENTAL SCENARIOS';scope='Dated Nov 6 anchor · assumptions, not trained forecasts';
   axis='Months after 6 Nov 2026 · monthly values are compounded calculations, not predicted observations.';
   foot='Scenario paths carry no probabilities · rental and hardware resale remain separate';
-  const reveal=month;G('sc-clip').setAttribute('width',SX(reveal)-149+8);G('scenario-ruler').setAttribute('x1',SX(reveal));G('scenario-ruler').setAttribute('x2',SX(reveal));
-  txt(right,1540,306,month+' months',40,C.ink);txt(right,1540,344,'Annual rental assumption',18,C.muted);
-  D.scenarios.assumptions.forEach((a,j)=>{const p=a.points[month];G('sc-dot-'+j).setAttribute('cx',SX(month));G('sc-dot-'+j).setAttribute('cy',SY(p.rental_rate));
+  const reveal=month===12?12:month===24?12+12*ease(ramp(t,28,28.8)):24+12*ease(ramp(t,34,34.8));G('sc-clip').setAttribute('width',SX(reveal)-149+8);G('scenario-ruler').setAttribute('x1',SX(reveal));G('scenario-ruler').setAttribute('x2',SX(reveal));
+  txt(right,1540,306,'At '+month+' months',36,C.ink);txt(right,1540,344,'Annual rental assumption',18,C.muted);
+  D.scenarios.assumptions.forEach((a,j)=>{const p=a.points[month],cursorRate=D.scenarios.anchor*(1+a.rental_annual_change)**(reveal/12);G('sc-dot-'+j).setAttribute('cx',SX(reveal));G('sc-dot-'+j).setAttribute('cy',SY(cursorRate));
    txt(right,1540,398+j*95,a.label,19,colors[j]);txt(right,1540,430+j*95,(a.rental_annual_change*100>0?'+':'')+(a.rental_annual_change*100).toFixed(0)+'% / year',20,C.muted);txt(right,1840,432+j*95,'$'+p.rental_rate.toFixed(2),29,colors[j],{'text-anchor':'end'})});
   txt(ex,150,838,'The further future is conditional on assumptions.',34,C.ink,{class:'hand'});
   txt(ex,150,881,'Rate(m) = $1.8818 × (1 + annual change)^(m / 12)',23,C.ink);
@@ -211,12 +229,12 @@ function render(t){
   const reveal=s.update;G('learn-clip').setAttribute('width',LX(reveal)-168+11);
   G('learning-dot').setAttribute('cx',LX(s.update));G('learning-dot').setAttribute('cy',LY(s.development_pinball));
   txt(right,1540,833,'Tinker trained the selector.',21,C.ink,{class:'hand'});noteLines(right,1540,869,['Numerical models generated','the price quantiles.','Rings: original kept checkpoints.'],17,C.muted);
-  if(t>=54){noteLines(right,1540,969,['Development is not future proof.'],16,C.muted)}
+  // The persistent scope footer carries the prospective limitation.
  }
  G('mode').textContent=label;G('scope').textContent=scope;G('axis-note').textContent=axis;G('foot').textContent=foot;
  for(const f of frozen)for(const[k,v]of f.attrs)if(f.e.getAttribute(k)!==v)throw Error('Measured geometry changed');
  G('scrub').value=t;G('clock').textContent=t.toFixed(2)+' source seconds';
- return{source_time:t,output_time:t/2,mode,checkpoint:mode==='research'?s.update:null,config:mode==='research'?s.config:null,case_loss:mode==='research'?s.case_pinball:null,development_loss:mode==='research'?s.development_pinball:null,checkpoint_weights:weights,scenario_month:mode==='scenario'?month:null,scenario_rates:mode==='scenario'?D.scenarios.assumptions.map(a=>a.points[month].rental_rate):null,measured_geometry_immutable:true};
+ return{source_time:t,output_time:t/2,mode,checkpoint:mode==='research'?s.update:null,config:mode==='research'?s.config:null,case_loss:mode==='research'?s.case_pinball:null,development_loss:mode==='research'?s.development_pinball:null,checkpoint_weights:weights,scenario_month:mode==='scenario'?month:null,scenario_cursor_month:mode==='scenario'?(month===12?12:month===24?12+12*ease(ramp(t,28,28.8)):24+12*ease(ramp(t,34,34.8))):null,scenario_cursor_rates:mode==='scenario'?[0,1,2].map(j=>{const e=G('sc-dot-'+j);return{month:(+e.getAttribute('cx')-150)/1330*36,rate:.4+(710-(+e.getAttribute('cy')))/410*1.9}}):null,scenario_rates:mode==='scenario'?D.scenarios.assumptions.map(a=>a.points[month].rental_rate):null,measured_geometry_immutable:true};
 }
 window.renderFrame=render;let playing=false,current=0,start=0;
 window.prepareCapture=()=>{G('player').style.display='none';playing=false;render(0)};
@@ -233,6 +251,11 @@ def verify_frame(r,t,d):
     if mode=="scenario":
         month=12 if t<28 else 24 if t<34 else 36
         if r["scenario_month"]!=month or any(not math.isclose(a,b["points"][month]["rental_rate"],abs_tol=1e-12) for a,b in zip(r["scenario_rates"],d["scenarios"]["assumptions"])):raise ValueError("Scenario cursor/value")
+        ease=lambda v:v*v*(3-2*v)
+        cursor=12 if month==12 else 12+12*ease(max(0,min(1,(t-28)/.8))) if month==24 else 24+12*ease(max(0,min(1,(t-34)/.8)))
+        if not math.isclose(r["scenario_cursor_month"],cursor,abs_tol=1e-10):raise ValueError("Scenario ruler clock")
+        for rendered,a in zip(r["scenario_cursor_rates"],d["scenarios"]["assumptions"]):
+            if not math.isclose(rendered["month"],cursor,abs_tol=1e-9) or not math.isclose(rendered["rate"],d["scenarios"]["anchor"]*(1+a["rental_annual_change"])**(cursor/12),abs_tol=1e-10):raise ValueError("Ruler compounding")
     if mode=="research":
         i=0 if t<44 else 1 if t<48 else 2 if t<50 else 3;s=d["case"]["states"][i]
         if (r["checkpoint"],r["config"],r["case_loss"],r["development_loss"])!=(s["update"],s["config"],s["case_pinball"],s["development_pinball"]):raise ValueError("Saved checkpoint/forecast synchronization")
@@ -288,7 +311,7 @@ def validate(page,d):
     page.locator("#scrub").focus();page.keyboard.press("ArrowRight")
     if float(page.locator("#scrub").input_value())<=29:raise ValueError("Keyboard scrub")
     page.evaluate("prepareCapture()")
-    return {"status":"passed","history_observations":234,"missing_calendar_days":65,"history_gap_bridging":False,"official_quantiles_verified":9,"checkpoint_quantiles_verified":36,"learning_checkpoints_verified":24,"original_checkpoint_selections_verified":6,"scenario_monthly_calculations_verified":111,"case_loss_reconstructions":12,"supported_archived_horizons":[1,3,7],"new_statistical_forecasts":0,"future_Nov7_13_outcomes_loaded":False,"source_seconds":60,"output_seconds":30,"playback_speed":2,"frame_sync_checks":0,"intermediate_forecast_morphing":False,"fixed_axes_within_comparison":True,"native_keyboard_controls":True,"autoplay":False,"new_training":False,"new_numerical_fits":False,"page_clipping":[]}
+    return {"status":"passed","history_observations":234,"missing_calendar_days":65,"history_gap_bridging":False,"official_quantiles_verified":9,"checkpoint_quantiles_verified":36,"learning_checkpoints_verified":24,"original_checkpoint_selections_verified":6,"scenario_monthly_calculations_verified":111,"existing_control_cell_losses_reconstructed":36,"scenario_ruler_formula_checks":True,"case_loss_reconstructions":12,"supported_archived_horizons":[1,3,7],"new_statistical_forecasts":0,"future_Nov7_13_outcomes_loaded":False,"source_seconds":60,"output_seconds":30,"playback_speed":2,"frame_sync_checks":0,"intermediate_forecast_morphing":False,"fixed_axes_within_comparison":True,"native_keyboard_controls":True,"autoplay":False,"new_training":False,"new_numerical_fits":False,"page_clipping":[]}
 
 def main():
     parser=argparse.ArgumentParser();parser.add_argument("--no-publish",action="store_true");parser.add_argument("--verify-only",action="store_true");args=parser.parse_args()
@@ -341,8 +364,8 @@ def main():
         if sec==9.5:im.save(out/"poster.png")
         im.thumbnail((480,270));x=i%4*480;y=i//4*294;sheet.paste(im,(x,y));draw.text((x+12,y+278),f"Output {sec}s / source {2*sec}s",fill="#263d3e")
     sheet.save(out/"contact-sheet.png")
-    transition_times=(3.0,3.5,4.0,5.0,5.25,5.5,11.0,11.15,11.3,20.0,20.15,20.3,22.0,22.15,22.3,24.0,24.15,24.3,25.0,25.15,25.3)
-    motion=Image.new("RGB",(1920,1764),"#f7f3e9");md=ImageDraw.Draw(motion)
+    transition_times=(3.0,3.5,4.0,5.0,5.25,5.5,11.0,11.15,11.3,14.0,14.2,14.4,17.0,17.2,17.4,20.0,20.15,20.3,22.0,22.15,22.3,24.0,24.15,24.3,25.0,25.15,25.3)
+    motion=Image.new("RGB",(1920,2058),"#f7f3e9");md=ImageDraw.Draw(motion)
     for i,sec in enumerate(transition_times):
         f=out/f"transition-{i}.png";subprocess.run(["ffmpeg","-y","-ss",str(sec),"-i",str(movie),"-frames:v","1",str(f)],check=True,capture_output=True)
         im=Image.open(f).convert("RGB");im.thumbnail((480,270));x=i%4*480;y=i//4*294;motion.paste(im,(x,y));md.text((x+12,y+274),f"Encoded transition / {sec:.2f}s",fill="#263d3e")
