@@ -70,6 +70,13 @@ def build(inputs,output):
             a=results[("price_evidence",seed)];b=results[("price_only",seed)]
             primary=matched([r for r in a["cells"] if r["horizon_days"]==7],[r for r in b["cells"] if r["horizon_days"]==7])
             comparisons.append({"seed":seed,"candidate":"price_evidence","reference":"price_only","all_horizons":matched(a["cells"],b["cells"]),"seven_day":primary})
+    paired_summary=None
+    if comparisons:
+        by_origin={}
+        for comparison in comparisons:
+            for origin,delta in comparison["seven_day"]["by_origin"].items():by_origin.setdefault(origin,[]).append(delta)
+        origin_means={o:statistics.mean(v) for o,v in sorted(by_origin.items())}
+        paired_summary={"paired_seeds":len(comparisons),"distinct_market_origins":len(origin_means),"mean_seed_primary_difference":statistics.mean(c["seven_day"]["mean_difference"] for c in comparisons),"origin_mean_differences":origin_means,"origin_difference_range":[min(origin_means.values()),max(origin_means.values())],"uncertainty":"Descriptive origin range; no population significance or independent-seed market sample claim"}
     status="completed" if len(states)==6 else "partial" if states else "awaiting_training"
     memory_files=sorted(pathlib.Path("results/evidence-v14/audits").glob("*/memory.json"),key=lambda f:int(f.parent.name))
     memory=None
@@ -77,7 +84,7 @@ def build(inputs,output):
         f=memory_files[-1];value=load(f)
         memory={"path":str(f),"sha256":hashlib.sha256(f.read_bytes()).hexdigest(),"status":value["status"],"eligibility":value["eligibility"],"changed_after_criticism":value["changed_after_criticism"],"decisions":value["decisions"],"actual_diagnostics":value["actual_diagnostics"]}
     default_case=next((c for c in cases if any(v!=c["anchor"] for v in c["outcomes"])),cases[0] if cases else None)
-    report={"study_id":p["study_id"],"schema_version":14,"status":status,"created_at":datetime.now(timezone.utc).isoformat(),"protocol":p,"protocol_sha256":digest(p),"dataset_sha256":digest(dataset),"audit":audit,"runs":states,"development_cases":cases,"default_case_id":default_case["task_id"] if default_case else None,"visual_case_rule":"First lexicographic development case with an observed price change, independent of model performance","comparisons":comparisons,"expected_runs":6,"incomplete_runs":incomplete,"execution":execution,"memory":memory,"task_anchors":{t["task_id"]:t["anchor"] for phase in ("development","retrospective") for t in dataset["groups"][phase]},"news_used":False,"infrastructure_used":False,"source_attribution":"Pacific Machines(2026), gpu-price-pack v0.1.1-handover, approved CC BY4.0 source derivatives; US Bureau of Labor Statistics, original archived monthly PPI releases","interpretation":"Price versus price+BLS; retrospective. Three dependent evaluation dates and seed replicates do not establish prospective accuracy or a news benefit.","prospective":{"status":"pending","outcomes_loaded":False,"protocol":"configs/evidence-v14-prospective.json"}}
+    report={"study_id":p["study_id"],"schema_version":14,"status":status,"created_at":datetime.now(timezone.utc).isoformat(),"protocol":p,"protocol_sha256":digest(p),"dataset_sha256":digest(dataset),"audit":audit,"runs":states,"development_cases":cases,"default_case_id":default_case["task_id"] if default_case else None,"visual_case_rule":"First lexicographic development case with an observed price change, independent of model performance","comparisons":comparisons,"paired_summary":paired_summary,"expected_runs":6,"incomplete_runs":incomplete,"execution":execution,"memory":memory,"task_anchors":{t["task_id"]:t["anchor"] for phase in ("development","retrospective") for t in dataset["groups"][phase]},"news_used":False,"infrastructure_used":False,"source_attribution":"Pacific Machines(2026), gpu-price-pack v0.1.1-handover, approved CC BY4.0 source derivatives; US Bureau of Labor Statistics, original archived monthly PPI releases","interpretation":"Price versus price+BLS; retrospective. Three dependent evaluation dates and seed replicates do not establish prospective accuracy or a news benefit.","prospective":{"status":"pending","outcomes_loaded":False,"protocol":"configs/evidence-v14-prospective.json"}}
     for name,raw in files.items():
         f=out/name;f.parent.mkdir(parents=True,exist_ok=True);f.write_text(raw)
     for name,value in (("report.json",report),("audit.json",audit),("bls-vintages.json",load(next(root.rglob("bls-vintages.json"))))):
@@ -86,6 +93,16 @@ def build(inputs,output):
     for s in states:
         h=s["retrospective"]["by_horizon"]["7"];lines.append(f"| {p['arm_labels'][s['arm']]} | {s['seed']} | {s['optimizer_updates']} | {s['selected']['update']} | {s['base']['primary_pinball']:.8f} | {s['retrospective']['primary_pinball']:.8f} | {h['coverage']:.1%} | {h['width']:.6f} |")
     lines+=["",f"{audit['phase_tasks']['training']} overlapping training tasks;{audit['phase_tasks']['development']} development tasks;{audit['phase_tasks']['retrospective']} retrospective tasks,66 horizon cells and3 reused dependent origins. Seed runs replicate the same market outcomes.","","Checkpoint selection uses development only. All stochastic samples and failed outputs remain retained. A positive BLS effect is not assumed.","","Prospective improvement from supplementary evidence is not established.","","[Methods](evidence-v14.md) · [Protocol](../configs/direct-evidence-v14-final.json) · [Artifacts](../results/evidence-v14/README.md)"]
+    if comparisons:
+        lines+=["","## Matched effect of the BLS input block","","Negative differences favor price+BLS. These are additional retrospective comparisons, not future accuracy.","","| Seed | BLS minus price7-day loss | Matched7-day cells |","| --- | ---: | ---: |"]
+        for comparison in comparisons:lines.append(f"| {comparison['seed']} | {comparison['seven_day']['mean_difference']:.8f} | {comparison['seven_day']['n_cells']} |")
+        lines+=["",f"Mean across{len(comparisons)} paired seed runs: {paired_summary['mean_seed_primary_difference']:.8f}. Descriptive origin-level difference range: {paired_summary['origin_difference_range'][0]:.8f} to{paired_summary['origin_difference_range'][1]:.8f}. The same market outcomes recur across seeds.",""]
+        for origin,delta in paired_summary["origin_mean_differences"].items():lines.append(f"- {origin}: {delta:.8f} BLS-minus-price seven-day loss, averaged over available paired seeds.")
+    lines+=["","## Strong numerical references",""]
+    if states:
+        lines+=["| Reference |7-day loss | Coverage | Width |","| --- | ---: | ---: | ---: |"]
+        for method,value in states[0]["references"].items():
+            h=value["summary"]["by_horizon"]["7"];lines.append(f"| {method} | {h['pinball']:.8f} | {h['coverage']:.1%} | {h['width']:.6f} |")
     (out/"findings.md").write_text("\n".join(lines)+"\n")
     manifest={"study_id":p["study_id"],"files":[{"path":str(f.relative_to(out)),"bytes":f.stat().st_size,"sha256":hashlib.sha256(f.read_bytes()).hexdigest()} for f in sorted(out.rglob("*")) if f.is_file() and f.name!="manifest.json"]}
     (out/"manifest.json").write_text(json.dumps(manifest,indent=2)+"\n")
