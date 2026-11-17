@@ -1,0 +1,55 @@
+{
+  "study_id": "ce-continuation-v21-prospective",
+  "parent_study_id": "ce-continuation-v21",
+  "registered_at": "2026-11-17T17:11:25Z",
+  "first_eligible_origin": "2026-12-20",
+  "horizons": [
+    1,
+    3,
+    7
+  ],
+  "primary_horizon": 7,
+  "origins": 16,
+  "frequency": "weekly Sunday UTC",
+  "final_analysis_not_before": "2027-04-12T00:00:00+00:00",
+  "stop_after_utc": "2027-04-19T00:00:00+00:00",
+  "source": "Exact v19 source-qualified individual-provider contract cohort; licensed gpurentalprices first eligible daily capture",
+  "cohort": "Reuse deterministic frozen source cohort and source vintage rules from the unchanged v19 protocol; new study IDs, no competition-target identity claim",
+  "methods": [
+    "incumbent",
+    "same",
+    "expanded",
+    "official_drift"
+  ],
+  "unavailable_arm": "Expanded is excluded by a deterministic effective-protocol lock only if its preregistered data gate failed before training; no invented model or unflagged persistence substitute",
+  "operational_ordering_seed": 17,
+  "model_lock": "Freeze operational selected checkpoints, full categorical support, renderer/tokenizer, prepared input hashes and source-code hashes before first eligible issuance",
+  "primary_comparison": "Development-selected eligible continuation arm versus frozen incumbent; exact ties retain incumbent. No operational seed selection using retrospective or future results.",
+  "secondary_comparisons": [
+    "expanded versus same-data continuation when both are available",
+    "all available arms versus unchanged official drift",
+    "1/3-day pinball, median MAE, coverage, width and failures"
+  ],
+  "information_cutoff": "Origin end UTC; issue within60minutes thereafter, before compatible target observations mature",
+  "collection_window_utc_hours": [
+    17,
+    19
+  ],
+  "truth": "First retained compatible target-day source capture; preserve missingness and revisions",
+  "publication": "Exact full probability vectors and quantiles committed with verified signed Sigstore publication timestamps, never author-entered dates alone",
+  "analysis": {
+    "interim": "Descriptive issuance/status only; no promotion before final analysis",
+    "paired": "Seven-day mean dollar pinball on identical eligible source contracts, origin-block sensitivity lengths2/4,2000resamples,seed20261117",
+    "dependence": "Shared market origins and contracts, overlapping horizons and all ordering seeds remain dependent. Reusing the v19 cohort is a matched comparison, not independent replication.",
+    "positive_claim": "At fixed analysis, primary continuation must have negative paired loss versus incumbent and upper paired block95% bounds below zero in both sensitivities, no higher failure rate, and a complete compatible registered panel. Otherwise retain incumbent and report negative/inconclusive. Approximate block intervals are not a coverage guarantee.",
+    "data_claim": "A separate expanded-minus-same comparison is required; a continuation gain alone does not establish a benefit from more data.",
+    "stopping": "16 registered weekly origins; no extension until success, no future retuning or automatic promotion"
+  },
+  "limits": {
+    "max_weekly_origins": 16,
+    "max_probability_requests_per_origin": 400,
+    "max_new_optimizer_updates_in_future_runner": 0,
+    "stop_after_utc": "2027-04-19T00:00:00+00:00"
+  },
+  "preserved_panels": "All existing panels, including November23 gate, v18 December6/February1 and v19/v20 December20/April12, remain unchanged"
+}

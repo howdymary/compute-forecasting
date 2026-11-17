@@ -1,0 +1,155 @@
+{
+  "study_id": "ce-continuation-v21",
+  "schema_version": 21,
+  "registered_at": "2026-11-17T17:11:25Z",
+  "classification": "Post-event continuation of the frozen direct categorical forecaster; historical development and exploratory comparison, separately registered future test",
+  "questions": {
+    "primary": "Does a lower-rate categorical CE continuation improve seven-day forecasts relative to the frozen v19 operational checkpoint?",
+    "secondary": "Does a broader verified training corpus improve forecasts relative to an otherwise matched same-data continuation?",
+    "attribution": "No isolated learning-rate claim: continuation changes update count and learning rate jointly. Expanded versus same-data isolates corpus under matched continuation settings."
+  },
+  "parent": {
+    "study_id": "market-state-v19",
+    "report_path": "results/market-state-v19/runs/44054321182/report.json",
+    "report_sha256": "374d677312191a04402e8ad7862f16e57b59da80886bf1f736e7f4f666783145",
+    "dataset_sha256": "867aad80b4418d6963222dd7c7f6f108602ab55c4ca9ac048df119290cfb3a99",
+    "input_pointer": "results/market-state-v19/readiness/44040999343/input-key.json",
+    "arm": "price",
+    "seed": 17,
+    "selected_update": 30,
+    "checkpoint_id": "27320038901ef32a394c16d4",
+    "tokenizer_sha256": "4d765ac5a92a75f240af39f9358a09a140216dce113e57754c91042ef8b9e4e8",
+    "original_lr": 0.0001,
+    "examples_seen_at_parent": 480
+  },
+  "arms": {
+    "incumbent": "Frozen v19 price-only seed17/checkpoint30",
+    "same": "Original 314 windows, continued categorical CE",
+    "expanded": "Original windows plus compatible additional H100/A100 training windows; same CE format and matched update budget"
+  },
+  "model": {
+    "base": "Qwen/Qwen3.5-4B",
+    "renderer": "qwen3_5_disable_thinking",
+    "rank": 16,
+    "objective": "ce",
+    "learning_rate": 0.00002,
+    "batch_size": 16,
+    "max_updates": 100,
+    "checkpoints": [
+      0,
+      20,
+      50,
+      100
+    ],
+    "max_context_tokens": 6144,
+    "initial_seed": 17,
+    "robustness_seeds": [
+      29,
+      43
+    ],
+    "seed_meaning": "All arms and ordering seeds share exactly the operational seed17 parent weights and optimizer. Seeds change continuation data order only, not LoRA initialization.",
+    "optimizer_restore": "create_training_client_from_state_with_optimizer; failure gates training, no silent reset",
+    "output": "Unchanged frozen 19 relative future-price levels, including exact zero return; same renderer, input, conditional probability extraction and quantile convention"
+  },
+  "data": {
+    "horizons": [
+      1,
+      3,
+      7
+    ],
+    "history_cutoff": "2026-11-06",
+    "train_origins_through": "2026-10-04",
+    "train_labels_through": "2026-10-11",
+    "development_origins": [
+      "2026-10-11",
+      "2026-10-18"
+    ],
+    "retrospective_origins": [
+      "2026-10-25",
+      "2026-10-28",
+      "2026-10-30"
+    ],
+    "context_calendar_days": 42,
+    "min_context_observations": 20,
+    "expansion_sources": [
+      "afhubbard",
+      "gpurentalprices",
+      "fastgpu_daily"
+    ],
+    "instruments": [
+      "hyperscaler_spot",
+      "neocloud_rate_card"
+    ],
+    "tiers": [
+      "spot",
+      "on_demand"
+    ],
+    "license": "CC-BY-4.0",
+    "quality_flag": "ok",
+    "max_training_groups": 48,
+    "max_windows_per_group": 96,
+    "max_expanded_windows": 4096,
+    "selection": "Retain every original training task. Add source/provider/family/instrument/tier groups by metadata-only round robin and uniformly spaced eligible origins. Deduplicate exact task IDs. Global cap by round robin, never price-change outcomes.",
+    "input_features": "Existing own-price input only; market fields withheld exactly as v19. No news, BLS, calibration, new heads or archive transfer.",
+    "aws_archive": "Not ingested. Afhubbard source-reported spot quotes retain their own identity; do not apply the separate AWS archive hole to genuine observations from another collector.",
+    "historical_availability": "Source-reported snapshot timestamps in the frozen pack; independent historical publication availability and base-model pretraining exposure remain unverified"
+  },
+  "readiness": {
+    "min_expanded_windows": 628,
+    "min_added_groups": 6,
+    "min_distinct_expanded_origins": 120,
+    "min_expanded_changed_7d_windows": 114,
+    "min_providers": 8,
+    "max_training_out_of_support_fraction": 0.05,
+    "all_original_training_tasks_preserved": true,
+    "evaluation_tasks_exactly_unchanged": true,
+    "quantitative_gate_is_not_power_guarantee": true
+  },
+  "training": {
+    "order": "Deterministic cyclic shuffled horizon-example stream; epoch permutation seed = ordering_seed + epoch*1000003. Both arms start at offset480. Batch size16, wrap across epochs without short batches. Record full100-batch task/horizon identity hash and repeated exposures.",
+    "selection": "Lowest development seven-day pinball; update0 eligible; earliest update exact tie. Four equal opportunities for each updated arm.",
+    "continuation_gate": "After seed17 pilot: at least one eligible updated arm selects update>0 with development seven-day loss <=0.98 times the shared incumbent and no extra development failures. Only then run ordering seeds29/43.",
+    "data_effect_gate": "Report separately whether expanded seed17 development loss <=0.98 times matched same-data loss; this is not required to fabricate or claim a data benefit.",
+    "retrospective": "Only each selected checkpoint receives one additional exploratory retrospective evaluation, after saved selection. Existing opened dates cannot select a model or seed.",
+    "further_search": "No automatic rate sweep, budget extension, output change, reward optimization or third intervention"
+  },
+  "limits": {
+    "max_runs": 6,
+    "max_total_optimizer_updates": 600,
+    "max_hours_per_run": 3,
+    "max_campaign_hours": 12,
+    "max_parallel_training": 2,
+    "max_new_persistent_states_per_run": 3,
+    "max_total_new_persistent_states": 18,
+    "checkpoint_preservation_limit": 100,
+    "checkpoint_ttl_days": 180,
+    "max_private_input_bytes": 50000000,
+    "max_private_recovery_bytes": 50000000,
+    "max_inference_concurrency": 4,
+    "inference_timeout_seconds": 120
+  },
+  "implementation": {
+    "requirements": "requirements/market-state-v19.txt",
+    "tinker": "0.39.1",
+    "cookbook": "0.6.1",
+    "torch": "2.15.0+cpu",
+    "data_pandas": "2.3.1",
+    "duckdb": "1.2.2",
+    "optimizer_documentation": "https://tinker-docs.thinkingmachines.ai/tinker/api-reference/serviceclient/"
+  },
+  "preservation": {
+    "official_csv_sha256": "67a043255a716db6bc9b73cd28f9258c30fb299fd8671a9ee3430c0d94cadd80",
+    "protected_outcomes_loaded": false,
+    "existing_studies_checkpoints_and_panels_unchanged": true,
+    "allow_checkpoint_deletion": false,
+    "allow_billing_change": false
+  },
+  "future_protocol": "configs/ce-continuation-v21-prospective.json",
+  "limitations": [
+    "Two reused development origins and three dependent exploratory origins",
+    "More examples can remain correlated; sample counts are not independent market experiments",
+    "Corpus and source shifts require explicit reporting",
+    "A successful development screen is not prospective improvement",
+    "Tinker private resource identity hashes are not weight-byte checksums"
+  ]
+}
