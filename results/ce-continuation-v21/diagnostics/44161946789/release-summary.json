@@ -1,0 +1,499 @@
+{
+  "study_id": "ce-continuation-v21-release-summary",
+  "source_report_path": "results/ce-continuation-v21/runs/44144492740/report.json",
+  "source_report_sha256": "7e5a1f9bb18f89162285a1a4fc1b69ee9bf0ab001544117bdab330982b9659ce",
+  "campaign_status": "completed_campaign",
+  "completed_runs": 6,
+  "actual_additional_optimizer_updates": 600,
+  "incomplete_runs": 0,
+  "arithmetic_verification": {
+    "status": "passed",
+    "completed_runs": 6,
+    "updates": 600,
+    "primary_cases": 24,
+    "prospective_accuracy": "not established"
+  },
+  "pilot_model_lock_unchanged": true,
+  "untuned_contextual_reference": {
+    "n": 72,
+    "pinball": 0.013518307924375122,
+    "coverage": 0.7361111111111112,
+    "width": 0.002263368617854692,
+    "median_mae": 0.027807642361111107,
+    "crps": 0.026834932938604263,
+    "failures": 0,
+    "out_of_support": 0,
+    "by_horizon": {
+      "1": {
+        "n": 24,
+        "pinball": 0.005848196223575446,
+        "coverage": 0.8333333333333334,
+        "width": 0.001469011103800752,
+        "median_mae": 0.012153697916666664,
+        "crps": 0.011562331870468436,
+        "failures": 0,
+        "out_of_support": 0
+      },
+      "3": {
+        "n": 24,
+        "pinball": 0.012561364301113116,
+        "coverage": 0.75,
+        "width": 0.003109502639973824,
+        "median_mae": 0.026019104166666664,
+        "crps": 0.024999722225417482,
+        "failures": 0,
+        "out_of_support": 0
+      },
+      "7": {
+        "n": 24,
+        "pinball": 0.022145363248436804,
+        "coverage": 0.625,
+        "width": 0.0022115921097895,
+        "median_mae": 0.045250124999999995,
+        "crps": 0.04394274471992687,
+        "failures": 0,
+        "out_of_support": 0
+      }
+    },
+    "primary_pinball": 0.022145363248436804
+  },
+  "incumbent": {
+    "n": 72,
+    "pinball": 0.009972762029750445,
+    "coverage": 0.9305555555555556,
+    "width": 0.11090711492341956,
+    "median_mae": 0.025805156922284588,
+    "crps": 0.019803963585581678,
+    "failures": 0,
+    "out_of_support": 0,
+    "by_horizon": {
+      "1": {
+        "n": 24,
+        "pinball": 0.0052941724837022985,
+        "coverage": 1,
+        "width": 0.09867095564390195,
+        "median_mae": 0.0120308437734334,
+        "crps": 0.009158653974281375,
+        "failures": 0,
+        "out_of_support": 0
+      },
+      "3": {
+        "n": 24,
+        "pinball": 0.009066451520154574,
+        "coverage": 0.9583333333333334,
+        "width": 0.11702519456317836,
+        "median_mae": 0.02304764937495844,
+        "crps": 0.01808767222178294,
+        "failures": 0,
+        "out_of_support": 0
+      },
+      "7": {
+        "n": 24,
+        "pinball": 0.015557662085394464,
+        "coverage": 0.8333333333333334,
+        "width": 0.11702519456317836,
+        "median_mae": 0.042336977618461925,
+        "crps": 0.032165564560680725,
+        "failures": 0,
+        "out_of_support": 0
+      }
+    },
+    "primary_pinball": 0.015557662085394464
+  },
+  "ordering_summaries": {
+    "same": {
+      "n_orderings": 3,
+      "mean_primary_pinball": 0.017953853979269678,
+      "orderings_better_than_incumbent": 0,
+      "independence": "Ordering seeds reuse the same parent and market outcomes"
+    },
+    "expanded": {
+      "n_orderings": 3,
+      "mean_primary_pinball": 0.017939199393175252,
+      "orderings_better_than_incumbent": 0,
+      "independence": "Ordering seeds reuse the same parent and market outcomes"
+    }
+  },
+  "horizon_wins": {
+    "1": {
+      "n_models": 6,
+      "models_with_lower_pinball": 5,
+      "incumbent": {
+        "n": 24,
+        "pinball": 0.0052941724837022985,
+        "coverage": 1,
+        "width": 0.09867095564390195,
+        "median_mae": 0.0120308437734334,
+        "crps": 0.009158653974281375,
+        "failures": 0,
+        "out_of_support": 0
+      }
+    },
+    "3": {
+      "n_models": 6,
+      "models_with_lower_pinball": 2,
+      "incumbent": {
+        "n": 24,
+        "pinball": 0.009066451520154574,
+        "coverage": 0.9583333333333334,
+        "width": 0.11702519456317836,
+        "median_mae": 0.02304764937495844,
+        "crps": 0.01808767222178294,
+        "failures": 0,
+        "out_of_support": 0
+      }
+    },
+    "7": {
+      "n_models": 6,
+      "models_with_lower_pinball": 0,
+      "incumbent": {
+        "n": 24,
+        "pinball": 0.015557662085394464,
+        "coverage": 0.8333333333333334,
+        "width": 0.11702519456317836,
+        "median_mae": 0.042336977618461925,
+        "crps": 0.032165564560680725,
+        "failures": 0,
+        "out_of_support": 0
+      }
+    }
+  },
+  "runs": [
+    {
+      "arm": "same",
+      "ordering_seed": 17,
+      "selected_additional_update": 20,
+      "actual_additional_updates": 100,
+      "development_loss": 0.007938938958549805,
+      "development_at_update100": 0.011427897771276903,
+      "retrospective": {
+        "n": 72,
+        "pinball": 0.011054072645753225,
+        "coverage": 0.8472222222222222,
+        "width": 0.06039440160451064,
+        "median_mae": 0.0292106379013007,
+        "crps": 0.02354107522877888,
+        "failures": 0,
+        "out_of_support": 0,
+        "by_horizon": {
+          "1": {
+            "n": 24,
+            "pinball": 0.005405094731040849,
+            "coverage": 0.9583333333333334,
+            "width": 0.051914865003915046,
+            "median_mae": 0.013606345385462093,
+            "crps": 0.010088873432432715,
+            "failures": 0,
+            "out_of_support": 0
+          },
+          "3": {
+            "n": 24,
+            "pinball": 0.009673723058415887,
+            "coverage": 0.8333333333333334,
+            "width": 0.06207779962324459,
+            "median_mae": 0.02711761028070496,
+            "crps": 0.021386503742844978,
+            "failures": 0,
+            "out_of_support": 0
+          },
+          "7": {
+            "n": 24,
+            "pinball": 0.01808340014780294,
+            "coverage": 0.75,
+            "width": 0.06719054018637229,
+            "median_mae": 0.046907958037735044,
+            "crps": 0.03914784851105895,
+            "failures": 0,
+            "out_of_support": 0
+          }
+        },
+        "primary_pinball": 0.01808340014780294
+      },
+      "elapsed_seconds": 2554.231487155,
+      "input_token_presentations": 3698754,
+      "provider_cost_usd": null
+    },
+    {
+      "arm": "same",
+      "ordering_seed": 29,
+      "selected_additional_update": 50,
+      "actual_additional_updates": 100,
+      "development_loss": 0.007168945308288428,
+      "development_at_update100": 0.012201244598861195,
+      "retrospective": {
+        "n": 72,
+        "pinball": 0.011414111991002606,
+        "coverage": 0.8472222222222222,
+        "width": 0.04523269262292696,
+        "median_mae": 0.030643355113353622,
+        "crps": 0.023707681133473744,
+        "failures": 0,
+        "out_of_support": 0,
+        "by_horizon": {
+          "1": {
+            "n": 24,
+            "pinball": 0.004955250435808515,
+            "coverage": 0.9166666666666666,
+            "width": 0.029487473100459512,
+            "median_mae": 0.014141313978286435,
+            "crps": 0.010055970173975944,
+            "failures": 0,
+            "out_of_support": 0
+          },
+          "3": {
+            "n": 24,
+            "pinball": 0.010688186670930563,
+            "coverage": 0.8333333333333334,
+            "width": 0.05009306282802145,
+            "median_mae": 0.02778092958298867,
+            "crps": 0.02149923141718102,
+            "failures": 0,
+            "out_of_support": 0
+          },
+          "7": {
+            "n": 24,
+            "pinball": 0.01859889886626874,
+            "coverage": 0.7916666666666666,
+            "width": 0.05611754194029991,
+            "median_mae": 0.05000782177878576,
+            "crps": 0.03956784180926427,
+            "failures": 0,
+            "out_of_support": 0
+          }
+        },
+        "primary_pinball": 0.01859889886626874
+      },
+      "elapsed_seconds": 2608.92117283,
+      "input_token_presentations": 3693904,
+      "provider_cost_usd": null
+    },
+    {
+      "arm": "same",
+      "ordering_seed": 43,
+      "selected_additional_update": 50,
+      "actual_additional_updates": 100,
+      "development_loss": 0.006710142630928983,
+      "development_at_update100": 0.014050263281365745,
+      "retrospective": {
+        "n": 72,
+        "pinball": 0.009790318140774508,
+        "coverage": 0.8888888888888888,
+        "width": 0.05394659697968282,
+        "median_mae": 0.027241321008741333,
+        "crps": 0.02132973930128922,
+        "failures": 0,
+        "out_of_support": 0,
+        "by_horizon": {
+          "1": {
+            "n": 24,
+            "pinball": 0.0036095701170111255,
+            "coverage": 0.9583333333333334,
+            "width": 0.04107236811792093,
+            "median_mae": 0.012191503062009812,
+            "crps": 0.009359784891607896,
+            "failures": 0,
+            "out_of_support": 0
+          },
+          "3": {
+            "n": 24,
+            "pinball": 0.008582121381575039,
+            "coverage": 0.875,
+            "width": 0.05925068596764564,
+            "median_mae": 0.025191982786512582,
+            "crps": 0.019913148732525643,
+            "failures": 0,
+            "out_of_support": 0
+          },
+          "7": {
+            "n": 24,
+            "pinball": 0.017179262923737358,
+            "coverage": 0.8333333333333334,
+            "width": 0.061516736853481885,
+            "median_mae": 0.0443404771777016,
+            "crps": 0.034716284279734125,
+            "failures": 0,
+            "out_of_support": 0
+          }
+        },
+        "primary_pinball": 0.017179262923737358
+      },
+      "elapsed_seconds": 2932.3804041800004,
+      "input_token_presentations": 3691865,
+      "provider_cost_usd": null
+    },
+    {
+      "arm": "expanded",
+      "ordering_seed": 17,
+      "selected_additional_update": 50,
+      "actual_additional_updates": 100,
+      "development_loss": 0.008182590288285793,
+      "development_at_update100": 0.011505460515580511,
+      "retrospective": {
+        "n": 72,
+        "pinball": 0.011383520335267534,
+        "coverage": 0.8055555555555556,
+        "width": 0.0403312487248743,
+        "median_mae": 0.028302638559925958,
+        "crps": 0.024296974585238936,
+        "failures": 0,
+        "out_of_support": 0,
+        "by_horizon": {
+          "1": {
+            "n": 24,
+            "pinball": 0.004711986282825977,
+            "coverage": 0.875,
+            "width": 0.02231856991828865,
+            "median_mae": 0.012637265136290285,
+            "crps": 0.010419280686285446,
+            "failures": 0,
+            "out_of_support": 0
+          },
+          "3": {
+            "n": 24,
+            "pinball": 0.011013350283406644,
+            "coverage": 0.7916666666666666,
+            "width": 0.04246380781292316,
+            "median_mae": 0.026502671386290283,
+            "crps": 0.022470269194620016,
+            "failures": 0,
+            "out_of_support": 0
+          },
+          "7": {
+            "n": 24,
+            "pinball": 0.01842522443956998,
+            "coverage": 0.75,
+            "width": 0.05621136844341108,
+            "median_mae": 0.045767979157197304,
+            "crps": 0.04000137387481135,
+            "failures": 0,
+            "out_of_support": 0
+          }
+        },
+        "primary_pinball": 0.01842522443956998
+      },
+      "elapsed_seconds": 2534.9729575899996,
+      "input_token_presentations": 3807683,
+      "provider_cost_usd": null
+    },
+    {
+      "arm": "expanded",
+      "ordering_seed": 29,
+      "selected_additional_update": 20,
+      "actual_additional_updates": 100,
+      "development_loss": 0.007511477802561353,
+      "development_at_update100": 0.008392474662207739,
+      "retrospective": {
+        "n": 72,
+        "pinball": 0.011303920059551472,
+        "coverage": 0.8055555555555556,
+        "width": 0.04449605450898449,
+        "median_mae": 0.02866958574087538,
+        "crps": 0.024611452065120616,
+        "failures": 0,
+        "out_of_support": 0,
+        "by_horizon": {
+          "1": {
+            "n": 24,
+            "pinball": 0.004930586617752987,
+            "coverage": 0.875,
+            "width": 0.027588988890991165,
+            "median_mae": 0.012894783351311839,
+            "crps": 0.01070219512518276,
+            "failures": 0,
+            "out_of_support": 0
+          },
+          "3": {
+            "n": 24,
+            "pinball": 0.010361859743320097,
+            "coverage": 0.7916666666666666,
+            "width": 0.04613600024575972,
+            "median_mae": 0.026891819635407196,
+            "crps": 0.022845096814348244,
+            "failures": 0,
+            "out_of_support": 0
+          },
+          "7": {
+            "n": 24,
+            "pinball": 0.01861931381758133,
+            "coverage": 0.75,
+            "width": 0.05976317439020258,
+            "median_mae": 0.0462221542359071,
+            "crps": 0.04028706425583085,
+            "failures": 0,
+            "out_of_support": 0
+          }
+        },
+        "primary_pinball": 0.01861931381758133
+      },
+      "elapsed_seconds": 2562.085941221,
+      "input_token_presentations": 3804402,
+      "provider_cost_usd": null
+    },
+    {
+      "arm": "expanded",
+      "ordering_seed": 43,
+      "selected_additional_update": 50,
+      "actual_additional_updates": 100,
+      "development_loss": 0.006569959343493562,
+      "development_at_update100": 0.008654267605512562,
+      "retrospective": {
+        "n": 72,
+        "pinball": 0.00991181417547326,
+        "coverage": 0.8333333333333334,
+        "width": 0.026879243077419235,
+        "median_mae": 0.02783175386217603,
+        "crps": 0.02214062479722463,
+        "failures": 0,
+        "out_of_support": 0,
+        "by_horizon": {
+          "1": {
+            "n": 24,
+            "pinball": 0.004216514663102235,
+            "coverage": 0.9166666666666666,
+            "width": 0.016894151062314858,
+            "median_mae": 0.012227563749677687,
+            "crps": 0.00909691549689456,
+            "failures": 0,
+            "out_of_support": 0
+          },
+          "3": {
+            "n": 24,
+            "pinball": 0.008745867940943107,
+            "coverage": 0.8333333333333334,
+            "width": 0.027598324751243266,
+            "median_mae": 0.02601272379815181,
+            "crps": 0.020278172416043284,
+            "failures": 0,
+            "out_of_support": 0
+          },
+          "7": {
+            "n": 24,
+            "pinball": 0.01677305992237444,
+            "coverage": 0.75,
+            "width": 0.03614525341869958,
+            "median_mae": 0.045254974038698596,
+            "crps": 0.03704678647873605,
+            "failures": 0,
+            "out_of_support": 0
+          }
+        },
+        "primary_pinball": 0.01677305992237444
+      },
+      "elapsed_seconds": 2180.148181327,
+      "input_token_presentations": 3804137,
+      "provider_cost_usd": null
+    }
+  ],
+  "cohort": {
+    "seven_day_cells": 24,
+    "series": 8,
+    "origins": [
+      "2026-10-25",
+      "2026-10-28",
+      "2026-10-30"
+    ]
+  },
+  "new_optimizer_updates_in_audit": 0,
+  "new_inference_calls_in_audit": 0,
+  "prospective_accuracy": "not established"
+}
