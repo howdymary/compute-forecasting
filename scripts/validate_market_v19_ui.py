@@ -12,7 +12,11 @@ assert hashlib.sha256(raw).hexdigest()==pointer["report_sha256"]
 report=json.loads(raw);checks=verify_progress(report) if report["study_id"]=="market-state-v19-progress" else verify(report);report["public_report_sha256"]=pointer["report_sha256"]
 font=urllib.request.urlopen("https://raw.githubusercontent.com/google/fonts/a85fc09e44c70c7159761adfdc9d5dd007792c15/ofl/caveat/Caveat%5Bwght%5D.ttf",timeout=60).read()
 assert hashlib.sha1(b"blob "+str(len(font)).encode()+b"\0"+font).hexdigest()=="f84acf2ce2d1b3329b194749530dbaec047e6df6"
-state={"error":False,"empty":False,"delay":False}
+state={"error":False,"empty":False,"delay":False,"synthetic_future":False}
+import importlib.util
+spec=importlib.util.spec_from_file_location("synthetic_future_contracts","tests/test_market_commitments_v19.py");fixtures=importlib.util.module_from_spec(spec);spec.loader.exec_module(fixtures)
+fixture_commitment,_=fixtures.commitment();task=fixture_commitment["price_inputs"][0]
+synthetic_future={"issued_origins":1,"public_report_sha256":"synthetic-test-only","forecast_cases":[{"id":task["task_id"],"origin":task["origin"],"issued_at":fixture_commitment["issued_at"],"metadata":task["metadata"],"history":task["context"],"predictions":[r for r in fixture_commitment["rows"] if r["series_id"]==task["series_id"] and r["method"] in ("price","market")],"outcomes":[],"market_state":task["market_state"],"input_sha256":"synthetic-test-only","commitment_sha256":"synthetic-test-only"}],"paired_by_origin":[]}
 class Handler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
         code=200
@@ -22,7 +26,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
             if state["delay"]:time.sleep(2)
             value=json.dumps({"runs":[]} if state["empty"] else report).encode();kind="application/json"
             if state["error"]:code=503
-        elif self.path=="/api/market-v19/future":value=b'{"issued_origins":0,"reasons":["insufficient_retained_price_days"]}';kind="application/json"
+        elif self.path=="/api/market-v19/future":value=json.dumps(synthetic_future if state["synthetic_future"] else {"issued_origins":0,"reasons":["insufficient_retained_price_days"]}).encode();kind="application/json"
         else:self.send_response(404);self.end_headers();return
         self.send_response(code);self.send_header("Content-Type",kind);self.end_headers();self.wfile.write(value)
     def log_message(self,*args):pass
@@ -64,6 +68,11 @@ with sync_playwright() as pw:
         state["error"]=False;page.locator("#retry").click();expect(page.locator("#retry")).to_be_hidden()
         state["empty"]=True;page.locator("#refresh").click();expect(page.locator("#status")).to_contain_text("pending")
         state["empty"]=False;page.locator("#retry").click();expect(page.locator("#retry")).to_be_hidden()
+        state["synthetic_future"]=True;page.reload();expect(page.locator("#future-figure")).to_be_visible()
+        expect(page.locator("#future-point")).to_contain_text("synthetic")
+        assert page.locator("#future-prices circle").count()==6 and page.locator("#future-paired").is_hidden()
+        page.locator("#future-pin").click();assert "synthetic" in page.locator("#pins").inner_text()
+        state["synthetic_future"]=False
         assert not errors,errors;ctx.close()
     base="https://howdymary--compute-forecast-evidence-v14-web.us-east.modal.run"
     def fetch(path):
@@ -81,4 +90,4 @@ with sync_playwright() as pw:
         assert page.goto(base+"/market",timeout=90000).status==200;inspect(page,width<600);page.screenshot(path=str(root/(name+".png")),full_page=True);ctx.close()
     browser.close()
 server.shutdown()
-(root/"validation.json").write_text(json.dumps({"status":"passed","source_report_sha256":pointer["report_sha256"],"arithmetic":checks,"http_batches":batches,"screenshots":["desktop.png","mobile.png","live-desktop.png","live-mobile.png"],"video_recorded":False},indent=2)+"\n")
+(root/"validation.json").write_text(json.dumps({"status":"passed","source_report_sha256":pointer["report_sha256"],"arithmetic":checks,"http_batches":batches,"screenshots":["desktop.png","mobile.png","live-desktop.png","live-mobile.png"],"synthetic_future_controls_tested":True,"synthetic_market_data_published":False,"video_recorded":False},indent=2)+"\n")

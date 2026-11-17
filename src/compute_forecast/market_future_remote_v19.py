@@ -150,6 +150,8 @@ async def execute(p,lock,numeric,publication_receipts):
             parts={method:[r for r in cells if r["origin"]==origin and r["horizon_days"]==7 and r["method"]==method] for method in ("price","market")}
             if parts["price"] and {(r["series_id"],r["outcome"]) for r in parts["price"]}=={(r["series_id"],r["outcome"]) for r in parts["market"]}:
                 result["paired_by_origin"].append({"origin":origin,"n":len(parts["price"]),"market_minus_price":sum(r["loss"] for r in parts["market"])/len(parts["market"])-sum(r["loss"] for r in parts["price"])/len(parts["price"])})
+    migration_path=root/"registration-format-upgrade.json"
+    if migration_path.exists():outputs["registration-format-upgrade.json"]=json.loads(migration_path.read_bytes())
     outputs["index.json"]=result;atomic(root/"latest.json",result);data_volume.commit();return outputs
 def verified_receipts(p):
     receipts={}
