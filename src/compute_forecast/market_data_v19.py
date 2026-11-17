@@ -104,7 +104,7 @@ def prepare(parent_levels):
         if dev and outside/(3*len(dev))>.05:reasons.append("frozen_support_inadequate_on_development")
     payload={"study_id":p["study_id"],"protocol_sha256":digest(p),"groups":groups,"log_levels":parent_levels,"selected_groups":selected,"protected_outcomes_loaded":False}
     audit={"study_id":p["study_id"],"source_sha":__import__("os").environ.get("GITHUB_SHA"),"protocol_sha256":digest(p),"dataset_sha256":digest(payload),"engine_sha256":engine,"readiness":"passed" if not reasons else "gated","training_ready":not reasons,"reasons":reasons,"phases":metrics,"feature_coverage":variation,"varying_features":varying,"quality_filtered_raw_rows":len(frame),"daily_rows":len(grouped),"snapshot_day_exclusions":bad_days,"ambiguous_groups":len(badkeys),"excluded_daily_rows":dict(excluded),"source_license_quality_counts":source_notices,"selected_groups":selected,"selected_metadata":[panels[sid]["metadata"] for sid in selected],"historical_availability":"Source-reported original snapshot timestamps in frozen pack; no independent publication-vintage proof, historical evaluation retrospective","not_in_training":p["features"]["not_in_training"],"pack_sha256":PACK_SHA256,"new_optimizer_updates":0,"provider_cost_usd":None,"runtime_seconds":time.monotonic()-start}
-    put(saved/"dataset.json",payload);put(saved/"audit.json",audit);volume.commit();return {"audit":audit,"private_key":digest(p)}
+    put(saved/"dataset.json",payload);put(saved/"audit.json",audit);volume.commit();return {"audit":audit,"private_key":input_key}
 @app.local_entrypoint()
 def main():
     import os
