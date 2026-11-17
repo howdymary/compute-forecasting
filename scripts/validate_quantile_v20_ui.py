@@ -32,6 +32,7 @@ async def main():
         assert await page.locator("#price-chart svg").count()==1
         assert not await page.locator("svg").evaluate_all("(xs)=>xs.some(x=>/NaN|Infinity/.test(x.innerHTML))")
         assert await page.evaluate("document.documentElement.scrollWidth<=innerWidth+1")
+        await expect(page.locator("#future")).not_to_contain_text("Loading the separate")
         await page.screenshot(path=str(out/"live-desktop.png"),full_page=True)
         checkpoints=await page.locator("#checkpoint option").evaluate_all("(xs)=>xs.map(x=>x.value)")
         await page.locator("#checkpoint").select_option(checkpoints[-1])

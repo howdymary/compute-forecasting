@@ -1,5 +1,5 @@
 """Validate real v18 artifacts, desktop/mobile interactions and deployed PNGs; no recording."""
-import concurrent.futures,hashlib,http.server,json,os,pathlib,re,threading,time,urllib.request
+import concurrent.futures,hashlib,http.server,json,math,os,pathlib,re,threading,time,urllib.request
 from compute_forecast.ui_http_v18 import live_urlopen
 from playwright.sync_api import sync_playwright,expect
 from compute_forecast.probability_ui_v18 import HTML
@@ -29,9 +29,17 @@ def verify_shapes(page,source):
     assert page.locator("#prices circle").count()>0
     assert page.evaluate("async()=>{await document.fonts.load('24px Caveat');await document.fonts.ready;return document.fonts.check('24px Caveat')}"),"Annotation font unavailable"
     for selector in ("#prices text","#distribution text"):
-        page.wait_for_function("(selector)=>{let e=document.querySelector(selector);return e&&parseFloat(getComputedStyle(e).fontSize)*e.getScreenCTM().a>=11}",arg=selector,timeout=5000)
-        size=page.locator(selector).first.evaluate("(e)=>parseFloat(getComputedStyle(e).fontSize)*e.getScreenCTM().a")
-        assert size>=11,("Unreadable settled axis",selector,size)
+        # Wait and measure the same connected node; responsive redraws may replace it between two protocol calls.
+        size=page.wait_for_function("""(selector)=>{
+          const e=document.querySelector(selector),m=e?.getScreenCTM();
+          const size=e&&m?parseFloat(getComputedStyle(e).fontSize)*m.a:NaN;
+          window.__axisMeasures=window.__axisMeasures||{};
+          const previous=window.__axisMeasures[selector],now=performance.now();
+          if(!e?.isConnected||!Number.isFinite(size)||size<11){delete window.__axisMeasures[selector];return false}
+          if(!previous||previous.node!==e||Math.abs(previous.size-size)>0.001){window.__axisMeasures[selector]={node:e,size,at:now};return false}
+          return now-previous.at>=150?size:false
+        }""",arg=selector,timeout=5000).json_value()
+        assert math.isfinite(size) and size>=11,("Unreadable settled axis",selector,size)
 def interact(page,source,touch):
     page.locator("#prices circle").first.focus();page.keyboard.press("Enter")
     value=json.loads(page.locator("#inspection").inner_text());assert value["kind"]=="Historical observed median"
