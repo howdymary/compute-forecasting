@@ -35,6 +35,7 @@ async def base_mode(inputs,output):
     from tinker_cookbook.recipes.decisions import DecisionRenderer
     data=read(pathlib.Path(inputs)/"dataset.json");p=read("configs/direct-probability-v18.json");audit=read(pathlib.Path(inputs)/"audit.json");pre=read(pathlib.Path(inputs)/"preflight.json")
     assert digest(data)==audit["dataset_sha256"] and pre["training_ready"]
+    assert data["protocol_sha256"]==digest(p)
     service=tinker.ServiceClient(display_name="Compute Forecast probability v18 shared untuned reference",user_metadata={"study_id":p["study_id"],"phase":"shared_base"})
     sampler=await service.create_sampling_client(base_model=p["model"]["base"]);renderer=DecisionRenderer(get_renderer(p["model"]["renderer"],sampler.get_tokenizer()))
     result={phase:await evaluate(data["groups"][phase],sampler,renderer,data,p,"untuned_probability") for phase in ("development","retrospective")}
@@ -45,7 +46,7 @@ async def api_preflight(inputs,output):
     from tinker_cookbook.renderers import get_renderer
     from tinker_cookbook.recipes.decisions import DecisionRenderer,sample_decision
     p=read("configs/direct-probability-v18.json");data=read(pathlib.Path(inputs)/"dataset.json");pre=read(pathlib.Path(inputs)/"preflight.json")
-    assert pre["training_ready"]
+    assert pre["training_ready"] and data["protocol_sha256"]==digest(p)
     rest=tinker.RestClient();items=[]
     for offset in range(0,2000,100):
         page=await rest.list_user_checkpoints(limit=100,offset=offset);items.extend(page.checkpoints)
