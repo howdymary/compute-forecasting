@@ -52,6 +52,17 @@ jobs:
           with live_urlopen(base+'/api/evidence-v14',timeout=90) as r:report=json.load(r)
           assert report['study_id']=='direct-evidence-v14' and not report['news_used']
           assert not report['audit']['protected_outcomes_loaded']
+          with live_urlopen(base+'/continuation',timeout=90) as r:assert r.status==200
+          with live_urlopen(base+'/api/continuation-v21/future',timeout=90) as r:future=json.load(r)
+          assert future['study_id']=='ce-continuation-v21-prospective'
+          from pathlib import Path
+          pointer=Path('results/ce-continuation-v21/latest.json')
+          if pointer.exists():
+              expected=json.loads(pointer.read_bytes())
+              with live_urlopen(base+'/api/continuation-v21',timeout=90) as r:
+                  value=json.load(r)
+                  assert r.headers['X-Source-Artifact-SHA256']==expected['report_sha256']
+              assert value['study_id']=='ce-continuation-v21' and value['public_report_sha256']==expected['report_sha256']
           PY
       - uses: actions/upload-artifact@v4
         if: always()
