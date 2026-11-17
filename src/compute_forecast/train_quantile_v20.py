@@ -40,6 +40,7 @@ async def run(seed):
     assert seed in (17,29,43)
     if seed!=17:
         pilot=read("artifacts/quantile-training-v20/models/17/result.json")
+        assert pilot["study_id"]==p["study_id"] and pilot["protocol_sha256"]==digest(p) and pilot["seed"]==17 and pilot["status"]=="completed"
         assert pilot["expansion_gate"]["passed"],"No new optimization: registered development expansion gate failed"
     tag=str(seed);out=pathlib.Path("artifacts/quantile-training-v20/models")/tag
     remote="/quantile-training-v20/"+digest(p)+"/"+tag+"/recovery.json"
