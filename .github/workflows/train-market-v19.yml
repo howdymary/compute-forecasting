@@ -1,0 +1,104 @@
+name: Train matched market-state forecasters v19
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/train-market-v19.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: market-state-v19-training
+  cancel-in-progress: false
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Fetch registered source
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Reuse frozen v18 probability dependencies and audited v19 data
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run watch 44040999343 --repo "$GITHUB_REPOSITORY" --interval 10 --exit-status
+          gh run download 44040999343 --repo "$GITHUB_REPOSITORY" --name market-state-v19-readiness-44040999343-1 --dir inputs/market-state-v19
+          gh run download 44006306188 --repo "$GITHUB_REPOSITORY" --name probability-v18-inputs-44006306188 --dir inputs/legacy-v18
+          python -m pip install --extra-index-url https://download.pytorch.org/whl/cpu -r inputs/legacy-v18/requirements-lock.txt
+          python -m pip install -e . modal --no-deps
+          python -m compileall -q src/compute_forecast/train_market_v19.py
+      - name: Validate immutable identical examples
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: python scripts/load_market_inputs_v19.py
+
+      - name: Freeze corresponding untuned probability references
+        env:
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: python -m compute_forecast.train_market_v19 --mode base --inputs inputs/market-state-v19 --output artifacts/market-state-v19-base
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: market-state-v19-base-${{ github.run_id }}
+          path: artifacts/market-state-v19-base
+          retention-days: 180
+  train:
+    needs: prepare
+    runs-on: ubuntu-latest
+    timeout-minutes: 130
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        arm: [price, market]
+        seed: [17, 29, 43]
+    steps:
+      - name: Fetch registered source
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Reuse frozen v18 probability dependencies and audited v19 data
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run watch 44040999343 --repo "$GITHUB_REPOSITORY" --interval 10 --exit-status
+          gh run download 44040999343 --repo "$GITHUB_REPOSITORY" --name market-state-v19-readiness-44040999343-1 --dir inputs/market-state-v19
+          gh run download 44006306188 --repo "$GITHUB_REPOSITORY" --name probability-v18-inputs-44006306188 --dir inputs/legacy-v18
+          python -m pip install --extra-index-url https://download.pytorch.org/whl/cpu -r inputs/legacy-v18/requirements-lock.txt
+          python -m pip install -e . modal --no-deps
+          python -m compileall -q src/compute_forecast/train_market_v19.py
+      - name: Validate immutable identical examples
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: python scripts/load_market_inputs_v19.py
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: market-state-v19-base-${{ github.run_id }}
+          path: inputs/market-state-v19
+      - name: One epoch of matched direct probability training
+        env:
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: python -m compute_forecast.train_market_v19 --mode train --inputs inputs/market-state-v19 --output artifacts/market-state-v19-models/${{ matrix.arm }}/${{ matrix.seed }} --arm ${{ matrix.arm }} --seed ${{ matrix.seed }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: market-state-v19-model-${{ matrix.arm }}-${{ matrix.seed }}-${{ github.run_id }}
+          path: artifacts/market-state-v19-models
+          retention-days: 180

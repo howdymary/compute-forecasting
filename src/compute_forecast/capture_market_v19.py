@@ -7,7 +7,7 @@ from .market_state_v19 import normalize_latest
 from .probability_v18 import digest
 app=modal.App("compute-forecast-market-v19-capture")
 volume=modal.Volume.from_name("compute-forecast-data",create_if_missing=False,version=2)
-image=modal.Image.debian_slim(python_version="3.11").pip_install("httpx[http2]==0.28.1").add_local_python_source("compute_forecast")
+image=modal.Image.debian_slim(python_version="3.11").pip_install("httpx[http2]==0.28.1").add_local_file("configs/market-state-v19-prospective.json","/root/configs/market-state-v19-prospective.json",copy=True).add_local_python_source("compute_forecast")
 def write(path,value):
     path=pathlib.Path(path);path.parent.mkdir(parents=True,exist_ok=True)
     raw=(json.dumps(value,sort_keys=True,allow_nan=False,indent=2)+"\n").encode()
