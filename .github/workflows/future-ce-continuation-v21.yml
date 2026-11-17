@@ -1,0 +1,89 @@
+name: Issue registered categorical continuation forecasts v21
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/future-ce-continuation-v21.yml]
+  schedule:
+    - cron: '5 0 * * 1'
+  workflow_run:
+    workflows: [Train categorical CE continuation v21, Expand categorical continuation after development gate v21]
+    types: [completed]
+    branches: [compute-observatory]
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+  id-token: write
+  attestations: write
+  artifact-metadata: write
+concurrency:
+  group: ce-continuation-v21-future
+  cancel-in-progress: false
+jobs:
+  issue:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - name: Fetch registered current source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          SOURCE_SHA=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/compute-observatory" --jq .object.sha)
+          gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+          echo "PUBLICATION_SOURCE_SHA=$SOURCE_SHA" >> "$GITHUB_ENV"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e '.[dev]' modal
+      - run: python -m pytest tests/test_continuation_future_v21.py -q
+      - name: Issue only eligible frozen forecasts and keep future truth gated
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: modal run -m compute_forecast.continuation_future_remote_v21
+      - name: Bind permitted publication files to a manifest
+        run: python scripts/attest_continuation_v21.py build artifacts/ce-continuation-v21-future
+      - name: Attest publication timing without relying on temporary downloads
+        id: attest
+        uses: actions/attest@v4
+        with:
+          subject-path: artifacts/ce-continuation-v21-future/commitment-manifest.json
+      - name: Retain and verify the signed publication bundle
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BUNDLE_PATH: ${{ steps.attest.outputs.bundle-path }}
+        run: |
+          cp "$BUNDLE_PATH" artifacts/ce-continuation-v21-future/attestation.bundle.json
+          python scripts/attest_continuation_v21.py verify artifacts/ce-continuation-v21-future
+      - uses: actions/upload-artifact@v4
+        id: artifact
+        with:
+          name: ce-continuation-v21-future-${{ github.run_id }}
+          path: artifacts/ce-continuation-v21-future
+          retention-days: 90
+      - name: Retain GitHub server publication receipt
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ARTIFACT_ID: ${{ steps.artifact.outputs.artifact-id }}
+        run: |
+          python - <<'PY'
+          import json,os,pathlib,subprocess,time
+          attempts=[];value=None
+          endpoint='repos/'+os.environ['GITHUB_REPOSITORY']+'/actions/artifacts/'+os.environ['ARTIFACT_ID']
+          for delay in (0,1,2,4,8):
+              if delay:time.sleep(delay)
+              r=subprocess.run(['gh','api',endpoint],capture_output=True,text=True)
+              attempts.append({'returncode':r.returncode,'message':r.stderr.strip()[:300]})
+              if r.returncode==0:
+                  value={'status':'retrieved','artifact':json.loads(r.stdout),'attempts':attempts};break
+          if value is None:value={'status':'metadata_unavailable','attempts':attempts,'authoritative_proof':'The already verified signed Sigstore bundle binds the exact publication files; this optional download metadata is not the issuance clock'}
+          pathlib.Path('artifacts/ce-continuation-v21-future/github-publication-receipt.json').write_text(json.dumps(value,indent=2)+'\n')
+          print(json.dumps({'status':value['status'],'attempts':len(attempts)}))
+          PY
+      - name: Publish commitments and pending state
+        env:
+          GH_TOKEN: ${{ github.token }}
+          V21_PUBLIC_ROOT: artifacts/ce-continuation-v21-future
+          V21_PUBLIC_KIND: future
+        run: python scripts/publish_continuation_v21.py
