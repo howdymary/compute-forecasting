@@ -71,7 +71,8 @@ with sync_playwright() as pw:
         state["synthetic_future"]=True;page.reload();expect(page.locator("#future-figure")).to_be_visible()
         expect(page.locator("#future-point")).to_contain_text("synthetic")
         assert page.locator("#future-prices circle").count()==6 and page.locator("#future-paired").is_hidden(),("Future fixture geometry",page.locator("#future-prices circle").count(),page.locator("#future-paired").is_hidden())
-        page.locator("#future-pin").click();assert "synthetic" in page.locator("#pins").inner_text()
+        page.locator("#future-pin").click();expect(page.locator("#future-pin-feedback")).to_have_text("Saved to pinned observations.")
+        expect(page.locator("#pins")).to_contain_text("synthetic")
         state["synthetic_future"]=False
         assert not errors,errors;ctx.close()
     base="https://howdymary--compute-forecast-evidence-v14-web.us-east.modal.run"
