@@ -86,9 +86,14 @@ with sync_playwright() as p:
     else:raise AssertionError("Live HTML is not the current figure implementation")
     def probe(i):
         route=("/api/probability-v18","/api/evidence-v14","/api/probability-v18/future")[i%3]
-        with urllib.request.urlopen(base+route,timeout=90) as response:
-            assert response.status==200;value=json.load(response)
-            assert value["study_id"]==("direct-probability-v18","direct-evidence-v14","direct-probability-v18-prospective")[i%3]
+        started=time.monotonic();print(json.dumps({"probe":"start","i":i,"route":route}),flush=True)
+        try:
+            with urllib.request.urlopen(base+route,timeout=90) as response:
+                assert response.status==200;raw=response.read();value=json.loads(raw)
+                assert value["study_id"]==("direct-probability-v18","direct-evidence-v14","direct-probability-v18-prospective")[i%3]
+            print(json.dumps({"probe":"passed","i":i,"route":route,"bytes":len(raw),"seconds":time.monotonic()-started}),flush=True)
+        except Exception as error:
+            print(json.dumps({"probe":"failed","i":i,"route":route,"error_type":type(error).__name__,"seconds":time.monotonic()-started}),flush=True);raise
         return True
     with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:assert all(pool.map(probe,range(12)))
     for attempt in range(12):
