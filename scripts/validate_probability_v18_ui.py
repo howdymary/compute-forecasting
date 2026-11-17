@@ -51,7 +51,9 @@ def interact(page,source,touch):
     page.locator("#horizon").select_option("1")
     assert "1-day forecast" in page.locator("#distribution-sub").inner_text()
     page.locator("#scope").select_option("development")
-    seed_runs=[r for r in source["runs"] if r["seed"]==29]
+    active_seed=29 if any(r["seed"]==29 for r in source["runs"]) else (source["runs"][0]["seed"] if source["runs"] else 29)
+    page.locator("#seed").select_option(str(active_seed))
+    seed_runs=[r for r in source["runs"] if r["seed"]==active_seed]
     if seed_runs:
         ys=page.locator("#prices text").all_text_contents()
         step=seed_runs[0]["checkpoints"][-1]["update"]

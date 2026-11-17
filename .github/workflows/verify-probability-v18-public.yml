@@ -12,6 +12,7 @@ permissions:
   contents: read
 jobs:
   verify:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -27,6 +28,7 @@ jobs:
       - run: python -m pip install -e '.[dev]'
       - name: Verify saved distributions, scores and selection without provider credentials
         run: |
+          set -euo pipefail
           mkdir -p artifacts/probability-v18-public-verification
           PYTHONPATH=src python scripts/verify_probability_v18.py | tee artifacts/probability-v18-public-verification/verification.json
           python -m pytest tests/test_probability_v18.py tests/test_probability_analysis_v18.py tests/test_probability_future_v18.py -q
