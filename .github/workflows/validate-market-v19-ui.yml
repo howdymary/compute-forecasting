@@ -50,7 +50,18 @@ jobs:
           node --check artifacts/market-state-v19-ui/script.js
       - name: Inspect actual desktop and mobile flows without recording
         run: PYTHONPATH=src python scripts/validate_market_v19_ui.py
+      - name: Preserve explicit validation outcome
+        if: always()
+        env:
+          VALIDATION_JOB_STATUS: ${{ job.status }}
+        run: |
+          python - <<'PY'
+          import json,os,pathlib
+          root=pathlib.Path("artifacts/market-state-v19-ui");root.mkdir(parents=True,exist_ok=True)
+          if not (root/"validation.json").exists():(root/"validation-failure.json").write_text(json.dumps({"status":"failed","job_status":os.environ["VALIDATION_JOB_STATUS"],"run_id":os.environ["GITHUB_RUN_ID"],"video_recorded":False})+"\\n")
+          PY
       - name: Publish immutable PNG validation
+        if: always()
         env:
           GH_TOKEN: ${{ github.token }}
           V18_PUBLIC_ROOT: artifacts/market-state-v19-ui
