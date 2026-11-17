@@ -1,5 +1,5 @@
 """New bounded weekly probability panel; old collection and panels are never modified."""
-import asyncio,hashlib,json,os,pathlib,time
+import asyncio,hashlib,json,os,pathlib,time,urllib.request
 from datetime import datetime,timezone
 import modal
 from .probability_v18 import digest,decision,support,quantiles
@@ -81,10 +81,20 @@ def tick():
             issued=datetime.now(timezone.utc).isoformat()
             used=[s for s in state["snapshots"] if s["prices"]["date"]<=origin]
             value={"study_id":p["study_id"],"status":"issued","protocol_sha256":digest(p),"model_lock_sha256":digest(lock),"origin":origin,"information_cutoff":origin+"T23:59:59+00:00","issued_at":issued,"input_vintages":[{"captured_at":s["captured_at"],"snapshot_sha256":digest(s)} for s in used],"rows":predictions,"target_contracts":{t["series_id"]:t["metadata"]["contract"] for t in tasks},"new_optimizer_updates":0,"provider_cost_usd":None}
+            value["target_source"]={"url":"https://gpurentalprices.com/api/latest.json","permission_url":"https://gpurentalprices.com/data","license":"CC BY 4.0","credit":"GPU Rental Prices. GPU rental price index [dataset]. https://gpurentalprices.com/data","unit":"USD per GPU-hour","instrument":"Individual provider exact-configuration advertised quote; own source IDs"}
             validate(value,p,lock);retain(root,"commitments",value,origin)
             retain(pathlib.Path("/public/probability-v18-future"),"artifacts",value);public.commit()
+            url="https://howdymary--compute-forecast-evidence-v14-web.us-east.modal.run/api/probability-v18/future/artifacts/"+digest(value)+".json"
+            verified=False
+            for attempt in range(4):
+                try:
+                    with urllib.request.urlopen(url,timeout=30) as response:
+                        assert response.status==200 and hashlib.sha256(response.read()).hexdigest()==digest(value)
+                    verified=True;break
+                except Exception:
+                    if attempt<3:time.sleep(8)
             published=datetime.now(timezone.utc).isoformat()
-            retain(root,"publication_receipts",{"commitment_sha256":digest(value),"published_at":published,"deadline_status":issuance_status(origin,published,p),"trust_boundary":"Provider runtime clock and public volume publication; not an independent trusted timestamp"},origin)
+            retain(root,"publication_receipts",{"commitment_sha256":digest(value),"published_at":published,"public_url":url,"public_http_verified":verified,"deadline_status":issuance_status(origin,published,p) if verified else "public_reachability_unverified","trust_boundary":"Verified public HTTP availability and provider runtime clock; not an independent trusted timestamp"},origin)
             if not frozen:atomic(cohort_path,[t["series_id"] for t in tasks])
             commitments.append(value)
         except Exception as error:retain(root,"failures",{"at":issued if "issued" in locals() else at,"origin":origin,"error_type":type(error).__name__,"status":"not_issued"})
@@ -94,7 +104,8 @@ def tick():
         receipt=next((r for r in receipts if r["commitment_sha256"]==digest(c)),None)
         if not receipt or receipt["deadline_status"]!="eligible":continue
         value=score(c,snapshots,at,p,lock);retain(root,"evaluations",value);evaluations.append(value)
-    index={"study_id":p["study_id"],"checked_at":at,"registration":registration,"issued_origins":len(commitments),"readiness":{k:v for k,v in state.items() if k not in ("tasks","snapshots")},"evaluations":evaluations,"new_optimizer_updates":0,"prospective_accuracy":"not established","classification":p["classification"]}
+    summaries=[{"origin":c["origin"],"issued_at":c["issued_at"],"commitment_sha256":digest(c),"model_lock_sha256":c["model_lock_sha256"],"artifact_url":"/api/probability-v18/future/artifacts/"+digest(c)+".json","publication_receipt":next((r for r in receipts if r["commitment_sha256"]==digest(c)),None)} for c in commitments]
+    index={"study_id":p["study_id"],"commitments":summaries,"checked_at":at,"registration":registration,"issued_origins":len(commitments),"readiness":{k:v for k,v in state.items() if k not in ("tasks","snapshots")},"evaluations":evaluations,"new_optimizer_updates":0,"prospective_accuracy":"not established","classification":p["classification"]}
     atomic(pathlib.Path("/public/probability-v18-future/index.json"),index);data.commit();public.commit()
     return index
 @app.local_entrypoint()

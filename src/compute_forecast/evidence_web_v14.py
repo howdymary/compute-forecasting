@@ -63,5 +63,5 @@ def web():
         if hashlib.sha256(raw).hexdigest()!=identity:return Response(status_code=503)
         return Response(raw,media_type="application/json",headers=headers)
     from .probability_web_v18 import mount
-    mount(api,headers)
+    mount(api,headers,future_public,future_lock,future_cache)
     return api
