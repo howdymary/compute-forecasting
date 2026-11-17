@@ -1,0 +1,66 @@
+name: Validate direct probability figures v18
+on:
+  push:
+    branches: [compute-observatory]
+    paths: ['src/compute_forecast/probability_ui_v18.py','src/compute_forecast/probability_web_v18.py','scripts/validate_probability_v18_ui.py','.github/workflows/validate-probability-v18-ui.yml']
+  workflow_run:
+    workflows: [Publish direct probability forecasts v18]
+    types: [completed]
+    branches: [compute-observatory]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: probability-v18-png-validation
+  cancel-in-progress: false
+jobs:
+  ui:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Fetch latest research source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          SOURCE_SHA=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/compute-observatory" --jq .object.sha)
+          gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+          echo "VALIDATION_SOURCE_SHA=$SOURCE_SHA" >> "$GITHUB_ENV"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: |
+          python -m pip install -e '.[dev]' modal numpy playwright
+          python -m playwright install --with-deps chromium
+      - name: Scientific reconstruction and browser syntax
+        run: |
+          python -m compileall -q src scripts
+          python -m pytest --junitxml=artifacts/probability-v18-tests.xml
+          python - <<'PY'
+          import json,pathlib,subprocess
+          from compute_forecast.probability_ui_v18 import HTML
+          p=json.loads(pathlib.Path('results/probability-v18/latest.json').read_bytes())
+          subprocess.run(['python','scripts/verify_probability_v18.py','--results',str(pathlib.Path(p['report_path']).parent)],check=True)
+          root=pathlib.Path('artifacts/probability-v18-ui');root.mkdir(parents=True,exist_ok=True)
+          (root/'script.js').write_text(HTML.split('<script>',1)[1].split('</script>',1)[0])
+          PY
+          node --check artifacts/probability-v18-ui/script.js
+      - name: Deploy current read-only figures
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: modal deploy -m compute_forecast.evidence_web_v14
+      - name: Inspect actual desktop and mobile flows without recording
+        run: PYTHONPATH=src python scripts/validate_probability_v18_ui.py
+      - name: Publish immutable PNG validation
+        env:
+          GH_TOKEN: ${{ github.token }}
+          V18_PUBLIC_ROOT: artifacts/probability-v18-ui
+          V18_PUBLIC_KIND: validation
+        run: python scripts/publish_probability_v18.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: probability-v18-ui-${{ github.run_id }}
+          path: artifacts/probability-v18-ui
+          retention-days: 30
