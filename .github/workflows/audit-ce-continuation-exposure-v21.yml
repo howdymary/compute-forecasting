@@ -1,0 +1,58 @@
+name: Audit actual continuation training exposure v21
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/audit-ce-continuation-exposure-v21.yml]
+  workflow_run:
+    workflows: [Expand categorical continuation after development gate v21]
+    types: [completed]
+    branches: [compute-observatory]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: ce-continuation-v21-exposure-audit
+  cancel-in-progress: false
+jobs:
+  audit:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Fetch registered input binding
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          SOURCE_SHA=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/compute-observatory" --jq .object.sha)
+          gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+          echo "PUBLICATION_SOURCE_SHA=$SOURCE_SHA" >> "$GITHUB_ENV"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e . modal
+      - name: Reuse immutable preparation, without touching running models
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: |
+          python - <<'PY'
+          import json,pathlib
+          p=json.loads(pathlib.Path('configs/ce-continuation-v21-inputs.json').read_bytes())
+          root=pathlib.Path('artifacts/ce-continuation-v21-preflight');root.mkdir(parents=True,exist_ok=True)
+          (root/'input-key.json').write_text(json.dumps({'input_key':p['input_key'],'dataset_sha256':p['dataset_sha256']}))
+          PY
+          python scripts/load_continuation_inputs_v21.py
+      - name: Reconstruct completed runs only
+        run: python scripts/audit_continuation_exposure_v21.py
+      - name: Publish sanitized counts, never private inputs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          V21_PUBLIC_ROOT: artifacts/ce-continuation-v21-exposure
+          V21_PUBLIC_KIND: exposure
+        run: python scripts/publish_continuation_v21.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ce-continuation-v21-exposure-${{ github.run_id }}
+          path: artifacts/ce-continuation-v21-exposure
+          retention-days: 90
