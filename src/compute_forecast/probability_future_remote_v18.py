@@ -2,7 +2,7 @@
 import asyncio,hashlib,json,os,pathlib,time,urllib.request
 from datetime import datetime,timezone
 import modal
-from .probability_v18 import digest,decision,support,quantiles
+from .probability_v18 import digest,decision,support,quantiles,datum
 from .probability_future_v18 import prepare,validate,score,forecast_row
 from .signals_remote_v6 import native_references
 from .direct_future_v12 import issuance_status
@@ -31,6 +31,16 @@ async def infer(tasks,p,parent,lock):
         base=await asyncio.wait_for(service.create_sampling_client(base_model=parent["model"]["base"]),timeout=120)
         renderer=DecisionRenderer(get_renderer(parent["model"]["renderer"],base.get_tokenizer()))
         assert hashlib.sha256(base.get_tokenizer().backend_tokenizer.to_str().encode()).hexdigest()==lock["tokenizer_sha256"]
+        if p.get("synthetic_alignment_probe"):
+            import torch
+            for task in tasks:
+                for h in p["horizons"]:
+                    rendered=renderer.render(decision(task,h,lock["log_levels"]))
+                    item=datum({**task,"outcomes":[1.,1.,1.]},h,lock["log_levels"],renderer)
+                    assert item.model_input.length==rendered.choice_pos,"Training/inference answer-position mismatch"
+                    expected=[rendered.label_tokens[k] for k in rendered.labels]
+                    assert item.loss_fn_inputs["target_tokens"].to_torch()[-1].tolist()==expected
+                    assert item.loss_fn_inputs["weights"].to_torch()[-1].sum().item()==1.
     except Exception as error:
         return [forecast_row(t,h,m,lock,failure_type="BaseInitialization"+type(error).__name__) for t in tasks for h in p["horizons"] for m in methods]
     samplers={"untuned":base};errors={};available=[]
@@ -133,9 +143,12 @@ def probe_models():
     p=read(pathlib.Path("/root/configs/probability-v18-prospective.json"));parent=read(pathlib.Path("/root/configs/direct-probability-v18.json"));lock=read(pathlib.Path("/root/inputs/probability-v18-future/model-lock.json"))
     origin=date(2026,1,20);contract={"gpu":"A100 40GB","provider":"explicit_synthetic_readiness_fixture","region":"synthetic","unit":"USD per GPU-hour"}
     task={"task_id":"synthetic-readiness-only","series_id":"synthetic-readiness-only","origin":origin.isoformat(),"anchor":1.,"metadata":{"series_id":"synthetic-readiness-only","source_id":"explicit_synthetic_readiness_fixture","gpu_model":"A100 40GB","instrument_class":"synthetic_fixture","pricing_tier":"synthetic","benchmark_contract":contract,"contract":contract},"context":[{"date":(origin-timedelta(days=19-i)).isoformat(),"value":1.} for i in range(20)],"context_missing_days":22,"target_dates":[(origin+timedelta(days=h)).isoformat() for h in (1,3,7)]}
-    rows=asyncio.run(infer([task],{**p,"horizons":[7]},parent,lock))
+    rows=asyncio.run(infer([task],{**p,"horizons":[7],"synthetic_alignment_probe":True},parent,lock))
+    import inspect,importlib.metadata
+    from tinker_cookbook.recipes.decisions import decision_dist_datums,sample_decision,DecisionRenderer
+    implementation={name:{"package_version":importlib.metadata.version("tinker-cookbook"),"sha256":hashlib.sha256(pathlib.Path(inspect.getfile(fn)).read_bytes()).hexdigest()} for name,fn in (("training_datum_builder",decision_dist_datums),("probability_readout",sample_decision),("choice_renderer",DecisionRenderer))}
     results=[{"method":r["method"],"fallback":r["fallback"],"failure_type":r["failure_type"],"request_attempted":r["request_attempted"],"probability_sum":sum(r["probabilities"]),"probability_sha256":r["probability_sha256"],"n_levels":len(r["probabilities"])} for r in rows]
-    return {"study_id":p["study_id"],"status":"verified" if len(results)==3 and all(not r["fallback"] for r in results) else "blocked_frozen_model_inference","synthetic_fixture":True,"market_forecasts_issued":0,"new_optimizer_updates":0,"conditional_probability_queries_attempted":sum(r["request_attempted"] for r in results),"provider_cost_usd":None,"model_lock_sha256":digest(lock),"results":results}
+    return {"study_id":p["study_id"],"status":"verified" if len(results)==3 and all(not r["fallback"] for r in results) else "blocked_frozen_model_inference","synthetic_fixture":True,"implementation_files":implementation,"answer_position_checked":True,"market_forecasts_issued":0,"new_optimizer_updates":0,"conditional_probability_queries_attempted":sum(r["request_attempted"] for r in results),"provider_cost_usd":None,"model_lock_sha256":digest(lock),"results":results}
 @app.local_entrypoint()
 def main(probe:bool=False):
     value=probe_models.remote() if probe else tick.remote();out=pathlib.Path("artifacts/probability-v18-future");out.mkdir(parents=True,exist_ok=True);atomic(out/("model-readiness.json" if probe else "readiness.json"),value)
