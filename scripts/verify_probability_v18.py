@@ -4,6 +4,7 @@ import argparse,hashlib,json,pathlib,statistics
 from compute_forecast.probability_v18 import digest,quantiles,crps,summarize
 from compute_forecast.direct_forecast_v12 import cell_loss
 from compute_forecast.pricing_contract import FORECAST_SHA
+from compute_forecast.probability_analysis_v18 import diagnostics,paired
 def read(p):return json.loads(p.read_text())
 def check(folder):
     root=pathlib.Path(folder);report=read(root/"report.json")
@@ -47,6 +48,15 @@ def check(folder):
         keys={(r["series_id"],r["origin"],r["horizon_days"]) for r in ref["cells"]};assert keys==baseline
         for r in ref["cells"]:assert abs(cell_loss(r["outcome"],[r[k] for k in ("q10","q50","q90")])-r["loss"])<1e-12
         assert summarize(ref["cells"])==ref["summary"]
+    if report.get("diagnostics"):
+        d=report["diagnostics"];cases=report["cases"]["retrospective"]
+        assert diagnostics(report["base"]["retrospective"]["cells"],cases)==d["untuned"]
+        for run in report["runs"]:
+            saved=next(r for r in d["trained"] if r["objective"]==run["objective"] and r["seed"]==run["seed"])
+            assert diagnostics(run["retrospective_evaluation"]["cells"],cases)==saved["breakdown"]
+            assert paired(run["retrospective_evaluation"]["cells"],report["base"]["retrospective"]["cells"],cases)==saved["versus_untuned"]
+            for name,value in report["native_references"].items():
+                assert paired(run["retrospective_evaluation"]["cells"],value["cells"],cases)==saved["versus_numerical"][name]
     raw=(root/"report.json").read_text();assert "tinker://" not in raw,"Private checkpoint resource leaked"
     official=pathlib.Path("results/frozen-v1/forecasts.csv");assert hashlib.sha256(official.read_bytes()).hexdigest()==FORECAST_SHA
     assert not report["audit"]["protected_outcomes_loaded"]
