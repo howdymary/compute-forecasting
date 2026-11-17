@@ -1,5 +1,5 @@
 """Explicit synthetic fixtures for future information and commitment contracts."""
-import json,pathlib
+import json,pathlib,math
 from datetime import date,timedelta
 import pytest
 from compute_forecast.probability_future_v18 import prepare,validate,score
@@ -17,9 +17,9 @@ def commitment():
     for method in p["methods"]:
         for h,target in zip(p["horizons"],task["target_dates"]):
             r={"method":method,"task_id":task["task_id"],"series_id":task["series_id"],"horizon_days":h,"target_date":target,"contract_sha256":digest(task["metadata"]["contract"]),"q10":1.,"q50":1.,"q90":1.,"fallback":False}
-            if method in ("untuned","ce_selected","crps_selected"):r.update(probabilities=[0.,1.,0.],support_prices=[.9,1.,1.1])
+            if method in ("untuned","ce_selected","crps_selected"):r.update(probabilities=[0.,1.,0.],support_prices=[.9,1.,1.1],probability_sha256=digest([0.,1.,0.]))
             rows.append(r)
-    lock={"synthetic":True}
+    lock={"synthetic":True,"log_levels":[math.log(.9),0,math.log(1.1)]}
     value={"study_id":p["study_id"],"protocol_sha256":digest(p),"model_lock_sha256":digest(lock),"origin":"2026-12-06","issued_at":"2026-12-07T00:10:00+00:00","information_cutoff":"2026-12-06T23:59:59+00:00","input_vintages":[{"captured_at":s["captured_at"],"snapshot_sha256":digest(s)} for s in source],"target_contracts":{task["series_id"]:task["metadata"]["contract"]},"rows":rows,"status":"issued"}
     return value,p,lock
 def test_capture_cutoff_and_origin_gate():
@@ -31,6 +31,8 @@ def test_commitment_maturity_and_missing_truth():
     value,p,lock=commitment();validate(value,p,lock)
     result=score(value,records()+[snapshot("2026-12-07")],"2026-12-07T20:00:00+00:00",p,lock);assert not result["cells"]
     result=score(value,records()+[snapshot("2026-12-07")],"2026-12-08T00:10:00+00:00",p,lock)
+    assert not result["cells"] and result["status"]=="pending_fixed_analysis_date"
+    result=score(value,records()+[snapshot("2026-12-07")],"2027-02-01T00:10:00+00:00",p,lock)
     assert len(result["cells"])==len(p["methods"]) and result["status"]=="pending"
 def test_rejects_late_or_contaminated_commitment():
     value,p,lock=commitment();value["issued_at"]="2026-12-07T02:00:00+00:00"
@@ -39,4 +41,12 @@ def test_rejects_late_or_contaminated_commitment():
     with pytest.raises(AssertionError):validate(value,p,lock)
 def test_rejects_changed_contract():
     value,p,lock=commitment();value["rows"][0]["contract_sha256"]="wrong"
+    with pytest.raises(AssertionError):validate(value,p,lock)
+
+def test_rejects_probability_or_horizon_change():
+    value,p,lock=commitment();value["rows"][0]["probability_sha256"]="wrong"
+    with pytest.raises(AssertionError):validate(value,p,lock)
+    value,p,lock=commitment()
+    for r in value["rows"]:
+        if r["horizon_days"]==7:r["horizon_days"]=2;r["target_date"]="2026-12-08"
     with pytest.raises(AssertionError):validate(value,p,lock)

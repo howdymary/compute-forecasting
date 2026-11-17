@@ -1,7 +1,7 @@
 """Locked prospective probability commitments; independent of existing future panels."""
 from datetime import date,datetime,timedelta
 import math
-from .probability_v18 import digest,quantiles
+from .probability_v18 import digest,quantiles,support
 from .direct_future_v12 import utc,issuance_status,tasks_at,score as score_contracts
 from .evidence_future_v15 import source_snapshots
 def origin_index(origin,p):
@@ -28,6 +28,7 @@ def validate(value,p,lock):
     assert {r["method"] for r in value["rows"]}==set(p["methods"])
     reference={(r["series_id"],r["horizon_days"]) for r in value["rows"] if r["method"]=="untuned"}
     assert 0<len(reference)<=p["limits"]["max_targets"]*3
+    assert reference=={(sid,h) for sid in value["target_contracts"] for h in p["horizons"]},"Incomplete registered horizon panel"
     for method in p["methods"]:
         assert {(r["series_id"],r["horizon_days"]) for r in value["rows"] if r["method"]==method}==reference
     for row in value["rows"]:
@@ -35,10 +36,18 @@ def validate(value,p,lock):
         assert "outcome" not in row and "loss" not in row,"Future truth must never enter issuance"
         assert all(math.isfinite(row[k]) for k in ("q10","q50","q90")) and 0<row["q10"]<=row["q50"]<=row["q90"]
         assert row["target_date"]==(date.fromisoformat(value["origin"])+timedelta(days=row["horizon_days"])).isoformat()
-        if row["method"] in ("untuned","ce_selected","crps_selected"):assert quantiles(row["probabilities"],row["support_prices"])==[row[k] for k in ("q10","q50","q90")]
+        if row["method"] in ("untuned","ce_selected","crps_selected"):
+            assert row["probability_sha256"]==digest(row["probabilities"])
+            assert quantiles(row["probabilities"],row["support_prices"])==[row[k] for k in ("q10","q50","q90")]
+            assert len(row["probabilities"])==len(lock["log_levels"])
+            anchor=row["support_prices"][lock["log_levels"].index(0)]
+            assert support(anchor,lock["log_levels"])==row["support_prices"]
     return value
 def score(value,records,at,p,lock):
-    validate(value,p,lock);snapshots,_=source_snapshots(records,at)
+    validate(value,p,lock)
+    if utc(at)<utc(p["final_analysis_not_before"]):
+        return {"status":"pending_fixed_analysis_date","not_before":p["final_analysis_not_before"],"cells":[],"outcomes_loaded":False}
+    snapshots,_=source_snapshots(records,at)
     result=score_contracts(value,snapshots,at,p)
     result["classification"]="Prospective individual-contract transfer; not competition medians"
     return result
