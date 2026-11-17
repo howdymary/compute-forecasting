@@ -1,19 +1,23 @@
 """Credential-free reconstruction of public v19 forecasts and comparisons."""
 import hashlib,json,pathlib,statistics
-from compute_forecast.probability_v18 import digest,quantiles,summarize
+from compute_forecast.probability_v18 import digest,quantiles,summarize,support
 from compute_forecast.direct_forecast_v12 import cell_loss
 def verify(report):
     assert report["study_id"]=="market-state-v19" and not report["protocol"]["preservation"]["protected_outcomes_loaded"]
     assert report["protocol_sha256"]==digest(report["protocol"])
-    keys=None
+    keys=None;truth=None
     for run in report["runs"]:
         rows=run["retrospective"]["cells"];current={(r["task_id"],r["horizon_days"]) for r in rows}
         assert len(current)==len(rows)
         if keys is None:keys=current
         assert current==keys
+        actual={(r["task_id"],r["horizon_days"]):(r["outcome"],r["anchor"],r["target_date"]) for r in rows}
+        if truth is None:truth=actual
+        assert actual==truth,"Forecast methods use different outcomes, anchors or target dates"
         for group in (rows,run["untuned"]["cells"]):
             for r in group:
                 q=[r[k] for k in ("q10","q50","q90")]
+                assert r["support_prices"]==support(r["anchor"],report["log_levels"])
                 assert q==quantiles(r["probabilities"],r["support_prices"])
                 assert abs(cell_loss(r["outcome"],q)-r["loss"])<1e-12
         assert summarize(rows)==run["retrospective"]["summary"]
@@ -33,7 +37,9 @@ def verify(report):
     for phase,methods in report["controls"]["results"].items():
         for method,value in methods.items():
             assert summarize(value["cells"])==value["summary"]
-            if phase=="retrospective":assert {(r["task_id"],r["horizon_days"]) for r in value["cells"]}==keys
+            if phase=="retrospective":
+                assert {(r["task_id"],r["horizon_days"]) for r in value["cells"]}==keys
+                assert {(r["task_id"],r["horizon_days"]):(r["outcome"],r["anchor"],r["target_date"]) for r in value["cells"]}==truth
             for r in value["cells"]:assert abs(cell_loss(r["outcome"],[r[k] for k in ("q10","q50","q90")])-r["loss"])<1e-12
     official=pathlib.Path("results/frozen-v1/forecasts.csv")
     assert hashlib.sha256(official.read_bytes()).hexdigest()=="67a043255a716db6bc9b73cd28f9258c30fb299fd8671a9ee3430c0d94cadd80"
@@ -43,12 +49,17 @@ def verify_progress(report):
     assert report["protocol_sha256"]==digest(report["protocol"]) and not report["protocol"]["preservation"]["protected_outcomes_loaded"]
     assert len(report["runs"])==6 and report["new_optimizer_updates"]==sum(r["optimizer_updates"] for r in report["runs"])
     assert report["completed_runs"]==sum(r["status"]=="completed" for r in report["runs"])
+    parent_pointer=json.loads(pathlib.Path("results/probability-v18/latest.json").read_bytes());raw=pathlib.Path(parent_pointer["report_path"]).read_bytes()
+    assert hashlib.sha256(raw).hexdigest()==parent_pointer["report_sha256"]
+    levels=json.loads(raw)["log_levels"]
+    if "log_levels" in report:assert report["log_levels"]==levels
     for run in report["runs"]:
         if run["status"]=="queued":assert run["optimizer_updates"]==0 and len(run["checkpoints"])==1 and run["selected"] is None
         for cp in run["checkpoints"]:
             rows=[r for case in report["cases"] for c in case["checkpoints"] if c["arm"]==run["arm"] and c["seed"]==run["seed"] and c["update"]==cp["update"] for r in c["rows"]]
             assert summarize(rows)==cp["development"]
             for r in rows:
+                assert r["support_prices"]==support(r["anchor"],levels)
                 assert quantiles(r["probabilities"],r["support_prices"])==[r[k] for k in ("q10","q50","q90")]
                 assert abs(cell_loss(r["outcome"],[r[k] for k in ("q10","q50","q90")])-r["loss"])<1e-12
     return {"status":"passed_progress_contracts","completed_runs":report["completed_runs"],"durable_optimizer_updates":report["new_optimizer_updates"],"scope":"Actual retained development checkpoints; final comparisons still pending"}
