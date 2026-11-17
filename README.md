@@ -185,3 +185,10 @@ Six matched Tinker LoRA runs directly predict GPU rental-price changes, comparin
 [Live probability comparison](https://howdymary--compute-forecast-evidence-v14-web.us-east.modal.run/probability) · [Registered methods](docs/direct-probability-v18.md) · [Measured findings](docs/probability-v18-findings.md) · [Versioned probabilities and audits](results/probability-v18/README.md).
 
 This post-event study completed eight Tinker LoRA candidate runs, including six final objective/seed runs, with 94 optimizer updates each. On 25 seven-day cases from 11 H100/A100 series and three reused, dependent dates, mean CE pinball was 0.05385809 versus 0.06484884 untuned and 0.06225366 for the best official reference. CRPS training scored 0.05827955. The improvement was probabilistic: median-price MAE did not improve, and interval coverage remained below the nominal 80%. Earlier negative studies and the official submission are preserved. The separately registered future transfer panel has not established prospective accuracy.
+
+
+## Market-context forecasting v19
+
+[Matched forecasting figure](https://howdymary--compute-forecast-evidence-v14-web.us-east.modal.run/market) · [Registered methods and source decisions](docs/market-state-v19.md) · [Versioned artifacts](results/market-state-v19/README.md).
+
+A separately registered study compares the same direct probability model with price history alone and with other-provider within-group price changes and observed collector composition. The engineering gate passed on 314 overlapping training windows across 12 provider/configuration groups. Six one-epoch Tinker runs are registered; actual completion and scores live in the versioned artifacts. News and availability are excluded. A new 16-week contract-transfer panel starts no earlier than December 20, with analysis gated until April 12, 2027. Prospective improvement is not established.

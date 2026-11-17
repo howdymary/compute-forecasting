@@ -48,3 +48,8 @@ The AWS spot archive is a different instrument. Its March–June 2026 coverage h
 The new [v6 cohort](prospective-signals-v6.md) uses the source’s explicitly licensed current JSON and health endpoints. Four exact provider configurations were retained on November15: Lambda A100 PCIe40GB (one/two-GPU nodes), Lambda H100 PCIe80GB, and HyperAI H100 PCIe80GB. The new IDs are not competition series IDs. Provider timestamps, null region/node metadata, quote availability limits and CC BY4 attribution remain attached. No historical-price endpoint was downloaded.
 
 BLS PCU221122221122 is retained as an index with its actual retrieval vintage and preliminary footnotes. Primary news bodies remain private; public metadata and features preserve source hashes and first-observed timestamps. No source is backdated into the benchmark.
+
+
+## Market-state v19
+
+The [v19 source decision](market-state-v19.md#sources-and-publication-decisions) and [machine-readable audit](market-state-v19-sources.json) separate approved historical provider-group medians from current individual-contract captures. This study tests other-provider price changes and observed collection composition only. News, availability, BLS and infrastructure are excluded. Historical cohort quality checks use the frozen pack through November 6, so the selected universe is a retrospective cohort rather than a reconstruction of every origin-time eligible universe. The future cohort has its own first-vintage collection and eligibility rules.

@@ -35,7 +35,8 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh run watch 44041295208 --repo "$GITHUB_REPOSITORY" --interval 20 --exit-status
+          gh run watch 44041295208 --repo "$GITHUB_REPOSITORY" --interval 20
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/44041295208" --jq '{id,status,conclusion,created_at,updated_at,html_url,head_sha}' > training-workflow-receipt.json
           SOURCE_SHA=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/compute-observatory" --jq .object.sha)
           gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
           echo "PUBLICATION_SOURCE_SHA=$SOURCE_SHA" >> "$GITHUB_ENV"

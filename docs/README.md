@@ -69,3 +69,8 @@ The earlier pricing/notebook guides describe their original release state. Histo
 [Live probability comparison](https://howdymary--compute-forecast-evidence-v14-web.us-east.modal.run/probability) · [Registered methods](direct-probability-v18.md) · [Measured findings](probability-v18-findings.md) · [Versioned probabilities and audits](../results/probability-v18/README.md).
 
 This post-event study trains future-price distributions directly, comparing matched categorical cross-entropy and CRPS objectives. It broadens training to 11 H100/A100 series while preserving earlier negative results and the official submission. Current completion and measured results are in the findings; the separate future transfer panel has not established prospective accuracy.
+
+
+## Market-context v19
+
+[Study methods](market-state-v19.md) · [Source decisions](market-state-v19-sources.json) · [Matched findings](market-state-v19-findings.md) · [Results and credential-free reconstruction](../results/market-state-v19/README.md). New provider-group historical targets and a separate future individual-contract panel; no prospective improvement established.
