@@ -4,7 +4,7 @@ from datetime import datetime,timezone
 def write(p,x):p.write_text(json.dumps(x,indent=2,allow_nan=False)+"\n")
 def build(root):
     commitments=sorted(root.glob("commitment-*.json"));files=commitments or [root/"index.json"]
-    manifest={"study_id":"market-state-v19-prospective","kind":"forecast_publication" if commitments else "readiness_no_forecasts","source_sha":os.environ.get("GITHUB_SHA"),"files":[{"name":f.name,"sha256":hashlib.sha256(f.read_bytes()).hexdigest()} for f in files]}
+    manifest={"study_id":"market-state-v19-prospective","kind":"forecast_publication" if commitments else "readiness_no_forecasts","execution_source_sha":os.environ.get("PUBLICATION_SOURCE_SHA",os.environ.get("GITHUB_SHA")),"workflow_trigger_sha":os.environ.get("GITHUB_SHA"),"files":[{"name":f.name,"sha256":hashlib.sha256(f.read_bytes()).hexdigest()} for f in files]}
     write(root/"commitment-manifest.json",manifest)
 def verify(root,repo=None):
     repo=repo or os.environ["GITHUB_REPOSITORY"]

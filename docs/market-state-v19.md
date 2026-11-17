@@ -53,7 +53,7 @@ The first v19 capture retained 43 exact-variant offers from 13 providers for **N
 
 Run the four unchanged starter-kit methods on all available past observations for the new target identities: last_value, last_value_empirical, multiplicative drift and seasonal_naive. The native source hash is verified. Omitted native rows use flagged persistence.
 
-A fixed, training-only quantile GradientBoostingRegressor (50 estimators, depth 2, learning rate .05, seed 17, leaf minimum 8) receives price summaries in one arm and the same market fields in the other. Fixed zero imputation has explicit missing indicators. Quantile crossings are corrected and recorded. This is a diagnostic of information value, not a competing LLM architecture search.
+A fixed, training-only quantile GradientBoostingRegressor (50 estimators, depth 2, learning rate .05, seed 17, leaf minimum 8) receives price summaries in one arm and the same market fields in the other. Fixed zero imputation has explicit missing indicators. Quantile crossings are corrected and recorded. The numerical learner uses the shared history summaries, horizon, anchor and GPU family, rather than the LLM's full raw history sequence. Its two conditions are matched to each other; it is a diagnostic of information value, not an equal-capacity architecture comparison.
 
 Frozen v18 collector medians have no exact target match here, so their aggregate scores are not reused as matched controls. No eligible exact future-rate announcement is in this cohort; an announcement-aware rule is therefore not claimed as tested. Calibration and RL are outside this primary comparison.
 
