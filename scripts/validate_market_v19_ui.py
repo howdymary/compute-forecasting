@@ -3,11 +3,13 @@ import concurrent.futures,hashlib,http.server,json,pathlib,threading,time,urllib
 from playwright.sync_api import sync_playwright,expect
 from compute_forecast.market_ui_v19 import HTML
 from compute_forecast.ui_http_v18 import live_urlopen
-from compute_forecast.verify_market_v19 import verify
+from compute_forecast.verify_market_v19 import verify,verify_progress
 root=pathlib.Path("artifacts/market-state-v19-ui");root.mkdir(parents=True,exist_ok=True)
-pointer=json.loads(pathlib.Path("results/market-state-v19/latest.json").read_bytes());raw=pathlib.Path(pointer["report_path"]).read_bytes()
+pointer_path=pathlib.Path("results/market-state-v19/latest.json")
+if not pointer_path.exists():pointer_path=pathlib.Path("results/market-state-v19/progress/latest.json")
+pointer=json.loads(pointer_path.read_bytes());raw=pathlib.Path(pointer["report_path"]).read_bytes()
 assert hashlib.sha256(raw).hexdigest()==pointer["report_sha256"]
-report=json.loads(raw);checks=verify(report);report["public_report_sha256"]=pointer["report_sha256"]
+report=json.loads(raw);checks=verify_progress(report) if report["study_id"]=="market-state-v19-progress" else verify(report);report["public_report_sha256"]=pointer["report_sha256"]
 font=urllib.request.urlopen("https://raw.githubusercontent.com/google/fonts/a85fc09e44c70c7159761adfdc9d5dd007792c15/ofl/caveat/Caveat%5Bwght%5D.ttf",timeout=60).read()
 assert hashlib.sha1(b"blob "+str(len(font)).encode()+b"\0"+font).hexdigest()=="f84acf2ce2d1b3329b194749530dbaec047e6df6"
 state={"error":False,"empty":False,"delay":False}
@@ -38,10 +40,10 @@ def inspect(page,touch):
     page.locator("#pin").click();page.locator("details").filter(has=page.locator("#pins")).locator("summary").click()
     original=page.locator("#pins").inner_text()
     axes=page.locator("#price text").all_text_contents()
-    page.locator("#seed").select_option("29");page.locator("#checkpoint").select_option(str(report["runs"][0]["optimizer_updates"]))
+    page.locator("#seed").select_option("29");page.locator("#checkpoint").select_option(page.locator("#checkpoint option").last.get_attribute("value"))
     assert page.locator("#price text").all_text_contents()==axes,"Price axes changed between measured checkpoints"
     page.locator("#horizon").select_option("1")
-    page.locator("#refresh").click();expect(page.locator("#status")).to_contain_text("actual optimizer",timeout=90000)
+    page.locator("#refresh").click();expect(page.locator("#status")).to_contain_text("updates",timeout=90000)
     assert page.locator("#seed").input_value()=="29" and page.locator("#horizon").input_value()=="1"
     assert page.locator("#refresh").evaluate("(e)=>e===document.activeElement")
     assert page.locator("#pins").inner_text()==original

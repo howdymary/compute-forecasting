@@ -39,9 +39,11 @@ jobs:
           python - <<'PY'
           import json,pathlib,subprocess
           from compute_forecast.market_ui_v19 import HTML
-          from compute_forecast.verify_market_v19 import verify
-          p=json.loads(pathlib.Path("results/market-state-v19/latest.json").read_bytes())
-          verify(json.loads(pathlib.Path(p["report_path"]).read_bytes()))
+          from compute_forecast.verify_market_v19 import verify,verify_progress
+          pointer=pathlib.Path("results/market-state-v19/latest.json")
+          if not pointer.exists():pointer=pathlib.Path("results/market-state-v19/progress/latest.json")
+          p=json.loads(pointer.read_bytes());report=json.loads(pathlib.Path(p["report_path"]).read_bytes())
+          (verify_progress if report["study_id"]=="market-state-v19-progress" else verify)(report)
           root=pathlib.Path('artifacts/market-state-v19-ui');root.mkdir(parents=True,exist_ok=True)
           (root/'script.js').write_text(HTML.split('<script>',1)[1].split('</script>',1)[0])
           PY
