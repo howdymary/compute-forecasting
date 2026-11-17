@@ -62,7 +62,10 @@ def execute(key):
                     cells.append({**cell(t,h,y,q,"numerical_"+arm),"crossing_corrected":raw!=q})
             results[phase]["numerical_"+arm]=cells
     private=pathlib.Path("/data/market-state-v19/numerical")/key;private.mkdir(parents=True,exist_ok=True)
-    raw=pickle.dumps(state);(private/"state.pkl").write_bytes(raw);volume.commit()
+    raw=pickle.dumps(state);state_file=private/"state.pkl"
+    if state_file.exists():assert state_file.read_bytes()==raw,"Immutable numerical model differs; use a new registered study"
+    else:state_file.write_bytes(raw)
+    volume.commit()
     return {"study_id":"market-state-v19","dataset_sha256":digest(data),"native_baseline_sha256":native_sha,"numerical_state_sha256":hashlib.sha256(raw).hexdigest(),"results":{phase:{name:{"cells":rows,"summary":summarize(rows)} for name,rows in methods.items()} for phase,methods in results.items()},"runtime_seconds":time.monotonic()-start,"provider_cost_usd":None,"new_optimizer_updates":0,"history_scope":"All available past source-defined group observations, no network; labels outside origin excluded","imputation":"Fixed zero plus missingness indicator; training-only numerical fit","state_format":"Private pickle; only load hash-verified state created by this module"}
 def cell(t,h,y,q,method,fallback=False):
     assert 0<q[0]<=q[1]<=q[2]
