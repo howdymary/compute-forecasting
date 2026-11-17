@@ -1,0 +1,76 @@
+name: Train direct quantile-head pilot v20
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/train-quantile-v20.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: quantile-training-v20-campaign
+  cancel-in-progress: false
+jobs:
+  pilot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 220
+    steps:
+      - name: Fetch registered immutable source
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Reuse frozen supported dependencies
+        run: |
+          python -m pip install --extra-index-url https://download.pytorch.org/whl/cpu -r requirements/market-state-v19.txt
+          python -m pip install -e '.[dev]' --no-deps
+          python -m pip install 'pytest>=8,<10'
+          python -m compileall -q src scripts
+          python -m pytest tests/test_quantile_v20.py
+          python -m compute_forecast.verify_market_v19
+      - name: Reuse hash-bound historical inputs
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: |
+          mkdir -p inputs/market-state-v19
+          cp results/market-state-v19/readiness/44040999343/input-key.json inputs/market-state-v19/input-key.json
+          python scripts/load_market_inputs_v19.py
+      - name: Freeze ensembles and check checkpoint preservation
+        id: readiness
+        env:
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+        run: python scripts/preflight_quantile_v20.py
+      - name: Publish preflight before optimization
+        env:
+          GH_TOKEN: ${{ github.token }}
+          V20_PUBLIC_ROOT: artifacts/quantile-training-v20/preflight
+          V20_PUBLIC_KIND: preflight
+        run: python scripts/publish_quantile_v20.py
+      - name: One bounded seed-17 direct pinball pilot
+        if: steps.readiness.outputs.ready == 'true'
+        env:
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: python -m compute_forecast.train_quantile_v20 --seed 17
+      - name: Upload retained numerical outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: quantile-training-v20-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/quantile-training-v20
+          retention-days: 90
+      - name: Assemble and verify completed or gated result
+        if: always() && steps.readiness.outcome == 'success'
+        run: python scripts/assemble_quantile_v20.py
+      - name: Publish versioned study result
+        if: always() && steps.readiness.outcome == 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          V20_PUBLIC_ROOT: artifacts/quantile-training-v20/public
+          V20_PUBLIC_KIND: runs
+        run: python scripts/publish_quantile_v20.py
