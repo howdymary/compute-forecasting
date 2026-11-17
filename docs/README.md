@@ -78,3 +78,5 @@ This post-event study trains future-price distributions directly, comparing matc
 - [Direct quantile training and fixed ensembles (v20)](quantile-training-v20.md): registered objective, controls, gates, future panel and public verification.
 
 - [Quantile-head failure diagnosis (v20)](quantile-training-v20-diagnostics.md): changed-price cases, quantile loss contributions, literal coverage and interpretation limits.
+
+- [Categorical CE continuation v21](ce-continuation-v21.md): restored Adam state, matched same-data and expanded-data training, linked checkpoint forecasts, and a separate locked future panel.

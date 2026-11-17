@@ -45,3 +45,34 @@ Training, builds and testing run on GitHub Actions and Modal. No local workspace
 The cream interactive figure links actual saved additional updates to actual price forecasts on fixed axes, with uncertainty width, coverage, source-bound pins and explicit historical/future labels. No video or recording work is included.
 
 Prospective improvement is not yet established.
+
+## Verified preparation
+
+The original corpus contains **314 windows, 942 horizon examples, 12 provider/configuration groups and 90 distinct origins**. The expanded corpus contains **3,837 windows, 11,511 horizon examples, 48 groups and 143 distinct origins**. Seven-day changed-price windows increase from 57 to 1,036, without outcome-based sampling. Both corpora use the same eight providers and the afhubbard collector. The intervention broadens configuration and historical coverage; it adds no new provider, news or BLS source.
+
+Original tasks and evaluation cases matched exactly. Eight of 11,511 expanded labels lie outside the registered support and remain in training under the unchanged nearest-level encoding. Mean relative quantization error is 0.334% for the expanded corpus versus 0.245% originally. Repeated and overlapping windows are reported in the [data audit](../results/ce-continuation-v21/data/44134233839/audit.json).
+
+The [restoration preflight](../results/ce-continuation-v21/preflight/44135344681/readiness.json) restored the original Adam state and reproduced **all 120 retained forecast vectors exactly**, including probabilities, quantiles and scores. No checkpoint was deleted. The preflight is an implementation check, not an independent forecasting experiment.
+
+## Run and inspect
+
+Remote workflows:
+
+- [Prepare the verified corpus](../.github/workflows/prepare-ce-continuation-v21.yml).
+- [Verify restoration and capacity](../.github/workflows/preflight-ce-continuation-v21.yml).
+- [Run the registered two-arm pilot](../.github/workflows/train-ce-continuation-v21.yml).
+- [Run ordering robustness only if the development gate passes](../.github/workflows/expand-ce-continuation-v21.yml).
+- [Issue separately registered future commitments](../.github/workflows/future-ce-continuation-v21.yml).
+- [Validate the live figure with PNGs](../.github/workflows/validate-continuation-v21-ui.yml).
+
+The [results index](../results/ce-continuation-v21/README.md) distinguishes completed preparation, saved training, and pending future outcomes. [The interactive figure](https://howdymary--compute-forecast-evidence-v14-web.us-east.modal.run/continuation) uses the canonical hash-verified report once published.
+
+Credential-free arithmetic verification, in a Python environment with this repository installed:
+
+```bash
+python -m compute_forecast.verify_continuation_v21
+```
+
+This reconstructs quantiles, per-cell scores, matched denominators and original development selections from retained predictions. It does not regenerate stochastic optimization or supply private model resources. Complete numerical training needs authorized pack access, the preserved parent checkpoint, and Tinker/Modal credentials. Frozen dependency versions are in `requirements/market-state-v19.txt`.
+
+The future runner performs no optimization. Its 60-minute origin-end issuance window and signed Sigstore receipts enforce timing. It does not call future truth before the fixed April 12 analysis gate. First eligible origin is December 20, 2026; a complete source-qualified history and matching outcomes are additional requirements.

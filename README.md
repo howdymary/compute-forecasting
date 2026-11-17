@@ -196,3 +196,10 @@ A separately registered study compares the same direct probability model with pr
 ## Direct quantile forecast training
 
 [Study v20](docs/quantile-training-v20.md) compares a bounded Tinker pinball-loss warm start with the frozen direct model and fixed three-seed ensembles. [Findings](docs/quantile-training-v20-findings.md) and [versioned artifacts](results/quantile-training-v20) preserve negative results and distinguish further weight training, representation changes and postprocessing. [Interactive figure](https://howdymary--compute-forecast-evidence-v14-web.us-east.modal.run/quantile). Prospective improvement remains pending under a separate registered panel.
+
+
+## Continuing the existing categorical forecaster
+
+[Live linked figure](https://howdymary--compute-forecast-evidence-v14-web.us-east.modal.run/continuation) · [Registered v21 study](docs/ce-continuation-v21.md) · [Verified data and reproduction](results/ce-continuation-v21/README.md).
+
+Two matched continuation arms restore the same successful v19 checkpoint and Adam state. One reuses the original 314 training windows; the other uses 3,837 verified windows across 48 provider/configuration groups. The 19-level output, CE objective, inputs and quantile extraction remain unchanged. Checkpoints are selected on development data only. Actual completed runs, negative results and future status are retained separately; prospective improvement is not established.
