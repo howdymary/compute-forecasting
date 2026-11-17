@@ -1,0 +1,45 @@
+name: Prepare matched market-state data v19
+on:
+  push:
+    branches: [compute-observatory]
+    paths: ['.github/workflows/prepare-market-v19.yml','configs/market-state-v19.json','src/compute_forecast/market_data_v19.py']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: market-state-v19-preparation
+  cancel-in-progress: false
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - name: Fetch registered source
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e . modal
+      - name: Validate source-time contracts
+        run: python -m pytest tests/test_market_state_v19.py -q
+      - name: Build and gate joint historical observations without model calls
+        id: data
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: modal run -m compute_forecast.market_data_v19
+      - name: Publish measured readiness and exclusions
+        env:
+          GH_TOKEN: ${{ github.token }}
+          V18_PUBLIC_ROOT: artifacts/market-state-v19-data
+          V18_PUBLIC_KIND: readiness
+        run: python scripts/publish_market_v19.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: market-state-v19-readiness-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/market-state-v19-data
+          retention-days: 30

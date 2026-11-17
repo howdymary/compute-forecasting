@@ -1,0 +1,165 @@
+{
+  "study_id": "market-state-v19",
+  "schema_version": 19,
+  "registered_at": "2026-11-17 07:38:05 UTC",
+  "classification": "Post-event retrospective training and separately registered prospective contract-transfer test",
+  "hypothesis": "Origin-available other-provider price-change context lowers seven-day quantile pinball relative to an otherwise matched price-history model",
+  "model": {
+    "base": "Qwen/Qwen3.5-4B",
+    "renderer": "qwen3_5_disable_thinking",
+    "rank": 16,
+    "batch_size": 16,
+    "seeds": [
+      17,
+      29,
+      43
+    ],
+    "learning_rate": 0.0001,
+    "max_updates": 200,
+    "max_epochs": 1,
+    "checkpoint_fractions": [
+      0,
+      0.25,
+      0.5,
+      1
+    ],
+    "max_context_tokens": 6144,
+    "train_mlp": true,
+    "train_attn": true,
+    "train_unembed": true
+  },
+  "data": {
+    "train_origins_through": "2026-10-04",
+    "train_labels_through": "2026-10-11",
+    "development_origins": [
+      "2026-10-11",
+      "2026-10-18"
+    ],
+    "retrospective_origins": [
+      "2026-10-25",
+      "2026-10-28",
+      "2026-10-30"
+    ],
+    "horizons": [
+      1,
+      3,
+      7
+    ],
+    "context_calendar_days": 42,
+    "history_cutoff": "2026-11-06",
+    "sources": [
+      "afhubbard",
+      "gpurentalprices",
+      "fastgpu_daily"
+    ],
+    "instruments": [
+      "hyperscaler_spot",
+      "neocloud_rate_card"
+    ],
+    "tiers": [
+      "spot",
+      "on_demand"
+    ],
+    "license": "CC-BY-4.0",
+    "quality_flag": "ok",
+    "max_target_groups": 12,
+    "max_training_windows_per_group": 32,
+    "max_training_windows": 512,
+    "min_context_observations": 20,
+    "target_definition": "Daily median of recorded positive quality-ok source/provider/GPU/instrument/tier/SKU/region/node groups. This is not an official target, persistent listing, or verified executed transaction. Null metadata stays null; ambiguous same-timestamp groups excluded before performance.",
+    "selection": "Round-robin sorted provider/family/source groups with at least 20 past observations and three observed providers in their source/GPU/instrument/tier market. Metadata/data availability only; never model loss."
+  },
+  "features": {
+    "arms": [
+      "price",
+      "market"
+    ],
+    "primary_group": "source-specific other-provider within-group return context and observed collector composition",
+    "shared": "Origin-safe own-price summaries in both arms",
+    "market_fields": [
+      "observed_provider_count",
+      "observed_quote_count",
+      "unknown_region_fraction",
+      "unknown_node_fraction",
+      "observed_provider_concentration",
+      "comparable_provider_count",
+      "log_anchor_to_peer_median",
+      "peer_log_iqr",
+      "log_anchor_to_peer_min",
+      "log_anchor_to_peer_max",
+      "peer_price_rank",
+      "peer_log_step_7d",
+      "peer_return_median_1d",
+      "peer_return_median_3d",
+      "peer_return_median_7d",
+      "peer_return_iqr_7d",
+      "peer_up_fraction_7d",
+      "peer_down_fraction_7d",
+      "peer_unchanged_fraction_7d",
+      "peer_return_provider_count_7d"
+    ],
+    "price_comparison_gate": "Recorded nonmissing region and node agreement; unmatched dollar prices never pooled",
+    "return_context": "Each return uses the same source-defined group at both dates before aggregation once per other provider. Cross-contract dollar levels are not compared.",
+    "not_in_training": [
+      "news",
+      "availability",
+      "BLS",
+      "infrastructure"
+    ]
+  },
+  "training": {
+    "objective": "ce",
+    "selection": "Lowest development seven-day pinball; checkpoint zero eligible; earliest update exact tie",
+    "learning_rate_selection": "Fixed at v18 development-selected 0.0001, no new sweep",
+    "same_examples_and_seed_order": true
+  },
+  "evaluation": {
+    "primary_horizon": 7,
+    "horizons": [
+      1,
+      3,
+      7
+    ],
+    "references": [
+      "last_value",
+      "last_value_empirical",
+      "drift",
+      "seasonal_naive"
+    ],
+    "numerical": {
+      "class": "GradientBoostingRegressor",
+      "loss": "quantile",
+      "n_estimators": 50,
+      "max_depth": 2,
+      "learning_rate": 0.05,
+      "random_state": 17,
+      "min_samples_leaf": 8
+    },
+    "zero_reference_loss": "Skill null; retain absolute differences",
+    "historical_label": "Retrospective, reused and dependent origins; no independent accuracy claim",
+    "frozen_v18_control": "No exact target match: new provider-group medians differ from v18 collector medians; do not reuse v18 scores as a matched control"
+  },
+  "limits": {
+    "max_training_runs": 6,
+    "max_parallel_training": 2,
+    "max_hours_per_run": 2,
+    "max_campaign_hours": 8,
+    "max_new_persistent_states": 18,
+    "max_total_optimizer_updates": 1200,
+    "max_private_bytes": 50000000
+  },
+  "preservation": {
+    "official_export_sha256": "67a043255a716db6bc9b73cd28f9258c30fb299fd8671a9ee3430c0d94cadd80",
+    "existing_future_panels_unchanged": true,
+    "protected_outcomes_loaded": false
+  },
+  "future_protocol": "configs/market-state-v19-prospective.json",
+  "dependencies": {
+    "tinker": "0.39.1",
+    "cookbook": "0.6.1",
+    "torch": "2.15.0+cpu",
+    "transformers": "5.23.0",
+    "numpy": "2.2.6",
+    "scikit_learn": "1.7.1"
+  }
+}
