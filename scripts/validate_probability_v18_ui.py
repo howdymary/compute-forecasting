@@ -43,9 +43,11 @@ def interact(page,source,touch):
     assert page.locator("details").first.get_attribute("open") is not None
     assert page.locator("#refresh").evaluate("(e)=>document.activeElement===e"),"Refresh lost focus"
     assert page.locator("#pins li").first.get_attribute("data-snapshot")==pinned
+    page.locator("#show-ce").uncheck();page.locator("#show-crps").uncheck()
     if touch:page.locator("#distribution circle").first.tap()
     else:page.locator("#distribution circle").first.hover()
-    detail=json.loads(page.locator("#inspection").inner_text());assert detail["kind"]=="Forecast probability"
+    detail=json.loads(page.locator("#inspection").inner_text());assert detail["kind"]=="Forecast probability" and detail["model"]=="Untuned"
+    page.locator("#show-ce").check();page.locator("#show-crps").check()
     page.locator("#horizon").select_option("1")
     assert "1-day forecast" in page.locator("#distribution-sub").inner_text()
     page.locator("#scope").select_option("development")
