@@ -1,0 +1,141 @@
+{
+  "schema_version": 18,
+  "study_id": "direct-probability-v18",
+  "registered_at": "2026-11-17T02:37:58Z",
+  "classification": "Post-event retrospective probability-training experiment; separate prospective challenger pending compatible inputs",
+  "hypothesis": "CRPS-trained direct future-price probabilities improve seven-day quantile pinball versus matched categorical-CE, untuned interfaces and native numerical controls",
+  "model": {
+    "base": "Qwen/Qwen3.5-4B",
+    "renderer": "qwen3_5_disable_thinking",
+    "rank": 16,
+    "batch_size": 16,
+    "seeds": [
+      17,
+      29,
+      43
+    ],
+    "learning_rates": [
+      2e-05,
+      0.0001
+    ],
+    "max_updates": 200,
+    "max_epochs": 1,
+    "checkpoint_fractions": [
+      0,
+      0.25,
+      0.5,
+      1
+    ],
+    "max_context_tokens": 6144,
+    "train_mlp": true,
+    "train_attn": true,
+    "train_unembed": true
+  },
+  "data": {
+    "source_ids": [
+      "afhubbard",
+      "gpurentalprices",
+      "fastgpu_daily"
+    ],
+    "gpu_prefixes": [
+      "A100",
+      "H100"
+    ],
+    "instrument_classes": [
+      "hyperscaler_spot",
+      "neocloud_rate_card"
+    ],
+    "table": "daily_statistics",
+    "licence_id": "CC-BY-4.0",
+    "tier": "headline",
+    "context_calendar_days": 42,
+    "min_context_observations": 20,
+    "train_origins_through": "2026-10-04",
+    "train_labels_through": "2026-10-11",
+    "development_origins": [
+      "2026-10-11",
+      "2026-10-18"
+    ],
+    "retrospective_origins": [
+      "2026-10-25",
+      "2026-10-28",
+      "2026-10-30"
+    ],
+    "history_cutoff": "2026-11-06",
+    "horizons": [
+      1,
+      3,
+      7
+    ],
+    "max_training_windows_per_series": 200,
+    "selection": "All metadata-qualified exact target series; uniform date subsampling only when cap binds; no performance filtering",
+    "unit": "USD per GPU-hour"
+  },
+  "distribution": {
+    "n_levels": 19,
+    "minimum_abs_log_return": 0.001,
+    "minimum_extent": 0.6931471805599453,
+    "training_max_abs_multiplier": 1.1,
+    "level_rule": "Zero plus nine geometrically spaced positive and negative log-return levels; extent=max(log(2),1.1*max(abs(training returns))); frozen using training only",
+    "categorical_target": "Nearest positive dollar support level; earlier level wins exact tie",
+    "quantile_rule": "Left inverse CDF: first support level whose cumulative probability is >= tau",
+    "failure": "Persistence fallback, record failure and keep cell",
+    "support_gate": "At least 95% of development labels within registered training-derived support and median development nearest-support absolute error <= persistence median absolute error; if persistence error is zero require zero quantization error"
+  },
+  "training": {
+    "objectives": [
+      "ce",
+      "crps"
+    ],
+    "primary_horizon": 7,
+    "pilot_seed": 17,
+    "selection": "Lowest development seven-day mean dollar pinball; checkpoint zero eligible; earliest update then lower learning rate breaks exact ties",
+    "crps_scale": "One fixed median training anchor, independent of objective and evaluation outcomes",
+    "losses": "Both use softmax over the identical registered answer-token logprobs; CE categorical NLL versus exact discrete CRPS against actual unrounded price",
+    "example_schedule": "Identical seeded shuffled without-replacement horizon-task order; stop at one epoch or 200 updates",
+    "checkpoint_retention": "Save all three trained quarter/half/final optimizer states per run; checkpoint zero binds to the untuned public base, without a redundant untrained storage copy"
+  },
+  "evaluation": {
+    "references": [
+      "last_value",
+      "last_value_empirical",
+      "drift",
+      "seasonal_naive"
+    ],
+    "quantiles": [
+      0.1,
+      0.5,
+      0.9
+    ],
+    "primary_horizon": 7,
+    "classification": "Opened historical dates; no independent or prospective accuracy claim",
+    "original_json_control": "Retained untuned v14 price-only predictions on exact matched cells only; report its separate subset denominator",
+    "chronos": "Use only existing exact matched predictions, otherwise explicitly unavailable",
+    "zero_baseline_loss": "Relative skill null; absolute difference retained"
+  },
+  "limits": {
+    "max_parallel_training": 2,
+    "max_models": 8,
+    "max_total_optimizer_updates": 1604,
+    "max_hours_per_run": 2,
+    "max_campaign_hours": 10,
+    "max_new_persistent_states": 24,
+    "sampler_ttl_seconds": 3600,
+    "selected_state_ttl_seconds": 2592000
+  },
+  "preservation": {
+    "official_export_sha256": "67a043255a716db6bc9b73cd28f9258c30fb299fd8671a9ee3430c0d94cadd80",
+    "protected_outcomes_loaded": false,
+    "prior_studies_unchanged": true,
+    "existing_future_gates_unchanged": true
+  },
+  "sources": {
+    "cookbook_version": "0.6.1",
+    "tinker_version": "0.39.1",
+    "thinking_machines_recipe": "https://tinker-docs.thinkingmachines.ai/cookbook/recipes/decisions/",
+    "custom_loss": "https://tinker-docs.thinkingmachines.ai/tinker/losses/custom/",
+    "proper_score": "https://sites.stat.washington.edu/raftery/Research/PDF/Gneiting2007jasa.pdf"
+  },
+  "protocol_revision": 2,
+  "compatibility_revision": "Pre-optimization API preflight rejected 21 scored choices on long prompts; use 19. No outcomes, cohort, split or model-performance based tuning."
+}
