@@ -16,7 +16,7 @@ state={"error":False,"empty":False,"delay":False,"synthetic_future":False}
 import importlib.util
 spec=importlib.util.spec_from_file_location("synthetic_future_contracts","tests/test_market_commitments_v19.py");fixtures=importlib.util.module_from_spec(spec);spec.loader.exec_module(fixtures)
 fixture_commitment,_=fixtures.commitment();task=fixture_commitment["price_inputs"][0]
-synthetic_future={"issued_origins":1,"public_report_sha256":"synthetic-test-only","forecast_cases":[{"id":task["task_id"],"origin":task["origin"],"issued_at":fixture_commitment["issued_at"],"metadata":task["metadata"],"history":task["context"],"predictions":[r for r in fixture_commitment["rows"] if r["series_id"]==task["series_id"] and r["method"] in ("price","market")],"outcomes":[],"market_state":task["market_state"],"input_sha256":"synthetic-test-only","commitment_sha256":"synthetic-test-only"}],"paired_by_origin":[]}
+synthetic_future={"issued_origins":1,"public_report_sha256":"synthetic-test-only","forecast_cases":[{"id":task["task_id"],"origin":task["origin"],"issued_at":fixture_commitment["issued_at"],"metadata":task["metadata"],"history":task["context"],"predictions":[r for r in fixture_commitment["rows"] if r["series_id"]==task["series_id"] and r["method"] in ("price","market")],"outcomes":[],"market_state":task["market_state"],"publication_receipt":{"eligible_publication_window":True},"input_sha256":"synthetic-test-only","commitment_sha256":"synthetic-test-only"}],"paired_by_origin":[]}
 class Handler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
         code=200

@@ -1,6 +1,6 @@
 """Durable publication evidence; use verified Sigstore timestamps, never predicate dates."""
 import hashlib,json,os,pathlib,subprocess,sys
-from datetime import datetime,timezone
+from datetime import datetime,timezone,timedelta
 def write(p,x):p.write_text(json.dumps(x,indent=2,allow_nan=False)+"\n")
 def build(root):
     commitments=sorted(root.glob("commitment-*.json"));files=commitments or [root/"index.json"]
@@ -23,10 +23,15 @@ def verify(root,repo=None):
         assert hashlib.sha256(path.read_bytes()).hexdigest()==entry["sha256"]
         if not entry["name"].startswith("commitment-"):continue
         from compute_forecast.probability_v18 import digest
-        value=json.loads(path.read_bytes());receipts[value["origin"]]={"created_at":min(times).isoformat(),"commitment_sha256":digest(value),"manifest_sha256":hashlib.sha256((root/"commitment-manifest.json").read_bytes()).hexdigest(),"proof":"Verified signer/ref, artifact digest and signed transparency timestamp"}
+        value=json.loads(path.read_bytes());origin_end=datetime.fromisoformat(value["origin"]+"T23:59:59.999999+00:00")
+        minutes=json.loads(pathlib.Path("configs/market-state-v19-prospective.json").read_bytes())["issuance_deadline_minutes_after_origin"]
+        timely=origin_end<min(times)<=origin_end+timedelta(minutes=minutes)
+        receipts[value["origin"]]={"eligible_publication_window":timely,"created_at":min(times).isoformat(),"commitment_sha256":digest(value),"manifest_sha256":hashlib.sha256((root/"commitment-manifest.json").read_bytes()).hexdigest(),"proof":"Verified signer/ref, artifact digest and signed transparency timestamp"}
     write(root/"attestation-verification.json",{"verified":result,"publication_timestamps":[t.isoformat() for t in sorted(times)],"forecast_receipts":receipts,"kind":manifest["kind"]})
     if receipts:
-        index_path=root/"index.json";index=json.loads(index_path.read_bytes());index["verified_publication_receipts"]=receipts
+        index_path=root/"index.json";index=json.loads(index_path.read_bytes());index["verified_publication_receipts"]={**index.get("verified_publication_receipts",{}),**receipts}
+        index["issued_origins"]=sum(r.get("eligible_publication_window",False) for r in index["verified_publication_receipts"].values())
+        index["status"]="issued_pending_outcomes" if any(r["eligible_publication_window"] for r in receipts.values()) else "ineligible_publication_window"
         for case in index.get("forecast_cases",[]):case["publication_receipt"]=receipts.get(case["origin"],case.get("publication_receipt"))
         write(index_path,index)
     return receipts

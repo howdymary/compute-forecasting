@@ -77,7 +77,7 @@ async def execute(p,lock,numeric,publication_receipts):
     day=at.date();origin=(day-timedelta(days=(day.weekday()+1)%7)).isoformat()
     cohort=json.loads((root/"cohort.json").read_bytes()) if (root/"cohort.json").exists() else None
     prepared=prepare(attempts,origin,at.isoformat(),p,cohort)
-    result={"study_id":p["study_id"],"checked_at":at.isoformat(),"protocol_sha256":digest(p),"model_lock_sha256":digest(lock),"origin":origin,"status":"pending","reasons":prepared["reasons"],"latest_observation":prepared["latest_observation"],"first_eligible_origin":p["first_eligible_origin"],"final_analysis_not_before":p["final_analysis_not_before"],"prospective_accuracy":"not established","new_optimizer_updates":0,"model_calls":0,"issued_origins":len(list((root/"commitments").glob("*.json"))),"provider_cost_usd":None}
+    result={"study_id":p["study_id"],"checked_at":at.isoformat(),"protocol_sha256":digest(p),"model_lock_sha256":digest(lock),"origin":origin,"status":"pending","reasons":prepared["reasons"],"latest_observation":prepared["latest_observation"],"first_eligible_origin":p["first_eligible_origin"],"final_analysis_not_before":p["final_analysis_not_before"],"prospective_accuracy":"not established","new_optimizer_updates":0,"model_calls":0,"produced_origins":len(list((root/"commitments").glob("*.json"))),"issued_origins":sum(r.get("eligible_publication_window",False) for r in publication_receipts.values()),"verified_publication_receipts":publication_receipts,"provider_cost_usd":None}
     outputs={}
     if lock is None:result["reasons"].append("trained_model_lock_pending")
     elif prepared["eligible"]:
@@ -121,7 +121,7 @@ async def execute(p,lock,numeric,publication_receipts):
             validate(commitment,p,lock);atomic(root/"model-lock.json",{"model":lock,"numerical":numeric},True);atomic(existing,commitment,True)
             if cohort is None:atomic(root/"cohort.json",prepared["cohort"],True)
             data_volume.commit()
-        outputs["commitment-"+origin+".json"]=commitment;result.update(status="issued_pending_outcomes",reasons=[],issued_origins=len(list((root/"commitments").glob("*.json"))))
+        outputs["commitment-"+origin+".json"]=commitment;result.update(status="produced_pending_publication",reasons=[],produced_origins=len(list((root/"commitments").glob("*.json"))))
     if lock is not None and at>=utc(p["final_analysis_not_before"]):
         for file in sorted((root/"commitments").glob("*.json")):outputs["score-"+file.name]=score(json.loads(file.read_bytes()),attempts,at.isoformat(),p,lock,publication_receipts.get(file.stem))
     if at>=utc(p["final_analysis_not_before"]) and lock is not None:
