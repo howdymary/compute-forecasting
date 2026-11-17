@@ -57,7 +57,17 @@ async def execute(p,lock,numeric,publication_receipts):
     if at>=utc(p["limits"]["stop_after_utc"]):raise ValueError("Registered future panel stop reached")
     reg={"protocol":p,"protocol_sha256":digest(p)}
     path=root/"registration.json"
-    if path.exists():assert json.loads(path.read_bytes())==reg,"Frozen registration differs"
+    if path.exists():
+        previous=json.loads(path.read_bytes())
+        assert previous.get("protocol")==p and previous.get("protocol_sha256")==digest(p),"Frozen scientific protocol differs"
+        if previous!=reg:
+            assert set(previous)==set(reg)|{"registered_model_lock"} and previous["registered_model_lock"] is None,"Unknown registration format"
+            migration={"old_registration_sha256":digest(previous),"protocol_sha256":digest(p),"change":"Remove a null model-lock placeholder from registration format; original file retained; scientific protocol, dates and candidates unchanged"}
+            record=root/"registration-format-upgrade.json"
+            if record.exists():assert json.loads(record.read_bytes())==migration
+            else:
+                assert not list((root/"commitments").glob("*.json")),"Format migration must precede first issuance"
+                atomic(record,migration,True)
     else:atomic(path,reg,True)
     if lock is not None and list((root/"commitments").glob("*.json")):
         model_path=root/"model-lock.json"
