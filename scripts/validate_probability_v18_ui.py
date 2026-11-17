@@ -1,5 +1,6 @@
 """Validate real v18 artifacts, desktop/mobile interactions and deployed PNGs; no recording."""
 import concurrent.futures,hashlib,http.server,json,os,pathlib,re,threading,time,urllib.request
+from compute_forecast.ui_http_v18 import live_urlopen
 from playwright.sync_api import sync_playwright,expect
 from compute_forecast.probability_ui_v18 import HTML
 root=pathlib.Path("artifacts/probability-v18-ui");root.mkdir(parents=True,exist_ok=True)
@@ -80,7 +81,7 @@ with sync_playwright() as p:
     base="https://howdymary--compute-forecast-evidence-v14-web.us-east.modal.run"
     for attempt in range(18):
         try:
-            with urllib.request.urlopen(base+"/probability",timeout=90) as response:
+            with live_urlopen(base+"/probability",timeout=90) as response:
                 assert response.status==200
                 deployed_html=response.read().decode()
             if deployed_html==HTML:break
@@ -92,7 +93,7 @@ with sync_playwright() as p:
         route=("/api/probability-v18","/api/evidence-v14","/api/probability-v18/future")[i%3]
         started=time.monotonic();print(json.dumps({"probe":"start","i":i,"route":route}),flush=True)
         try:
-            with urllib.request.urlopen(base+route,timeout=90) as response:
+            with live_urlopen(base+route,timeout=90) as response:
                 assert response.status==200;raw=response.read();value=json.loads(raw)
                 assert value["study_id"]==("direct-probability-v18","direct-evidence-v14","direct-probability-v18-prospective")[i%3]
             print(json.dumps({"probe":"passed","i":i,"route":route,"bytes":len(raw),"seconds":time.monotonic()-started}),flush=True)
@@ -101,7 +102,7 @@ with sync_playwright() as p:
         return True
     with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:assert all(pool.map(probe,range(12)))
     for attempt in range(12):
-        live=json.load(urllib.request.urlopen(base+"/api/probability-v18",timeout=90))
+        live=json.load(live_urlopen(base+"/api/probability-v18",timeout=90))
         live_pointer=json.load(urllib.request.urlopen("https://raw.githubusercontent.com/howdymary/mochi-demo/compute-observatory/results/probability-v18/latest.json",timeout=60))
         raw=urllib.request.urlopen("https://raw.githubusercontent.com/howdymary/mochi-demo/compute-observatory/"+live_pointer["report_path"],timeout=90).read()
         assert hashlib.sha256(raw).hexdigest()==live_pointer["report_sha256"]

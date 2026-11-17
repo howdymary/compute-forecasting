@@ -1,5 +1,6 @@
 """PNG-only validation on actual paired-study artifacts, never synthetic learning curves."""
 import hashlib,http.server,json,os,pathlib,re,threading,time,urllib.request
+from compute_forecast.ui_http_v18 import live_urlopen
 from playwright.sync_api import sync_playwright,expect
 from compute_forecast.evidence_ui_v14 import HTML
 root=pathlib.Path("artifacts/evidence-v14-ui");root.mkdir(parents=True,exist_ok=True)
@@ -51,7 +52,7 @@ with sync_playwright() as p:
     live_base="https://howdymary--compute-forecast-evidence-v14-web.us-east.modal.run"
     from concurrent.futures import ThreadPoolExecutor
     def future_probe(_):
-        with urllib.request.urlopen(live_base+"/api/evidence-future",timeout=90) as response:
+        with live_urlopen(live_base+"/api/evidence-future",timeout=90) as response:
             assert response.status==200
             value=json.load(response)
             assert value.get("study_id")=="direct-evidence-v14-prospective" or value.get("status")=="pending_initial_readiness_audit"
@@ -60,7 +61,7 @@ with sync_playwright() as p:
         future_probes=list(pool.map(future_probe,range(12)))
     assert all(v.get("issued_origins",0)>=0 for v in future_probes)
     for attempt in range(18):
-        live_raw=urllib.request.urlopen(live_base+"/api/evidence-v14",timeout=90).read()
+        live_raw=live_urlopen(live_base+"/api/evidence-v14",timeout=90).read()
         live_report=json.loads(live_raw)
         live_pointer=json.load(urllib.request.urlopen("https://raw.githubusercontent.com/howdymary/mochi-demo/compute-observatory/results/evidence-v14/latest.json",timeout=60))
         canonical=urllib.request.urlopen("https://raw.githubusercontent.com/howdymary/mochi-demo/compute-observatory/"+live_pointer["report_path"],timeout=90).read()

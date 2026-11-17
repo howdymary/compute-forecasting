@@ -30,7 +30,7 @@ jobs:
         with:
           python-version: '3.11'
       - run: |
-          python -m pip install -e '.[dev]' modal numpy playwright
+          python -m pip install -e '.[dev]' modal numpy playwright 'httpx[http2]==0.28.1'
           python -m playwright install --with-deps chromium
       - name: Validate scientific contracts and browser syntax
         run: |
