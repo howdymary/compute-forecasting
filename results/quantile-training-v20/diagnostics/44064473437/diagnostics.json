@@ -1,0 +1,53 @@
+{
+  "study_id": "quantile-training-v20-diagnostic",
+  "classification": "Post-hoc descriptive analysis of the frozen pilot; no retuning",
+  "source_report_path": "results/quantile-training-v20/runs/44063349358/report.json",
+  "source_report_sha256": "b9cdb930f7ee5f9b363d82d78f336947764029068af013fc88f2d94b630204c1",
+  "selected_update": 64,
+  "primary_cells": 24,
+  "origins": [
+    "2026-10-25",
+    "2026-10-28",
+    "2026-10-30"
+  ],
+  "quantile_delta_contributions": {
+    "q10": 0.007742026921544741,
+    "q50": 0.0005850313727210513,
+    "q90": -0.0010071284461937765
+  },
+  "aggregate_delta": 0.007319929848072017,
+  "groups": [
+    {
+      "changed_price": false,
+      "n": 15,
+      "pinball": 7.273870407558608e-07,
+      "covered": 2,
+      "mean_width": 6.147659295481962e-07,
+      "median_mae": 1.5589357287515427e-06,
+      "weighted_delta": 4.5461690047241294e-07
+    },
+    {
+      "changed_price": true,
+      "n": 9,
+      "pinball": 0.06100569951084269,
+      "covered": 0,
+      "mean_width": 0.0006944132485396937,
+      "median_mae": 0.12225651071988737,
+      "weighted_delta": 0.007319475231171545
+    }
+  ],
+  "direction_counts": {
+    "down": 8,
+    "up": 1,
+    "unchanged": 15
+  },
+  "new_optimizer_updates": 0,
+  "new_model_calls": 0,
+  "causal_explanation_established": false,
+  "limitations": [
+    "Three reused dependent dates, not independent future validation",
+    "Interval collapse describes the failure; its cause is not isolated",
+    "Strict coverage is sensitive to microscopic misses on unchanged-price atoms",
+    "Additional training is not assumed to fix the problem"
+  ]
+}
