@@ -1,0 +1,56 @@
+{
+  "study_id": "market-state-v19-prospective",
+  "parent_study_id": "market-state-v19",
+  "classification": "New individual-provider contract cohort; not the Pacific collector-median target",
+  "first_eligible_origin": "2026-12-20",
+  "horizons": [
+    1,
+    3,
+    7
+  ],
+  "primary_horizon": 7,
+  "context_calendar_days": 42,
+  "min_price_days": 30,
+  "issuance_deadline_minutes_after_origin": 60,
+  "capture_window_utc_hours": [
+    17,
+    19
+  ],
+  "primary_operational_seed": 17,
+  "robustness_seeds": [
+    29,
+    43
+  ],
+  "min_contracts": 8,
+  "max_contracts": 12,
+  "min_providers": 3,
+  "min_each_gpu_family": 2,
+  "cohort_selection": "Price-independent deterministic round-robin over sorted source-verified provider/family/contract identities with 30 retained observations; freeze at first eligible issuance; no replacements",
+  "model_lock": "Immutable selected checkpoints and numerical state after readiness; no issuance before lock",
+  "methods": [
+    "price",
+    "market",
+    "untuned_price",
+    "untuned_market",
+    "last_value",
+    "last_value_empirical",
+    "drift",
+    "seasonal_naive",
+    "numerical_price",
+    "numerical_market"
+  ],
+  "limits": {
+    "max_weekly_origins": 16,
+    "max_probability_requests_per_origin": 400,
+    "max_source_snapshots": 400,
+    "stop_after_utc": "2027-04-19T00:00:00+00:00",
+    "max_new_optimizer_updates_in_future_runner": 0
+  },
+  "final_analysis_not_before": "2027-04-12T00:00:00+00:00",
+  "truth": "First retained compatible target-date source observation from the registered capture window, scored after target day ends; do not replace first vintage with revisions",
+  "primary_analysis": "Paired seven-day mean dollar pinball on identical eligible contracts; origin clusters, shared shocks and repeated seed predictions are dependent; descriptive interim reporting only; no early promotion",
+  "uncertainty": "Prespecified origin-block sensitivity; 16 origins are an initial panel, not an adequate-power assertion. Inconclusive results remain inconclusive. A later extension requires a separate registration.",
+  "promotion": "At fixed final analysis, report paired loss and uncertainty versus price-only and preselected numerical reference. No automatic promotion from favorable interim scores. Median MAE, coverage, interval width and costs reported jointly.",
+  "fallback": "Persistence for inference failures, retain failure flags; absent frozen origin contract or insufficient feature provenance prevents issuance; missing truth remains pending",
+  "existing_panels": "v18 December6/February1, signals-v6, v8 and November23 gate unchanged"
+}
