@@ -1,0 +1,53 @@
+name: Inspect durable categorical continuation progress v21
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/status-ce-continuation-v21.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Fetch current registered source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          SOURCE_SHA=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/compute-observatory" --jq .object.sha)
+          gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+          echo "PUBLICATION_SOURCE_SHA=$SOURCE_SHA" >> "$GITHUB_ENV"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e . modal
+      - name: Read recovery metadata without model calls
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: |
+          python - <<'PY'
+          import json,pathlib,subprocess
+          from compute_forecast.probability_v18 import digest
+          p=json.loads(pathlib.Path('configs/ce-continuation-v21.json').read_bytes())
+          target=pathlib.Path('private/progress.json');target.parent.mkdir(parents=True,exist_ok=True)
+          result={'study_id':p['study_id'],'runs':[],'new_model_calls':0,'new_optimizer_updates':0}
+          for arm in ('same','expanded'):
+              path='/ce-continuation-v21/'+digest(p)+'/'+arm+'-17/recovery.json'
+              r=subprocess.run(['modal','volume','get','compute-forecast-data',path,str(target),'--force'],capture_output=True,text=True)
+              item={'arm':arm,'seed':17,'status':'no_durable_recovery_yet'}
+              if r.returncode==0:
+                  value=json.loads(target.read_bytes());s=value['state']
+                  item.update(status=s['status'],durable_optimizer_updates=s['optimizer_updates'],last_saved_checkpoints=[c['update'] for c in s['checkpoints']],development=[{'update':c['update'],'pinball':c['development']['primary_pinball']} for c in s['checkpoints']],completed=value['completed'])
+              result['runs'].append(item)
+          root=pathlib.Path('artifacts/ce-continuation-v21-status');root.mkdir(parents=True,exist_ok=True)
+          (root/'progress.json').write_text(json.dumps(result,indent=2)+'\n')
+          print(json.dumps(result))
+          PY
+      - name: Publish status without changing canonical results
+        env:
+          GH_TOKEN: ${{ github.token }}
+          V21_PUBLIC_ROOT: artifacts/ce-continuation-v21-status
+          V21_PUBLIC_KIND: progress
+        run: python scripts/publish_continuation_v21.py
