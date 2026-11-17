@@ -72,11 +72,11 @@
     "unit": "USD per GPU-hour"
   },
   "distribution": {
-    "n_levels": 21,
+    "n_levels": 19,
     "minimum_abs_log_return": 0.001,
     "minimum_extent": 0.6931471805599453,
     "training_max_abs_multiplier": 1.1,
-    "level_rule": "Zero plus ten geometrically spaced positive and negative log-return levels; extent=max(log(2),1.1*max(abs(training returns))); frozen using training only",
+    "level_rule": "Zero plus nine geometrically spaced positive and negative log-return levels; extent=max(log(2),1.1*max(abs(training returns))); frozen using training only",
     "categorical_target": "Nearest positive dollar support level; earlier level wins exact tie",
     "quantile_rule": "Left inverse CDF: first support level whose cumulative probability is >= tau",
     "failure": "Persistence fallback, record failure and keep cell",
@@ -93,7 +93,7 @@
     "crps_scale": "One fixed median training anchor, independent of objective and evaluation outcomes",
     "losses": "Both use softmax over the identical registered answer-token logprobs; CE categorical NLL versus exact discrete CRPS against actual unrounded price",
     "example_schedule": "Identical seeded shuffled without-replacement horizon-task order; stop at one epoch or 200 updates",
-    "checkpoint_retention": "Selected immutable optimizer state per run, short-lived sampler exports; existing checkpoints untouched"
+    "checkpoint_retention": "Save all three trained quarter/half/final optimizer states per run; checkpoint zero binds to the untuned public base, without a redundant untrained storage copy"
   },
   "evaluation": {
     "references": [
@@ -116,10 +116,10 @@
   "limits": {
     "max_parallel_training": 2,
     "max_models": 8,
-    "max_total_optimizer_updates": 1600,
+    "max_total_optimizer_updates": 1604,
     "max_hours_per_run": 2,
     "max_campaign_hours": 10,
-    "max_new_persistent_states": 8,
+    "max_new_persistent_states": 24,
     "sampler_ttl_seconds": 3600,
     "selected_state_ttl_seconds": 2592000
   },
@@ -135,5 +135,7 @@
     "thinking_machines_recipe": "https://tinker-docs.thinkingmachines.ai/cookbook/recipes/decisions/",
     "custom_loss": "https://tinker-docs.thinkingmachines.ai/tinker/losses/custom/",
     "proper_score": "https://sites.stat.washington.edu/raftery/Research/PDF/Gneiting2007jasa.pdf"
-  }
+  },
+  "protocol_revision": 2,
+  "compatibility_revision": "Pre-optimization API preflight rejected 21 scored choices on long prompts; use 19. No outcomes, cohort, split or model-performance based tuning."
 }

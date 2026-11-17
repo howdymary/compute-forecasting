@@ -5,7 +5,8 @@ def digest(v):return hashlib.sha256(json.dumps(v,sort_keys=True,allow_nan=False,
 def levels(train,p):
     extent=max(p["distribution"]["minimum_extent"],p["distribution"]["training_max_abs_multiplier"]*max(abs(x) for t in train for x in t["returns"]))
     small=p["distribution"]["minimum_abs_log_return"]
-    positive=[math.exp(math.log(small)+i*(math.log(extent)-math.log(small))/9) for i in range(10)]
+    half=(p["distribution"]["n_levels"]-1)//2
+    positive=[math.exp(math.log(small)+i*(math.log(extent)-math.log(small))/(half-1)) for i in range(half)]
     return sorted([-x for x in positive]+[0.]+positive)
 def support(anchor,log_levels):
     if not math.isfinite(anchor) or anchor<=0:raise ValueError("Positive finite anchor required")

@@ -5,6 +5,7 @@ source=pathlib.Path(os.environ.get("V18_PUBLIC_ROOT","artifacts/probability-v18-
 def api(path,body=None,method=None):
     args=["gh","api","repos/"+repo+"/"+path]
     if method:args+=["-X",method]
+    if body is not None:args+=["--input","-"]
     return json.loads(subprocess.check_output(args,input=json.dumps(body) if body is not None else None,text=True))
 payloads={"results/probability-v18/"+kind+"/"+run+"/"+f.name:f.read_bytes() for f in source.iterdir() if f.is_file()}
 if not payloads:raise ValueError("No completed public artifacts")

@@ -11,3 +11,5 @@ Official foundations: https://tinker-docs.thinkingmachines.ai/cookbook/recipes/d
 Audit and numerical contract checks precede any new optimizer update. A failed data, support, gradient, API or storage gate blocks the campaign and is published. Existing checkpoints are not deleted.
 
 Configuration: configs/direct-probability-v18.json. Pure arithmetic and adapters: src/compute_forecast/probability_v18.py. Private prepared examples remain outside public artifacts; source audit, probabilities and derived forecasts retain attribution.
+
+Pre-optimization compatibility revision 2 uses 19 price levels because the actual sampling endpoint rejected 21 target token IDs for long prompts. Original configuration is preserved in direct-probability-v18-preflight-v1.json and the failed run is retained. Cohorts, outcomes and split dates are unchanged; the level grid is regenerated from training data only. All three trained optimizer checkpoints per run are retained, requiring 24 state slots at most, plus transient headroom. No existing checkpoints are deleted.

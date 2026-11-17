@@ -13,9 +13,9 @@ concurrency:
 jobs:
   audit:
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 20
     steps:
-      - name: Fetch registered source
+      - name: Fetch registered compatibility correction
         env:
           GH_TOKEN: ${{ github.token }}
           SOURCE_SHA: ${{ github.sha }}
@@ -23,22 +23,16 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Retrieve the previously locked client environment
+      - name: Reuse completed source preparation without repeating Modal work
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh run download 43966729631 --repo "$GITHUB_REPOSITORY" --name evidence-v14-inputs-43966729631 --dir inputs/old-v14
+        run: gh run download 44005208079 --repo "$GITHUB_REPOSITORY" --name probability-v18-inputs-44005208079 --dir inputs/probability-v18
       - run: |
-          python -m pip install --extra-index-url https://download.pytorch.org/whl/cpu -r inputs/old-v14/requirements-lock.txt
+          python -m pip install --extra-index-url https://download.pytorch.org/whl/cpu -r inputs/probability-v18/requirements-lock.txt
           python -m pip install -e '.[dev]' modal --no-deps
           python -m pytest tests/test_probability_v18.py
-      - name: Prepare broader immutable target windows on Modal
-        env:
-          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
-          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
-        run: |
-          modal run -m compute_forecast.probability_data_v18
-          cp inputs/old-v14/requirements-lock.txt inputs/probability-v18/requirements-lock.txt
-      - name: Verify model probabilities, gradients and resource headroom without optimization
+          PYTHONPATH=src python scripts/rebind_probability_v18.py
+      - name: Verify actual probabilities, gradients and checkpoint headroom without optimization
         env:
           TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
         run: PYTHONPATH=src python scripts/audit_probability_v18.py
@@ -54,7 +48,7 @@ jobs:
           name: probability-v18-audit-${{ github.run_id }}
           path: artifacts/probability-v18-audit
           retention-days: 30
-      - name: Publish actual readiness and source audit
+      - name: Publish readiness and corrected source binding
         if: always()
         env:
           GH_TOKEN: ${{ github.token }}
