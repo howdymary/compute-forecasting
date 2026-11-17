@@ -16,7 +16,7 @@ for arm in ("price","market"):
         assert state["status"]=="completed" and state["dataset_sha256"]==digest(data) and state["arm"]==arm and state["seed"]==seed
         assert state["selected"]==selection["selected"]
         assert state["selected"]==min(state["checkpoints"],key=lambda x:(x["development"]["primary_pinball"],x["update"]))
-        evaluation=read(directory/"evaluation-selected.json");check_cells(evaluation["cells"]) if False else None
+        evaluation=read(directory/"evaluation-selected.json")
         for cp in state["checkpoints"]:
             dev=read(directory/("development-"+str(cp["update"])+".json"))
             assert summarize(dev["cells"])==cp["development"]

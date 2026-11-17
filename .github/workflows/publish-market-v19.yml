@@ -1,0 +1,64 @@
+name: Publish matched market-state study v19
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/publish-market-v19.yml]
+  workflow_run:
+    workflows: [Train matched market-state forecasters v19]
+    types: [completed]
+    branches: [compute-observatory]
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: market-state-v19-publication
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 70
+    steps:
+      - name: Fetch fresh source without changing completed experiments
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          SOURCE_SHA=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/compute-observatory" --jq .object.sha)
+          gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+          echo "PUBLICATION_SOURCE_SHA=$SOURCE_SHA" >> "$GITHUB_ENV"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e '.[dev]' modal
+      - name: Retrieve completed canonical models; never rerun optimization
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run watch 44041295208 --repo "$GITHUB_REPOSITORY" --interval 20 --exit-status
+          gh run download 44041295208 --repo "$GITHUB_REPOSITORY" --name market-state-v19-base-44041295208 --dir artifacts/market-state-v19-base
+          gh run download 44041295208 --repo "$GITHUB_REPOSITORY" --pattern 'market-state-v19-model-*-44041295208' --dir artifacts/market-state-v19-models
+          python scripts/flatten_market_v19.py
+          gh run download 44040999343 --repo "$GITHUB_REPOSITORY" --name market-state-v19-readiness-44040999343-1 --dir inputs/market-state-v19
+          gh run download 44041529178 --repo "$GITHUB_REPOSITORY" --name market-state-v19-controls-44041529178 --dir artifacts/market-state-v19-controls
+      - name: Validate and reconstruct all published arithmetic
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: |
+          python scripts/load_market_inputs_v19.py
+          python scripts/assemble_market_v19.py
+          python -m compute_forecast.verify_market_v19 artifacts/market-state-v19-public/report.json > artifacts/market-state-v19-public/verification.json
+          python -m pytest tests/test_market_state_v19.py tests/test_market_future_v19.py -q
+      - name: Publish versioned results and preserved negative findings
+        env:
+          GH_TOKEN: ${{ github.token }}
+          V18_PUBLIC_ROOT: artifacts/market-state-v19-public
+          V18_PUBLIC_KIND: runs
+        run: python scripts/publish_market_v19.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: market-state-v19-public-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/market-state-v19-public
+          retention-days: 180
