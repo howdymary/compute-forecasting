@@ -29,6 +29,15 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: Check chart JavaScript syntax
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import runpy
+          HTML=runpy.run_path("src/compute_forecast/quantile_ui_v20.py")["HTML"]
+          Path("quantile-ui.js").write_text(HTML.split("<script>",1)[1].split("</script>",1)[0])
+          PY
+          node --check quantile-ui.js
       - name: Wait for a complete versioned study
         id: study
         run: |

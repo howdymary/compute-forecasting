@@ -5,6 +5,7 @@ from .quantile_v20 import ensemble,head_quantiles,decompose
 from .direct_forecast_v12 import cell_loss
 def verify(report):
     assert report["study_id"]=="quantile-training-v20"
+    assert "tinker://" not in json.dumps(report) and "private_paths" not in json.dumps(report),"Private model resource in public artifact"
     assert digest(report["protocol"])==report["protocol_sha256"]
     parent_raw=pathlib.Path(report["protocol"]["parent"]["report_path"]).read_bytes()
     assert hashlib.sha256(parent_raw).hexdigest()==report["protocol"]["parent"]["report_sha256"]
