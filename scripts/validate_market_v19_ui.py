@@ -28,7 +28,11 @@ class Handler(http.server.BaseHTTPRequestHandler):
     def log_message(self,*args):pass
 server=http.server.ThreadingHTTPServer(("127.0.0.1",0),Handler);threading.Thread(target=server.serve_forever,daemon=True).start()
 def inspect(page,touch):
-    expect(page.locator("#results")).to_be_visible(timeout=90000)
+    try:expect(page.locator("#results")).to_be_visible(timeout=90000)
+    except Exception:
+        print("UI_STATUS",page.locator("#status").inner_text(),flush=True)
+        page.screenshot(path=str(root/"failure.png"),full_page=True)
+        raise
     assert page.evaluate("document.documentElement.scrollWidth<=innerWidth")
     for selector in ("#price text","#learning text"):
         actual=page.locator(selector).first.evaluate("(e)=>parseFloat(getComputedStyle(e).fontSize)*e.getScreenCTM().a")
