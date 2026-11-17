@@ -80,3 +80,5 @@ This post-event study trains future-price distributions directly, comparing matc
 - [Quantile-head failure diagnosis (v20)](quantile-training-v20-diagnostics.md): changed-price cases, quantile loss contributions, literal coverage and interpretation limits.
 
 - [Categorical CE continuation v21](ce-continuation-v21.md): restored Adam state, matched same-data and expanded-data training, linked checkpoint forecasts, and a separate locked future panel.
+
+- [Locked v21 seed-17 pilot diagnosis](ce-continuation-v21-pilot.md): development gains failed to transfer; narrower intervals and changed-price cases explain the measured deterioration.
