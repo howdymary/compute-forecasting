@@ -70,7 +70,7 @@ with sync_playwright() as pw:
         state["empty"]=False;page.locator("#retry").click();expect(page.locator("#retry")).to_be_hidden()
         state["synthetic_future"]=True;page.reload();expect(page.locator("#future-figure")).to_be_visible()
         expect(page.locator("#future-point")).to_contain_text("synthetic")
-        assert page.locator("#future-prices circle").count()==6 and page.locator("#future-paired").is_hidden()
+        assert page.locator("#future-prices circle").count()==6 and page.locator("#future-paired").is_hidden(),("Future fixture geometry",page.locator("#future-prices circle").count(),page.locator("#future-paired").is_hidden())
         page.locator("#future-pin").click();assert "synthetic" in page.locator("#pins").inner_text()
         state["synthetic_future"]=False
         assert not errors,errors;ctx.close()
