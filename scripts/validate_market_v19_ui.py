@@ -43,6 +43,8 @@ def inspect(page,touch):
     expect(page.locator("#point")).to_contain_text("Historical observation")
     page.locator("#pin").click();page.locator("details").filter(has=page.locator("#pins")).locator("summary").click()
     original=page.locator("#pins").inner_text()
+    pin=json.loads(page.locator("#pins .pin").last.get_attribute("data-snapshot"));assert pin["source_report_sha256"]==report["public_report_sha256"]
+    assert pin["observation"]["value"]==next(r["value"] for r in report["cases"][0]["history"] if r["date"]==pin["observation"]["date"])
     axes=page.locator("#price text").all_text_contents()
     page.locator("#seed").select_option("29");page.locator("#checkpoint").select_option(page.locator("#checkpoint option").last.get_attribute("value"))
     assert page.locator("#price text").all_text_contents()==axes,"Price axes changed between measured checkpoints"
