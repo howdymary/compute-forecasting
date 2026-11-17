@@ -1,0 +1,26 @@
+name: Verify public direct-forecast diagnosis v16
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [scripts/verify_direct_v16_public.py, .github/workflows/verify-direct-v16-public.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: public-direct-v16-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  public-arithmetic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Fetch exact public source
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Reconstruct public samples and diagnostic arithmetic without credentials
+        run: PYTHONPATH=src python scripts/verify_direct_v16_public.py --root .
