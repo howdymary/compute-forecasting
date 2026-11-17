@@ -55,10 +55,14 @@ async def infer(tasks,p,lock):
 async def execute(p,lock,numeric):
     at=datetime.now(timezone.utc);root=pathlib.Path("/data/market-state-v19/future");root.mkdir(parents=True,exist_ok=True)
     if at>=utc(p["limits"]["stop_after_utc"]):raise ValueError("Registered future panel stop reached")
-    reg={"protocol":p,"protocol_sha256":digest(p),"registered_model_lock":lock}
+    reg={"protocol":p,"protocol_sha256":digest(p)}
     path=root/"registration.json"
     if path.exists():assert json.loads(path.read_bytes())==reg,"Frozen registration differs"
     else:atomic(path,reg,True)
+    if lock is not None:
+        model_path=root/"model-lock.json"
+        if model_path.exists():assert json.loads(model_path.read_bytes())=={"model":lock,"numerical":numeric},"Frozen model lock differs"
+        else:atomic(model_path,{"model":lock,"numerical":numeric},True)
     attempts=[json.loads(f.read_bytes()) for f in sorted(pathlib.Path("/data/market-state-v19/capture/attempts").glob("*.json"))]
     day=at.date();origin=(day-timedelta(days=(day.weekday()+1)%7)).isoformat()
     cohort=json.loads((root/"cohort.json").read_bytes()) if (root/"cohort.json").exists() else None
