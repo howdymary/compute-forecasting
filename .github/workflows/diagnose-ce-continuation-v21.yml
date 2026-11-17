@@ -2,7 +2,7 @@ name: Audit completed categorical continuation distributions v21
 on:
   push:
     branches: [compute-observatory]
-    paths: [.github/workflows/diagnose-ce-continuation-v21.yml]
+    paths: [.github/workflows/diagnose-ce-continuation-v21.yml, scripts/diagnose_ce_continuation_v21.py]
   workflow_run:
     workflows: [Train categorical CE continuation v21, Expand categorical continuation after development gate v21]
     types: [completed]

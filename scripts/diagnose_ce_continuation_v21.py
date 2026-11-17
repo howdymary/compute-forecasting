@@ -45,7 +45,7 @@ if os.environ.get("V21_DIAGNOSTIC_PLOTS")=="1" and runs:
         assert abs(sum(parts)-c["difference"])<1e-12
         entries.append({"arm":run["arm"],"ordering_seed":run["ordering_seed"],"selected_additional_update":run["selected_additional_update"],"parts":parts,"net_difference":c["difference"]})
     fig,ax=plt.subplots(figsize=(11,max(4.6,2.8+.57*len(entries))));paper="#f8f4ea";ink="#202c3b"
-    fig.set_facecolor(paper);ax.set_facecolor(paper);fig.subplots_adjust(left=.24,right=.81,top=.76,bottom=.26)
+    fig.set_facecolor(paper);ax.set_facecolor(paper);fig.subplots_adjust(left=.24,right=.81,top=.76,bottom=.34)
     palette=["#2858c6","#647182","#39836c"];span=max(sum(v for v in e["parts"] if v>0) for e in entries)
     span=max(span,max(-sum(v for v in e["parts"] if v<0) for e in entries),1e-6)
     for i,e in enumerate(entries):
@@ -64,9 +64,11 @@ if os.environ.get("V21_DIAGNOSTIC_PLOTS")=="1" and runs:
     ax.spines["bottom"].set_color("#b8bab5")
     fig.suptitle("Where continued training changed forecast error",x=.04,y=.96,ha="left",fontsize=19,color=ink)
     fig.text(.04,.87,"Relative to the frozen incumbent. Left: lower loss; right: higher loss. Row labels show ordering and selected update.",fontsize=10,color="#536074")
-    fig.legend(handles=[Patch(color=c,label=t) for c,t in zip(palette,["Lower quantile · q10","Median · q50","Upper quantile · q90"])],loc="lower center",bbox_to_anchor=(.5,.12),ncol=3,frameon=False,fontsize=10)
+    legend=fig.legend(handles=[Patch(color=c,label=t) for c,t in zip(palette,["Lower quantile · q10","Median · q50","Upper quantile · q90"])],loc="lower center",bbox_to_anchor=(.5,.12),ncol=3,frameon=False,fontsize=10)
     fig.text(.04,.055,"24 matched seven-day cases · 3 reused, dependent origins · retrospective diagnosis",fontsize=10,color="#536074")
     fig.text(.04,.025,"Source report SHA-256: "+pointer["report_sha256"],fontsize=8,color="#536074")
+    fig.canvas.draw()
+    assert not ax.xaxis.label.get_window_extent().overlaps(legend.get_window_extent()),"Figure legend overlaps the loss axis label"
     for extension in ("png","svg"):fig.savefig(out/("loss-contributions."+extension),dpi=160,facecolor=paper)
     plt.close(fig)
     (out/"figure-data.json").write_text(json.dumps({"source_report_sha256":pointer["report_sha256"],"entries":entries,"matplotlib_version":matplotlib.__version__},indent=2,allow_nan=False)+"\n")
