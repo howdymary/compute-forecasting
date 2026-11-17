@@ -49,6 +49,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: probability-v18-serving-diagnostic-${{ github.run_id }}
+          name: probability-v18-serving-diagnostic-${{ github.run_id }}-${{ github.run_attempt }}
           path: artifacts/probability-v18-serving-diagnostic
           retention-days: 30
