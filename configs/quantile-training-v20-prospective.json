@@ -1,0 +1,58 @@
+{
+  "study_id": "quantile-training-v20-prospective",
+  "parent_study_id": "quantile-training-v20",
+  "registered_at": "2026-11-17T09:37:29Z",
+  "first_eligible_origin": "2026-12-20",
+  "origins": 16,
+  "frequency": "weekly Sunday UTC",
+  "final_analysis_not_before": "2027-04-12T00:00:00+00:00",
+  "stop_after_utc": "2027-04-19T00:00:00+00:00",
+  "primary_horizon": 7,
+  "horizons": [
+    1,
+    3,
+    7
+  ],
+  "source": "gpurentalprices API; reuse v19 immutable captures without altering v19 protocol",
+  "target": "Exact individual provider contract quote; new source IDs, no identity claim with competition medians",
+  "cohort": "Same deterministic first eligible v19 source-specific 8–12-contract cohort, frozen before forecasts; no replacements",
+  "capture_window_utc_hours": [
+    17,
+    19
+  ],
+  "min_price_days": 30,
+  "context_calendar_days": 42,
+  "issuance_deadline_minutes_after_origin": 60,
+  "methods": [
+    "quantile_head_selected_seed17",
+    "quantile_head_zero_seed17",
+    "frozen_v19_price17",
+    "uniform_quantile_average",
+    "uniform_probability_pool",
+    "official_drift"
+  ],
+  "selection": "Head checkpoint selected only on reused development seven-day pinball with update zero eligible. Both equal-weight ensembles retained; no retrospective weight fitting.",
+  "primary_comparison": "Selected head versus unchanged frozen v19 price/17; paired seven-day mean dollar pinball",
+  "secondary_comparisons": [
+    "selected head versus head-interface zero",
+    "selected head versus development-selected fixed ensemble",
+    "versus unchanged official drift",
+    "median MAE, coverage, width, failures and inference costs"
+  ],
+  "model_lock": "Commit selected checkpoint/resource-identity hash, tokenizer, protocol and engine hashes before first eligible issuance; private paths excluded",
+  "truth": "First retained compatible target-date snapshot from registered capture window, after maturity; retain revisions separately",
+  "publication": "Signed GitHub Actions/Sigstore commitment manifest covering exact issued forecast bytes; verified timestamp must precede registered deadline and outcome resolution",
+  "analysis": {
+    "interim": "Descriptive only; no promotion or repeated significance testing",
+    "resampling": "Paired origin-block sensitivity lengths 2 and 4, 2000 repetitions, seed20261117; common market shocks remain dependent",
+    "promotion": "At fixed analysis, positive evidence only if selected head has lower paired loss versus both frozen parent and selected ensemble, paired block upper95% bound below zero under both sensitivities, and no higher failure rate. Otherwise inconclusive/negative; do not extend until it wins.",
+    "duration_caution": "16 origins are a bounded initial panel, not a power guarantee; no prospective claim before outcomes mature"
+  },
+  "limits": {
+    "max_origins": 16,
+    "max_probability_requests_per_origin": 400,
+    "max_optimizer_updates": 0
+  },
+  "fallback": "Persistence with explicit failure flag; absent compatible current contract or failed provenance prevents issuance, absent truth stays pending",
+  "existing_panels_unchanged": true
+}

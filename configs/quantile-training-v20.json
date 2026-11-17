@@ -1,0 +1,158 @@
+{
+  "study_id": "quantile-training-v20",
+  "schema_version": 20,
+  "registered_at": "2026-11-17T09:37:29Z",
+  "classification": "Post-event development experiment with additional exploratory retrospective analysis; separate future panel",
+  "primary_hypothesis": "Training ordered continuous quantile heads with dollar pinball loss improves seven-day development loss relative to the same head interface at update zero; later market accuracy requires prospective evaluation",
+  "parent": {
+    "study_id": "market-state-v19",
+    "report_path": "results/market-state-v19/runs/44054321182/report.json",
+    "report_sha256": "374d677312191a04402e8ad7862f16e57b59da80886bf1f736e7f4f666783145",
+    "dataset_sha256": "867aad80b4418d6963222dd7c7f6f108602ab55c4ca9ac048df119290cfb3a99",
+    "tokenizer_sha256": "4d765ac5a92a75f240af39f9358a09a140216dce113e57754c91042ef8b9e4e8",
+    "input_pointer": "results/market-state-v19/readiness/44040999343/input-key.json",
+    "arm": "price",
+    "selected_updates": {
+      "17": 30,
+      "29": 30,
+      "43": 30
+    },
+    "checkpoint_ids": {
+      "17": "27320038901ef32a394c16d4",
+      "29": "7ad40d905dcbcaeae4b5e7b3",
+      "43": "7328876d3ae63c20cce34f18"
+    }
+  },
+  "model": {
+    "base": "Qwen/Qwen3.5-4B",
+    "renderer": "qwen3_5_disable_thinking",
+    "rank": 16,
+    "seed": 17,
+    "learning_rate": 0.00002,
+    "batch_horizon_groups": 8,
+    "max_updates": 64,
+    "checkpoints": [
+      0,
+      16,
+      32,
+      64
+    ],
+    "max_context_tokens": 6144,
+    "optimizer": "Fresh Adam on weight-only warm start; original optimizer moments not reused"
+  },
+  "data": {
+    "reuse": "Unchanged v19 314 training windows / 942 horizon examples, development 16 seven-day cases on two reused dates; same historical provenance limitations",
+    "horizons": [
+      1,
+      3,
+      7
+    ],
+    "quantiles": [
+      0.1,
+      0.5,
+      0.9
+    ],
+    "history_cutoff": "2026-11-06",
+    "training_origins_through": "2026-10-04",
+    "training_labels_through": "2026-10-11",
+    "development_origins": [
+      "2026-10-11",
+      "2026-10-18"
+    ],
+    "exploratory_origins": [
+      "2026-10-25",
+      "2026-10-28",
+      "2026-10-30"
+    ],
+    "new_information": false
+  },
+  "objective": {
+    "name": "Sorted continuous-head quantile pinball",
+    "encoding": "Each tau-specific answer-token softmax over frozen 19 price levels encodes a scalar weighted mean, not a predictive probability distribution. Sort the three means before both training loss and evaluation.",
+    "loss": "Mean dollar pinball across three ordered quantiles and horizon groups, divided by one global positive median training anchor; scaling does not alter relative cell weights",
+    "crossing": "Sort three scalar heads with differentiable torch.sort; retain raw crossing frequency",
+    "label": "One matured realized price per horizon is valid supervision for asymmetric quantile regression; no claim of observed quantile labels",
+    "comparison_caution": "Compared with parent categorical forecasts, representation and objective both change. Only head-zero versus trained isolates updates within this interface."
+  },
+  "controls": {
+    "fixed_ensembles": [
+      "Uniform three-seed quantile average",
+      "Uniform three-seed probability pool then registered quantiles"
+    ],
+    "weights": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333
+    ],
+    "fit_weights": false,
+    "selection": "Choose the lower development seven-day ensemble score; exact ties choose quantile average. Freeze before computing additional retrospective ensemble scores.",
+    "references": [
+      "Frozen v19 price/17 parent",
+      "Official drift unchanged",
+      "Head-interface checkpoint zero"
+    ],
+    "label": "Ensemble gains are postprocessing, not new weight learning"
+  },
+  "selection": {
+    "rule": "Lowest development seven-day pinball, update zero eligible, earliest update exact tie",
+    "expansion_gate": "Pilot selected update >0; development pinball at least 2% lower than BOTH head-zero and unchanged v19 price/17 parent; zero development fallbacks. Threshold is an engineering gate, not statistical evidence.",
+    "expansion": "If gate passes, same objective/budget with seeds29/43, warm-start corresponding frozen price parent. Otherwise stop initial campaign and publish result. No automatic hyperparameter search.",
+    "retrospective": "Only selected checkpoint evaluated after selection is saved; no change to original studies or selections"
+  },
+  "limits": {
+    "max_pilot_updates": 64,
+    "max_campaign_updates": 192,
+    "max_runs": 3,
+    "max_hours_per_run": 3,
+    "max_parallel_runs": 1,
+    "max_new_persistent_states_per_run": 3,
+    "max_total_new_persistent_states": 9,
+    "checkpoint_preservation_limit": 100,
+    "max_inference_concurrency": 4,
+    "max_private_recovery_bytes": 50000000,
+    "allow_checkpoint_deletion": false
+  },
+  "preservation": {
+    "official_export_sha256": "67a043255a716db6bc9b73cd28f9258c30fb299fd8671a9ee3430c0d94cadd80",
+    "existing_future_panels_unchanged": true,
+    "protected_outcomes_loaded": false
+  },
+  "implementation": {
+    "tinker": "0.39.1",
+    "cookbook": "0.6.1",
+    "torch": "2.15.0+cpu",
+    "dependencies": "requirements/market-state-v19.txt",
+    "loss_api": "Existing supported client-side forward_backward_custom callback; no alpha API"
+  },
+  "future_protocol": "configs/quantile-training-v20-prospective.json",
+  "sources": [
+    {
+      "url": "https://tinker-docs.thinkingmachines.ai/tinker/losses/custom/",
+      "adopt": "Client-side differentiable multi-target callback"
+    },
+    {
+      "url": "https://tinker-docs.thinkingmachines.ai/tinker/api-reference/serviceclient/",
+      "adopt": "Weight-only warm start resets optimizer"
+    },
+    {
+      "url": "https://arxiv.org/abs/1711.11053",
+      "adopt": "Direct multi-horizon asymmetric quantile loss"
+    },
+    {
+      "url": "https://pubsonline.informs.org/doi/10.1287/mnsc.1120.1667",
+      "adopt": "Distinguish quantile averaging from probability pooling"
+    },
+    {
+      "url": "https://arxiv.org/abs/0704.3649",
+      "adopt": "Ordered quantile rearrangement; no novelty claim"
+    }
+  ],
+  "limitations": [
+    "Opened development and retrospective dates cannot establish future improvement",
+    "Warm start already selected on same development period",
+    "Three seeds share market outcomes",
+    "Support bounded to frozen v19 extent; report out-of-support labels",
+    "Pretraining exposure unknown",
+    "No news/BLS/availability feature attribution in this price-only study"
+  ]
+}
