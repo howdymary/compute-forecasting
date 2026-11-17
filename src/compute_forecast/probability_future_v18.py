@@ -51,3 +51,11 @@ def score(value,records,at,p,lock):
     result=score_contracts(value,snapshots,at,p)
     result["classification"]="Prospective individual-contract transfer; not competition medians"
     return result
+
+def forecast_row(task,h,method,lock,mass=None,failure_type=None,request_attempted=False):
+    z=support(task["anchor"],lock["log_levels"])
+    if mass is None:
+        mass=[float(r==0) for r in lock["log_levels"]]
+        assert failure_type,"Fallbacks require an explicit failure reason"
+    q=quantiles(mass,z)
+    return {"task_id":task["task_id"],"method":method,"series_id":task["series_id"],"horizon_days":h,"target_date":task["target_dates"][(1,3,7).index(h)],"contract_sha256":digest(task["metadata"]["contract"]),"probabilities":mass,"probability_sha256":digest(mass),"support_prices":z,"q10":q[0],"q50":q[1],"q90":q[2],"fallback":failure_type is not None,"failure_type":failure_type,"request_attempted":request_attempted}

@@ -50,3 +50,11 @@ def test_rejects_probability_or_horizon_change():
     for r in value["rows"]:
         if r["horizon_days"]==7:r["horizon_days"]=2;r["target_date"]="2026-12-08"
     with pytest.raises(AssertionError):validate(value,p,lock)
+
+def test_initialization_fallback_keeps_positive_registered_distribution():
+    from compute_forecast.probability_future_v18 import forecast_row
+    value,p,lock=commitment();task=prepare(records(),"2026-12-07T00:10:00+00:00",p)["tasks"][0]
+    row=forecast_row(task,7,"ce_selected",lock,failure_type="SyntheticInitializationError")
+    assert row["probabilities"]==[0.,1.,0.] and row["q10"]==row["q50"]==row["q90"]==task["anchor"]
+    assert row["fallback"] and not row["request_attempted"]
+    assert row["probability_sha256"]==digest(row["probabilities"])

@@ -3,7 +3,7 @@ import asyncio,hashlib,json,os,pathlib,time,urllib.request
 from datetime import datetime,timezone
 import modal
 from .probability_v18 import digest,decision,support,quantiles
-from .probability_future_v18 import prepare,validate,score
+from .probability_future_v18 import prepare,validate,score,forecast_row
 from .signals_remote_v6 import native_references
 from .direct_future_v12 import issuance_status
 app=modal.App("compute-forecast-probability-v18-future")
@@ -25,31 +25,43 @@ async def infer(tasks,p,parent,lock):
     import tinker
     from tinker_cookbook.renderers import get_renderer
     from tinker_cookbook.recipes.decisions import DecisionRenderer,sample_decision
-    service=tinker.ServiceClient(display_name="Compute Forecast frozen probability transfer",user_metadata={"study_id":p["study_id"],"phase":"prospective_inference"})
-    base=await service.create_sampling_client(base_model=parent["model"]["base"]);renderer=DecisionRenderer(get_renderer(parent["model"]["renderer"],base.get_tokenizer()))
-    assert hashlib.sha256(base.get_tokenizer().backend_tokenizer.to_str().encode()).hexdigest()==lock["tokenizer_sha256"]
-    samplers={"untuned":base};rest=tinker.RestClient();available=[]
-    for offset in range(0,2000,100):
-        page=await rest.list_user_checkpoints(limit=100,offset=offset);available.extend(page.checkpoints)
-        if len(page.checkpoints)<100:break
+    methods=("untuned","ce_selected","crps_selected")
+    try:
+        service=tinker.ServiceClient(display_name="Compute Forecast frozen probability transfer",user_metadata={"study_id":p["study_id"],"phase":"prospective_inference"})
+        base=await asyncio.wait_for(service.create_sampling_client(base_model=parent["model"]["base"]),timeout=120)
+        renderer=DecisionRenderer(get_renderer(parent["model"]["renderer"],base.get_tokenizer()))
+        assert hashlib.sha256(base.get_tokenizer().backend_tokenizer.to_str().encode()).hexdigest()==lock["tokenizer_sha256"]
+    except Exception as error:
+        return [forecast_row(t,h,m,lock,failure_type="BaseInitialization"+type(error).__name__) for t in tasks for h in p["horizons"] for m in methods]
+    samplers={"untuned":base};errors={};available=[]
+    try:
+        rest=tinker.RestClient()
+        for offset in range(0,2000,100):
+            page=await asyncio.wait_for(rest.list_user_checkpoints(limit=100,offset=offset),timeout=60);available.extend(page.checkpoints)
+            if len(page.checkpoints)<100:break
+    except Exception as error:errors.update({obj+"_selected":"CheckpointLookup"+type(error).__name__ for obj in ("ce","crps")})
     for obj in ("ce","crps"):
-        row=next(r for r in lock["records"] if r["objective"]==obj)
-        if row["selected_update"]==0:samplers[obj+"_selected"]=base;continue
-        matches=[c for c in available if hashlib.sha256(c.tinker_path.encode()).hexdigest()[:24]==row["checkpoint_id"]]
-        if len(matches)!=1:raise ValueError("Frozen selected probability checkpoint missing")
-        assert (matches[0].user_metadata or {}).get("study_id")==parent["study_id"]
-        trainer=await service.create_training_client_from_state(matches[0].tinker_path)
-        samplers[obj+"_selected"]=await trainer.save_weights_and_get_sampling_client()
+        method=obj+"_selected"
+        try:
+            row=next(r for r in lock["records"] if r["objective"]==obj)
+            if row["selected_update"]==0:samplers[method]=base;errors.pop(method,None);continue
+            if method in errors:continue
+            matches=[c for c in available if hashlib.sha256(c.tinker_path.encode()).hexdigest()[:24]==row["checkpoint_id"]]
+            assert len(matches)==1,"Frozen checkpoint missing"
+            assert (matches[0].user_metadata or {}).get("study_id")==parent["study_id"]
+            trainer=await asyncio.wait_for(service.create_training_client_from_state(matches[0].tinker_path),timeout=120)
+            samplers[method]=await asyncio.wait_for(trainer.save_weights_and_get_sampling_client(),timeout=120)
+        except Exception as error:errors[method]="FrozenModelInitialization"+type(error).__name__
     sem=asyncio.Semaphore(4)
     async def one(t,h,method):
-        z=support(t["anchor"],lock["log_levels"]);error=None
+        if method in errors:return forecast_row(t,h,method,lock,failure_type=errors[method])
         try:
             rendering=renderer.render(decision(t,h,lock["log_levels"]))
-            async with sem:mass=await sample_decision(samplers[method],rendering)
-            prob=[mass[str(i)] for i in range(len(z))];q=quantiles(prob,z)
-        except Exception as exc:error=type(exc).__name__;prob=[float(r==0) for r in lock["log_levels"]];q=[t["anchor"]]*3
-        return {"task_id":t["task_id"],"method":method,"series_id":t["series_id"],"horizon_days":h,"target_date":t["target_dates"][(1,3,7).index(h)],"contract_sha256":digest(t["metadata"]["contract"]),"probabilities":prob,"probability_sha256":digest(prob),"support_prices":z,"q10":q[0],"q50":q[1],"q90":q[2],"fallback":error is not None,"failure_type":error}
-    return await asyncio.gather(*(one(t,h,m) for t in tasks for h in p["horizons"] for m in samplers))
+            async with sem:mass=await asyncio.wait_for(sample_decision(samplers[method],rendering),timeout=60)
+            prob=[mass[str(i)] for i in range(len(lock["log_levels"]))]
+            return forecast_row(t,h,method,lock,mass=prob,request_attempted=True)
+        except Exception as error:return forecast_row(t,h,method,lock,failure_type=type(error).__name__,request_attempted=True)
+    return await asyncio.gather(*(one(t,h,m) for t in tasks for h in p["horizons"] for m in methods))
 @app.function(image=image,cpu=2,memory=4096,timeout=1800,max_containers=1,secrets=[secret],volumes={"/data":data,"/public":public},schedule=modal.Cron("10 0 * * 1"))
 def tick():
     at=datetime.now(timezone.utc).isoformat();p=read(pathlib.Path("/root/configs/probability-v18-prospective.json"))
@@ -81,6 +93,7 @@ def tick():
             issued=datetime.now(timezone.utc).isoformat()
             used=[s for s in state["snapshots"] if s["prices"]["date"]<=origin]
             value={"study_id":p["study_id"],"status":"issued","protocol_sha256":digest(p),"model_lock_sha256":digest(lock),"origin":origin,"information_cutoff":origin+"T23:59:59+00:00","issued_at":issued,"input_vintages":[{"captured_at":s["captured_at"],"snapshot_sha256":digest(s)} for s in used],"rows":predictions,"target_contracts":{t["series_id"]:t["metadata"]["contract"] for t in tasks},"new_optimizer_updates":0,"provider_cost_usd":None}
+            value["probability_requests_attempted"]=sum(r.get("request_attempted",False) for r in predictions)
             value["target_source"]={"url":"https://gpurentalprices.com/api/latest.json","permission_url":"https://gpurentalprices.com/data","license":"CC BY 4.0","credit":"GPU Rental Prices. GPU rental price index [dataset]. https://gpurentalprices.com/data","unit":"USD per GPU-hour","instrument":"Individual provider exact-configuration advertised quote; own source IDs"}
             validate(value,p,lock);retain(root,"commitments",value,origin)
             retain(pathlib.Path("/public/probability-v18-future"),"artifacts",value);public.commit()
@@ -103,9 +116,11 @@ def tick():
     for c in commitments:
         receipt=next((r for r in receipts if r["commitment_sha256"]==digest(c)),None)
         if not receipt or receipt["deadline_status"]!="eligible":continue
-        value=score(c,snapshots,at,p,lock);retain(root,"evaluations",value);evaluations.append(value)
+        try:value=score(c,snapshots,at,p,lock)
+        except Exception as error:value={"status":"blocked_evaluator_contract","commitment_sha256":digest(c),"error_type":type(error).__name__,"cells":[],"prospective_accuracy":"not established"}
+        retain(root,"evaluations",value);evaluations.append(value)
     summaries=[{"origin":c["origin"],"issued_at":c["issued_at"],"commitment_sha256":digest(c),"model_lock_sha256":c["model_lock_sha256"],"artifact_url":"/api/probability-v18/future/artifacts/"+digest(c)+".json","publication_receipt":next((r for r in receipts if r["commitment_sha256"]==digest(c)),None)} for c in commitments]
-    index={"study_id":p["study_id"],"commitments":summaries,"checked_at":at,"registration":registration,"issued_origins":len(commitments),"readiness":{k:v for k,v in state.items() if k not in ("tasks","snapshots")},"evaluations":evaluations,"new_optimizer_updates":0,"prospective_accuracy":"not established","classification":p["classification"]}
+    index={"study_id":p["study_id"],"commitments":summaries,"failures":records(root,"failures"),"eligible_public_origins":sum(r["deadline_status"]=="eligible" for r in receipts),"checked_at":at,"registration":registration,"issued_origins":len(commitments),"readiness":{k:v for k,v in state.items() if k not in ("tasks","snapshots")},"evaluations":evaluations,"new_optimizer_updates":0,"prospective_accuracy":"not established","classification":p["classification"]}
     atomic(pathlib.Path("/public/probability-v18-future/index.json"),index);data.commit();public.commit()
     return index
 @app.local_entrypoint()
