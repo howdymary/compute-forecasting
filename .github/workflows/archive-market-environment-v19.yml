@@ -1,0 +1,37 @@
+name: Preserve market-state environment v19
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/archive-market-environment-v19.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+jobs:
+  preserve:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Fetch current source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/compute-observatory" | tar -xz --strip-components=1
+      - name: Preserve the actual dependency lock before temporary inputs expire
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run download 44006306188 --repo "$GITHUB_REPOSITORY" --name probability-v18-inputs-44006306188 --dir inputs/legacy-v18
+          python - <<'PY'
+          import pathlib
+          raw=pathlib.Path("inputs/legacy-v18/requirements-lock.txt").read_bytes()
+          assert b"tinker==0.39.1" in raw and b"tinker-cookbook==0.6.1" in raw
+          assert b"://" not in raw and b"@" not in raw,"Unexpected remote/private requirement"
+          out=pathlib.Path("artifacts/market-state-v19-environment");out.mkdir(parents=True,exist_ok=True)
+          (out/"requirements-lock.txt").write_bytes(raw)
+          PY
+      - name: Publish exact permitted environment metadata
+        env:
+          GH_TOKEN: ${{ github.token }}
+          V18_PUBLIC_ROOT: artifacts/market-state-v19-environment
+          V18_PUBLIC_KIND: environment
+        run: python scripts/publish_market_v19.py
