@@ -28,7 +28,7 @@ def verify_shapes(page,source):
     assert page.locator("#prices circle").count()>0
     for selector in ("#prices text","#distribution text"):
         assert page.locator(selector).first.evaluate("(e)=>parseFloat(getComputedStyle(e).fontSize)*e.getScreenCTM().a")>=11,"Unreadable axis"
-    assert page.evaluate("async()=>{await document.fonts.ready;return document.fonts.check('24px Caveat')}"),"Annotation font unavailable"
+    assert page.evaluate("async()=>{await document.fonts.load('24px Caveat');await document.fonts.ready;return document.fonts.check('24px Caveat')}"),"Annotation font unavailable"
 def interact(page,source,touch):
     page.locator("#prices circle").first.focus();page.keyboard.press("Enter")
     value=json.loads(page.locator("#inspection").inner_text());assert value["kind"]=="Historical observed median"
