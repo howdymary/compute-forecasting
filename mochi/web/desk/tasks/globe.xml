@@ -1,0 +1,33 @@
+<mujoco model="Mochi globe desk task"><compiler angle="radian"/><option timestep="0.002" integrator="implicitfast" iterations="90"/>
+    <default><joint damping=".025" armature=".00004"/><geom friction=".7 .005 .0001" solref=".006 1" solimp=".95 .99 .001" rgba=".8 .82 .76 1"/></default>
+    <worldbody><geom name="desk" type="box" pos="0 0 -.020" size=".60 .40 .020"/>
+      <body name="pelvis" pos="0.075 -0.005 0.112" euler="0 0 1.5707963267948966"><geom type="box" size=".021 .0135 .011"/><body name="left-hip" pos="-0.018 0 0"><geom type="capsule" fromto="0 0 0 0 0 -.052" size=".007"/>
+          <body name="left-knee" pos="0 0 -.052"><geom type="capsule" fromto="0 0 0 0 0 -.048" size=".006"/>
+          <body name="left-ankle" pos="0 0 -.048"><geom type="box" pos="0 -.008 -.006" size=".012 .020 .006"/></body></body></body><body name="right-hip" pos="0.018 0 0"><geom type="capsule" fromto="0 0 0 0 0 -.052" size=".007"/>
+          <body name="right-knee" pos="0 0 -.052"><geom type="capsule" fromto="0 0 0 0 0 -.048" size=".006"/>
+          <body name="right-ankle" pos="0 0 -.048"><geom type="box" pos="0 -.008 -.006" size=".012 .020 .006"/></body></body></body>
+       <body name="waist" pos="0 0 .014"><geom type="box" pos="0 0 .028" size=".0235 .014 .028"/>
+        <body name="head" pos="0 0 .078" euler="0 0 -1.5707963267948966"><geom type="box" size=".0175 .015 .017"/></body>
+        <body name="left-shoulder" pos="-.033 0 .047"><geom type="capsule" fromto="0 0 0 0 0 -.040" size=".0058"/>
+          <body name="left-elbow" pos="0 0 -.040"><geom type="capsule" fromto="0 0 0 0 0 -.037" size=".0048"/>
+           <body name="left-wrist" pos="0 0 -.037"><geom type="box" pos="0 0 -.007" size=".0055 .004 .007"/></body></body></body>
+        <body name="right-shoulder" pos=".033 0 .047">
+       <joint name="arm-yaw" axis="0 0 1" range="-3 3"/><joint name="arm-pitch" axis="1 0 0" range="-1.57 1.57"/><joint name="arm-roll" axis="0 1 0" range="-3.14 3.14"/>
+       <geom name="upper-arm" type="capsule" fromto="0 0 0 0 0 -.040" size=".0058" mass=".020"/>
+       <body name="right-elbow" pos="0 0 -.040"><joint name="arm-elbow" axis="1 0 0" range=".08 2.9"/>
+         <geom name="forearm" type="capsule" fromto="0 0 0 0 0 -.037" size=".0048" mass=".015"/>
+         <body name="right-wrist" pos="0 0 -.037"><geom name="palm-contact" type="box" pos="0 0 -.005" size=".0055 .004 .005" mass=".006"/>
+           <geom name="hand-contact" type="sphere" pos="0 0 -.014" size=".0045" mass=".003" friction="1 .005 .0001"/><site name="tip" pos="0 0 -.014" size=".001"/>
+         </body></body></body></body></body>
+      <body name="laptop-base" pos="-.12 -.024 .007"><geom type="box" size=".145 .0975 .007"/></body>
+      <body name="laptop-screen" pos="-.12 .070 .014" euler="0.3490658503988659 0 0">
+        <geom name="screen-contact" type="box" pos="0 0 .0925" size=".145 .0035 .0875" mass="0.16" friction="0.781319603522935 .005 .0001"/>
+      </body>
+      <body name="globe-base" pos=".20 .040 0"><geom type="cylinder" pos="0 0 .006" size=".039 .006"/><geom type="cylinder" pos="0 0 .035" size=".004 .029"/></body>
+      <body name="globe" pos=".20 .040 .123"><joint name="object-angle" axis="0 0 1" limited="false" damping=".00008" frictionloss="3.629049460794331e-05"/><geom name="globe-contact" type="sphere" size=".058" mass="0.040886594414527945" friction="0.781319603522935 .005 .0001"/></body>
+    </worldbody><actuator>
+      <position joint="arm-yaw" kp="8" kv=".055" ctrlrange="-3 3" forcerange="-.12 .12"/>
+      <position joint="arm-pitch" kp="8" kv=".055" ctrlrange="-1.57 1.57" forcerange="-.12 .12"/>
+      <position joint="arm-roll" kp="8" kv=".055" ctrlrange="-3.14 3.14" forcerange="-.12 .12"/>
+      <position joint="arm-elbow" kp="6" kv=".045" ctrlrange=".08 2.9" forcerange="-.10 .10"/>
+    </actuator></mujoco>

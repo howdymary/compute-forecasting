@@ -1,0 +1,33 @@
+name: Mochi two-task preview
+on:
+  push:
+    branches: [mochi-desk-v3]
+    paths:
+      - '.github/workflows/mochi-tasks-preview.yml'
+      - 'mochi/scripts/deploy_tasks.py'
+      - 'mochi/web/desk/tasks.html'
+      - 'mochi/web/desk/tasks.css'
+      - 'mochi/web/desk/tasks.js'
+      - 'mochi/web/desk/task-objects.js'
+      - 'mochi/web/desk/workspace-stage.js'
+      - 'mochi/web/desk/tasks/**'
+permissions:
+  contents: read
+concurrency:
+  group: mochi-two-task-preview
+  cancel-in-progress: true
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install modal==1.6.4
+      - name: Deploy the isolated replay app
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: modal deploy mochi/scripts/deploy_tasks.py
