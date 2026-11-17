@@ -127,6 +127,17 @@ def tick():
     index={"study_id":p["study_id"],"commitments":summaries,"failures":records(root,"failures"),"eligible_public_origins":sum(r["deadline_status"]=="eligible" for r in receipts),"checked_at":at,"registration":registration,"issued_origins":len(commitments),"readiness":{k:v for k,v in state.items() if k not in ("tasks","snapshots")},"evaluations":evaluations,"new_optimizer_updates":0,"prospective_accuracy":"not established","classification":p["classification"]}
     atomic(pathlib.Path("/public/probability-v18-future/index.json"),index);data.commit();public.commit()
     return index
+@app.function(image=image,cpu=2,memory=4096,timeout=600,max_containers=1,secrets=[secret])
+def probe_models():
+    from datetime import date,timedelta
+    p=read(pathlib.Path("/root/configs/probability-v18-prospective.json"));parent=read(pathlib.Path("/root/configs/direct-probability-v18.json"));lock=read(pathlib.Path("/root/inputs/probability-v18-future/model-lock.json"))
+    origin=date(2026,1,20);contract={"gpu":"A100 40GB","provider":"explicit_synthetic_readiness_fixture","region":"synthetic","unit":"USD per GPU-hour"}
+    task={"task_id":"synthetic-readiness-only","series_id":"synthetic-readiness-only","origin":origin.isoformat(),"anchor":1.,"metadata":{"series_id":"synthetic-readiness-only","source_id":"explicit_synthetic_readiness_fixture","gpu_model":"A100 40GB","instrument_class":"synthetic_fixture","pricing_tier":"synthetic","benchmark_contract":contract,"contract":contract},"context":[{"date":(origin-timedelta(days=19-i)).isoformat(),"value":1.} for i in range(20)],"context_missing_days":22,"target_dates":[(origin+timedelta(days=h)).isoformat() for h in (1,3,7)]}
+    rows=asyncio.run(infer([task],{**p,"horizons":[7]},parent,lock))
+    results=[{"method":r["method"],"fallback":r["fallback"],"failure_type":r["failure_type"],"request_attempted":r["request_attempted"],"probability_sum":sum(r["probabilities"]),"probability_sha256":r["probability_sha256"],"n_levels":len(r["probabilities"])} for r in rows]
+    return {"study_id":p["study_id"],"status":"verified" if len(results)==3 and all(not r["fallback"] for r in results) else "blocked_frozen_model_inference","synthetic_fixture":True,"market_forecasts_issued":0,"new_optimizer_updates":0,"conditional_probability_queries_attempted":sum(r["request_attempted"] for r in results),"provider_cost_usd":None,"model_lock_sha256":digest(lock),"results":results}
 @app.local_entrypoint()
-def main():
-    value=tick.remote();out=pathlib.Path("artifacts/probability-v18-future");out.mkdir(parents=True,exist_ok=True);atomic(out/"readiness.json",value);print(json.dumps({k:value.get(k) for k in ("study_id","issued_origins","new_optimizer_updates","classification")}),flush=True)
+def main(probe:bool=False):
+    value=probe_models.remote() if probe else tick.remote();out=pathlib.Path("artifacts/probability-v18-future");out.mkdir(parents=True,exist_ok=True);atomic(out/("model-readiness.json" if probe else "readiness.json"),value)
+    print(json.dumps({k:value.get(k) for k in ("study_id","status","issued_origins","new_optimizer_updates","classification")}),flush=True)
+    if probe:assert value["status"]=="verified","Frozen model API readiness failed; inspect the sanitized receipt"

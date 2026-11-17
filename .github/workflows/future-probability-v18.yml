@@ -36,6 +36,14 @@ jobs:
         env:
           TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
         run: PYTHONPATH=src python scripts/retain_probability_v18.py
+      - name: Verify selected models with an explicitly synthetic read-only probe
+        if: steps.lock.outputs.ready == 'true'
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: |
+          modal run -m compute_forecast.probability_future_remote_v18 --probe
+          cp artifacts/probability-v18-future/model-readiness.json artifacts/probability-v18-future-lock/
       - name: Deploy the separately registered finite weekly panel
         if: steps.lock.outputs.ready == 'true'
         env:
