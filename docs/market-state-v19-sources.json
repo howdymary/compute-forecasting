@@ -1,0 +1,31 @@
+{
+  "study_id": "market-state-v19",
+  "checked_at": "2026-11-17T08:05:00+00:00",
+  "historical_source": "Pacific v0.1.1-handover source-specific CC-BY-4.0 quality-ok observations",
+  "training_features": [
+    "observed collector composition",
+    "other-provider within-group price changes"
+  ],
+  "excluded_features": {
+    "news": "historical joint availability not verified",
+    "availability": "historical source-specific availability not verified",
+    "BLS": "outside this registered price-context intervention",
+    "infrastructure": "historical joint panel not verified"
+  },
+  "current_source": {
+    "url": "https://gpurentalprices.com/api/latest.json",
+    "permission": "https://gpurentalprices.com/data",
+    "licence": "CC-BY-4.0",
+    "raw_public": false,
+    "normalised_quotes_public": true,
+    "quote_update_time_verified": false
+  },
+  "optional_sources": {
+    "getdeploying": "not ingested; authenticated richer API and vintage compatibility pending",
+    "priceofcompute": "not ingested; methodology, identity, source rights pending",
+    "vast": "not ingested; authorized API access and redistribution basis pending",
+    "runpod": "not ingested; authorized product-specific API access and redistribution basis pending"
+  },
+  "protected_period": "2026-11-07 through 2026-11-13 excluded from all frozen and v19 inputs",
+  "search_exposure": "Current discovery previously exposed post-cutoff snippets. These remain quarantined current research, not inputs or an untouched historical evaluation."
+}
