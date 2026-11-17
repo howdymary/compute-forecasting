@@ -56,6 +56,7 @@ async def main():
         assert await page.locator("#price-chart").inner_html()==chart
         await page.unroute("**/api/continuation-v21",fail);await page.locator("#refresh").click()
         await expect(page.locator("#status")).to_contain_text("actual optimizer updates")
+        assert await page.locator("#learning-chart svg text").evaluate_all("(xs)=>xs.every(t=>{const b=t.getBBox(),v=t.ownerSVGElement.viewBox.baseVal;return b.x>=-1&&b.y>=-1&&b.x+b.width<=v.width+1&&b.y+b.height<=v.height+1})"),"Learning-curve labels clip the chart"
         assert not errors,errors
         mobile=await browser.new_context(viewport={"width":390,"height":844},device_scale_factor=1,is_mobile=True,has_touch=True,reduced_motion="reduce")
         m=await mobile.new_page();m.on("pageerror",lambda error:errors.append(str(error)))
