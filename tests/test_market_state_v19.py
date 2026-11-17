@@ -39,3 +39,17 @@ def test_conflicting_current_quote_not_averaged():
     p={"date":"2026-11-16","generated_at":"2026-11-16T18:00:00Z","offers":[{"provider":"a","gpu":"h100-sxm","kind":"on-demand","usd_hr":v,"fetched_at":"2026-11-16T17:00:00Z"} for v in (2.,3.)]}
     h={"snapshot_date":"2026-11-16","provider_freshness":{"a":{"status":"current"}}}
     v=normalize_latest(p,h,"2026-11-16T19:00:00Z","s","h");assert not v["rows"] and v["excluded"][0]["reason"]=="ambiguous_same_contract_prices"
+
+def test_return_context_does_not_require_false_dollar_comparability():
+    t=task();t["metadata"]["region"]=None
+    current=[row("b",None,2.,"b"),row("c","elsewhere",6.,"c")]
+    prior=[row("b",None,1.,"b"),row("c","elsewhere",3.,"c")]
+    for r in prior:r["date"]="2026-09-24"
+    f=market_features(t,current,t["origin"],past_by_horizon={7:prior})
+    assert f["log_anchor_to_peer_median"] is None
+    assert f["peer_return_provider_count_7d"]==2
+    assert abs(f["peer_return_median_7d"]-__import__("math").log(2))<1e-12
+def test_changed_return_context_identity_refused():
+    t=task();current=[row("b",value=2.,sid="b"),row("c",value=6.,sid="c")]
+    prior=[row("b",region="other",value=1.,sid="b"),row("c",value=3.,sid="c")]
+    with pytest.raises(ValueError):market_features(t,current,t["origin"],past_by_horizon={7:prior})

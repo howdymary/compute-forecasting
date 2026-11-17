@@ -3,9 +3,9 @@ from __future__ import annotations
 import json,math,statistics
 from datetime import date,datetime,timedelta,timezone
 from .probability_v18 import digest,support,bin_index
-MARKET_FIELDS=("observed_provider_count","observed_quote_count","unknown_region_fraction","unknown_node_fraction","observed_provider_concentration","comparable_provider_count","log_anchor_to_peer_median","peer_log_iqr","log_anchor_to_peer_min","log_anchor_to_peer_max","peer_price_rank","peer_log_step_7d")
+MARKET_FIELDS=("observed_provider_count","observed_quote_count","unknown_region_fraction","unknown_node_fraction","observed_provider_concentration","comparable_provider_count","log_anchor_to_peer_median","peer_log_iqr","log_anchor_to_peer_min","log_anchor_to_peer_max","peer_price_rank","peer_log_step_7d","peer_return_median_1d","peer_return_median_3d","peer_return_median_7d","peer_return_iqr_7d","peer_up_fraction_7d","peer_down_fraction_7d","peer_unchanged_fraction_7d","peer_return_provider_count_7d")
 SHARED_FIELDS=("days_since_observed_repricing","observed_change_fraction_14d","observed_log_step_sd_14d","log_change_7d","context_missing_fraction","origin_observation_age_hours")
-CONTRACT_FIELDS=("provider","gpu","vram_gb","kind","region","min_gpus","instance","cpu","vcpus","ram_gb","commitment","reservation_months","source_url")
+CONTRACT_FIELDS=("provider","gpu","vram_gb","kind","region","min_gpus","gpu_count_reported","instance","vcpus","ram_gib","ram_label","disk_label","rate_basis","commitment","reservation_months","source_url")
 def utc(value):
     t=datetime.fromisoformat(value.replace("Z","+00:00"))
     if t.tzinfo is None:raise ValueError("Timezone required")
@@ -31,7 +31,7 @@ def shared_features(task):
     past=[r for r in rows if r["date"]<=(date.fromisoformat(origin)-timedelta(days=7)).isoformat()]
     latest=rows[-1];stamp=latest.get("available_at") or latest["date"]+"T23:59:59+00:00"
     return {"days_since_observed_repricing":(date.fromisoformat(origin)-date.fromisoformat(changes[-1])).days if changes else None,"observed_change_fraction_14d":sum(a["value"]!=b["value"] for a,b in pairs)/len(pairs) if pairs else None,"observed_log_step_sd_14d":statistics.pstdev(steps) if len(steps)>1 else None,"log_change_7d":math.log(task["anchor"]/past[-1]["value"]) if past else None,"context_missing_fraction":task.get("context_missing_days",0)/42,"origin_observation_age_hours":max(0,(utc(origin+"T23:59:59+00:00")-utc(stamp)).total_seconds()/3600)}
-def market_features(target,quotes,origin,past_quotes=None):
+def market_features(target,quotes,origin,past_quotes=None,past_by_horizon=None):
     check_asof(quotes,origin)
     meta=target["metadata"];same=[r for r in quotes if r["metadata"].get("source_id")==meta.get("source_id") and r["metadata"].get("gpu_model")==meta.get("gpu_model") and r["metadata"].get("pricing_tier")==meta.get("pricing_tier") and r["metadata"].get("instrument_class")==meta.get("instrument_class")]
     counts={}
@@ -53,13 +53,29 @@ def market_features(target,quotes,origin,past_quotes=None):
             check_asof(past_quotes,origin);prior={r["series_id"]:r for r in past_quotes}
             steps=[math.log(r["value"]/prior[r["series_id"]]["value"]) for r in peers if r["series_id"] in prior]
             if steps:result["peer_log_step_7d"]=statistics.median(steps)
+    # A return is calculated within the same source-defined group first.
+    # This is an indirect market signal, not a cross-contract dollar comparison.
+    history=past_by_horizon or ({7:past_quotes} if past_quotes else {})
+    for horizon in (1,3,7):
+        old=history.get(horizon,[]);check_asof(old,origin);prior={r["series_id"]:r for r in old};paired={}
+        for r in same:
+            if r["metadata"]["provider"]==meta["provider"] or r["series_id"] not in prior:continue
+            before=prior[r["series_id"]]
+            if before["metadata"]!=r["metadata"]:raise ValueError("Return context identity changed")
+            paired.setdefault(r["metadata"]["provider"],[]).append(math.log(r["value"]/before["value"]))
+        changes=[statistics.median(v) for v in paired.values()]
+        if len(changes)>=2:
+            result["peer_return_median_"+str(horizon)+"d"]=statistics.median(changes)
+            if horizon==7:
+                result.update(peer_return_iqr_7d=quantile(changes,.75)-quantile(changes,.25),peer_up_fraction_7d=sum(v>0 for v in changes)/len(changes),peer_down_fraction_7d=sum(v<0 for v in changes)/len(changes),peer_unchanged_fraction_7d=sum(v==0 for v in changes)/len(changes),peer_return_provider_count_7d=len(changes))
+        elif horizon==7:result["peer_return_provider_count_7d"]=len(changes)
     return result
 def normalize_latest(payload,health,retrieved_at,raw_sha256,health_sha256):
     at=utc(retrieved_at);day=payload.get("date")
     if not day or not allowed(day) or day>at.date().isoformat() or day!=health.get("snapshot_date"):raise ValueError("Invalid source day or health vintage")
     if utc(payload["generated_at"])>at:raise ValueError("Future source publication")
     groups={};excluded=[];fresh=health.get("provider_freshness",{})
-    variants={"a100-pcie-40","a100-pcie-80","a100-sxm-80","h100-pcie","h100-sxm"}
+    variants={"a100-pcie-40","a100-pcie-80","a100-sxm-40","a100-sxm-80","h100-pcie","h100-sxm","h100-nvl"}
     for row in payload.get("offers",[]):
         if row.get("gpu") not in variants or row.get("kind")!="on-demand":continue
         c=contract(row);sid="market-v19-grp-"+digest(c)[:20]
@@ -74,7 +90,7 @@ def normalize_latest(payload,health,retrieved_at,raw_sha256,health_sha256):
     for sid,g in sorted(groups.items()):
         if len(set(g["prices"]))>1:excluded.append({"series_id":sid,"reason":"ambiguous_same_contract_prices"});continue
         c=g["contract"];family="H100" if c["gpu"].startswith("h100") else "A100"
-        meta={"source_id":"gpurentalprices-current-v19","provider":c["provider"],"gpu_model":c["gpu"],"family":family,"pricing_tier":"on_demand","instrument_class":"provider_rate_card","region":c.get("region"),"gpu_count":c.get("min_gpus"),"gpu_memory_gb":c.get("vram_gb"),"benchmark_contract":json.dumps(c,sort_keys=True)}
+        meta={"source_id":"gpurentalprices-current-v19","provider":c["provider"],"gpu_model":c["gpu"],"family":family,"pricing_tier":"on_demand","instrument_class":"provider_rate_card","region":c.get("region"),"gpu_count":c.get("min_gpus") if c.get("gpu_count_reported") else None,"gpu_memory_gb":c.get("vram_gb"),"benchmark_contract":json.dumps(c,sort_keys=True)}
         rows.append({"series_id":sid,"date":day,"available_at":retrieved_at,"value":g["prices"][0],"metadata":meta,"contract":c,"provider_checked_at":max(g["times"]),"source_sha256":raw_sha256,"health_sha256":health_sha256,"unit":"USD per GPU-hour","quote_update_timestamp_verified":False})
     return {"date":day,"captured_at":retrieved_at,"rows":rows,"excluded":excluded,"source_sha256":raw_sha256,"health_sha256":health_sha256,"license":"CC-BY-4.0","permission_url":"https://gpurentalprices.com/data","credit":"GPU Rental Prices"}
 def prompt(task,h):
@@ -87,7 +103,7 @@ def prompt(task,h):
         v=block.get(key) if arm=="market" else None
         if v is not None and (not isinstance(v,(int,float)) or not math.isfinite(v)):raise ValueError("Nonfinite market feature")
         features[key]=v
-    value["market_state"]={"values":features,"availability":"observed source-specific price context" if arm=="market" else "withheld by study","scope":"Observed collector composition; comparable-price fields require recorded region and node agreement; no stock, utilization or transaction claims"}
+    value["market_state"]={"values":features,"availability":"observed source-specific price context" if arm=="market" else "withheld by study","scope":"Observed collector composition and within-group return context; comparable-price fields require recorded region and node agreement; no stock, utilization or transaction claims"}
     return json.dumps(value,sort_keys=True,separators=(",",":"),allow_nan=False)
 def decision(task,h,log_levels):
     from tinker_cookbook.recipes.decisions import Decision

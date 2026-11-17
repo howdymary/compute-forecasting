@@ -1,0 +1,20 @@
+{
+  "study_id": "market-state-v19-feature-definitions",
+  "registered_at": "2026-11-17 07:35:26 UTC",
+  "readiness_protocol": "configs/market-state-v19-readiness.json",
+  "selected_before_model_calls": true,
+  "primary_supplementary_group": "Other-provider within-group price-change context and observed collector composition",
+  "minimum_peer_coverage": "At least two other providers with same source, GPU model, instrument and tier, each return computed within an unchanged source/provider/SKU/region/node identity; minimum coverage applies to paired-return context, not unverified dollar comparability",
+  "strict_price_comparisons": "Additional dollar-ratio fields require recorded nonmissing region and node-count agreement; otherwise remain null",
+  "target_definition": "New source-specific provider/SKU/region/node daily observed-quote median, not a persistent marketplace listing or the official collector target",
+  "missing_identity": "Unknown metadata remains explicit; same-timestamp conflicting quotes are excluded before model performance is observed",
+  "historical_limit": "Frozen Pacific collection vintage and declared source timestamps; not independent proof of real-time historical publication",
+  "excluded_from_primary_training": [
+    "availability",
+    "market news",
+    "BLS",
+    "infrastructure"
+  ],
+  "prior_v8": "No offer replay or repeat pooled-change forecasting study; v8 negative findings and failed identity gates retained",
+  "prospective_limit": "New current-source contracts retain separate IDs; transfer from historical source-defined groups is reported explicitly, never as exact identity with competition targets"
+}
