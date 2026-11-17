@@ -26,7 +26,7 @@ Windows overlap. These counts are not independent market experiments. The base-m
 
 Targets are daily medians within source / provider / GPU / instrument / tier / SKU / region / node groups. They are **new targets**, not the official collector medians, persistent listings, or executed transactions. Ambiguous same-timestamp groups are excluded before performance inspection. Missing region/node metadata remains missing.
 
-Dollar ratios require matching recorded region, GPU count and memory. No such ratios were usable in the training cohort. Return context instead computes changes within each stable source-defined group, aggregates once per other provider, then summarizes the other providers. It is an indirect signal; it does not imply comparable contract prices.
+The existing feature name observed_quote_count counts observed daily source-defined provider/configuration groups, not individual raw offers or guaranteed available machines. Dollar ratios require matching recorded region, GPU count and memory. No such ratios were usable in the training cohort. Return context instead computes changes within each stable source-defined group, aggregates once per other provider, then summarizes the other providers. It is an indirect signal; it does not imply comparable contract prices.
 
 The audit and dataset bind to the protocol and preparation/feature-engine hashes. Both arms use the same examples. The engineering readiness gate is not a statistical power guarantee. Training ends October 4 with labels through October 11; development uses October 11/18 and retrospective evaluation October 25/28/30. Protected November 7–13 outcomes are not loaded.
 

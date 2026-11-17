@@ -57,6 +57,8 @@ if __name__=="__main__":
     import sys
     if len(sys.argv)>1:report=json.loads(pathlib.Path(sys.argv[1]).read_bytes())
     else:
-        pointer=json.loads(pathlib.Path("results/market-state-v19/latest.json").read_bytes());raw=pathlib.Path(pointer["report_path"]).read_bytes()
+        pointer_file=pathlib.Path("results/market-state-v19/latest.json")
+        if not pointer_file.exists():pointer_file=pathlib.Path("results/market-state-v19/progress/latest.json")
+        pointer=json.loads(pointer_file.read_bytes());raw=pathlib.Path(pointer["report_path"]).read_bytes()
         assert hashlib.sha256(raw).hexdigest()==pointer["report_sha256"];report=json.loads(raw)
-    print(json.dumps(verify(report)))
+    print(json.dumps(verify_progress(report) if report["study_id"]=="market-state-v19-progress" else verify(report)))
