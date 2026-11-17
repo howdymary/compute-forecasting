@@ -1,0 +1,52 @@
+{
+  "study_id": "ce-continuation-v21",
+  "protocol_sha256": "4af88a5c12b75bbd6571428feb866b41bd2736f721f3d306a6fb9767764781c7",
+  "dataset_sha256": "2921b5ee09b24e4f18d59565a5ac7057e0673cfa31c5489de4706ce6c01dc720",
+  "parent_report_sha256": "374d677312191a04402e8ad7862f16e57b59da80886bf1f736e7f4f666783145",
+  "arms": [
+    "same",
+    "expanded"
+  ],
+  "training_ready": true,
+  "storage": {
+    "current_states": 76,
+    "pilot_reserved_states": 6,
+    "max_campaign_new_states": 18,
+    "deletion_performed": false
+  },
+  "optimizer_restore": {
+    "method": "create_training_client_from_state_with_optimizer",
+    "status": "documented_restore_succeeded",
+    "silent_reset_allowed": false
+  },
+  "reasons": [],
+  "new_optimizer_updates": 0,
+  "new_model_calls": 120,
+  "provider_cost_usd": null,
+  "max_prompt_tokens": {
+    "same": 2677,
+    "expanded": 2697
+  },
+  "compatibility": {
+    "development": {
+      "quantiles_match": true,
+      "quantile_mismatches": [],
+      "max_probability_difference": 0.0,
+      "fresh_loss": 0.008652142545484801,
+      "retained_loss": 0.008652142545484801,
+      "failures": 0
+    },
+    "retrospective": {
+      "quantiles_match": true,
+      "quantile_mismatches": [],
+      "max_probability_difference": 0.0,
+      "fresh_loss": 0.015557662085394464,
+      "retained_loss": 0.015557662085394464,
+      "failures": 0
+    }
+  },
+  "ordering_hashes": {
+    "same": "cef24d549440e8ce1f7409369a6ffe805337537af1a1320532a409e704adee46",
+    "expanded": "4f482f1a8488104e6a76c3dc800c4a512beed47421a7541dbc59025463833f7b"
+  }
+}
