@@ -11,6 +11,9 @@ payloads={"results/market-state-v19/"+kind+"/"+run+"/"+str(f.relative_to(source)
 if not payloads:raise ValueError("No completed public artifacts")
 manifest={"study_id":"market-state-v19","source_sha":os.environ.get("PUBLICATION_SOURCE_SHA",os.environ.get("VALIDATION_SOURCE_SHA",os.environ["GITHUB_SHA"])),"trigger_sha":os.environ["GITHUB_SHA"],"files":[{"path":p.split("/"+kind+"/"+run+"/",1)[1],"bytes":len(raw),"sha256":hashlib.sha256(raw).hexdigest()} for p,raw in sorted(payloads.items())]}
 payloads["results/market-state-v19/"+kind+"/"+run+"/manifest.json"]=(json.dumps(manifest,indent=2)+"\n").encode()
+if kind=="future" and (source/"index.json").exists():
+    raw=(source/"index.json").read_bytes()
+    payloads["results/market-state-v19/future/latest.json"]=(json.dumps({"study_id":"market-state-v19-prospective","report_path":"results/market-state-v19/future/"+run+"/index.json","report_sha256":hashlib.sha256(raw).hexdigest()},indent=2)+"\n").encode()
 if kind=="runs" and (source/"report.json").exists():
     raw=(source/"report.json").read_bytes()
     payloads["results/market-state-v19/latest.json"]=(json.dumps({"study_id":"market-state-v19","run_id":run,"report_path":"results/market-state-v19/runs/"+run+"/report.json","report_sha256":hashlib.sha256(raw).hexdigest()},indent=2)+"\n").encode()
@@ -24,7 +27,7 @@ for attempt in range(5):
     state=api("git/trees/"+parent["tree"]["sha"]+"?recursive=1");assert not state.get("truncated")
     exists={r["path"]:r["sha"] for r in state["tree"] if r["type"]=="blob"}
     for e in entries:
-        if ("/runs/" in e["path"] or "/audits/" in e["path"]) and e["path"] in exists:assert exists[e["path"]]==e["sha"],"Immutable study artifact collision"
+        if e["path"].startswith("results/market-state-v19/"+kind+"/"+run+"/") and e["path"] in exists:assert exists[e["path"]]==e["sha"],"Immutable study artifact collision"
     tree=api("git/trees",{"base_tree":parent["tree"]["sha"],"tree":entries},"POST")
     made=api("git/commits",{"message":"Publish market-state forecasting "+kind,"tree":tree["sha"],"parents":[head]},"POST")
     if api("git/ref/heads/compute-observatory")["object"]["sha"]!=head:continue
