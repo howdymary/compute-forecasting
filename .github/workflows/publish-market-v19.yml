@@ -36,6 +36,9 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh run watch 44041295208 --repo "$GITHUB_REPOSITORY" --interval 20 --exit-status
+          SOURCE_SHA=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/compute-observatory" --jq .object.sha)
+          gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+          echo "PUBLICATION_SOURCE_SHA=$SOURCE_SHA" >> "$GITHUB_ENV"
           gh run download 44041295208 --repo "$GITHUB_REPOSITORY" --name market-state-v19-base-44041295208 --dir artifacts/market-state-v19-base
           gh run download 44041295208 --repo "$GITHUB_REPOSITORY" --pattern 'market-state-v19-model-*-44041295208' --dir artifacts/market-state-v19-models
           python scripts/flatten_market_v19.py

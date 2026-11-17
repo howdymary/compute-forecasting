@@ -59,7 +59,7 @@ async def execute(p,lock,numeric,publication_receipts):
     path=root/"registration.json"
     if path.exists():assert json.loads(path.read_bytes())==reg,"Frozen registration differs"
     else:atomic(path,reg,True)
-    if lock is not None:
+    if lock is not None and list((root/"commitments").glob("*.json")):
         model_path=root/"model-lock.json"
         if model_path.exists():assert json.loads(model_path.read_bytes())=={"model":lock,"numerical":numeric},"Frozen model lock differs"
         else:atomic(model_path,{"model":lock,"numerical":numeric},True)
@@ -72,6 +72,8 @@ async def execute(p,lock,numeric,publication_receipts):
     if lock is None:result["reasons"].append("trained_model_lock_pending")
     elif prepared["eligible"]:
         existing=root/"commitments"/(origin+".json")
+        expected_engine=digest({name:hashlib.sha256(pathlib.Path(__file__).with_name(name).read_bytes()).hexdigest() for name in ("market_future_remote_v19.py","market_future_v19.py","market_analysis_v19.py","market_controls_v19.py","market_state_v19.py","probability_v18.py")})
+        assert lock["future_engine_sha256"]==expected_engine,"Frozen future engine changed"
         if existing.exists():commitment=json.loads(existing.read_bytes());validate(commitment,p,lock)
         else:
             from .market_controls_v19 import vector
@@ -96,12 +98,16 @@ async def execute(p,lock,numeric,publication_receipts):
                     for method in ("last_value","last_value_empirical","drift","seasonal_naive"):
                         r=refmap.get((t["series_id"],h,method));rows.append(row(t,h,method,[r[k] for k in ("q10","q50","q90")] if r else [t["anchor"]]*3,failure=None if r else "NativeRowMissing"))
             commitment={"study_id":p["study_id"],"protocol_sha256":digest(p),"model_lock_sha256":digest(lock),"origin":origin,"issued_at":datetime.now(timezone.utc).isoformat(),"information_cutoff":origin+"T23:59:59.999999+00:00","cohort":prepared["cohort"],"price_inputs":tasks,"rows":rows,"input_vintages":prepared["input_vintages"],"capture_receipts":[r for r in attempts if r.get("eligible_for_origin") and r.get("retrieved_at","")<=origin+"T23:59:59.999999+00:00"],"model_calls":calls,"new_optimizer_updates":0,"publication_requires_workflow_receipt":True}
-            validate(commitment,p,lock);atomic(existing,commitment,True)
+            validate(commitment,p,lock);atomic(root/"model-lock.json",{"model":lock,"numerical":numeric},True);atomic(existing,commitment,True)
             if cohort is None:atomic(root/"cohort.json",prepared["cohort"],True)
             data_volume.commit()
         outputs["commitment-"+origin+".json"]=commitment;result.update(status="issued_pending_outcomes",reasons=[],issued_origins=len(list((root/"commitments").glob("*.json"))))
     if lock is not None and at>=utc(p["final_analysis_not_before"]):
         for file in sorted((root/"commitments").glob("*.json")):outputs["score-"+file.name]=score(json.loads(file.read_bytes()),attempts,at.isoformat(),p,lock,publication_receipts.get(file.stem))
+    if at>=utc(p["final_analysis_not_before"]) and lock is not None:
+        from .market_analysis_v19 import paired
+        cells=[row for name,value in outputs.items() if name.startswith("score-") for row in value["cells"]]
+        outputs["paired-analysis.json"]={"study_id":p["study_id"],"contrasts":[paired(cells,a,b) for a,b in (("market","price"),("market","drift"),("market","numerical_market"),("numerical_market","numerical_price"))],"effective_origins":len({r["origin"] for r in cells}),"no_automatic_promotion":True}
     outputs["index.json"]=result;atomic(root/"latest.json",result);data_volume.commit();return outputs
 @app.local_entrypoint()
 def verified_receipts(p):
