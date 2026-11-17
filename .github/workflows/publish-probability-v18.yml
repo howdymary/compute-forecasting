@@ -1,0 +1,50 @@
+name: Publish direct probability forecasts v18
+on:
+  workflow_run:
+    workflows: [Train direct probability forecasts v18]
+    types: [completed]
+    branches: [compute-observatory]
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/publish-probability-v18.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: probability-v18-publication
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Fetch fresh branch head without changing frozen training
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          V18_SOURCE_SHA=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/compute-observatory" --jq .object.sha)
+          gh api "repos/$GITHUB_REPOSITORY/tarball/$V18_SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Retrieve actual retained campaign artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CAMPAIGN_RUN: 44006731633
+        run: gh run download "$CAMPAIGN_RUN" --repo "$GITHUB_REPOSITORY" --pattern "probability-v18-*" --dir inputs/probability-v18-collected
+      - run: |
+          PYTHONPATH=src python scripts/assemble_probability_v18.py
+          PYTHONPATH=src python scripts/verify_probability_v18.py --results artifacts/probability-v18-public
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: probability-v18-publication-${{ github.run_id }}
+          path: artifacts/probability-v18-public
+          retention-days: 30
+      - name: Publish verified public result artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+          V18_PUBLIC_ROOT: artifacts/probability-v18-public
+          V18_PUBLIC_KIND: runs
+        run: python scripts/publish_probability_v18.py
