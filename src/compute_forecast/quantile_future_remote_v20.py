@@ -101,6 +101,17 @@ async def execute(p,lock,receipts):
         from .quantile_future_v20 import final_analysis
         cells=[r for name,value in outputs.items() if name.startswith("score-") for r in value["cells"]]
         outputs["paired-analysis.json"]=final_analysis(cells,p,lock["selected_ensemble"],[v for name,v in outputs.items() if name.startswith("score-")],lock["selected_head_update"])
+    resolved={}
+    for name,value in outputs.items():
+        if name.startswith("score-"):
+            for r in value["cells"]:resolved[(r["origin"],r["series_id"],r["horizon_days"])]=r["outcome"]
+    figures=[]
+    for file in sorted((root/"commitments").glob("*.json")):
+        value=json.loads(file.read_bytes());receipt=receipts.get(value["origin"])
+        if not receipt or not receipt.get("eligible_publication_window") or receipt["commitment_sha256"]!=digest(value):continue
+        for task in value["price_inputs"]:
+            figures.append({"task_id":task["task_id"],"series_id":task["series_id"],"origin":value["origin"],"issued_at":value["issued_at"],"metadata":task["metadata"],"history":task["context"],"predictions":[{k:r[k] for k in ("method","horizon_days","target_date","q10","q50","q90","fallback","failure_type")} for r in value["rows"] if r["series_id"]==task["series_id"]],"outcomes":[{"horizon_days":h,"target_date":task["target_dates"][(1,3,7).index(h)],"value":resolved[(value["origin"],task["series_id"],h)]} for h in p["horizons"] if (value["origin"],task["series_id"],h) in resolved],"commitment_sha256":digest(value),"publication_receipt":receipt,"outcome_gate":p["final_analysis_not_before"]})
+    index["forecast_cases"]=figures
     index["produced_origins"]=len(list((root/"commitments").glob("*.json")));index["model_lock"]=lock
     outputs["index.json"]=index;atomic(root/"latest.json",index);data_volume.commit();return outputs
 def verified_receipts():
@@ -126,5 +137,10 @@ def main():
             state=pilot["state"];files=["quantile_future_v20.py","quantile_future_remote_v20.py","quantile_v20.py","market_future_v19.py","market_state_v19.py","probability_v18.py"]
             lock={"base_model":cfg["model"]["base"],"renderer":cfg["model"]["renderer"],"tokenizer_sha256":cfg["parent"]["tokenizer_sha256"],"log_levels":parent["log_levels"],"parent_ids":[cfg["parent"]["checkpoint_ids"][str(s)] for s in (17,29,43)],"selected_head_id":state["selected"]["checkpoint_id"],"selected_head_update":state["selected"]["update"],"selected_ensemble":"uniform_quantile_average" if report["ensembles"]["selection"]["method"]=="quantile_average" else "uniform_probability_pool","study_protocol_sha256":digest(cfg),"registered_future_protocol_sha256":digest(protocol),"report_sha256":ref["report_sha256"],"engine_files":files,"engine_sha256":digest({name:hashlib.sha256(pathlib.Path(__file__).with_name(name).read_bytes()).hexdigest() for name in files})}
     values=execute.remote(p,lock,verified_receipts());out=pathlib.Path("artifacts/quantile-training-v20-future");out.mkdir(parents=True,exist_ok=True)
+    known={digest(json.loads(f.read_bytes())):str(f) for f in pathlib.Path("results/quantile-training-v20/future").glob("*/commitment-*.json")}
+    run=os.environ["GITHUB_RUN_ID"]+("-attempt-"+os.environ["GITHUB_RUN_ATTEMPT"] if int(os.environ.get("GITHUB_RUN_ATTEMPT","1"))>1 else "")
+    for name,value in values.items():
+        if name.startswith("commitment-"):known[digest(value)]="results/quantile-training-v20/future/"+run+"/"+name
+    for case in values["index.json"].get("forecast_cases",[]):case["artifact_path"]=known.get(case["commitment_sha256"])
     for name,value in values.items():(out/name).write_text(json.dumps(value,indent=2,allow_nan=False)+"\n")
     print(json.dumps(values["index.json"]),flush=True)
