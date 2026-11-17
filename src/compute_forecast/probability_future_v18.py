@@ -24,6 +24,12 @@ def validate(value,p,lock):
     assert issuance_status(value["origin"],value["issued_at"],p)=="eligible"
     assert value["information_cutoff"]==value["origin"]+"T23:59:59+00:00"
     assert all(utc(s["captured_at"])<=utc(value["information_cutoff"]) for s in value["input_vintages"])
+    inputs={t["task_id"]:t for t in value["price_inputs"]}
+    assert len(inputs)==len(value["price_inputs"]) and inputs
+    for t in inputs.values():
+        assert t["origin"]==value["origin"] and all(r["date"]<=t["origin"] for r in t["context"])
+        assert next(r["value"] for r in t["context"] if r["date"]==t["origin"])==t["anchor"]
+        assert digest(t["metadata"]["contract"])==digest(value["target_contracts"][t["series_id"]])
     keys=[(r["method"],r["series_id"],r["horizon_days"]) for r in value["rows"]];assert len(keys)==len(set(keys))
     assert {r["method"] for r in value["rows"]}==set(p["methods"])
     reference={(r["series_id"],r["horizon_days"]) for r in value["rows"] if r["method"]=="untuned"}
@@ -32,6 +38,7 @@ def validate(value,p,lock):
     for method in p["methods"]:
         assert {(r["series_id"],r["horizon_days"]) for r in value["rows"] if r["method"]==method}==reference
     for row in value["rows"]:
+        assert row["task_id"] in inputs and inputs[row["task_id"]]["series_id"]==row["series_id"]
         assert row["contract_sha256"]==digest(value["target_contracts"][row["series_id"]]),"Target contract changed"
         assert "outcome" not in row and "loss" not in row,"Future truth must never enter issuance"
         assert all(math.isfinite(row[k]) for k in ("q10","q50","q90")) and 0<row["q10"]<=row["q50"]<=row["q90"]
@@ -40,7 +47,7 @@ def validate(value,p,lock):
             assert row["probability_sha256"]==digest(row["probabilities"])
             assert quantiles(row["probabilities"],row["support_prices"])==[row[k] for k in ("q10","q50","q90")]
             assert len(row["probabilities"])==len(lock["log_levels"])
-            anchor=row["support_prices"][lock["log_levels"].index(0)]
+            anchor=inputs[row["task_id"]]["anchor"]
             assert support(anchor,lock["log_levels"])==row["support_prices"]
     return value
 def score(value,records,at,p,lock):

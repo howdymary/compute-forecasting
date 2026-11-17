@@ -55,12 +55,15 @@ async def infer(tasks,p,parent,lock):
     sem=asyncio.Semaphore(4)
     async def one(t,h,method):
         if method in errors:return forecast_row(t,h,method,lock,failure_type=errors[method])
+        attempted=False
         try:
             rendering=renderer.render(decision(t,h,lock["log_levels"]))
-            async with sem:mass=await asyncio.wait_for(sample_decision(samplers[method],rendering),timeout=60)
+            async with sem:
+                attempted=True
+                mass=await asyncio.wait_for(sample_decision(samplers[method],rendering),timeout=60)
             prob=[mass[str(i)] for i in range(len(lock["log_levels"]))]
             return forecast_row(t,h,method,lock,mass=prob,request_attempted=True)
-        except Exception as error:return forecast_row(t,h,method,lock,failure_type=type(error).__name__,request_attempted=True)
+        except Exception as error:return forecast_row(t,h,method,lock,failure_type=type(error).__name__,request_attempted=attempted)
     return await asyncio.gather(*(one(t,h,m) for t in tasks for h in p["horizons"] for m in methods))
 @app.function(image=image,cpu=2,memory=4096,timeout=1800,max_containers=1,secrets=[secret],volumes={"/data":data,"/public":public},schedule=modal.Cron("10 0 * * 1"))
 def tick():
@@ -93,6 +96,7 @@ def tick():
             issued=datetime.now(timezone.utc).isoformat()
             used=[s for s in state["snapshots"] if s["prices"]["date"]<=origin]
             value={"study_id":p["study_id"],"status":"issued","protocol_sha256":digest(p),"model_lock_sha256":digest(lock),"origin":origin,"information_cutoff":origin+"T23:59:59+00:00","issued_at":issued,"input_vintages":[{"captured_at":s["captured_at"],"snapshot_sha256":digest(s)} for s in used],"rows":predictions,"target_contracts":{t["series_id"]:t["metadata"]["contract"] for t in tasks},"new_optimizer_updates":0,"provider_cost_usd":None}
+            value["price_inputs"]=[{k:t[k] for k in ("task_id","series_id","origin","anchor","metadata","context","context_missing_days","target_dates")} for t in tasks]
             value["probability_requests_attempted"]=sum(r.get("request_attempted",False) for r in predictions)
             value["target_source"]={"url":"https://gpurentalprices.com/api/latest.json","permission_url":"https://gpurentalprices.com/data","license":"CC BY 4.0","credit":"GPU Rental Prices. GPU rental price index [dataset]. https://gpurentalprices.com/data","unit":"USD per GPU-hour","instrument":"Individual provider exact-configuration advertised quote; own source IDs"}
             validate(value,p,lock);retain(root,"commitments",value,origin)

@@ -20,7 +20,7 @@ def commitment():
             if method in ("untuned","ce_selected","crps_selected"):r.update(probabilities=[0.,1.,0.],support_prices=[.9,1.,1.1],probability_sha256=digest([0.,1.,0.]))
             rows.append(r)
     lock={"synthetic":True,"log_levels":[math.log(.9),0,math.log(1.1)]}
-    value={"study_id":p["study_id"],"protocol_sha256":digest(p),"model_lock_sha256":digest(lock),"origin":"2026-12-06","issued_at":"2026-12-07T00:10:00+00:00","information_cutoff":"2026-12-06T23:59:59+00:00","input_vintages":[{"captured_at":s["captured_at"],"snapshot_sha256":digest(s)} for s in source],"target_contracts":{task["series_id"]:task["metadata"]["contract"]},"rows":rows,"status":"issued"}
+    value={"study_id":p["study_id"],"protocol_sha256":digest(p),"model_lock_sha256":digest(lock),"origin":"2026-12-06","issued_at":"2026-12-07T00:10:00+00:00","information_cutoff":"2026-12-06T23:59:59+00:00","input_vintages":[{"captured_at":s["captured_at"],"snapshot_sha256":digest(s)} for s in source],"target_contracts":{task["series_id"]:task["metadata"]["contract"]},"rows":rows,"status":"issued","price_inputs":[{k:task[k] for k in ("task_id","series_id","origin","anchor","metadata","context","context_missing_days","target_dates")}]}
     return value,p,lock
 def test_capture_cutoff_and_origin_gate():
     p=protocol();a=prepare(records(),"2026-12-07T00:10:00+00:00",p)
@@ -58,3 +58,9 @@ def test_initialization_fallback_keeps_positive_registered_distribution():
     assert row["probabilities"]==[0.,1.,0.] and row["q10"]==row["q50"]==row["q90"]==task["anchor"]
     assert row["fallback"] and not row["request_attempted"]
     assert row["probability_sha256"]==digest(row["probabilities"])
+
+def test_rejects_future_or_incorrect_anchor_in_public_inputs():
+    value,p,lock=commitment();value["price_inputs"][0]["context"].append({"date":"2026-12-07","value":9999.})
+    with pytest.raises(AssertionError):validate(value,p,lock)
+    value,p,lock=commitment();value["price_inputs"][0]["anchor"]=2.
+    with pytest.raises(AssertionError):validate(value,p,lock)
