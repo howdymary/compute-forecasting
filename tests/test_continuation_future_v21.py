@@ -27,7 +27,7 @@ def fixture():
         for h in P["horizons"]:
             for method in P["methods"]:
                 row={"method":method,"series_id":t["series_id"],"horizon_days":h,"target_date":t["target_dates"][(1,3,7).index(h)],"contract_sha256":digest(t["contract"]),"q10":1.,"q50":1.,"q90":1.,"fallback":False,"support_prices":z}
-                if method!="official_drift":row.update(probabilities=[0.,1.,0.],checkpoint_id="synthetic-"+method,prompt_sha256=digest(prompt({**t,"arm":"price"},h)))
+                if method!="official_drift":row.update(probabilities=[0.,1.,0.],probability_sha256=digest([0.,1.,0.]),checkpoint_id="synthetic-"+method,prompt_sha256=digest(prompt({**t,"arm":"price"},h)))
                 rows.append(row)
     value={"study_id":P["study_id"],"protocol_sha256":digest(P),"model_lock_sha256":digest(lock),"origin":origin,"issued_at":"2026-12-21T00:05:00+00:00","information_cutoff":origin+"T23:59:59.999999+00:00","capture_receipts":records,"price_inputs":prepared["tasks"],"input_vintages":prepared["input_vintages"],"cohort":prepared["cohort"],"rows":rows}
     return value,lock

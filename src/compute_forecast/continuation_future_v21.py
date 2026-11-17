@@ -16,10 +16,9 @@ def validate(value,p,lock):
     identities={r["arm"]:r["checkpoint_id"] for r in lock["records"]}
     for r in value["rows"]:
         t=tasks[r["series_id"]];actual=[r[k] for k in ("q10","q50","q90")]
-        if r["fallback"]:
-            assert actual==[t["anchor"]]*3
-            continue
+        if r["fallback"]:assert actual==[t["anchor"]]*3
         if r["method"]=="official_drift":continue
+        assert r["probability_sha256"]==digest(r["probabilities"])
         assert r["checkpoint_id"]==identities[r["method"]]
         assert r["support_prices"]==support(t["anchor"],lock["log_levels"])
         assert quantiles(r["probabilities"],r["support_prices"])==actual

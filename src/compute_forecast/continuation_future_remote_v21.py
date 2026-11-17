@@ -50,8 +50,11 @@ async def infer(tasks,p,lock):
             try:
                 m,prompt=await get(record["checkpoint_id"],t,h);q=quantiles(m,z)
                 r.update(probabilities=m,support_prices=z,prompt_sha256=prompt,fallback=False,failure_type=None)
-            except Exception as exc:q=[t["anchor"]]*3;r.update(fallback=True,failure_type=type(exc).__name__)
-            r.update(q10=q[0],q50=q[1],q90=q[2]);rows.append(r)
+            except Exception as exc:
+                from .market_state_v19 import prompt
+                m=[float(v==0) for v in lock["log_levels"]];q=[t["anchor"]]*3
+                r.update(probabilities=m,support_prices=z,prompt_sha256=digest(prompt({**t,"arm":"price"},h)),fallback=True,failure_type=type(exc).__name__)
+            r.update(q10=q[0],q50=q[1],q90=q[2],probability_sha256=digest(r["probabilities"]));rows.append(r)
         return rows
     groups=await asyncio.gather(*(one(t,h) for t in tasks for h in p["horizons"]))
     return [r for rows in groups for r in rows],calls
@@ -78,7 +81,7 @@ async def execute(p,lock,receipts):
                 calls=None;rows=[]
                 for t in tasks:
                     for h in p["horizons"]:
-                        for method in p["methods"][:-1]:rows.append({"task_id":t["task_id"],"series_id":t["series_id"],"horizon_days":h,"target_date":t["target_dates"][(1,3,7).index(h)],"contract_sha256":digest(t["contract"]),"method":method,"q10":t["anchor"],"q50":t["anchor"],"q90":t["anchor"],"fallback":True,"failure_type":"InferenceDeadlineOrInitialization"+type(exc).__name__})
+                        for method in p["methods"][:-1]:rows.append({"task_id":t["task_id"],"series_id":t["series_id"],"horizon_days":h,"target_date":t["target_dates"][(1,3,7).index(h)],"contract_sha256":digest(t["contract"]),"method":method,"q10":t["anchor"],"q50":t["anchor"],"q90":t["anchor"],"fallback":True,"failure_type":"InferenceDeadlineOrInitialization"+type(exc).__name__,"checkpoint_id":next(v["checkpoint_id"] for v in lock["records"] if v["arm"]==method),"probabilities":[float(v==0) for v in lock["log_levels"]],"probability_sha256":digest([float(v==0) for v in lock["log_levels"]]),"support_prices":support(t["anchor"],lock["log_levels"]),"prompt_sha256":digest(__import__("compute_forecast.market_state_v19",fromlist=["prompt"]).prompt({**t,"arm":"price"},h))})
             from .signals_remote_v6 import native_references
             snapshots=[{"captured_at":r["retrieved_at"],"prices":{"date":r["observed_day"],"cohort":[{"id":t["series_id"],"family":t["metadata"]["family"]} for t in tasks],"rows":[{"id":v["series_id"],"date":v["date"],"value":v["value"]} for v in r["observations"]]}} for day,r in sorted(first_source_vintages(attempts,origin+"T23:59:59.999999+00:00",p).items())]
             try:refs=native_references(snapshots,origin)
