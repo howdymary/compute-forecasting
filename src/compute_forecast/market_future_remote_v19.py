@@ -119,7 +119,6 @@ async def execute(p,lock,numeric,publication_receipts):
         cells=[row for name,value in outputs.items() if name.startswith("score-") for row in value["cells"]]
         outputs["paired-analysis.json"]={"study_id":p["study_id"],"contrasts":[paired(cells,a,b) for a,b in (("market","price"),("market","drift"),("market","numerical_market"),("numerical_market","numerical_price"))],"effective_origins":len({r["origin"] for r in cells}),"no_automatic_promotion":True}
     outputs["index.json"]=result;atomic(root/"latest.json",result);data_volume.commit();return outputs
-@app.local_entrypoint()
 def verified_receipts(p):
     receipts={}
     if datetime.now(timezone.utc)<utc(p["final_analysis_not_before"]):return receipts
@@ -130,6 +129,7 @@ def verified_receipts(p):
         for origin,receipt in module.verify(directory).items():
             if origin not in receipts or receipt["created_at"]<receipts[origin]["created_at"]:receipts[origin]=receipt
     return receipts
+@app.local_entrypoint()
 def main():
     p=json.loads(pathlib.Path("configs/market-state-v19-prospective.json").read_bytes());pointer=pathlib.Path("results/market-state-v19/latest.json")
     lock=None;numeric=None
