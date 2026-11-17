@@ -30,5 +30,8 @@ for attempt in range(5):
     if api("git/ref/heads/compute-observatory")["object"]["sha"]!=head:continue
     try:api("git/refs/heads/compute-observatory",{"sha":made["sha"],"force":False},"PATCH")
     except subprocess.CalledProcessError:time.sleep(1);continue
-    print("PUBLICATION_COMMIT "+made["sha"]);break
+    print("PUBLICATION_COMMIT "+made["sha"])
+    if os.environ.get("GITHUB_ENV"):
+        with open(os.environ["GITHUB_ENV"],"a") as f:f.write("V18_PUBLICATION_COMMIT="+made["sha"]+"\n")
+    break
 else:raise RuntimeError("Branch advanced repeatedly; publication refused")
