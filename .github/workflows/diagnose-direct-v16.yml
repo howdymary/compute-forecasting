@@ -1,0 +1,44 @@
+name: Diagnose the frozen direct-forecasting result v16
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/diagnose-direct-v16.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: direct-v14-diagnosis-v16
+  cancel-in-progress: false
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Fetch diagnostic source remotely
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Retrieve the immutable prepared dataset without model access
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run download 43966729631 --repo "$GITHUB_REPOSITORY" --name evidence-v14-inputs-43966729631 --dir inputs/diagnosis
+      - name: Reconstruct and decompose saved forecasts
+        run: |
+          python -m pip install -e . numpy==2.2.6 matplotlib==3.10.7
+          python -m compileall -q scripts/diagnose_direct_v16.py
+          PYTHONPATH=src python scripts/diagnose_direct_v16.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: direct-v16-diagnosis-${{ github.run_id }}
+          path: artifacts/diagnosis-v16
+          retention-days: 30
+      - name: Publish versioned diagnostic artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/publish_diagnosis_v16.py

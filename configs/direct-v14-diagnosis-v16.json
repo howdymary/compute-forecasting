@@ -1,0 +1,29 @@
+{
+  "study_id": "direct-v14-diagnosis-v16",
+  "classification": "Post-hoc artifact-only diagnosis; no new training, inference, selection or market-accuracy test",
+  "source_ref": "a3aaaad76b3f972fa72659fed925e14784653528",
+  "source_report": {
+    "study_id": "direct-evidence-v14",
+    "run_id": "43966729631-publication-43978179779",
+    "status": "completed",
+    "report_path": "results/evidence-v14/runs/43966729631-publication-43978179779/report.json",
+    "report_sha256": "6eebe9964df27727d77c1fb46c99b8777bc41ad21d675518b66904fc9e1f5fcb"
+  },
+  "frozen_training_run": 43966729631,
+  "dataset_artifact": "evidence-v14-inputs-43966729631",
+  "expected_dataset_sha256": "5dfcc775bf03025d8be7330d240a595a30c35e8a67947d44ef31a4cf407e4c12",
+  "bootstrap": {
+    "replicates": 1000,
+    "seed": 1617,
+    "scope": "Conditional resampling of retained vectors with fixed observed outcomes; not market-sampling uncertainty"
+  },
+  "limits": {
+    "optimizer_updates": 0,
+    "inference_requests": 0,
+    "timeout_minutes": 20
+  },
+  "preservation": {
+    "official_csv": "67a043255a716db6bc9b73cd28f9258c30fb299fd8671a9ee3430c0d94cadd80",
+    "protected_outcomes_loaded": false
+  }
+}
