@@ -27,19 +27,19 @@ def web():
     @api.get("/health")
     def health():return {"status":"ok","study_id":"direct-evidence-v14","ui_revision":os.environ.get("EVIDENCE_UI_SHA")}
     @api.get("/api/evidence-v14")
-    def report():
-        with lock:
-            if cache and time.monotonic()-cache["at"]<15:return JSONResponse(cache["value"],headers=headers)
-            try:
-                with urllib.request.urlopen(BASE+"results/evidence-v14/latest.json",timeout=30) as response:index=json.load(response)
-                path=index["report_path"]
-                if not path.startswith("results/evidence-v14/runs/") or ".." in path:raise ValueError("Invalid public pointer")
-                with urllib.request.urlopen(BASE+path,timeout=60) as response:raw=response.read(18000001)
-                if len(raw)>18000000 or hashlib.sha256(raw).hexdigest()!=index["report_sha256"]:raise ValueError("Report hash mismatch")
-                value=json.loads(raw)
-                if value.get("study_id")!="direct-evidence-v14" or value.get("news_used"):raise ValueError("Study boundary mismatch")
-                cache.update(at=time.monotonic(),value=value);return JSONResponse(value,headers=headers)
-            except Exception as error:return JSONResponse({"status":"unavailable","error_type":type(error).__name__},status_code=503,headers=headers)
+    async def report():
+        from .artifact_snapshot_v18 import read_public_snapshot
+        try:
+            async with future_lock:
+                if not cache or time.monotonic()-cache["at"]>=15:
+                    if time.monotonic()-future_cache["at"]>15:
+                        await future_public.reload.aio();future_cache["at"]=time.monotonic()
+                    value,pointer=read_public_snapshot("direct-evidence-v14")
+                    if value.get("news_used"):raise ValueError("Study boundary mismatch")
+                    cache.update(at=time.monotonic(),value=value,pointer=pointer)
+                value=cache["value"];identity=cache["pointer"]["report_sha256"]
+            return JSONResponse(value,headers={**headers,"X-Source-Artifact-SHA256":identity})
+        except Exception as error:return JSONResponse({"status":"unavailable","error_type":type(error).__name__},status_code=503,headers=headers)
     @api.get("/api/evidence-future")
     async def future_index():
         try:
