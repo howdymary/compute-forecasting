@@ -11,8 +11,8 @@ def mapped(q,lower,upper):
     if not 0<lower or not 0<upper:raise ValueError("Positive multipliers required")
     if lower==upper==1:return list(q),False
     try:
-        low=q[0] if lower==1 else math.exp(math.log(q[1])+lower*(math.log(q[0])-math.log(q[1])))
-        high=q[2] if upper==1 else math.exp(math.log(q[1])+upper*(math.log(q[2])-math.log(q[1])))
+        low=q[0] if lower==1 or q[0]==q[1] else q[1]*math.exp(lower*math.log(q[0]/q[1]))
+        high=q[2] if upper==1 or q[2]==q[1] else q[1]*math.exp(upper*math.log(q[2]/q[1]))
         out=[low,q[1],high]
         if not all(math.isfinite(x) for x in out) or not 0<low<=q[1]<=high:raise ValueError("Nonpositive or crossed result")
         return out,False
@@ -34,7 +34,7 @@ def choose(dev,grid):
     return best,candidates
 def keys(rows):return {(r["task_id"],r["origin"],r["horizon_days"]) for r in rows}
 def tests():
-    for q in ([1,1,1],[.01,1,100],[.9,1,1.1],[1e-100,1e-50,1]):
+    for q in ([1,1,1],[2.204,2.204,2.204],[1.757,1.757,1.8155],[1.8155,3.949,3.949],[.01,1,100],[.9,1,1.1],[1e-100,1e-50,1]):
         original,failed=mapped(q,1,1)
         assert original==list(q) and not failed,"Identity must preserve exact values"
         for a in (.5,1,2):

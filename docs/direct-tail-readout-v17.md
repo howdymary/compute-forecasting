@@ -19,3 +19,7 @@ The remote workflow is “Evaluate matched frozen tail readout v17.” It requir
 Original forecasts, official exports, v14 checkpoint selections, prospective panels and the November 23 gate are preserved. This diagnostic cannot support a claim that training improved the original forecasts. It tests whether the observed forecast-distribution problem is amenable to one bounded readout change.
 
 [Findings](direct-v17-findings.md) · [Results](../results/direct-v17/latest.json)
+
+## Numerical revision
+
+The first run (44001483178) is retained but superseded: subtracting separately rounded logarithms could introduce a crossed bound when a quantile exactly equaled its median, causing avoidable identity fallbacks. Revision 2 uses the algebraically equivalent positive ratio transformation and preserves exact ties. The grid, model selection, controls and original forecasts are unchanged. Tests include source-scale tied values and both one-sided ties. This is a numerical correction, not additional tuning.
