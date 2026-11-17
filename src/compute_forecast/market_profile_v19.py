@@ -26,14 +26,20 @@ def profile():
     identity=[x for x in ("source_id","provider","gpu_model","instrument_class","pricing_tier","sku_raw","region_canonical","gpu_count","gpu_memory_gb","licence_id","source_url") if x in cols]
     groups=frame.groupby(["source_id","gpu_model","instrument_class","pricing_tier"],dropna=False).agg(rows=("day","size"),days=("day","nunique"),first_day=("day","min"),last_day=("day","max"),providers=("provider","nunique")).reset_index().to_dict("records")
     nulls={col:int((frame[col].isna()|frame[col].astype("string").eq("")).sum()) for col in identity}
-    selected=frame[identity+["day","usd_per_gpu_hour","snapshot_ts_utc"]].copy()
-    selected=selected.where(pd.notna(selected),None)
-    private=pathlib.Path("/data/market-state-v19/preparation")/digest(p)
-    raw=selected.to_json(orient="records",date_format="iso")
-    assert len(raw.encode())<=p["limits"]["max_private_profile_bytes"],"Profile byte budget"
-    private.mkdir(parents=True,exist_ok=True);target=private/"offer-inputs.json"
-    if target.exists():assert hashlib.sha256(target.read_bytes()).hexdigest()==hashlib.sha256(raw.encode()).hexdigest()
-    else:target.write_text(raw)
+    contract_fields=[k for k in identity if k not in ("licence_id","source_url")]
+    grouped=frame.groupby(contract_fields+["day"],dropna=False).agg(value=("usd_per_gpu_hour","median"),n_observations=("usd_per_gpu_hour","size"),first_snapshot=("snapshot_ts_utc","min"),last_snapshot=("snapshot_ts_utc","max"),distinct_prices=("usd_per_gpu_hour","nunique")).reset_index()
+    collisions=frame.groupby(contract_fields+["snapshot_ts_utc"],dropna=False)["usd_per_gpu_hour"].nunique()
+    bad=collisions[collisions>1].reset_index()
+    bad_contracts={digest([None if pd.isna(row[k]) else row[k] for k in contract_fields]) for _,row in bad.iterrows()}
+    grouped["identity_ambiguous"]=grouped.apply(lambda row:digest([None if pd.isna(row[k]) else row[k] for k in contract_fields]) in bad_contracts,axis=1)
+    raw=grouped.to_json(orient="records",date_format="iso")
+    import gzip
+    encoded=gzip.compress(raw.encode(),mtime=0)
+    assert len(encoded)<=p["limits"]["max_private_profile_bytes"],"Derived profile byte budget"
+    private=pathlib.Path("/data/market-state-v19/preparation")/digest(p);private.mkdir(parents=True,exist_ok=True)
+    target=private/"daily-provider-quotes.json.gz"
+    if target.exists():assert target.read_bytes()==encoded
+    else:target.write_bytes(encoded)
     receipts=[];quote_metadata={}
     with httpx.Client(http2=True,timeout=30,headers={"User-Agent":"ComputeForecastResearch/1.0"}) as client:
         for key in ("current_quote","current_health"):
@@ -46,7 +52,7 @@ def profile():
                 receipts.append(receipt)
                 if key=="current_quote":quote_metadata={"offer_keys":sorted({k for r in value.get("offers",[]) for k in r}),"n_offers":len(value.get("offers",[])),"gpu_variants":sorted({r.get("gpu","") for r in value.get("offers",[]) if str(r.get("gpu","")).startswith(("a100","h100"))}),"generated_at":value.get("generated_at")}
             except Exception as error:receipts.append({"kind":key,"url":url,"retrieved_at":at,"status":"unavailable","error_type":type(error).__name__})
-    result={"study_id":p["study_id"],"stage":"schema_and_coverage_only","readiness_protocol_sha256":digest(p),"source_sha":__import__("os").environ.get("GITHUB_SHA"),"pack_sha256":PACK_SHA256,"manifest_entries":members,"schema":[list(r) for r in schema],"identity_fields":identity,"identity_missing_rows":nulls,"groups":groups,"historical_observations":len(frame),"private_input_sha256":hashlib.sha256(raw.encode()).hexdigest(),"current_source_receipts":receipts,"current_quote_metadata":quote_metadata,"new_optimizer_updates":0,"model_calls":0,"protected_outcomes_loaded":False,"runtime_seconds":time.monotonic()-start}
+    result={"study_id":p["study_id"],"stage":"schema_and_coverage_only","readiness_protocol_sha256":digest(p),"source_sha":__import__("os").environ.get("GITHUB_SHA"),"pack_sha256":PACK_SHA256,"manifest_entries":members,"schema":[list(r) for r in schema],"identity_fields":identity,"identity_missing_rows":nulls,"groups":groups,"historical_observations":len(frame),"private_input_sha256":hashlib.sha256(encoded).hexdigest(),"private_input_kind":"gzip-compressed provider-contract daily medians; unchanged raw offers remain only in the verified pack","daily_contract_rows":len(grouped),"ambiguous_contracts":len(bad_contracts),"current_source_receipts":receipts,"current_quote_metadata":quote_metadata,"new_optimizer_updates":0,"model_calls":0,"protected_outcomes_loaded":False,"runtime_seconds":time.monotonic()-start}
     atomic(private/"profile.json",result);data.commit();return result
 @app.local_entrypoint()
 def main():
