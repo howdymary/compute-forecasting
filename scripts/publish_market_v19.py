@@ -9,11 +9,11 @@ def api(path,body=None,method=None):
     return json.loads(subprocess.check_output(args,input=json.dumps(body) if body is not None else None,text=True))
 payloads={"results/market-state-v19/"+kind+"/"+run+"/"+str(f.relative_to(source)):f.read_bytes() for f in source.rglob("*") if f.is_file()}
 if not payloads:raise ValueError("No completed public artifacts")
-manifest={"study_id":"direct-market-state-v19","source_sha":os.environ.get("PUBLICATION_SOURCE_SHA",os.environ.get("VALIDATION_SOURCE_SHA",os.environ["GITHUB_SHA"])),"trigger_sha":os.environ["GITHUB_SHA"],"files":[{"path":p.split("/"+kind+"/"+run+"/",1)[1],"bytes":len(raw),"sha256":hashlib.sha256(raw).hexdigest()} for p,raw in sorted(payloads.items())]}
+manifest={"study_id":"market-state-v19","source_sha":os.environ.get("PUBLICATION_SOURCE_SHA",os.environ.get("VALIDATION_SOURCE_SHA",os.environ["GITHUB_SHA"])),"trigger_sha":os.environ["GITHUB_SHA"],"files":[{"path":p.split("/"+kind+"/"+run+"/",1)[1],"bytes":len(raw),"sha256":hashlib.sha256(raw).hexdigest()} for p,raw in sorted(payloads.items())]}
 payloads["results/market-state-v19/"+kind+"/"+run+"/manifest.json"]=(json.dumps(manifest,indent=2)+"\n").encode()
 if kind=="runs" and (source/"report.json").exists():
     raw=(source/"report.json").read_bytes()
-    payloads["results/market-state-v19/latest.json"]=(json.dumps({"study_id":"direct-market-state-v19","run_id":run,"report_path":"results/market-state-v19/runs/"+run+"/report.json","report_sha256":hashlib.sha256(raw).hexdigest()},indent=2)+"\n").encode()
+    payloads["results/market-state-v19/latest.json"]=(json.dumps({"study_id":"market-state-v19","run_id":run,"report_path":"results/market-state-v19/runs/"+run+"/report.json","report_sha256":hashlib.sha256(raw).hexdigest()},indent=2)+"\n").encode()
     if (source/"findings.md").exists():payloads["docs/market-state-v19-findings.md"]=(source/"findings.md").read_bytes()
 def blob(item):
     path,raw=item;r=api("git/blobs",{"content":base64.b64encode(raw).decode(),"encoding":"base64"},"POST")

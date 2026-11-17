@@ -15,6 +15,8 @@ def atomic(p,v):
 def profile():
     import duckdb,pandas as pd,httpx
     start=time.monotonic();p=json.loads(pathlib.Path("/root/configs/market-state-v19-readiness.json").read_bytes())
+    prior=pathlib.Path("/data/market-state-v19/preparation")/digest(p)/"profile.json"
+    if prior.exists():return json.loads(prior.read_bytes())
     root=pathlib.Path("/data/pacific")/PACK_NAME;members=verify_manifest(root)
     c=duckdb.connect();pattern=str(root/"rental_observations"/"*"/"*"/"*.parquet")
     c.execute("CREATE VIEW offers AS SELECT * FROM read_parquet('"+pattern.replace("'","''")+"',hive_partitioning=false)")
