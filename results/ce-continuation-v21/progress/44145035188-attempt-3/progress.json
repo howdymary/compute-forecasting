@@ -1,0 +1,126 @@
+{
+  "study_id": "ce-continuation-v21",
+  "runs": [
+    {
+      "arm": "same",
+      "seed": 17,
+      "status": "completed",
+      "durable_optimizer_updates": 100,
+      "last_saved_checkpoints": [
+        0,
+        20,
+        50,
+        100
+      ],
+      "development": [
+        {
+          "update": 0,
+          "pinball": 0.008652142545484801
+        },
+        {
+          "update": 20,
+          "pinball": 0.007938938958549805
+        },
+        {
+          "update": 50,
+          "pinball": 0.008528312317585789
+        },
+        {
+          "update": 100,
+          "pinball": 0.011427897771276903
+        }
+      ],
+      "completed": true
+    },
+    {
+      "arm": "same",
+      "seed": 29,
+      "status": "running",
+      "durable_optimizer_updates": 56,
+      "last_saved_checkpoints": [
+        0,
+        20,
+        50
+      ],
+      "development": [
+        {
+          "update": 0,
+          "pinball": 0.008652142545484801
+        },
+        {
+          "update": 20,
+          "pinball": 0.00791942209634232
+        },
+        {
+          "update": 50,
+          "pinball": 0.007168945308288428
+        }
+      ],
+      "completed": false
+    },
+    {
+      "arm": "same",
+      "seed": 43,
+      "status": "running",
+      "durable_optimizer_updates": 44,
+      "last_saved_checkpoints": [
+        0,
+        20
+      ],
+      "development": [
+        {
+          "update": 0,
+          "pinball": 0.008652142545484801
+        },
+        {
+          "update": 20,
+          "pinball": 0.008224414053849067
+        }
+      ],
+      "completed": false
+    },
+    {
+      "arm": "expanded",
+      "seed": 17,
+      "status": "completed",
+      "durable_optimizer_updates": 100,
+      "last_saved_checkpoints": [
+        0,
+        20,
+        50,
+        100
+      ],
+      "development": [
+        {
+          "update": 0,
+          "pinball": 0.008652142545484801
+        },
+        {
+          "update": 20,
+          "pinball": 0.008457023990613476
+        },
+        {
+          "update": 50,
+          "pinball": 0.008182590288285793
+        },
+        {
+          "update": 100,
+          "pinball": 0.011505460515580511
+        }
+      ],
+      "completed": true
+    },
+    {
+      "arm": "expanded",
+      "seed": 29,
+      "status": "no_durable_recovery_yet"
+    },
+    {
+      "arm": "expanded",
+      "seed": 43,
+      "status": "no_durable_recovery_yet"
+    }
+  ],
+  "new_model_calls": 0,
+  "new_optimizer_updates": 0
+}
