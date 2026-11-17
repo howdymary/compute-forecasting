@@ -59,7 +59,7 @@ async def run(seed):
     identifier=p["parent"]["checkpoint_ids"][tag]
     parents=[c for c in items if hashlib.sha256(c.tinker_path.encode()).hexdigest()[:24]==identifier and (c.user_metadata or {}).get("study_id")=="market-state-v19"]
     assert len(parents)==1,"Frozen parent identity not available"
-    meta={"study_id":p["study_id"],"protocol_sha256":digest(p),"seed":tag,"objective":"direct_ordered_quantile_pinball","parent_id":identifier,"github_run_id":os.environ["GITHUB_RUN_ID"],"github_sha":os.environ["GITHUB_SHA"]}
+    meta={"study_id":p["study_id"],"protocol_sha256":digest(p),"seed":tag,"objective":"direct_ordered_quantile_pinball","parent_id":identifier,"github_run_id":os.environ["GITHUB_RUN_ID"],"github_sha":os.environ.get("PUBLICATION_SOURCE_SHA",os.environ["GITHUB_SHA"])}
     for offset in range(0,2000,100):
         page=await rest.list_training_runs(limit=100,offset=offset)
         if any(all((r.user_metadata or {}).get(k)==meta[k] for k in ("study_id","protocol_sha256","seed")) for r in page.training_runs):raise RuntimeError("Matching Tinker run already exists; duplicate optimization refused")
@@ -72,7 +72,7 @@ async def run(seed):
     order=list(range(len(records)));random.Random(seed).shuffle(order)
     steps=p["model"]["max_updates"];batch_size=p["model"]["batch_horizon_groups"]
     assert steps*batch_size<=len(order),"Pilot repeats or exceeds registered one-pass horizon budget"
-    state={"study_id":p["study_id"],"seed":seed,"status":"running","protocol_sha256":digest(p),"dataset_sha256":digest(data),"parent_id":identifier,"parent_selected_update":30,"model":p["model"],"optimizer_updates":0,"horizon_group_presentations":0,"head_presentations":0,"training_windows":len(data["groups"]["training"]),"training_horizon_examples":len(records),"batch_order_sha256":digest([(records[i][0]["task_id"],records[i][1]) for i in order[:steps*batch_size]]),"started_at":now(),"source_sha":os.environ["GITHUB_SHA"],"tokenizer_sha256":p["parent"]["tokenizer_sha256"],"loss_scale":pre["loss_scale"],"updates":[],"checkpoints":[],"provider_cost_usd":None,"prospective_accuracy":"not established","packages":{k:importlib.metadata.version(k) for k in ("tinker","tinker-cookbook","torch","transformers")}}
+    state={"study_id":p["study_id"],"seed":seed,"status":"running","protocol_sha256":digest(p),"dataset_sha256":digest(data),"parent_id":identifier,"parent_selected_update":30,"model":p["model"],"optimizer_updates":0,"horizon_group_presentations":0,"head_presentations":0,"training_windows":len(data["groups"]["training"]),"training_horizon_examples":len(records),"batch_order_sha256":digest([(records[i][0]["task_id"],records[i][1]) for i in order[:steps*batch_size]]),"started_at":now(),"source_sha":os.environ.get("PUBLICATION_SOURCE_SHA",os.environ["GITHUB_SHA"]),"tokenizer_sha256":p["parent"]["tokenizer_sha256"],"loss_scale":pre["loss_scale"],"updates":[],"checkpoints":[],"provider_cost_usd":None,"prospective_accuracy":"not established","packages":{k:importlib.metadata.version(k) for k in ("tinker","tinker-cookbook","torch","transformers")}}
     files={};paths={};snapshots={};start=time.monotonic()
     recovery=lambda done:{"protocol_sha256":digest(p),"dataset_sha256":digest(data),"completed":done,"state":state,"private_paths":paths,"public_files":files}
     # Persist existence before any update; interruption never silently reruns optimization.

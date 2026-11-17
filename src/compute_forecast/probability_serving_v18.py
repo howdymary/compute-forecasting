@@ -26,9 +26,9 @@ def publish(payloads):
 @app.local_entrypoint()
 def main():
     payloads=[];commit=os.environ.get("EVIDENCE_SOURCE_SHA",os.environ.get("PUBLICATION_SOURCE_SHA",os.environ["GITHUB_SHA"]))
-    for study,kind in (("direct-probability-v18","probability-v18"),("direct-evidence-v14","evidence-v14"),("market-state-v19","market-state-v19"),("market-state-v19-progress","market-state-v19/progress"),("market-state-v19-prospective","market-state-v19/future")):
+    for study,kind in (("quantile-training-v20","quantile-training-v20"),("quantile-training-v20-prospective","quantile-training-v20/future"),("direct-probability-v18","probability-v18"),("direct-evidence-v14","evidence-v14"),("market-state-v19","market-state-v19"),("market-state-v19-progress","market-state-v19/progress"),("market-state-v19-prospective","market-state-v19/future")):
         path=pathlib.Path("results/"+kind+"/latest.json")
-        if not path.exists() and study.startswith("market-state-v19"):continue
+        if not path.exists() and (study.startswith("market-state-v19") or study.startswith("quantile-training-v20")):continue
         pointer=json.loads(path.read_bytes());raw=pathlib.Path(pointer["report_path"]).read_bytes()
         assert hashlib.sha256(raw).hexdigest()==pointer["report_sha256"]
         payloads.append({"study_id":study,"pointer":pointer,"raw":raw,"github_commit":commit})

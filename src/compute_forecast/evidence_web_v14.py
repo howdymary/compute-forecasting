@@ -77,4 +77,6 @@ def web():
     mount(api,headers,future_public,future_lock,future_cache)
     from .market_web_v19 import mount as mount_market
     mount_market(api,headers,future_public,future_lock,future_cache)
+    from .quantile_web_v20 import mount as mount_quantile
+    mount_quantile(api,headers,future_public,future_lock,future_cache)
     return api
