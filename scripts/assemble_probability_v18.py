@@ -110,6 +110,11 @@ def main():
             a=aggregate[obj];lines.append(f'| {obj.upper()} trained, {a["seeds"]} seeds | {a["mean_primary_pinball"]:.10f} | {a["mean_median_mae"]:.6f} | {a["mean_crps"]:.6f} | {a["mean_coverage"]:.2%} | {a["mean_width"]:.6f} |')
     for method,value in references.items():
         a=value["summary"];lines.append(f'| Native {method} | {a["primary_pinball"]:.10f} | {a["by_horizon"]["7"]["median_mae"]:.6f} | not retained | {a["by_horizon"]["7"]["coverage"]:.2%} | {a["by_horizon"]["7"]["width"]:.6f} |')
+    if original_subset:
+        lines.extend(["","## Previous untuned JSON interface","","This diagnostic uses only exact retained matches: six seven-day cases on one October25 origin per seed. It is not the 25-case full-cohort comparison. Provider base-weight revisions are unrecorded, and the older interface uses retained Monte Carlo forecasts.","","| Objective / seed | Seven-day cases | Trained probability pinball | Untuned JSON pinball | Difference |","|---|---:|---:|---:|---:|"])
+        for r in original_subset:
+            lines.append(f'| {r["objective"]} / {r["seed"]} | {r["comparison"]["n"]} | {r["candidate_summary"]["primary_pinball"]:.10f} | {r["original_summary"]["primary_pinball"]:.10f} | {r["comparison"]["difference"]:+.10f} |')
+        lines.extend(["","A gain on the full cohort against the new untuned interface or numerical controls does not establish superiority over this older interface. Retained prediction differences are descriptive; no resampling or reselection was performed."])
     if report.get("primary_interpretation"):
         lines.extend(["","## Interpretation","","All comparisons below are descriptive, retrospective and conditional on this registered cohort."])
         for obj,value in report["primary_interpretation"]["models"].items():
