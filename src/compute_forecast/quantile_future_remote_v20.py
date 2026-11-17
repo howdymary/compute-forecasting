@@ -5,7 +5,7 @@ import modal
 from .probability_v18 import digest,support,quantiles
 from .quantile_v20 import decision as head_decision,head_quantiles,TAUS
 from .market_state_v19 import decision as parent_decision,utc
-from .market_future_v19 import prepare
+from .market_future_v19 import prepare,snapshots as first_source_vintages
 from .quantile_future_v20 import effective_protocol,validate,score
 from .market_future_remote_v19 import image,data_volume,secret,atomic
 app=modal.App("compute-forecast-quantile-v20-future")
@@ -85,7 +85,7 @@ async def execute(p,lock,receipts):
                     for h in p["horizons"]:
                         for method in p["methods"][:-1]:rows.append({"task_id":t["task_id"],"series_id":t["series_id"],"horizon_days":h,"target_date":t["target_dates"][(1,3,7).index(h)],"contract_sha256":digest(t["contract"]),"method":method,"q10":t["anchor"],"q50":t["anchor"],"q90":t["anchor"],"fallback":True,"failure_type":"InferenceDeadlineOrInitialization"+type(exc).__name__})
             from .signals_remote_v6 import native_references
-            snapshots=[{"captured_at":r["retrieved_at"],"prices":{"date":r["observed_day"],"cohort":[{"id":t["series_id"],"family":t["metadata"]["family"]} for t in tasks],"rows":[{"id":v["series_id"],"date":v["date"],"value":v["value"]} for v in r["observations"]]}} for r in attempts if r.get("eligible_for_origin") and r.get("status")=="captured" and r["retrieved_at"]<=origin+"T23:59:59.999999+00:00"]
+            snapshots=[{"captured_at":r["retrieved_at"],"prices":{"date":r["observed_day"],"cohort":[{"id":t["series_id"],"family":t["metadata"]["family"]} for t in tasks],"rows":[{"id":v["series_id"],"date":v["date"],"value":v["value"]} for v in r["observations"]]}} for day,r in sorted(first_source_vintages(attempts,origin+"T23:59:59.999999+00:00",p).items())]
             try:refs=native_references(snapshots,origin)
             except Exception:refs=[]
             refs={(r["series_id"],r["horizon_days"]):r for r in refs if r["forecaster"]=="drift"}
