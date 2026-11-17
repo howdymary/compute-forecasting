@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "study_id": "direct-tail-readout-v17",
+  "registered_at": "2026-11-17T02:11:40Z",
+  "classification": "Post-hoc saved-forecast diagnostic on previously examined development and retrospective outcomes; not a prospective test",
+  "input_ref": "342169e6a38b30fb537b66043c70fcf97a647b21",
+  "source_report": {
+    "study_id": "direct-evidence-v14",
+    "run_id": "43966729631-publication-43978179779",
+    "status": "completed",
+    "report_path": "results/evidence-v14/runs/43966729631-publication-43978179779/report.json",
+    "report_sha256": "6eebe9964df27727d77c1fb46c99b8777bc41ad21d675518b66904fc9e1f5fcb"
+  },
+  "primary_horizon": 7,
+  "multipliers": [
+    0.5,
+    1,
+    2
+  ],
+  "selection": "Lowest mean development seven-day USD quantile pinball, exact ties prefer identity then smallest sum(abs(log(multiplier))) then lexicographic multipliers",
+  "training_checkpoint_selection": "Reuse original v14 selection; never reselect weights",
+  "matched_control": "Apply the same nine-candidate calibration selection rule independently to each corresponding untuned and selected-SFT saved forecast",
+  "eligibility": "Exactly all 20 development and 22 retrospective seven-day cases per arm/seed; no performance-based exclusions",
+  "transformation": "Preserve q50 exactly; scale q10/q90 log-price offsets around q50 by positive lower/upper multipliers; preserve original values exactly for unit multipliers",
+  "failure": "Nonfinite/nonpositive transformed values revert to the original triplet and count a failure; no dropping cells",
+  "success_diagnostic": "At least 50% reduction of the original SFT-minus-base gap and positive gap reduction on at least two of three retrospective origins; this is descriptive only, not a claim of future improvement",
+  "budgets": {
+    "optimizer_updates": 0,
+    "inference_requests": 0,
+    "new_outcomes": 0,
+    "candidates_per_model": 9,
+    "timeout_minutes": 10
+  },
+  "preservation": {
+    "official_export_sha256": "67a043255a716db6bc9b73cd28f9258c30fb299fd8671a9ee3430c0d94cadd80",
+    "original_selections_unchanged": true,
+    "existing_future_panels_unchanged": true
+  }
+}

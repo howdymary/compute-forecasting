@@ -1,0 +1,39 @@
+name: Evaluate matched frozen tail readout v17
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/evaluate-tail-readout-v17.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: direct-tail-readout-v17
+  cancel-in-progress: false
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Fetch exact source remotely
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify saved inputs and run the fixed diagnostic
+        run: |
+          python -m pip install matplotlib==3.10.7
+          PYTHONPATH=src python scripts/verify_direct_v16_public.py --root .
+          PYTHONPATH=src python scripts/evaluate_tail_readout_v17.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: direct-v17-tail-readout-${{ github.run_id }}
+          path: artifacts/tail-readout-v17
+          retention-days: 30
+      - name: Publish immutable derived results
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/publish_tail_readout_v17.py
