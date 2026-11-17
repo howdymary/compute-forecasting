@@ -1,0 +1,61 @@
+name: Audit direct probability forecasting v18
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/audit-probability-v18.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: probability-v18-data-audit
+  cancel-in-progress: false
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - name: Fetch registered source
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Retrieve the previously locked client environment
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run download 43966729631 --repo "$GITHUB_REPOSITORY" --name evidence-v14-inputs-43966729631 --dir inputs/old-v14
+      - run: |
+          python -m pip install --extra-index-url https://download.pytorch.org/whl/cpu -r inputs/old-v14/requirements-lock.txt
+          python -m pip install -e '.[dev]' modal --no-deps
+          python -m pytest tests/test_probability_v18.py
+      - name: Prepare broader immutable target windows on Modal
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: |
+          modal run -m compute_forecast.probability_data_v18
+          cp inputs/old-v14/requirements-lock.txt inputs/probability-v18/requirements-lock.txt
+      - name: Verify model probabilities, gradients and resource headroom without optimization
+        env:
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+        run: PYTHONPATH=src python scripts/audit_probability_v18.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: probability-v18-inputs-${{ github.run_id }}
+          path: inputs/probability-v18
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: probability-v18-audit-${{ github.run_id }}
+          path: artifacts/probability-v18-audit
+          retention-days: 30
+      - name: Publish actual readiness and source audit
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/publish_probability_v18.py
