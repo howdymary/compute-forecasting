@@ -12,6 +12,9 @@ payloads={"results/market-state-v19/"+kind+"/"+run+"/"+str(f.relative_to(source)
 if not payloads:raise ValueError("No completed public artifacts")
 manifest={"study_id":"market-state-v19","source_sha":os.environ.get("PUBLICATION_SOURCE_SHA",os.environ.get("VALIDATION_SOURCE_SHA",os.environ["GITHUB_SHA"])),"trigger_sha":os.environ["GITHUB_SHA"],"files":[{"path":p.split("/"+kind+"/"+run+"/",1)[1],"bytes":len(raw),"sha256":hashlib.sha256(raw).hexdigest()} for p,raw in sorted(payloads.items())]}
 payloads["results/market-state-v19/"+kind+"/"+run+"/manifest.json"]=(json.dumps(manifest,indent=2)+"\n").encode()
+if kind=="progress" and (source/"report.json").exists():
+    raw=(source/"report.json").read_bytes()
+    payloads["results/market-state-v19/progress/latest.json"]=(json.dumps({"study_id":"market-state-v19-progress","report_path":"results/market-state-v19/progress/"+run+"/report.json","report_sha256":hashlib.sha256(raw).hexdigest()},indent=2)+"\n").encode()
 if kind=="future" and (source/"index.json").exists():
     raw=(source/"index.json").read_bytes()
     payloads["results/market-state-v19/future/latest.json"]=(json.dumps({"study_id":"market-state-v19-prospective","report_path":"results/market-state-v19/future/"+run+"/index.json","report_sha256":hashlib.sha256(raw).hexdigest()},indent=2)+"\n").encode()
