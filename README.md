@@ -192,3 +192,7 @@ This post-event study completed eight Tinker LoRA candidate runs, including six 
 [Matched forecasting figure](https://howdymary--compute-forecast-evidence-v14-web.us-east.modal.run/market) · [Registered methods and source decisions](docs/market-state-v19.md) · [Versioned artifacts](results/market-state-v19/README.md).
 
 A separately registered study compares the same direct probability model with price history alone and with other-provider within-group price changes and observed collector composition. The engineering gate passed on 314 overlapping training windows across 12 provider/configuration groups. Six one-epoch Tinker runs are registered; actual completion and scores live in the versioned artifacts. News and availability are excluded. A new 16-week contract-transfer panel starts no earlier than December 20, with analysis gated until April 12, 2027. Prospective improvement is not established.
+
+## Direct quantile forecast training
+
+[Study v20](docs/quantile-training-v20.md) compares a bounded Tinker pinball-loss warm start with the frozen direct model and fixed three-seed ensembles. [Findings](docs/quantile-training-v20-findings.md) and [versioned artifacts](results/quantile-training-v20) preserve negative results and distinguish further weight training, representation changes and postprocessing. [Interactive figure](https://howdymary--compute-forecast-evidence-v14-web.us-east.modal.run/quantile). Prospective improvement remains pending under a separate registered panel.
