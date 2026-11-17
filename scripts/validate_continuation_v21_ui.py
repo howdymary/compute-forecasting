@@ -29,6 +29,8 @@ async def main():
         await page.locator("#experience:not([hidden])").wait_for(timeout=45000)
         assert await page.locator("#future").inner_text()=="Loading the separate commitment ledger…","Primary chart did not load independently"
         future_gate.set()
+        selected=next(r["state"]["selected"]["update"] for r in report["runs"] if r["state"]["arm"]=="same" and r["state"]["seed"]==17)
+        assert await page.locator("#checkpoint").input_value()==str(selected),"Initial figure does not show the development-selected checkpoint"
         assert await page.locator("#price-chart svg").count()==1
         assert not await page.locator("svg").evaluate_all("(xs)=>xs.some(x=>/NaN|Infinity/.test(x.innerHTML))")
         assert await page.evaluate("document.documentElement.scrollWidth<=innerWidth+1")
