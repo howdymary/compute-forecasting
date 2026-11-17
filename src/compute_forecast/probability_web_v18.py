@@ -1,5 +1,5 @@
 """Read-only v18 routes with an independent cache and no model credentials."""
-import hashlib,json,threading,time,urllib.error,urllib.request
+import asyncio,hashlib,json,threading,time,urllib.error,urllib.request
 from .probability_ui_v18 import HTML
 BASE="https://raw.githubusercontent.com/howdymary/mochi-demo/compute-observatory/"
 def mount(api,headers,public_volume,future_lock,future_cache):
@@ -14,7 +14,7 @@ def mount(api,headers,public_volume,future_lock,future_cache):
             async with future_lock:
                 if not cache or time.monotonic()-cache["at"]>=15:
                     if time.monotonic()-future_cache["at"]>15:
-                        await public_volume.reload.aio();future_cache["at"]=time.monotonic()
+                        await asyncio.wait_for(public_volume.reload.aio(),timeout=10);future_cache["at"]=time.monotonic()
                     value,pointer=read_public_snapshot("direct-probability-v18")
                     value["public_report_sha256"]=pointer["report_sha256"];cache.update(at=time.monotonic(),value=value,pointer=pointer)
                 value=cache["value"];identity=cache["pointer"]["report_sha256"]
@@ -27,7 +27,7 @@ def mount(api,headers,public_volume,future_lock,future_cache):
         try:
             async with future_lock:
                 if time.monotonic()-future_cache["at"]>15:
-                    await public_volume.reload.aio();future_cache["at"]=time.monotonic()
+                    await asyncio.wait_for(public_volume.reload.aio(),timeout=10);future_cache["at"]=time.monotonic()
                 path=Path("/public/probability-v18-future/index.json")
                 if not path.exists():
                     return JSONResponse({"study_id":"direct-probability-v18-prospective","status":"pending_initial_readiness_audit","issued_origins":0,"prospective_accuracy":"not established"},headers=headers)
@@ -43,7 +43,7 @@ def mount(api,headers,public_volume,future_lock,future_cache):
         if not re.fullmatch("[0-9a-f]{64}",identity):return Response(status_code=404)
         async with future_lock:
             if time.monotonic()-future_cache["at"]>15:
-                await public_volume.reload.aio();future_cache["at"]=time.monotonic()
+                await asyncio.wait_for(public_volume.reload.aio(),timeout=10);future_cache["at"]=time.monotonic()
             path=Path("/public/probability-v18-future/artifacts")/(identity+".json")
             if not path.exists():return Response(status_code=404)
             raw=path.read_bytes()

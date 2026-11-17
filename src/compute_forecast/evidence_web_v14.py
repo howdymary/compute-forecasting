@@ -14,7 +14,7 @@ BASE="https://raw.githubusercontent.com/howdymary/mochi-demo/compute-observatory
 def web():
     from fastapi import FastAPI
     from fastapi.responses import HTMLResponse,JSONResponse,Response
-    api=FastAPI(docs_url=None,redoc_url=None,openapi_url=None);cache={};lock=threading.Lock();future_lock=asyncio.Lock();future_cache={"at":0}
+    api=FastAPI(docs_url=None,redoc_url=None,openapi_url=None);cache={};lock=threading.Lock();future_lock=asyncio.Lock();future_cache={"at":time.monotonic()}
     headers={"Cache-Control":"no-store","X-Content-Type-Options":"nosniff","Content-Security-Policy":"default-src 'self';script-src 'self' 'unsafe-inline';style-src 'self' 'unsafe-inline';object-src 'none';base-uri 'none';frame-ancestors 'none'"}
     @api.get("/")
     def page():return HTMLResponse(HTML,headers=headers)
@@ -33,7 +33,7 @@ def web():
             async with future_lock:
                 if not cache or time.monotonic()-cache["at"]>=15:
                     if time.monotonic()-future_cache["at"]>15:
-                        await future_public.reload.aio();future_cache["at"]=time.monotonic()
+                        await asyncio.wait_for(future_public.reload.aio(),timeout=10);future_cache["at"]=time.monotonic()
                     value,pointer=read_public_snapshot("direct-evidence-v14")
                     if value.get("news_used"):raise ValueError("Study boundary mismatch")
                     cache.update(at=time.monotonic(),value=value,pointer=pointer)
@@ -45,7 +45,7 @@ def web():
         try:
             async with future_lock:
                 if time.monotonic()-future_cache["at"]>15:
-                    await future_public.reload.aio();future_cache["at"]=time.monotonic()
+                    await asyncio.wait_for(future_public.reload.aio(),timeout=10);future_cache["at"]=time.monotonic()
                 path=Path("/public/evidence-v14-future/index.json")
                 if not path.exists():return JSONResponse({"status":"pending_initial_readiness_audit","issued_origins":0},headers=headers)
                 value=json.loads(path.read_bytes());assert value["study_id"]=="direct-evidence-v14-prospective"
@@ -56,7 +56,7 @@ def web():
         if not re.fullmatch("[0-9a-f]{64}",identity):return Response(status_code=404)
         async with future_lock:
             if time.monotonic()-future_cache["at"]>15:
-                await future_public.reload.aio();future_cache["at"]=time.monotonic()
+                await asyncio.wait_for(future_public.reload.aio(),timeout=10);future_cache["at"]=time.monotonic()
             path=Path("/public/evidence-v14-future/artifacts")/(identity+".json")
             if not path.exists():return Response(status_code=404)
             raw=path.read_bytes()
