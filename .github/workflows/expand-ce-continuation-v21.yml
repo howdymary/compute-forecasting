@@ -113,6 +113,16 @@ jobs:
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
           MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
         run: python scripts/load_continuation_inputs_v21.py
+      - name: Verify the original training implementation before further optimization
+        run: |
+          python - <<'PY'
+          import hashlib,json,pathlib
+          lock=json.loads(pathlib.Path('configs/ce-continuation-v21-code-lock.json').read_bytes())
+          for item in lock['files']:
+              raw=pathlib.Path(item['path']).read_bytes()
+              assert hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\0'+raw).hexdigest()==item['git_blob_sha'],'Frozen training implementation changed: '+item['path']
+          print('Original categorical training implementation preserved')
+          PY
       - name: Matched ordering robustness run
         env:
           TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
