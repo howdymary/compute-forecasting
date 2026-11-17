@@ -45,7 +45,7 @@ async def infer(tasks,p,lock):
             if method in errors:raise RuntimeError(errors[method])
             if calls>=p["limits"]["max_probability_requests_per_origin"]:raise ValueError("Registered inference limit")
             calls+=1
-            async with sem:probs=await sample_decision(samplers[method],renderer.render(decision({**t,"arm":arm},h,lock["log_levels"])))
+            async with sem:probs=await asyncio.wait_for(sample_decision(samplers[method],renderer.render(decision({**t,"arm":arm},h,lock["log_levels"]))),timeout=60)
             mass=[float(probs[str(i)]) for i in range(len(z))];q=quantiles(mass,z)
         except Exception as exc:error=type(exc).__name__;mass=[float(v==0) for v in lock["log_levels"]];q=[t["anchor"]]*3
         return row(t,h,method,q,mass,z,error)
@@ -78,7 +78,15 @@ async def execute(p,lock,numeric,publication_receipts):
         else:
             from .market_controls_v19 import vector
             from .signals_remote_v6 import native_references
-            tasks=prepared["tasks"];rows,calls=await infer(tasks,p,lock);result["model_calls"]=calls
+            tasks=prepared["tasks"]
+            try:rows,calls=await asyncio.wait_for(infer(tasks,p,lock),timeout=900)
+            except Exception as error:
+                calls=None;rows=[]
+                for t in tasks:
+                    z=support(t["anchor"],lock["log_levels"]);mass=[float(v==0) for v in lock["log_levels"]]
+                    for h in p["horizons"]:
+                        for method in ("price","market","untuned_price","untuned_market"):rows.append(row(t,h,method,[t["anchor"]]*3,mass,z,"InferenceInitializationOrDeadline"+type(error).__name__))
+            result["model_calls"]=calls
             private=pathlib.Path("/data/market-state-v19/numerical")/numeric["input_key"]/"state.pkl";raw=private.read_bytes()
             assert hashlib.sha256(raw).hexdigest()==numeric["state_sha256"],"Numerical model changed"
             models=pickle.loads(raw)["models"]
@@ -92,7 +100,9 @@ async def execute(p,lock,numeric,publication_receipts):
             for receipt in attempts:
                 if not receipt.get("eligible_for_origin") or receipt.get("status")!="captured" or receipt["retrieved_at"]>origin+"T23:59:59.999999+00:00":continue
                 snapshots.append({"captured_at":receipt["retrieved_at"],"prices":{"date":receipt["observed_day"],"cohort":[{"id":t["series_id"],"family":t["metadata"]["family"]} for t in tasks],"rows":[{"id":r["series_id"],"date":r["date"],"value":r["value"]} for r in receipt["observations"]]}})
-            refs=native_references(snapshots,origin);refmap={(r["series_id"],r["horizon_days"],r["forecaster"]):r for r in refs}
+            try:refs=native_references(snapshots,origin)
+            except Exception:refs=[]
+            refmap={(r["series_id"],r["horizon_days"],r["forecaster"]):r for r in refs}
             for t in tasks:
                 for h in p["horizons"]:
                     for method in ("last_value","last_value_empirical","drift","seasonal_naive"):
