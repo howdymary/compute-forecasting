@@ -1,0 +1,53 @@
+{
+  "selected": {
+    "update": 24,
+    "checkpoint_id": "621a378f0eb88500b9836cb9",
+    "checkpoint_identity_kind": "Hash of private resource identity, not weight-byte checksum",
+    "development": {
+      "n": 54,
+      "pinball": 0.029006780186211653,
+      "coverage": 0.6851851851851852,
+      "width": 0.1931020440954412,
+      "median_mae": 0.06675185185185188,
+      "crps": 0.05869970390061784,
+      "failures": 0,
+      "out_of_support": 0,
+      "by_horizon": {
+        "1": {
+          "n": 18,
+          "pinball": 0.01755786892149188,
+          "coverage": 0.6666666666666666,
+          "width": 0.15353301922990323,
+          "median_mae": 0.03915555555555556,
+          "crps": 0.03601827337393945,
+          "failures": 0,
+          "out_of_support": 0
+        },
+        "3": {
+          "n": 18,
+          "pinball": 0.028377667473982737,
+          "coverage": 0.7222222222222222,
+          "width": 0.2128865565282102,
+          "median_mae": 0.0625888888888889,
+          "crps": 0.0555392254803154,
+          "failures": 0,
+          "out_of_support": 0
+        },
+        "7": {
+          "n": 18,
+          "pinball": 0.04108480416316034,
+          "coverage": 0.6666666666666666,
+          "width": 0.2128865565282102,
+          "median_mae": 0.09851111111111117,
+          "crps": 0.08454161284759866,
+          "failures": 0,
+          "out_of_support": 0
+        }
+      },
+      "primary_pinball": 0.04108480416316034
+    }
+  },
+  "selected_at": "2026-11-17T05:03:00.605898+00:00",
+  "rule": "Lowest development seven-day mean dollar pinball; checkpoint zero eligible; earliest update then lower learning rate breaks exact ties",
+  "locked_before_retrospective_evaluation": true
+}
