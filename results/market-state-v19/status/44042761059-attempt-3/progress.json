@@ -1,0 +1,70 @@
+{
+  "study_id": "market-state-v19",
+  "runs": [
+    {
+      "arm": "price",
+      "seed": 17,
+      "status": "in_progress",
+      "optimizer_updates": 30,
+      "planned_updates": 59,
+      "checkpoints": [
+        {
+          "update": 0,
+          "development_pinball": 0.013454358729337467
+        },
+        {
+          "update": 15,
+          "development_pinball": 0.01280791326416938
+        },
+        {
+          "update": 30,
+          "development_pinball": 0.008652142545484801
+        }
+      ]
+    },
+    {
+      "arm": "price",
+      "seed": 29,
+      "status": "in_progress",
+      "optimizer_updates": 15,
+      "planned_updates": 59,
+      "checkpoints": [
+        {
+          "update": 0,
+          "development_pinball": 0.013454358729337467
+        },
+        {
+          "update": 15,
+          "development_pinball": 0.0127518994561431
+        }
+      ]
+    },
+    {
+      "arm": "price",
+      "seed": 43,
+      "status": "not_yet_backed_up",
+      "optimizer_updates": 0
+    },
+    {
+      "arm": "market",
+      "seed": 17,
+      "status": "not_yet_backed_up",
+      "optimizer_updates": 0
+    },
+    {
+      "arm": "market",
+      "seed": 29,
+      "status": "not_yet_backed_up",
+      "optimizer_updates": 0
+    },
+    {
+      "arm": "market",
+      "seed": 43,
+      "status": "not_yet_backed_up",
+      "optimizer_updates": 0
+    }
+  ],
+  "model_calls": 0,
+  "new_optimizer_updates": 0,
+  "note": "Updates are the latest durable recovery checkpoint; in-flight steps may be newer"
+}
