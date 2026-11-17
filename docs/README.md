@@ -82,3 +82,5 @@ This post-event study trains future-price distributions directly, comparing matc
 - [Categorical CE continuation v21](ce-continuation-v21.md): restored Adam state, matched same-data and expanded-data training, linked checkpoint forecasts, and a separate locked future panel.
 
 - [Locked v21 seed-17 pilot diagnosis](ce-continuation-v21-pilot.md): development gains failed to transfer; narrower intervals and changed-price cases explain the measured deterioration.
+
+- [Proposed next continuation test](ce-continuation-v21-next-steps.md): preserve the categorical model, test an incumbent-probability constraint, and evaluate new observations separately. Not registered or executed.
