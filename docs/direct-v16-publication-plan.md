@@ -121,7 +121,7 @@ The untuned model is mostly persistence-like in its median (106/132 seven-day me
 
 ## Uncertainty and effective evidence
 
-Training seeds, sampling requests and market outcomes are different uncertainty sources. The six runs reuse the same 22 target cases and three market origins. No market-level significance claim is justified.
+Training seeds, sampling requests and market outcomes are different uncertainty sources. The six runs reuse the same 22 target cases and three market origins. Within each input condition, the untuned weights are shared across the three seed-labelled runs; their differing baseline scores arise from separate stochastic inference draws. Consequently, variation between seed-labelled contrasts cannot be attributed entirely to training-seed variability. No market-level significance claim is justified.
 
 The v16 conditional bootstrap resamples each retained vector pool 1,000 times with fixed outcomes. All six deterioration percentile ranges are positive, approximately:
 - Price 17: [0.004837, 0.010092].
