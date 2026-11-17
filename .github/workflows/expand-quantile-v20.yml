@@ -32,8 +32,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           PILOT_RUN: ${{ github.event.workflow_run.id }}
         run: |
-          python -m pip install --extra-index-url https://download.pytorch.org/whl/cpu -r requirements/market-state-v19.txt
-          python -m pip install -e . --no-deps
+          python -m pip install -e .
           python - <<'PY'
           import json,os,pathlib,subprocess
           run=os.environ.get('PILOT_RUN')
@@ -51,13 +50,16 @@ jobs:
           TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
         run: |
           python - <<'PY'
-          import asyncio,json,os,pathlib,tinker
+          import asyncio,json,os,pathlib
           async def main():
               root=pathlib.Path('artifacts/quantile-training-v20')
               result=root/'models/17/result.json'
               gate=result.exists() and json.loads(result.read_bytes())['expansion_gate']['passed']
               count=None
               if gate:
+                  import subprocess,sys
+                  subprocess.run([sys.executable,"-m","pip","install","--extra-index-url","https://download.pytorch.org/whl/cpu","-r","requirements/market-state-v19.txt"],check=True)
+                  import tinker
                   rest=tinker.RestClient();items=[]
                   for offset in range(0,2000,100):
                       page=await rest.list_user_checkpoints(limit=100,offset=offset);items+=page.checkpoints
