@@ -121,21 +121,14 @@ async def execute(p,lock,numeric,publication_receipts):
     outputs["index.json"]=result;atomic(root/"latest.json",result);data_volume.commit();return outputs
 @app.local_entrypoint()
 def verified_receipts(p):
-    """Server metadata and downloaded archive bytes, not author-entered commit times."""
-    import io,subprocess,zipfile
     receipts={}
     if datetime.now(timezone.utc)<utc(p["final_analysis_not_before"]):return receipts
-    for directory in pathlib.Path("results/market-state-v19/future").iterdir():
-        if not directory.is_dir() or not (directory/"github-publication-receipt.json").exists():continue
-        saved=json.loads((directory/"github-publication-receipt.json").read_bytes());identity=str(saved["id"])
-        server=json.loads(subprocess.check_output(["gh","api","repos/"+os.environ["GITHUB_REPOSITORY"]+"/actions/artifacts/"+identity],text=True))
-        assert server["id"]==saved["id"] and server["created_at"]==saved["created_at"] and server["digest"]==saved["digest"]
-        archive=subprocess.check_output(["gh","api","repos/"+os.environ["GITHUB_REPOSITORY"]+"/actions/artifacts/"+identity+"/zip"])
-        assert hashlib.sha256(archive).hexdigest()==server["digest"].removeprefix("sha256:")
-        with zipfile.ZipFile(io.BytesIO(archive)) as z:
-            for name in z.namelist():
-                if not pathlib.PurePosixPath(name).name.startswith("commitment-"):continue
-                value=json.loads(z.read(name));receipts[value["origin"]]={"artifact_id":server["id"],"created_at":server["created_at"],"archive_digest":server["digest"],"commitment_sha256":digest(value)}
+    import importlib.util
+    spec=importlib.util.spec_from_file_location("attest_market_v19",pathlib.Path("scripts/attest_market_v19.py"));module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+    for directory in sorted(pathlib.Path("results/market-state-v19/future").iterdir()):
+        if not directory.is_dir() or not (directory/"attestation.bundle.json").exists():continue
+        for origin,receipt in module.verify(directory).items():
+            if origin not in receipts or receipt["created_at"]<receipts[origin]["created_at"]:receipts[origin]=receipt
     return receipts
 def main():
     p=json.loads(pathlib.Path("configs/market-state-v19-prospective.json").read_bytes());pointer=pathlib.Path("results/market-state-v19/latest.json")

@@ -13,6 +13,9 @@ on:
 permissions:
   contents: write
   actions: read
+  id-token: write
+  attestations: write
+  artifact-metadata: write
 concurrency:
   group: market-state-v19-future
   cancel-in-progress: false
@@ -36,6 +39,20 @@ jobs:
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
           MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
         run: modal run -m compute_forecast.market_future_remote_v19
+      - name: Bind permitted publication files to a manifest
+        run: python scripts/attest_market_v19.py build artifacts/market-state-v19-future
+      - name: Attest publication timing without relying on temporary downloads
+        id: attest
+        uses: actions/attest@v4
+        with:
+          subject-path: artifacts/market-state-v19-future/commitment-manifest.json
+      - name: Retain and verify the signed publication bundle
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BUNDLE_PATH: ${{ steps.attest.outputs.bundle-path }}
+        run: |
+          cp "$BUNDLE_PATH" artifacts/market-state-v19-future/attestation.bundle.json
+          python scripts/attest_market_v19.py verify artifacts/market-state-v19-future
       - uses: actions/upload-artifact@v4
         id: artifact
         with:
