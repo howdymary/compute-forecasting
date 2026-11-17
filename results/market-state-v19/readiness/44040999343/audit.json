@@ -1,0 +1,525 @@
+{
+  "study_id": "market-state-v19",
+  "source_sha": null,
+  "protocol_sha256": "7965ee6601ebdad9467f5283a3bf3e2c1c90a64cfe9131ae52a7c16cef7bf38a",
+  "dataset_sha256": "867aad80b4418d6963222dd7c7f6f108602ab55c4ca9ac048df119290cfb3a99",
+  "engine_sha256": "7377382e5483addb3dd5dbc9738bc1aa46c9b50d5493c1d19a4ddb265e1fb935",
+  "readiness": "passed",
+  "training_ready": true,
+  "reasons": [],
+  "phases": {
+    "training": {
+      "windows": 314,
+      "horizon_examples": 942,
+      "contracts": 12,
+      "providers": 8,
+      "origins": [
+        "2026-02-01",
+        "2026-02-02",
+        "2026-02-14",
+        "2026-02-15",
+        "2026-02-16",
+        "2026-02-17",
+        "2026-02-18",
+        "2026-02-19",
+        "2026-02-20",
+        "2026-02-22",
+        "2026-02-23",
+        "2026-02-24",
+        "2026-02-26",
+        "2026-03-01",
+        "2026-03-02",
+        "2026-05-29",
+        "2026-06-02",
+        "2026-06-03",
+        "2026-06-06",
+        "2026-06-07",
+        "2026-06-08",
+        "2026-06-11",
+        "2026-06-12",
+        "2026-06-13",
+        "2026-06-14",
+        "2026-06-16",
+        "2026-06-17",
+        "2026-06-18",
+        "2026-06-19",
+        "2026-06-20",
+        "2026-06-21",
+        "2026-06-22",
+        "2026-06-23",
+        "2026-06-24",
+        "2026-06-25",
+        "2026-06-26",
+        "2026-06-27",
+        "2026-06-28",
+        "2026-06-29",
+        "2026-06-30",
+        "2026-07-01",
+        "2026-07-02",
+        "2026-07-03",
+        "2026-07-05",
+        "2026-07-06",
+        "2026-07-08",
+        "2026-07-10",
+        "2026-07-12",
+        "2026-07-14",
+        "2026-07-17",
+        "2026-07-18",
+        "2026-07-19",
+        "2026-07-21",
+        "2026-07-22",
+        "2026-07-23",
+        "2026-07-26",
+        "2026-07-28",
+        "2026-07-30",
+        "2026-08-01",
+        "2026-08-02",
+        "2026-08-04",
+        "2026-08-06",
+        "2026-08-08",
+        "2026-08-10",
+        "2026-08-11",
+        "2026-08-12",
+        "2026-08-14",
+        "2026-08-15",
+        "2026-08-17",
+        "2026-08-18",
+        "2026-08-20",
+        "2026-08-22",
+        "2026-08-24",
+        "2026-08-26",
+        "2026-08-29",
+        "2026-08-30",
+        "2026-09-05",
+        "2026-09-11",
+        "2026-09-12",
+        "2026-09-14",
+        "2026-09-16",
+        "2026-09-18",
+        "2026-09-20",
+        "2026-09-21",
+        "2026-09-22",
+        "2026-09-25",
+        "2026-09-26",
+        "2026-09-29",
+        "2026-09-30",
+        "2026-10-04"
+      ],
+      "gpu_families": {
+        "A100": 230,
+        "H100": 84
+      },
+      "changed_seven_day": 57,
+      "peer_return_coverage": 0.8949044585987261
+    },
+    "development": {
+      "windows": 16,
+      "horizon_examples": 48,
+      "contracts": 8,
+      "providers": 5,
+      "origins": [
+        "2026-10-11",
+        "2026-10-18"
+      ],
+      "gpu_families": {
+        "A100": 12,
+        "H100": 4
+      },
+      "changed_seven_day": 4,
+      "peer_return_coverage": 0.875
+    },
+    "retrospective": {
+      "windows": 24,
+      "horizon_examples": 72,
+      "contracts": 8,
+      "providers": 5,
+      "origins": [
+        "2026-10-25",
+        "2026-10-28",
+        "2026-10-30"
+      ],
+      "gpu_families": {
+        "A100": 18,
+        "H100": 6
+      },
+      "changed_seven_day": 9,
+      "peer_return_coverage": 0.875
+    }
+  },
+  "feature_coverage": {
+    "observed_provider_count": {
+      "nonnull": 314,
+      "distinct": 3,
+      "origins": 90
+    },
+    "observed_quote_count": {
+      "nonnull": 314,
+      "distinct": 10,
+      "origins": 90
+    },
+    "unknown_region_fraction": {
+      "nonnull": 314,
+      "distinct": 10,
+      "origins": 90
+    },
+    "unknown_node_fraction": {
+      "nonnull": 314,
+      "distinct": 1,
+      "origins": 90
+    },
+    "observed_provider_concentration": {
+      "nonnull": 314,
+      "distinct": 11,
+      "origins": 90
+    },
+    "comparable_provider_count": {
+      "nonnull": 314,
+      "distinct": 2,
+      "origins": 90
+    },
+    "log_anchor_to_peer_median": {
+      "nonnull": 0,
+      "distinct": 0,
+      "origins": 0
+    },
+    "peer_log_iqr": {
+      "nonnull": 0,
+      "distinct": 0,
+      "origins": 0
+    },
+    "log_anchor_to_peer_min": {
+      "nonnull": 0,
+      "distinct": 0,
+      "origins": 0
+    },
+    "log_anchor_to_peer_max": {
+      "nonnull": 0,
+      "distinct": 0,
+      "origins": 0
+    },
+    "peer_price_rank": {
+      "nonnull": 0,
+      "distinct": 0,
+      "origins": 0
+    },
+    "peer_log_step_7d": {
+      "nonnull": 0,
+      "distinct": 0,
+      "origins": 0
+    },
+    "peer_return_median_1d": {
+      "nonnull": 288,
+      "distinct": 46,
+      "origins": 77
+    },
+    "peer_return_median_3d": {
+      "nonnull": 286,
+      "distinct": 57,
+      "origins": 76
+    },
+    "peer_return_median_7d": {
+      "nonnull": 281,
+      "distinct": 74,
+      "origins": 75
+    },
+    "peer_return_iqr_7d": {
+      "nonnull": 281,
+      "distinct": 75,
+      "origins": 75
+    },
+    "peer_up_fraction_7d": {
+      "nonnull": 281,
+      "distinct": 4,
+      "origins": 75
+    },
+    "peer_down_fraction_7d": {
+      "nonnull": 281,
+      "distinct": 3,
+      "origins": 75
+    },
+    "peer_unchanged_fraction_7d": {
+      "nonnull": 281,
+      "distinct": 4,
+      "origins": 75
+    },
+    "peer_return_provider_count_7d": {
+      "nonnull": 314,
+      "distinct": 4,
+      "origins": 90
+    }
+  },
+  "varying_features": [
+    "observed_provider_count",
+    "observed_quote_count",
+    "unknown_region_fraction",
+    "observed_provider_concentration",
+    "comparable_provider_count",
+    "peer_return_median_1d",
+    "peer_return_median_3d",
+    "peer_return_median_7d",
+    "peer_return_iqr_7d",
+    "peer_up_fraction_7d",
+    "peer_down_fraction_7d",
+    "peer_unchanged_fraction_7d",
+    "peer_return_provider_count_7d"
+  ],
+  "quality_filtered_raw_rows": 314834,
+  "daily_rows": 129606,
+  "snapshot_day_exclusions": 0,
+  "ambiguous_groups": 5,
+  "excluded_daily_rows": {
+    "ambiguous_same_timestamp_group": 1068,
+    "missing_provider_or_sku": 6435
+  },
+  "source_license_quality_counts": [
+    {
+      "source_id": "afhubbard",
+      "licence_id": "CC-BY-4.0",
+      "quality_flag": "ok",
+      "n": 3714882
+    },
+    {
+      "source_id": "gpurentalprices",
+      "licence_id": "CC-BY-4.0",
+      "quality_flag": "ok",
+      "n": 27316
+    },
+    {
+      "source_id": "fastgpu_daily",
+      "licence_id": "CC-BY-4.0",
+      "quality_flag": "ok",
+      "n": 18987
+    }
+  ],
+  "selected_groups": [
+    "pack-market-v19-2bc60cf5847deb213e64af65",
+    "pack-market-v19-033ad8fb758d60748254ed0e",
+    "pack-market-v19-619b9382d76b803e39ec6b76",
+    "pack-market-v19-01688e422ed0d60d6137fad1",
+    "pack-market-v19-0318458658e90ceff88661ca",
+    "pack-market-v19-05820995d40a56d5603f8252",
+    "pack-market-v19-2dec08e4d645460d977a2195",
+    "pack-market-v19-07edbf2cb3ce731188c9aa48",
+    "pack-market-v19-3bd09f33e4f1b756cf0d32af",
+    "pack-market-v19-10b67bd734a6f42eea61457c",
+    "pack-market-v19-2f3ce868065789ae2b12a785",
+    "pack-market-v19-0647c3e47ef7353aafa5d0b6"
+  ],
+  "selected_metadata": [
+    {
+      "source_id": "afhubbard",
+      "provider": "aws",
+      "gpu_model": "A100 SXM 80GB",
+      "instrument_class": "hyperscaler_spot",
+      "pricing_tier": "spot",
+      "sku_raw": "p4de.24xlarge",
+      "region_canonical": "ap-southeast-singapore",
+      "gpu_count": 8,
+      "gpu_memory_gb": 80,
+      "region": "ap-southeast-singapore",
+      "series_id": "pack-market-v19-2bc60cf5847deb213e64af65",
+      "family": "A100",
+      "benchmark_contract": "Source-defined provider/SKU/region/node daily quote median: {\"gpu_count\": 8, \"gpu_memory_gb\": 80, \"gpu_model\": \"A100 SXM 80GB\", \"instrument_class\": \"hyperscaler_spot\", \"pricing_tier\": \"spot\", \"provider\": \"aws\", \"region_canonical\": \"ap-southeast-singapore\", \"sku_raw\": \"p4de.24xlarge\", \"source_id\": \"afhubbard\"}",
+      "unit": "USD per GPU-hour",
+      "availability_assurance": "Source-reported historical snapshot timestamp in frozen Pacific vintage; not independent proof of publication"
+    },
+    {
+      "source_id": "afhubbard",
+      "provider": "azure",
+      "gpu_model": "A100 SXM 80GB",
+      "instrument_class": "hyperscaler_spot",
+      "pricing_tier": "spot",
+      "sku_raw": "Standard_ND96amsr_A100_v4",
+      "region_canonical": "us-central-iowa",
+      "gpu_count": 8,
+      "gpu_memory_gb": 80,
+      "region": "us-central-iowa",
+      "series_id": "pack-market-v19-033ad8fb758d60748254ed0e",
+      "family": "A100",
+      "benchmark_contract": "Source-defined provider/SKU/region/node daily quote median: {\"gpu_count\": 8, \"gpu_memory_gb\": 80, \"gpu_model\": \"A100 SXM 80GB\", \"instrument_class\": \"hyperscaler_spot\", \"pricing_tier\": \"spot\", \"provider\": \"azure\", \"region_canonical\": \"us-central-iowa\", \"sku_raw\": \"Standard_ND96amsr_A100_v4\", \"source_id\": \"afhubbard\"}",
+      "unit": "USD per GPU-hour",
+      "availability_assurance": "Source-reported historical snapshot timestamp in frozen Pacific vintage; not independent proof of publication"
+    },
+    {
+      "source_id": "afhubbard",
+      "provider": "cudo",
+      "gpu_model": "A100 40GB",
+      "instrument_class": "neocloud_rate_card",
+      "pricing_tier": "on_demand",
+      "sku_raw": "intel-ice-lake-a100-pci",
+      "region_canonical": null,
+      "gpu_count": 1,
+      "gpu_memory_gb": 40,
+      "region": null,
+      "series_id": "pack-market-v19-619b9382d76b803e39ec6b76",
+      "family": "A100",
+      "benchmark_contract": "Source-defined provider/SKU/region/node daily quote median: {\"gpu_count\": 1, \"gpu_memory_gb\": 40, \"gpu_model\": \"A100 40GB\", \"instrument_class\": \"neocloud_rate_card\", \"pricing_tier\": \"on_demand\", \"provider\": \"cudo\", \"region_canonical\": null, \"sku_raw\": \"intel-ice-lake-a100-pci\", \"source_id\": \"afhubbard\"}",
+      "unit": "USD per GPU-hour",
+      "availability_assurance": "Source-reported historical snapshot timestamp in frozen Pacific vintage; not independent proof of publication"
+    },
+    {
+      "source_id": "afhubbard",
+      "provider": "gcp",
+      "gpu_model": "A100 40GB",
+      "instrument_class": "hyperscaler_spot",
+      "pricing_tier": "spot",
+      "sku_raw": "a2-highgpu-1g",
+      "region_canonical": "us-west-lasvegas",
+      "gpu_count": 1,
+      "gpu_memory_gb": 40,
+      "region": "us-west-lasvegas",
+      "series_id": "pack-market-v19-01688e422ed0d60d6137fad1",
+      "family": "A100",
+      "benchmark_contract": "Source-defined provider/SKU/region/node daily quote median: {\"gpu_count\": 1, \"gpu_memory_gb\": 40, \"gpu_model\": \"A100 40GB\", \"instrument_class\": \"hyperscaler_spot\", \"pricing_tier\": \"spot\", \"provider\": \"gcp\", \"region_canonical\": \"us-west-lasvegas\", \"sku_raw\": \"a2-highgpu-1g\", \"source_id\": \"afhubbard\"}",
+      "unit": "USD per GPU-hour",
+      "availability_assurance": "Source-reported historical snapshot timestamp in frozen Pacific vintage; not independent proof of publication"
+    },
+    {
+      "source_id": "afhubbard",
+      "provider": "lambdalabs",
+      "gpu_model": "A100 40GB",
+      "instrument_class": "neocloud_rate_card",
+      "pricing_tier": "on_demand",
+      "sku_raw": "gpu_1x_a100",
+      "region_canonical": "us-central-illinois",
+      "gpu_count": 1,
+      "gpu_memory_gb": 40,
+      "region": "us-central-illinois",
+      "series_id": "pack-market-v19-0318458658e90ceff88661ca",
+      "family": "A100",
+      "benchmark_contract": "Source-defined provider/SKU/region/node daily quote median: {\"gpu_count\": 1, \"gpu_memory_gb\": 40, \"gpu_model\": \"A100 40GB\", \"instrument_class\": \"neocloud_rate_card\", \"pricing_tier\": \"on_demand\", \"provider\": \"lambdalabs\", \"region_canonical\": \"us-central-illinois\", \"sku_raw\": \"gpu_1x_a100\", \"source_id\": \"afhubbard\"}",
+      "unit": "USD per GPU-hour",
+      "availability_assurance": "Source-reported historical snapshot timestamp in frozen Pacific vintage; not independent proof of publication"
+    },
+    {
+      "source_id": "afhubbard",
+      "provider": "lambdalabs",
+      "gpu_model": "H100 SXM 80GB",
+      "instrument_class": "neocloud_rate_card",
+      "pricing_tier": "on_demand",
+      "sku_raw": "gpu_4x_h100_sxm5",
+      "region_canonical": "us-west-california",
+      "gpu_count": 4,
+      "gpu_memory_gb": 80,
+      "region": "us-west-california",
+      "series_id": "pack-market-v19-05820995d40a56d5603f8252",
+      "family": "H100",
+      "benchmark_contract": "Source-defined provider/SKU/region/node daily quote median: {\"gpu_count\": 4, \"gpu_memory_gb\": 80, \"gpu_model\": \"H100 SXM 80GB\", \"instrument_class\": \"neocloud_rate_card\", \"pricing_tier\": \"on_demand\", \"provider\": \"lambdalabs\", \"region_canonical\": \"us-west-california\", \"sku_raw\": \"gpu_4x_h100_sxm5\", \"source_id\": \"afhubbard\"}",
+      "unit": "USD per GPU-hour",
+      "availability_assurance": "Source-reported historical snapshot timestamp in frozen Pacific vintage; not independent proof of publication"
+    },
+    {
+      "source_id": "afhubbard",
+      "provider": "nebius",
+      "gpu_model": "H100 SXM 80GB",
+      "instrument_class": "neocloud_rate_card",
+      "pricing_tier": "on_demand",
+      "sku_raw": "gpu-h100-sxm 8gpu-128vcpu-1600gb",
+      "region_canonical": "eu-north-finland",
+      "gpu_count": 8,
+      "gpu_memory_gb": 80,
+      "region": "eu-north-finland",
+      "series_id": "pack-market-v19-2dec08e4d645460d977a2195",
+      "family": "H100",
+      "benchmark_contract": "Source-defined provider/SKU/region/node daily quote median: {\"gpu_count\": 8, \"gpu_memory_gb\": 80, \"gpu_model\": \"H100 SXM 80GB\", \"instrument_class\": \"neocloud_rate_card\", \"pricing_tier\": \"on_demand\", \"provider\": \"nebius\", \"region_canonical\": \"eu-north-finland\", \"sku_raw\": \"gpu-h100-sxm 8gpu-128vcpu-1600gb\", \"source_id\": \"afhubbard\"}",
+      "unit": "USD per GPU-hour",
+      "availability_assurance": "Source-reported historical snapshot timestamp in frozen Pacific vintage; not independent proof of publication"
+    },
+    {
+      "source_id": "afhubbard",
+      "provider": "verda",
+      "gpu_model": "A100 40GB",
+      "instrument_class": "neocloud_rate_card",
+      "pricing_tier": "on_demand",
+      "sku_raw": "1A100.40S.22V",
+      "region_canonical": null,
+      "gpu_count": 1,
+      "gpu_memory_gb": 40,
+      "region": null,
+      "series_id": "pack-market-v19-07edbf2cb3ce731188c9aa48",
+      "family": "A100",
+      "benchmark_contract": "Source-defined provider/SKU/region/node daily quote median: {\"gpu_count\": 1, \"gpu_memory_gb\": 40, \"gpu_model\": \"A100 40GB\", \"instrument_class\": \"neocloud_rate_card\", \"pricing_tier\": \"on_demand\", \"provider\": \"verda\", \"region_canonical\": null, \"sku_raw\": \"1A100.40S.22V\", \"source_id\": \"afhubbard\"}",
+      "unit": "USD per GPU-hour",
+      "availability_assurance": "Source-reported historical snapshot timestamp in frozen Pacific vintage; not independent proof of publication"
+    },
+    {
+      "source_id": "afhubbard",
+      "provider": "verda",
+      "gpu_model": "H100 SXM 80GB",
+      "instrument_class": "neocloud_rate_card",
+      "pricing_tier": "on_demand",
+      "sku_raw": "8H100.80S.176V",
+      "region_canonical": null,
+      "gpu_count": 8,
+      "gpu_memory_gb": 80,
+      "region": null,
+      "series_id": "pack-market-v19-3bd09f33e4f1b756cf0d32af",
+      "family": "H100",
+      "benchmark_contract": "Source-defined provider/SKU/region/node daily quote median: {\"gpu_count\": 8, \"gpu_memory_gb\": 80, \"gpu_model\": \"H100 SXM 80GB\", \"instrument_class\": \"neocloud_rate_card\", \"pricing_tier\": \"on_demand\", \"provider\": \"verda\", \"region_canonical\": null, \"sku_raw\": \"8H100.80S.176V\", \"source_id\": \"afhubbard\"}",
+      "unit": "USD per GPU-hour",
+      "availability_assurance": "Source-reported historical snapshot timestamp in frozen Pacific vintage; not independent proof of publication"
+    },
+    {
+      "source_id": "afhubbard",
+      "provider": "vultr",
+      "gpu_model": "A100 40GB",
+      "instrument_class": "neocloud_rate_card",
+      "pricing_tier": "on_demand",
+      "sku_raw": "vcg-a100-6c-60g-40vram",
+      "region_canonical": "us-east-newjersey",
+      "gpu_count": 1,
+      "gpu_memory_gb": 40,
+      "region": "us-east-newjersey",
+      "series_id": "pack-market-v19-10b67bd734a6f42eea61457c",
+      "family": "A100",
+      "benchmark_contract": "Source-defined provider/SKU/region/node daily quote median: {\"gpu_count\": 1, \"gpu_memory_gb\": 40, \"gpu_model\": \"A100 40GB\", \"instrument_class\": \"neocloud_rate_card\", \"pricing_tier\": \"on_demand\", \"provider\": \"vultr\", \"region_canonical\": \"us-east-newjersey\", \"sku_raw\": \"vcg-a100-6c-60g-40vram\", \"source_id\": \"afhubbard\"}",
+      "unit": "USD per GPU-hour",
+      "availability_assurance": "Source-reported historical snapshot timestamp in frozen Pacific vintage; not independent proof of publication"
+    },
+    {
+      "source_id": "afhubbard",
+      "provider": "aws",
+      "gpu_model": "A100 40GB",
+      "instrument_class": "hyperscaler_spot",
+      "pricing_tier": "spot",
+      "sku_raw": "p4d.24xlarge",
+      "region_canonical": "eu-north-stockholm",
+      "gpu_count": 8,
+      "gpu_memory_gb": 40,
+      "region": "eu-north-stockholm",
+      "series_id": "pack-market-v19-2f3ce868065789ae2b12a785",
+      "family": "A100",
+      "benchmark_contract": "Source-defined provider/SKU/region/node daily quote median: {\"gpu_count\": 8, \"gpu_memory_gb\": 40, \"gpu_model\": \"A100 40GB\", \"instrument_class\": \"hyperscaler_spot\", \"pricing_tier\": \"spot\", \"provider\": \"aws\", \"region_canonical\": \"eu-north-stockholm\", \"sku_raw\": \"p4d.24xlarge\", \"source_id\": \"afhubbard\"}",
+      "unit": "USD per GPU-hour",
+      "availability_assurance": "Source-reported historical snapshot timestamp in frozen Pacific vintage; not independent proof of publication"
+    },
+    {
+      "source_id": "afhubbard",
+      "provider": "azure",
+      "gpu_model": "A100 40GB",
+      "instrument_class": "hyperscaler_spot",
+      "pricing_tier": "spot",
+      "sku_raw": "Standard_ND96asr_v4",
+      "region_canonical": "us-east-virginia",
+      "gpu_count": 8,
+      "gpu_memory_gb": 40,
+      "region": "us-east-virginia",
+      "series_id": "pack-market-v19-0647c3e47ef7353aafa5d0b6",
+      "family": "A100",
+      "benchmark_contract": "Source-defined provider/SKU/region/node daily quote median: {\"gpu_count\": 8, \"gpu_memory_gb\": 40, \"gpu_model\": \"A100 40GB\", \"instrument_class\": \"hyperscaler_spot\", \"pricing_tier\": \"spot\", \"provider\": \"azure\", \"region_canonical\": \"us-east-virginia\", \"sku_raw\": \"Standard_ND96asr_v4\", \"source_id\": \"afhubbard\"}",
+      "unit": "USD per GPU-hour",
+      "availability_assurance": "Source-reported historical snapshot timestamp in frozen Pacific vintage; not independent proof of publication"
+    }
+  ],
+  "historical_availability": "Source-reported original snapshot timestamps in frozen pack; no independent publication-vintage proof, historical evaluation retrospective",
+  "not_in_training": [
+    "news",
+    "availability",
+    "BLS",
+    "infrastructure"
+  ],
+  "pack_sha256": "f0b52af28c52545732208bcc4905facd9b941aa5779da683e1d9884c283b7c7c",
+  "new_optimizer_updates": 0,
+  "provider_cost_usd": null,
+  "runtime_seconds": 66.132299561
+}
