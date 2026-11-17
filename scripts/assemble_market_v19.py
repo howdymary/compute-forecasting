@@ -23,7 +23,7 @@ for arm in ("price","market"):
             for task_id,c in cases.items():
                 rows=[r for r in dev["cells"] if r["task_id"]==task_id];assert len(rows)==3
                 c["checkpoints"].append({"arm":arm,"seed":seed,"update":cp["update"],"selected":cp["update"]==state["selected"]["update"],"rows":rows})
-        runs.append({"arm":arm,"seed":seed,"source_sha":state["source_sha"],"optimizer_updates":state["optimizer_updates"],"example_presentations":state["example_presentations"],"batch_order_sha256":state["batch_order_sha256"],"elapsed_seconds":state["elapsed_seconds"],"selected":state["selected"],"checkpoints":state["checkpoints"],"retrospective":evaluation,"untuned":base[arm]["retrospective"],"tokenizer":state["tokenizer"],"model":state["model"],"provider_cost_usd":state["provider_cost_usd"]})
+        runs.append({"arm":arm,"seed":seed,"source_sha":state["source_sha"],"optimizer_updates":state["optimizer_updates"],"example_presentations":state["example_presentations"],"max_prompt_tokens":state["max_prompt_tokens"],"training_windows":state["training_windows"],"training_horizon_examples":state["training_horizon_examples"],"batch_order_sha256":state["batch_order_sha256"],"elapsed_seconds":state["elapsed_seconds"],"selected":state["selected"],"checkpoints":state["checkpoints"],"retrospective":evaluation,"untuned":base[arm]["retrospective"],"tokenizer":state["tokenizer"],"model":state["model"],"provider_cost_usd":state["provider_cost_usd"]})
 for seed in (17,29,43):
     a,b=[next(r for r in runs if r["seed"]==seed and r["arm"]==arm) for arm in ("price","market")]
     assert a["batch_order_sha256"]==b["batch_order_sha256"] and a["optimizer_updates"]==b["optimizer_updates"]
