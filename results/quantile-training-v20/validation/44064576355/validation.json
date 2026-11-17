@@ -1,0 +1,76 @@
+{
+  "status": "passed",
+  "live_url": "https://howdymary--compute-forecast-evidence-v14-web.us-east.modal.run/quantile",
+  "public_report_sha256": "b9cdb930f7ee5f9b363d82d78f336947764029068af013fc88f2d94b630204c1",
+  "arithmetic": {
+    "status": "passed",
+    "completed_runs": 1,
+    "updates": 64,
+    "prospective_accuracy": "not established"
+  },
+  "concurrent_http2_batches": [
+    {
+      "requests": 12,
+      "statuses": [
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200
+      ],
+      "http_versions": [
+        "HTTP/2"
+      ]
+    },
+    {
+      "requests": 12,
+      "statuses": [
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200
+      ],
+      "http_versions": [
+        "HTTP/2"
+      ]
+    }
+  ],
+  "checks": [
+    "actual rendered desktop/mobile",
+    "future requests do not delay primary figure",
+    "keyboard/touch forecast inspection",
+    "immutable full-source pins",
+    "refresh selections and focus",
+    "error retains verified chart and retry recovers",
+    "narrow-page overflow",
+    "no NaN or Infinity geometry",
+    "no browser errors",
+    "reduced motion"
+  ],
+  "pngs": [
+    {
+      "name": "live-desktop.png",
+      "sha256": "aef4809e97dae42262ef84d23ba6f980025bb584e61d841612b9e4bb72f3aed9"
+    },
+    {
+      "name": "live-mobile.png",
+      "sha256": "575b56a577d1acb4c15358302c138ebaea515f98af6e29f6d85df052c5995d20"
+    }
+  ],
+  "video_recorded": false
+}
