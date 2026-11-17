@@ -4,7 +4,7 @@ on:
     branches: [compute-observatory]
     paths: ['src/compute_forecast/probability_ui_v18.py','src/compute_forecast/probability_web_v18.py','scripts/validate_probability_v18_ui.py','.github/workflows/validate-probability-v18-ui.yml']
   workflow_run:
-    workflows: [Publish direct probability forecasts v18]
+    workflows: [Deploy matched forecasting evidence study v14]
     types: [completed]
     branches: [compute-observatory]
   workflow_dispatch:

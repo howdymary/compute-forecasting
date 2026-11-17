@@ -49,16 +49,3 @@ jobs:
           V18_PUBLIC_ROOT: artifacts/probability-v18-public
           V18_PUBLIC_KIND: runs
         run: python scripts/publish_probability_v18.py
-      - name: Publish verified serving snapshots on the existing public volume
-        env:
-          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
-          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
-        run: |
-          python -m pip install modal
-          PYTHONPATH=src modal run -m compute_forecast.probability_serving_v18
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: probability-v18-serving-${{ github.run_id }}-${{ github.run_attempt }}
-          path: artifacts/probability-v18-public/serving-receipt.json
-          retention-days: 30

@@ -4,7 +4,7 @@ on:
     branches: [compute-observatory]
     paths: ['src/compute_forecast/evidence_ui_v14.py', 'src/compute_forecast/evidence_web_v14.py', 'scripts/validate_evidence_v14_ui.py', 'results/evidence-v14/latest.json', '.github/workflows/validate-evidence-v14-ui.yml']
   workflow_run:
-    workflows: [Publish matched evidence forecasting research v14]
+    workflows: [Deploy matched forecasting evidence study v14]
     types: [completed]
     branches: [compute-observatory]
   workflow_dispatch:

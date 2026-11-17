@@ -25,13 +25,10 @@ def publish(payloads):
     return {"status":"published_verified_serving_snapshots","snapshots":receipts,"new_optimizer_updates":0,"model_calls":0,"runtime_seconds":time.monotonic()-started,"provider_cost_usd":None}
 @app.local_entrypoint()
 def main():
-    payloads=[]
+    payloads=[];commit=os.environ.get("EVIDENCE_SOURCE_SHA",os.environ.get("PUBLICATION_SOURCE_SHA",os.environ["GITHUB_SHA"]))
     for study,kind in (("direct-probability-v18","probability-v18"),("direct-evidence-v14","evidence-v14")):
-        if kind=="probability-v18":
-            path=pathlib.Path("artifacts/probability-v18-public/report.json");raw=path.read_bytes()
-            pointer={"report_path":"results/probability-v18/runs/"+os.environ["GITHUB_RUN_ID"]+"/report.json","report_sha256":hashlib.sha256(raw).hexdigest()}
-        else:
-            pointer=json.loads(pathlib.Path("results/evidence-v14/latest.json").read_bytes());raw=pathlib.Path(pointer["report_path"]).read_bytes()
+        pointer=json.loads(pathlib.Path("results/"+kind+"/latest.json").read_bytes());raw=pathlib.Path(pointer["report_path"]).read_bytes()
         assert hashlib.sha256(raw).hexdigest()==pointer["report_sha256"]
-        payloads.append({"study_id":study,"pointer":pointer,"raw":raw,"github_commit":os.environ["V18_PUBLICATION_COMMIT"]})
-    value=publish.remote(payloads);out=pathlib.Path("artifacts/probability-v18-public");(out/"serving-receipt.json").write_text(json.dumps(value,indent=2)+"\n");print(json.dumps(value),flush=True)
+        payloads.append({"study_id":study,"pointer":pointer,"raw":raw,"github_commit":commit})
+    value=publish.remote(payloads);out=pathlib.Path("artifacts/forecast-serving");out.mkdir(parents=True,exist_ok=True)
+    (out/"serving-receipt.json").write_text(json.dumps(value,indent=2)+"\n");print(json.dumps(value),flush=True)

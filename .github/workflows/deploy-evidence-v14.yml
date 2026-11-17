@@ -4,7 +4,7 @@ on:
     branches: [compute-observatory]
     paths: ['src/compute_forecast/evidence_ui_v14.py', 'src/compute_forecast/evidence_web_v14.py', 'src/compute_forecast/probability_ui_v18.py', 'src/compute_forecast/probability_web_v18.py', '.github/workflows/deploy-evidence-v14.yml']
   workflow_run:
-    workflows: [Publish matched evidence forecasting research v14]
+    workflows: [Publish matched evidence forecasting research v14, Publish direct probability forecasts v18]
     types: [completed]
     branches: [compute-observatory]
   workflow_dispatch:
@@ -31,6 +31,11 @@ jobs:
         with:
           python-version: '3.11'
       - run: python -m pip install -e . modal
+      - name: Mirror both verified publications before serving
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: modal run -m compute_forecast.probability_serving_v18
       - name: Deploy read-only paired figures
         env:
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
@@ -47,3 +52,9 @@ jobs:
           assert report['study_id']=='direct-evidence-v14' and not report['news_used']
           assert not report['audit']['protected_outcomes_loaded']
           PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: forecast-serving-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/forecast-serving
+          retention-days: 30
