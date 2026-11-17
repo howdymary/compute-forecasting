@@ -75,4 +75,6 @@ def web():
         return Response(raw,media_type="application/json",headers=headers)
     from .probability_web_v18 import mount
     mount(api,headers,future_public,future_lock,future_cache)
+    from .market_web_v19 import mount as mount_market
+    mount_market(api,headers,future_public,future_lock,future_cache)
     return api

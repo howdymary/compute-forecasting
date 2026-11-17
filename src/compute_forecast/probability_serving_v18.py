@@ -26,8 +26,10 @@ def publish(payloads):
 @app.local_entrypoint()
 def main():
     payloads=[];commit=os.environ.get("EVIDENCE_SOURCE_SHA",os.environ.get("PUBLICATION_SOURCE_SHA",os.environ["GITHUB_SHA"]))
-    for study,kind in (("direct-probability-v18","probability-v18"),("direct-evidence-v14","evidence-v14")):
-        pointer=json.loads(pathlib.Path("results/"+kind+"/latest.json").read_bytes());raw=pathlib.Path(pointer["report_path"]).read_bytes()
+    for study,kind in (("direct-probability-v18","probability-v18"),("direct-evidence-v14","evidence-v14"),("market-state-v19","market-state-v19"),("market-state-v19-prospective","market-state-v19/future")):
+        path=pathlib.Path("results/"+kind+"/latest.json")
+        if not path.exists() and study.startswith("market-state-v19"):continue
+        pointer=json.loads(path.read_bytes());raw=pathlib.Path(pointer["report_path"]).read_bytes()
         assert hashlib.sha256(raw).hexdigest()==pointer["report_sha256"]
         payloads.append({"study_id":study,"pointer":pointer,"raw":raw,"github_commit":commit})
     value=publish.remote(payloads);out=pathlib.Path("artifacts/forecast-serving");out.mkdir(parents=True,exist_ok=True)

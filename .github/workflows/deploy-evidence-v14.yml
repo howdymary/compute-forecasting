@@ -2,9 +2,9 @@ name: Deploy matched forecasting evidence study v14
 on:
   push:
     branches: [compute-observatory]
-    paths: ['src/compute_forecast/evidence_ui_v14.py', 'src/compute_forecast/evidence_web_v14.py', 'src/compute_forecast/probability_ui_v18.py', 'src/compute_forecast/probability_web_v18.py', '.github/workflows/deploy-evidence-v14.yml']
+    paths: ['src/compute_forecast/market_ui_v19.py','src/compute_forecast/market_web_v19.py','src/compute_forecast/evidence_ui_v14.py', 'src/compute_forecast/evidence_web_v14.py', 'src/compute_forecast/probability_ui_v18.py', 'src/compute_forecast/probability_web_v18.py', '.github/workflows/deploy-evidence-v14.yml']
   workflow_run:
-    workflows: [Publish matched evidence forecasting research v14, Publish direct probability forecasts v18]
+    workflows: [Publish matched evidence forecasting research v14, Publish direct probability forecasts v18, Publish matched market-state study v19, Issue registered market-state forecasts v19]
     types: [completed]
     branches: [compute-observatory]
   workflow_dispatch:
@@ -30,7 +30,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - run: python -m pip install -e . modal
+      - run: python -m pip install -e . modal 'httpx[http2]==0.28.1'
       - name: Mirror both verified publications before serving
         env:
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
@@ -44,11 +44,12 @@ jobs:
       - name: Verify live study identity and source boundaries
         run: |
           python - <<'PY'
-          import json,urllib.request
+          import json
+          from compute_forecast.ui_http_v18 import live_urlopen
           base='https://howdymary--compute-forecast-evidence-v14-web.us-east.modal.run'
-          with urllib.request.urlopen(base+'/health',timeout=90) as r:health=json.load(r)
+          with live_urlopen(base+'/health',timeout=90) as r:health=json.load(r)
           assert health['study_id']=='direct-evidence-v14'
-          with urllib.request.urlopen(base+'/api/evidence-v14',timeout=90) as r:report=json.load(r)
+          with live_urlopen(base+'/api/evidence-v14',timeout=90) as r:report=json.load(r)
           assert report['study_id']=='direct-evidence-v14' and not report['news_used']
           assert not report['audit']['protected_outcomes_loaded']
           PY
