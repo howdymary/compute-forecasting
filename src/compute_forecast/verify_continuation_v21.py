@@ -12,6 +12,7 @@ def verify_evaluation(value,levels,reference=None):
         assert {(r["task_id"],r["horizon_days"]):(r["anchor"],r["outcome"],r["target_date"],r["prompt_sha256"]) for r in rows}==expected
     for r in rows:
         z=support(r["anchor"],levels);assert z==r["support_prices"]
+        assert digest(r["probabilities"])==r["probability_sha256"]
         assert quantiles(r["probabilities"],z)==[r[k] for k in ("q10","q50","q90")]
         assert r["target_date"]==(date.fromisoformat(r["origin"])+timedelta(days=r["horizon_days"])).isoformat()
         assert abs(cell_loss(r["outcome"],[r[k] for k in ("q10","q50","q90")])-r["loss"])<1e-12
@@ -41,6 +42,21 @@ def verify(r):
         verify_evaluation(run["retrospective"],r["log_levels"],r["baseline"]["retrospective"])
         assert run["retrospective"]["summary"]==state["retrospective"]
         assert state["unique_horizon_examples_presented"]+state["repeated_horizon_presentations"]==1600
+    from .quantile_v20 import decompose
+    lookup={(v["state"]["arm"],v["state"]["seed"]):v for v in r["runs"]}
+    for contrast in r["comparisons"]:
+        candidate=lookup[(contrast["arm"],contrast["seed"])]["retrospective"]["cells"]
+        reference=r["baseline"]["retrospective"]["cells"] if contrast["reference"]=="incumbent" else lookup[(contrast["reference"],contrast["seed"])]["retrospective"]["cells"]
+        assert contrast["result"]==decompose(candidate,reference)
+        for groups in contrast["result"]["groups"].values():
+            assert abs(sum(g["weighted_contribution"] for g in groups)-contrast["result"]["difference"])<1e-12
+    for phase in ("development","retrospective"):
+        expected={(v["task_id"],v["horizon_days"]):(v["anchor"],v["outcome"],v["target_date"]) for v in r["baseline"][phase]["cells"]}
+        for method in ("last_value","last_value_empirical","drift","seasonal_naive"):
+            evaluation=r["controls"]["results"][phase][method]
+            assert {(v["task_id"],v["horizon_days"]):(v["anchor"],v["outcome"],v["target_date"]) for v in evaluation["cells"]}==expected
+            for v in evaluation["cells"]:assert abs(cell_loss(v["outcome"],[v[k] for k in ("q10","q50","q90")])-v["loss"])<1e-12
+            assert summarize(evaluation["cells"])==evaluation["summary"]
     for case in r["cases"]:
         for cp in case["checkpoints"]:
             for row in cp["rows"]:
