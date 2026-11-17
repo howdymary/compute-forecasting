@@ -3,7 +3,7 @@ import asyncio,hashlib,json,threading,time,urllib.error,urllib.request
 from .probability_ui_v18 import HTML
 BASE="https://raw.githubusercontent.com/howdymary/mochi-demo/compute-observatory/"
 def mount(api,headers,public_volume,future_lock,future_cache):
-    from fastapi.responses import HTMLResponse,JSONResponse
+    from fastapi.responses import HTMLResponse,JSONResponse,Response
     lock=threading.Lock();cache={}
     @api.get("/probability")
     def page():return HTMLResponse(HTML,headers=headers)
@@ -16,9 +16,9 @@ def mount(api,headers,public_volume,future_lock,future_cache):
                     if time.monotonic()-future_cache["at"]>15:
                         await asyncio.wait_for(public_volume.reload.aio(),timeout=10);future_cache["at"]=time.monotonic()
                     value,pointer=read_public_snapshot("direct-probability-v18")
-                    value["public_report_sha256"]=pointer["report_sha256"];cache.update(at=time.monotonic(),value=value,pointer=pointer)
+                    value["public_report_sha256"]=pointer["report_sha256"];cache.update(at=time.monotonic(),value=value,pointer=pointer,raw=json.dumps(value,ensure_ascii=False,allow_nan=False,separators=(",",":")).encode())
                 value=cache["value"];identity=cache["pointer"]["report_sha256"]
-            return JSONResponse(value,headers={**headers,"X-Source-Artifact-SHA256":identity})
+            return Response(cache["raw"],media_type="application/json",headers={**headers,"X-Source-Artifact-SHA256":identity})
         except FileNotFoundError:return JSONResponse({"study_id":"direct-probability-v18","status":"awaiting_serving_publication","runs":[]},status_code=503,headers=headers)
         except Exception as error:return JSONResponse({"status":"unavailable","error_type":type(error).__name__},status_code=503,headers=headers)
     @api.get("/api/probability-v18/future")
