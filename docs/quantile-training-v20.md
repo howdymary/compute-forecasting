@@ -50,3 +50,9 @@ python -m compute_forecast.verify_quantile_v20
 Authorized numerical reruns additionally require the original CC-BY-4.0 Pacific pack, Modal data access and Tinker resources. Regeneration can differ because provider computation is not promised byte-identical; arithmetic from saved predictions is exact. Original successful optimization is recovered rather than duplicated after a publication failure.
 
 The interactive chart must distinguish a categorical forecast from scalar quantile heads, show actual saved checkpoints and fixed axes, and retain every regression. No video is created.
+
+## Additional loss diagnostic
+
+The registered preflight also decomposed the already opened v19 market-minus-price losses. Averaged across the three training seeds, the seven-day difference was +0.00058069 dollar pinball (market worse). Contributions were approximately +0.00036894 from q10, +0.00020790 from q50 and +0.00000385 from q90; their sum reconstructs the difference. This is descriptive arithmetic, not a confirmed causal explanation. Seeds share the same 24 seven-day market cases.
+
+[Exact cell and group contributions](../results/quantile-training-v20/preflight/44057806631/diagnostics.json) preserve the origin/series breakdown and cancellations. The quantile objective was fixed before this decomposition, and was not retuned in response.
