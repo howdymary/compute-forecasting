@@ -27,7 +27,7 @@ def dist(tasks,anchor_by_id,h):
     ix={1:0,3:1,7:2}[h];vectors=[t["sample_returns"] for t in tasks]
     returns=[v[ix] for group in vectors for v in group]
     qs=[row for t in tasks for row in t["cells"] if row["horizon_days"]==h]
-    return {"tasks":len(tasks),"valid":sum(t["valid_samples"] for t in tasks),"invalid":sum(t["invalid_samples"] for t in tasks),"fallback_tasks":sum(t["fallback"] for t in tasks),"collapsed_vector_tasks":sum(t["sample_collapse"] for t in tasks),"distinct_vectors":describe([t["distinct_vectors"] for t in tasks]),"median_equals_anchor_cells":sum(r["q50"]==anchor_by_id[r["task_id"]] for r in qs),"all_quantiles_equal_anchor_cells":sum(r["q10"]==r["q50"]==r["q90"]==anchor_by_id[r["task_id"]] for r in qs),"zero_width_cells":sum(r["q10"]==r["q90"] for r in qs),"sample_zero_fraction":mean(float(x==0) for x in returns),"sample_near_zero_fraction":mean(float(abs(x)<=1e-8) for x in returns),"sample_negative_fraction":mean(float(x<0) for x in returns),"sample_positive_fraction":mean(float(x>0) for x in returns),"sample_abs_return_above_10pct_fraction":mean(float(abs(x)>math.log(1.1)) for x in returns),"sample_return_summary":describe(returns),"mean_sample_return_per_task":mean(mean(v[ix] for v in group) for group in vectors),"median_mae":mean(abs(r["outcome"]-r["q50"]) for r in qs),"coverage":mean(r["q10"]<=r["outcome"]<=r["q90"] for r in qs),"width":mean(r["q90"]-r["q10"] for r in qs),"pinball":mean(r["loss"] for r in qs)}
+    return {"tasks":len(tasks),"valid":sum(t["valid_samples"] for t in tasks),"invalid":sum(t["invalid_samples"] for t in tasks),"fallback_tasks":sum(t["fallback"] for t in tasks),"collapsed_vector_tasks":sum(t["sample_collapse"] for t in tasks),"distinct_vectors":describe([t["distinct_vectors"] for t in tasks]),"median_equals_anchor_cells":sum(r["q50"]==anchor_by_id[r["task_id"]] for r in qs),"all_quantiles_equal_anchor_cells":sum(r["q10"]==r["q50"]==r["q90"]==anchor_by_id[r["task_id"]] for r in qs),"zero_width_cells":sum(r["q10"]==r["q90"] for r in qs),"sample_zero_fraction":mean(float(x==0) for x in returns),"sample_near_zero_fraction":mean(float(abs(x)<=1e-8) for x in returns),"sample_negative_fraction":mean(float(x<0) for x in returns),"sample_positive_fraction":mean(float(x>0) for x in returns),"sample_abs_return_above_10pct_fraction":mean(float(abs(x)>math.log(1.1)) for x in returns),"sample_return_summary":describe(returns),"mean_sample_return_per_task":mean(mean(v[ix] for v in group) for group in vectors),"median_mae":mean(abs(r["outcome"]-r["q50"]) for r in qs),"coverage":mean(r["q10"]<=r["outcome"]<=r["q90"] for r in qs),"width":mean(r["q90"]-r["q10"] for r in qs),"pinball":mean(r["loss"] for r in qs),"lower_misses":sum(r["outcome"]<r["q10"] for r in qs),"upper_misses":sum(r["outcome"]>r["q90"] for r in qs),"mean_log_quantiles":{k:mean(math.log(r[k]/anchor_by_id[r["task_id"]]) for r in qs) for k in ("q10","q50","q90")}}
 def main():
     cfg=read("configs/direct-v14-diagnosis-v16.json");report_path=pathlib.Path(cfg["source_report"]["report_path"]);root=report_path.parent
     assert hashlib.sha256(report_path.read_bytes()).hexdigest()==cfg["source_report"]["report_sha256"]
@@ -63,7 +63,7 @@ def main():
             selected_tasks=[t for t in tasks if t["metadata"]["source_id"]==source]
             phase_by_source[phase][source]={str(h):{**describe([math.log(t["outcomes"][i]/t["anchor"]) for t in selected_tasks]),"zero":sum(t["outcomes"][i]==t["anchor"] for t in selected_tasks),"negative":sum(t["outcomes"][i]<t["anchor"] for t in selected_tasks),"positive":sum(t["outcomes"][i]>t["anchor"] for t in selected_tasks)} for i,h in enumerate((1,3,7))}
     training_series={t["series_id"] for t in groups["training"]}
-    allrows=[];runs=[];boot=[];case_payload={}
+    allrows=[];runs=[];boot=[];case_payload={};hybrids=[];dev_diagnostics=[]
     rng=np.random.default_rng(cfg["bootstrap"]["seed"])
     for state in report["runs"]:
         arm,seed=state["arm"],state["seed"];directory=root/arm/("seed-"+str(seed))
@@ -76,12 +76,49 @@ def main():
             for q,name in zip((.1,.5,.9),("q10","q50","q90")):qparts.append((pin(t["outcome"],t[name],q)-pin(b["outcome"],b[name],q))/3)
             assert b["outcome"]==t["outcome"]==task["outcomes"][(1,3,7).index(key[1])]
             assert abs(sum(qparts)-(t["loss"]-b["loss"]))<1e-12
-            allrows.append({"arm":arm,"seed":seed,"task_id":key[0],"series":b["series_id"],"origin":b["origin"],"horizon":key[1],"family":"H100" if m["gpu_model"].startswith("H100") else "A100","source":m["source_id"],"instrument":m["instrument_class"],"seen_in_training":b["series_id"] in training_series,"changed":t["outcome"]!=task["anchor"],"base_loss":b["loss"],"trained_loss":t["loss"],"difference":t["loss"]-b["loss"],"q10_contribution":qparts[0],"q50_contribution":qparts[1],"q90_contribution":qparts[2],"base_median_ae":abs(b["outcome"]-b["q50"]),"trained_median_ae":abs(t["outcome"]-t["q50"]),"anchor":task["anchor"],"outcome":t["outcome"],"relative_difference":(t["loss"]-b["loss"])/task["anchor"]})
+            center_b,center_t=b["q50"],t["q50"]
+            base_shape=[b[q]-center_b for q in ("q10","q50","q90")];trained_shape=[t[q]-center_t for q in ("q10","q50","q90")]
+            tc_bs=[center_t+v for v in base_shape];bc_ts=[center_b+v for v in trained_shape]
+            valid=min(tc_bs+bc_ts)>0
+            if valid:
+                hybrid_t=cell_loss(t["outcome"],tc_bs);hybrid_b=cell_loss(t["outcome"],bc_ts)
+                center_effect=.5*((hybrid_t-b["loss"])+(t["loss"]-hybrid_b))
+                shape_effect=.5*((hybrid_b-b["loss"])+(t["loss"]-hybrid_t))
+                assert abs(center_effect+shape_effect-(t["loss"]-b["loss"]))<1e-12
+            else:hybrid_t=hybrid_b=center_effect=shape_effect=None
+            hybrids.append({"arm":arm,"seed":seed,"task_id":key[0],"horizon":key[1],"valid_positive_quantiles":valid,"base":b["loss"],"trained":t["loss"],"trained_center_base_shape":hybrid_t,"base_center_trained_shape":hybrid_b,"center_shapley":center_effect,"shape_shapley":shape_effect})
+            observed_return=math.log(t["outcome"]/task["anchor"]);bounds=target_distributions["training"][str(key[1])]
+            outside=not bounds["min"]<=observed_return<=bounds["max"]
+            allrows.append({"arm":arm,"seed":seed,"task_id":key[0],"series":b["series_id"],"origin":b["origin"],"horizon":key[1],"family":"H100" if m["gpu_model"].startswith("H100") else "A100","source":m["source_id"],"instrument":m["instrument_class"],"seen_in_training":b["series_id"] in training_series,"changed":t["outcome"]!=task["anchor"],"outside_training_return_range":outside,"base_loss":b["loss"],"trained_loss":t["loss"],"difference":t["loss"]-b["loss"],"q10_contribution":qparts[0],"q50_contribution":qparts[1],"q90_contribution":qparts[2],"base_median_ae":abs(b["outcome"]-b["q50"]),"trained_median_ae":abs(t["outcome"]-t["q50"]),"anchor":task["anchor"],"outcome":t["outcome"],"relative_difference":(t["loss"]-b["loss"])/task["anchor"]})
+        dev_outputs={cp["update"]:read(directory/("development-"+str(cp["update"])+".json")) for cp in state["checkpoints"]}
+        dev_base=bykey(dev_outputs[0]);dev_selected=bykey(dev_outputs[selected]);dev_rows=[]
+        for key,b in dev_base.items():
+            if key[1]!=7:continue
+            t=dev_selected[key];task=tasks_by_id[key[0]]
+            dev_rows.append({"task_id":key[0],"series":task["series_id"],"origin":task["origin"],"source":task["metadata"]["source_id"],"base_loss":b["loss"],"trained_loss":t["loss"],"difference":t["loss"]-b["loss"],"base_median_ae":abs(b["outcome"]-b["q50"]),"trained_median_ae":abs(t["outcome"]-t["q50"])})
+        leave_case=[];leave_origin=[]
+        for omit in [r["task_id"] for r in dev_rows]:
+            losses={str(cp):mean(r["loss"] for r in val["cells"] if r["horizon_days"]==7 and r["task_id"]!=omit) for cp,val in dev_outputs.items()}
+            chosen=min(losses,key=lambda k:(losses[k],int(k)));leave_case.append({"omitted":omit,"chosen_update":int(chosen)})
+        for omit in sorted({r["origin"] for r in dev_rows}):
+            losses={str(cp):mean(r["loss"] for r in val["cells"] if r["horizon_days"]==7 and r["origin"]!=omit) for cp,val in dev_outputs.items()}
+            chosen=min(losses,key=lambda k:(losses[k],int(k)));leave_origin.append({"omitted":omit,"chosen_update":int(chosen),"losses":losses})
+        B=cfg["bootstrap"]["replicates"];dev_boot={}
+        for cp,value in dev_outputs.items():
+            totals=np.zeros(B)
+            for task in value["tasks"]:
+                x=np.asarray(task["sample_returns"])[:,2];sample=x[rng.integers(0,len(x),size=(B,len(x)))]
+                qq=np.quantile(anchors[task["task_id"]]*np.exp(sample),[.1,.5,.9],axis=1).T
+                yy=next(r["outcome"] for r in task["cells"] if r["horizon_days"]==7);ee=yy-qq
+                totals+=np.maximum(np.asarray([.1,.5,.9])*ee,(np.asarray([.1,.5,.9])-1)*ee).mean(axis=1)
+            dev_boot[cp]=totals/len(value["tasks"])
+        cp_order=sorted(dev_boot);winners=np.argmin(np.stack([dev_boot[cp] for cp in cp_order]),axis=0)
+        dev_diagnostics.append({"arm":arm,"seed":seed,"original_selected":selected,"source_contributions":aggregate(dev_rows,"source"),"origin_contributions":aggregate(dev_rows,"origin"),"case_contributions":aggregate(dev_rows,"task_id"),"leave_one_case_selection_counts":dict(collections.Counter(v["chosen_update"] for v in leave_case)),"leave_one_origin":leave_origin,"conditional_mc_selection_frequencies":{str(cp):float(np.mean(winners==i)) for i,cp in enumerate(cp_order)},"scope":"Post-hoc stability analysis only; original checkpoint selection is preserved"})
         runrows=[r for r in allrows if r["arm"]==arm and r["seed"]==seed]
         perh={}
         for h in (1,3,7):
             rr=[r for r in runrows if r["horizon"]==h]
-            perh[str(h)]={"base":dist(base["tasks"],anchors,h),"trained":dist(trained["tasks"],anchors,h),"difference":mean(r["difference"] for r in rr),"q_contributions":{q:mean(r[q+"_contribution"] for r in rr) for q in ("q10","q50","q90")},"improved":sum(r["difference"]<0 for r in rr),"worsened":sum(r["difference"]>0 for r in rr),"equal":sum(r["difference"]==0 for r in rr),"grouped":{field:aggregate(rr,field) for field in ("origin","series","family","source","instrument","changed","seen_in_training")}}
+            perh[str(h)]={"base":dist(base["tasks"],anchors,h),"trained":dist(trained["tasks"],anchors,h),"difference":mean(r["difference"] for r in rr),"q_contributions":{q:mean(r[q+"_contribution"] for r in rr) for q in ("q10","q50","q90")},"improved":sum(r["difference"]<0 for r in rr),"worsened":sum(r["difference"]>0 for r in rr),"equal":sum(r["difference"]==0 for r in rr),"grouped":{field:aggregate(rr,field) for field in ("origin","series","family","source","instrument","changed","seen_in_training","outside_training_return_range")}}
         ce=[r["completion_cross_entropy"] for r in state["updates"]]
         dev=state["checkpoints"];z=dev[0]["development"]["primary_pinball"];chosen=state["selected"]["development"]["primary_pinball"]
         runs.append({"arm":arm,"seed":seed,"updates":state["optimizer_updates"],"selected_update":selected,"development_base":z,"development_selected":chosen,"development_difference":chosen-z,"dev_trajectory":[{"update":c["update"],"pinball":c["development"]["primary_pinball"]} for c in dev],"training_ce_first10":mean(ce[:10]),"training_ce_last10":mean(ce[-10:]),"by_horizon":perh})
@@ -102,14 +139,19 @@ def main():
             case_payload={t["task_id"]:{"base":t,"trained":next(s for s in trained["tasks"] if s["task_id"]==t["task_id"]),"task":{"series_id":tasks_by_id[t["task_id"]]["series_id"],"origin":tasks_by_id[t["task_id"]]["origin"],"anchor":anchors[t["task_id"]]}} for t in base["tasks"]}
     primary=[r for r in allrows if r["horizon"]==7]
     mean_base=mean(r["base_loss"] for r in primary);mean_trained=mean(r["trained_loss"] for r in primary);difference=mean(r["difference"] for r in primary)
-    pooled={field:aggregate(primary,field) for field in ("arm","seed","source","series","origin","family","instrument","changed","seen_in_training")}
+    pooled={field:aggregate(primary,field) for field in ("arm","seed","source","series","origin","family","instrument","changed","seen_in_training","outside_training_return_range")}
     qcontrib={q:mean(r[q+"_contribution"] for r in primary) for q in ("q10","q50","q90")}
     assert abs(sum(qcontrib.values())-difference)<1e-12
     loss_rank=sorted(primary,key=lambda r:r["difference"],reverse=True)
     global_result={"base":mean_base,"trained":mean_trained,"difference":difference,"relative_increase":mean_trained/mean_base-1,"mean_anchor_normalized_difference":mean(r["relative_difference"] for r in primary),"q_contributions":qcontrib,"n_primary_cells_per_run":22,"repeated_cells":len(primary),"distinct_market_origins":3,"distinct_series":10,"groups":pooled,"top10_harm_contribution":sum(r["difference"] for r in loss_rank[:10])/len(primary),"top10_harm_fraction_of_net":sum(r["difference"] for r in loss_rank[:10])/sum(r["difference"] for r in primary),"positive_cells":sum(r["difference"]>0 for r in primary),"negative_cells":sum(r["difference"]<0 for r in primary),"equal_cells":sum(r["difference"]==0 for r in primary),"leave_one_origin_out":[{"omitted":o,"difference":mean(r["difference"] for r in primary if r["origin"]!=o)} for o in sorted({r["origin"] for r in primary})]}
+    primary_hybrids=[r for r in hybrids if r["horizon"]==7]
+    shape_summary={"cells":len(primary_hybrids),"invalid":sum(not r["valid_positive_quantiles"] for r in primary_hybrids),"scope":"Loss-function counterfactual at fixed saved predictions; not causal attribution to a training mechanism"}
+    if not shape_summary["invalid"]:
+        shape_summary.update({k:mean(r[k] for r in primary_hybrids) for k in ("base","trained","trained_center_base_shape","base_center_trained_shape","center_shapley","shape_shapley")})
+        assert abs(shape_summary["center_shapley"]+shape_summary["shape_shapley"]-difference)<1e-12
     native={name:value["summary"] for name,value in report["runs"][0]["references"].items()}
-    result={"study_id":cfg["study_id"],"classification":cfg["classification"],"input_ref":cfg["source_ref"],"input_report":cfg["source_report"],"dataset_sha256":digest(data),"protocol_sha256":report["protocol_sha256"],"new_optimizer_updates":0,"new_inference_requests":0,"new_outcomes_retrieved":False,"composition":composition,"target_returns":target_distributions,"adjacent_context_overlap":overlap,"context_shapes":context_shapes,"target_returns_by_source":phase_by_source,"runs":runs,"global_primary":global_result,"conditional_mc":boot,"native_references":native,"limits":{"no_population_confidence_interval":True,"no_new_checkpoint_reselection":True,"missing_raw_malformed_completions":True,"tokenizer_revision_was_not_recorded":True,"pretraining_cutoff_not_verified":True}}
-    save(out/"diagnosis.json",result);csvfile(out/"cell-contributions.csv",allrows)
+    result={"study_id":cfg["study_id"],"classification":cfg["classification"],"input_ref":cfg["source_ref"],"input_report":cfg["source_report"],"dataset_sha256":digest(data),"protocol_sha256":report["protocol_sha256"],"new_optimizer_updates":0,"new_inference_requests":0,"new_outcomes_retrieved":False,"composition":composition,"target_returns":target_distributions,"adjacent_context_overlap":overlap,"context_shapes":context_shapes,"location_shape":shape_summary,"development_selection":dev_diagnostics,"target_returns_by_source":phase_by_source,"runs":runs,"global_primary":global_result,"conditional_mc":boot,"native_references":native,"limits":{"no_population_confidence_interval":True,"no_new_checkpoint_reselection":True,"missing_raw_malformed_completions":True,"tokenizer_revision_was_not_recorded":True,"pretraining_cutoff_not_verified":True}}
+    save(out/"diagnosis.json",result);csvfile(out/"cell-contributions.csv",allrows);csvfile(out/"location-shape-counterfactuals.csv",hybrids)
     for field,rows in pooled.items():csvfile(out/("contribution-"+field+".csv"),rows)
     lines=["# Diagnosis of the frozen direct-forecasting comparison","",f"All six saved results were independently reconstructed. Across six paired runs on the same22 seven-day cases, mean untuned loss was{mean_base:.10f}; selected SFT loss was{mean_trained:.10f}, a{(mean_trained/mean_base-1):.2%} increase.","","Three reused dates remain three market origins;132 repeated cells are not132 independent forecasts.","","| Arm | Seed | Selected | Untuned loss | SFT loss | Difference | Median MAE change |","| --- | ---: | ---: | ---: | ---: | ---: | ---: |"]
     for r in runs:
