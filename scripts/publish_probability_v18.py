@@ -7,9 +7,9 @@ def api(path,body=None,method=None):
     if method:args+=["-X",method]
     if body is not None:args+=["--input","-"]
     return json.loads(subprocess.check_output(args,input=json.dumps(body) if body is not None else None,text=True))
-payloads={"results/probability-v18/"+kind+"/"+run+"/"+f.name:f.read_bytes() for f in source.iterdir() if f.is_file()}
+payloads={"results/probability-v18/"+kind+"/"+run+"/"+str(f.relative_to(source)):f.read_bytes() for f in source.rglob("*") if f.is_file()}
 if not payloads:raise ValueError("No completed public artifacts")
-manifest={"study_id":"direct-probability-v18","source_sha":os.environ["GITHUB_SHA"],"files":[{"path":p.rsplit("/",1)[-1],"bytes":len(raw),"sha256":hashlib.sha256(raw).hexdigest()} for p,raw in sorted(payloads.items())]}
+manifest={"study_id":"direct-probability-v18","source_sha":os.environ["GITHUB_SHA"],"files":[{"path":p.split("/"+kind+"/"+run+"/",1)[1],"bytes":len(raw),"sha256":hashlib.sha256(raw).hexdigest()} for p,raw in sorted(payloads.items())]}
 payloads["results/probability-v18/"+kind+"/"+run+"/manifest.json"]=(json.dumps(manifest,indent=2)+"\n").encode()
 if kind=="runs" and (source/"report.json").exists():
     raw=(source/"report.json").read_bytes()
