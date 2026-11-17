@@ -1,0 +1,4165 @@
+{
+  "study_id": "ce-continuation-v21-exposure-audit",
+  "source_report_path": "results/ce-continuation-v21/runs/44136095711/report.json",
+  "source_report_sha256": "3faa97688d2a272b038e6aa7f1091f32060779aef030aa59dafd6366d5a4ba30",
+  "dataset_sha256": "2921b5ee09b24e4f18d59565a5ac7057e0673cfa31c5489de4706ce6c01dc720",
+  "protocol_sha256": "4af88a5c12b75bbd6571428feb866b41bd2736f721f3d306a6fb9767764781c7",
+  "corpora": {
+    "same": {
+      "presentations": 942,
+      "unique_horizon_examples": 942,
+      "repeated_presentations": 0,
+      "actual_unchanged": 807,
+      "actual_unchanged_fraction": 0.856687898089172,
+      "quantized_unchanged": 808,
+      "quantized_unchanged_fraction": 0.8577494692144374,
+      "changed_but_quantized_unchanged": 1,
+      "out_of_support": 0,
+      "mean_relative_quantization_error": 0.0024463413826873804,
+      "classes": [
+        {
+          "level_index": 0,
+          "log_return": -0.6931471805599453,
+          "presentations": 0
+        },
+        {
+          "level_index": 1,
+          "log_return": -0.30600060026488674,
+          "presentations": 10
+        },
+        {
+          "level_index": 2,
+          "log_return": -0.1350887228406941,
+          "presentations": 10
+        },
+        {
+          "level_index": 3,
+          "log_return": -0.059637017126544296,
+          "presentations": 19
+        },
+        {
+          "level_index": 4,
+          "log_return": -0.026327688477341595,
+          "presentations": 12
+        },
+        {
+          "level_index": 5,
+          "log_return": -0.011622767434681559,
+          "presentations": 6
+        },
+        {
+          "level_index": 6,
+          "log_return": -0.00513105140076979,
+          "presentations": 1
+        },
+        {
+          "level_index": 7,
+          "log_return": -0.002265182421079987,
+          "presentations": 0
+        },
+        {
+          "level_index": 8,
+          "log_return": -0.0010000000000000002,
+          "presentations": 0
+        },
+        {
+          "level_index": 9,
+          "log_return": 0.0,
+          "presentations": 808
+        },
+        {
+          "level_index": 10,
+          "log_return": 0.0010000000000000002,
+          "presentations": 1
+        },
+        {
+          "level_index": 11,
+          "log_return": 0.002265182421079987,
+          "presentations": 1
+        },
+        {
+          "level_index": 12,
+          "log_return": 0.00513105140076979,
+          "presentations": 1
+        },
+        {
+          "level_index": 13,
+          "log_return": 0.011622767434681559,
+          "presentations": 4
+        },
+        {
+          "level_index": 14,
+          "log_return": 0.026327688477341595,
+          "presentations": 13
+        },
+        {
+          "level_index": 15,
+          "log_return": 0.059637017126544296,
+          "presentations": 35
+        },
+        {
+          "level_index": 16,
+          "log_return": 0.1350887228406941,
+          "presentations": 12
+        },
+        {
+          "level_index": 17,
+          "log_return": 0.30600060026488674,
+          "presentations": 9
+        },
+        {
+          "level_index": 18,
+          "log_return": 0.6931471805599453,
+          "presentations": 0
+        }
+      ],
+      "providers": {
+        "aws": 192,
+        "azure": 192,
+        "cudo": 42,
+        "gcp": 96,
+        "lambdalabs": 192,
+        "nebius": 96,
+        "verda": 120,
+        "vultr": 12
+      },
+      "families": {
+        "A100": 690,
+        "H100": 252
+      },
+      "origin_months": {
+        "2026-02": 120,
+        "2026-03": 27,
+        "2026-05": 21,
+        "2026-06": 276,
+        "2026-07": 159,
+        "2026-08": 168,
+        "2026-09": 147,
+        "2026-10": 24
+      },
+      "instruments": {
+        "hyperscaler_spot": 480,
+        "neocloud_rate_card": 462
+      },
+      "independence": "Presentations and overlapping windows are not independent market experiments",
+      "by_horizon": {
+        "1": {
+          "presentations": 314,
+          "unique_horizon_examples": 314,
+          "repeated_presentations": 0,
+          "actual_unchanged": 279,
+          "actual_unchanged_fraction": 0.8885350318471338,
+          "quantized_unchanged": 280,
+          "quantized_unchanged_fraction": 0.89171974522293,
+          "changed_but_quantized_unchanged": 1,
+          "out_of_support": 0,
+          "mean_relative_quantization_error": 0.000768617531167841,
+          "classes": [
+            {
+              "level_index": 0,
+              "log_return": -0.6931471805599453,
+              "presentations": 0
+            },
+            {
+              "level_index": 1,
+              "log_return": -0.30600060026488674,
+              "presentations": 0
+            },
+            {
+              "level_index": 2,
+              "log_return": -0.1350887228406941,
+              "presentations": 0
+            },
+            {
+              "level_index": 3,
+              "log_return": -0.059637017126544296,
+              "presentations": 9
+            },
+            {
+              "level_index": 4,
+              "log_return": -0.026327688477341595,
+              "presentations": 6
+            },
+            {
+              "level_index": 5,
+              "log_return": -0.011622767434681559,
+              "presentations": 1
+            },
+            {
+              "level_index": 6,
+              "log_return": -0.00513105140076979,
+              "presentations": 1
+            },
+            {
+              "level_index": 7,
+              "log_return": -0.002265182421079987,
+              "presentations": 0
+            },
+            {
+              "level_index": 8,
+              "log_return": -0.0010000000000000002,
+              "presentations": 0
+            },
+            {
+              "level_index": 9,
+              "log_return": 0.0,
+              "presentations": 280
+            },
+            {
+              "level_index": 10,
+              "log_return": 0.0010000000000000002,
+              "presentations": 1
+            },
+            {
+              "level_index": 11,
+              "log_return": 0.002265182421079987,
+              "presentations": 1
+            },
+            {
+              "level_index": 12,
+              "log_return": 0.00513105140076979,
+              "presentations": 1
+            },
+            {
+              "level_index": 13,
+              "log_return": 0.011622767434681559,
+              "presentations": 3
+            },
+            {
+              "level_index": 14,
+              "log_return": 0.026327688477341595,
+              "presentations": 5
+            },
+            {
+              "level_index": 15,
+              "log_return": 0.059637017126544296,
+              "presentations": 6
+            },
+            {
+              "level_index": 16,
+              "log_return": 0.1350887228406941,
+              "presentations": 0
+            },
+            {
+              "level_index": 17,
+              "log_return": 0.30600060026488674,
+              "presentations": 0
+            },
+            {
+              "level_index": 18,
+              "log_return": 0.6931471805599453,
+              "presentations": 0
+            }
+          ],
+          "providers": {
+            "aws": 64,
+            "azure": 64,
+            "cudo": 14,
+            "gcp": 32,
+            "lambdalabs": 64,
+            "nebius": 32,
+            "verda": 40,
+            "vultr": 4
+          },
+          "families": {
+            "A100": 230,
+            "H100": 84
+          },
+          "origin_months": {
+            "2026-02": 40,
+            "2026-03": 9,
+            "2026-05": 7,
+            "2026-06": 92,
+            "2026-07": 53,
+            "2026-08": 56,
+            "2026-09": 49,
+            "2026-10": 8
+          },
+          "instruments": {
+            "hyperscaler_spot": 160,
+            "neocloud_rate_card": 154
+          },
+          "independence": "Presentations and overlapping windows are not independent market experiments"
+        },
+        "3": {
+          "presentations": 314,
+          "unique_horizon_examples": 314,
+          "repeated_presentations": 0,
+          "actual_unchanged": 271,
+          "actual_unchanged_fraction": 0.8630573248407644,
+          "quantized_unchanged": 271,
+          "quantized_unchanged_fraction": 0.8630573248407644,
+          "changed_but_quantized_unchanged": 0,
+          "out_of_support": 0,
+          "mean_relative_quantization_error": 0.0023376159902315638,
+          "classes": [
+            {
+              "level_index": 0,
+              "log_return": -0.6931471805599453,
+              "presentations": 0
+            },
+            {
+              "level_index": 1,
+              "log_return": -0.30600060026488674,
+              "presentations": 1
+            },
+            {
+              "level_index": 2,
+              "log_return": -0.1350887228406941,
+              "presentations": 8
+            },
+            {
+              "level_index": 3,
+              "log_return": -0.059637017126544296,
+              "presentations": 5
+            },
+            {
+              "level_index": 4,
+              "log_return": -0.026327688477341595,
+              "presentations": 5
+            },
+            {
+              "level_index": 5,
+              "log_return": -0.011622767434681559,
+              "presentations": 0
+            },
+            {
+              "level_index": 6,
+              "log_return": -0.00513105140076979,
+              "presentations": 0
+            },
+            {
+              "level_index": 7,
+              "log_return": -0.002265182421079987,
+              "presentations": 0
+            },
+            {
+              "level_index": 8,
+              "log_return": -0.0010000000000000002,
+              "presentations": 0
+            },
+            {
+              "level_index": 9,
+              "log_return": 0.0,
+              "presentations": 271
+            },
+            {
+              "level_index": 10,
+              "log_return": 0.0010000000000000002,
+              "presentations": 0
+            },
+            {
+              "level_index": 11,
+              "log_return": 0.002265182421079987,
+              "presentations": 0
+            },
+            {
+              "level_index": 12,
+              "log_return": 0.00513105140076979,
+              "presentations": 0
+            },
+            {
+              "level_index": 13,
+              "log_return": 0.011622767434681559,
+              "presentations": 1
+            },
+            {
+              "level_index": 14,
+              "log_return": 0.026327688477341595,
+              "presentations": 5
+            },
+            {
+              "level_index": 15,
+              "log_return": 0.059637017126544296,
+              "presentations": 10
+            },
+            {
+              "level_index": 16,
+              "log_return": 0.1350887228406941,
+              "presentations": 7
+            },
+            {
+              "level_index": 17,
+              "log_return": 0.30600060026488674,
+              "presentations": 1
+            },
+            {
+              "level_index": 18,
+              "log_return": 0.6931471805599453,
+              "presentations": 0
+            }
+          ],
+          "providers": {
+            "aws": 64,
+            "azure": 64,
+            "cudo": 14,
+            "gcp": 32,
+            "lambdalabs": 64,
+            "nebius": 32,
+            "verda": 40,
+            "vultr": 4
+          },
+          "families": {
+            "A100": 230,
+            "H100": 84
+          },
+          "origin_months": {
+            "2026-02": 40,
+            "2026-03": 9,
+            "2026-05": 7,
+            "2026-06": 92,
+            "2026-07": 53,
+            "2026-08": 56,
+            "2026-09": 49,
+            "2026-10": 8
+          },
+          "instruments": {
+            "hyperscaler_spot": 160,
+            "neocloud_rate_card": 154
+          },
+          "independence": "Presentations and overlapping windows are not independent market experiments"
+        },
+        "7": {
+          "presentations": 314,
+          "unique_horizon_examples": 314,
+          "repeated_presentations": 0,
+          "actual_unchanged": 257,
+          "actual_unchanged_fraction": 0.8184713375796179,
+          "quantized_unchanged": 257,
+          "quantized_unchanged_fraction": 0.8184713375796179,
+          "changed_but_quantized_unchanged": 0,
+          "out_of_support": 0,
+          "mean_relative_quantization_error": 0.004232790626662734,
+          "classes": [
+            {
+              "level_index": 0,
+              "log_return": -0.6931471805599453,
+              "presentations": 0
+            },
+            {
+              "level_index": 1,
+              "log_return": -0.30600060026488674,
+              "presentations": 9
+            },
+            {
+              "level_index": 2,
+              "log_return": -0.1350887228406941,
+              "presentations": 2
+            },
+            {
+              "level_index": 3,
+              "log_return": -0.059637017126544296,
+              "presentations": 5
+            },
+            {
+              "level_index": 4,
+              "log_return": -0.026327688477341595,
+              "presentations": 1
+            },
+            {
+              "level_index": 5,
+              "log_return": -0.011622767434681559,
+              "presentations": 5
+            },
+            {
+              "level_index": 6,
+              "log_return": -0.00513105140076979,
+              "presentations": 0
+            },
+            {
+              "level_index": 7,
+              "log_return": -0.002265182421079987,
+              "presentations": 0
+            },
+            {
+              "level_index": 8,
+              "log_return": -0.0010000000000000002,
+              "presentations": 0
+            },
+            {
+              "level_index": 9,
+              "log_return": 0.0,
+              "presentations": 257
+            },
+            {
+              "level_index": 10,
+              "log_return": 0.0010000000000000002,
+              "presentations": 0
+            },
+            {
+              "level_index": 11,
+              "log_return": 0.002265182421079987,
+              "presentations": 0
+            },
+            {
+              "level_index": 12,
+              "log_return": 0.00513105140076979,
+              "presentations": 0
+            },
+            {
+              "level_index": 13,
+              "log_return": 0.011622767434681559,
+              "presentations": 0
+            },
+            {
+              "level_index": 14,
+              "log_return": 0.026327688477341595,
+              "presentations": 3
+            },
+            {
+              "level_index": 15,
+              "log_return": 0.059637017126544296,
+              "presentations": 19
+            },
+            {
+              "level_index": 16,
+              "log_return": 0.1350887228406941,
+              "presentations": 5
+            },
+            {
+              "level_index": 17,
+              "log_return": 0.30600060026488674,
+              "presentations": 8
+            },
+            {
+              "level_index": 18,
+              "log_return": 0.6931471805599453,
+              "presentations": 0
+            }
+          ],
+          "providers": {
+            "aws": 64,
+            "azure": 64,
+            "cudo": 14,
+            "gcp": 32,
+            "lambdalabs": 64,
+            "nebius": 32,
+            "verda": 40,
+            "vultr": 4
+          },
+          "families": {
+            "A100": 230,
+            "H100": 84
+          },
+          "origin_months": {
+            "2026-02": 40,
+            "2026-03": 9,
+            "2026-05": 7,
+            "2026-06": 92,
+            "2026-07": 53,
+            "2026-08": 56,
+            "2026-09": 49,
+            "2026-10": 8
+          },
+          "instruments": {
+            "hyperscaler_spot": 160,
+            "neocloud_rate_card": 154
+          },
+          "independence": "Presentations and overlapping windows are not independent market experiments"
+        }
+      },
+      "same_evaluation_series_7d": {
+        "presentations": 256,
+        "unique_horizon_examples": 256,
+        "repeated_presentations": 0,
+        "actual_unchanged": 199,
+        "actual_unchanged_fraction": 0.77734375,
+        "quantized_unchanged": 199,
+        "quantized_unchanged_fraction": 0.77734375,
+        "changed_but_quantized_unchanged": 0,
+        "out_of_support": 0,
+        "mean_relative_quantization_error": 0.00519178225301601,
+        "classes": [
+          {
+            "level_index": 0,
+            "log_return": -0.6931471805599453,
+            "presentations": 0
+          },
+          {
+            "level_index": 1,
+            "log_return": -0.30600060026488674,
+            "presentations": 9
+          },
+          {
+            "level_index": 2,
+            "log_return": -0.1350887228406941,
+            "presentations": 2
+          },
+          {
+            "level_index": 3,
+            "log_return": -0.059637017126544296,
+            "presentations": 5
+          },
+          {
+            "level_index": 4,
+            "log_return": -0.026327688477341595,
+            "presentations": 1
+          },
+          {
+            "level_index": 5,
+            "log_return": -0.011622767434681559,
+            "presentations": 5
+          },
+          {
+            "level_index": 6,
+            "log_return": -0.00513105140076979,
+            "presentations": 0
+          },
+          {
+            "level_index": 7,
+            "log_return": -0.002265182421079987,
+            "presentations": 0
+          },
+          {
+            "level_index": 8,
+            "log_return": -0.0010000000000000002,
+            "presentations": 0
+          },
+          {
+            "level_index": 9,
+            "log_return": 0.0,
+            "presentations": 199
+          },
+          {
+            "level_index": 10,
+            "log_return": 0.0010000000000000002,
+            "presentations": 0
+          },
+          {
+            "level_index": 11,
+            "log_return": 0.002265182421079987,
+            "presentations": 0
+          },
+          {
+            "level_index": 12,
+            "log_return": 0.00513105140076979,
+            "presentations": 0
+          },
+          {
+            "level_index": 13,
+            "log_return": 0.011622767434681559,
+            "presentations": 0
+          },
+          {
+            "level_index": 14,
+            "log_return": 0.026327688477341595,
+            "presentations": 3
+          },
+          {
+            "level_index": 15,
+            "log_return": 0.059637017126544296,
+            "presentations": 19
+          },
+          {
+            "level_index": 16,
+            "log_return": 0.1350887228406941,
+            "presentations": 5
+          },
+          {
+            "level_index": 17,
+            "log_return": 0.30600060026488674,
+            "presentations": 8
+          },
+          {
+            "level_index": 18,
+            "log_return": 0.6931471805599453,
+            "presentations": 0
+          }
+        ],
+        "providers": {
+          "aws": 64,
+          "azure": 64,
+          "gcp": 32,
+          "lambdalabs": 64,
+          "nebius": 32
+        },
+        "families": {
+          "A100": 192,
+          "H100": 64
+        },
+        "origin_months": {
+          "2026-02": 24,
+          "2026-03": 7,
+          "2026-05": 7,
+          "2026-06": 54,
+          "2026-07": 51,
+          "2026-08": 56,
+          "2026-09": 49,
+          "2026-10": 8
+        },
+        "instruments": {
+          "hyperscaler_spot": 160,
+          "neocloud_rate_card": 96
+        },
+        "independence": "Presentations and overlapping windows are not independent market experiments"
+      }
+    },
+    "expanded": {
+      "presentations": 11511,
+      "unique_horizon_examples": 11511,
+      "repeated_presentations": 0,
+      "actual_unchanged": 9060,
+      "actual_unchanged_fraction": 0.7870732342976283,
+      "quantized_unchanged": 9111,
+      "quantized_unchanged_fraction": 0.7915037789940057,
+      "changed_but_quantized_unchanged": 51,
+      "out_of_support": 8,
+      "mean_relative_quantization_error": 0.0033389914777356275,
+      "classes": [
+        {
+          "level_index": 0,
+          "log_return": -0.6931471805599453,
+          "presentations": 8
+        },
+        {
+          "level_index": 1,
+          "log_return": -0.30600060026488674,
+          "presentations": 120
+        },
+        {
+          "level_index": 2,
+          "log_return": -0.1350887228406941,
+          "presentations": 178
+        },
+        {
+          "level_index": 3,
+          "log_return": -0.059637017126544296,
+          "presentations": 256
+        },
+        {
+          "level_index": 4,
+          "log_return": -0.026327688477341595,
+          "presentations": 181
+        },
+        {
+          "level_index": 5,
+          "log_return": -0.011622767434681559,
+          "presentations": 108
+        },
+        {
+          "level_index": 6,
+          "log_return": -0.00513105140076979,
+          "presentations": 98
+        },
+        {
+          "level_index": 7,
+          "log_return": -0.002265182421079987,
+          "presentations": 63
+        },
+        {
+          "level_index": 8,
+          "log_return": -0.0010000000000000002,
+          "presentations": 45
+        },
+        {
+          "level_index": 9,
+          "log_return": 0.0,
+          "presentations": 9111
+        },
+        {
+          "level_index": 10,
+          "log_return": 0.0010000000000000002,
+          "presentations": 53
+        },
+        {
+          "level_index": 11,
+          "log_return": 0.002265182421079987,
+          "presentations": 82
+        },
+        {
+          "level_index": 12,
+          "log_return": 0.00513105140076979,
+          "presentations": 110
+        },
+        {
+          "level_index": 13,
+          "log_return": 0.011622767434681559,
+          "presentations": 173
+        },
+        {
+          "level_index": 14,
+          "log_return": 0.026327688477341595,
+          "presentations": 212
+        },
+        {
+          "level_index": 15,
+          "log_return": 0.059637017126544296,
+          "presentations": 465
+        },
+        {
+          "level_index": 16,
+          "log_return": 0.1350887228406941,
+          "presentations": 154
+        },
+        {
+          "level_index": 17,
+          "log_return": 0.30600060026488674,
+          "presentations": 80
+        },
+        {
+          "level_index": 18,
+          "log_return": 0.6931471805599453,
+          "presentations": 14
+        }
+      ],
+      "providers": {
+        "aws": 2304,
+        "azure": 2304,
+        "cudo": 351,
+        "gcp": 2016,
+        "lambdalabs": 2304,
+        "nebius": 576,
+        "verda": 1392,
+        "vultr": 264
+      },
+      "families": {
+        "A100": 6342,
+        "H100": 5169
+      },
+      "origin_months": {
+        "2026-02": 1059,
+        "2026-03": 168,
+        "2026-05": 441,
+        "2026-06": 2622,
+        "2026-07": 2484,
+        "2026-08": 2355,
+        "2026-09": 2049,
+        "2026-10": 333
+      },
+      "instruments": {
+        "hyperscaler_spot": 6624,
+        "neocloud_rate_card": 4887
+      },
+      "independence": "Presentations and overlapping windows are not independent market experiments",
+      "by_horizon": {
+        "1": {
+          "presentations": 3837,
+          "unique_horizon_examples": 3837,
+          "repeated_presentations": 0,
+          "actual_unchanged": 3206,
+          "actual_unchanged_fraction": 0.835548605681522,
+          "quantized_unchanged": 3240,
+          "quantized_unchanged_fraction": 0.8444096950742768,
+          "changed_but_quantized_unchanged": 34,
+          "out_of_support": 1,
+          "mean_relative_quantization_error": 0.001010184815926256,
+          "classes": [
+            {
+              "level_index": 0,
+              "log_return": -0.6931471805599453,
+              "presentations": 1
+            },
+            {
+              "level_index": 1,
+              "log_return": -0.30600060026488674,
+              "presentations": 4
+            },
+            {
+              "level_index": 2,
+              "log_return": -0.1350887228406941,
+              "presentations": 9
+            },
+            {
+              "level_index": 3,
+              "log_return": -0.059637017126544296,
+              "presentations": 53
+            },
+            {
+              "level_index": 4,
+              "log_return": -0.026327688477341595,
+              "presentations": 86
+            },
+            {
+              "level_index": 5,
+              "log_return": -0.011622767434681559,
+              "presentations": 33
+            },
+            {
+              "level_index": 6,
+              "log_return": -0.00513105140076979,
+              "presentations": 31
+            },
+            {
+              "level_index": 7,
+              "log_return": -0.002265182421079987,
+              "presentations": 35
+            },
+            {
+              "level_index": 8,
+              "log_return": -0.0010000000000000002,
+              "presentations": 28
+            },
+            {
+              "level_index": 9,
+              "log_return": 0.0,
+              "presentations": 3240
+            },
+            {
+              "level_index": 10,
+              "log_return": 0.0010000000000000002,
+              "presentations": 31
+            },
+            {
+              "level_index": 11,
+              "log_return": 0.002265182421079987,
+              "presentations": 40
+            },
+            {
+              "level_index": 12,
+              "log_return": 0.00513105140076979,
+              "presentations": 53
+            },
+            {
+              "level_index": 13,
+              "log_return": 0.011622767434681559,
+              "presentations": 52
+            },
+            {
+              "level_index": 14,
+              "log_return": 0.026327688477341595,
+              "presentations": 60
+            },
+            {
+              "level_index": 15,
+              "log_return": 0.059637017126544296,
+              "presentations": 75
+            },
+            {
+              "level_index": 16,
+              "log_return": 0.1350887228406941,
+              "presentations": 2
+            },
+            {
+              "level_index": 17,
+              "log_return": 0.30600060026488674,
+              "presentations": 3
+            },
+            {
+              "level_index": 18,
+              "log_return": 0.6931471805599453,
+              "presentations": 1
+            }
+          ],
+          "providers": {
+            "aws": 768,
+            "azure": 768,
+            "cudo": 117,
+            "gcp": 672,
+            "lambdalabs": 768,
+            "nebius": 192,
+            "verda": 464,
+            "vultr": 88
+          },
+          "families": {
+            "A100": 2114,
+            "H100": 1723
+          },
+          "origin_months": {
+            "2026-02": 353,
+            "2026-03": 56,
+            "2026-05": 147,
+            "2026-06": 874,
+            "2026-07": 828,
+            "2026-08": 785,
+            "2026-09": 683,
+            "2026-10": 111
+          },
+          "instruments": {
+            "hyperscaler_spot": 2208,
+            "neocloud_rate_card": 1629
+          },
+          "independence": "Presentations and overlapping windows are not independent market experiments"
+        },
+        "3": {
+          "presentations": 3837,
+          "unique_horizon_examples": 3837,
+          "repeated_presentations": 0,
+          "actual_unchanged": 3053,
+          "actual_unchanged_fraction": 0.7956737034141256,
+          "quantized_unchanged": 3065,
+          "quantized_unchanged_fraction": 0.7988011467292155,
+          "changed_but_quantized_unchanged": 12,
+          "out_of_support": 2,
+          "mean_relative_quantization_error": 0.002912084843603489,
+          "classes": [
+            {
+              "level_index": 0,
+              "log_return": -0.6931471805599453,
+              "presentations": 2
+            },
+            {
+              "level_index": 1,
+              "log_return": -0.30600060026488674,
+              "presentations": 19
+            },
+            {
+              "level_index": 2,
+              "log_return": -0.1350887228406941,
+              "presentations": 82
+            },
+            {
+              "level_index": 3,
+              "log_return": -0.059637017126544296,
+              "presentations": 92
+            },
+            {
+              "level_index": 4,
+              "log_return": -0.026327688477341595,
+              "presentations": 51
+            },
+            {
+              "level_index": 5,
+              "log_return": -0.011622767434681559,
+              "presentations": 26
+            },
+            {
+              "level_index": 6,
+              "log_return": -0.00513105140076979,
+              "presentations": 39
+            },
+            {
+              "level_index": 7,
+              "log_return": -0.002265182421079987,
+              "presentations": 17
+            },
+            {
+              "level_index": 8,
+              "log_return": -0.0010000000000000002,
+              "presentations": 11
+            },
+            {
+              "level_index": 9,
+              "log_return": 0.0,
+              "presentations": 3065
+            },
+            {
+              "level_index": 10,
+              "log_return": 0.0010000000000000002,
+              "presentations": 17
+            },
+            {
+              "level_index": 11,
+              "log_return": 0.002265182421079987,
+              "presentations": 24
+            },
+            {
+              "level_index": 12,
+              "log_return": 0.00513105140076979,
+              "presentations": 33
+            },
+            {
+              "level_index": 13,
+              "log_return": 0.011622767434681559,
+              "presentations": 57
+            },
+            {
+              "level_index": 14,
+              "log_return": 0.026327688477341595,
+              "presentations": 83
+            },
+            {
+              "level_index": 15,
+              "log_return": 0.059637017126544296,
+              "presentations": 140
+            },
+            {
+              "level_index": 16,
+              "log_return": 0.1350887228406941,
+              "presentations": 65
+            },
+            {
+              "level_index": 17,
+              "log_return": 0.30600060026488674,
+              "presentations": 10
+            },
+            {
+              "level_index": 18,
+              "log_return": 0.6931471805599453,
+              "presentations": 4
+            }
+          ],
+          "providers": {
+            "aws": 768,
+            "azure": 768,
+            "cudo": 117,
+            "gcp": 672,
+            "lambdalabs": 768,
+            "nebius": 192,
+            "verda": 464,
+            "vultr": 88
+          },
+          "families": {
+            "A100": 2114,
+            "H100": 1723
+          },
+          "origin_months": {
+            "2026-02": 353,
+            "2026-03": 56,
+            "2026-05": 147,
+            "2026-06": 874,
+            "2026-07": 828,
+            "2026-08": 785,
+            "2026-09": 683,
+            "2026-10": 111
+          },
+          "instruments": {
+            "hyperscaler_spot": 2208,
+            "neocloud_rate_card": 1629
+          },
+          "independence": "Presentations and overlapping windows are not independent market experiments"
+        },
+        "7": {
+          "presentations": 3837,
+          "unique_horizon_examples": 3837,
+          "repeated_presentations": 0,
+          "actual_unchanged": 2801,
+          "actual_unchanged_fraction": 0.7299973937972374,
+          "quantized_unchanged": 2806,
+          "quantized_unchanged_fraction": 0.7313004951785249,
+          "changed_but_quantized_unchanged": 5,
+          "out_of_support": 5,
+          "mean_relative_quantization_error": 0.006094704773677146,
+          "classes": [
+            {
+              "level_index": 0,
+              "log_return": -0.6931471805599453,
+              "presentations": 5
+            },
+            {
+              "level_index": 1,
+              "log_return": -0.30600060026488674,
+              "presentations": 97
+            },
+            {
+              "level_index": 2,
+              "log_return": -0.1350887228406941,
+              "presentations": 87
+            },
+            {
+              "level_index": 3,
+              "log_return": -0.059637017126544296,
+              "presentations": 111
+            },
+            {
+              "level_index": 4,
+              "log_return": -0.026327688477341595,
+              "presentations": 44
+            },
+            {
+              "level_index": 5,
+              "log_return": -0.011622767434681559,
+              "presentations": 49
+            },
+            {
+              "level_index": 6,
+              "log_return": -0.00513105140076979,
+              "presentations": 28
+            },
+            {
+              "level_index": 7,
+              "log_return": -0.002265182421079987,
+              "presentations": 11
+            },
+            {
+              "level_index": 8,
+              "log_return": -0.0010000000000000002,
+              "presentations": 6
+            },
+            {
+              "level_index": 9,
+              "log_return": 0.0,
+              "presentations": 2806
+            },
+            {
+              "level_index": 10,
+              "log_return": 0.0010000000000000002,
+              "presentations": 5
+            },
+            {
+              "level_index": 11,
+              "log_return": 0.002265182421079987,
+              "presentations": 18
+            },
+            {
+              "level_index": 12,
+              "log_return": 0.00513105140076979,
+              "presentations": 24
+            },
+            {
+              "level_index": 13,
+              "log_return": 0.011622767434681559,
+              "presentations": 64
+            },
+            {
+              "level_index": 14,
+              "log_return": 0.026327688477341595,
+              "presentations": 69
+            },
+            {
+              "level_index": 15,
+              "log_return": 0.059637017126544296,
+              "presentations": 250
+            },
+            {
+              "level_index": 16,
+              "log_return": 0.1350887228406941,
+              "presentations": 87
+            },
+            {
+              "level_index": 17,
+              "log_return": 0.30600060026488674,
+              "presentations": 67
+            },
+            {
+              "level_index": 18,
+              "log_return": 0.6931471805599453,
+              "presentations": 9
+            }
+          ],
+          "providers": {
+            "aws": 768,
+            "azure": 768,
+            "cudo": 117,
+            "gcp": 672,
+            "lambdalabs": 768,
+            "nebius": 192,
+            "verda": 464,
+            "vultr": 88
+          },
+          "families": {
+            "A100": 2114,
+            "H100": 1723
+          },
+          "origin_months": {
+            "2026-02": 353,
+            "2026-03": 56,
+            "2026-05": 147,
+            "2026-06": 874,
+            "2026-07": 828,
+            "2026-08": 785,
+            "2026-09": 683,
+            "2026-10": 111
+          },
+          "instruments": {
+            "hyperscaler_spot": 2208,
+            "neocloud_rate_card": 1629
+          },
+          "independence": "Presentations and overlapping windows are not independent market experiments"
+        }
+      },
+      "same_evaluation_series_7d": {
+        "presentations": 768,
+        "unique_horizon_examples": 768,
+        "repeated_presentations": 0,
+        "actual_unchanged": 599,
+        "actual_unchanged_fraction": 0.7799479166666666,
+        "quantized_unchanged": 599,
+        "quantized_unchanged_fraction": 0.7799479166666666,
+        "changed_but_quantized_unchanged": 0,
+        "out_of_support": 0,
+        "mean_relative_quantization_error": 0.0050500473583983034,
+        "classes": [
+          {
+            "level_index": 0,
+            "log_return": -0.6931471805599453,
+            "presentations": 0
+          },
+          {
+            "level_index": 1,
+            "log_return": -0.30600060026488674,
+            "presentations": 22
+          },
+          {
+            "level_index": 2,
+            "log_return": -0.1350887228406941,
+            "presentations": 13
+          },
+          {
+            "level_index": 3,
+            "log_return": -0.059637017126544296,
+            "presentations": 14
+          },
+          {
+            "level_index": 4,
+            "log_return": -0.026327688477341595,
+            "presentations": 1
+          },
+          {
+            "level_index": 5,
+            "log_return": -0.011622767434681559,
+            "presentations": 12
+          },
+          {
+            "level_index": 6,
+            "log_return": -0.00513105140076979,
+            "presentations": 2
+          },
+          {
+            "level_index": 7,
+            "log_return": -0.002265182421079987,
+            "presentations": 0
+          },
+          {
+            "level_index": 8,
+            "log_return": -0.0010000000000000002,
+            "presentations": 0
+          },
+          {
+            "level_index": 9,
+            "log_return": 0.0,
+            "presentations": 599
+          },
+          {
+            "level_index": 10,
+            "log_return": 0.0010000000000000002,
+            "presentations": 0
+          },
+          {
+            "level_index": 11,
+            "log_return": 0.002265182421079987,
+            "presentations": 0
+          },
+          {
+            "level_index": 12,
+            "log_return": 0.00513105140076979,
+            "presentations": 0
+          },
+          {
+            "level_index": 13,
+            "log_return": 0.011622767434681559,
+            "presentations": 4
+          },
+          {
+            "level_index": 14,
+            "log_return": 0.026327688477341595,
+            "presentations": 5
+          },
+          {
+            "level_index": 15,
+            "log_return": 0.059637017126544296,
+            "presentations": 53
+          },
+          {
+            "level_index": 16,
+            "log_return": 0.1350887228406941,
+            "presentations": 18
+          },
+          {
+            "level_index": 17,
+            "log_return": 0.30600060026488674,
+            "presentations": 25
+          },
+          {
+            "level_index": 18,
+            "log_return": 0.6931471805599453,
+            "presentations": 0
+          }
+        ],
+        "providers": {
+          "aws": 192,
+          "azure": 192,
+          "gcp": 96,
+          "lambdalabs": 192,
+          "nebius": 96
+        },
+        "families": {
+          "A100": 576,
+          "H100": 192
+        },
+        "origin_months": {
+          "2026-02": 71,
+          "2026-03": 16,
+          "2026-05": 22,
+          "2026-06": 160,
+          "2026-07": 166,
+          "2026-08": 162,
+          "2026-09": 147,
+          "2026-10": 24
+        },
+        "instruments": {
+          "hyperscaler_spot": 480,
+          "neocloud_rate_card": 288
+        },
+        "independence": "Presentations and overlapping windows are not independent market experiments"
+      }
+    }
+  },
+  "runs": [
+    {
+      "arm": "same",
+      "ordering_seed": 17,
+      "selected_additional_update": 20,
+      "batch_order_sha256": "cef24d549440e8ce1f7409369a6ffe805337537af1a1320532a409e704adee46",
+      "full_run": {
+        "presentations": 1600,
+        "unique_horizon_examples": 942,
+        "repeated_presentations": 658,
+        "actual_unchanged": 1363,
+        "actual_unchanged_fraction": 0.851875,
+        "quantized_unchanged": 1365,
+        "quantized_unchanged_fraction": 0.853125,
+        "changed_but_quantized_unchanged": 2,
+        "out_of_support": 0,
+        "mean_relative_quantization_error": 0.002650179690597812,
+        "classes": [
+          {
+            "level_index": 0,
+            "log_return": -0.6931471805599453,
+            "presentations": 0
+          },
+          {
+            "level_index": 1,
+            "log_return": -0.30600060026488674,
+            "presentations": 17
+          },
+          {
+            "level_index": 2,
+            "log_return": -0.1350887228406941,
+            "presentations": 18
+          },
+          {
+            "level_index": 3,
+            "log_return": -0.059637017126544296,
+            "presentations": 30
+          },
+          {
+            "level_index": 4,
+            "log_return": -0.026327688477341595,
+            "presentations": 19
+          },
+          {
+            "level_index": 5,
+            "log_return": -0.011622767434681559,
+            "presentations": 10
+          },
+          {
+            "level_index": 6,
+            "log_return": -0.00513105140076979,
+            "presentations": 2
+          },
+          {
+            "level_index": 7,
+            "log_return": -0.002265182421079987,
+            "presentations": 0
+          },
+          {
+            "level_index": 8,
+            "log_return": -0.0010000000000000002,
+            "presentations": 0
+          },
+          {
+            "level_index": 9,
+            "log_return": 0.0,
+            "presentations": 1365
+          },
+          {
+            "level_index": 10,
+            "log_return": 0.0010000000000000002,
+            "presentations": 1
+          },
+          {
+            "level_index": 11,
+            "log_return": 0.002265182421079987,
+            "presentations": 2
+          },
+          {
+            "level_index": 12,
+            "log_return": 0.00513105140076979,
+            "presentations": 1
+          },
+          {
+            "level_index": 13,
+            "log_return": 0.011622767434681559,
+            "presentations": 7
+          },
+          {
+            "level_index": 14,
+            "log_return": 0.026327688477341595,
+            "presentations": 25
+          },
+          {
+            "level_index": 15,
+            "log_return": 0.059637017126544296,
+            "presentations": 63
+          },
+          {
+            "level_index": 16,
+            "log_return": 0.1350887228406941,
+            "presentations": 24
+          },
+          {
+            "level_index": 17,
+            "log_return": 0.30600060026488674,
+            "presentations": 16
+          },
+          {
+            "level_index": 18,
+            "log_return": 0.6931471805599453,
+            "presentations": 0
+          }
+        ],
+        "providers": {
+          "azure": 312,
+          "cudo": 72,
+          "aws": 332,
+          "verda": 194,
+          "nebius": 170,
+          "lambdalabs": 330,
+          "gcp": 171,
+          "vultr": 19
+        },
+        "families": {
+          "A100": 1172,
+          "H100": 428
+        },
+        "origin_months": {
+          "2026-09": 266,
+          "2026-02": 203,
+          "2026-07": 253,
+          "2026-08": 287,
+          "2026-06": 464,
+          "2026-10": 42,
+          "2026-03": 44,
+          "2026-05": 41
+        },
+        "instruments": {
+          "hyperscaler_spot": 815,
+          "neocloud_rate_card": 785
+        },
+        "independence": "Presentations and overlapping windows are not independent market experiments",
+        "by_horizon": {
+          "1": {
+            "presentations": 537,
+            "unique_horizon_examples": 314,
+            "repeated_presentations": 223,
+            "actual_unchanged": 477,
+            "actual_unchanged_fraction": 0.888268156424581,
+            "quantized_unchanged": 479,
+            "quantized_unchanged_fraction": 0.8919925512104283,
+            "changed_but_quantized_unchanged": 2,
+            "out_of_support": 0,
+            "mean_relative_quantization_error": 0.0007939283185174797,
+            "classes": [
+              {
+                "level_index": 0,
+                "log_return": -0.6931471805599453,
+                "presentations": 0
+              },
+              {
+                "level_index": 1,
+                "log_return": -0.30600060026488674,
+                "presentations": 0
+              },
+              {
+                "level_index": 2,
+                "log_return": -0.1350887228406941,
+                "presentations": 0
+              },
+              {
+                "level_index": 3,
+                "log_return": -0.059637017126544296,
+                "presentations": 14
+              },
+              {
+                "level_index": 4,
+                "log_return": -0.026327688477341595,
+                "presentations": 9
+              },
+              {
+                "level_index": 5,
+                "log_return": -0.011622767434681559,
+                "presentations": 1
+              },
+              {
+                "level_index": 6,
+                "log_return": -0.00513105140076979,
+                "presentations": 2
+              },
+              {
+                "level_index": 7,
+                "log_return": -0.002265182421079987,
+                "presentations": 0
+              },
+              {
+                "level_index": 8,
+                "log_return": -0.0010000000000000002,
+                "presentations": 0
+              },
+              {
+                "level_index": 9,
+                "log_return": 0.0,
+                "presentations": 479
+              },
+              {
+                "level_index": 10,
+                "log_return": 0.0010000000000000002,
+                "presentations": 1
+              },
+              {
+                "level_index": 11,
+                "log_return": 0.002265182421079987,
+                "presentations": 2
+              },
+              {
+                "level_index": 12,
+                "log_return": 0.00513105140076979,
+                "presentations": 1
+              },
+              {
+                "level_index": 13,
+                "log_return": 0.011622767434681559,
+                "presentations": 5
+              },
+              {
+                "level_index": 14,
+                "log_return": 0.026327688477341595,
+                "presentations": 11
+              },
+              {
+                "level_index": 15,
+                "log_return": 0.059637017126544296,
+                "presentations": 12
+              },
+              {
+                "level_index": 16,
+                "log_return": 0.1350887228406941,
+                "presentations": 0
+              },
+              {
+                "level_index": 17,
+                "log_return": 0.30600060026488674,
+                "presentations": 0
+              },
+              {
+                "level_index": 18,
+                "log_return": 0.6931471805599453,
+                "presentations": 0
+              }
+            ],
+            "providers": {
+              "azure": 107,
+              "cudo": 22,
+              "aws": 110,
+              "verda": 64,
+              "nebius": 55,
+              "gcp": 60,
+              "lambdalabs": 114,
+              "vultr": 5
+            },
+            "families": {
+              "A100": 398,
+              "H100": 139
+            },
+            "origin_months": {
+              "2026-09": 87,
+              "2026-02": 66,
+              "2026-08": 101,
+              "2026-07": 86,
+              "2026-06": 158,
+              "2026-05": 14,
+              "2026-10": 13,
+              "2026-03": 12
+            },
+            "instruments": {
+              "hyperscaler_spot": 277,
+              "neocloud_rate_card": 260
+            },
+            "independence": "Presentations and overlapping windows are not independent market experiments"
+          },
+          "3": {
+            "presentations": 527,
+            "unique_horizon_examples": 314,
+            "repeated_presentations": 213,
+            "actual_unchanged": 450,
+            "actual_unchanged_fraction": 0.8538899430740038,
+            "quantized_unchanged": 450,
+            "quantized_unchanged_fraction": 0.8538899430740038,
+            "changed_but_quantized_unchanged": 0,
+            "out_of_support": 0,
+            "mean_relative_quantization_error": 0.002746526436866731,
+            "classes": [
+              {
+                "level_index": 0,
+                "log_return": -0.6931471805599453,
+                "presentations": 0
+              },
+              {
+                "level_index": 1,
+                "log_return": -0.30600060026488674,
+                "presentations": 3
+              },
+              {
+                "level_index": 2,
+                "log_return": -0.1350887228406941,
+                "presentations": 15
+              },
+              {
+                "level_index": 3,
+                "log_return": -0.059637017126544296,
+                "presentations": 7
+              },
+              {
+                "level_index": 4,
+                "log_return": -0.026327688477341595,
+                "presentations": 8
+              },
+              {
+                "level_index": 5,
+                "log_return": -0.011622767434681559,
+                "presentations": 0
+              },
+              {
+                "level_index": 6,
+                "log_return": -0.00513105140076979,
+                "presentations": 0
+              },
+              {
+                "level_index": 7,
+                "log_return": -0.002265182421079987,
+                "presentations": 0
+              },
+              {
+                "level_index": 8,
+                "log_return": -0.0010000000000000002,
+                "presentations": 0
+              },
+              {
+                "level_index": 9,
+                "log_return": 0.0,
+                "presentations": 450
+              },
+              {
+                "level_index": 10,
+                "log_return": 0.0010000000000000002,
+                "presentations": 0
+              },
+              {
+                "level_index": 11,
+                "log_return": 0.002265182421079987,
+                "presentations": 0
+              },
+              {
+                "level_index": 12,
+                "log_return": 0.00513105140076979,
+                "presentations": 0
+              },
+              {
+                "level_index": 13,
+                "log_return": 0.011622767434681559,
+                "presentations": 2
+              },
+              {
+                "level_index": 14,
+                "log_return": 0.026327688477341595,
+                "presentations": 9
+              },
+              {
+                "level_index": 15,
+                "log_return": 0.059637017126544296,
+                "presentations": 17
+              },
+              {
+                "level_index": 16,
+                "log_return": 0.1350887228406941,
+                "presentations": 14
+              },
+              {
+                "level_index": 17,
+                "log_return": 0.30600060026488674,
+                "presentations": 2
+              },
+              {
+                "level_index": 18,
+                "log_return": 0.6931471805599453,
+                "presentations": 0
+              }
+            ],
+            "providers": {
+              "verda": 61,
+              "aws": 116,
+              "azure": 101,
+              "nebius": 58,
+              "lambdalabs": 104,
+              "cudo": 24,
+              "gcp": 56,
+              "vultr": 7
+            },
+            "families": {
+              "A100": 390,
+              "H100": 137
+            },
+            "origin_months": {
+              "2026-06": 151,
+              "2026-03": 16,
+              "2026-10": 15,
+              "2026-08": 96,
+              "2026-05": 13,
+              "2026-02": 69,
+              "2026-09": 91,
+              "2026-07": 76
+            },
+            "instruments": {
+              "neocloud_rate_card": 254,
+              "hyperscaler_spot": 273
+            },
+            "independence": "Presentations and overlapping windows are not independent market experiments"
+          },
+          "7": {
+            "presentations": 536,
+            "unique_horizon_examples": 314,
+            "repeated_presentations": 222,
+            "actual_unchanged": 436,
+            "actual_unchanged_fraction": 0.8134328358208955,
+            "quantized_unchanged": 436,
+            "quantized_unchanged_fraction": 0.8134328358208955,
+            "changed_but_quantized_unchanged": 0,
+            "out_of_support": 0,
+            "mean_relative_quantization_error": 0.004415165234484792,
+            "classes": [
+              {
+                "level_index": 0,
+                "log_return": -0.6931471805599453,
+                "presentations": 0
+              },
+              {
+                "level_index": 1,
+                "log_return": -0.30600060026488674,
+                "presentations": 14
+              },
+              {
+                "level_index": 2,
+                "log_return": -0.1350887228406941,
+                "presentations": 3
+              },
+              {
+                "level_index": 3,
+                "log_return": -0.059637017126544296,
+                "presentations": 9
+              },
+              {
+                "level_index": 4,
+                "log_return": -0.026327688477341595,
+                "presentations": 2
+              },
+              {
+                "level_index": 5,
+                "log_return": -0.011622767434681559,
+                "presentations": 9
+              },
+              {
+                "level_index": 6,
+                "log_return": -0.00513105140076979,
+                "presentations": 0
+              },
+              {
+                "level_index": 7,
+                "log_return": -0.002265182421079987,
+                "presentations": 0
+              },
+              {
+                "level_index": 8,
+                "log_return": -0.0010000000000000002,
+                "presentations": 0
+              },
+              {
+                "level_index": 9,
+                "log_return": 0.0,
+                "presentations": 436
+              },
+              {
+                "level_index": 10,
+                "log_return": 0.0010000000000000002,
+                "presentations": 0
+              },
+              {
+                "level_index": 11,
+                "log_return": 0.002265182421079987,
+                "presentations": 0
+              },
+              {
+                "level_index": 12,
+                "log_return": 0.00513105140076979,
+                "presentations": 0
+              },
+              {
+                "level_index": 13,
+                "log_return": 0.011622767434681559,
+                "presentations": 0
+              },
+              {
+                "level_index": 14,
+                "log_return": 0.026327688477341595,
+                "presentations": 5
+              },
+              {
+                "level_index": 15,
+                "log_return": 0.059637017126544296,
+                "presentations": 34
+              },
+              {
+                "level_index": 16,
+                "log_return": 0.1350887228406941,
+                "presentations": 10
+              },
+              {
+                "level_index": 17,
+                "log_return": 0.30600060026488674,
+                "presentations": 14
+              },
+              {
+                "level_index": 18,
+                "log_return": 0.6931471805599453,
+                "presentations": 0
+              }
+            ],
+            "providers": {
+              "azure": 104,
+              "nebius": 57,
+              "lambdalabs": 112,
+              "verda": 69,
+              "cudo": 26,
+              "aws": 106,
+              "gcp": 55,
+              "vultr": 7
+            },
+            "families": {
+              "A100": 384,
+              "H100": 152
+            },
+            "origin_months": {
+              "2026-07": 91,
+              "2026-06": 155,
+              "2026-10": 14,
+              "2026-08": 90,
+              "2026-09": 88,
+              "2026-05": 14,
+              "2026-03": 16,
+              "2026-02": 68
+            },
+            "instruments": {
+              "hyperscaler_spot": 265,
+              "neocloud_rate_card": 271
+            },
+            "independence": "Presentations and overlapping windows are not independent market experiments"
+          }
+        },
+        "same_evaluation_series_7d": {
+          "presentations": 434,
+          "unique_horizon_examples": 256,
+          "repeated_presentations": 178,
+          "actual_unchanged": 334,
+          "actual_unchanged_fraction": 0.7695852534562212,
+          "quantized_unchanged": 334,
+          "quantized_unchanged_fraction": 0.7695852534562212,
+          "changed_but_quantized_unchanged": 0,
+          "out_of_support": 0,
+          "mean_relative_quantization_error": 0.005452830796506564,
+          "classes": [
+            {
+              "level_index": 0,
+              "log_return": -0.6931471805599453,
+              "presentations": 0
+            },
+            {
+              "level_index": 1,
+              "log_return": -0.30600060026488674,
+              "presentations": 14
+            },
+            {
+              "level_index": 2,
+              "log_return": -0.1350887228406941,
+              "presentations": 3
+            },
+            {
+              "level_index": 3,
+              "log_return": -0.059637017126544296,
+              "presentations": 9
+            },
+            {
+              "level_index": 4,
+              "log_return": -0.026327688477341595,
+              "presentations": 2
+            },
+            {
+              "level_index": 5,
+              "log_return": -0.011622767434681559,
+              "presentations": 9
+            },
+            {
+              "level_index": 6,
+              "log_return": -0.00513105140076979,
+              "presentations": 0
+            },
+            {
+              "level_index": 7,
+              "log_return": -0.002265182421079987,
+              "presentations": 0
+            },
+            {
+              "level_index": 8,
+              "log_return": -0.0010000000000000002,
+              "presentations": 0
+            },
+            {
+              "level_index": 9,
+              "log_return": 0.0,
+              "presentations": 334
+            },
+            {
+              "level_index": 10,
+              "log_return": 0.0010000000000000002,
+              "presentations": 0
+            },
+            {
+              "level_index": 11,
+              "log_return": 0.002265182421079987,
+              "presentations": 0
+            },
+            {
+              "level_index": 12,
+              "log_return": 0.00513105140076979,
+              "presentations": 0
+            },
+            {
+              "level_index": 13,
+              "log_return": 0.011622767434681559,
+              "presentations": 0
+            },
+            {
+              "level_index": 14,
+              "log_return": 0.026327688477341595,
+              "presentations": 5
+            },
+            {
+              "level_index": 15,
+              "log_return": 0.059637017126544296,
+              "presentations": 34
+            },
+            {
+              "level_index": 16,
+              "log_return": 0.1350887228406941,
+              "presentations": 10
+            },
+            {
+              "level_index": 17,
+              "log_return": 0.30600060026488674,
+              "presentations": 14
+            },
+            {
+              "level_index": 18,
+              "log_return": 0.6931471805599453,
+              "presentations": 0
+            }
+          ],
+          "providers": {
+            "azure": 104,
+            "nebius": 57,
+            "lambdalabs": 112,
+            "aws": 106,
+            "gcp": 55
+          },
+          "families": {
+            "A100": 317,
+            "H100": 117
+          },
+          "origin_months": {
+            "2026-07": 87,
+            "2026-06": 90,
+            "2026-10": 14,
+            "2026-08": 90,
+            "2026-09": 88,
+            "2026-05": 14,
+            "2026-02": 40,
+            "2026-03": 11
+          },
+          "instruments": {
+            "hyperscaler_spot": 265,
+            "neocloud_rate_card": 169
+          },
+          "independence": "Presentations and overlapping windows are not independent market experiments"
+        }
+      },
+      "selected_checkpoint_prefix": {
+        "presentations": 320,
+        "unique_horizon_examples": 320,
+        "repeated_presentations": 0,
+        "actual_unchanged": 280,
+        "actual_unchanged_fraction": 0.875,
+        "quantized_unchanged": 280,
+        "quantized_unchanged_fraction": 0.875,
+        "changed_but_quantized_unchanged": 0,
+        "out_of_support": 0,
+        "mean_relative_quantization_error": 0.0027343453359034197,
+        "classes": [
+          {
+            "level_index": 0,
+            "log_return": -0.6931471805599453,
+            "presentations": 0
+          },
+          {
+            "level_index": 1,
+            "log_return": -0.30600060026488674,
+            "presentations": 4
+          },
+          {
+            "level_index": 2,
+            "log_return": -0.1350887228406941,
+            "presentations": 3
+          },
+          {
+            "level_index": 3,
+            "log_return": -0.059637017126544296,
+            "presentations": 5
+          },
+          {
+            "level_index": 4,
+            "log_return": -0.026327688477341595,
+            "presentations": 3
+          },
+          {
+            "level_index": 5,
+            "log_return": -0.011622767434681559,
+            "presentations": 1
+          },
+          {
+            "level_index": 6,
+            "log_return": -0.00513105140076979,
+            "presentations": 0
+          },
+          {
+            "level_index": 7,
+            "log_return": -0.002265182421079987,
+            "presentations": 0
+          },
+          {
+            "level_index": 8,
+            "log_return": -0.0010000000000000002,
+            "presentations": 0
+          },
+          {
+            "level_index": 9,
+            "log_return": 0.0,
+            "presentations": 280
+          },
+          {
+            "level_index": 10,
+            "log_return": 0.0010000000000000002,
+            "presentations": 0
+          },
+          {
+            "level_index": 11,
+            "log_return": 0.002265182421079987,
+            "presentations": 0
+          },
+          {
+            "level_index": 12,
+            "log_return": 0.00513105140076979,
+            "presentations": 0
+          },
+          {
+            "level_index": 13,
+            "log_return": 0.011622767434681559,
+            "presentations": 2
+          },
+          {
+            "level_index": 14,
+            "log_return": 0.026327688477341595,
+            "presentations": 4
+          },
+          {
+            "level_index": 15,
+            "log_return": 0.059637017126544296,
+            "presentations": 11
+          },
+          {
+            "level_index": 16,
+            "log_return": 0.1350887228406941,
+            "presentations": 4
+          },
+          {
+            "level_index": 17,
+            "log_return": 0.30600060026488674,
+            "presentations": 3
+          },
+          {
+            "level_index": 18,
+            "log_return": 0.6931471805599453,
+            "presentations": 0
+          }
+        ],
+        "providers": {
+          "azure": 59,
+          "cudo": 17,
+          "aws": 61,
+          "verda": 37,
+          "nebius": 36,
+          "lambdalabs": 69,
+          "gcp": 38,
+          "vultr": 3
+        },
+        "families": {
+          "A100": 227,
+          "H100": 93
+        },
+        "origin_months": {
+          "2026-09": 54,
+          "2026-02": 43,
+          "2026-07": 43,
+          "2026-08": 58,
+          "2026-06": 94,
+          "2026-10": 8,
+          "2026-03": 9,
+          "2026-05": 11
+        },
+        "instruments": {
+          "hyperscaler_spot": 158,
+          "neocloud_rate_card": 162
+        },
+        "independence": "Presentations and overlapping windows are not independent market experiments",
+        "by_horizon": {
+          "1": {
+            "presentations": 106,
+            "unique_horizon_examples": 106,
+            "repeated_presentations": 0,
+            "actual_unchanged": 98,
+            "actual_unchanged_fraction": 0.9245283018867925,
+            "quantized_unchanged": 98,
+            "quantized_unchanged_fraction": 0.9245283018867925,
+            "changed_but_quantized_unchanged": 0,
+            "out_of_support": 0,
+            "mean_relative_quantization_error": 0.0009124410684314198,
+            "classes": [
+              {
+                "level_index": 0,
+                "log_return": -0.6931471805599453,
+                "presentations": 0
+              },
+              {
+                "level_index": 1,
+                "log_return": -0.30600060026488674,
+                "presentations": 0
+              },
+              {
+                "level_index": 2,
+                "log_return": -0.1350887228406941,
+                "presentations": 0
+              },
+              {
+                "level_index": 3,
+                "log_return": -0.059637017126544296,
+                "presentations": 2
+              },
+              {
+                "level_index": 4,
+                "log_return": -0.026327688477341595,
+                "presentations": 1
+              },
+              {
+                "level_index": 5,
+                "log_return": -0.011622767434681559,
+                "presentations": 0
+              },
+              {
+                "level_index": 6,
+                "log_return": -0.00513105140076979,
+                "presentations": 0
+              },
+              {
+                "level_index": 7,
+                "log_return": -0.002265182421079987,
+                "presentations": 0
+              },
+              {
+                "level_index": 8,
+                "log_return": -0.0010000000000000002,
+                "presentations": 0
+              },
+              {
+                "level_index": 9,
+                "log_return": 0.0,
+                "presentations": 98
+              },
+              {
+                "level_index": 10,
+                "log_return": 0.0010000000000000002,
+                "presentations": 0
+              },
+              {
+                "level_index": 11,
+                "log_return": 0.002265182421079987,
+                "presentations": 0
+              },
+              {
+                "level_index": 12,
+                "log_return": 0.00513105140076979,
+                "presentations": 0
+              },
+              {
+                "level_index": 13,
+                "log_return": 0.011622767434681559,
+                "presentations": 1
+              },
+              {
+                "level_index": 14,
+                "log_return": 0.026327688477341595,
+                "presentations": 2
+              },
+              {
+                "level_index": 15,
+                "log_return": 0.059637017126544296,
+                "presentations": 2
+              },
+              {
+                "level_index": 16,
+                "log_return": 0.1350887228406941,
+                "presentations": 0
+              },
+              {
+                "level_index": 17,
+                "log_return": 0.30600060026488674,
+                "presentations": 0
+              },
+              {
+                "level_index": 18,
+                "log_return": 0.6931471805599453,
+                "presentations": 0
+              }
+            ],
+            "providers": {
+              "azure": 16,
+              "cudo": 5,
+              "aws": 19,
+              "verda": 11,
+              "nebius": 12,
+              "gcp": 15,
+              "lambdalabs": 28
+            },
+            "families": {
+              "A100": 74,
+              "H100": 32
+            },
+            "origin_months": {
+              "2026-09": 18,
+              "2026-02": 13,
+              "2026-08": 23,
+              "2026-07": 13,
+              "2026-06": 33,
+              "2026-05": 4,
+              "2026-10": 1,
+              "2026-03": 1
+            },
+            "instruments": {
+              "hyperscaler_spot": 50,
+              "neocloud_rate_card": 56
+            },
+            "independence": "Presentations and overlapping windows are not independent market experiments"
+          },
+          "3": {
+            "presentations": 100,
+            "unique_horizon_examples": 100,
+            "repeated_presentations": 0,
+            "actual_unchanged": 86,
+            "actual_unchanged_fraction": 0.86,
+            "quantized_unchanged": 86,
+            "quantized_unchanged_fraction": 0.86,
+            "changed_but_quantized_unchanged": 0,
+            "out_of_support": 0,
+            "mean_relative_quantization_error": 0.002806963920994845,
+            "classes": [
+              {
+                "level_index": 0,
+                "log_return": -0.6931471805599453,
+                "presentations": 0
+              },
+              {
+                "level_index": 1,
+                "log_return": -0.30600060026488674,
+                "presentations": 1
+              },
+              {
+                "level_index": 2,
+                "log_return": -0.1350887228406941,
+                "presentations": 3
+              },
+              {
+                "level_index": 3,
+                "log_return": -0.059637017126544296,
+                "presentations": 0
+              },
+              {
+                "level_index": 4,
+                "log_return": -0.026327688477341595,
+                "presentations": 2
+              },
+              {
+                "level_index": 5,
+                "log_return": -0.011622767434681559,
+                "presentations": 0
+              },
+              {
+                "level_index": 6,
+                "log_return": -0.00513105140076979,
+                "presentations": 0
+              },
+              {
+                "level_index": 7,
+                "log_return": -0.002265182421079987,
+                "presentations": 0
+              },
+              {
+                "level_index": 8,
+                "log_return": -0.0010000000000000002,
+                "presentations": 0
+              },
+              {
+                "level_index": 9,
+                "log_return": 0.0,
+                "presentations": 86
+              },
+              {
+                "level_index": 10,
+                "log_return": 0.0010000000000000002,
+                "presentations": 0
+              },
+              {
+                "level_index": 11,
+                "log_return": 0.002265182421079987,
+                "presentations": 0
+              },
+              {
+                "level_index": 12,
+                "log_return": 0.00513105140076979,
+                "presentations": 0
+              },
+              {
+                "level_index": 13,
+                "log_return": 0.011622767434681559,
+                "presentations": 1
+              },
+              {
+                "level_index": 14,
+                "log_return": 0.026327688477341595,
+                "presentations": 1
+              },
+              {
+                "level_index": 15,
+                "log_return": 0.059637017126544296,
+                "presentations": 2
+              },
+              {
+                "level_index": 16,
+                "log_return": 0.1350887228406941,
+                "presentations": 3
+              },
+              {
+                "level_index": 17,
+                "log_return": 0.30600060026488674,
+                "presentations": 1
+              },
+              {
+                "level_index": 18,
+                "log_return": 0.6931471805599453,
+                "presentations": 0
+              }
+            ],
+            "providers": {
+              "verda": 9,
+              "aws": 23,
+              "azure": 20,
+              "nebius": 12,
+              "lambdalabs": 18,
+              "cudo": 7,
+              "gcp": 9,
+              "vultr": 2
+            },
+            "families": {
+              "A100": 77,
+              "H100": 23
+            },
+            "origin_months": {
+              "2026-06": 25,
+              "2026-03": 3,
+              "2026-10": 3,
+              "2026-08": 17,
+              "2026-05": 4,
+              "2026-02": 19,
+              "2026-09": 18,
+              "2026-07": 11
+            },
+            "instruments": {
+              "neocloud_rate_card": 48,
+              "hyperscaler_spot": 52
+            },
+            "independence": "Presentations and overlapping windows are not independent market experiments"
+          },
+          "7": {
+            "presentations": 114,
+            "unique_horizon_examples": 114,
+            "repeated_presentations": 0,
+            "actual_unchanged": 96,
+            "actual_unchanged_fraction": 0.8421052631578947,
+            "quantized_unchanged": 96,
+            "quantized_unchanged_fraction": 0.8421052631578947,
+            "changed_but_quantized_unchanged": 0,
+            "out_of_support": 0,
+            "mean_relative_quantization_error": 0.00436469615908666,
+            "classes": [
+              {
+                "level_index": 0,
+                "log_return": -0.6931471805599453,
+                "presentations": 0
+              },
+              {
+                "level_index": 1,
+                "log_return": -0.30600060026488674,
+                "presentations": 3
+              },
+              {
+                "level_index": 2,
+                "log_return": -0.1350887228406941,
+                "presentations": 0
+              },
+              {
+                "level_index": 3,
+                "log_return": -0.059637017126544296,
+                "presentations": 3
+              },
+              {
+                "level_index": 4,
+                "log_return": -0.026327688477341595,
+                "presentations": 0
+              },
+              {
+                "level_index": 5,
+                "log_return": -0.011622767434681559,
+                "presentations": 1
+              },
+              {
+                "level_index": 6,
+                "log_return": -0.00513105140076979,
+                "presentations": 0
+              },
+              {
+                "level_index": 7,
+                "log_return": -0.002265182421079987,
+                "presentations": 0
+              },
+              {
+                "level_index": 8,
+                "log_return": -0.0010000000000000002,
+                "presentations": 0
+              },
+              {
+                "level_index": 9,
+                "log_return": 0.0,
+                "presentations": 96
+              },
+              {
+                "level_index": 10,
+                "log_return": 0.0010000000000000002,
+                "presentations": 0
+              },
+              {
+                "level_index": 11,
+                "log_return": 0.002265182421079987,
+                "presentations": 0
+              },
+              {
+                "level_index": 12,
+                "log_return": 0.00513105140076979,
+                "presentations": 0
+              },
+              {
+                "level_index": 13,
+                "log_return": 0.011622767434681559,
+                "presentations": 0
+              },
+              {
+                "level_index": 14,
+                "log_return": 0.026327688477341595,
+                "presentations": 1
+              },
+              {
+                "level_index": 15,
+                "log_return": 0.059637017126544296,
+                "presentations": 7
+              },
+              {
+                "level_index": 16,
+                "log_return": 0.1350887228406941,
+                "presentations": 1
+              },
+              {
+                "level_index": 17,
+                "log_return": 0.30600060026488674,
+                "presentations": 2
+              },
+              {
+                "level_index": 18,
+                "log_return": 0.6931471805599453,
+                "presentations": 0
+              }
+            ],
+            "providers": {
+              "azure": 23,
+              "nebius": 12,
+              "lambdalabs": 23,
+              "verda": 17,
+              "cudo": 5,
+              "aws": 19,
+              "gcp": 14,
+              "vultr": 1
+            },
+            "families": {
+              "A100": 76,
+              "H100": 38
+            },
+            "origin_months": {
+              "2026-07": 19,
+              "2026-06": 36,
+              "2026-10": 4,
+              "2026-08": 18,
+              "2026-09": 18,
+              "2026-05": 3,
+              "2026-03": 5,
+              "2026-02": 11
+            },
+            "instruments": {
+              "hyperscaler_spot": 56,
+              "neocloud_rate_card": 58
+            },
+            "independence": "Presentations and overlapping windows are not independent market experiments"
+          }
+        },
+        "same_evaluation_series_7d": {
+          "presentations": 91,
+          "unique_horizon_examples": 91,
+          "repeated_presentations": 0,
+          "actual_unchanged": 73,
+          "actual_unchanged_fraction": 0.8021978021978022,
+          "quantized_unchanged": 73,
+          "quantized_unchanged_fraction": 0.8021978021978022,
+          "changed_but_quantized_unchanged": 0,
+          "out_of_support": 0,
+          "mean_relative_quantization_error": 0.0054678611223723,
+          "classes": [
+            {
+              "level_index": 0,
+              "log_return": -0.6931471805599453,
+              "presentations": 0
+            },
+            {
+              "level_index": 1,
+              "log_return": -0.30600060026488674,
+              "presentations": 3
+            },
+            {
+              "level_index": 2,
+              "log_return": -0.1350887228406941,
+              "presentations": 0
+            },
+            {
+              "level_index": 3,
+              "log_return": -0.059637017126544296,
+              "presentations": 3
+            },
+            {
+              "level_index": 4,
+              "log_return": -0.026327688477341595,
+              "presentations": 0
+            },
+            {
+              "level_index": 5,
+              "log_return": -0.011622767434681559,
+              "presentations": 1
+            },
+            {
+              "level_index": 6,
+              "log_return": -0.00513105140076979,
+              "presentations": 0
+            },
+            {
+              "level_index": 7,
+              "log_return": -0.002265182421079987,
+              "presentations": 0
+            },
+            {
+              "level_index": 8,
+              "log_return": -0.0010000000000000002,
+              "presentations": 0
+            },
+            {
+              "level_index": 9,
+              "log_return": 0.0,
+              "presentations": 73
+            },
+            {
+              "level_index": 10,
+              "log_return": 0.0010000000000000002,
+              "presentations": 0
+            },
+            {
+              "level_index": 11,
+              "log_return": 0.002265182421079987,
+              "presentations": 0
+            },
+            {
+              "level_index": 12,
+              "log_return": 0.00513105140076979,
+              "presentations": 0
+            },
+            {
+              "level_index": 13,
+              "log_return": 0.011622767434681559,
+              "presentations": 0
+            },
+            {
+              "level_index": 14,
+              "log_return": 0.026327688477341595,
+              "presentations": 1
+            },
+            {
+              "level_index": 15,
+              "log_return": 0.059637017126544296,
+              "presentations": 7
+            },
+            {
+              "level_index": 16,
+              "log_return": 0.1350887228406941,
+              "presentations": 1
+            },
+            {
+              "level_index": 17,
+              "log_return": 0.30600060026488674,
+              "presentations": 2
+            },
+            {
+              "level_index": 18,
+              "log_return": 0.6931471805599453,
+              "presentations": 0
+            }
+          ],
+          "providers": {
+            "azure": 23,
+            "nebius": 12,
+            "lambdalabs": 23,
+            "aws": 19,
+            "gcp": 14
+          },
+          "families": {
+            "A100": 63,
+            "H100": 28
+          },
+          "origin_months": {
+            "2026-07": 18,
+            "2026-06": 20,
+            "2026-10": 4,
+            "2026-08": 18,
+            "2026-09": 18,
+            "2026-05": 3,
+            "2026-02": 7,
+            "2026-03": 3
+          },
+          "instruments": {
+            "hyperscaler_spot": 56,
+            "neocloud_rate_card": 35
+          },
+          "independence": "Presentations and overlapping windows are not independent market experiments"
+        }
+      }
+    },
+    {
+      "arm": "expanded",
+      "ordering_seed": 17,
+      "selected_additional_update": 50,
+      "batch_order_sha256": "4f482f1a8488104e6a76c3dc800c4a512beed47421a7541dbc59025463833f7b",
+      "full_run": {
+        "presentations": 1600,
+        "unique_horizon_examples": 1600,
+        "repeated_presentations": 0,
+        "actual_unchanged": 1260,
+        "actual_unchanged_fraction": 0.7875,
+        "quantized_unchanged": 1269,
+        "quantized_unchanged_fraction": 0.793125,
+        "changed_but_quantized_unchanged": 9,
+        "out_of_support": 1,
+        "mean_relative_quantization_error": 0.0036105609140587606,
+        "classes": [
+          {
+            "level_index": 0,
+            "log_return": -0.6931471805599453,
+            "presentations": 1
+          },
+          {
+            "level_index": 1,
+            "log_return": -0.30600060026488674,
+            "presentations": 18
+          },
+          {
+            "level_index": 2,
+            "log_return": -0.1350887228406941,
+            "presentations": 17
+          },
+          {
+            "level_index": 3,
+            "log_return": -0.059637017126544296,
+            "presentations": 32
+          },
+          {
+            "level_index": 4,
+            "log_return": -0.026327688477341595,
+            "presentations": 21
+          },
+          {
+            "level_index": 5,
+            "log_return": -0.011622767434681559,
+            "presentations": 13
+          },
+          {
+            "level_index": 6,
+            "log_return": -0.00513105140076979,
+            "presentations": 13
+          },
+          {
+            "level_index": 7,
+            "log_return": -0.002265182421079987,
+            "presentations": 9
+          },
+          {
+            "level_index": 8,
+            "log_return": -0.0010000000000000002,
+            "presentations": 7
+          },
+          {
+            "level_index": 9,
+            "log_return": 0.0,
+            "presentations": 1269
+          },
+          {
+            "level_index": 10,
+            "log_return": 0.0010000000000000002,
+            "presentations": 10
+          },
+          {
+            "level_index": 11,
+            "log_return": 0.002265182421079987,
+            "presentations": 13
+          },
+          {
+            "level_index": 12,
+            "log_return": 0.00513105140076979,
+            "presentations": 15
+          },
+          {
+            "level_index": 13,
+            "log_return": 0.011622767434681559,
+            "presentations": 25
+          },
+          {
+            "level_index": 14,
+            "log_return": 0.026327688477341595,
+            "presentations": 27
+          },
+          {
+            "level_index": 15,
+            "log_return": 0.059637017126544296,
+            "presentations": 69
+          },
+          {
+            "level_index": 16,
+            "log_return": 0.1350887228406941,
+            "presentations": 25
+          },
+          {
+            "level_index": 17,
+            "log_return": 0.30600060026488674,
+            "presentations": 14
+          },
+          {
+            "level_index": 18,
+            "log_return": 0.6931471805599453,
+            "presentations": 2
+          }
+        ],
+        "providers": {
+          "azure": 306,
+          "lambdalabs": 328,
+          "nebius": 80,
+          "aws": 336,
+          "vultr": 35,
+          "gcp": 309,
+          "cudo": 36,
+          "verda": 170
+        },
+        "families": {
+          "A100": 856,
+          "H100": 744
+        },
+        "origin_months": {
+          "2026-07": 320,
+          "2026-06": 363,
+          "2026-05": 58,
+          "2026-09": 294,
+          "2026-02": 133,
+          "2026-08": 372,
+          "2026-10": 35,
+          "2026-03": 25
+        },
+        "instruments": {
+          "hyperscaler_spot": 951,
+          "neocloud_rate_card": 649
+        },
+        "independence": "Presentations and overlapping windows are not independent market experiments",
+        "by_horizon": {
+          "1": {
+            "presentations": 506,
+            "unique_horizon_examples": 506,
+            "repeated_presentations": 0,
+            "actual_unchanged": 416,
+            "actual_unchanged_fraction": 0.8221343873517787,
+            "quantized_unchanged": 422,
+            "quantized_unchanged_fraction": 0.83399209486166,
+            "changed_but_quantized_unchanged": 6,
+            "out_of_support": 0,
+            "mean_relative_quantization_error": 0.0011620030129852873,
+            "classes": [
+              {
+                "level_index": 0,
+                "log_return": -0.6931471805599453,
+                "presentations": 0
+              },
+              {
+                "level_index": 1,
+                "log_return": -0.30600060026488674,
+                "presentations": 2
+              },
+              {
+                "level_index": 2,
+                "log_return": -0.1350887228406941,
+                "presentations": 1
+              },
+              {
+                "level_index": 3,
+                "log_return": -0.059637017126544296,
+                "presentations": 7
+              },
+              {
+                "level_index": 4,
+                "log_return": -0.026327688477341595,
+                "presentations": 8
+              },
+              {
+                "level_index": 5,
+                "log_return": -0.011622767434681559,
+                "presentations": 5
+              },
+              {
+                "level_index": 6,
+                "log_return": -0.00513105140076979,
+                "presentations": 7
+              },
+              {
+                "level_index": 7,
+                "log_return": -0.002265182421079987,
+                "presentations": 5
+              },
+              {
+                "level_index": 8,
+                "log_return": -0.0010000000000000002,
+                "presentations": 4
+              },
+              {
+                "level_index": 9,
+                "log_return": 0.0,
+                "presentations": 422
+              },
+              {
+                "level_index": 10,
+                "log_return": 0.0010000000000000002,
+                "presentations": 5
+              },
+              {
+                "level_index": 11,
+                "log_return": 0.002265182421079987,
+                "presentations": 5
+              },
+              {
+                "level_index": 12,
+                "log_return": 0.00513105140076979,
+                "presentations": 10
+              },
+              {
+                "level_index": 13,
+                "log_return": 0.011622767434681559,
+                "presentations": 10
+              },
+              {
+                "level_index": 14,
+                "log_return": 0.026327688477341595,
+                "presentations": 4
+              },
+              {
+                "level_index": 15,
+                "log_return": 0.059637017126544296,
+                "presentations": 10
+              },
+              {
+                "level_index": 16,
+                "log_return": 0.1350887228406941,
+                "presentations": 0
+              },
+              {
+                "level_index": 17,
+                "log_return": 0.30600060026488674,
+                "presentations": 1
+              },
+              {
+                "level_index": 18,
+                "log_return": 0.6931471805599453,
+                "presentations": 0
+              }
+            ],
+            "providers": {
+              "azure": 99,
+              "aws": 101,
+              "gcp": 96,
+              "lambdalabs": 103,
+              "nebius": 26,
+              "vultr": 11,
+              "verda": 60,
+              "cudo": 10
+            },
+            "families": {
+              "A100": 261,
+              "H100": 245
+            },
+            "origin_months": {
+              "2026-07": 86,
+              "2026-06": 116,
+              "2026-08": 133,
+              "2026-05": 12,
+              "2026-10": 14,
+              "2026-09": 97,
+              "2026-02": 39,
+              "2026-03": 9
+            },
+            "instruments": {
+              "hyperscaler_spot": 296,
+              "neocloud_rate_card": 210
+            },
+            "independence": "Presentations and overlapping windows are not independent market experiments"
+          },
+          "3": {
+            "presentations": 547,
+            "unique_horizon_examples": 547,
+            "repeated_presentations": 0,
+            "actual_unchanged": 450,
+            "actual_unchanged_fraction": 0.8226691042047533,
+            "quantized_unchanged": 451,
+            "quantized_unchanged_fraction": 0.8244972577696527,
+            "changed_but_quantized_unchanged": 1,
+            "out_of_support": 0,
+            "mean_relative_quantization_error": 0.0024416414971132907,
+            "classes": [
+              {
+                "level_index": 0,
+                "log_return": -0.6931471805599453,
+                "presentations": 0
+              },
+              {
+                "level_index": 1,
+                "log_return": -0.30600060026488674,
+                "presentations": 2
+              },
+              {
+                "level_index": 2,
+                "log_return": -0.1350887228406941,
+                "presentations": 6
+              },
+              {
+                "level_index": 3,
+                "log_return": -0.059637017126544296,
+                "presentations": 6
+              },
+              {
+                "level_index": 4,
+                "log_return": -0.026327688477341595,
+                "presentations": 6
+              },
+              {
+                "level_index": 5,
+                "log_return": -0.011622767434681559,
+                "presentations": 2
+              },
+              {
+                "level_index": 6,
+                "log_return": -0.00513105140076979,
+                "presentations": 5
+              },
+              {
+                "level_index": 7,
+                "log_return": -0.002265182421079987,
+                "presentations": 3
+              },
+              {
+                "level_index": 8,
+                "log_return": -0.0010000000000000002,
+                "presentations": 3
+              },
+              {
+                "level_index": 9,
+                "log_return": 0.0,
+                "presentations": 451
+              },
+              {
+                "level_index": 10,
+                "log_return": 0.0010000000000000002,
+                "presentations": 5
+              },
+              {
+                "level_index": 11,
+                "log_return": 0.002265182421079987,
+                "presentations": 5
+              },
+              {
+                "level_index": 12,
+                "log_return": 0.00513105140076979,
+                "presentations": 4
+              },
+              {
+                "level_index": 13,
+                "log_return": 0.011622767434681559,
+                "presentations": 6
+              },
+              {
+                "level_index": 14,
+                "log_return": 0.026327688477341595,
+                "presentations": 8
+              },
+              {
+                "level_index": 15,
+                "log_return": 0.059637017126544296,
+                "presentations": 21
+              },
+              {
+                "level_index": 16,
+                "log_return": 0.1350887228406941,
+                "presentations": 11
+              },
+              {
+                "level_index": 17,
+                "log_return": 0.30600060026488674,
+                "presentations": 2
+              },
+              {
+                "level_index": 18,
+                "log_return": 0.6931471805599453,
+                "presentations": 1
+              }
+            ],
+            "providers": {
+              "lambdalabs": 112,
+              "nebius": 27,
+              "aws": 117,
+              "azure": 98,
+              "gcp": 113,
+              "verda": 50,
+              "cudo": 15,
+              "vultr": 15
+            },
+            "families": {
+              "A100": 303,
+              "H100": 244
+            },
+            "origin_months": {
+              "2026-06": 112,
+              "2026-05": 26,
+              "2026-09": 95,
+              "2026-08": 117,
+              "2026-07": 130,
+              "2026-02": 48,
+              "2026-03": 8,
+              "2026-10": 11
+            },
+            "instruments": {
+              "neocloud_rate_card": 219,
+              "hyperscaler_spot": 328
+            },
+            "independence": "Presentations and overlapping windows are not independent market experiments"
+          },
+          "7": {
+            "presentations": 547,
+            "unique_horizon_examples": 547,
+            "repeated_presentations": 0,
+            "actual_unchanged": 394,
+            "actual_unchanged_fraction": 0.720292504570384,
+            "quantized_unchanged": 396,
+            "quantized_unchanged_fraction": 0.7239488117001828,
+            "changed_but_quantized_unchanged": 2,
+            "out_of_support": 1,
+            "mean_relative_quantization_error": 0.00704450829799359,
+            "classes": [
+              {
+                "level_index": 0,
+                "log_return": -0.6931471805599453,
+                "presentations": 1
+              },
+              {
+                "level_index": 1,
+                "log_return": -0.30600060026488674,
+                "presentations": 14
+              },
+              {
+                "level_index": 2,
+                "log_return": -0.1350887228406941,
+                "presentations": 10
+              },
+              {
+                "level_index": 3,
+                "log_return": -0.059637017126544296,
+                "presentations": 19
+              },
+              {
+                "level_index": 4,
+                "log_return": -0.026327688477341595,
+                "presentations": 7
+              },
+              {
+                "level_index": 5,
+                "log_return": -0.011622767434681559,
+                "presentations": 6
+              },
+              {
+                "level_index": 6,
+                "log_return": -0.00513105140076979,
+                "presentations": 1
+              },
+              {
+                "level_index": 7,
+                "log_return": -0.002265182421079987,
+                "presentations": 1
+              },
+              {
+                "level_index": 8,
+                "log_return": -0.0010000000000000002,
+                "presentations": 0
+              },
+              {
+                "level_index": 9,
+                "log_return": 0.0,
+                "presentations": 396
+              },
+              {
+                "level_index": 10,
+                "log_return": 0.0010000000000000002,
+                "presentations": 0
+              },
+              {
+                "level_index": 11,
+                "log_return": 0.002265182421079987,
+                "presentations": 3
+              },
+              {
+                "level_index": 12,
+                "log_return": 0.00513105140076979,
+                "presentations": 1
+              },
+              {
+                "level_index": 13,
+                "log_return": 0.011622767434681559,
+                "presentations": 9
+              },
+              {
+                "level_index": 14,
+                "log_return": 0.026327688477341595,
+                "presentations": 15
+              },
+              {
+                "level_index": 15,
+                "log_return": 0.059637017126544296,
+                "presentations": 38
+              },
+              {
+                "level_index": 16,
+                "log_return": 0.1350887228406941,
+                "presentations": 14
+              },
+              {
+                "level_index": 17,
+                "log_return": 0.30600060026488674,
+                "presentations": 11
+              },
+              {
+                "level_index": 18,
+                "log_return": 0.6931471805599453,
+                "presentations": 1
+              }
+            ],
+            "providers": {
+              "azure": 109,
+              "vultr": 9,
+              "lambdalabs": 113,
+              "aws": 118,
+              "gcp": 100,
+              "nebius": 27,
+              "cudo": 11,
+              "verda": 60
+            },
+            "families": {
+              "A100": 292,
+              "H100": 255
+            },
+            "origin_months": {
+              "2026-06": 135,
+              "2026-02": 46,
+              "2026-08": 122,
+              "2026-07": 104,
+              "2026-09": 102,
+              "2026-05": 20,
+              "2026-10": 10,
+              "2026-03": 8
+            },
+            "instruments": {
+              "hyperscaler_spot": 327,
+              "neocloud_rate_card": 220
+            },
+            "independence": "Presentations and overlapping windows are not independent market experiments"
+          }
+        },
+        "same_evaluation_series_7d": {
+          "presentations": 104,
+          "unique_horizon_examples": 104,
+          "repeated_presentations": 0,
+          "actual_unchanged": 78,
+          "actual_unchanged_fraction": 0.75,
+          "quantized_unchanged": 78,
+          "quantized_unchanged_fraction": 0.75,
+          "changed_but_quantized_unchanged": 0,
+          "out_of_support": 0,
+          "mean_relative_quantization_error": 0.006415800801389245,
+          "classes": [
+            {
+              "level_index": 0,
+              "log_return": -0.6931471805599453,
+              "presentations": 0
+            },
+            {
+              "level_index": 1,
+              "log_return": -0.30600060026488674,
+              "presentations": 5
+            },
+            {
+              "level_index": 2,
+              "log_return": -0.1350887228406941,
+              "presentations": 0
+            },
+            {
+              "level_index": 3,
+              "log_return": -0.059637017126544296,
+              "presentations": 1
+            },
+            {
+              "level_index": 4,
+              "log_return": -0.026327688477341595,
+              "presentations": 1
+            },
+            {
+              "level_index": 5,
+              "log_return": -0.011622767434681559,
+              "presentations": 2
+            },
+            {
+              "level_index": 6,
+              "log_return": -0.00513105140076979,
+              "presentations": 0
+            },
+            {
+              "level_index": 7,
+              "log_return": -0.002265182421079987,
+              "presentations": 0
+            },
+            {
+              "level_index": 8,
+              "log_return": -0.0010000000000000002,
+              "presentations": 0
+            },
+            {
+              "level_index": 9,
+              "log_return": 0.0,
+              "presentations": 78
+            },
+            {
+              "level_index": 10,
+              "log_return": 0.0010000000000000002,
+              "presentations": 0
+            },
+            {
+              "level_index": 11,
+              "log_return": 0.002265182421079987,
+              "presentations": 0
+            },
+            {
+              "level_index": 12,
+              "log_return": 0.00513105140076979,
+              "presentations": 0
+            },
+            {
+              "level_index": 13,
+              "log_return": 0.011622767434681559,
+              "presentations": 1
+            },
+            {
+              "level_index": 14,
+              "log_return": 0.026327688477341595,
+              "presentations": 2
+            },
+            {
+              "level_index": 15,
+              "log_return": 0.059637017126544296,
+              "presentations": 6
+            },
+            {
+              "level_index": 16,
+              "log_return": 0.1350887228406941,
+              "presentations": 4
+            },
+            {
+              "level_index": 17,
+              "log_return": 0.30600060026488674,
+              "presentations": 4
+            },
+            {
+              "level_index": 18,
+              "log_return": 0.6931471805599453,
+              "presentations": 0
+            }
+          ],
+          "providers": {
+            "lambdalabs": 31,
+            "aws": 32,
+            "nebius": 9,
+            "gcp": 10,
+            "azure": 22
+          },
+          "families": {
+            "H100": 27,
+            "A100": 77
+          },
+          "origin_months": {
+            "2026-09": 17,
+            "2026-07": 23,
+            "2026-08": 29,
+            "2026-06": 22,
+            "2026-03": 1,
+            "2026-02": 7,
+            "2026-05": 4,
+            "2026-10": 1
+          },
+          "instruments": {
+            "neocloud_rate_card": 40,
+            "hyperscaler_spot": 64
+          },
+          "independence": "Presentations and overlapping windows are not independent market experiments"
+        }
+      },
+      "selected_checkpoint_prefix": {
+        "presentations": 800,
+        "unique_horizon_examples": 800,
+        "repeated_presentations": 0,
+        "actual_unchanged": 642,
+        "actual_unchanged_fraction": 0.8025,
+        "quantized_unchanged": 649,
+        "quantized_unchanged_fraction": 0.81125,
+        "changed_but_quantized_unchanged": 7,
+        "out_of_support": 0,
+        "mean_relative_quantization_error": 0.002962500462471948,
+        "classes": [
+          {
+            "level_index": 0,
+            "log_return": -0.6931471805599453,
+            "presentations": 0
+          },
+          {
+            "level_index": 1,
+            "log_return": -0.30600060026488674,
+            "presentations": 8
+          },
+          {
+            "level_index": 2,
+            "log_return": -0.1350887228406941,
+            "presentations": 8
+          },
+          {
+            "level_index": 3,
+            "log_return": -0.059637017126544296,
+            "presentations": 15
+          },
+          {
+            "level_index": 4,
+            "log_return": -0.026327688477341595,
+            "presentations": 14
+          },
+          {
+            "level_index": 5,
+            "log_return": -0.011622767434681559,
+            "presentations": 7
+          },
+          {
+            "level_index": 6,
+            "log_return": -0.00513105140076979,
+            "presentations": 6
+          },
+          {
+            "level_index": 7,
+            "log_return": -0.002265182421079987,
+            "presentations": 4
+          },
+          {
+            "level_index": 8,
+            "log_return": -0.0010000000000000002,
+            "presentations": 3
+          },
+          {
+            "level_index": 9,
+            "log_return": 0.0,
+            "presentations": 649
+          },
+          {
+            "level_index": 10,
+            "log_return": 0.0010000000000000002,
+            "presentations": 4
+          },
+          {
+            "level_index": 11,
+            "log_return": 0.002265182421079987,
+            "presentations": 5
+          },
+          {
+            "level_index": 12,
+            "log_return": 0.00513105140076979,
+            "presentations": 8
+          },
+          {
+            "level_index": 13,
+            "log_return": 0.011622767434681559,
+            "presentations": 10
+          },
+          {
+            "level_index": 14,
+            "log_return": 0.026327688477341595,
+            "presentations": 11
+          },
+          {
+            "level_index": 15,
+            "log_return": 0.059637017126544296,
+            "presentations": 28
+          },
+          {
+            "level_index": 16,
+            "log_return": 0.1350887228406941,
+            "presentations": 11
+          },
+          {
+            "level_index": 17,
+            "log_return": 0.30600060026488674,
+            "presentations": 8
+          },
+          {
+            "level_index": 18,
+            "log_return": 0.6931471805599453,
+            "presentations": 1
+          }
+        ],
+        "providers": {
+          "azure": 148,
+          "lambdalabs": 178,
+          "nebius": 41,
+          "aws": 160,
+          "vultr": 21,
+          "gcp": 158,
+          "cudo": 20,
+          "verda": 74
+        },
+        "families": {
+          "A100": 431,
+          "H100": 369
+        },
+        "origin_months": {
+          "2026-07": 160,
+          "2026-06": 188,
+          "2026-05": 22,
+          "2026-09": 147,
+          "2026-02": 68,
+          "2026-08": 188,
+          "2026-10": 17,
+          "2026-03": 10
+        },
+        "instruments": {
+          "hyperscaler_spot": 466,
+          "neocloud_rate_card": 334
+        },
+        "independence": "Presentations and overlapping windows are not independent market experiments",
+        "by_horizon": {
+          "1": {
+            "presentations": 267,
+            "unique_horizon_examples": 267,
+            "repeated_presentations": 0,
+            "actual_unchanged": 228,
+            "actual_unchanged_fraction": 0.8539325842696629,
+            "quantized_unchanged": 233,
+            "quantized_unchanged_fraction": 0.8726591760299626,
+            "changed_but_quantized_unchanged": 5,
+            "out_of_support": 0,
+            "mean_relative_quantization_error": 0.000997492086728666,
+            "classes": [
+              {
+                "level_index": 0,
+                "log_return": -0.6931471805599453,
+                "presentations": 0
+              },
+              {
+                "level_index": 1,
+                "log_return": -0.30600060026488674,
+                "presentations": 2
+              },
+              {
+                "level_index": 2,
+                "log_return": -0.1350887228406941,
+                "presentations": 0
+              },
+              {
+                "level_index": 3,
+                "log_return": -0.059637017126544296,
+                "presentations": 3
+              },
+              {
+                "level_index": 4,
+                "log_return": -0.026327688477341595,
+                "presentations": 6
+              },
+              {
+                "level_index": 5,
+                "log_return": -0.011622767434681559,
+                "presentations": 3
+              },
+              {
+                "level_index": 6,
+                "log_return": -0.00513105140076979,
+                "presentations": 3
+              },
+              {
+                "level_index": 7,
+                "log_return": -0.002265182421079987,
+                "presentations": 1
+              },
+              {
+                "level_index": 8,
+                "log_return": -0.0010000000000000002,
+                "presentations": 0
+              },
+              {
+                "level_index": 9,
+                "log_return": 0.0,
+                "presentations": 233
+              },
+              {
+                "level_index": 10,
+                "log_return": 0.0010000000000000002,
+                "presentations": 2
+              },
+              {
+                "level_index": 11,
+                "log_return": 0.002265182421079987,
+                "presentations": 2
+              },
+              {
+                "level_index": 12,
+                "log_return": 0.00513105140076979,
+                "presentations": 5
+              },
+              {
+                "level_index": 13,
+                "log_return": 0.011622767434681559,
+                "presentations": 4
+              },
+              {
+                "level_index": 14,
+                "log_return": 0.026327688477341595,
+                "presentations": 0
+              },
+              {
+                "level_index": 15,
+                "log_return": 0.059637017126544296,
+                "presentations": 3
+              },
+              {
+                "level_index": 16,
+                "log_return": 0.1350887228406941,
+                "presentations": 0
+              },
+              {
+                "level_index": 17,
+                "log_return": 0.30600060026488674,
+                "presentations": 0
+              },
+              {
+                "level_index": 18,
+                "log_return": 0.6931471805599453,
+                "presentations": 0
+              }
+            ],
+            "providers": {
+              "azure": 63,
+              "aws": 42,
+              "gcp": 54,
+              "lambdalabs": 61,
+              "nebius": 10,
+              "vultr": 7,
+              "verda": 25,
+              "cudo": 5
+            },
+            "families": {
+              "A100": 137,
+              "H100": 130
+            },
+            "origin_months": {
+              "2026-07": 38,
+              "2026-06": 60,
+              "2026-08": 72,
+              "2026-05": 7,
+              "2026-10": 9,
+              "2026-09": 58,
+              "2026-02": 19,
+              "2026-03": 4
+            },
+            "instruments": {
+              "hyperscaler_spot": 159,
+              "neocloud_rate_card": 108
+            },
+            "independence": "Presentations and overlapping windows are not independent market experiments"
+          },
+          "3": {
+            "presentations": 261,
+            "unique_horizon_examples": 261,
+            "repeated_presentations": 0,
+            "actual_unchanged": 215,
+            "actual_unchanged_fraction": 0.8237547892720306,
+            "quantized_unchanged": 216,
+            "quantized_unchanged_fraction": 0.8275862068965517,
+            "changed_but_quantized_unchanged": 1,
+            "out_of_support": 0,
+            "mean_relative_quantization_error": 0.0018086134401690554,
+            "classes": [
+              {
+                "level_index": 0,
+                "log_return": -0.6931471805599453,
+                "presentations": 0
+              },
+              {
+                "level_index": 1,
+                "log_return": -0.30600060026488674,
+                "presentations": 0
+              },
+              {
+                "level_index": 2,
+                "log_return": -0.1350887228406941,
+                "presentations": 4
+              },
+              {
+                "level_index": 3,
+                "log_return": -0.059637017126544296,
+                "presentations": 2
+              },
+              {
+                "level_index": 4,
+                "log_return": -0.026327688477341595,
+                "presentations": 6
+              },
+              {
+                "level_index": 5,
+                "log_return": -0.011622767434681559,
+                "presentations": 1
+              },
+              {
+                "level_index": 6,
+                "log_return": -0.00513105140076979,
+                "presentations": 3
+              },
+              {
+                "level_index": 7,
+                "log_return": -0.002265182421079987,
+                "presentations": 2
+              },
+              {
+                "level_index": 8,
+                "log_return": -0.0010000000000000002,
+                "presentations": 3
+              },
+              {
+                "level_index": 9,
+                "log_return": 0.0,
+                "presentations": 216
+              },
+              {
+                "level_index": 10,
+                "log_return": 0.0010000000000000002,
+                "presentations": 2
+              },
+              {
+                "level_index": 11,
+                "log_return": 0.002265182421079987,
+                "presentations": 2
+              },
+              {
+                "level_index": 12,
+                "log_return": 0.00513105140076979,
+                "presentations": 3
+              },
+              {
+                "level_index": 13,
+                "log_return": 0.011622767434681559,
+                "presentations": 1
+              },
+              {
+                "level_index": 14,
+                "log_return": 0.026327688477341595,
+                "presentations": 4
+              },
+              {
+                "level_index": 15,
+                "log_return": 0.059637017126544296,
+                "presentations": 4
+              },
+              {
+                "level_index": 16,
+                "log_return": 0.1350887228406941,
+                "presentations": 6
+              },
+              {
+                "level_index": 17,
+                "log_return": 0.30600060026488674,
+                "presentations": 2
+              },
+              {
+                "level_index": 18,
+                "log_return": 0.6931471805599453,
+                "presentations": 0
+              }
+            ],
+            "providers": {
+              "lambdalabs": 55,
+              "nebius": 15,
+              "aws": 65,
+              "azure": 36,
+              "gcp": 53,
+              "verda": 19,
+              "cudo": 9,
+              "vultr": 9
+            },
+            "families": {
+              "A100": 151,
+              "H100": 110
+            },
+            "origin_months": {
+              "2026-06": 62,
+              "2026-05": 9,
+              "2026-09": 41,
+              "2026-08": 54,
+              "2026-07": 65,
+              "2026-02": 24,
+              "2026-03": 3,
+              "2026-10": 3
+            },
+            "instruments": {
+              "neocloud_rate_card": 107,
+              "hyperscaler_spot": 154
+            },
+            "independence": "Presentations and overlapping windows are not independent market experiments"
+          },
+          "7": {
+            "presentations": 272,
+            "unique_horizon_examples": 272,
+            "repeated_presentations": 0,
+            "actual_unchanged": 199,
+            "actual_unchanged_fraction": 0.7316176470588235,
+            "quantized_unchanged": 200,
+            "quantized_unchanged_fraction": 0.7352941176470589,
+            "changed_but_quantized_unchanged": 1,
+            "out_of_support": 0,
+            "mean_relative_quantization_error": 0.005998609834326768,
+            "classes": [
+              {
+                "level_index": 0,
+                "log_return": -0.6931471805599453,
+                "presentations": 0
+              },
+              {
+                "level_index": 1,
+                "log_return": -0.30600060026488674,
+                "presentations": 6
+              },
+              {
+                "level_index": 2,
+                "log_return": -0.1350887228406941,
+                "presentations": 4
+              },
+              {
+                "level_index": 3,
+                "log_return": -0.059637017126544296,
+                "presentations": 10
+              },
+              {
+                "level_index": 4,
+                "log_return": -0.026327688477341595,
+                "presentations": 2
+              },
+              {
+                "level_index": 5,
+                "log_return": -0.011622767434681559,
+                "presentations": 3
+              },
+              {
+                "level_index": 6,
+                "log_return": -0.00513105140076979,
+                "presentations": 0
+              },
+              {
+                "level_index": 7,
+                "log_return": -0.002265182421079987,
+                "presentations": 1
+              },
+              {
+                "level_index": 8,
+                "log_return": -0.0010000000000000002,
+                "presentations": 0
+              },
+              {
+                "level_index": 9,
+                "log_return": 0.0,
+                "presentations": 200
+              },
+              {
+                "level_index": 10,
+                "log_return": 0.0010000000000000002,
+                "presentations": 0
+              },
+              {
+                "level_index": 11,
+                "log_return": 0.002265182421079987,
+                "presentations": 1
+              },
+              {
+                "level_index": 12,
+                "log_return": 0.00513105140076979,
+                "presentations": 0
+              },
+              {
+                "level_index": 13,
+                "log_return": 0.011622767434681559,
+                "presentations": 5
+              },
+              {
+                "level_index": 14,
+                "log_return": 0.026327688477341595,
+                "presentations": 7
+              },
+              {
+                "level_index": 15,
+                "log_return": 0.059637017126544296,
+                "presentations": 21
+              },
+              {
+                "level_index": 16,
+                "log_return": 0.1350887228406941,
+                "presentations": 5
+              },
+              {
+                "level_index": 17,
+                "log_return": 0.30600060026488674,
+                "presentations": 6
+              },
+              {
+                "level_index": 18,
+                "log_return": 0.6931471805599453,
+                "presentations": 1
+              }
+            ],
+            "providers": {
+              "azure": 49,
+              "vultr": 5,
+              "lambdalabs": 62,
+              "aws": 53,
+              "gcp": 51,
+              "nebius": 16,
+              "cudo": 6,
+              "verda": 30
+            },
+            "families": {
+              "A100": 143,
+              "H100": 129
+            },
+            "origin_months": {
+              "2026-06": 66,
+              "2026-02": 25,
+              "2026-08": 62,
+              "2026-07": 57,
+              "2026-09": 48,
+              "2026-05": 6,
+              "2026-10": 5,
+              "2026-03": 3
+            },
+            "instruments": {
+              "hyperscaler_spot": 153,
+              "neocloud_rate_card": 119
+            },
+            "independence": "Presentations and overlapping windows are not independent market experiments"
+          }
+        },
+        "same_evaluation_series_7d": {
+          "presentations": 51,
+          "unique_horizon_examples": 51,
+          "repeated_presentations": 0,
+          "actual_unchanged": 38,
+          "actual_unchanged_fraction": 0.7450980392156863,
+          "quantized_unchanged": 38,
+          "quantized_unchanged_fraction": 0.7450980392156863,
+          "changed_but_quantized_unchanged": 0,
+          "out_of_support": 0,
+          "mean_relative_quantization_error": 0.0038625068728533906,
+          "classes": [
+            {
+              "level_index": 0,
+              "log_return": -0.6931471805599453,
+              "presentations": 0
+            },
+            {
+              "level_index": 1,
+              "log_return": -0.30600060026488674,
+              "presentations": 1
+            },
+            {
+              "level_index": 2,
+              "log_return": -0.1350887228406941,
+              "presentations": 0
+            },
+            {
+              "level_index": 3,
+              "log_return": -0.059637017126544296,
+              "presentations": 0
+            },
+            {
+              "level_index": 4,
+              "log_return": -0.026327688477341595,
+              "presentations": 0
+            },
+            {
+              "level_index": 5,
+              "log_return": -0.011622767434681559,
+              "presentations": 1
+            },
+            {
+              "level_index": 6,
+              "log_return": -0.00513105140076979,
+              "presentations": 0
+            },
+            {
+              "level_index": 7,
+              "log_return": -0.002265182421079987,
+              "presentations": 0
+            },
+            {
+              "level_index": 8,
+              "log_return": -0.0010000000000000002,
+              "presentations": 0
+            },
+            {
+              "level_index": 9,
+              "log_return": 0.0,
+              "presentations": 38
+            },
+            {
+              "level_index": 10,
+              "log_return": 0.0010000000000000002,
+              "presentations": 0
+            },
+            {
+              "level_index": 11,
+              "log_return": 0.002265182421079987,
+              "presentations": 0
+            },
+            {
+              "level_index": 12,
+              "log_return": 0.00513105140076979,
+              "presentations": 0
+            },
+            {
+              "level_index": 13,
+              "log_return": 0.011622767434681559,
+              "presentations": 1
+            },
+            {
+              "level_index": 14,
+              "log_return": 0.026327688477341595,
+              "presentations": 2
+            },
+            {
+              "level_index": 15,
+              "log_return": 0.059637017126544296,
+              "presentations": 4
+            },
+            {
+              "level_index": 16,
+              "log_return": 0.1350887228406941,
+              "presentations": 3
+            },
+            {
+              "level_index": 17,
+              "log_return": 0.30600060026488674,
+              "presentations": 1
+            },
+            {
+              "level_index": 18,
+              "log_return": 0.6931471805599453,
+              "presentations": 0
+            }
+          ],
+          "providers": {
+            "lambdalabs": 14,
+            "aws": 17,
+            "nebius": 5,
+            "gcp": 5,
+            "azure": 10
+          },
+          "families": {
+            "H100": 11,
+            "A100": 40
+          },
+          "origin_months": {
+            "2026-09": 10,
+            "2026-07": 10,
+            "2026-08": 14,
+            "2026-06": 10,
+            "2026-03": 1,
+            "2026-02": 5,
+            "2026-05": 1
+          },
+          "instruments": {
+            "neocloud_rate_card": 19,
+            "hyperscaler_spot": 32
+          },
+          "independence": "Presentations and overlapping windows are not independent market experiments"
+        }
+      }
+    }
+  ],
+  "source_attribution": "Pacific Machines gpu-price-pack v0.1.1-handover, CC BY 4.0 compilation; approved source IDs afhubbard, gpurentalprices, fastgpu_daily retain component attribution; no raw redistribution",
+  "new_optimizer_updates": 0,
+  "new_inference_calls": 0,
+  "raw_inputs_published": false,
+  "limitations": [
+    "Post-hoc descriptive audit, not a causal test",
+    "The model conditions on history and metadata; unconditional class frequencies do not determine conditional forecast quality",
+    "No retrospective outcomes are used for configuration or checkpoint selection",
+    "No future or protected outcomes retrieved"
+  ]
+}
