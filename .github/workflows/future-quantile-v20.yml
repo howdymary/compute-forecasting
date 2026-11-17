@@ -6,7 +6,7 @@ on:
   schedule:
     - cron: '5 0 * * 1'
   workflow_run:
-    workflows: [Train direct quantile-head pilot v20]
+    workflows: [Train direct quantile-head pilot v20, Expand quantile-head pilot only after development gate v20]
     types: [completed]
     branches: [compute-observatory]
   workflow_dispatch:
@@ -66,7 +66,21 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           ARTIFACT_ID: ${{ steps.artifact.outputs.artifact-id }}
-        run: gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID" > artifacts/quantile-training-v20-future/github-publication-receipt.json
+        run: |
+          python - <<'PY'
+          import json,os,pathlib,subprocess,time
+          attempts=[];value=None
+          endpoint='repos/'+os.environ['GITHUB_REPOSITORY']+'/actions/artifacts/'+os.environ['ARTIFACT_ID']
+          for delay in (0,1,2,4,8):
+              if delay:time.sleep(delay)
+              r=subprocess.run(['gh','api',endpoint],capture_output=True,text=True)
+              attempts.append({'returncode':r.returncode,'message':r.stderr.strip()[:300]})
+              if r.returncode==0:
+                  value={'status':'retrieved','artifact':json.loads(r.stdout),'attempts':attempts};break
+          if value is None:value={'status':'metadata_unavailable','attempts':attempts,'authoritative_proof':'The already verified signed Sigstore bundle binds the exact publication files; this optional download metadata is not the issuance clock'}
+          pathlib.Path('artifacts/quantile-training-v20-future/github-publication-receipt.json').write_text(json.dumps(value,indent=2)+'\n')
+          print(json.dumps({'status':value['status'],'attempts':len(attempts)}))
+          PY
       - name: Publish commitments and pending state
         env:
           GH_TOKEN: ${{ github.token }}
