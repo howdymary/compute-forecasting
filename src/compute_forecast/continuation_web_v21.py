@@ -16,12 +16,12 @@ def mount(api,headers,public_volume,lock,clock):
                 cache[study]={"at":time.monotonic(),"raw":json.dumps(value,allow_nan=False,separators=(",",":")).encode(),"sha":pointer["report_sha256"]}
             item=cache[study]
         return Response(item["raw"],media_type="application/json",headers={**headers,"X-Source-Artifact-SHA256":item["sha"]})
-    @api.get("/api/continuation-v20")
+    @api.get("/api/continuation-v21")
     async def result():
         try:
             return await read("ce-continuation-v21")
         except Exception as error:return JSONResponse({"status":"pending_publication","error_type":type(error).__name__},status_code=503,headers=headers)
-    @api.get("/api/continuation-v20/future")
+    @api.get("/api/continuation-v21/future")
     async def future():
         try:return await read("ce-continuation-v21-prospective")
         except FileNotFoundError:return JSONResponse({"study_id":"ce-continuation-v21-prospective","status":"pending_initial_readiness","issued_origins":0,"first_eligible_origin":"2026-12-20","final_analysis_not_before":"2027-04-12T00:00:00+00:00","prospective_accuracy":"not established"},headers=headers)

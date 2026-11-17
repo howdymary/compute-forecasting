@@ -8,7 +8,7 @@ out=pathlib.Path("artifacts/ce-continuation-v21-validation");out.mkdir(parents=T
 async def main():
     pointer=json.loads(pathlib.Path("results/ce-continuation-v21/latest.json").read_bytes())
     async with httpx.AsyncClient(http2=True,timeout=90) as client:
-        response=await client.get(BASE+"/api/continuation-v21");assert response.status_code==200
+        response=await client.get(BASE+"/api/continuation-v21");assert response.status_code==200,(response.status_code,response.text[:500])
         report=response.json();assert report["public_report_sha256"]==pointer["report_sha256"]
         assert response.headers["x-source-artifact-sha256"]==pointer["report_sha256"];assert report["runs"],"No completed training run to visualize"
         arithmetic=verify(report)
