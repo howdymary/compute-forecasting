@@ -67,6 +67,7 @@ with sync_playwright() as pw:
         state["error"]=True;page.locator("#refresh").click();expect(page.locator("#retry")).to_be_visible()
         state["error"]=False;page.locator("#retry").click();expect(page.locator("#retry")).to_be_hidden()
         state["empty"]=True;page.locator("#refresh").click();expect(page.locator("#status")).to_contain_text("pending")
+        page.locator("#horizon").select_option("3");expect(page.locator("#point")).to_contain_text("USD per GPU-hour")
         state["empty"]=False;page.locator("#retry").click();expect(page.locator("#retry")).to_be_hidden()
         state["synthetic_future"]=True;page.reload();expect(page.locator("#future-figure")).to_be_visible()
         expect(page.locator("#future-point")).to_contain_text("synthetic")
