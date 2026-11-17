@@ -1,0 +1,108 @@
+name: Expand quantile-head pilot only after development gate v20
+on:
+  workflow_run:
+    workflows: [Train direct quantile-head pilot v20]
+    types: [completed]
+    branches: [compute-observatory]
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: quantile-training-v20-campaign
+  cancel-in-progress: false
+jobs:
+  expansion:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 420
+    steps:
+      - name: Fetch current source without changing frozen configuration
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          SOURCE_SHA=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/compute-observatory" --jq .object.sha)
+          gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Recover pilot outputs without repeating its optimization
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PILOT_RUN: ${{ github.event.workflow_run.id }}
+        run: |
+          python -m pip install --extra-index-url https://download.pytorch.org/whl/cpu -r requirements/market-state-v19.txt
+          python -m pip install -e . --no-deps
+          python - <<'PY'
+          import json,os,pathlib,subprocess
+          run=os.environ.get('PILOT_RUN')
+          if not run:
+              data=json.loads(subprocess.check_output(['gh','api','repos/'+os.environ['GITHUB_REPOSITORY']+'/actions/runs?branch=compute-observatory&per_page=100'],text=True))
+              run=str(next(r['id'] for r in data['workflow_runs'] if r['name']=='Train direct quantile-head pilot v20' and r['conclusion']=='success'))
+          data=json.loads(subprocess.check_output(['gh','api','repos/'+os.environ['GITHUB_REPOSITORY']+'/actions/runs/'+run+'/artifacts'],text=True))
+          names=[r['name'] for r in data['artifacts'] if r['name'].startswith('quantile-training-v20-')]
+          assert len(names)==1
+          subprocess.run(['gh','run','download',run,'--repo',os.environ['GITHUB_REPOSITORY'],'--name',names[0],'--dir','artifacts/quantile-training-v20'],check=True)
+          PY
+      - name: Check prespecified expansion and preservation gates
+        id: gate
+        env:
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+        run: |
+          python - <<'PY'
+          import asyncio,json,os,pathlib,tinker
+          async def main():
+              root=pathlib.Path('artifacts/quantile-training-v20')
+              result=root/'models/17/result.json'
+              gate=result.exists() and json.loads(result.read_bytes())['expansion_gate']['passed']
+              count=None
+              if gate:
+                  rest=tinker.RestClient();items=[]
+                  for offset in range(0,2000,100):
+                      page=await rest.list_user_checkpoints(limit=100,offset=offset);items+=page.checkpoints
+                      if len(page.checkpoints)<100:break
+                  count=len(items);gate=count+6<=100
+              value={'study_id':'quantile-training-v20','expansion_ready':gate,'remaining_runs':2,'additional_states':6,'current_states':count,'reason':'Prespecified development and preservation gates passed' if gate else 'Development gate failed, pilot unavailable, or insufficient preservation capacity; no extra optimization','checkpoint_deletion':False}
+              (root/'expansion-readiness.json').write_text(json.dumps(value,indent=2)+'\n')
+              with open(os.environ['GITHUB_OUTPUT'],'a') as f:f.write('ready='+str(gate).lower()+'\n')
+              print(json.dumps(value))
+          asyncio.run(main())
+          PY
+      - name: Reuse exact same historical inputs
+        if: steps.gate.outputs.ready == 'true'
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: |
+          mkdir -p inputs/market-state-v19
+          cp results/market-state-v19/readiness/44040999343/input-key.json inputs/market-state-v19/input-key.json
+          python scripts/load_market_inputs_v19.py
+      - name: Fixed seed29 robustness run
+        if: steps.gate.outputs.ready == 'true'
+        env:
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: python -m compute_forecast.train_quantile_v20 --seed 29
+      - name: Fixed seed43 robustness run
+        if: steps.gate.outputs.ready == 'true'
+        env:
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: python -m compute_forecast.train_quantile_v20 --seed 43
+      - name: Publish completed runs and negative gates
+        if: always() && steps.gate.outcome == 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          V20_PUBLIC_ROOT: artifacts/quantile-training-v20/public
+          V20_PUBLIC_KIND: runs
+        run: |
+          python scripts/assemble_quantile_v20.py
+          python scripts/publish_quantile_v20.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: quantile-training-v20-expansion-${{ github.run_id }}
+          path: artifacts/quantile-training-v20
+          retention-days: 90
