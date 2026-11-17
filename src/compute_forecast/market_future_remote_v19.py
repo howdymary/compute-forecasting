@@ -19,7 +19,7 @@ async def infer(tasks,p,lock):
     import tinker
     from tinker_cookbook.renderers import get_renderer
     from tinker_cookbook.recipes.decisions import DecisionRenderer,sample_decision
-    service=tinker.ServiceClient(display_name="Frozen market-state v19 prospective",user_metadata={"study_id":p["study_id"],"phase":"inference_only"})
+    service=tinker.ServiceClient(display_name="Frozen market-state v19 prospective",user_metadata={"study_id":p["study_id"],"phase":"synthetic_readiness" if p.get("synthetic_probe") else "inference_only"})
     base=await service.create_sampling_client(base_model=lock["base_model"]);renderer=DecisionRenderer(get_renderer(lock["renderer"],base.get_tokenizer()))
     assert hashlib.sha256(base.get_tokenizer().backend_tokenizer.to_str().encode()).hexdigest()==lock["tokenizer_sha256"]
     available=[];rest=tinker.RestClient()
@@ -153,6 +153,18 @@ async def execute(p,lock,numeric,publication_receipts):
     migration_path=root/"registration-format-upgrade.json"
     if migration_path.exists():outputs["registration-format-upgrade.json"]=json.loads(migration_path.read_bytes())
     outputs["index.json"]=result;atomic(root/"latest.json",result);data_volume.commit();return outputs
+@app.function(image=image,cpu=2,memory=4096,timeout=900,max_containers=1,volumes={"/data":data_volume},secrets=[secret])
+async def model_probe(p,lock):
+    target=pathlib.Path("/data/market-state-v19/future/probes")/(digest(lock)+".json")
+    if target.exists():
+        value=json.loads(target.read_bytes());return {**value,"reused_probe":True,"new_model_calls":0}
+    origin="2026-01-01";history=[{"date":(datetime.fromisoformat(origin)-timedelta(days=i)).date().isoformat(),"value":1.0,"available_at":(datetime.fromisoformat(origin)-timedelta(days=i)).date().isoformat()+"T17:40:00+00:00"} for i in reversed(range(42))]
+    task={"task_id":"synthetic-v19-readiness","series_id":"synthetic-v19-readiness","origin":origin,"anchor":1.0,"context":history,"context_missing_days":0,"metadata":{"source_id":"synthetic_fixture","provider":"synthetic","family":"A100","gpu_model":"synthetic A100 fixture","instrument_class":"synthetic_test_only","pricing_tier":"synthetic","benchmark_contract":"Synthetic API alignment fixture; not a market observation"},"contract":{"kind":"synthetic_not_market"},"market_state":{},"target_dates":["2026-01-02","2026-01-04","2026-01-08"]}
+    rows,calls=await infer([task],{**p,"synthetic_probe":True},lock)
+    assert len(rows)==12 and calls==12 and not any(r["fallback"] for r in rows),"Frozen model inference readiness failed"
+    assert all(len(r["probabilities"])==len(lock["log_levels"])==19 for r in rows)
+    result={"study_id":"market-state-v19","status":"passed","model_lock_sha256":digest(lock),"fixture":"Explicitly synthetic API-only probe, not a GPU forecast","probability_vectors":len(rows),"probability_sha256":[digest(r["probabilities"]) for r in rows],"new_model_calls":calls,"new_optimizer_updates":0,"market_forecasts_issued":0,"provider_cost_usd":None}
+    atomic(target,result,True);data_volume.commit();return result
 def verified_receipts(p):
     receipts={}
     import importlib.util
@@ -169,7 +181,10 @@ def main():
     if pointer.exists():
         entry=json.loads(pointer.read_bytes());raw=pathlib.Path(entry["report_path"]).read_bytes();assert hashlib.sha256(raw).hexdigest()==entry["report_sha256"]
         report=json.loads(raw);lock=report.get("model_lock");numeric=report.get("numerical_lock")
-    values=execute.remote(p,lock,numeric,verified_receipts(p));out=pathlib.Path("artifacts/market-state-v19-future");out.mkdir(parents=True,exist_ok=True)
+    probe=model_probe.remote(p,lock) if lock is not None else None
+    values=execute.remote(p,lock,numeric,verified_receipts(p))
+    if probe is not None:values["model-readiness.json"]=probe
+    out=pathlib.Path("artifacts/market-state-v19-future");out.mkdir(parents=True,exist_ok=True)
     known={}
     for file in pathlib.Path("results/market-state-v19/future").glob("*/commitment-*.json"):known[digest(json.loads(file.read_bytes()))]=str(file)
     run=os.environ["GITHUB_RUN_ID"]+("-attempt-"+os.environ["GITHUB_RUN_ATTEMPT"] if int(os.environ.get("GITHUB_RUN_ATTEMPT","1"))>1 else "")
