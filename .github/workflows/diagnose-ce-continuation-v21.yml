@@ -29,9 +29,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - run: python -m pip install -e '.[dev]'
+      - run: python -m pip install -e '.[dev]' matplotlib
       - run: python -m pytest tests/test_continuation_diagnostics_v21.py -q
       - name: Reconstruct scores and inspect saved distributions
+        env:
+          V21_DIAGNOSTIC_PLOTS: '1'
         run: |
           python -m compute_forecast.verify_continuation_v21
           python scripts/diagnose_ce_continuation_v21.py

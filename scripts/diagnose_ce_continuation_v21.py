@@ -32,4 +32,43 @@ for arm,v in grouped.items():
         lines.append(("Original-data" if arm=="same" else "Expanded-data")+" continuation had "+format(abs(change),".2f")+"% "+("higher" if change>0 else "lower" if change<0 else "equal")+" mean seven-day loss than the incumbent across "+str(v["n_orderings"])+" completed ordering runs. "+str(v["orderings_better_than_incumbent"])+" had lower aggregate loss. Lower loss is better; this is an average over the same historical cases.")
 lines+=["","A good practice score did not establish better forecasts on another period. The originally selected checkpoints remain unchanged. We do not pick a seed or replace the official export using these retrospective scores.","","The retained distributions show where confidence, interval width, coverage and errors changed. These observations can identify a behavioral failure, but cannot by themselves prove overfitting or establish that a proposed remedy works.","","The recommended next step is a separately registered, short matched continuation with an incumbent-probability constraint, plus later observations for evaluation. See docs/ce-continuation-v21-next-steps.md. No further optimization is launched by this audit."]
 lines+=["","Public reconstruction: python -m compute_forecast.verify_continuation_v21; python scripts/diagnose_ce_continuation_v21.py.","","Prospective improvement is not yet established."]
+if os.environ.get("V21_DIAGNOSTIC_PLOTS")=="1" and runs:
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    from matplotlib.patches import Patch
+    entries=[]
+    for run in runs:
+        c=next(c["result"] for c in r["comparisons"] if c["arm"]==run["arm"] and c["seed"]==run["ordering_seed"] and c["reference"]=="incumbent")
+        primary=[v for v in c["cells"] if v["horizon_days"]==7]
+        parts=[sum(v["quantile_contributions"][i] for v in primary)/len(primary) for i in range(3)]
+        assert abs(sum(parts)-c["difference"])<1e-12
+        entries.append({"arm":run["arm"],"ordering_seed":run["ordering_seed"],"selected_additional_update":run["selected_additional_update"],"parts":parts,"net_difference":c["difference"]})
+    fig,ax=plt.subplots(figsize=(11,max(4.6,2.8+.57*len(entries))));paper="#f8f4ea";ink="#202c3b"
+    fig.set_facecolor(paper);ax.set_facecolor(paper);fig.subplots_adjust(left=.24,right=.81,top=.76,bottom=.26)
+    palette=["#2858c6","#647182","#39836c"];span=max(sum(v for v in e["parts"] if v>0) for e in entries)
+    span=max(span,max(-sum(v for v in e["parts"] if v<0) for e in entries),1e-6)
+    for i,e in enumerate(entries):
+        positive=negative=0.
+        for color,value in zip(palette,e["parts"]):
+            start=positive if value>=0 else negative
+            ax.barh(i,value,left=start,height=.55,color=color)
+            if value>=0:positive+=value
+            else:negative+=value
+        ax.text(span*1.07,i,format(e["net_difference"],"+.7f"),ha="left",va="center",fontsize=10,color=ink,fontfamily="monospace")
+    ax.axvline(0,color=ink,linewidth=.9);ax.set_xlim(-span*1.05,span*1.65)
+    ax.set_yticks(range(len(entries)),[("Original" if e["arm"]=="same" else "Expanded")+" /"+str(e["ordering_seed"])+"  ·  +"+str(e["selected_additional_update"]) for e in entries])
+    ax.invert_yaxis();ax.set_xlabel("Contribution to mean seven-day pinball loss (USD/GPU-hour)",fontsize=10,labelpad=10)
+    ax.xaxis.grid(True,color="#d9d9d1",linewidth=.6);ax.set_axisbelow(True);ax.tick_params(colors="#465264",labelsize=10)
+    for key in ("top","right","left"):ax.spines[key].set_visible(False)
+    ax.spines["bottom"].set_color("#b8bab5")
+    fig.suptitle("Where continued training changed forecast error",x=.04,y=.96,ha="left",fontsize=19,color=ink)
+    fig.text(.04,.87,"Relative to the frozen incumbent. Left: lower loss; right: higher loss. Row labels show ordering and selected update.",fontsize=10,color="#536074")
+    fig.legend(handles=[Patch(color=c,label=t) for c,t in zip(palette,["Lower quantile · q10","Median · q50","Upper quantile · q90"])],loc="lower center",bbox_to_anchor=(.5,.12),ncol=3,frameon=False,fontsize=10)
+    fig.text(.04,.055,"24 matched seven-day cases · 3 reused, dependent origins · retrospective diagnosis",fontsize=10,color="#536074")
+    fig.text(.04,.025,"Source report SHA-256: "+pointer["report_sha256"],fontsize=8,color="#536074")
+    for extension in ("png","svg"):fig.savefig(out/("loss-contributions."+extension),dpi=160,facecolor=paper)
+    plt.close(fig)
+    (out/"figure-data.json").write_text(json.dumps({"source_report_sha256":pointer["report_sha256"],"entries":entries,"matplotlib_version":matplotlib.__version__},indent=2,allow_nan=False)+"\n")
+    lines+=["","![Quantile contributions to loss change](loss-contributions.png)","","The contributions reconstruct the exact aggregate difference. These are not confidence intervals."]
 (out/"findings.md").write_text("\n".join(lines)+"\n");print(json.dumps({"status":"passed","source_report_sha256":pointer["report_sha256"],"completed_orderings":len(runs),"new_optimizer_updates":0,"new_inference_calls":0}))
