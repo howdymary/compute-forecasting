@@ -20,12 +20,16 @@ def fixture():
     return records
 def commitment():
     records=fixture();x=prepare(records,"2026-12-20","2026-12-21T00:05:00+00:00",P);assert x["eligible"],x["reasons"]
-    lock={};rows=[]
+    lock={"log_levels":[(i-9)*.01 for i in range(19)]};rows=[]
     for t in x["tasks"]:
         for h in P["horizons"]:
             for method in P["methods"]:
                 rows.append({"method":method,"series_id":t["series_id"],"horizon_days":h,"target_date":t["target_dates"][(1,3,7).index(h)],"contract_sha256":digest(t["contract"]),"q10":t["anchor"],"q50":t["anchor"],"q90":t["anchor"]})
-    c={"study_id":P["study_id"],"protocol_sha256":digest(P),"model_lock_sha256":digest(lock),"origin":"2026-12-20","issued_at":"2026-12-21T00:05:00+00:00","capture_receipts":records,"cohort":x["cohort"],"price_inputs":x["tasks"],"rows":rows}
+    for r in rows:
+        if r["method"] in ("price","market","untuned_price","untuned_market"):
+            task=next(t for t in x["tasks"] if t["series_id"]==r["series_id"])
+            r["support_prices"]=support(task["anchor"],lock["log_levels"]);r["probabilities"]=[float(i==9) for i in range(19)]
+    c={"information_cutoff":"2026-12-20T23:59:59.999999+00:00","input_vintages":x["input_vintages"],"study_id":P["study_id"],"protocol_sha256":digest(P),"model_lock_sha256":digest(lock),"origin":"2026-12-20","issued_at":"2026-12-21T00:05:00+00:00","capture_receipts":records,"cohort":x["cohort"],"price_inputs":x["tasks"],"rows":rows}
     return c,lock
 def test_complete_matched_synthetic_commitment():
     c,lock=commitment();assert validate(c,P,lock) is c and len(c["rows"])==12*3*10
@@ -43,4 +47,9 @@ def test_incomplete_method_cannot_be_hidden():
 def test_future_truth_cannot_enter_commitment():
     import pytest
     c,lock=commitment();c["rows"][0]["outcome"]=1
+    with pytest.raises(AssertionError):validate(c,P,lock)
+
+def test_model_inputs_must_reconstruct_from_receipts():
+    import pytest
+    c,lock=commitment();c["price_inputs"][0]["anchor"]=9999
     with pytest.raises(AssertionError):validate(c,P,lock)

@@ -61,7 +61,10 @@ def prepare(records,origin,at,p,cohort=None):
 def validate(commitment,p,lock):
     assert commitment["study_id"]==p["study_id"] and commitment["protocol_sha256"]==digest(p) and commitment["model_lock_sha256"]==digest(lock)
     origin=commitment["origin"];assert weekly_index(origin,p) is not None
-    assert prepare(commitment["capture_receipts"],origin,commitment["issued_at"],p,commitment["cohort"])["eligible"]
+    prepared=prepare(commitment["capture_receipts"],origin,commitment["issued_at"],p,commitment["cohort"]);assert prepared["eligible"]
+    assert commitment["information_cutoff"]==origin+"T23:59:59.999999+00:00"
+    assert digest(commitment["price_inputs"])==digest(prepared["tasks"]),"Inputs differ from as-of source vintages"
+    assert commitment["input_vintages"]==prepared["input_vintages"]
     tasks={t["series_id"]:t for t in commitment["price_inputs"]}
     expected={(sid,h) for sid in commitment["cohort"] for h in p["horizons"]};seen=set()
     for row in commitment["rows"]:
@@ -71,7 +74,9 @@ def validate(commitment,p,lock):
         assert all(math.isfinite(row[k]) for k in ("q10","q50","q90"))
         assert row["target_date"]==(date.fromisoformat(origin)+timedelta(days=row["horizon_days"])).isoformat()
         assert row["contract_sha256"]==digest(tasks[row["series_id"]]["contract"])
-        if row.get("probabilities") is not None:
+        if row["method"] in ("price","market","untuned_price","untuned_market"):
+            from .probability_v18 import support
+            assert row.get("probabilities") is not None and support(tasks[row["series_id"]]["anchor"],lock["log_levels"])==row["support_prices"]
             assert quantiles(row["probabilities"],row["support_prices"])==[row[k] for k in ("q10","q50","q90")]
     for method in p["methods"]:assert {(r["series_id"],r["horizon_days"]) for r in commitment["rows"] if r["method"]==method}==expected
     return commitment
