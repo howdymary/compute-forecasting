@@ -26,7 +26,7 @@ def publish(payloads):
 @app.local_entrypoint()
 def main():
     payloads=[];commit=os.environ.get("EVIDENCE_SOURCE_SHA",os.environ.get("PUBLICATION_SOURCE_SHA",os.environ["GITHUB_SHA"]))
-    for study,kind in (("direct-probability-v18","probability-v18"),("direct-evidence-v14","evidence-v14"),("market-state-v19","market-state-v19"),("market-state-v19-prospective","market-state-v19/future")):
+    for study,kind in (("direct-probability-v18","probability-v18"),("direct-evidence-v14","evidence-v14"),("market-state-v19","market-state-v19"),("market-state-v19-progress","market-state-v19/progress"),("market-state-v19-prospective","market-state-v19/future")):
         path=pathlib.Path("results/"+kind+"/latest.json")
         if not path.exists() and study.startswith("market-state-v19"):continue
         pointer=json.loads(path.read_bytes());raw=pathlib.Path(pointer["report_path"]).read_bytes()

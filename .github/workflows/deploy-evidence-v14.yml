@@ -4,7 +4,7 @@ on:
     branches: [compute-observatory]
     paths: ['src/compute_forecast/market_ui_v19.py','src/compute_forecast/market_web_v19.py','src/compute_forecast/evidence_ui_v14.py', 'src/compute_forecast/evidence_web_v14.py', 'src/compute_forecast/probability_ui_v18.py', 'src/compute_forecast/probability_web_v18.py', '.github/workflows/deploy-evidence-v14.yml']
   workflow_run:
-    workflows: [Publish matched evidence forecasting research v14, Publish direct probability forecasts v18, Publish matched market-state study v19, Issue registered market-state forecasts v19]
+    workflows: [Publish matched evidence forecasting research v14, Publish direct probability forecasts v18, Publish matched market-state study v19, Publish measured market-state training progress v19, Issue registered market-state forecasts v19]
     types: [completed]
     branches: [compute-observatory]
   workflow_dispatch:

@@ -18,7 +18,9 @@ def mount(api,headers,public_volume,lock,clock):
         return Response(item["raw"],media_type="application/json",headers={**headers,"X-Source-Artifact-SHA256":item["sha"]})
     @api.get("/api/market-v19")
     async def result():
-        try:return await read("market-state-v19")
+        try:
+            try:return await read("market-state-v19")
+            except FileNotFoundError:return await read("market-state-v19-progress")
         except Exception as error:return JSONResponse({"status":"pending_publication","error_type":type(error).__name__},status_code=503,headers=headers)
     @api.get("/api/market-v19/future")
     async def future():

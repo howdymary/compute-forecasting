@@ -23,7 +23,15 @@ jobs:
         run: gh api "repos/$GITHUB_REPOSITORY/tarball/compute-observatory" | tar -xz --strip-components=1
       - name: Stop progress exports after final publication
         id: gate
-        run: test -f results/market-state-v19/latest.json || echo "active=true" >> "$GITHUB_OUTPUT"
+        run: |
+          python - <<'PY'
+          import json,os,pathlib
+          from datetime import datetime,timedelta,timezone
+          p=json.loads(pathlib.Path("configs/market-state-v19.json").read_bytes())
+          stop=datetime.strptime(p["registered_at"],"%Y-%m-%d %H:%M:%S UTC").replace(tzinfo=timezone.utc)+timedelta(hours=p["limits"]["max_campaign_hours"])
+          if not pathlib.Path("results/market-state-v19/latest.json").exists() and datetime.now(timezone.utc)<stop:
+              with open(os.environ["GITHUB_OUTPUT"],"a") as f:f.write("active=true\n")
+          PY
       - uses: actions/setup-python@v5
         if: steps.gate.outputs.active == 'true'
         with:
