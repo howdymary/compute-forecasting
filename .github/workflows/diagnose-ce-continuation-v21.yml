@@ -1,0 +1,49 @@
+name: Audit completed categorical continuation distributions v21
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/diagnose-ce-continuation-v21.yml]
+  workflow_run:
+    workflows: [Train categorical CE continuation v21, Expand categorical continuation after development gate v21]
+    types: [completed]
+    branches: [compute-observatory]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: ce-continuation-v21-diagnostics
+  cancel-in-progress: false
+jobs:
+  audit:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Fetch current permitted artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          SOURCE_SHA=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/compute-observatory" --jq .object.sha)
+          gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+          echo "PUBLICATION_SOURCE_SHA=$SOURCE_SHA" >> "$GITHUB_ENV"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e '.[dev]'
+      - run: python -m pytest tests/test_continuation_diagnostics_v21.py -q
+      - name: Reconstruct scores and inspect saved distributions
+        run: |
+          python -m compute_forecast.verify_continuation_v21
+          python scripts/diagnose_ce_continuation_v21.py
+      - name: Publish versioned diagnostic artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+          V21_PUBLIC_ROOT: artifacts/ce-continuation-v21-diagnostics
+          V21_PUBLIC_KIND: diagnostics
+        run: python scripts/publish_continuation_v21.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ce-continuation-v21-diagnostics-${{ github.run_id }}
+          path: artifacts/ce-continuation-v21-diagnostics
+          retention-days: 90
