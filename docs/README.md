@@ -76,3 +76,5 @@ This post-event study trains future-price distributions directly, comparing matc
 [Study methods](market-state-v19.md) · [Source decisions](market-state-v19-sources.json) · [Matched findings](market-state-v19-findings.md) · [Results and credential-free reconstruction](../results/market-state-v19/README.md). New provider-group historical targets and a separate future individual-contract panel; no prospective improvement established.
 
 - [Direct quantile training and fixed ensembles (v20)](quantile-training-v20.md): registered objective, controls, gates, future panel and public verification.
+
+- [Quantile-head failure diagnosis (v20)](quantile-training-v20-diagnostics.md): changed-price cases, quantile loss contributions, literal coverage and interpretation limits.
