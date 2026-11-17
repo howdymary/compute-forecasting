@@ -40,7 +40,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: probability-v18-publication-${{ github.run_id }}
+          name: probability-v18-publication-${{ github.run_id }}-${{ github.run_attempt }}
           path: artifacts/probability-v18-public
           retention-days: 30
       - name: Publish verified public result artifacts

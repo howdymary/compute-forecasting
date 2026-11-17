@@ -4,7 +4,7 @@ import collections,hashlib,json,os,pathlib,shutil,statistics,subprocess
 from datetime import datetime,timezone
 from compute_forecast.probability_v18 import digest,quantiles,crps,summarize
 from compute_forecast.direct_forecast_v12 import cell_loss
-from compute_forecast.probability_analysis_v18 import diagnostics,paired
+from compute_forecast.probability_analysis_v18 import diagnostics,paired as paired_diagnostic
 def read(p):return json.loads(pathlib.Path(p).read_text())
 def mean(x):return statistics.mean(x) if x else None
 def write(p,v):p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(v,indent=2,allow_nan=False)+"\n")
@@ -91,7 +91,7 @@ def main():
         detail={"untuned":diagnostics(base["retrospective"]["cells"],cohort),"numerical_references":{name:diagnostics(value["cells"],cohort) for name,value in references.items()},"trained":[],"conditional_uncertainty":"Three dependent reused market origins. Seed ranges and leave-one-origin sensitivity are descriptive; no population confidence interval is estimated."}
         for run in final:
             candidate=run["retrospective_evaluation"]["cells"]
-            detail["trained"].append({"objective":run["objective"],"seed":run["seed"],"breakdown":diagnostics(candidate,cohort),"versus_untuned":paired(candidate,base["retrospective"]["cells"],cohort),"versus_numerical":{name:paired(candidate,value["cells"],cohort) for name,value in references.items()}})
+            detail["trained"].append({"objective":run["objective"],"seed":run["seed"],"breakdown":diagnostics(candidate,cohort),"versus_untuned":paired_diagnostic(candidate,base["retrospective"]["cells"],cohort),"versus_numerical":{name:paired_diagnostic(candidate,value["cells"],cohort) for name,value in references.items()}})
         report["diagnostics"]=detail
         report["chronos"]={"status":"unavailable_on_registered_cohort","existing_artifact":"results/explorer-v3/chronos-control.json","existing_origins":["2026-08-29","2026-09-05","2026-09-12"],"reason":"The retained Chronos retrospective origins have zero overlap with the registered October25/28/30 cohort. Existing November commitments remain unscored and are not repurposed."}
         report["resource_accounting"]={"completed_candidate_runs":len(candidates),"completed_optimizer_updates":sum(r["optimizer_updates"] for r in candidates),"mechanism_preflight_updates":api_check["new_optimizer_updates"] if api_check else 0,"example_presentations":sum(r["example_presentations"] for r in candidates),"elapsed_candidate_seconds_sum":sum(r["elapsed_seconds"] for r in candidates),"provider_cost_usd":None,"note":"Summed candidate elapsed time is not campaign wall time or a billing receipt; active unsaved updates are excluded."}
