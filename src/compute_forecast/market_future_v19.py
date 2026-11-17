@@ -11,7 +11,10 @@ def snapshots(records,at,p):
     for r in records:
         if not r.get("status")=="captured" or not r.get("eligible_for_origin"):continue
         if utc(r["retrieved_at"])>utc(at):continue
-        if r["observed_day"]!=utc(r["retrieved_at"]).date().isoformat():continue
+        collected=utc(r["retrieved_at"])
+        if r["observed_day"]!=collected.date().isoformat():continue
+        if not p["capture_window_utc_hours"][0]<=collected.hour<p["capture_window_utc_hours"][1]:continue
+        if any(x["date"]!=r["observed_day"] or utc(x["available_at"])>collected for x in r.get("observations",[])):continue
         available.append(r)
     first={}
     for r in sorted(available,key=lambda r:r["retrieved_at"]):
@@ -27,6 +30,8 @@ def prepare(records,origin,at,p,cohort=None):
             values=[x for x in rows if x["series_id"]==sid]
             if len(values)==1:context.append(values[0])
         if len(context)<p["min_price_days"]:exclusions.append({"series_id":sid,"reason":"insufficient_retained_price_days"});continue
+        if any(x["contract"]!=r["contract"] or x["metadata"]!=r["metadata"] for x in context):
+            exclusions.append({"series_id":sid,"reason":"contract_or_metadata_revision"});continue
         check_asof(context,origin)
         task={"task_id":sid+"|"+origin,"series_id":sid,"origin":origin,"anchor":r["value"],"metadata":{**r["metadata"],"series_id":sid},"context":[{k:v[k] for k in ("date","value","available_at")} for v in context],"context_missing_days":42-len(context),"target_dates":[(date.fromisoformat(origin)+timedelta(days=h)).isoformat() for h in p["horizons"]],"contract":r["contract"]}
         past={h:allrows.get((date.fromisoformat(origin)-timedelta(days=h)).isoformat(),[]) for h in p["horizons"]}
