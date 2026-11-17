@@ -22,6 +22,13 @@ def verify(report):
         a,b=[next(r for r in report["runs"] if r["seed"]==c["seed"] and r["arm"]==arm) for arm in ("price","market")]
         assert abs(c["market_minus_price"]-(b["retrospective"]["summary"]["primary_pinball"]-a["retrospective"]["summary"]["primary_pinball"]))<1e-12
         assert a["batch_order_sha256"]==b["batch_order_sha256"]
+        assert abs(sum(r["weighted_contribution"] for r in c["by_origin"])-c["market_minus_price"])<1e-12
+    for case in report["cases"]:
+        for cp in case["checkpoints"]:
+            for r in cp["rows"]:
+                assert r["origin"]==case["origin"] and r["task_id"]==case["task_id"]
+                assert [r[k] for k in ("q10","q50","q90")]==quantiles(r["probabilities"],r["support_prices"])
+                assert abs(cell_loss(r["outcome"],[r[k] for k in ("q10","q50","q90")])-r["loss"])<1e-12
     assert report["new_optimizer_updates"]==sum(r["optimizer_updates"] for r in report["runs"])
     for phase,methods in report["controls"]["results"].items():
         for method,value in methods.items():

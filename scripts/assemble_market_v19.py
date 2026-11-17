@@ -32,6 +32,18 @@ comparison=[]
 for seed in (17,29,43):
     a,b=[next(r for r in runs if r["seed"]==seed and r["arm"]==arm) for arm in ("price","market")]
     comparison.append({"seed":seed,"price_pinball":a["retrospective"]["summary"]["primary_pinball"],"market_pinball":b["retrospective"]["summary"]["primary_pinball"],"market_minus_price":b["retrospective"]["summary"]["primary_pinball"]-a["retrospective"]["summary"]["primary_pinball"]})
+for c in comparison:
+    a,b=[next(r for r in runs if r["seed"]==c["seed"] and r["arm"]==arm) for arm in ("price","market")]
+    c["price_training_minus_untuned"]=c["price_pinball"]-a["untuned"]["summary"]["primary_pinball"]
+    c["market_training_minus_untuned"]=c["market_pinball"]-b["untuned"]["summary"]["primary_pinball"]
+    c["by_origin"]=[]
+    for origin in sorted({r["origin"] for r in a["retrospective"]["cells"]}):
+        av=[r for r in a["retrospective"]["cells"] if r["origin"]==origin and r["horizon_days"]==7]
+        bv=[r for r in b["retrospective"]["cells"] if r["origin"]==origin and r["horizon_days"]==7]
+        assert {(r["series_id"],r["outcome"]) for r in av}=={(r["series_id"],r["outcome"]) for r in bv}
+        delta=statistics.mean(r["loss"] for r in bv)-statistics.mean(r["loss"] for r in av)
+        c["by_origin"].append({"origin":origin,"n":len(av),"market_minus_price":delta,"weighted_contribution":len(av)/sum(r["horizon_days"]==7 for r in a["retrospective"]["cells"])*delta})
+    assert abs(sum(x["weighted_contribution"] for x in c["by_origin"])-c["market_minus_price"])<1e-12
 operational=[r for r in runs if r["seed"]==17]
 engine=digest({name:hashlib.sha256(pathlib.Path("src/compute_forecast") .joinpath(name).read_bytes()).hexdigest() for name in ("market_future_remote_v19.py","market_future_v19.py","market_analysis_v19.py","market_controls_v19.py","market_state_v19.py","probability_v18.py")})
 lock={"future_engine_sha256":engine,"analysis_plan_sha256":hashlib.sha256(pathlib.Path("configs/market-state-v19-analysis.json").read_bytes()).hexdigest(),"base_model":p["model"]["base"],"renderer":p["model"]["renderer"],"tokenizer_sha256":runs[0]["tokenizer"]["backend_sha256"],"log_levels":data["log_levels"],"protocol_sha256":digest(p),"dataset_sha256":digest(data),"records":[{"arm":r["arm"],"seed":17,"selected_update":r["selected"]["update"],"checkpoint_id":r["selected"]["checkpoint_id"]} for r in operational]}
