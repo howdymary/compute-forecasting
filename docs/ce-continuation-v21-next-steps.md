@@ -8,7 +8,7 @@ Can a short continuation learn from real observed prices while retaining the use
 
 The seed-17 pilot improved development pinball but worsened retrospective pinball. In its nine changed-price cases, mean probability of no change rose from 0.36035 in the incumbent to 0.52070 for original-data continuation and 0.49086 for expanded-data continuation. Interval width and coverage fell. The expanded arm's mean entropy over all cases actually increased: a generic entropy bonus would therefore target an incomplete description of the problem.
 
-These are behavioral diagnostics, not proof of a causal explanation such as overfitting. Final ordering checks must be interpreted alongside them. [Reproducible distribution audit](../.github/workflows/diagnose-ce-continuation-v21.yml).
+These are behavioral diagnostics, not proof of a causal explanation such as overfitting. The completed six-run campaign confirms that none of the selected continuations beat the incumbent on retrospective seven-day loss. Five improved one-day probabilistic loss, suggesting a separate horizon-specific question. [Complete plain-language results](ce-continuation-v21-plain-results.md). [Reproducible distribution audit](../.github/workflows/diagnose-ce-continuation-v21.yml).
 
 ## First recommended intervention: anchored categorical CE
 
@@ -31,7 +31,7 @@ The parent is frozen and sees exactly the same origin-safe price inputs, without
 
 Use lambda = 1 as one fixed initial hypothesis, rather than searching a large grid. Keep the observed-label CE term at the same weight in both arms. The KL gradient is zero when parent and student agree at initialization. This avoids weakening the hard-label term silently by averaging two targets without retaining its original scale.
 
-The aim is not to make intervals uniformly wider. It is to test whether a parent-dependent constraint preserves useful tail probabilities while allowing beneficial updates. This remains an unproven intervention.
+The aim is not to make intervals uniformly wider. It is to test whether a parent-dependent constraint preserves useful tail probabilities while allowing beneficial updates. This remains an unproven intervention. Beating the already-deteriorated ordinary-CE control would show reduced harm, not a better forecaster than the incumbent. Improvement over the incumbent must be demonstrated separately on subsequently observed outcomes.
 
 ## Bounded initial design
 
@@ -62,7 +62,7 @@ Prioritize new compatible, first-vintage price observations and genuine repricin
 
 ## Why this is the next test
 
-The first v21 pilot supplies no reason to assume another long unconstrained continuation will improve forecasting. The original-data arm revisited942 unique horizon examples; the expanded arm saw 1,600 of 11,511. Under the same compute budget, corpus composition and effective passes changed together. The result does not show that more data is generally harmful or that full training on the expanded corpus would behave identically.
+The first v21 pilot supplies no reason to assume another long unconstrained continuation will improve forecasting. The original-data arm revisited 942 unique horizon examples; the expanded arm saw 1,600 of 11,511. Under the same compute budget, corpus composition and effective passes changed together. The result does not show that more data is generally harmful or that full training on the expanded corpus would behave identically.
 
 A short anchored continuation changes one defined training mechanism while preserving the representation that previously worked. If it fails, retain the incumbent. If it improves development or reused historical results, describe that scope; only separately registered later outcomes can support a prospective improvement claim.
 

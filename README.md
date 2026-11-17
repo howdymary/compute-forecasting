@@ -1,3 +1,5 @@
+> **Compute Forecast on this branch:** [Current results in plain language](docs/ce-continuation-v21-plain-results.md) · [Interactive forecasts](https://howdymary--compute-forecast-evidence-v14-web.us-east.modal.run/continuation) · [Methods and public reproduction](results/ce-continuation-v21/README.md). Six continuation runs are complete; the frozen incumbent remains the reference.
+
 # MOCHI: Autonomous Robot Policy Optimization
 
 Mochi investigates failed robot actions, searches for a better controller, and tests the change in simulation. Four model-driven roles handle research, policy design, experimentation, and criticism. A miniature humanoid shows the resulting motion in a desk scene.
@@ -202,4 +204,4 @@ A separately registered study compares the same direct probability model with pr
 
 [Live linked figure](https://howdymary--compute-forecast-evidence-v14-web.us-east.modal.run/continuation) · [Registered v21 study](docs/ce-continuation-v21.md) · [Verified data and reproduction](results/ce-continuation-v21/README.md).
 
-Two matched continuation arms restore the same successful v19 checkpoint and Adam state. One reuses the original 314 training windows; the other uses 3,837 verified windows across 48 provider/configuration groups. The 19-level output, CE objective, inputs and quantile extraction remain unchanged. Checkpoints are selected on development data only. Actual completed runs, negative results and future status are retained separately; prospective improvement is not established.
+Two matched continuation arms restore the same successful v19 checkpoint and Adam state. One reuses the original 314 training windows; the other uses 3,837 verified windows across 48 provider/configuration groups. The 19-level output, CE objective, inputs and quantile extraction remain unchanged. Checkpoints are selected on development data only. All six runs completed 600 additional updates. None of the development-selected continuations beat the incumbent on retrospective seven-day loss; five improved one-day probabilistic loss. [Plain-language results](docs/ce-continuation-v21-plain-results.md), original selections, diagnostics and future status are retained separately. Prospective improvement is not established.

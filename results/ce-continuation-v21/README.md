@@ -27,3 +27,11 @@ No service credentials are required to reconstruct the published arithmetic. Tra
 Development uses two reused dates. Exploratory evaluation uses 24 seven-day cases across three reused, dependent dates. Seeds share the same parent and market outcomes. Unknown provider charges remain null. Future outcomes are pending and are never filled with historical or synthetic values.
 
 Prospective improvement is not yet established.
+
+## Completed six-run release
+
+[Plain-language results](../../docs/ce-continuation-v21-plain-results.md) · [Canonical final report](runs/44144492740/report.json) · [Compact verified summary](diagnostics/44161946789/release-summary.json) · [Distribution audit](diagnostics/44161946789/diagnostics.json) · [Exact exposure audit](exposure/44161097117/exposure.json).
+
+All six continuations completed 600 additional optimizer updates. None of their development-selected checkpoints beat the incumbent on retrospective seven-day pinball. Five improved one-day pinball. These are 24 matched cases per horizon on three reused, dependent dates; ordering seeds are not independent market evidence. Future forecasts have not been issued as of November 17.
+
+[Remote UI validation](https://github.com/howdymary/mochi-demo/actions/runs/44161275998) and inspected [desktop](validation/44161275998/live-desktop.png)/[mobile](validation/44161275998/live-mobile.png) PNGs use the final report hash. [Proposed next test](../../docs/ce-continuation-v21-next-steps.md) is not registered or executed.

@@ -84,3 +84,5 @@ This post-event study trains future-price distributions directly, comparing matc
 - [Locked v21 seed-17 pilot diagnosis](ce-continuation-v21-pilot.md): development gains failed to transfer; narrower intervals and changed-price cases explain the measured deterioration.
 
 - [Proposed next continuation test](ce-continuation-v21-next-steps.md): preserve the categorical model, test an incumbent-probability constraint, and evaluate new observations separately. Not registered or executed.
+
+- [Completed continuation results in plain language](ce-continuation-v21-plain-results.md): all six runs, 600 updates, seven-day deterioration, one-day gains, verified diagnostics and proposed next experiment.
