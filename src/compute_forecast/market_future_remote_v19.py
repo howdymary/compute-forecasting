@@ -128,6 +128,28 @@ async def execute(p,lock,numeric,publication_receipts):
         from .market_analysis_v19 import paired
         cells=[row for name,value in outputs.items() if name.startswith("score-") for row in value["cells"]]
         outputs["paired-analysis.json"]={"study_id":p["study_id"],"contrasts":[paired(cells,a,b) for a,b in (("market","price"),("market","drift"),("market","numerical_market"),("numerical_market","numerical_price"))],"effective_origins":len({r["origin"] for r in cells}),"no_automatic_promotion":True}
+    figures=[];resolved={}
+    for name,value in outputs.items():
+        if name.startswith("score-"):
+            for r in value["cells"]:
+                key=(r["origin"],r["series_id"],r["horizon_days"])
+                if key in resolved:assert resolved[key]==r["outcome"]
+                resolved[key]=r["outcome"]
+    for file in sorted((root/"commitments").glob("*.json")):
+        committed=json.loads(file.read_bytes())
+        for task in committed["price_inputs"]:
+            predictions=[r for r in committed["rows"] if r["series_id"]==task["series_id"] and r["method"] in ("price","market")]
+            figures.append({"id":task["task_id"],"origin":committed["origin"],"issued_at":committed["issued_at"],"series_id":task["series_id"],"metadata":task["metadata"],"history":task["context"],"predictions":predictions,"outcomes":[{"horizon_days":h,"target_date":task["target_dates"][(1,3,7).index(h)],"value":resolved[(committed["origin"],task["series_id"],h)]} for h in p["horizons"] if (committed["origin"],task["series_id"],h) in resolved],"market_state":task["market_state"],"input_sha256":task["market_input_identity"],"commitment_sha256":digest(committed),"publication_receipt":publication_receipts.get(committed["origin"])})
+    result["forecast_cases"]=figures
+    if at>=utc(p["final_analysis_not_before"]) and lock is not None:
+        from .probability_v18 import summarize
+        cells=[r for name,value in outputs.items() if name.startswith("score-") for r in value["cells"]]
+        result["by_method"]={method:summarize([r for r in cells if r["method"]==method]) for method in p["methods"]}
+        origins=sorted({r["origin"] for r in cells});result["paired_by_origin"]=[]
+        for origin in origins:
+            parts={method:[r for r in cells if r["origin"]==origin and r["horizon_days"]==7 and r["method"]==method] for method in ("price","market")}
+            if parts["price"] and {(r["series_id"],r["outcome"]) for r in parts["price"]}=={(r["series_id"],r["outcome"]) for r in parts["market"]}:
+                result["paired_by_origin"].append({"origin":origin,"n":len(parts["price"]),"market_minus_price":sum(r["loss"] for r in parts["market"])/len(parts["market"])-sum(r["loss"] for r in parts["price"])/len(parts["price"])})
     outputs["index.json"]=result;atomic(root/"latest.json",result);data_volume.commit();return outputs
 def verified_receipts(p):
     receipts={}
