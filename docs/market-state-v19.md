@@ -103,3 +103,8 @@ The separate future status contains only issued commitments and matured permitte
 
 
 The issued-forecast figure is implemented but remains empty until eligible commitments exist. Coverage, width and paired origin differences remain pending until the locked evaluator runs. Synthetic contract fixtures exercise future controls remotely; they are not market observations and are not published as price histories. A prototype null model-lock registration field is preserved in its original file; a separate format-upgrade receipt records its removal from the new storage format without changing the scientific protocol, dates or candidates.
+
+
+### Retained environment
+
+The [actual dependency lock](../requirements/market-state-v19.txt) is committed independently of temporary Actions downloads. Package-name spelling tinker_cookbook normalizes to tinker-cookbook; its actual version is 0.6.1. Tinker is 0.39.1, matching registration. This was a package-name assertion issue in archival validation, not a different training environment. The full six-run comparison uses the same locked environment.
