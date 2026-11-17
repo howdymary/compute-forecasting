@@ -25,8 +25,9 @@ def put(p,value):
 def prepare(parent_levels):
     import duckdb,pandas as pd
     start=time.monotonic();p=json.loads(pathlib.Path("/root/configs/market-state-v19.json").read_bytes());gates=json.loads(pathlib.Path("/root/configs/market-state-v19-readiness.json").read_bytes())["gates"]
-    saved=pathlib.Path("/data/market-state-v19/inputs")/digest(p)
-    if (saved/"audit.json").exists():return {"audit":json.loads((saved/"audit.json").read_bytes()),"private_key":digest(p)}
+    engine=digest({"data_engine":hashlib.sha256(pathlib.Path(__file__).read_bytes()).hexdigest(),"feature_engine":hashlib.sha256(pathlib.Path(__file__).with_name("market_state_v19.py").read_bytes()).hexdigest()})
+    input_key=digest({"protocol_sha256":digest(p),"engine_sha256":engine});saved=pathlib.Path("/data/market-state-v19/inputs")/input_key
+    if (saved/"audit.json").exists():return {"audit":json.loads((saved/"audit.json").read_bytes()),"private_key":input_key}
     root=pathlib.Path("/data/pacific")/PACK_NAME;verify_manifest(root);c=duckdb.connect();pattern=str(root/"rental_observations"/"*"/"*"/"*.parquet")
     frame=c.execute("SELECT * FROM read_parquet(?,hive_partitioning=false) WHERE source_id IN ('afhubbard','gpurentalprices','fastgpu_daily') AND CAST(dt AS DATE)<=DATE '2026-11-06' AND usd_per_gpu_hour>0 AND quality_flag='ok' AND upper(licence_id)='CC-BY-4.0' AND instrument_class IN ('hyperscaler_spot','neocloud_rate_card') AND pricing_tier IN ('spot','on_demand') AND (gpu_model LIKE 'H100%' OR gpu_model LIKE 'A100%')",[pattern]).df()
     source_notices=c.execute("SELECT source_id,licence_id,quality_flag,count(*) n FROM read_parquet(?,hive_partitioning=false) WHERE source_id IN ('afhubbard','gpurentalprices','fastgpu_daily') AND CAST(dt AS DATE)<=DATE '2026-11-06' GROUP BY ALL",[pattern]).df().to_dict("records")
@@ -41,7 +42,7 @@ def prepare(parent_levels):
         ident={k:clean(r[k]) for k in fields};key=digest(ident)
         if key in badkeys:excluded["ambiguous_same_timestamp_group"]+=1;continue
         if not ident["provider"] or not ident["sku_raw"]:excluded["missing_provider_or_sku"]+=1;continue
-        sid="pack-market-v19-"+key[:24];meta={**ident,"region":ident.pop("region_canonical"),"series_id":sid,"family":ident["gpu_model"].split()[0],"benchmark_contract":"Source-defined provider/SKU/region/node daily quote median: "+json.dumps(ident,sort_keys=True),"unit":"USD per GPU-hour","availability_assurance":"Source-reported historical snapshot timestamp in frozen Pacific vintage; not independent proof of publication"}
+        sid="pack-market-v19-"+key[:24];meta={**ident,"region":ident["region_canonical"],"series_id":sid,"family":ident["gpu_model"].split()[0],"benchmark_contract":"Source-defined provider/SKU/region/node daily quote median: "+json.dumps(ident,sort_keys=True),"unit":"USD per GPU-hour","availability_assurance":"Source-reported historical snapshot timestamp in frozen Pacific vintage; not independent proof of publication"}
         row={"series_id":sid,"date":r["day"],"value":float(r["value"]),"available_at":stamp(r["last_snapshot"]),"metadata":meta,"records":int(r["records"])}
         panels.setdefault(sid,{"metadata":meta,"rows":{}})["rows"][row["date"]]=row
         byday.setdefault(row["date"],[]).append(row)
@@ -102,7 +103,7 @@ def prepare(parent_levels):
         dev=groups["development"];outside=sum(y<support(t["anchor"],parent_levels)[0] or y>support(t["anchor"],parent_levels)[-1] for t in dev for y in t["outcomes"])
         if dev and outside/(3*len(dev))>.05:reasons.append("frozen_support_inadequate_on_development")
     payload={"study_id":p["study_id"],"protocol_sha256":digest(p),"groups":groups,"log_levels":parent_levels,"selected_groups":selected,"protected_outcomes_loaded":False}
-    audit={"study_id":p["study_id"],"source_sha":__import__("os").environ.get("GITHUB_SHA"),"protocol_sha256":digest(p),"dataset_sha256":digest(payload),"readiness":"passed" if not reasons else "gated","training_ready":not reasons,"reasons":reasons,"phases":metrics,"feature_coverage":variation,"varying_features":varying,"quality_filtered_raw_rows":len(frame),"daily_rows":len(grouped),"snapshot_day_exclusions":bad_days,"ambiguous_groups":len(badkeys),"excluded_daily_rows":dict(excluded),"source_license_quality_counts":source_notices,"selected_groups":selected,"selected_metadata":[panels[sid]["metadata"] for sid in selected],"historical_availability":"Source-reported original snapshot timestamps in frozen pack; no independent publication-vintage proof, historical evaluation retrospective","not_in_training":p["features"]["not_in_training"],"pack_sha256":PACK_SHA256,"new_optimizer_updates":0,"provider_cost_usd":None,"runtime_seconds":time.monotonic()-start}
+    audit={"study_id":p["study_id"],"source_sha":__import__("os").environ.get("GITHUB_SHA"),"protocol_sha256":digest(p),"dataset_sha256":digest(payload),"engine_sha256":engine,"readiness":"passed" if not reasons else "gated","training_ready":not reasons,"reasons":reasons,"phases":metrics,"feature_coverage":variation,"varying_features":varying,"quality_filtered_raw_rows":len(frame),"daily_rows":len(grouped),"snapshot_day_exclusions":bad_days,"ambiguous_groups":len(badkeys),"excluded_daily_rows":dict(excluded),"source_license_quality_counts":source_notices,"selected_groups":selected,"selected_metadata":[panels[sid]["metadata"] for sid in selected],"historical_availability":"Source-reported original snapshot timestamps in frozen pack; no independent publication-vintage proof, historical evaluation retrospective","not_in_training":p["features"]["not_in_training"],"pack_sha256":PACK_SHA256,"new_optimizer_updates":0,"provider_cost_usd":None,"runtime_seconds":time.monotonic()-start}
     put(saved/"dataset.json",payload);put(saved/"audit.json",audit);volume.commit();return {"audit":audit,"private_key":digest(p)}
 @app.local_entrypoint()
 def main():

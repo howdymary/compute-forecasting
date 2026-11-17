@@ -61,6 +61,7 @@ def market_features(target,quotes,origin,past_quotes=None,past_by_horizon=None):
         for r in same:
             if r["metadata"]["provider"]==meta["provider"] or r["series_id"] not in prior:continue
             before=prior[r["series_id"]]
+            if before["date"]!=(date.fromisoformat(origin)-timedelta(days=horizon)).isoformat():raise ValueError("Wrong return-context lag")
             if before["metadata"]!=r["metadata"]:raise ValueError("Return context identity changed")
             paired.setdefault(r["metadata"]["provider"],[]).append(math.log(r["value"]/before["value"]))
         changes=[statistics.median(v) for v in paired.values()]
@@ -96,6 +97,7 @@ def normalize_latest(payload,health,retrieved_at,raw_sha256,health_sha256):
 def prompt(task,h):
     from .probability_v18 import prompt as base_prompt
     value=json.loads(base_prompt(task,h));value["shared_history_summary"]=shared_features(task)
+    value["metadata"].update({k:task["metadata"].get(k) for k in ("provider","region","gpu_count","gpu_memory_gb")})
     arm=task.get("arm")
     if arm not in ("price","market"):raise ValueError("Unknown matched arm")
     block=task.get("market_state",{});features={}
