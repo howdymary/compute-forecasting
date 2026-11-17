@@ -78,9 +78,11 @@ def check(folder):
     if report.get("diagnostics"):
         d=report["diagnostics"];cases=report["cases"]["retrospective"]
         assert diagnostics(report["base"]["retrospective"]["cells"],cases)==d["untuned"]
+        if "primary_untuned" in d:assert diagnostics([r for r in report["base"]["retrospective"]["cells"] if r["horizon_days"]==7],cases)==d["primary_untuned"]
         for run in report["runs"]:
             saved=next(r for r in d["trained"] if r["objective"]==run["objective"] and r["seed"]==run["seed"])
             assert diagnostics(run["retrospective_evaluation"]["cells"],cases)==saved["breakdown"]
+            if "primary_breakdown" in saved:assert diagnostics([r for r in run["retrospective_evaluation"]["cells"] if r["horizon_days"]==7],cases)==saved["primary_breakdown"]
             assert paired(run["retrospective_evaluation"]["cells"],report["base"]["retrospective"]["cells"],cases)==saved["versus_untuned"]
             for name,value in report["native_references"].items():
                 assert paired(run["retrospective_evaluation"]["cells"],value["cells"],cases)==saved["versus_numerical"][name]
