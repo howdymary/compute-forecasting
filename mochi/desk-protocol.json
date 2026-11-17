@@ -1,0 +1,16 @@
+{
+  "version": "desk-eraser-v3-development",
+  "task": "supported crouched humanoid pushes a rectangular eraser directly on one human-sized desk",
+  "physics_dt": 0.002,
+  "control_dt": 0.02,
+  "horizon_seconds": 6,
+  "target_half_size_m": [0.031, 0.023],
+  "orientation_tolerance_rad": 0.35,
+  "max_terminal_speed_m_s": 0.025,
+  "dwell_seconds": 0.35,
+  "seed_splits": {"calibration": [7000, 7024], "train": [71000, 71192], "validation": [72000, 72048], "test": [73000, 73064]},
+  "selector_observation": "object XY pose and yaw, target XY pose, visible surface material; no hidden friction or mass values",
+  "selection": "validation physical success rate, then lower pose error; test remains sealed until checkpoint freeze",
+  "training": {"base_model": "Qwen/Qwen3.5-4B", "lora_rank": 16, "maximum_updates": 100, "batch_size": 24, "learning_rate": 0.0002, "checkpoints": [0, 20, 50, 100]},
+  "scope": "All dimensions are native meters. Fixed supported torso and three actuated right-arm joints. No walking, balance, vision or new low-level neural motor weights."
+}
