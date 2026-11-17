@@ -1,0 +1,54 @@
+name: Diagnose public serving routes v18
+on:
+  push:
+    branches: [compute-observatory]
+    paths: ['.github/workflows/diagnose-serving-v18.yml','src/compute_forecast/serving_diagnostic_v18.py']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Read current diagnostic source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          SOURCE_SHA=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/compute-observatory" --jq .object.sha)
+          gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e . modal
+      - name: Inspect only public volume metadata
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: modal run -m compute_forecast.serving_diagnostic_v18
+      - name: Measure each route independently
+        run: |
+          python - <<'PY'
+          import concurrent.futures,hashlib,json,pathlib,time,urllib.request
+          base="https://howdymary--compute-forecast-evidence-v14-web.us-east.modal.run"
+          paths=["/health","/api/evidence-future","/api/probability-v18/future","/api/evidence-v14","/api/probability-v18"]*3
+          def one(path):
+              start=time.monotonic();row={"path":path}
+              try:
+                  with urllib.request.urlopen(base+path,timeout=15) as r:
+                      raw=r.read();value=json.loads(raw)
+                      row.update(status=r.status,bytes=len(raw),sha256=hashlib.sha256(raw).hexdigest(),study_id=value.get("study_id"),ui_revision=value.get("ui_revision"))
+              except Exception as error:row.update(error_type=type(error).__name__)
+              row["elapsed_seconds"]=time.monotonic()-start
+              return row
+          with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:rows=list(pool.map(one,paths))
+          value={"requests":rows,"new_optimizer_updates":0,"model_calls":0}
+          pathlib.Path("artifacts/probability-v18-serving-diagnostic/http.json").write_text(json.dumps(value,indent=2)+"\n")
+          print(json.dumps(value))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: probability-v18-serving-diagnostic-${{ github.run_id }}
+          path: artifacts/probability-v18-serving-diagnostic
+          retention-days: 30
