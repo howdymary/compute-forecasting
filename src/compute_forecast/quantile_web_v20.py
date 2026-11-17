@@ -12,7 +12,7 @@ def mount(api,headers,public_volume,lock,clock):
             if not cache.get(study) or time.monotonic()-cache[study]["at"]>=15:
                 if time.monotonic()-clock["at"]>15:
                     await asyncio.wait_for(public_volume.reload.aio(),timeout=10);clock["at"]=time.monotonic()
-                value,pointer=read_public_snapshot(study);value["public_report_sha256"]=pointer["report_sha256"]
+                value,pointer=read_public_snapshot(study);value["public_report_sha256"]=pointer["report_sha256"];value["public_report_path"]=pointer["report_path"]
                 cache[study]={"at":time.monotonic(),"raw":json.dumps(value,allow_nan=False,separators=(",",":")).encode(),"sha":pointer["report_sha256"]}
             item=cache[study]
         return Response(item["raw"],media_type="application/json",headers={**headers,"X-Source-Artifact-SHA256":item["sha"]})
