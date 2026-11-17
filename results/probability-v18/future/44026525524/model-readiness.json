@@ -1,0 +1,54 @@
+{
+  "answer_position_contract_verified": true,
+  "conditional_probability_queries_attempted": 3,
+  "implementation_files": {
+    "choice_renderer": {
+      "package_version": "0.6.1",
+      "sha256": "805eeb924eca458ee4bb092cc7e71a1756345000f5caf3780b3dca6be7c53df9"
+    },
+    "probability_readout": {
+      "package_version": "0.6.1",
+      "sha256": "805eeb924eca458ee4bb092cc7e71a1756345000f5caf3780b3dca6be7c53df9"
+    },
+    "training_datum_builder": {
+      "package_version": "0.6.1",
+      "sha256": "feb2af6990c6ab5aaba825c905e6f8ea18aca4a213f22113c2b57817c8fd7987"
+    }
+  },
+  "market_forecasts_issued": 0,
+  "model_lock_sha256": "659a1e83e7bf53ee80390b913fc9dc8c82c17c4df4e8e06f0ef65291cdeb0a67",
+  "new_optimizer_updates": 0,
+  "provider_cost_usd": null,
+  "results": [
+    {
+      "failure_type": null,
+      "fallback": false,
+      "method": "untuned",
+      "n_levels": 19,
+      "probability_sha256": "5bf4a0defa0ead701a9b55406c9b2d5b33c6d2e2236ef6708efcc45c2f741818",
+      "probability_sum": 1.0000000083491614,
+      "request_attempted": true
+    },
+    {
+      "failure_type": null,
+      "fallback": false,
+      "method": "ce_selected",
+      "n_levels": 19,
+      "probability_sha256": "b6d3ebe06252fb944c02497ae702f4627e9f61913158328ef2cf95fa12b25220",
+      "probability_sum": 1.0000000157160684,
+      "request_attempted": true
+    },
+    {
+      "failure_type": null,
+      "fallback": false,
+      "method": "crps_selected",
+      "n_levels": 19,
+      "probability_sha256": "f8f362e9a0d4251bfa7434f2e556863b3ab6fa0d239096cc0645d81a013702c1",
+      "probability_sum": 1.0000000317813829,
+      "request_attempted": true
+    }
+  ],
+  "status": "verified",
+  "study_id": "direct-probability-v18-prospective",
+  "synthetic_fixture": true
+}
