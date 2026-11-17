@@ -93,5 +93,5 @@ def score(commitment,records,at,p,lock,publication_receipt=None):
         if utc(at)<=utc(r["target_date"]+"T23:59:59+00:00"):missing.append(r);continue
         hits=[x for x in truth.get(r["target_date"],{}).get("observations",[]) if x["series_id"]==r["series_id"] and digest(x["contract"])==r["contract_sha256"]]
         if len(hits)!=1:missing.append({"method":r["method"],"series_id":r["series_id"],"target_date":r["target_date"]});continue
-        y=hits[0]["value"];cells.append({**r,"origin":commitment["origin"],"outcome":y,"loss":cell_loss(y,[r[k] for k in ("q10","q50","q90")]),"truth_vintage_sha256":truth[r["target_date"]]["vintage_sha256"]})
+        y=hits[0]["value"];cells.append({**r,"origin":commitment["origin"],"outcome":y,"loss":cell_loss(y,[r[k] for k in ("q10","q50","q90")]),"truth_vintage_sha256":truth[r["target_date"]]["vintage_sha256"],"out_of_support":bool(r.get("support_prices") and (y<r["support_prices"][0] or y>r["support_prices"][-1]))})
     return {"status":"resolved" if not missing else "partially_pending","cells":cells,"missing":missing,"outcomes_loaded":True}

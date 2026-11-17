@@ -38,7 +38,7 @@ def verify(root,repo=None):
         index["verified_publication_receipts"]=merged
         index["issued_origins"]=sum(r.get("eligible_publication_window",False) for r in index["verified_publication_receipts"].values())
         index["status"]="issued_pending_outcomes" if any(r["eligible_publication_window"] for r in merged.values()) else "ineligible_publication_window"
-        for case in index.get("forecast_cases",[]):case["publication_receipt"]=receipts.get(case["origin"],case.get("publication_receipt"))
+        for case in index.get("forecast_cases",[]):case["publication_receipt"]=merged.get(case["origin"],case.get("publication_receipt"))
         write(index_path,index)
     return receipts
 if __name__=="__main__":
