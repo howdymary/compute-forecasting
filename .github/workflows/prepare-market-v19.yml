@@ -22,7 +22,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - run: python -m pip install -e . modal
+      - run: python -m pip install -e '.[dev]' modal
       - name: Validate source-time contracts
         run: python -m pytest tests/test_market_state_v19.py -q
       - name: Build and gate joint historical observations without model calls
