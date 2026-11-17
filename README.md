@@ -178,3 +178,10 @@ The GPU rental forecasting study remains on compute-observatory. [Measured findi
 Six matched Tinker LoRA runs directly predict GPU rental-price changes, comparing price history alone with original-release electricity-distribution PPI features. The historical comparison is retrospective; news and infrastructure are excluded. The future comparison is separately registered and has not established prospective accuracy.
 
 [Prospective execution and source readiness](docs/evidence-future-v15.md): frozen direct models, qualified original BLS releases, dated quote captures and maturity-gated evaluation. The new panel has issued no forecasts and has not established future accuracy.
+
+
+## Direct probability forecasting v18
+
+[Live probability comparison](https://howdymary--compute-forecast-evidence-v14-web.us-east.modal.run/probability) · [Registered methods](docs/direct-probability-v18.md) · [Measured findings](docs/probability-v18-findings.md) · [Versioned probabilities and audits](results/probability-v18/README.md).
+
+This post-event study trains future-price distributions directly, comparing matched categorical cross-entropy and CRPS objectives. It broadens training to 11 H100/A100 series while preserving earlier negative results and the official submission. Current completion and measured results are in the findings; the separate future transfer panel has not established prospective accuracy.

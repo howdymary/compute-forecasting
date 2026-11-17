@@ -62,4 +62,10 @@ def check(folder):
     assert not report["audit"]["protected_outcomes_loaded"]
     print(json.dumps({"status":"verified","study_id":report["study_id"],"final_runs":len(report["runs"]),"official_export_unchanged":True,"prospective_accuracy":"not established","scope":"Saved probability, score, cohort, selection and public hash reconstruction; full data rebuilding requires authorized pack access"}))
 if __name__=="__main__":
-    p=argparse.ArgumentParser();p.add_argument("--results",required=True);check(p.parse_args().results)
+    p=argparse.ArgumentParser();p.add_argument("--results");a=p.parse_args()
+    if a.results:folder=pathlib.Path(a.results)
+    else:
+        pointer=read(pathlib.Path("results/probability-v18/latest.json"));target=pathlib.Path(pointer["report_path"])
+        assert hashlib.sha256(target.read_bytes()).hexdigest()==pointer["report_sha256"]
+        folder=target.parent
+    check(folder)

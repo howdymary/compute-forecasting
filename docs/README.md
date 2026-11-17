@@ -62,3 +62,10 @@ The earlier pricing/notebook guides describe their original release state. Histo
 [Methods](evidence-v14.md) · [Measured findings](evidence-v14-findings.md) · [Versioned artifacts](../results/evidence-v14/README.md). This matched two-arm study preserves the earlier direct and selector studies.
 
 [Execution of the frozen paired prospective panel](evidence-future-v15.md): source freshness, locked checkpoint identities, scheduled inference, public commitment receipts and maturity-gated scoring. No new optimization or prospective accuracy claim.
+
+
+## Direct probability forecasting v18
+
+[Live probability comparison](https://howdymary--compute-forecast-evidence-v14-web.us-east.modal.run/probability) · [Registered methods](direct-probability-v18.md) · [Measured findings](probability-v18-findings.md) · [Versioned probabilities and audits](../results/probability-v18/README.md).
+
+This post-event study trains future-price distributions directly, comparing matched categorical cross-entropy and CRPS objectives. It broadens training to 11 H100/A100 series while preserving earlier negative results and the official submission. Current completion and measured results are in the findings; the separate future transfer panel has not established prospective accuracy.
