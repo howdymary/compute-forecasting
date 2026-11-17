@@ -1,0 +1,37 @@
+name: Reconstruct quantile failure mechanism v20
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/diagnose-quantile-v20.yml]
+  workflow_run:
+    workflows: [Expand quantile-head pilot only after development gate v20]
+    types: [completed]
+    branches: [compute-observatory]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  diagnose:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Fetch completed source artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          SOURCE_SHA=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/compute-observatory" --jq .object.sha)
+          gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+          echo "PUBLICATION_SOURCE_SHA=$SOURCE_SHA" >> "$GITHUB_ENV"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e . matplotlib
+      - name: Decompose immutable scores without retraining
+        run: python scripts/diagnose_quantile_v20.py
+      - name: Publish exact arithmetic and figures
+        env:
+          GH_TOKEN: ${{ github.token }}
+          V20_PUBLIC_ROOT: artifacts/quantile-training-v20-diagnostics
+          V20_PUBLIC_KIND: diagnostics
+        run: python scripts/publish_quantile_v20.py
