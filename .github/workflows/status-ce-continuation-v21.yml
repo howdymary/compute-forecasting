@@ -33,10 +33,10 @@ jobs:
           p=json.loads(pathlib.Path('configs/ce-continuation-v21.json').read_bytes())
           target=pathlib.Path('private/progress.json');target.parent.mkdir(parents=True,exist_ok=True)
           result={'study_id':p['study_id'],'runs':[],'new_model_calls':0,'new_optimizer_updates':0}
-          for arm in ('same','expanded'):
-              path='/ce-continuation-v21/'+digest(p)+'/'+arm+'-17/recovery.json'
+          for arm,seed in [(a,s) for a in ('same','expanded') for s in (17,29,43)]:
+              path='/ce-continuation-v21/'+digest(p)+'/'+arm+'-'+str(seed)+'/recovery.json'
               r=subprocess.run(['modal','volume','get','compute-forecast-data',path,str(target),'--force'],capture_output=True,text=True)
-              item={'arm':arm,'seed':17,'status':'no_durable_recovery_yet'}
+              item={'arm':arm,'seed':seed,'status':'no_durable_recovery_yet'}
               if r.returncode==0:
                   value=json.loads(target.read_bytes());s=value['state']
                   item.update(status=s['status'],durable_optimizer_updates=s['optimizer_updates'],last_saved_checkpoints=[c['update'] for c in s['checkpoints']],development=[{'update':c['update'],'pinball':c['development']['primary_pinball']} for c in s['checkpoints']],completed=value['completed'])
