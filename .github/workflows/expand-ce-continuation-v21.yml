@@ -1,0 +1,162 @@
+name: Expand categorical continuation after development gate v21
+on:
+  workflow_run:
+    workflows: [Train categorical CE continuation v21]
+    types: [completed]
+    branches: [compute-observatory]
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: ce-continuation-v21-campaign
+  cancel-in-progress: false
+jobs:
+  gate:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    outputs:
+      ready: ${{ steps.check.outputs.ready }}
+      arms: ${{ steps.check.outputs.arms }}
+    steps:
+      - name: Fetch current source while preserving the frozen protocol
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          SOURCE_SHA=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/compute-observatory" --jq .object.sha)
+          gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+          echo "PUBLICATION_SOURCE_SHA=$SOURCE_SHA" >> "$GITHUB_ENV"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e .
+      - name: Recover completed public predictions and enforce development-only expansion
+        id: check
+        env:
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+        run: |
+          python - <<'PY'
+          import asyncio,hashlib,json,os,pathlib,subprocess,sys
+          from compute_forecast.probability_v18 import digest
+          from compute_forecast.continuation_v21 import expansion_gate
+          from compute_forecast.verify_continuation_v21 import verify
+          from compute_forecast.train_market_v19 import write
+          async def main():
+              entry=json.loads(pathlib.Path('results/ce-continuation-v21/latest.json').read_bytes());raw=pathlib.Path(entry['report_path']).read_bytes();assert hashlib.sha256(raw).hexdigest()==entry['report_sha256']
+              r=json.loads(raw);verify(r);p=json.loads(pathlib.Path('configs/ce-continuation-v21.json').read_bytes());assert digest(p)==r['protocol_sha256']
+              pilot=[x['state'] for x in r['runs'] if x['state']['seed']==17]
+              gate=expansion_gate(pilot,r['baseline']['development']['summary']['primary_pinball'])
+              gate.update(study_id=p['study_id'],protocol_sha256=digest(p),development_passed=gate['passed'],capacity_passed=None,new_optimizer_updates=0)
+              if gate['passed']:
+                  subprocess.run([sys.executable,'-m','pip','install','--extra-index-url','https://download.pytorch.org/whl/cpu','-r','requirements/market-state-v19.txt'],check=True)
+                  import tinker
+                  rest=tinker.RestClient();states=[]
+                  for offset in range(0,2000,100):
+                      page=await rest.list_user_checkpoints(limit=100,offset=offset);states+=page.checkpoints
+                      if len(page.checkpoints)<100:break
+                  needed=len(r['readiness']['arms'])*2*3
+                  gate.update(capacity_passed=len(states)+needed<=100,current_states=len(states),additional_states=needed)
+                  gate['passed']=gate['capacity_passed']
+              gate['reason']='Registered development and preservation gates passed' if gate['passed'] else 'Development gate failed' if not gate['development_passed'] else 'Insufficient preservation capacity; no deletion'
+              target=pathlib.Path('artifacts/ce-continuation-v21-expansion');write(target/'gate.json',gate)
+              pre=pathlib.Path('artifacts/ce-continuation-v21-preflight')
+              for name,value in (('incumbent.json',r['baseline']),('audit.json',r['audit']),('readiness.json',r['readiness'])):write(pre/name,value)
+              binding=json.loads(pathlib.Path('configs/ce-continuation-v21-inputs.json').read_bytes());write(pre/'input-key.json',{'input_key':binding['input_key'],'dataset_sha256':binding['dataset_sha256']})
+              for run in r['runs']:
+                  state=run['state'];root=pathlib.Path('artifacts/ce-continuation-v21-models')/state['arm']/str(state['seed'])
+                  write(root/'result.json',state);write(root/'evaluation-selected.json',run['retrospective'])
+                  for update,value in run['development'].items():write(root/('development-'+update+'.json'),value)
+              with open(os.environ['GITHUB_OUTPUT'],'a') as f:f.write('ready='+str(gate['passed']).lower()+'\narms='+json.dumps(r['readiness']['arms'],separators=(',',':'))+'\n')
+              print(json.dumps(gate))
+          asyncio.run(main())
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ce-continuation-v21-expansion-inputs-${{ github.run_id }}
+          path: |
+            artifacts/ce-continuation-v21-preflight
+            artifacts/ce-continuation-v21-expansion
+            artifacts/ce-continuation-v21-models
+          retention-days: 90
+  train:
+    needs: gate
+    if: needs.gate.outputs.ready == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 220
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        arm: ${{ fromJSON(needs.gate.outputs.arms) }}
+        seed: [29,43]
+    steps:
+      - name: Fetch current compatible source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          SOURCE_SHA=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/compute-observatory" --jq .object.sha)
+          gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+          echo "PUBLICATION_SOURCE_SHA=$SOURCE_SHA" >> "$GITHUB_ENV"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: |
+          python -m pip install --extra-index-url https://download.pytorch.org/whl/cpu -r requirements/market-state-v19.txt
+          python -m pip install -e . --no-deps
+      - uses: actions/download-artifact@v4
+        with:
+          name: ce-continuation-v21-expansion-inputs-${{ github.run_id }}
+          path: artifacts
+      - name: Reuse hash-bound private inputs
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: python scripts/load_continuation_inputs_v21.py
+      - name: Matched ordering robustness run
+        env:
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: python -m compute_forecast.train_continuation_v21 --arm ${{ matrix.arm }} --seed ${{ matrix.seed }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ce-continuation-v21-robust-${{ matrix.arm }}-${{ matrix.seed }}-${{ github.run_id }}
+          path: artifacts/ce-continuation-v21-models
+          retention-days: 90
+  publish:
+    needs: [gate,train]
+    if: always() && needs.gate.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Fetch current analysis source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          SOURCE_SHA=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/compute-observatory" --jq .object.sha)
+          gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+          echo "PUBLICATION_SOURCE_SHA=$SOURCE_SHA" >> "$GITHUB_ENV"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          name: ce-continuation-v21-expansion-inputs-${{ github.run_id }}
+          path: artifacts
+      - uses: actions/download-artifact@v4
+        if: needs.gate.outputs.ready == 'true'
+        with:
+          pattern: ce-continuation-v21-robust-*-${{ github.run_id }}
+          merge-multiple: true
+          path: artifacts/ce-continuation-v21-models
+      - name: Publish completed robustness results or a negative gate
+        env:
+          GH_TOKEN: ${{ github.token }}
+          V21_PUBLIC_ROOT: artifacts/ce-continuation-v21-public
+          V21_PUBLIC_KIND: runs
+        run: |
+          python scripts/assemble_continuation_v21.py
+          python scripts/publish_continuation_v21.py
