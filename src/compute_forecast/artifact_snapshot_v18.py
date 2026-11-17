@@ -1,6 +1,6 @@
 """Read only hash-verified, permitted publication snapshots from the public volume."""
 import hashlib,json,pathlib,re
-NAMES={"quantile-training-v20":"quantile-training-v20","quantile-training-v20-prospective":"quantile-training-v20-future","market-state-v19-progress":"market-state-v19-progress","direct-probability-v18":"probability-v18","direct-evidence-v14":"evidence-v14","market-state-v19":"market-state-v19","market-state-v19-prospective":"market-state-v19-future"}
+NAMES={"ce-continuation-v21":"ce-continuation-v21","ce-continuation-v21-prospective":"ce-continuation-v21-future","quantile-training-v20":"quantile-training-v20","quantile-training-v20-prospective":"quantile-training-v20-future","market-state-v19-progress":"market-state-v19-progress","direct-probability-v18":"probability-v18","direct-evidence-v14":"evidence-v14","market-state-v19":"market-state-v19","market-state-v19-prospective":"market-state-v19-future"}
 def read_public_snapshot(study,root="/public"):
     directory=pathlib.Path(root)/"forecast-serving"/NAMES[study]
     pointer=json.loads((directory/"index.json").read_bytes());identity=pointer["report_sha256"]
