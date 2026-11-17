@@ -1,0 +1,77 @@
+name: Validate categorical continuation without recording v21
+# Locator assertions preserve the deployed CSP; no unsafe-eval exception.
+on:
+  workflow_run:
+    workflows: [Deploy matched forecasting evidence study v14]
+    types: [completed]
+    branches: [compute-observatory]
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/validate-continuation-v21-ui.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: continuation-v21-ui-validation
+  cancel-in-progress: false
+jobs:
+  browser:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Fetch current published source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          SOURCE_SHA=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/compute-observatory" --jq .object.sha)
+          gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+          echo "PUBLICATION_SOURCE_SHA=$SOURCE_SHA" >> "$GITHUB_ENV"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Check chart JavaScript syntax
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import runpy
+          HTML=runpy.run_path("src/compute_forecast/continuation_ui_v21.py")["HTML"]
+          Path("continuation-ui.js").write_text(HTML.split("<script>",1)[1].split("</script>",1)[0])
+          PY
+          node --check continuation-ui.js
+      - name: Wait for a complete versioned study
+        id: study
+        run: |
+          python - <<'PY'
+          import json,os,pathlib
+          pointer=pathlib.Path('results/ce-continuation-v21/latest.json')
+          ready=False
+          if pointer.exists():
+              data=json.loads(pathlib.Path(json.loads(pointer.read_bytes())['report_path']).read_bytes())
+              ready=bool(data.get('runs')) and 'parent_development_pinball' in data
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:f.write('ready='+str(ready).lower()+'\n')
+          print('Completed linked study available:',ready)
+          PY
+      - name: Install remote browser dependencies
+        if: steps.study.outputs.ready == 'true'
+        run: |
+          python -m pip install -e '.[dev,forecasting]' modal 'httpx[http2]==0.28.1' playwright
+          python -m playwright install --with-deps chromium
+          python -m pytest
+          python -m compute_forecast.verify_continuation_v21
+      - name: Verify live numerical and interaction contracts
+        if: steps.study.outputs.ready == 'true'
+        run: python scripts/validate_continuation_v21_ui.py
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.study.outputs.ready == 'true'
+        with:
+          name: continuation-v21-ui-${{ github.run_id }}
+          path: artifacts/ce-continuation-v21-validation
+          retention-days: 90
+      - name: Publish PNG validation
+        if: success() && steps.study.outputs.ready == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          V21_PUBLIC_ROOT: artifacts/ce-continuation-v21-validation
+          V21_PUBLIC_KIND: validation
+        run: python scripts/publish_continuation_v21.py
