@@ -12,8 +12,8 @@ def test_proper_asymmetric_loss_and_ordered_decode():
     z=torch.tensor([1.,2.,4.]);y=torch.tensor(2.5)
     scores=torch.tensor([[6.,0.,0.],[0.,6.,0.],[0.,0.,6.]],requires_grad=True)
     v,q,raw=tensor_loss(scores,z,y,1.)
-    expected=sum(max(t*(2.5-float(x)),(t-1)*(2.5-float(x))) for t,x in zip(TAUS,q))/3
-    assert float(v)==pytest.approx(expected);v.backward();assert torch.isfinite(scores.grad).all() and scores.grad.abs().sum()>0
+    expected=sum(max(t*(2.5-float(x.detach())),(t-1)*(2.5-float(x))) for t,x in zip(TAUS,q))/3
+    assert float(v.detach())==pytest.approx(expected);v.backward();assert torch.isfinite(scores.grad).all() and scores.grad.abs().sum()>0
     q,raw,cross=head_quantiles([[0.,0.,1.],[0.,1.,0.],[1.,0.,0.]],[1.,2.,4.])
     assert q==[1.,2.,4.] and raw==[4.,2.,1.] and cross
 def test_ensemble_cohorts_and_convex_pinball():
@@ -35,6 +35,8 @@ def test_candidate_prompt_excludes_labels():
     pytest.importorskip("tinker_cookbook")
     t=dict(origin="2026-01-02",anchor=2.,metadata={},context=[{"date":"2026-01-01","value":2.,"available_at":"2026-01-01T00:00:00Z"},{"date":"2026-01-02","value":2.,"available_at":"2026-01-02T00:00:00Z"}],context_missing_days=40,market_state={},outcomes=[999.,999.,999.])
     d=decision(t,7,.1,[-.1,0.,.1])
-    assert "999" not in d.text and '"quantile_tau":0.1' in d.text
+    other=copy.deepcopy(t);other["outcomes"]=[12345.,54321.,88888.]
+    assert decision(other,7,.1,[-.1,0.,.1]).text==d.text
+    assert "outcomes" not in json.loads(d.text) and '"quantile_tau":0.1' in d.text
     t["context"][-1]["date"]="2026-01-03"
     with pytest.raises(ValueError):decision(t,7,.1,[-.1,0.,.1])
