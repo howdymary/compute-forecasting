@@ -7,6 +7,11 @@ appropriate station. This does not demonstrate locomotion or balance.
 
 ## Run and inspect
 
+[Open the published two-task preview](https://howdymary--mochi-desk-tasks-web.us-east.modal.run/).
+The additive Modal app `mochi-desk-tasks` serves only this preview and its
+measurement files. It has no provider secrets attached and does not replace
+either existing deployment. Deployment: [workflow 44196113940](https://github.com/howdymary/mochi-demo/actions/runs/44196113940).
+
 From the repository root:
 
 ```sh
