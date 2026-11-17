@@ -68,7 +68,7 @@ The [new registration](../configs/probability-v18-prospective.json) fixes seed 1
 
 Continuing exact competition collector medians are unverified. This is therefore an explicitly separate individual-provider transfer cohort with its own source IDs, units and contract hashes. Snapshot collection time does not establish the provider's quote-update timestamp. Missing origin quotes prevent issuance; unavailable outcomes remain pending.
 
-Commitments bind probabilities, quantiles, input vintages, model/configuration hashes and actual issuance/publication receipts. Final outcome analysis is locked until February 1, 2027 UTC; collection and issuance stop after the registered eight-week panel. No new training occurs. Existing panels and the November 23 gate remain unchanged.
+Commitments bind probabilities, quantiles, attributed public price contexts, input-vintage hashes, model/configuration hashes and actual issuance/publication receipts. The public HTTP response must match the commitment hash before the deadline. This verifies availability, not an independent trusted timestamp. Origin anchors and every public input date are checked before issuance; existing shared-volume reload/read locking is preserved. Final outcome analysis is locked until February 1, 2027 UTC; collection and issuance stop after the registered eight-week panel. A separate three-query synthetic read-only preflight checks the deployed credentials, tokenizer and selected model access before activation. Per-query timeouts, persistence fallbacks and sanitized failure receipts keep failed methods visible; synthetic probe outputs are never market forecasts. No new training occurs. Existing panels and the November 23 gate remain unchanged.
 
 ## Reproduce and verify
 
@@ -78,7 +78,7 @@ After installing the project's ordinary Python dependencies, the following crede
 
 It does not regenerate hosted model weights or claim stochastic training is byte-identical. Exact source hashes and the official CSV preservation check are included.
 
-Authorized full data rebuilding runs probability_data_v18 on Modal against the unchanged pack; audit-probability-v18.yml performs the tokenizer, storage, support and custom-gradient gates. train-probability-v18.yml executes the bounded campaign. publish-probability-v18.yml assembles retained outputs without repeating optimization. The dedicated UI workflow publishes desktop/mobile PNGs. Re-running an incomplete matching model is refused until its exact recovery state is resolved.
+Authorized full data rebuilding runs probability_data_v18 on Modal against the unchanged pack; audit-probability-v18.yml performs the tokenizer, storage, support and custom-gradient gates. train-probability-v18.yml executes the bounded campaign. publish-probability-v18.yml assembles retained outputs without repeating optimization. The [credential-free verification workflow](../.github/workflows/verify-probability-v18-public.yml) runs the same arithmetic and contract checks using only public artifacts. The dedicated UI workflow publishes desktop/mobile PNGs. Re-running an incomplete matching model is refused until its exact recovery state is resolved.
 
 Public artifacts permit arithmetic verification without Tinker or Modal credentials. Full numerical data rebuilding needs pack access; private checkpoint regeneration needs authorized Tinker access. Provider charges remain unknown when no receipt is available.
 
