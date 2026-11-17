@@ -20,7 +20,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - run: python -m pip install -e . modal
+      - run: python -m pip install -e . modal 'httpx[http2]==0.28.1'
       - name: Inspect only public volume metadata
         env:
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
@@ -47,7 +47,25 @@ jobs:
           value={"warmups":warmups,"cache_expiry_wait_seconds":16,"requests":rows,"new_optimizer_updates":0,"model_calls":0}
           pathlib.Path("artifacts/probability-v18-serving-diagnostic/http.json").write_text(json.dumps(value,indent=2)+"\n")
           print(json.dumps(value))
+          import httpx
+          conditions=[]
+          for label,h2 in (("pooled_http1",False),("pooled_http2",True),("pooled_http2_repeat",True),("pooled_http1_repeat",False)):
+              with httpx.Client(http2=h2,timeout=15,limits=httpx.Limits(max_connections=6,max_keepalive_connections=6),headers={"Accept-Encoding":"identity"}) as client:
+                  def pooled(path):
+                      start=time.monotonic();row={"path":path}
+                      try:
+                          response=client.get(base+path);raw=response.content;value=response.json()
+                          row.update(status=response.status_code,bytes=len(raw),sha256=hashlib.sha256(raw).hexdigest(),study_id=value.get("study_id"),http_version=response.http_version,request_id=response.headers.get("X-Compute-Request-ID"))
+                      except Exception as error:row["error_type"]=type(error).__name__
+                      row["elapsed_seconds"]=time.monotonic()-start
+                      return row
+                  with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:results=list(pool.map(pooled,paths))
+                  conditions.append({"condition":label,"requests":results})
+          comparison={"fresh_connection_http1":rows,"pooled_conditions":conditions,"new_optimizer_updates":0,"model_calls":0}
+          pathlib.Path("artifacts/probability-v18-serving-diagnostic/transports.json").write_text(json.dumps(comparison,indent=2)+"\n")
+          print(json.dumps(comparison))
           assert all(row.get("status")==200 for row in warmups+rows),"A public route failed the strict post-expiry probe"
+          assert all(row.get("status")==200 for condition in conditions for row in condition["requests"]),"A pooled transport failed the strict probe"
           PY
       - name: Read only public HTTP timing logs
         if: always()
