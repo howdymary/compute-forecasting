@@ -26,9 +26,11 @@ def verify_shapes(page,source):
     assert page.evaluate("document.documentElement.scrollWidth<=innerWidth"),"Horizontal page overflow"
     assert page.locator("#case option").count()==len(source["cases"]["retrospective"])
     assert page.locator("#prices circle").count()>0
-    for selector in ("#prices text","#distribution text"):
-        assert page.locator(selector).first.evaluate("(e)=>parseFloat(getComputedStyle(e).fontSize)*e.getScreenCTM().a")>=11,"Unreadable axis"
     assert page.evaluate("async()=>{await document.fonts.load('24px Caveat');await document.fonts.ready;return document.fonts.check('24px Caveat')}"),"Annotation font unavailable"
+    for selector in ("#prices text","#distribution text"):
+        page.wait_for_function("(selector)=>{let e=document.querySelector(selector);return e&&parseFloat(getComputedStyle(e).fontSize)*e.getScreenCTM().a>=11}",arg=selector,timeout=5000)
+        size=page.locator(selector).first.evaluate("(e)=>parseFloat(getComputedStyle(e).fontSize)*e.getScreenCTM().a")
+        assert size>=11,("Unreadable settled axis",selector,size)
 def interact(page,source,touch):
     page.locator("#prices circle").first.focus();page.keyboard.press("Enter")
     value=json.loads(page.locator("#inspection").inner_text());assert value["kind"]=="Historical observed median"
