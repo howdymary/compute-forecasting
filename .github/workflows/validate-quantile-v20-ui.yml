@@ -1,4 +1,5 @@
 name: Validate quantile forecasts without recording v20
+# Locator assertions preserve the deployed CSP; no unsafe-eval exception.
 on:
   workflow_run:
     workflows: [Deploy matched forecasting evidence study v14]

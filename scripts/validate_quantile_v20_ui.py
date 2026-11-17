@@ -1,7 +1,7 @@
 """PNG-only verification of the actual deployed quantile interface and source arithmetic."""
 import asyncio,hashlib,json,os,pathlib,time
 import httpx
-from playwright.async_api import async_playwright
+from playwright.async_api import async_playwright,expect
 from compute_forecast.verify_quantile_v20 import verify
 BASE="https://howdymary--compute-forecast-evidence-v14-web.us-east.modal.run"
 out=pathlib.Path("artifacts/quantile-training-v20-validation");out.mkdir(parents=True,exist_ok=True)
@@ -43,15 +43,15 @@ async def main():
         assert await page.locator("#pins").text_content()==pin,"Pin mutated with selection"
         before=await page.locator("#case").input_value();cp=await page.locator("#checkpoint").input_value()
         await page.locator("#refresh").click()
-        await page.wait_for_function("document.getElementById('status').textContent.includes('actual optimizer updates')")
+        await expect(page.locator("#status")).to_contain_text("actual optimizer updates")
         assert await page.locator("#case").input_value()==before and await page.locator("#checkpoint").input_value()==cp
         assert await page.evaluate("document.activeElement.id")=="refresh"
         async def fail(route):await route.fulfill(status=503,json={"status":"test_error"})
         await page.route("**/api/quantile-v20",fail);chart=await page.locator("#price-chart").inner_html()
-        await page.locator("#refresh").click();await page.wait_for_function("document.getElementById('status').textContent.includes('Retaining the last verified chart')")
+        await page.locator("#refresh").click();await expect(page.locator("#status")).to_contain_text("Retaining the last verified chart")
         assert await page.locator("#price-chart").inner_html()==chart
         await page.unroute("**/api/quantile-v20",fail);await page.locator("#refresh").click()
-        await page.wait_for_function("document.getElementById('status').textContent.includes('actual optimizer updates')")
+        await expect(page.locator("#status")).to_contain_text("actual optimizer updates")
         assert not errors,errors
         mobile=await browser.new_context(viewport={"width":390,"height":844},device_scale_factor=1,is_mobile=True,has_touch=True,reduced_motion="reduce")
         m=await mobile.new_page();m.on("pageerror",lambda error:errors.append(str(error)))
