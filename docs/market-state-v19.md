@@ -22,7 +22,7 @@ The frozen Pacific pack checksum is `f0b52af28c52545732208bcc4905facd9b941aa5779
 
 The audit found 571,191 H100/A100 rows and 239,580 daily provider/configuration groups before final eligibility filtering. The registered preparation retained **314 training windows / 942 horizon examples**, 12 source-defined groups, eight providers, and 90 distinct training origin dates. Fifty-seven windows had changed seven-day prices. Other-provider return context was available on 89.49% of training windows. Development has 16 seven-day cases on two dates; retrospective evaluation has 24 on three reused, dependent dates and eight eligible groups.
 
-Windows overlap. These counts are not independent market experiments. Historical timestamps are source-reported snapshots in a frozen pack, not independent proof of original public availability.
+Windows overlap. These counts are not independent market experiments. The base-model pretraining cutoff and historical outcome exposure are not established; origin-safe prompts do not prove absence of pretrained knowledge. Historical timestamps are source-reported snapshots in a frozen pack, not independent proof of original public availability.
 
 Targets are daily medians within source / provider / GPU / instrument / tier / SKU / region / node groups. They are **new targets**, not the official collector medians, persistent listings, or executed transactions. Ambiguous same-timestamp groups are excluded before performance inspection. Missing region/node metadata remains missing.
 
