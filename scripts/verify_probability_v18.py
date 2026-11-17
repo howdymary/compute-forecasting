@@ -1,7 +1,7 @@
 """Credential-free reconstruction of saved categorical forecasts and matched arithmetic."""
 from __future__ import annotations
 import argparse,hashlib,json,pathlib,statistics
-from compute_forecast.probability_v18 import digest,quantiles,crps,summarize
+from compute_forecast.probability_v18 import digest,quantiles,crps,summarize,support
 from compute_forecast.direct_forecast_v12 import cell_loss
 from compute_forecast.pricing_contract import FORECAST_SHA
 from compute_forecast.probability_analysis_v18 import diagnostics,paired
@@ -15,9 +15,15 @@ def check(folder):
         for item in read(manifest)["files"]:
             p=(root/item["path"]).resolve();assert p.is_relative_to(root.resolve())
             raw=p.read_bytes();assert len(raw)==item["bytes"] and hashlib.sha256(raw).hexdigest()==item["sha256"]
+    case_index={c["task_id"]:c for phase in ("development","retrospective") for c in report["cases"].get(phase,[])}
+    for c in case_index.values():assert all(r["date"]<=c["origin"] for r in c["history"])
     def verify_evaluation(ev):
         cells=ev["cells"];keys=[(r["series_id"],r["origin"],r["horizon_days"]) for r in cells];assert len(keys)==len(set(keys))
         for r in cells:
+            t=case_index[r["task_id"]];index=(1,3,7).index(r["horizon_days"])
+            assert r["series_id"]==t["series_id"] and r["origin"]==t["origin"]
+            assert r["target_date"]==t["target_dates"][index] and r["outcome"]==t["outcomes"][index]
+            assert r["support_prices"]==support(t["anchor"],report["log_levels"])
             assert len(r["probabilities"])==len(r["support_prices"])==report["config"]["distribution"]["n_levels"]
             assert r["probability_sha256"]==digest(r["probabilities"])
             q=quantiles(r["probabilities"],r["support_prices"]);assert q==[r[k] for k in ("q10","q50","q90")]
@@ -28,6 +34,27 @@ def check(folder):
     if report["base"]:
         for phase in ("development","retrospective"):verify_evaluation(report["base"][phase])
         baseline={(r["series_id"],r["origin"],r["horizon_days"]) for r in report["base"]["retrospective"]["cells"]}
+    completed_candidates=[]
+    for candidate in report["all_candidates"]:
+        folder=root/candidate["artifact_folder"];saved=read(folder/"result.json")
+        assert saved["dataset_sha256"]==report["dataset_sha256"] and saved["protocol_sha256"]==report["protocol_sha256"]
+        assert saved["model"]==report["config"]["model"]
+        assert saved["dataset_equivalent_passes"]==1.0 and saved["example_presentations"]==report["audit"]["phases"]["training"]["horizon_examples"]
+        assert saved["optimizer_updates"]==saved["planned_updates"]==94
+        assert [c["update"] for c in saved["checkpoints"]]==[0,24,47,94]
+        for cp in saved["checkpoints"]:
+            ev=read(folder/("development-"+str(cp["update"])+".json"));verify_evaluation(ev);assert ev["summary"]==cp["development"]
+        assert min(saved["checkpoints"],key=lambda c:(c["development"]["primary_pinball"],c["update"]))==saved["selected"]
+        assert verify_evaluation(read(folder/"evaluation-selected.json"))==baseline
+        completed_candidates.append(saved)
+    for seed in (17,29,43):
+        matched=[r for r in completed_candidates if r["seed"]==seed]
+        if matched:
+            assert len({r["batch_order_sha256"] for r in matched})==1
+            assert len({r["tokenizer"]["backend_sha256"] for r in matched})==1
+            assert len({digest(r["packages"]) for r in matched})==1
+    if report["status"]=="completed":assert len(completed_candidates)==8
+    assert report["optimizer_updates"]==sum(r["optimizer_updates"] for r in completed_candidates)+(report["api_preflight"]["new_optimizer_updates"] if report["api_preflight"] else 0)
     identities=set()
     for run in report["runs"]:
         identity=(run["objective"],run["seed"]);assert identity not in identities;identities.add(identity)
