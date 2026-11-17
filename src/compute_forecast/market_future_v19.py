@@ -70,9 +70,12 @@ def validate(commitment,p,lock):
             assert quantiles(row["probabilities"],row["support_prices"])==[row[k] for k in ("q10","q50","q90")]
     for method in p["methods"]:assert {(r["series_id"],r["horizon_days"]) for r in commitment["rows"] if r["method"]==method}==expected
     return commitment
-def score(commitment,records,at,p,lock):
+def score(commitment,records,at,p,lock,publication_receipt=None):
     validate(commitment,p,lock)
     if utc(at)<utc(p["final_analysis_not_before"]):return {"status":"pending_fixed_analysis_date","not_before":p["final_analysis_not_before"],"outcomes_loaded":False,"cells":[]}
+    if not publication_receipt or publication_receipt.get("commitment_sha256")!=digest(commitment):return {"status":"pending_verified_publication_receipt","cells":[],"outcomes_loaded":False}
+    deadline=utc(commitment["origin"]+"T23:59:59.999999+00:00")+timedelta(minutes=p["issuance_deadline_minutes_after_origin"])
+    if utc(publication_receipt["created_at"])>deadline:return {"status":"ineligible_late_publication","cells":[],"outcomes_loaded":False}
     from .direct_forecast_v12 import cell_loss
     truth=snapshots(records,at,p);cells=[];missing=[]
     for r in commitment["rows"]:

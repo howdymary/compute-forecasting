@@ -52,7 +52,7 @@ async def infer(tasks,p,lock):
     values=await asyncio.gather(*(one(t,h,m) for t in tasks for h in p["horizons"] for m in ("price","market","untuned_price","untuned_market")))
     return values,calls
 @app.function(image=image,cpu=2,memory=4096,timeout=1800,max_containers=1,volumes={"/data":data_volume},secrets=[secret])
-async def execute(p,lock,numeric):
+async def execute(p,lock,numeric,publication_receipts):
     at=datetime.now(timezone.utc);root=pathlib.Path("/data/market-state-v19/future");root.mkdir(parents=True,exist_ok=True)
     if at>=utc(p["limits"]["stop_after_utc"]):raise ValueError("Registered future panel stop reached")
     reg={"protocol":p,"protocol_sha256":digest(p)}
@@ -101,15 +101,32 @@ async def execute(p,lock,numeric):
             data_volume.commit()
         outputs["commitment-"+origin+".json"]=commitment;result.update(status="issued_pending_outcomes",reasons=[],issued_origins=len(list((root/"commitments").glob("*.json"))))
     if lock is not None and at>=utc(p["final_analysis_not_before"]):
-        for file in sorted((root/"commitments").glob("*.json")):outputs["score-"+file.name]=score(json.loads(file.read_bytes()),attempts,at.isoformat(),p,lock)
+        for file in sorted((root/"commitments").glob("*.json")):outputs["score-"+file.name]=score(json.loads(file.read_bytes()),attempts,at.isoformat(),p,lock,publication_receipts.get(file.stem))
     outputs["index.json"]=result;atomic(root/"latest.json",result);data_volume.commit();return outputs
 @app.local_entrypoint()
+def verified_receipts(p):
+    """Server metadata and downloaded archive bytes, not author-entered commit times."""
+    import io,subprocess,zipfile
+    receipts={}
+    if datetime.now(timezone.utc)<utc(p["final_analysis_not_before"]):return receipts
+    for directory in pathlib.Path("results/market-state-v19/future").iterdir():
+        if not directory.is_dir() or not (directory/"github-publication-receipt.json").exists():continue
+        saved=json.loads((directory/"github-publication-receipt.json").read_bytes());identity=str(saved["id"])
+        server=json.loads(subprocess.check_output(["gh","api","repos/"+os.environ["GITHUB_REPOSITORY"]+"/actions/artifacts/"+identity],text=True))
+        assert server["id"]==saved["id"] and server["created_at"]==saved["created_at"] and server["digest"]==saved["digest"]
+        archive=subprocess.check_output(["gh","api","repos/"+os.environ["GITHUB_REPOSITORY"]+"/actions/artifacts/"+identity+"/zip"])
+        assert hashlib.sha256(archive).hexdigest()==server["digest"].removeprefix("sha256:")
+        with zipfile.ZipFile(io.BytesIO(archive)) as z:
+            for name in z.namelist():
+                if not pathlib.PurePosixPath(name).name.startswith("commitment-"):continue
+                value=json.loads(z.read(name));receipts[value["origin"]]={"artifact_id":server["id"],"created_at":server["created_at"],"archive_digest":server["digest"],"commitment_sha256":digest(value)}
+    return receipts
 def main():
     p=json.loads(pathlib.Path("configs/market-state-v19-prospective.json").read_bytes());pointer=pathlib.Path("results/market-state-v19/latest.json")
     lock=None;numeric=None
     if pointer.exists():
         entry=json.loads(pointer.read_bytes());raw=pathlib.Path(entry["report_path"]).read_bytes();assert hashlib.sha256(raw).hexdigest()==entry["report_sha256"]
         report=json.loads(raw);lock=report.get("model_lock");numeric=report.get("numerical_lock")
-    values=execute.remote(p,lock,numeric);out=pathlib.Path("artifacts/market-state-v19-future");out.mkdir(parents=True,exist_ok=True)
+    values=execute.remote(p,lock,numeric,verified_receipts(p));out=pathlib.Path("artifacts/market-state-v19-future");out.mkdir(parents=True,exist_ok=True)
     for name,value in values.items():(out/name).write_text(json.dumps(value,indent=2,allow_nan=False)+"\n")
     print(json.dumps(values["index.json"]),flush=True)

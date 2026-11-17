@@ -1,0 +1,33 @@
+{
+  "study_id": "market-state-v19-prospective-analysis",
+  "parent_protocol": "configs/market-state-v19-prospective.json",
+  "registered_at": "2026-11-17 08:00:21 UTC",
+  "endpoint": "Seven-day quantile pinball, arithmetic mean across matched eligible contract-origin cells",
+  "operational_seed": 17,
+  "primary_contrast": "market minus price",
+  "secondary_contrasts": [
+    "market minus drift",
+    "market minus numerical_market",
+    "numerical_market minus numerical_price"
+  ],
+  "missingness": "Truth must match exact frozen contract. Use the common truth-resolved cohort across all registered methods; inference failures retain persistence and failure flags. Do not exclude failed predictions.",
+  "uncertainty": {
+    "unit": "entire weekly origin, all its contracts and methods together",
+    "method": "circular moving-block bootstrap of origins, paired contrasts",
+    "block_lengths": [
+      2,
+      4
+    ],
+    "replicates": 2000,
+    "seed": 20261117,
+    "quantiles": [
+      0.025,
+      0.975
+    ],
+    "resampling_rule": "Sample uniformly chosen contiguous circular origin blocks until n origins, truncate to n; retain each sampled origin's sum of paired cell differences and cell count; divide summed losses by summed counts",
+    "limitations": "Sixteen dependent origins may be weakly informative. Intervals are a dependence-sensitivity diagnostic, not a guarantee of nominal coverage."
+  },
+  "analysis_gate": "2027-04-12T00:00:00+00:00",
+  "promotion": "No automatic promotion and no repeated significance tests. Publish all paired estimates, both block sensitivities, coverage, widths, MAE, failures and effective temporal coverage. Inconclusive stays inconclusive.",
+  "future_followup": "Any later challenger or panel extension requires a separate registration before issuance"
+}
