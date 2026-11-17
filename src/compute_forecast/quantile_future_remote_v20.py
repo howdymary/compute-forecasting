@@ -98,19 +98,9 @@ async def execute(p,lock,receipts):
         outputs["commitment-"+origin+".json"]=commitment;index.update(status="produced_pending_publication",reasons=[],model_calls=commitment["model_calls"])
     if lock is not None and at>=utc(p["final_analysis_not_before"]):
         for file in sorted((root/"commitments").glob("*.json")):outputs["score-"+file.name]=score(json.loads(file.read_bytes()),attempts,at.isoformat(),p,lock,receipts.get(file.stem))
-        from .market_analysis_v19 import paired
+        from .quantile_future_v20 import final_analysis
         cells=[r for name,value in outputs.items() if name.startswith("score-") for r in value["cells"]]
-        comparisons=[paired(cells,"quantile_head_selected_seed17",reference) for reference in ("frozen_v19_price17","quantile_head_zero_seed17",lock["selected_ensemble"],"official_drift")]
-        selected="quantile_head_selected_seed17";references=("frozen_v19_price17",lock["selected_ensemble"])
-        tests=[v for v in comparisons if v.get("contrast") in [selected+" minus "+r for r in references]]
-        complete_origins={r["origin"] for r in cells if r["horizon_days"]==7}
-        fully_resolved=len(complete_origins)==p["limits"]["max_weekly_origins"] and all(v["status"]=="resolved" for name,v in outputs.items() if name.startswith("score-"))
-        bounds_ok=len(tests)==2 and all(v.get("estimate") is not None and v["estimate"]<0 and all(v.get("block_sensitivity",{}).get(str(n)) is not None and v["block_sensitivity"][str(n)]["upper"]<0 for n in (2,4)) for v in tests)
-        primary={m:[r for r in cells if r["method"]==m and r["horizon_days"]==7] for m in (selected,)+references}
-        failure_rates={m:sum(r["fallback"] for r in rows)/len(rows) if rows else None for m,rows in primary.items()}
-        failures_ok=all(failure_rates[m] is not None and failure_rates[selected]<=failure_rates[m] for m in references)
-        met=fully_resolved and bounds_ok and failures_ok
-        outputs["paired-analysis.json"]={"study_id":p["study_id"],"comparisons":comparisons,"effective_origins":len(complete_origins),"fully_resolved_registered_panel":fully_resolved,"failure_rates":failure_rates,"registered_positive_criterion_met":met,"decision":"Criterion met; report effect and limitations, no automatic deployment" if met else "Incumbent retained; negative or inconclusive under the registered fixed analysis","no_automatic_promotion":True}
+        outputs["paired-analysis.json"]=final_analysis(cells,p,lock["selected_ensemble"],[v for name,v in outputs.items() if name.startswith("score-")],lock["selected_head_update"])
     index["produced_origins"]=len(list((root/"commitments").glob("*.json")));index["model_lock"]=lock
     outputs["index.json"]=index;atomic(root/"latest.json",index);data_volume.commit();return outputs
 def verified_receipts():

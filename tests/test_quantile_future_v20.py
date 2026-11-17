@@ -50,3 +50,17 @@ def test_fixed_analysis_and_signed_receipt_before_truth():
     assert result["status"]=="pending_verified_publication_receipt"
     receipt={"commitment_sha256":digest(v),"created_at":"2026-12-21T01:01:00+00:00"}
     assert score(v,Poison(),"2027-04-12T00:00:01+00:00",P,lock,receipt)["status"]=="ineligible_late_publication"
+
+def test_positive_system_and_weight_claims_remain_separate():
+    from compute_forecast.quantile_future_v20 import final_analysis
+    cells=[]
+    for i in range(16):
+        for method,loss in (("quantile_head_selected_seed17",.1),("quantile_head_zero_seed17",.1),("frozen_v19_price17",.2),("uniform_probability_pool",.15),("official_drift",.2)):
+            cells.append({"origin":str(i),"series_id":"synthetic_contract","horizon_days":7,"method":method,"loss":loss,"fallback":False})
+    resolved=[{"status":"resolved"} for _ in range(16)]
+    result=final_analysis(cells,P,"uniform_probability_pool",resolved,16)
+    assert result["registered_positive_criterion_met"] and not result["secondary_weight_update_evidence"]
+    assert not final_analysis(cells[:-5],P,"uniform_probability_pool",resolved[:-1],16)["registered_positive_criterion_met"]
+    for r in cells:
+        if r["method"]=="quantile_head_selected_seed17":r["fallback"]=True
+    assert not final_analysis(cells,P,"uniform_probability_pool",resolved,16)["registered_positive_criterion_met"]

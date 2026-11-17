@@ -33,3 +33,20 @@ def validate(value,p,lock):
 def score(value,records,at,p,lock,receipt=None):
     validate(value,p,lock)
     return source_score(value,records,at,p,lock,receipt)
+
+def final_analysis(cells,p,selected_ensemble,resolutions,selected_update):
+    from .market_analysis_v19 import paired
+    selected="quantile_head_selected_seed17";refs=("frozen_v19_price17",selected_ensemble)
+    comparisons=[paired(cells,selected,r) for r in refs+("quantile_head_zero_seed17","official_drift")]
+    origins={r["origin"] for r in cells if r["horizon_days"]==7}
+    complete=len(origins)==p["limits"]["max_weekly_origins"] and len(resolutions)==p["limits"]["max_weekly_origins"] and all(v["status"]=="resolved" for v in resolutions)
+    methods=(selected,)+refs+("quantile_head_zero_seed17",)
+    primary={m:[r for r in cells if r["method"]==m and r["horizon_days"]==7] for m in methods}
+    rates={m:sum(r["fallback"] for r in rows)/len(rows) if rows else None for m,rows in primary.items()}
+    def supported(reference):
+        v=next(v for v in comparisons if v.get("contrast")==selected+" minus "+reference) if any(v.get("contrast")==selected+" minus "+reference for v in comparisons) else {}
+        bound=v.get("estimate") is not None and v["estimate"]<0 and all(v.get("block_sensitivity",{}).get(str(n)) is not None and v["block_sensitivity"][str(n)]["upper"]<0 for n in (2,4))
+        return bound and rates[selected] is not None and rates[reference] is not None and rates[selected]<=rates[reference]
+    system=complete and all(supported(r) for r in refs)
+    weights=complete and selected_update>0 and supported("quantile_head_zero_seed17")
+    return {"study_id":p["study_id"],"comparisons":comparisons,"effective_origins":len(origins),"fully_resolved_registered_panel":complete,"failure_rates":rates,"registered_positive_criterion_met":system,"secondary_weight_update_evidence":weights,"interpretation":"System comparison and head-zero weight-update comparison are separate. Neither implies universal improvement; block intervals are sensitivity analyses, not guaranteed coverage.","decision":"System criterion met; report effect and limitations, no automatic deployment" if system else "Incumbent retained; negative or inconclusive under the registered fixed analysis","no_automatic_promotion":True}
