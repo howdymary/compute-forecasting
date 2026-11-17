@@ -1,0 +1,38 @@
+name: Verify public probability research v18
+on:
+  push:
+    branches: [compute-observatory]
+    paths: ['scripts/verify_probability_v18.py','src/compute_forecast/probability_v18.py','src/compute_forecast/probability_analysis_v18.py','results/probability-v18/latest.json','.github/workflows/verify-probability-v18-public.yml']
+  workflow_run:
+    workflows: [Publish direct probability forecasts v18]
+    types: [completed]
+    branches: [compute-observatory]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Fetch permitted public artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          SOURCE_SHA=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/compute-observatory" --jq .object.sha)
+          gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e '.[dev]'
+      - name: Verify saved distributions, scores and selection without provider credentials
+        run: |
+          mkdir -p artifacts/probability-v18-public-verification
+          PYTHONPATH=src python scripts/verify_probability_v18.py | tee artifacts/probability-v18-public-verification/verification.json
+          python -m pytest tests/test_probability_v18.py tests/test_probability_analysis_v18.py tests/test_probability_future_v18.py -q
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: probability-v18-public-verification-${{ github.run_id }}
+          path: artifacts/probability-v18-public-verification
+          retention-days: 30
