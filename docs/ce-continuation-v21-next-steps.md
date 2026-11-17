@@ -17,8 +17,8 @@ Keep the existing Qwen3.5-4B, LoRA rank 16, input format, 19 price levels, uncha
 Compare three conditions:
 
 1. Frozen incumbent.
-2. Short ordinary categorical CE continuation.
-3. The same continuation with a penalty for departing from the incumbent's full 19-level probabilities on the same training inputs.
+2. The already-completed v21 original-data, ordering-17 additional-update-20 checkpoint, reused as the fixed ordinary-CE control after full compatibility checks.
+3. One new, otherwise matched 20-update continuation with a penalty for departing from the incumbent's full 19-level probabilities on the same training inputs.
 
 Proposed loss:
 
@@ -38,13 +38,13 @@ The aim is not to make intervals uniformly wider. It is to test whether a parent
 Before execution, register a new unused study ID, model/configuration/code hashes, teacher probabilities, eligibility, controls, failure behavior and analysis dates.
 
 - Original 314-window corpus first, so data expansion does not confound the regularization test.
-- Identical examples and batch ordering for matched ordinary/anchored runs.
+- Reuse the exact original-corpus first 20 batches from the registered ordering-17 stream, including offset 480. Compare their identity, optimizer restoration, SDK/model/renderer/tokenizer, learning rate, batch size and failure rules against the completed control before accepting reuse.
 - Learning rate 0.00002, batch size 16, at most 20 additional updates.
-- Save additional updates 0, 5, 10 and 20; checkpoint zero stays eligible.
-- Start with ordering seed 17: two updated runs, at most 40 optimizer updates total. This is a mechanism pilot, not a seed-robust accuracy claim.
-- Check technical checkpoint capacity before launch. At updates 5, 10 and 20, two runs require up to six new retained states; checkpoint zero reuses the parent. If preservation capacity is unavailable, gate execution. Do not delete existing checkpoints or change billing. Any additional ordering run needs its own prespecified gate and sufficient retention capacity.
+- Keep update zero as the frozen incumbent reference. Save additional updates 5, 10 and 20 for recovery and diagnostics, but **fix update 20 as the primary comparison endpoint**. Do not give the new arm extra checkpoint-selection opportunities absent from the retained control.
+- One new ordering-17 run, at most 20 optimizer updates. Do not repeat the completed ordinary-CE updates. This is a mechanism pilot, not a seed-robust accuracy claim.
+- Check technical checkpoint capacity before launch. One run requires up to three new retained states at updates 5, 10 and 20; checkpoint zero reuses the parent. If preservation capacity is unavailable, gate execution. Do not delete existing checkpoints or change billing. Any additional ordering run needs its own prespecified gate and sufficient retention capacity.
 - Same optimizer-state restoration and inference interface as v21.
-- Development seven-day pinball selects checkpoints; report median MAE, coverage, width, probability drift, no-change mass and failures alongside it.
+- Primary contrast: anchored update 20 versus retained ordinary-CE update 20. Secondary: anchored update 20 versus the frozen incumbent. Development seven-day pinball, median MAE, coverage, width, probability drift, no-change mass and failures remain diagnostic; no endpoint or seed is selected using retrospective scores.
 - Numerical controls and existing fixed ensembles remain available only on matching cells.
 - No new architecture, price support, quantile heads, RL, news or BLS feature intervention in this comparison.
 
@@ -85,3 +85,11 @@ The [read-only exposure workflow](../.github/workflows/audit-ce-continuation-exp
 Restricting both corpora to the same evaluation-series identities and seven-day horizon, the unchanged-level fraction is **77.73%** in the original historical pool and **77.99%** in the expanded pool. There are no small nonzero changes mapped to zero in those matched seven-day slices. The retrospective cohort has 15 unchanged outcomes out of 24, or 62.5%.
 
 This identifies a marginal difference in the observed check period, not a proven causal explanation or evidence of a persistent market regime. It also argues against treating near-zero rounding as the principal demonstrated failure. Both corpora remain dominated by unchanged labels, while the full expanded pool includes a different mix of configurations. Conditional prediction quality cannot be deduced from those aggregate frequencies alone.
+
+## Attribution and a fixed control
+
+This proposal adapts an established idea: preserve a previous network's output probabilities during further supervised training. [Li and Hoiem, Learning without Forgetting](https://zhizhongli.vision/projects/learning-without-forgetting/) appeared at ECCV 2016 and in an extended TPAMI 2017 article. Their experiments concern visual tasks; they are not evidence of GPU-price forecasting gains.
+
+The retained ordinary-CE control must match the new procedure exactly except for the registered regularizer. If complete compatibility cannot be established, register a new matched design rather than calling an incompatible old result a control. A wholly duplicated continuation is not needed merely to republish existing results.
+
+The 20-update endpoint is a small, fixed mechanism test. It is not asserted to be an optimal training duration. Existing v21 operational identities, selections, future commitments and analysis gates remain unchanged.
