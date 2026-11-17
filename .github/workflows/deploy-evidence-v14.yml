@@ -2,7 +2,7 @@ name: Deploy matched forecasting evidence study v14
 on:
   push:
     branches: [compute-observatory]
-    paths: ['src/compute_forecast/evidence_ui_v14.py', 'src/compute_forecast/evidence_web_v14.py', '.github/workflows/deploy-evidence-v14.yml']
+    paths: ['src/compute_forecast/evidence_ui_v14.py', 'src/compute_forecast/evidence_web_v14.py', 'src/compute_forecast/probability_ui_v18.py', 'src/compute_forecast/probability_web_v18.py', '.github/workflows/deploy-evidence-v14.yml']
   workflow_run:
     workflows: [Publish matched evidence forecasting research v14]
     types: [completed]

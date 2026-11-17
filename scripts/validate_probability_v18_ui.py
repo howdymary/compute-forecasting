@@ -74,11 +74,21 @@ with sync_playwright() as p:
         state["empty"]=True;page.locator("#refresh").click();ready(page);expect(page.locator("#empty")).to_be_visible()
         state["empty"]=False;page.locator("#refresh").click();ready(page);context.close()
     base="https://howdymary--compute-forecast-evidence-v14-web.us-east.modal.run"
+    for attempt in range(18):
+        try:
+            with urllib.request.urlopen(base+"/probability",timeout=90) as response:
+                assert response.status==200
+                deployed_html=response.read().decode()
+            if deployed_html==HTML:break
+        except Exception:
+            if attempt==17:raise
+        time.sleep(5)
+    else:raise AssertionError("Live HTML is not the current figure implementation")
     def probe(i):
-        route="/api/probability-v18" if i%2 else "/api/evidence-v14"
+        route=("/api/probability-v18","/api/evidence-v14","/api/probability-v18/future")[i%3]
         with urllib.request.urlopen(base+route,timeout=90) as response:
             assert response.status==200;value=json.load(response)
-            assert value["study_id"]==("direct-probability-v18" if i%2 else "direct-evidence-v14")
+            assert value["study_id"]==("direct-probability-v18","direct-evidence-v14","direct-probability-v18-prospective")[i%3]
         return True
     with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:assert all(pool.map(probe,range(12)))
     for attempt in range(12):

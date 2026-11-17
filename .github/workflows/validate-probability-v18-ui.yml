@@ -45,11 +45,6 @@ jobs:
           (root/'script.js').write_text(HTML.split('<script>',1)[1].split('</script>',1)[0])
           PY
           node --check artifacts/probability-v18-ui/script.js
-      - name: Deploy current read-only figures
-        env:
-          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
-          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
-        run: modal deploy -m compute_forecast.evidence_web_v14
       - name: Inspect actual desktop and mobile flows without recording
         run: PYTHONPATH=src python scripts/validate_probability_v18_ui.py
       - name: Publish immutable PNG validation
