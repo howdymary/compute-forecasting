@@ -172,6 +172,7 @@ def verified_receipts(p):
     for directory in sorted(pathlib.Path("results/market-state-v19/future").iterdir()):
         if not directory.is_dir() or not (directory/"attestation.bundle.json").exists():continue
         for origin,receipt in module.verify(directory).items():
+            if origin in receipts:assert receipts[origin]["commitment_sha256"]==receipt["commitment_sha256"],"Conflicting sealed commitments"
             if origin not in receipts or receipt["created_at"]<receipts[origin]["created_at"]:receipts[origin]=receipt
     return receipts
 @app.local_entrypoint()

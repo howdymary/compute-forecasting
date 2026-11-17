@@ -29,9 +29,15 @@ def verify(root,repo=None):
         receipts[value["origin"]]={"eligible_publication_window":timely,"created_at":min(times).isoformat(),"commitment_sha256":digest(value),"manifest_sha256":hashlib.sha256((root/"commitment-manifest.json").read_bytes()).hexdigest(),"proof":"Verified signer/ref, artifact digest and signed transparency timestamp"}
     write(root/"attestation-verification.json",{"verified":result,"publication_timestamps":[t.isoformat() for t in sorted(times)],"forecast_receipts":receipts,"kind":manifest["kind"]})
     if receipts:
-        index_path=root/"index.json";index=json.loads(index_path.read_bytes());index["verified_publication_receipts"]={**index.get("verified_publication_receipts",{}),**receipts}
+        index_path=root/"index.json";index=json.loads(index_path.read_bytes());merged=dict(index.get("verified_publication_receipts",{}))
+        for origin,receipt in receipts.items():
+            if origin in merged:
+                assert merged[origin]["commitment_sha256"]==receipt["commitment_sha256"],"Conflicting sealed commitments"
+                if datetime.fromisoformat(merged[origin]["created_at"])<=datetime.fromisoformat(receipt["created_at"]):continue
+            merged[origin]=receipt
+        index["verified_publication_receipts"]=merged
         index["issued_origins"]=sum(r.get("eligible_publication_window",False) for r in index["verified_publication_receipts"].values())
-        index["status"]="issued_pending_outcomes" if any(r["eligible_publication_window"] for r in receipts.values()) else "ineligible_publication_window"
+        index["status"]="issued_pending_outcomes" if any(r["eligible_publication_window"] for r in merged.values()) else "ineligible_publication_window"
         for case in index.get("forecast_cases",[]):case["publication_receipt"]=receipts.get(case["origin"],case.get("publication_receipt"))
         write(index_path,index)
     return receipts
