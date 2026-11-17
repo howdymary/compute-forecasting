@@ -2,7 +2,7 @@ name: Audit actual continuation training exposure v21
 on:
   push:
     branches: [compute-observatory]
-    paths: [.github/workflows/audit-ce-continuation-exposure-v21.yml]
+    paths: [.github/workflows/audit-ce-continuation-exposure-v21.yml, scripts/audit_continuation_exposure_v21.py]
   workflow_run:
     workflows: [Expand categorical continuation after development gate v21]
     types: [completed]

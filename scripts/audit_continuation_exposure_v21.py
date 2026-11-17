@@ -8,7 +8,7 @@ data=read("inputs/ce-continuation-v21/dataset.json");assert digest(data)==bindin
 pointer=read("results/ce-continuation-v21/latest.json");raw=pathlib.Path(pointer["report_path"]).read_bytes();assert hashlib.sha256(raw).hexdigest()==pointer["report_sha256"]
 report=json.loads(raw);assert report["protocol_sha256"]==digest(cfg)==data["protocol_sha256"]
 levels=data["log_levels"];zero=levels.index(0)
-def audit(records):
+def audit(records,include_horizons=True):
     bins=collections.Counter();providers=collections.Counter();families=collections.Counter();months=collections.Counter();instruments=collections.Counter();unique=set();flat=small=outside=0;errors=[]
     for task,h in records:
         y=task["outcomes"][(1,3,7).index(h)];z=support(task["anchor"],levels);label=bin_index(z,y)
@@ -16,11 +16,15 @@ def audit(records):
         outside+=y<z[0] or y>z[-1];errors.append(abs(z[label]-y)/task["anchor"])
         unique.add((task["task_id"],h));providers[task["metadata"]["provider"]]+=1;families[task["metadata"]["family"]]+=1;months[task["origin"][:7]]+=1;instruments[task["metadata"]["instrument_class"]]+=1
     n=sum(bins.values());assert n==len(records)
-    return {"presentations":n,"unique_horizon_examples":len(unique),"repeated_presentations":n-len(unique),"actual_unchanged":flat,"actual_unchanged_fraction":flat/n if n else None,"quantized_unchanged":bins[zero],"quantized_unchanged_fraction":bins[zero]/n if n else None,"changed_but_quantized_unchanged":small,"out_of_support":outside,"mean_relative_quantization_error":sum(errors)/n if n else None,"classes":[{"level_index":i,"log_return":v,"presentations":bins[i]} for i,v in enumerate(levels)],"providers":dict(providers),"families":dict(families),"origin_months":dict(months),"instruments":dict(instruments),"independence":"Presentations and overlapping windows are not independent market experiments"}
+    result={"presentations":n,"unique_horizon_examples":len(unique),"repeated_presentations":n-len(unique),"actual_unchanged":flat,"actual_unchanged_fraction":flat/n if n else None,"quantized_unchanged":bins[zero],"quantized_unchanged_fraction":bins[zero]/n if n else None,"changed_but_quantized_unchanged":small,"out_of_support":outside,"mean_relative_quantization_error":sum(errors)/n if n else None,"classes":[{"level_index":i,"log_return":v,"presentations":bins[i]} for i,v in enumerate(levels)],"providers":dict(providers),"families":dict(families),"origin_months":dict(months),"instruments":dict(instruments),"independence":"Presentations and overlapping windows are not independent market experiments"}
+    if include_horizons:result["by_horizon"]={str(h):audit([(t,j) for t,j in records if j==h],False) for h in (1,3,7)}
+    return result
+evaluation_series={v["series_id"] for v in report["baseline"]["retrospective"]["cells"] if v["horizon_days"]==7}
 corpora={}
 for arm in ("same","expanded"):
     assert digest(data["training"][arm])==binding["training_corpus_sha256"][arm]
     corpora[arm]=audit([(t,h) for t in data["training"][arm] for h in (1,3,7)])
+    corpora[arm]["same_evaluation_series_7d"]=audit([(t,7) for t in data["training"][arm] if t["series_id"] in evaluation_series],False)
 runs=[]
 for run in report["runs"]:
     s=run["state"];plan=batches(data["training"][s["arm"]],s["seed"],cfg["model"]["max_updates"],cfg["model"]["batch_size"],cfg["parent"]["examples_seen_at_parent"])
@@ -28,6 +32,8 @@ for run in report["runs"]:
     full=audit([record for group in plan for record in group]);selected=audit([record for group in plan[:s["selected"]["update"]] for record in group])
     assert full["presentations"]==s["example_presentations"] and full["unique_horizon_examples"]==s["unique_horizon_examples_presented"] and full["repeated_presentations"]==s["repeated_horizon_presentations"]
     assert selected["presentations"]==s["selected"]["update"]*cfg["model"]["batch_size"]
+    full["same_evaluation_series_7d"]=audit([(t,h) for group in plan for t,h in group if h==7 and t["series_id"] in evaluation_series],False)
+    selected["same_evaluation_series_7d"]=audit([(t,h) for group in plan[:s["selected"]["update"]] for t,h in group if h==7 and t["series_id"] in evaluation_series],False)
     runs.append({"arm":s["arm"],"ordering_seed":s["seed"],"selected_additional_update":s["selected"]["update"],"batch_order_sha256":s["batch_order_sha256"],"full_run":full,"selected_checkpoint_prefix":selected})
 value={"study_id":"ce-continuation-v21-exposure-audit","source_report_path":pointer["report_path"],"source_report_sha256":pointer["report_sha256"],"dataset_sha256":digest(data),"protocol_sha256":digest(cfg),"corpora":corpora,"runs":runs,"source_attribution":report["source_attribution"],"new_optimizer_updates":0,"new_inference_calls":0,"raw_inputs_published":False,"limitations":["Post-hoc descriptive audit, not a causal test","The model conditions on history and metadata; unconditional class frequencies do not determine conditional forecast quality","No retrospective outcomes are used for configuration or checkpoint selection","No future or protected outcomes retrieved"]}
 out=pathlib.Path("artifacts/ce-continuation-v21-exposure");out.mkdir(parents=True,exist_ok=True)
