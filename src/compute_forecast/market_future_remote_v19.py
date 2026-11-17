@@ -153,7 +153,6 @@ async def execute(p,lock,numeric,publication_receipts):
     outputs["index.json"]=result;atomic(root/"latest.json",result);data_volume.commit();return outputs
 def verified_receipts(p):
     receipts={}
-    if datetime.now(timezone.utc)<utc(p["final_analysis_not_before"]):return receipts
     import importlib.util
     spec=importlib.util.spec_from_file_location("attest_market_v19",pathlib.Path("scripts/attest_market_v19.py"));module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
     for directory in sorted(pathlib.Path("results/market-state-v19/future").iterdir()):
@@ -169,5 +168,11 @@ def main():
         entry=json.loads(pointer.read_bytes());raw=pathlib.Path(entry["report_path"]).read_bytes();assert hashlib.sha256(raw).hexdigest()==entry["report_sha256"]
         report=json.loads(raw);lock=report.get("model_lock");numeric=report.get("numerical_lock")
     values=execute.remote(p,lock,numeric,verified_receipts(p));out=pathlib.Path("artifacts/market-state-v19-future");out.mkdir(parents=True,exist_ok=True)
+    known={}
+    for file in pathlib.Path("results/market-state-v19/future").glob("*/commitment-*.json"):known[digest(json.loads(file.read_bytes()))]=str(file)
+    run=os.environ["GITHUB_RUN_ID"]+("-attempt-"+os.environ["GITHUB_RUN_ATTEMPT"] if int(os.environ.get("GITHUB_RUN_ATTEMPT","1"))>1 else "")
+    for name,value in values.items():
+        if name.startswith("commitment-"):known[digest(value)]="results/market-state-v19/future/"+run+"/"+name
+    for case in values["index.json"].get("forecast_cases",[]):case["artifact_path"]=known.get(case["commitment_sha256"])
     for name,value in values.items():(out/name).write_text(json.dumps(value,indent=2,allow_nan=False)+"\n")
     print(json.dumps(values["index.json"]),flush=True)

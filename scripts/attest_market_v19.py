@@ -3,8 +3,8 @@ import hashlib,json,os,pathlib,subprocess,sys
 from datetime import datetime,timezone
 def write(p,x):p.write_text(json.dumps(x,indent=2,allow_nan=False)+"\n")
 def build(root):
-    files=[root/"index.json"]+sorted(root.glob("commitment-*.json"))
-    manifest={"study_id":"market-state-v19-prospective","kind":"forecast_publication" if len(files)>1 else "readiness_no_forecasts","source_sha":os.environ.get("GITHUB_SHA"),"files":[{"name":f.name,"sha256":hashlib.sha256(f.read_bytes()).hexdigest()} for f in files]}
+    commitments=sorted(root.glob("commitment-*.json"));files=commitments or [root/"index.json"]
+    manifest={"study_id":"market-state-v19-prospective","kind":"forecast_publication" if commitments else "readiness_no_forecasts","source_sha":os.environ.get("GITHUB_SHA"),"files":[{"name":f.name,"sha256":hashlib.sha256(f.read_bytes()).hexdigest()} for f in files]}
     write(root/"commitment-manifest.json",manifest)
 def verify(root,repo=None):
     repo=repo or os.environ["GITHUB_REPOSITORY"]
@@ -25,6 +25,10 @@ def verify(root,repo=None):
         from compute_forecast.probability_v18 import digest
         value=json.loads(path.read_bytes());receipts[value["origin"]]={"created_at":min(times).isoformat(),"commitment_sha256":digest(value),"manifest_sha256":hashlib.sha256((root/"commitment-manifest.json").read_bytes()).hexdigest(),"proof":"Verified signer/ref, artifact digest and signed transparency timestamp"}
     write(root/"attestation-verification.json",{"verified":result,"publication_timestamps":[t.isoformat() for t in sorted(times)],"forecast_receipts":receipts,"kind":manifest["kind"]})
+    if receipts:
+        index_path=root/"index.json";index=json.loads(index_path.read_bytes());index["verified_publication_receipts"]=receipts
+        for case in index.get("forecast_cases",[]):case["publication_receipt"]=receipts.get(case["origin"],case.get("publication_receipt"))
+        write(index_path,index)
     return receipts
 if __name__=="__main__":
     operation,root=sys.argv[1],pathlib.Path(sys.argv[2])
