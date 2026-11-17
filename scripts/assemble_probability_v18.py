@@ -69,7 +69,7 @@ def main():
         for name in ("ce","crps"):
             runs=[r for r in final if r["objective"]==name]
             if runs:
-                aggregate[name]={"seeds":len(runs),"mean_primary_pinball":mean([r["retrospective"]["primary_pinball"] for r in runs]),"seed_primary_losses":[{"seed":r["seed"],"pinball":r["retrospective"]["primary_pinball"],"selected_update":r["selected"]["update"]} for r in runs],"mean_coverage":mean([r["retrospective"]["by_horizon"]["7"]["coverage"] for r in runs]),"mean_width":mean([r["retrospective"]["by_horizon"]["7"]["width"] for r in runs]),"mean_crps":mean([r["retrospective"]["by_horizon"]["7"]["crps"] for r in runs])}
+                aggregate[name]={"seeds":len(runs),"mean_primary_pinball":mean([r["retrospective"]["primary_pinball"] for r in runs]),"seed_primary_losses":[{"seed":r["seed"],"pinball":r["retrospective"]["primary_pinball"],"selected_update":r["selected"]["update"]} for r in runs],"mean_coverage":mean([r["retrospective"]["by_horizon"]["7"]["coverage"] for r in runs]),"mean_width":mean([r["retrospective"]["by_horizon"]["7"]["width"] for r in runs]),"mean_crps":mean([r["retrospective"]["by_horizon"]["7"]["crps"] for r in runs]),"mean_median_mae":mean([r["retrospective"]["by_horizon"]["7"]["median_mae"] for r in runs])}
         aggregate["base"]={"mean_primary_pinball":base["retrospective"]["summary"]["primary_pinball"],"summary":base["retrospective"]["summary"]}
     paired=[]
     for seed in p["model"]["seeds"]:
@@ -98,14 +98,23 @@ def main():
     if base and aggregate:
         reference=base["retrospective"]["summary"]["primary_pinball"]
         report["retrospective_training_gain"]={obj:{"mean_difference":aggregate[obj]["mean_primary_pinball"]-reference,"improving_seeds":sum(r["retrospective"]["primary_pinball"]<reference and r["selected"]["update"]>0 for r in final if r["objective"]==obj),"scope":"Descriptive historical matched comparison only"} for obj in ("ce","crps") if obj in aggregate}
+    if len(final)==6 and base:
+        starting=base["retrospective"]["summary"]["by_horizon"]["7"]
+        best_native=min(value["summary"]["primary_pinball"] for value in references.values())
+        report["primary_interpretation"]={"scope":"Retrospective seven-day quantile loss on 25 matched cases, 11 series, three dependent dates; three seeds per objective","models":{obj:{"difference_vs_untuned":aggregate[obj]["mean_primary_pinball"]-starting["pinball"],"difference_vs_best_official_reference":aggregate[obj]["mean_primary_pinball"]-best_native,"median_mae_difference_vs_untuned":aggregate[obj]["mean_median_mae"]-starting["median_mae"],"wins_vs_untuned_seeds":report["retrospective_training_gain"][obj]["improving_seeds"]} for obj in ("ce","crps")},"limitations":"Probabilistic score improvement does not establish improved median predictions, every-case improvement, an objective's universal superiority, or prospective accuracy. Original JSON forecasts use a separate six-case seven-day subset; Chronos has no matched origin."}
     write(out/"report.json",report);write(out/"config.json",p);write(out/"audit.json",audit)
-    lines=["# Direct probability forecasting v18","",""+status+". CE and CRPS use the same registered output levels and matched chronological data.","","Retrospective seven-day results; three dependent dates. Prospective improvement is not established.","","| Method | Seven-day pinball | Coverage | Width |","|---|---:|---:|---:|"]
-    if base:lines.append(f'| Untuned probability model | {base["retrospective"]["summary"]["primary_pinball"]:.10f} | {base["retrospective"]["summary"]["by_horizon"]["7"]["coverage"]:.2%} | {base["retrospective"]["summary"]["by_horizon"]["7"]["width"]:.6f} |')
+    lines=["# Direct probability forecasting v18","",""+status+". CE and CRPS use the same registered output levels and matched chronological data.","","Retrospective seven-day results; three dependent dates. Prospective improvement is not established.","","| Method | Seven-day pinball | Median MAE | CRPS | Coverage | Width |","|---|---:|---:|---:|---:|---:|"]
+    if base:lines.append(f'| Untuned probability model | {base["retrospective"]["summary"]["primary_pinball"]:.10f} | {base["retrospective"]["summary"]["by_horizon"]["7"]["median_mae"]:.6f} | {base["retrospective"]["summary"]["by_horizon"]["7"]["crps"]:.6f} | {base["retrospective"]["summary"]["by_horizon"]["7"]["coverage"]:.2%} | {base["retrospective"]["summary"]["by_horizon"]["7"]["width"]:.6f} |')
     for obj in ("ce","crps"):
         if obj in aggregate:
-            a=aggregate[obj];lines.append(f'| {obj.upper()} trained, {a["seeds"]} seeds | {a["mean_primary_pinball"]:.10f} | {a["mean_coverage"]:.2%} | {a["mean_width"]:.6f} |')
+            a=aggregate[obj];lines.append(f'| {obj.upper()} trained, {a["seeds"]} seeds | {a["mean_primary_pinball"]:.10f} | {a["mean_median_mae"]:.6f} | {a["mean_crps"]:.6f} | {a["mean_coverage"]:.2%} | {a["mean_width"]:.6f} |')
     for method,value in references.items():
-        a=value["summary"];lines.append(f'| Native {method} | {a["primary_pinball"]:.10f} | {a["by_horizon"]["7"]["coverage"]:.2%} | {a["by_horizon"]["7"]["width"]:.6f} |')
+        a=value["summary"];lines.append(f'| Native {method} | {a["primary_pinball"]:.10f} | {a["by_horizon"]["7"]["median_mae"]:.6f} | not retained | {a["by_horizon"]["7"]["coverage"]:.2%} | {a["by_horizon"]["7"]["width"]:.6f} |')
+    if report.get("primary_interpretation"):
+        lines.extend(["","## Interpretation","","All comparisons below are descriptive, retrospective and conditional on this registered cohort."])
+        for obj,value in report["primary_interpretation"]["models"].items():
+            lines.append(f'{obj.upper()}: trained-minus-untuned seven-day pinball {value["difference_vs_untuned"]:+.10f}; difference from the best official reference {value["difference_vs_best_official_reference"]:+.10f}; median-MAE difference {value["median_mae_difference_vs_untuned"]:+.6f}. {value["wins_vs_untuned_seeds"]}/3 seeds improved over the common untuned model.')
+        lines.extend(["",report["primary_interpretation"]["limitations"]])
     lines.extend(["",f'Actual optimizer updates including API preflight: {report["optimizer_updates"]}. Complete final runs: {len(final)}/6.',"","All candidate runs, original selections, failures and probability vectors are retained in the versioned results folder. Learning rates and checkpoints are selected on development fields only. The original v14 JSON comparison uses a separate exact-match subset.","","Provider charges are unavailable. This is a direct price-distribution model, separate from the earlier experiment selector."])
     (out/"findings.md").write_text("\n".join(lines)+"\n")
     print(json.dumps({"study_id":p["study_id"],"status":status,"final_runs":len(final),"optimizer_updates":report["optimizer_updates"],"aggregate":aggregate}),flush=True)
