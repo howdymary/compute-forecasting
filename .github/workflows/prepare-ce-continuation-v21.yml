@@ -1,0 +1,45 @@
+name: Prepare categorical continuation corpus v21
+on:
+  push:
+    branches: [compute-observatory]
+    paths: [.github/workflows/prepare-ce-continuation-v21.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: ce-continuation-v21-data
+  cancel-in-progress: false
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - name: Fetch frozen registered source
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: gh api "repos/$GITHUB_REPOSITORY/tarball/$SOURCE_SHA" | tar -xz --strip-components=1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: |
+          python -m pip install -e '.[dev]' modal numpy
+          python -m compileall -q src scripts
+          python -m pytest tests/test_continuation_v21.py
+      - name: Build only compatible pre-cutoff training data on Modal
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: modal run -m compute_forecast.continuation_data_v21
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ce-continuation-v21-data-${{ github.run_id }}
+          path: artifacts/ce-continuation-v21-preflight
+          retention-days: 90
+      - name: Publish data audit and immutable input identity
+        env:
+          GH_TOKEN: ${{ github.token }}
+          V21_PUBLIC_ROOT: artifacts/ce-continuation-v21-preflight
+          V21_PUBLIC_KIND: data
+        run: python scripts/publish_continuation_v21.py
