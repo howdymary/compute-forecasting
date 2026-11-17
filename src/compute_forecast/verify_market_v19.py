@@ -26,6 +26,7 @@ def verify(report):
     for phase,methods in report["controls"]["results"].items():
         for method,value in methods.items():
             assert summarize(value["cells"])==value["summary"]
+            if phase=="retrospective":assert {(r["task_id"],r["horizon_days"]) for r in value["cells"]}==keys
             for r in value["cells"]:assert abs(cell_loss(r["outcome"],[r[k] for k in ("q10","q50","q90")])-r["loss"])<1e-12
     official=pathlib.Path("results/frozen-v1/forecasts.csv")
     assert hashlib.sha256(official.read_bytes()).hexdigest()=="67a043255a716db6bc9b73cd28f9258c30fb299fd8671a9ee3430c0d94cadd80"

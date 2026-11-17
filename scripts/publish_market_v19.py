@@ -1,6 +1,7 @@
 """Publish new-study artifacts using fresh-head nonforce updates."""
 import base64,concurrent.futures,hashlib,json,os,pathlib,subprocess,time
 repo=os.environ["GITHUB_REPOSITORY"];run=os.environ["GITHUB_RUN_ID"]
+if int(os.environ.get("GITHUB_RUN_ATTEMPT","1"))>1:run+="-attempt-"+os.environ["GITHUB_RUN_ATTEMPT"]
 source=pathlib.Path(os.environ.get("V18_PUBLIC_ROOT","artifacts/market-state-v19-audit"));kind=os.environ.get("V18_PUBLIC_KIND","audits")
 def api(path,body=None,method=None):
     args=["gh","api","repos/"+repo+"/"+path]
