@@ -41,7 +41,8 @@ Before execution, register a new unused study ID, model/configuration/code hashe
 - Identical examples and batch ordering for matched ordinary/anchored runs.
 - Learning rate 0.00002, batch16, at most20 additional updates.
 - Save updates0/5/10/20; checkpoint zero stays eligible.
-- Ordering seeds17/29: four updated runs, at most80 optimizer updates total.
+- Start with ordering seed17: two updated runs, at most40 optimizer updates total. This is a mechanism pilot, not a seed-robust accuracy claim.
+- Check technical checkpoint capacity before launch. At updates5/10/20, two runs require up to six new retained states; checkpoint zero reuses the parent. If preservation capacity is unavailable, gate execution. Do not delete existing checkpoints or change billing. Any additional ordering run needs its own prespecified gate and sufficient retention capacity.
 - Same optimizer-state restoration and inference interface as v21.
 - Development seven-day pinball selects checkpoints; report median MAE, coverage, width, probability drift, no-change mass and failures alongside it.
 - Numerical controls and existing fixed ensembles remain available only on matching cells.
