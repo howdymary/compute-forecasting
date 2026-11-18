@@ -1,0 +1,1384 @@
+{
+  "study": "mochi-route-planning-v1",
+  "status": "calibration_completed_training_not_started",
+  "new_tinker_optimizer_updates": 0,
+  "route_version": "56d9a2c817b950dd",
+  "primary_calibration_seed": 19000,
+  "source_sha": "fd1f7de95c380994cc35e2171178c12087d57fff",
+  "workflow_run": "44283374410",
+  "workflow_url": "https://github.com/howdymary/mochi-demo/actions/runs/44283374410",
+  "status_text": "All 16 new task arrivals, zero falls; laptop closure still 0/4. No additional Tinker controller training has run.",
+  "diagnosis": "Previously recorded pelvis paths were about 2.0\u20132.1 m for roughly 1.1 m of waypoints. The controller aligned to the final task direction up to 70 mm early, then shuffled. A first new follower also switched out of final alignment and drifted during stopping. Those failed calibration trials were retained.",
+  "storage_text": "The live inventory found 100 checkpoints, at the organization\u2019s free checkpoint-count limit. Six are Mochi full training states. Nothing was deleted and billing was not changed. Four new full states need about 1.75 GB and four checkpoint slots.",
+  "provenance_text": "9 new Modal rollouts in this paired-route study, plus 80 preceding isolated contact calibrations. Source-verified past.dev handoffs and an Exa search ran in the study. Tinker provided research-decision inference here; no controller post-training ran.",
+  "results_note": "Calibration scenarios, not reserved tests. The old method includes a fifth transit stop; the new method follows intermediate vertices without that stop. Task-arrival error excludes the old transit stop. The new laptop profile B was chosen for stability after unsuccessful contact calibration; the old fixed baseline uses C. This is a combined engineering comparison. A short failed episode is not more efficient. No comparison of model weights has been performed. On the one case where both methods finished navigation (19003), walking time rose from 47.1 to 52.6 s and pelvis path from 2.123 to 2.255 m. Improved precision and visual clearance came with a speed/distance cost. The maximum measured tracking errors exceed the assumed 5 mm allowance.",
+  "cases": [
+    {
+      "seed": 19000,
+      "label": "old fixed",
+      "file": "19000-old.json",
+      "metrics": {
+        "trajectory_sample_hz": 25,
+        "frames_analyzed": 1756,
+        "maximum_time_s": null,
+        "walking_duration_s": 40.05600700000001,
+        "walking_path_m": 1.875419253725956,
+        "walking_yaw_travel_degrees": 824.112867849281,
+        "walking_torso_tilt_rms_degrees": 3.589650087667959,
+        "walking_torso_peak_tilt_degrees": 6.380445372900322,
+        "command_change_rms_m_s2": 0.052415378838559144,
+        "yaw_command_change_rms_rad_s2": 0.8882940088098414,
+        "turn_direction_reversals": 0,
+        "loaded_foot_slip_entire_episode_m": 0.4056031879086134,
+        "loaded_foot_slip_entire_episode_m_per_s": 0.005768067699515574,
+        "foot_clearance_m": null,
+        "motor_work_j": null,
+        "limits": [
+          "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+          "Command changes describe requested velocity, not actual body jerk.",
+          "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+          "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+          "No aggregate naturalness score or causal gait-training claim."
+        ],
+        "navigation_success": false,
+        "full_sequence_success": false,
+        "task_success": {
+          "alarm": true,
+          "drawer": true,
+          "laptop": false,
+          "globe": false
+        },
+        "arrivals": 4,
+        "required_arrivals": 5,
+        "planned_path_m": 1.1063436440872072,
+        "excess_path_m_successful_only": null,
+        "cross_track_rms_mm": 11.524672446176725,
+        "cross_track_max_mm": 27.479681820786844,
+        "arrival_position_mean_mm": 14.733333333333334,
+        "arrival_heading_mean_degrees": 4.533333333333334,
+        "fall": true,
+        "episode_duration_s": 70.3187287386862,
+        "maximum_applied_base_force": 0.0,
+        "efficiency_caveat": "Only compare excess distance and whole-route time for completed matched routes. Pelvis path includes native gait sway; this is not a footstep distance. Arrival means cover task stations, excluding the old extra transit stop."
+      },
+      "clearance_audit": {
+        "walking_frames": 1003,
+        "sample_hz": 25,
+        "maximum_reconstruction_error_m": 2.2898349882893854e-16,
+        "visual_envelope_overlap_frames": 79,
+        "foot_outside_desk_frames": 0,
+        "first_overlaps": [
+          {
+            "t": 18.746211,
+            "depth_mm": 2.7857068765518256,
+            "fixture": "planning-clock-visual-4"
+          },
+          {
+            "t": 18.786267,
+            "depth_mm": 1.2348992493089552,
+            "fixture": "planning-clock-visual-4"
+          },
+          {
+            "t": 18.826323,
+            "depth_mm": 1.719712999589892,
+            "fixture": "planning-clock-visual-1"
+          },
+          {
+            "t": 18.866379,
+            "depth_mm": 5.054167659693335,
+            "fixture": "planning-clock-visual-1"
+          },
+          {
+            "t": 18.906435,
+            "depth_mm": 6.609528725557735,
+            "fixture": "planning-clock-visual-1"
+          },
+          {
+            "t": 18.946491,
+            "depth_mm": 6.274568212563485,
+            "fixture": "planning-clock-visual-1"
+          },
+          {
+            "t": 18.986547,
+            "depth_mm": 6.199386106391944,
+            "fixture": "planning-clock-visual-1"
+          },
+          {
+            "t": 19.026603,
+            "depth_mm": 6.753803919717271,
+            "fixture": "planning-clock-visual-1"
+          },
+          {
+            "t": 19.066659,
+            "depth_mm": 7.0065303139969215,
+            "fixture": "planning-clock-visual-1"
+          },
+          {
+            "t": 19.106715,
+            "depth_mm": 0.49605799705242876,
+            "fixture": "planning-clock-visual-4"
+          },
+          {
+            "t": 19.146771,
+            "depth_mm": 1.3167000345003748,
+            "fixture": "planning-clock-visual-4"
+          },
+          {
+            "t": 19.186827,
+            "depth_mm": 2.1793765971691714,
+            "fixture": "planning-clock-visual-4"
+          }
+        ],
+        "first_edge_times": [],
+        "scope": "Sampled replay audit, not continuous collision certification. Visual GLB parts use conservative boxes; robot meshes use convex contact hulls."
+      },
+      "receipt": {
+        "provider": "Modal",
+        "cpu": 1,
+        "wall_s": 77.752051799,
+        "no_tinker_optimizer_updates": true
+      },
+      "paired_on_one_worker": true
+    },
+    {
+      "seed": 19000,
+      "label": "new fixed",
+      "file": "19000-new.json",
+      "metrics": {
+        "trajectory_sample_hz": 25,
+        "frames_analyzed": 2593,
+        "maximum_time_s": null,
+        "walking_duration_s": 53.314545999999986,
+        "walking_path_m": 2.2735458731038896,
+        "walking_yaw_travel_degrees": 1174.027061320536,
+        "walking_torso_tilt_rms_degrees": 3.587806011111026,
+        "walking_torso_peak_tilt_degrees": 5.175036571234911,
+        "command_change_rms_m_s2": 0.0963411379753569,
+        "yaw_command_change_rms_rad_s2": 2.762956761117551,
+        "turn_direction_reversals": 34,
+        "loaded_foot_slip_entire_episode_m": 0.5479949953010596,
+        "loaded_foot_slip_entire_episode_m_per_s": 0.005276185979770028,
+        "foot_clearance_m": null,
+        "motor_work_j": null,
+        "limits": [
+          "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+          "Command changes describe requested velocity, not actual body jerk.",
+          "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+          "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+          "No aggregate naturalness score or causal gait-training claim."
+        ],
+        "navigation_success": true,
+        "full_sequence_success": false,
+        "task_success": {
+          "alarm": true,
+          "drawer": true,
+          "laptop": false,
+          "globe": true
+        },
+        "arrivals": 4,
+        "required_arrivals": 4,
+        "planned_path_m": 1.1654964953105,
+        "excess_path_m_successful_only": 1.1080493777933895,
+        "cross_track_rms_mm": 6.405709420965019,
+        "cross_track_max_mm": 21.993986665888016,
+        "arrival_position_mean_mm": 3.733055530305605,
+        "arrival_heading_mean_degrees": 4.732161472796533,
+        "fall": false,
+        "episode_duration_s": 103.86195585261474,
+        "maximum_applied_base_force": 0.0,
+        "efficiency_caveat": "Only compare excess distance and whole-route time for completed matched routes. Pelvis path includes native gait sway; this is not a footstep distance. Arrival means cover task stations, excluding the old extra transit stop."
+      },
+      "clearance_audit": {
+        "walking_frames": 1335,
+        "sample_hz": 25,
+        "maximum_reconstruction_error_m": 2.203098814490545e-16,
+        "visual_envelope_overlap_frames": 0,
+        "foot_outside_desk_frames": 0,
+        "first_overlaps": [],
+        "first_edge_times": [],
+        "scope": "Sampled replay audit, not continuous collision certification. Visual GLB parts use conservative boxes; robot meshes use convex contact hulls."
+      },
+      "receipt": {
+        "provider": "Modal",
+        "cpu": 1,
+        "wall_s": 80.987801848,
+        "no_tinker_optimizer_updates": true
+      },
+      "paired_on_one_worker": true
+    },
+    {
+      "seed": 19001,
+      "label": "old fixed",
+      "file": "19001-old.json",
+      "metrics": {
+        "trajectory_sample_hz": 25,
+        "frames_analyzed": 1779,
+        "maximum_time_s": null,
+        "walking_duration_s": 39.415111,
+        "walking_path_m": 1.8596808465369306,
+        "walking_yaw_travel_degrees": 829.3929471535394,
+        "walking_torso_tilt_rms_degrees": 3.768501927942534,
+        "walking_torso_peak_tilt_degrees": 6.107796579696977,
+        "command_change_rms_m_s2": 0.05274502330555241,
+        "yaw_command_change_rms_rad_s2": 0.8966582266600274,
+        "turn_direction_reversals": 0,
+        "loaded_foot_slip_entire_episode_m": 0.42276865383445555,
+        "loaded_foot_slip_entire_episode_m_per_s": 0.005934494733774247,
+        "foot_clearance_m": null,
+        "motor_work_j": null,
+        "limits": [
+          "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+          "Command changes describe requested velocity, not actual body jerk.",
+          "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+          "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+          "No aggregate naturalness score or causal gait-training claim."
+        ],
+        "navigation_success": false,
+        "full_sequence_success": false,
+        "task_success": {
+          "alarm": true,
+          "drawer": true,
+          "laptop": false,
+          "globe": false
+        },
+        "arrivals": 4,
+        "required_arrivals": 5,
+        "planned_path_m": 1.105846017036886,
+        "excess_path_m_successful_only": null,
+        "cross_track_rms_mm": 14.845462455986707,
+        "cross_track_max_mm": 37.2411445733044,
+        "arrival_position_mean_mm": 14.533333333333331,
+        "arrival_heading_mean_degrees": 4.866666666666666,
+        "fall": true,
+        "episode_duration_s": 71.23919942643225,
+        "maximum_applied_base_force": 0.0,
+        "efficiency_caveat": "Only compare excess distance and whole-route time for completed matched routes. Pelvis path includes native gait sway; this is not a footstep distance. Arrival means cover task stations, excluding the old extra transit stop."
+      },
+      "clearance_audit": {
+        "walking_frames": 987,
+        "sample_hz": 25,
+        "maximum_reconstruction_error_m": 2.636779683484747e-16,
+        "visual_envelope_overlap_frames": 61,
+        "foot_outside_desk_frames": 0,
+        "first_overlaps": [
+          {
+            "t": 19.066659,
+            "depth_mm": 3.434570777558934,
+            "fixture": "planning-clock-visual-4"
+          },
+          {
+            "t": 19.106715,
+            "depth_mm": 5.956575860214092,
+            "fixture": "planning-clock-visual-4"
+          },
+          {
+            "t": 19.146771,
+            "depth_mm": 1.0523671790601257,
+            "fixture": "planning-clock-visual-4"
+          },
+          {
+            "t": 19.186827,
+            "depth_mm": 1.8243517486770684,
+            "fixture": "planning-clock-visual-1"
+          },
+          {
+            "t": 19.226883,
+            "depth_mm": 3.855279121213945,
+            "fixture": "planning-clock-visual-1"
+          },
+          {
+            "t": 19.266939,
+            "depth_mm": 5.22712347728356,
+            "fixture": "planning-clock-visual-1"
+          },
+          {
+            "t": 19.306995,
+            "depth_mm": 4.086213246867091,
+            "fixture": "planning-clock-visual-1"
+          },
+          {
+            "t": 19.347051,
+            "depth_mm": 5.057158031687177,
+            "fixture": "planning-clock-visual-1"
+          },
+          {
+            "t": 19.387107,
+            "depth_mm": 5.8315963582740125,
+            "fixture": "planning-clock-visual-1"
+          },
+          {
+            "t": 19.427163,
+            "depth_mm": 6.556472468586549,
+            "fixture": "planning-clock-visual-1"
+          },
+          {
+            "t": 19.467219,
+            "depth_mm": 7.765175379929844,
+            "fixture": "planning-clock-visual-1"
+          },
+          {
+            "t": 19.507275,
+            "depth_mm": 1.6271812506222278,
+            "fixture": "planning-clock-visual-4"
+          }
+        ],
+        "first_edge_times": [],
+        "scope": "Sampled replay audit, not continuous collision certification. Visual GLB parts use conservative boxes; robot meshes use convex contact hulls."
+      },
+      "receipt": {
+        "provider": "Modal",
+        "cpu": 1,
+        "wall_s": 97.98836783,
+        "no_tinker_optimizer_updates": true
+      },
+      "paired_on_one_worker": true
+    },
+    {
+      "seed": 19001,
+      "label": "new fixed",
+      "file": "19001-new.json",
+      "metrics": {
+        "trajectory_sample_hz": 25,
+        "frames_analyzed": 2642,
+        "maximum_time_s": null,
+        "walking_duration_s": 53.875328999999994,
+        "walking_path_m": 2.3129284442856797,
+        "walking_yaw_travel_degrees": 1176.9752099751252,
+        "walking_torso_tilt_rms_degrees": 3.5722925440568667,
+        "walking_torso_peak_tilt_degrees": 5.275591507281485,
+        "command_change_rms_m_s2": 0.10275338579971022,
+        "yaw_command_change_rms_rad_s2": 2.348551567964759,
+        "turn_direction_reversals": 17,
+        "loaded_foot_slip_entire_episode_m": 0.5989140143553187,
+        "loaded_foot_slip_entire_episode_m_per_s": 0.005660103839338049,
+        "foot_clearance_m": null,
+        "motor_work_j": null,
+        "limits": [
+          "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+          "Command changes describe requested velocity, not actual body jerk.",
+          "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+          "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+          "No aggregate naturalness score or causal gait-training claim."
+        ],
+        "navigation_success": true,
+        "full_sequence_success": false,
+        "task_success": {
+          "alarm": true,
+          "drawer": true,
+          "laptop": false,
+          "globe": true
+        },
+        "arrivals": 4,
+        "required_arrivals": 4,
+        "planned_path_m": 1.1654964953105,
+        "excess_path_m_successful_only": 1.1474319489751796,
+        "cross_track_rms_mm": 6.182952690050028,
+        "cross_track_max_mm": 15.347318332703264,
+        "arrival_position_mean_mm": 3.6619655836496303,
+        "arrival_heading_mean_degrees": 4.596105173521146,
+        "fall": false,
+        "episode_duration_s": 105.81325561429308,
+        "maximum_applied_base_force": 0.0,
+        "efficiency_caveat": "Only compare excess distance and whole-route time for completed matched routes. Pelvis path includes native gait sway; this is not a footstep distance. Arrival means cover task stations, excluding the old extra transit stop."
+      },
+      "clearance_audit": {
+        "walking_frames": 1349,
+        "sample_hz": 25,
+        "maximum_reconstruction_error_m": 2.3592239273284576e-16,
+        "visual_envelope_overlap_frames": 0,
+        "foot_outside_desk_frames": 0,
+        "first_overlaps": [],
+        "first_edge_times": [],
+        "scope": "Sampled replay audit, not continuous collision certification. Visual GLB parts use conservative boxes; robot meshes use convex contact hulls."
+      },
+      "receipt": {
+        "provider": "Modal",
+        "cpu": 1,
+        "wall_s": 90.971830807,
+        "no_tinker_optimizer_updates": true
+      },
+      "paired_on_one_worker": true
+    },
+    {
+      "seed": 19002,
+      "label": "old fixed",
+      "file": "19002-old.json",
+      "metrics": {
+        "trajectory_sample_hz": 25,
+        "frames_analyzed": 1682,
+        "maximum_time_s": null,
+        "walking_duration_s": 36.691302,
+        "walking_path_m": 1.7782520144741176,
+        "walking_yaw_travel_degrees": 753.8656002789104,
+        "walking_torso_tilt_rms_degrees": 3.5946899080906105,
+        "walking_torso_peak_tilt_degrees": 5.287559898172059,
+        "command_change_rms_m_s2": 0.04837529477995305,
+        "yaw_command_change_rms_rad_s2": 0.9007822707282837,
+        "turn_direction_reversals": 0,
+        "loaded_foot_slip_entire_episode_m": 0.4016944284288665,
+        "loaded_foot_slip_entire_episode_m_per_s": 0.005965614278458504,
+        "foot_clearance_m": null,
+        "motor_work_j": null,
+        "limits": [
+          "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+          "Command changes describe requested velocity, not actual body jerk.",
+          "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+          "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+          "No aggregate naturalness score or causal gait-training claim."
+        ],
+        "navigation_success": false,
+        "full_sequence_success": false,
+        "task_success": {
+          "alarm": true,
+          "drawer": true,
+          "laptop": false,
+          "globe": false
+        },
+        "arrivals": 4,
+        "required_arrivals": 5,
+        "planned_path_m": 1.107622780683854,
+        "excess_path_m_successful_only": null,
+        "cross_track_rms_mm": 14.180572397192218,
+        "cross_track_max_mm": 30.21922481811951,
+        "arrival_position_mean_mm": 18.133333333333333,
+        "arrival_heading_mean_degrees": 4.1000000000000005,
+        "fall": true,
+        "episode_duration_s": 67.33496496402095,
+        "maximum_applied_base_force": 0.0,
+        "efficiency_caveat": "Only compare excess distance and whole-route time for completed matched routes. Pelvis path includes native gait sway; this is not a footstep distance. Arrival means cover task stations, excluding the old extra transit stop."
+      },
+      "clearance_audit": {
+        "walking_frames": 919,
+        "sample_hz": 25,
+        "maximum_reconstruction_error_m": 2.42861286636753e-16,
+        "visual_envelope_overlap_frames": 56,
+        "foot_outside_desk_frames": 0,
+        "first_overlaps": [
+          {
+            "t": 18.906435,
+            "depth_mm": 0.8382648443778337,
+            "fixture": "planning-clock-visual-4"
+          },
+          {
+            "t": 18.946491,
+            "depth_mm": 1.0266446426111488,
+            "fixture": "planning-clock-visual-4"
+          },
+          {
+            "t": 18.986547,
+            "depth_mm": 2.7255094973298912,
+            "fixture": "planning-clock-visual-4"
+          },
+          {
+            "t": 19.026603,
+            "depth_mm": 3.0293387732012005,
+            "fixture": "planning-clock-visual-4"
+          },
+          {
+            "t": 19.066659,
+            "depth_mm": 2.096930030052847,
+            "fixture": "planning-clock-visual-4"
+          },
+          {
+            "t": 19.226883,
+            "depth_mm": 0.7630863973595551,
+            "fixture": "planning-clock-visual-4"
+          },
+          {
+            "t": 19.266939,
+            "depth_mm": 1.9062570188019652,
+            "fixture": "planning-clock-visual-4"
+          },
+          {
+            "t": 19.306995,
+            "depth_mm": 1.5206409832034415,
+            "fixture": "planning-clock-visual-4"
+          },
+          {
+            "t": 19.347051,
+            "depth_mm": 0.8322665494447071,
+            "fixture": "planning-clock-visual-4"
+          },
+          {
+            "t": 19.387107,
+            "depth_mm": 2.1276016530368524,
+            "fixture": "planning-clock-visual-4"
+          },
+          {
+            "t": 19.427163,
+            "depth_mm": 3.3133911128996423,
+            "fixture": "planning-clock-visual-4"
+          },
+          {
+            "t": 19.467219,
+            "depth_mm": 1.4543316399642239,
+            "fixture": "planning-clock-visual-1"
+          }
+        ],
+        "first_edge_times": [],
+        "scope": "Sampled replay audit, not continuous collision certification. Visual GLB parts use conservative boxes; robot meshes use convex contact hulls."
+      },
+      "receipt": {
+        "provider": "Modal",
+        "cpu": 1,
+        "wall_s": 82.735168624,
+        "no_tinker_optimizer_updates": true
+      },
+      "paired_on_one_worker": true
+    },
+    {
+      "seed": 19002,
+      "label": "new fixed",
+      "file": "19002-new.json",
+      "metrics": {
+        "trajectory_sample_hz": 25,
+        "frames_analyzed": 2658,
+        "maximum_time_s": null,
+        "walking_duration_s": 56.519025,
+        "walking_path_m": 2.3869408272431882,
+        "walking_yaw_travel_degrees": 1253.418489552958,
+        "walking_torso_tilt_rms_degrees": 3.6549183735938175,
+        "walking_torso_peak_tilt_degrees": 5.541917973208616,
+        "command_change_rms_m_s2": 0.09754685030636777,
+        "yaw_command_change_rms_rad_s2": 2.706569830941347,
+        "turn_direction_reversals": 39,
+        "loaded_foot_slip_entire_episode_m": 0.6398222872205227,
+        "loaded_foot_slip_entire_episode_m_per_s": 0.00601030844603569,
+        "foot_clearance_m": null,
+        "motor_work_j": null,
+        "limits": [
+          "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+          "Command changes describe requested velocity, not actual body jerk.",
+          "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+          "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+          "No aggregate naturalness score or causal gait-training claim."
+        ],
+        "navigation_success": true,
+        "full_sequence_success": false,
+        "task_success": {
+          "alarm": true,
+          "drawer": true,
+          "laptop": false,
+          "globe": true
+        },
+        "arrivals": 4,
+        "required_arrivals": 4,
+        "planned_path_m": 1.1654964953105,
+        "excess_path_m_successful_only": 1.2214443319326882,
+        "cross_track_rms_mm": 7.0942180542035995,
+        "cross_track_max_mm": 21.324274710931,
+        "arrival_position_mean_mm": 3.111996611406452,
+        "arrival_heading_mean_degrees": 1.782351742673862,
+        "fall": false,
+        "episode_duration_s": 106.45415172370063,
+        "maximum_applied_base_force": 0.0,
+        "efficiency_caveat": "Only compare excess distance and whole-route time for completed matched routes. Pelvis path includes native gait sway; this is not a footstep distance. Arrival means cover task stations, excluding the old extra transit stop."
+      },
+      "clearance_audit": {
+        "walking_frames": 1415,
+        "sample_hz": 25,
+        "maximum_reconstruction_error_m": 2.3592239273284576e-16,
+        "visual_envelope_overlap_frames": 0,
+        "foot_outside_desk_frames": 0,
+        "first_overlaps": [],
+        "first_edge_times": [],
+        "scope": "Sampled replay audit, not continuous collision certification. Visual GLB parts use conservative boxes; robot meshes use convex contact hulls."
+      },
+      "receipt": {
+        "provider": "Modal",
+        "cpu": 1,
+        "wall_s": 89.78209935299999,
+        "no_tinker_optimizer_updates": true
+      },
+      "paired_on_one_worker": true
+    },
+    {
+      "seed": 19003,
+      "label": "old fixed",
+      "file": "19003-old.json",
+      "metrics": {
+        "trajectory_sample_hz": 25,
+        "frames_analyzed": 2500,
+        "maximum_time_s": null,
+        "walking_duration_s": 47.065808000000004,
+        "walking_path_m": 2.1231811725071297,
+        "walking_yaw_travel_degrees": 1012.0823771668847,
+        "walking_torso_tilt_rms_degrees": 3.553523989041117,
+        "walking_torso_peak_tilt_degrees": 5.383551667360184,
+        "command_change_rms_m_s2": 0.05149297603649603,
+        "yaw_command_change_rms_rad_s2": 1.1246479878725575,
+        "turn_direction_reversals": 2,
+        "loaded_foot_slip_entire_episode_m": 0.6050165604477539,
+        "loaded_foot_slip_entire_episode_m_per_s": 0.006041952793322288,
+        "foot_clearance_m": null,
+        "motor_work_j": null,
+        "limits": [
+          "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+          "Command changes describe requested velocity, not actual body jerk.",
+          "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+          "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+          "No aggregate naturalness score or causal gait-training claim."
+        ],
+        "navigation_success": true,
+        "full_sequence_success": false,
+        "task_success": {
+          "alarm": true,
+          "drawer": true,
+          "laptop": false,
+          "globe": true
+        },
+        "arrivals": 5,
+        "required_arrivals": 5,
+        "planned_path_m": 1.1056407781112683,
+        "excess_path_m_successful_only": 1.0175403943958614,
+        "cross_track_rms_mm": 18.568689674702505,
+        "cross_track_max_mm": 52.15429006048874,
+        "arrival_position_mean_mm": 19.625,
+        "arrival_heading_mean_degrees": 3.3499999999999996,
+        "fall": false,
+        "episode_duration_s": 100.13592974715606,
+        "maximum_applied_base_force": 0.0,
+        "efficiency_caveat": "Only compare excess distance and whole-route time for completed matched routes. Pelvis path includes native gait sway; this is not a footstep distance. Arrival means cover task stations, excluding the old extra transit stop."
+      },
+      "clearance_audit": {
+        "walking_frames": 1179,
+        "sample_hz": 25,
+        "maximum_reconstruction_error_m": 2.7755575615628914e-16,
+        "visual_envelope_overlap_frames": 67,
+        "foot_outside_desk_frames": 0,
+        "first_overlaps": [
+          {
+            "t": 19.026603,
+            "depth_mm": 1.4578108200690523,
+            "fixture": "planning-clock-visual-4"
+          },
+          {
+            "t": 19.066659,
+            "depth_mm": 1.6451862914518431,
+            "fixture": "planning-clock-visual-4"
+          },
+          {
+            "t": 19.146771,
+            "depth_mm": 2.6815469252008524,
+            "fixture": "planning-clock-visual-4"
+          },
+          {
+            "t": 19.186827,
+            "depth_mm": 1.910681977503058,
+            "fixture": "planning-clock-visual-1"
+          },
+          {
+            "t": 19.226883,
+            "depth_mm": 3.2681205131807958,
+            "fixture": "planning-clock-visual-1"
+          },
+          {
+            "t": 19.266939,
+            "depth_mm": 3.5719048162547113,
+            "fixture": "planning-clock-visual-1"
+          },
+          {
+            "t": 19.306995,
+            "depth_mm": 2.7805721780516,
+            "fixture": "planning-clock-visual-1"
+          },
+          {
+            "t": 19.347051,
+            "depth_mm": 3.4621823551125597,
+            "fixture": "planning-clock-visual-1"
+          },
+          {
+            "t": 19.387107,
+            "depth_mm": 4.165381232123392,
+            "fixture": "planning-clock-visual-1"
+          },
+          {
+            "t": 19.427163,
+            "depth_mm": 4.907222051897143,
+            "fixture": "planning-clock-visual-1"
+          },
+          {
+            "t": 19.467219,
+            "depth_mm": 5.497508383275426,
+            "fixture": "planning-clock-visual-1"
+          },
+          {
+            "t": 19.507275,
+            "depth_mm": 0.7575886918733633,
+            "fixture": "planning-clock-visual-4"
+          }
+        ],
+        "first_edge_times": [],
+        "scope": "Sampled replay audit, not continuous collision certification. Visual GLB parts use conservative boxes; robot meshes use convex contact hulls."
+      },
+      "receipt": {
+        "provider": "Modal",
+        "cpu": 1,
+        "wall_s": 139.429374866,
+        "no_tinker_optimizer_updates": true
+      },
+      "paired_on_one_worker": true
+    },
+    {
+      "seed": 19003,
+      "label": "new fixed",
+      "file": "19003-new.json",
+      "metrics": {
+        "trajectory_sample_hz": 25,
+        "frames_analyzed": 2603,
+        "maximum_time_s": null,
+        "walking_duration_s": 52.59353699999998,
+        "walking_path_m": 2.255123738545038,
+        "walking_yaw_travel_degrees": 1112.3369109739176,
+        "walking_torso_tilt_rms_degrees": 4.020208199624994,
+        "walking_torso_peak_tilt_degrees": 6.870160792651487,
+        "command_change_rms_m_s2": 0.1141230252227698,
+        "yaw_command_change_rms_rad_s2": 2.2362636339783877,
+        "turn_direction_reversals": 11,
+        "loaded_foot_slip_entire_episode_m": 0.6073511748064255,
+        "loaded_foot_slip_entire_episode_m_per_s": 0.005826079100826239,
+        "foot_clearance_m": null,
+        "motor_work_j": null,
+        "limits": [
+          "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+          "Command changes describe requested velocity, not actual body jerk.",
+          "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+          "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+          "No aggregate naturalness score or causal gait-training claim."
+        ],
+        "navigation_success": true,
+        "full_sequence_success": false,
+        "task_success": {
+          "alarm": true,
+          "drawer": true,
+          "laptop": false,
+          "globe": true
+        },
+        "arrivals": 4,
+        "required_arrivals": 4,
+        "planned_path_m": 1.1654964953105,
+        "excess_path_m_successful_only": 1.0896272432345377,
+        "cross_track_rms_mm": 9.409518245806826,
+        "cross_track_max_mm": 24.59591327456394,
+        "arrival_position_mean_mm": 4.699825763567869,
+        "arrival_heading_mean_degrees": 2.2155966549094064,
+        "fall": false,
+        "episode_duration_s": 104.24698399997565,
+        "maximum_applied_base_force": 0.0,
+        "efficiency_caveat": "Only compare excess distance and whole-route time for completed matched routes. Pelvis path includes native gait sway; this is not a footstep distance. Arrival means cover task stations, excluding the old extra transit stop."
+      },
+      "clearance_audit": {
+        "walking_frames": 1317,
+        "sample_hz": 25,
+        "maximum_reconstruction_error_m": 2.3592239273284576e-16,
+        "visual_envelope_overlap_frames": 0,
+        "foot_outside_desk_frames": 0,
+        "first_overlaps": [],
+        "first_edge_times": [],
+        "scope": "Sampled replay audit, not continuous collision certification. Visual GLB parts use conservative boxes; robot meshes use convex contact hulls."
+      },
+      "receipt": {
+        "provider": "Modal",
+        "cpu": 1,
+        "wall_s": 106.215150814,
+        "no_tinker_optimizer_updates": true
+      },
+      "paired_on_one_worker": true
+    }
+  ],
+  "services": {
+    "actors": {
+      "researcher": "mochi-desk-5f688428-researcher",
+      "designer": "mochi-desk-5f688428-designer",
+      "experimenter": "mochi-desk-5f688428-experimenter",
+      "critic": "mochi-desk-5f688428-critic"
+    },
+    "audiences": {
+      "shared": "mochi-desk-5f688428-shared",
+      "critic_private": "mochi-desk-5f688428-critic"
+    },
+    "records": [
+      {
+        "id": "mochi-desk-5f688428-r1",
+        "role": "researcher",
+        "author": "mochi-desk-5f688428-researcher",
+        "audience": "mochi-desk-5f688428-shared",
+        "at": "2026-11-18T10:15:50.896303+00:00",
+        "sha256": "0bb868c58a7b0be30ebecf41936e9a65295dd29b6f55dc83b2efe88b2564160c",
+        "ingestion_id": "6aedc4f0-432a-4920-98cd-4f45e2fd887a",
+        "write_to_ready_seconds": 10.543442263999992
+      },
+      {
+        "id": "mochi-desk-5f688428-r2",
+        "role": "designer",
+        "author": "mochi-desk-5f688428-designer",
+        "audience": "mochi-desk-5f688428-shared",
+        "at": "2026-11-18T10:16:04.354460+00:00",
+        "sha256": "6cef4620f55b8a65f91c1c48ac168de64dbf096465970fbdd9b9e7446278c530",
+        "ingestion_id": "5bcedd3b-027c-4293-a96e-ad73c61da04c",
+        "write_to_ready_seconds": 4.390004654999984
+      },
+      {
+        "id": "mochi-desk-5f688428-r3",
+        "role": "experimenter",
+        "author": "mochi-desk-5f688428-experimenter",
+        "audience": "mochi-desk-5f688428-shared",
+        "at": "2026-11-18T10:21:05.644607+00:00",
+        "sha256": "3e36f2748c9cfd52a361adb0901c71e85b06ce24fa81969c76d6d76a7b0b5f39",
+        "ingestion_id": "ad83e016-c6e2-44a8-9eaf-bf76cfe1b8de",
+        "write_to_ready_seconds": 19.292870506999975
+      },
+      {
+        "id": "mochi-desk-5f688428-r4",
+        "role": "critic",
+        "author": "mochi-desk-5f688428-critic",
+        "audience": "mochi-desk-5f688428-shared",
+        "at": "2026-11-18T10:21:27.923713+00:00",
+        "sha256": "165b72892fe0e1a5595fe5ee32c2ea8f0b9277e6154eb1be22a5f9248e46e452",
+        "ingestion_id": "62971850-fa86-414f-9435-d5b4cd43a4eb",
+        "write_to_ready_seconds": 18.862695505999966
+      }
+    ],
+    "reads": [
+      {
+        "reader": "mochi-desk-5f688428-researcher",
+        "reader_role": "researcher",
+        "author": "mochi-desk-5f688428-critic",
+        "record_id": "mochi-desk-5f688428-r0",
+        "source_id_verified": false,
+        "expected_access": false,
+        "cross_agent_use": false,
+        "sha256": null,
+        "at": "2026-11-18T10:15:49.610328+00:00"
+      },
+      {
+        "reader": "mochi-desk-5f688428-designer",
+        "reader_role": "designer",
+        "author": "mochi-desk-5f688428-researcher",
+        "record_id": "mochi-desk-5f688428-r1",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "0bb868c58a7b0be30ebecf41936e9a65295dd29b6f55dc83b2efe88b2564160c",
+        "at": "2026-11-18T10:16:01.778618+00:00"
+      },
+      {
+        "reader": "mochi-desk-5f688428-experimenter",
+        "reader_role": "experimenter",
+        "author": "mochi-desk-5f688428-designer",
+        "record_id": "mochi-desk-5f688428-r2",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "6cef4620f55b8a65f91c1c48ac168de64dbf096465970fbdd9b9e7446278c530",
+        "at": "2026-11-18T10:16:09.049807+00:00"
+      },
+      {
+        "reader": "mochi-desk-5f688428-critic",
+        "reader_role": "critic",
+        "author": "mochi-desk-5f688428-experimenter",
+        "record_id": "mochi-desk-5f688428-r3",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "3e36f2748c9cfd52a361adb0901c71e85b06ce24fa81969c76d6d76a7b0b5f39",
+        "at": "2026-11-18T10:21:25.333699+00:00"
+      },
+      {
+        "reader": "mochi-desk-5f688428-researcher",
+        "reader_role": "researcher",
+        "author": "mochi-desk-5f688428-critic",
+        "record_id": "mochi-desk-5f688428-r4",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "165b72892fe0e1a5595fe5ee32c2ea8f0b9277e6154eb1be22a5f9248e46e452",
+        "at": "2026-11-18T10:21:47.093911+00:00"
+      }
+    ],
+    "decisions": [
+      {
+        "role": "designer",
+        "question": "Pick one extra physical navigation probe. Both options are training-only; do not open held-out scenarios.",
+        "selected": "repeat_stop_probe",
+        "distribution": {
+          "repeat_stop_probe": 0.562176525592804,
+          "turn_clearance_probe": 0.4378235340118408
+        },
+        "input_record_ids": [
+          "mochi-desk-5f688428-r1"
+        ],
+        "context_sha256": "7d5922187499216bd3b1a8cfc439618eb7a01ff68e891f36511662ceb6f95d0f",
+        "at": "2026-11-18T10:16:04.354438+00:00"
+      },
+      {
+        "role": "critic",
+        "question": "Assess FULL FOUR-TASK physical feasibility, not arrival alone. All four tasks must pass on every calibration route for this gate. Storage is blocked regardless. Retain failures; do not attribute engineering changes to weights.",
+        "selected": "more_controller_work_needed",
+        "distribution": {
+          "feasibility_demonstrated_on_calibration": 0.3208213150501251,
+          "more_controller_work_needed": 0.6791787147521973
+        },
+        "input_record_ids": [
+          "mochi-desk-5f688428-r3"
+        ],
+        "context_sha256": "2d59a19b7552aa935bea90d0e4e8ec1465dd93677df6b8a4850c0990e9abbe88",
+        "at": "2026-11-18T10:21:27.923694+00:00"
+      }
+    ],
+    "calls": [
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-18T10:15:33.604892+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-18T10:15:33.708377+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-18T10:15:33.775343+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-18T10:15:33.842698+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "audiences",
+        "status": 201,
+        "at": "2026-11-18T10:15:33.944435+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "audiences",
+        "status": 201,
+        "at": "2026-11-18T10:15:34.014751+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-18T10:15:45.117423+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T10:15:45.200012+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T10:15:47.261003+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T10:15:49.343217+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-18T10:15:49.610273+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-18T10:15:51.003761+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T10:15:51.066252+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T10:15:53.162198+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T10:15:55.221324+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T10:15:57.281775+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T10:15:59.376048+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T10:16:01.439645+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-18T10:16:01.778488+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-18T10:16:04.500078+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T10:16:04.589422+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T10:16:06.685069+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T10:16:08.744383+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-18T10:16:09.049756+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-18T10:21:06.268235+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T10:21:06.357172+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T10:21:08.413311+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T10:21:10.471449+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T10:21:12.529004+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T10:21:14.585985+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T10:21:16.642356+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T10:21:18.698519+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T10:21:20.754080+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T10:21:22.831801+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T10:21:24.937378+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-18T10:21:25.333543+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-18T10:21:28.027512+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T10:21:28.081352+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T10:21:30.173149+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T10:21:32.230560+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T10:21:34.286759+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T10:21:36.461972+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T10:21:38.531329+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T10:21:40.586555+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T10:21:42.646102+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T10:21:44.730260+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T10:21:46.786321+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-18T10:21:47.093813+00:00"
+      }
+    ],
+    "sources": [
+      {
+        "query": "humanoid robot waypoint tracking final heading alignment stopping drift manipulation approach stance contact force stability",
+        "request_id": "c8406d9b2af88e35d60db269f0160c19",
+        "cost_dollars": {
+          "total": 0.007,
+          "search": {
+            "neural": 0.007
+          }
+        },
+        "sources": [
+          {
+            "url": "https://arxiv.org/html/2505.23499",
+            "title": "Centroidal Trajectory Generation and Stabilization based on Preview Control for Humanoid Multi-contact Motion",
+            "retrieved_at": "2026-11-18T10:15:50.896089+00:00"
+          },
+          {
+            "url": "https://arxiv.org/html/2502.01465v1",
+            "title": "Embrace Collisions: Humanoid Shadowing for Deployable Contact-Agnostics Motions",
+            "retrieved_at": "2026-11-18T10:15:50.896150+00:00"
+          },
+          {
+            "url": "https://arxiv.org/pdf/2610.41334",
+            "title": "HIPC: Humanoid Iterative Planning and Con-trol via Goal-Conditioned Motion Closure",
+            "retrieved_at": "2026-11-18T10:15:50.896185+00:00"
+          }
+        ],
+        "response_sha256": "966fbf045c53b55ad46c21151e402db61f4a53c22b31964e088b35389a8eaf16",
+        "at": "2026-11-18T10:15:50.896287+00:00"
+      }
+    ],
+    "eligibility": {
+      "writers": 4,
+      "readers": 4,
+      "cross_agent_reads": 4,
+      "isolation_passed": true
+    }
+  },
+  "probe": {
+    "seed": 19004,
+    "mode": "task",
+    "failure": null,
+    "arrivals": [
+      {
+        "station": "alarm",
+        "arrived": true,
+        "t": 5.956900445451708,
+        "position_error_mm": 1.4530359084644147,
+        "heading_error_degrees": 4.70778290854404,
+        "travel_time_s": 5.956900445451708
+      }
+    ],
+    "route_version": "training-only-repeat_stop_probe",
+    "stop_trials": [
+      {
+        "t": 5.956900445451708,
+        "drift_body_m": [
+          0.01032916721097632,
+          0.0026854090857216517
+        ],
+        "end_error_mm": 1.4530359084644147
+      }
+    ],
+    "physics_calls": 26,
+    "duration_wall_s": 1.8965633759999996,
+    "probe": "repeat_stop_probe",
+    "receipt": {
+      "provider": "Modal",
+      "cpu": 1,
+      "wall_s": 3.8123056,
+      "isolated_initialization_before_physics": true
+    }
+  },
+  "summary": {
+    "old": {
+      "arrivals": 17,
+      "arrival_opportunities": 20,
+      "falls": 3,
+      "tasks": {
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 0,
+        "globe": 1
+      }
+    },
+    "new": {
+      "arrivals": 16,
+      "arrival_opportunities": 16,
+      "falls": 0,
+      "tasks": {
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 0,
+        "globe": 4
+      }
+    }
+  },
+  "gates": {
+    "storage_headroom": false,
+    "all_four_tasks_on_all_calibration_routes": false,
+    "fresh_test_scenarios_opened": false
+  },
+  "limits": [
+    "Native gait, standing balance, arm IK, physical objects and numerical verifiers unchanged.",
+    "Route uses 7 sampled gait configurations with 7.5 mm / 7.5 degree sweeps, not a continuous-motion certificate.",
+    "Replay geometry checks sample at 25 Hz; convex meshes and visual clock boxes are conservative approximations.",
+    "The 5 mm tracking allowance must be compared with actual recorded cross-track error; it is not an established bound.",
+    "No dynamic-obstruction replanning demonstrated. This prototype uses a static reference in the fixed desk layout.",
+    "No new learned improvement, search/memory causal effect, or hardware validation claimed."
+  ],
+  "memory_usage": {
+    "writes_including_private_canary": 5,
+    "shared_records": 4,
+    "recalls": 5,
+    "verified_cross_identity_recalls": 4,
+    "private_canary_passed": true
+  }
+}

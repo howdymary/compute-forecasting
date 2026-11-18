@@ -1,278 +1,161 @@
-# Mochi · A tiny robot with a scientific method
+# MOCHI — Navigation and Manipulation Policy Learning
 
-<!-- MOCHI_CURRICULUM_START -->
-## Current: Post-training locomotion and contact decisions
+A 22.1 cm Unitree G1 walks across one desk to silence an alarm, close a drawer,
+close a laptop and align a globe. MuJoCo produces the motion and outcomes.
+The web demo replays measured trajectories; Blender renders the same recordings.
 
-[Live demo](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/) · [Methods and results](docs/refinement-v7-results.md) · [Numerical evidence](evidence/refinement-v7/results.json) · [Execution receipt](https://github.com/howdymary/mochi-demo/actions/runs/44266707804)
+[Trained checkpoints](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/)
+· [Route study](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/planning.html)
+· [V7 results](docs/refinement-v7-results.md)
+· [Planning methods](docs/path-planning-study.md)
 
-![Recorded Mochi globe interaction](web/desk/curriculum/v7-complete-example.png)
+## What has actually run
 
-*Test scenario 16001, selected after evaluation for this illustration. One of four complete test routes passed.*
+**Completed V7 training:** Tinker post-trained Qwen3.5-4B with rank-16 LoRA for
+96 optimizer updates. Every update included walking-command selection and all
+four task-profile domains. The native Unitree gait network, standing balance
+and arm IK were fixed. This was supervised controller selection from simulation
+state, not motor-level gait training.
 
-A 22.1 cm Unitree G1 moves around one desk: silence the clock, close the drawer, close the laptop, and align the globe. Every checkpoint is a recorded, uninterrupted MuJoCo episode. Blender and Three.js replay its measured motion.
+The selected model completed one of four held-out full routes and reached all
+20 waypoints without falling. It reached eight of eight isolated navigation
+goals, versus zero for the starting weights. The fixed controller also reached
+eight and completed one of four full routes. Superiority over fixed control
+was not established. Alarm performance regressed in isolated tests; laptop
+reliability remains limited. The viewer retains six checkpoints and all four
+test pairs, including failures.
 
-Tinker completed **96 optimizer updates and 480 domain-gradient calls**, training Qwen3.5-4B LoRA rank 16 to choose walking commands and task-contact profiles. The model reads simulation state rather than camera images. The native gait network, standing balance and arm IK remain fixed. This is command/profile learning, not motor-torque or gait-network training.
+**Current route study:** structured reference planning, local targets, latched
+final alignment and measured stopping drift are being tested with fixed control.
+This phase has performed **zero additional Tinker optimizer updates**.
+[Its calibration results](evidence/planning/results.json) are an engineering
+comparison, not a gain from new model weights.
 
-| Matched Modal test | Starting weights | Update 96 | Classical + fixed profiles |
-|---|---:|---:|---:|
-| Full four-task routes | 0/4 | 1/4 | 1/4 |
-| Waypoints reached | 0/20 | 20/20 | 19/20 |
-| Falls | 1 | 0 | 1 |
-| Isolated walking goals | 0/8 | 8/8 | 8/8 |
+The storage audit found 100 checkpoints at the free checkpoint-count limit,
+including six Mochi full states. They were preserved; billing was not changed.
+Further training is gated on physical feasibility and durable storage.
 
-Four fresh routes are a small simulation pilot. Individual outcomes and uncertainty are published; isolated tests are separate from full routes. The default checkpoint scenario is the first declared development seed. All test recordings and regressions remain inspectable. A separate complete-test button is labeled as a successful example selected after evaluation.
+## Inspect the demo
 
-Update 64 reached 10/10 development waypoints with 0 falls. Update 96 reached 8/10 with 2 falls. The frozen stopping rule selected update 96; later training was not monotonically better. Laptop contact remains a limitation wherever its verifier fails.
+The original viewer shows actual V7 checkpoints, paired tests, model-decision
+traces and verified memory handoffs. The successful test example was selected
+after evaluation and is labeled as one of four; the default remains the
+predeclared development case.
 
-The interface includes synchronized before/after playback, all saved checkpoints, side and foot cameras, and matched-window movement diagnostics. Those diagnostics were added after training began and are labeled post-hoc. The separate cadence calibration found tradeoffs rather than a consistent gain, so those profiles are not promoted. [Calibration evidence](docs/gait-calibration.md).
+The planning viewer adds a top-down desk plan, planned/executed paths, local
+targets, approach directions and tracking error. Old and new fixed-control
+episodes play at the same simulation time. Top-down, follow, side and foot
+views inspect the same physical sequence. The path overlay can be hidden.
 
-### What the services actually do
+Each four-task attempt preserves physical state throughout. No task resets,
+teleports, external base forces or animated root motion determine the result.
+The planning study's primary calibration seed, 19000, was declared before its
+paired results. Proposed new held-out scenarios remain unopened.
 
-- **Tinker:** actual supervised weight updates for walking and all four contact tasks. Canonical starting/final states are retained; intermediate inference snapshots have limited retention. This V7 study starts from archived update zero, not from V6 update 64.
-- **Exa:** 3 failure-directed searches with retained sources. The final recovery search informs future investigation, not the frozen test policy.
-- **past.dev:** verified shared evidence handoffs select the predeclared walking/contact training allocation. The frozen training adaptation occurs at initialization and update 16. It is not a memory call at every optimizer step.
-- **Modal:** 274 recorded executions including two short recovery inference probes. Held-out policies run closed-loop on the same worker per scenario. Reused older training trials are identified separately.
+## Sponsor integrations
 
-### past.dev challenge
+| Service | Actual use | Source |
+|---|---|---|
+| Tinker | V7 LoRA training, saved-state recovery and inference. Planning roles use inference only. | [Training](src/mochi/curriculum/refine.py), [recovery](src/mochi/curriculum/finalize_refinement.py), [receipts](evidence/refinement-v7/results.json) |
+| Modal | Pinned CPU MuJoCo trials, parallel contact calibration and paired closed-loop evaluation. | [Planning workers](src/mochi/planning/remote.py), [V7 workers](src/mochi/curriculum/remote_policy.py) |
+| Exa | Failure-derived searches in the main research loop, with request IDs and source links. | [HTTP adapter](src/mochi/integrations.py), [planning loop](src/mochi/planning/baseline.py) |
+| past.dev | Real ingestion, audience controls and source-verified cross-identity recalls. | [Memory client](src/mochi/desk/services.py), [planning evidence](evidence/planning/results.json) |
 
-**Agents:** separate research, design/training, execution/evaluation and criticism identities write and recall evidence. The demo exposes verified source handoffs and the bounded decisions they informed.
-
-**Layers:** prompts hold working context; past.dev holds episodic findings and provenance; versioned code holds procedures; artifact files hold exact numerical results and trajectories.
-
-**Results:** 11 writes, 11 recall requests, 244 ingestion polls, and 9 verified cross-role recalls. Private-audience isolation passed.
-
-**Caveats:** no causal search or memory ablation. Exact numerical payloads are resolved only after verifying their source IDs. API call counts do not establish credit charges. Recovery uses additional identities while retaining earlier source provenance.
-
-### Reproduce and inspect
-
-Run commands from the repository root. Install the independent package and fetch the pinned assets using the setup instructions below. Provider credentials are configured in existing GitHub Actions secrets; the replay frontend receives none.
-
-```sh
-node mochi/scripts/check_replay_ui.mjs
-PYTHONPATH=mochi/src mochi/.venv/bin/python -m pytest mochi/tests/test_motion_metrics.py mochi/tests/test_gait_control.py -q
-```
-
-Artifact download, evidence checks and export commands are in [the results document](docs/refinement-v7-results.md). Render a recorded episode with:
-
-```sh
-blender --background --python mochi/scripts/render_curriculum.py -- --input mochi/web/desk/curriculum/checkpoint-64.json --out mochi/artifacts/inspection --time 1.5 --camera side --samples 16
-```
-
-The final training state was saved before the free checkpoint-storage limit closed its original client. Evaluation recovery uses fresh clients and in-memory snapshots, with **zero additional optimizer updates**, no canonical checkpoint deletion, and no billing changes. Additional persistent training checkpoints need available storage. The original failures remain archived.
-
-Exact integration paths: [training](src/mochi/curriculum/refine.py), [memory](src/mochi/desk/services.py), [Exa and model decisions](src/mochi/integrations.py), [Modal feedback evaluation](src/mochi/curriculum/remote_policy.py), [evaluation recovery](src/mochi/curriculum/finalize_refinement.py).
-
-```mermaid
-flowchart LR
-  E[Exa sources] --> M[past.dev verified findings]
-  M --> B[Bounded training allocation]
-  B --> T[Tinker weight updates]
-  T --> S[Walking commands and contact profiles]
-  S --> C[Fixed gait, balance and IK]
-  C --> P[MuJoCo on Modal]
-  P --> R[Metrics and recorded trajectories]
-  R --> M
-  R --> V[Three.js and Blender replay]
-```
-
-The earlier V6 reference success, its negative Modal replication, and the original supported-pushing studies are archived separately. They are not merged into the V7 test counts. See [V6 replication](evidence/curriculum-v6/modal-validation.json).
-<!-- MOCHI_CURRICULUM_END -->
-
-An original supported humanoid pushes a star-stamped puck into a target. A
-bounded research loop diagnoses failures, searches Exa, proposes controller
-changes, evaluates them on Modal, and shares evidence through past.dev. A critic
-and deterministic gate decide which changes survive. Blender and the browser
-replay actual MuJoCo body trajectories.
-
-This is an independent Track 5 subproject. The forecasting application, its
-archives, deployment, model weights and benchmark inputs are unchanged.
-
-**[Open the Mochi studio](https://howdymary--mochi-policy-studio-web.us-east.modal.run)** ·
-**[Two-minute demo](https://howdymary--mochi-policy-studio-web.us-east.modal.run/data/demo.mp4)** ·
-**[Executed research and limits](docs/results.md)** ·
-**[Successful sponsor workflow](https://github.com/howdymary/compute-forecasting/actions/runs/43762703104)**
-
-The live study completed 188 Modal rollouts, two Exa searches, nine Tinker
-decisions, and eleven verified cross-agent past.dev recalls. Held-out success
-was 8/12 for the research-selected controller versus 2/12 initially and 6/12 for
-the conventional control. Under higher friction and mass it fell to **1/8**,
-versus 6/8 for conventional search. This is conditional improvement and an
-important generalization failure, not a universal win or proof of search value.
-
-## Desk humanoid design and expanded study
-
-[Design 02 preview](https://howdymary--mochi-policy-studio-web.us-east.modal.run/concept.html) gives Mochi a compact mechanical humanoid body on a full-size desk. [The design notes](docs/desk-humanoid.md) distinguish its static Blender rig and proposed desktop-bowling task from the measured supported-pushing simulator.
-
-The separately registered robustness follow-up uses eight research rounds, the same controller-family access in both search arms, fresh friction/mass mixtures, and a maximum of 2,016 Modal simulations. Execution: [workflow 43765530700](https://github.com/howdymary/compute-forecasting/actions/runs/43765530700). Do not pool its outcomes with V1.
-
-## First visible slice
-
-- Original procedural mini humanoid and tabletop scene.
-- Three-joint actuated right arm; state-based control, fixed supported base.
-- Real contact dynamics in MuJoCo 3.3.7.
-- Frozen starting policy and reproducible parameter search.
-- Before/after viewer with a shared playback clock and held-out replay.
-- Blender scene generation, film encoding, source and memory evidence panels.
-
-Current runtime status and numerical outcomes are in `web/data/report.json`
-when a demo pack has been published. A local conventional-search run is never
-presented as a successful sponsor-connected run.
-
-## Run locally
-
-From the repository root, using Python 3.11:
-
-```sh
-uv venv mochi/.venv --python 3.11
-uv pip install --python mochi/.venv/bin/python './mochi[dev]'
-PYTHONPATH=mochi/src mochi/.venv/bin/python -m mochi.cli capabilities
-PYTHONPATH=mochi/src mochi/.venv/bin/python -m pytest mochi/tests -q
-PYTHONPATH=mochi/src mochi/.venv/bin/python -m mochi.cli demo --out mochi/artifacts/local
-mochi/.venv/bin/python mochi/scripts/publish_local.py mochi/artifacts/local
-PYTHONPATH=mochi/src mochi/.venv/bin/python -m mochi.cli serve --port 8765
-```
-
-Open http://127.0.0.1:8765. `PYTHONPATH` explicitly points at the live source
-tree; the Python package can also be installed non-editably. Current commands
-assume a repository checkout because the fixed protocol and web assets are kept
-in the independent subproject. Set `MOCHI_ROOT` to its absolute path if needed.
-The Three.js viewer and optional fonts use public CDNs and need network access.
-
-## Render the recorded motion
-
-Blender 5.1.2 was used locally. Run a smoke render first:
-
-```sh
-blender --background --python mochi/scripts/blender_scene.py -- --trajectory mochi/artifacts/local/selected.json --out mochi/artifacts/preview --still --width 960
-```
-
-For each of `baseline`, `selected`, and `heldout`:
-
-```sh
-blender --background --python mochi/scripts/blender_scene.py -- --trajectory mochi/artifacts/local/selected.json --out mochi/artifacts/film-selected --stride 2 --width 960
-mochi/.venv/bin/python mochi/scripts/encode.py --root mochi/artifacts --scope local --stride 2
-mochi/.venv/bin/python mochi/scripts/publish_local.py mochi/artifacts/local
-```
-
-The transform exporter is deliberately simple: body positions and quaternions
-are sampled at 25 Hz; Blender keyframes selected samples and renders those
-frames. `stride=2` is encoded at 12.5 FPS, preserving six seconds of real time.
-Generated `.blend` scenes and large frame sequences stay ignored; short public
-renders may be published in a release/demo pack with source hashes.
-
-## Sponsor-connected execution
-
-The parent repository's GitHub Actions secret names are reused by the additive
-`.github/workflows/mochi-research.yml` workflow. No keys were copied locally.
-The existing `metagame` checkout remains unchanged; code is prepared on the
-separate `mochi-hackathon` remote branch.
-
-The workflow installs `mochi[remote,dev]`, runs tests, then runs:
-
-```sh
-python -m mochi.research --out mochi/artifacts/live
-```
-
-Required server-side variables: `EXA_API_KEY`, `PAST_API_KEY`, `TINKER_API_KEY`,
-`MODAL_TOKEN_ID`, `MODAL_TOKEN_SECRET`. The separate Modal app is
-`mochi-robot-lab`, with at most eight one-CPU / 1 GiB workers and 180-second
-function timeouts. The research loop is bounded to two rounds and 48 candidate
-rollouts, plus baseline, matched control, and final evaluations.
-
-Download the workflow artifact, inspect `live/report.json`, and publish that
-folder using `scripts/publish_local.py`. The local preview and live study have
-different candidate budgets; keep their claims separate.
-
-The published pack can be audited without provider credentials:
-
-```sh
-mochi/.venv/bin/python mochi/scripts/audit_pack.py mochi/web/data
-```
-
-This checks exact numerical summaries, four model-driven roles, eleven consumed
-cross-agent records and their payload hashes, matched simulation counts, provider
-receipts, the preserved robustness failure, and all thirteen artifact checksums.
-The final Blender audit checked fourteen body poses at three recorded keyframes,
-with maximum component error below 3e-8. The 120-second MP4 uses measured study
-results and the corresponding recorded Linux trajectories.
-
-Exact integration locations:
-- `src/mochi/integrations.py`: Exa search, past.dev writes/recalls, bounded
-  Tinker/Qwen decisions. No import-time network calls.
-- `src/mochi/research.py`: failure-driven source-to-experiment loop, rejection
-  decisions, equal-budget control, selection freeze and final evaluation.
-- `src/mochi/remote.py`: asynchronous Modal fan-out, actual resource receipts.
-- `configs/protocol.json`: fixed evaluation contract and disjoint seed sets.
-- `docs/integrations.md`: local/remote capabilities and parent-pattern reuse.
+Search and memory have no causal ablation. Service receipts establish use,
+not that either service caused a control improvement.
 
 ## past.dev challenge
 
 ### Agents
 
-Four model-driven roles use the same Qwen/Qwen3.5-4B base sampler with different
-instructions, bounded choices, identities and contexts. Researcher writes sourced
-mechanisms and reads criticism. Designer reads research and writes proposals.
-Experimenter reads proposals, selects a diagnostic, executes the fixed numerical
-tool and writes results. Critic reads results/evidence and writes a verdict.
-The researcher consumes that verdict before the next query.
-
-All writes have timestamps, authors and explicit audiences. A shared Mochi
-audience connects the roles; a critic-only audience holds a synthetic canary.
-The researcher must not retrieve that private source. IDs are unique per run
-and stay within the documented audience length constraints.
+Four application roles use distinct instructions and identities: research,
+policy design, experiment execution and criticism. Research writes a sourced
+proposal; design recalls it; execution recalls the plan and writes results;
+criticism recalls evidence and writes a verdict; research recalls the verdict.
+In the planning loop, the recalled plan selects a real additional physical probe.
 
 ### Layers
 
-Working context is per-role. Past.dev holds authored episodic events and their
-semantic evidence. Versioned Python holds procedural methods. Exact numerical
-payloads and trajectories live in JSON artifacts. A recall must return the
-required source ID; only then is the exact canonical payload supplied to the
-consumer. No fallback is counted as successful recall.
+Prompts hold working context. past.dev holds findings and conclusions.
+Versioned code holds procedures. Exact measurements and trajectories live in
+Mochi artifacts. Fixed shared and critic-only audiences enforce access;
+a synthetic private canary checks isolation.
 
 ### Results
 
-Executed results, source IDs, hashes, reader/writer identities, model decisions,
-ingestion completion, and write-to-readable latency are retained in each live
-report. The service-connected run must finish before eligibility is claimed.
-Local conventional search proves only the simulator/evaluator/rendering slice.
-No benefit from memory or search is inferred merely from calling the APIs.
-The successful study has four writers/readers, eleven cross-agent recalls, and
-a passed positive/negative private-canary check. See `docs/results.md` and the
-versioned report for actual decisions and the robustness failure.
+The V7 training/recovery campaign recorded 11 writes, 11 recalls and nine
+verified cross-identity recalls. The new planning receipts are reported
+separately in [its evidence](evidence/planning/results.json).
+Dependent reads require completed ingestion and the expected source ID.
 
 ### Caveats
 
-This is a small constrained manipulation study. Roles select registered actions
-and policy families; they do not invent arbitrary new control code. Search
-sources motivate a choice among supported families. There is no matched
-no-memory or no-search ablation yet, so their causal benefit is unproven. The
-random-search comparison matches simulation counts, not total model cost.
-It also uses a narrower open-loop family than the research arm, which can
-choose feedback; this confound prevents attributing the difference to Exa.
-Private-reader isolation is one positive/negative synthetic canary check, not
-an exhaustive security audit. Prior hypotheses are qualified by later authored
-critic conclusions; native semantic supersession is not assumed or proven.
+Canonical numerical records are resolved only after verifying recalled source
+IDs. There is no silent memory fallback. Memory's performance benefit is
+unestablished. Corrections retain provenance; native semantic supersession
+is not assumed.
 
-## Evaluation and limitations
+## Run from the repository root
 
-See [architecture](docs/architecture.md) and the fixed protocol. Selection uses
-development success count, then mean final distance. Held-out and higher-friction
-/ higher-mass scenarios run only after the selected policy is frozen. Report
-Wilson intervals and all paired trials. The showcase seed is selected on
-development for a visible baseline failure, and labeled accordingly.
+Reuse the existing Mochi environment when present. For a new environment:
 
-Only the hand collides with the puck/table; other arm and self collisions are
-disabled. The robot is supported and the legs are cosmetic. Obstacles, vision,
-walking, neural training, contact-force safety validation and sim-to-real
-transfer are outside this slice. The control model is deliberately simplified.
-Successful table-boundary checks are not a safety certification.
+```sh
+uv venv --python 3.11 mochi/.venv
+uv pip install --python mochi/.venv/bin/python torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu
+uv pip install --python mochi/.venv/bin/python -e './mochi[remote,dev,plots]' pyyaml==6.0.2
+mochi/.venv/bin/python mochi/scripts/fetch_visual_models.py
+```
 
-## Reuse and provenance
+Backend integrations use existing `TINKER_API_KEY`, `EXA_API_KEY`,
+`PAST_API_KEY`, `MODAL_TOKEN_ID` and `MODAL_TOKEN_SECRET`.
+See [integration setup](docs/integrations.md). Mochi workflows explicitly
+inject existing GitHub secret references. No credential belongs in the viewer.
 
-Mochi's robot, scene, task, controller, evaluator, UI and renderer were created
-on November 15, 2026. Parent service patterns were inspected and adapted without
-importing forecasting jobs. Attribution: MuJoCo (Apache-2.0), NumPy (BSD-3-Clause),
-Three.js (MIT), Blender (GPL; output licensing separate), FastAPI (MIT), and the
-respective Modal, Exa, past.dev and Tinker SDK/API terms. External research links
-and short excerpts keep their source attribution. No external robot meshes or
-forecast data were used. Protocol hashes accompany the numerical results.
+Local planning and fixed control need no service credentials:
+
+```sh
+PYTHONPATH=mochi/src mochi/.venv/bin/python -m mochi.planning.route
+PYTHONPATH=mochi/src mochi/.venv/bin/python -m mochi.planning.follower --seed 19000
+mochi/.venv/bin/python mochi/scripts/draw_route.py
+PYTHONPATH=mochi/src mochi/.venv/bin/python -m pytest -q mochi/tests/test_planning.py
+python3 -m http.server 8047 --directory mochi/web/desk
+```
+
+Open `http://localhost:8047/planning.html` or `curriculum.html`.
+The additive `mochi-planning*.yml` workflows run remote calibration and actual
+service handoffs. The [next training plan](configs/path-training-plan.json)
+has not run. Rerunning the old V7 entrypoint is not a continuation of the new
+tracking interface.
+
+Render an episode exported from the workflow artifact:
+
+```sh
+blender -b -t 4 -P mochi/scripts/render_curriculum.py -- \
+  --input mochi/artifacts/planning/episode.json \
+  --out mochi/artifacts/planning/render --time 30 --samples 32 \
+  --camera topdown --route mochi/configs/desk-route-v1.json
+```
+
+Use `--camera side` or `--camera feet` for inspection.
+`--animate` writes the recorded animation into a Blender scene. Large outputs
+and caches stay out of Git.
+
+## Limits and provenance
+
+This is a small fixed-layout simulation study. Waist and fingers are fixed.
+There is no camera input or hardware validation. Seven sampled planning
+configurations and a 25 Hz replay audit do not certify continuous collision
+freedom. Tracking/braking margins remain assumptions to test. Longer paths,
+failed tasks and checkpoint regressions are retained.
+
+The original supported puck hackathon slice is preserved in
+[the archived README](docs/archive/initial-puck-slice.md). Free walking,
+the four-task curriculum and subsequent training are later iterations;
+they are not all claimed as work built during the original hackathon.
+
+Dependencies include MuJoCo, NumPy, SciPy, PyTorch, Three.js, Blender, FastAPI
+and the service SDKs. Robot revisions, hashes and licenses are recorded in
+[G1 provenance](assets/robot/g1/source.json) and
+[locomotion provenance](assets/robot/locomotion/source.json).
+[Scene attribution](web/desk/assets/sand3d-attribution.json) records visual assets.
+The forecasting application and its archived results remain separate.

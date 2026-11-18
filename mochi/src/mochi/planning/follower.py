@@ -66,11 +66,12 @@ class PathRunner:
  def result(self):
   return {'seed':self.w.s['seed'],'mode':self.mode,'failure':self.failure,'arrivals':self.arrivals,'episode':self.w.episode(),'route_version':self.route['version'],'path_trace':self.path_trace,'stop_trials':self.stop_trials,'physics_calls':self.calls,'duration_wall_s':time.perf_counter()-self.start}
 
-def fixed_sequence(route,seed,record=True):
+def fixed_sequence(route,seed,record=True,profiles=None):
+ profiles=profiles or {'alarm':'B','drawer':'A','laptop':'B','globe':'A'}
  r=PathRunner(route);status=r.reset(seed,record)
  for _ in range(1200):
   if status['mode']=='done':break
-  obs=status['observation'];action=teacher(obs) if obs['domain']=='walk' else {'alarm':'G' if obs['material_cue']=='firm' else 'B','drawer':'A','laptop':'C','globe':'A'}[obs['domain']];status=r.advance(action)
+  obs=status['observation'];action=teacher(obs) if obs['domain']=='walk' else profiles[obs['domain']];status=r.advance(action)
  return r.result()
 
 if __name__=='__main__':

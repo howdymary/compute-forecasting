@@ -18,7 +18,9 @@ jobs:
         with: {python-version: '3.11'}
       - run: python -m pip install modal==1.6.4
       - name: Check recorded data and replay controls
-        run: node mochi/scripts/check_replay_ui.mjs
+        run: |
+          node mochi/scripts/check_replay_ui.mjs
+          node mochi/scripts/check_planning_ui.mjs
       - name: Normalize completed numerical progress
         env:
           PYTHONPATH: ${{ github.workspace }}/mochi/src

@@ -1,0 +1,126 @@
+{
+  "study": "mochi-reference-tracking-v1",
+  "status": "proposed_not_launched",
+  "gates": [
+    "Fixed follower traverses every leg and demonstrates manipulation-ready arrivals",
+    "Freeze route, tracking interface and verifiers",
+    "At least four additional durable checkpoint slots verified"
+  ],
+  "parent": {
+    "study": "mochi-curriculum-v7",
+    "additional_updates_in_parent": 96,
+    "durable_state_name": "mochi_geometry_walk_tasks_96",
+    "selection_caveat": "Latest recoverable V7 full state; V7 update 64 had better development arrivals but has no preserved optimizer state. Resume from recoverability, not a claim of being best."
+  },
+  "training": {
+    "method": "Supervised imitation from physical reference-follower rollouts, plus measured contact-profile trials",
+    "maximum_additional_optimizer_updates": 64,
+    "maximum_gradient_calls": 320,
+    "domains_per_update": [
+      "walk",
+      "alarm",
+      "drawer",
+      "laptop",
+      "globe"
+    ],
+    "batch_sizes": {
+      "walk": 32,
+      "alarm": 8,
+      "drawer": 8,
+      "laptop": 8,
+      "globe": 8
+    },
+    "maximum_examples_including_repeats": 4096,
+    "learning_rate": 0.0002,
+    "model": "Qwen/Qwen3.5-4B",
+    "lora_rank": 16,
+    "motor_gait_balance_ik_trained": false
+  },
+  "checkpoint_additional_updates": [
+    0,
+    8,
+    16,
+    32,
+    64
+  ],
+  "checkpoint_cumulative_updates": [
+    96,
+    104,
+    112,
+    128,
+    160
+  ],
+  "retention": {
+    "new_durable_full_states": 4,
+    "estimated_additional_bytes": 1750260180,
+    "estimate_basis": "Four times the measured 437565045-byte parent full state; future sizes may differ",
+    "reuse_parent_for_extra_zero": true,
+    "sampler_snapshots": "ephemeral only",
+    "delete_existing": false,
+    "change_billing": false
+  },
+  "scenarios": {
+    "calibration_and_training": [
+      19000,
+      19001,
+      19002,
+      19003,
+      19004,
+      19005,
+      19006,
+      19007
+    ],
+    "development": [
+      20000,
+      20001
+    ],
+    "held_out_not_opened": [
+      21000,
+      21001,
+      21002,
+      21003
+    ],
+    "isolated_navigation_held_out_not_opened": [
+      21500,
+      21501,
+      21502,
+      21503,
+      21504,
+      21505,
+      21506,
+      21507
+    ]
+  },
+  "evaluation_arms": {
+    "A": "Parent 96 + existing route and original interface",
+    "B": "Parent 96 + frozen new reference and new tracking interface",
+    "C": "Post-trained weights + exactly the same reference/interface as B",
+    "D": "Fixed reference follower + fixed, training-calibrated contact profiles"
+  },
+  "selection": "Development only: first minimize falls, edge/contact violations; then maximize full-sequence and navigation success; then successful-route travel time, excess distance and reversals. Do not automatically select update 64. Open held-out scenarios once after selection freeze.",
+  "modal_budget": {
+    "cpu_per_worker": 1,
+    "maximum_concurrency": 4,
+    "maximum_total_new_rollouts": 512,
+    "stop_on_budget": true
+  },
+  "wall_clock_estimate": "2-3 hours for data, training, checkpoint evaluation and demo export after the gates pass; a planning estimate, not a service guarantee",
+  "sponsor_use": {
+    "Tinker": "Actual forward/backward + optimizer updates only after storage gate",
+    "Modal": "Bounded physical rollouts and matched inference comparisons",
+    "past.dev": "Source-verified cross-identity evidence handoffs after checkpoints",
+    "Exa": "Failure-derived searches with experiment-linked sources"
+  },
+  "presentation": {
+    "primary_scenario_chosen_before_test": 20000,
+    "checkpoint_animation": "Recorded continuous episodes; preserve regressions; no root animation or stage resets",
+    "claims": "No motor-level gait training, hardware transfer or causal memory/search benefit without additional evidence"
+  },
+  "reference_candidate_version": "56d9a2c817b950dd",
+  "current_gates": {
+    "new_controller_updates": 0,
+    "all_four_task_feasibility": false,
+    "storage_headroom": false,
+    "tracking_error_within_assumed_allowance": false
+  }
+}

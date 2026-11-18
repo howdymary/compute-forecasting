@@ -1,0 +1,3865 @@
+{
+  "optimizer_updates": 0,
+  "held_out_opened": false,
+  "total_modal_rollouts": 80,
+  "studies": [
+    {
+      "workflow_run": "44279180914",
+      "source_sha": "f4866955cae978b14789f2eb0a07df600ff4fe99",
+      "phase": "training-scenario isolated contact calibration, not held-out evaluation",
+      "rollouts": 48,
+      "artifact_sha256": "3211d7ce1cb276039a420ebb57fab3c170317361b62c9fea04caaae2b9281bb5",
+      "rows": [
+        {
+          "seed": 19000,
+          "task": "alarm",
+          "pose": [
+            -0.375,
+            0.015,
+            1.5707963267948966
+          ],
+          "observation": {
+            "domain": "alarm",
+            "object_state": 0.0,
+            "relative_position_mm": [
+              0.0,
+              25.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": 4.4,
+            "material_cue": "soft"
+          },
+          "result": {
+            "task": "alarm",
+            "success": true,
+            "value": -0.0003442037813382469,
+            "duration": 8.775535375588987,
+            "contacts": 5914,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.06314043765269584,
+            "fall": false,
+            "max_tilt_deg": 1.317896187123065,
+            "profile": {
+              "code": "A",
+              "speed": 0.012,
+              "depth": 0.0002,
+              "force": 0.055,
+              "brake": 0.001,
+              "hold": 0.3
+            },
+            "phase": "release",
+            "contact_progress": -0.004105484487385981
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 24.148726895,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19000,
+          "task": "alarm",
+          "pose": [
+            -0.375,
+            0.015,
+            1.5707963267948966
+          ],
+          "observation": {
+            "domain": "alarm",
+            "object_state": 0.0,
+            "relative_position_mm": [
+              0.0,
+              25.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": 4.4,
+            "material_cue": "soft"
+          },
+          "result": {
+            "task": "alarm",
+            "success": true,
+            "value": -0.00034420376122763085,
+            "duration": 7.85915203548345,
+            "contacts": 5393,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.06453394337695445,
+            "fall": false,
+            "max_tilt_deg": 1.2785763203405174,
+            "profile": {
+              "code": "B",
+              "speed": 0.025,
+              "depth": 0.0003,
+              "force": 0.12,
+              "brake": 0.001,
+              "hold": 0.35
+            },
+            "phase": "release",
+            "contact_progress": -0.004112535110946484
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 24.295278688,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19000,
+          "task": "alarm",
+          "pose": [
+            -0.375,
+            0.015,
+            1.5707963267948966
+          ],
+          "observation": {
+            "domain": "alarm",
+            "object_state": 0.0,
+            "relative_position_mm": [
+              0.0,
+              25.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": 4.4,
+            "material_cue": "soft"
+          },
+          "result": {
+            "task": "alarm",
+            "success": true,
+            "value": -0.0003442037190651807,
+            "duration": 7.817461089591048,
+            "contacts": 5385,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.06348715644385783,
+            "fall": false,
+            "max_tilt_deg": 1.327845617599387,
+            "profile": {
+              "code": "C",
+              "speed": 0.04,
+              "depth": 0.0006,
+              "force": 0.22,
+              "brake": 0.002,
+              "hold": 0.25
+            },
+            "phase": "release",
+            "contact_progress": -0.004099915325563504
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 23.43081956,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19000,
+          "task": "alarm",
+          "pose": [
+            -0.375,
+            0.015,
+            1.5707963267948966
+          ],
+          "observation": {
+            "domain": "alarm",
+            "object_state": 0.0,
+            "relative_position_mm": [
+              0.0,
+              25.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": 4.4,
+            "material_cue": "soft"
+          },
+          "result": {
+            "task": "alarm",
+            "success": true,
+            "value": -0.00034420371789684214,
+            "duration": 8.946386506795104,
+            "contacts": 6456,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.06442295723589803,
+            "fall": false,
+            "max_tilt_deg": 1.3237222688462233,
+            "profile": {
+              "code": "D",
+              "speed": 0.016,
+              "depth": 0.0005,
+              "force": 0.22,
+              "brake": 0.004,
+              "hold": 0.5
+            },
+            "phase": "release",
+            "contact_progress": -0.0040939034862460715
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 27.085887008,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19000,
+          "task": "alarm",
+          "pose": [
+            -0.375,
+            0.015,
+            1.5707963267948966
+          ],
+          "observation": {
+            "domain": "alarm",
+            "object_state": 0.0,
+            "relative_position_mm": [
+              0.0,
+              25.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": 4.4,
+            "material_cue": "soft"
+          },
+          "result": {
+            "task": "alarm",
+            "success": true,
+            "value": -0.0003442037692741288,
+            "duration": 7.936811640577139,
+            "contacts": 5523,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.06218576199827902,
+            "fall": false,
+            "max_tilt_deg": 1.3260793340159016,
+            "profile": {
+              "code": "E",
+              "speed": 0.04,
+              "depth": 0.0002,
+              "force": 0.08,
+              "brake": 0.005,
+              "hold": 0.25
+            },
+            "phase": "release",
+            "contact_progress": -0.004092944688134933
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 23.827762048,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19000,
+          "task": "alarm",
+          "pose": [
+            -0.375,
+            0.015,
+            1.5707963267948966
+          ],
+          "observation": {
+            "domain": "alarm",
+            "object_state": 0.0,
+            "relative_position_mm": [
+              0.0,
+              25.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": 4.4,
+            "material_cue": "soft"
+          },
+          "result": {
+            "task": "alarm",
+            "success": true,
+            "value": -0.0003442037540253373,
+            "duration": 7.165937876331358,
+            "contacts": 4550,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.06509334934308578,
+            "fall": false,
+            "max_tilt_deg": 1.2785763203405174,
+            "profile": {
+              "code": "F",
+              "speed": 0.025,
+              "depth": 0.0008,
+              "force": 0.3,
+              "brake": 0.0005,
+              "hold": 0.4
+            },
+            "phase": "release",
+            "contact_progress": -0.004094933460724072
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 22.336047325000003,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19000,
+          "task": "alarm",
+          "pose": [
+            -0.375,
+            0.015,
+            1.5707963267948966
+          ],
+          "observation": {
+            "domain": "alarm",
+            "object_state": 0.0,
+            "relative_position_mm": [
+              0.0,
+              25.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": 4.4,
+            "material_cue": "soft"
+          },
+          "result": {
+            "task": "alarm",
+            "success": true,
+            "value": -0.0003442037493823226,
+            "duration": 7.937629110104441,
+            "contacts": 5532,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.06264305757092885,
+            "fall": false,
+            "max_tilt_deg": 1.3270613595292076,
+            "profile": {
+              "code": "G",
+              "speed": 0.035,
+              "depth": 0.0004,
+              "force": 0.25,
+              "brake": 0.001,
+              "hold": 0.3
+            },
+            "phase": "release",
+            "contact_progress": -0.0041016877531938525
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 24.186216097,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19000,
+          "task": "alarm",
+          "pose": [
+            -0.375,
+            0.015,
+            1.5707963267948966
+          ],
+          "observation": {
+            "domain": "alarm",
+            "object_state": 0.0,
+            "relative_position_mm": [
+              0.0,
+              25.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": 4.4,
+            "material_cue": "soft"
+          },
+          "result": {
+            "task": "alarm",
+            "success": true,
+            "value": -0.00034420374350899733,
+            "duration": 7.897573103266644,
+            "contacts": 5476,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.0626313349596114,
+            "fall": false,
+            "max_tilt_deg": 1.328075625987369,
+            "profile": {
+              "code": "H",
+              "speed": 0.05,
+              "depth": 0.0003,
+              "force": 0.18,
+              "brake": 0.001,
+              "hold": 0.25
+            },
+            "phase": "release",
+            "contact_progress": -0.004093505907512252
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 26.339220920000002,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19000,
+          "task": "alarm",
+          "pose": [
+            -0.375,
+            0.025,
+            1.5707963267948966
+          ],
+          "observation": {
+            "domain": "alarm",
+            "object_state": 0.0,
+            "relative_position_mm": [
+              0.0,
+              15.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": 4.4,
+            "material_cue": "soft"
+          },
+          "result": {
+            "task": "alarm",
+            "success": true,
+            "value": -0.00034420378553608443,
+            "duration": 4.5091619125998745,
+            "contacts": 1390,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.2294463757134451,
+            "fall": false,
+            "max_tilt_deg": 1.585199503775726,
+            "profile": {
+              "code": "A",
+              "speed": 0.012,
+              "depth": 0.0002,
+              "force": 0.055,
+              "brake": 0.001,
+              "hold": 0.3
+            },
+            "phase": "release",
+            "contact_progress": -0.004098363904047121
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 16.740715621999996,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19000,
+          "task": "alarm",
+          "pose": [
+            -0.375,
+            0.025,
+            1.5707963267948966
+          ],
+          "observation": {
+            "domain": "alarm",
+            "object_state": 0.0,
+            "relative_position_mm": [
+              0.0,
+              15.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": 4.4,
+            "material_cue": "soft"
+          },
+          "result": {
+            "task": "alarm",
+            "success": true,
+            "value": -0.00034420387523311175,
+            "duration": 3.745645374099673,
+            "contacts": 1097,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.2294463757134451,
+            "fall": false,
+            "max_tilt_deg": 1.585199503775726,
+            "profile": {
+              "code": "B",
+              "speed": 0.025,
+              "depth": 0.0003,
+              "force": 0.12,
+              "brake": 0.001,
+              "hold": 0.35
+            },
+            "phase": "release",
+            "contact_progress": -0.004099600204626236
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 15.972781310999999,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19000,
+          "task": "alarm",
+          "pose": [
+            -0.375,
+            0.025,
+            1.5707963267948966
+          ],
+          "observation": {
+            "domain": "alarm",
+            "object_state": 0.0,
+            "relative_position_mm": [
+              0.0,
+              15.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": 4.4,
+            "material_cue": "soft"
+          },
+          "result": {
+            "task": "alarm",
+            "success": true,
+            "value": -0.00034420380251108,
+            "duration": 3.525746071255317,
+            "contacts": 1016,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.2294463757134451,
+            "fall": false,
+            "max_tilt_deg": 1.585199503775726,
+            "profile": {
+              "code": "C",
+              "speed": 0.04,
+              "depth": 0.0006,
+              "force": 0.22,
+              "brake": 0.002,
+              "hold": 0.25
+            },
+            "phase": "release",
+            "contact_progress": -0.004100861545602578
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 18.120313789999997,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19000,
+          "task": "alarm",
+          "pose": [
+            -0.375,
+            0.025,
+            1.5707963267948966
+          ],
+          "observation": {
+            "domain": "alarm",
+            "object_state": 0.0,
+            "relative_position_mm": [
+              0.0,
+              15.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": 4.4,
+            "material_cue": "soft"
+          },
+          "result": {
+            "task": "alarm",
+            "success": true,
+            "value": -0.0003442037956905086,
+            "duration": 4.324413799429624,
+            "contacts": 1490,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.23931058290518992,
+            "fall": false,
+            "max_tilt_deg": 1.591281316762666,
+            "profile": {
+              "code": "D",
+              "speed": 0.016,
+              "depth": 0.0005,
+              "force": 0.22,
+              "brake": 0.004,
+              "hold": 0.5
+            },
+            "phase": "release",
+            "contact_progress": -0.004098326415209381
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 18.377001543000006,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19000,
+          "task": "alarm",
+          "pose": [
+            -0.375,
+            0.025,
+            1.5707963267948966
+          ],
+          "observation": {
+            "domain": "alarm",
+            "object_state": 0.0,
+            "relative_position_mm": [
+              0.0,
+              15.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": 4.4,
+            "material_cue": "soft"
+          },
+          "result": {
+            "task": "alarm",
+            "success": true,
+            "value": -0.00034420375956233323,
+            "duration": 3.4930472901632195,
+            "contacts": 970,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.2294463757134451,
+            "fall": false,
+            "max_tilt_deg": 1.585199503775726,
+            "profile": {
+              "code": "E",
+              "speed": 0.04,
+              "depth": 0.0002,
+              "force": 0.08,
+              "brake": 0.005,
+              "hold": 0.25
+            },
+            "phase": "release",
+            "contact_progress": -0.004103817625172736
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 15.775471069000005,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19000,
+          "task": "alarm",
+          "pose": [
+            -0.375,
+            0.025,
+            1.5707963267948966
+          ],
+          "observation": {
+            "domain": "alarm",
+            "object_state": 0.0,
+            "relative_position_mm": [
+              0.0,
+              15.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": 4.4,
+            "material_cue": "soft"
+          },
+          "result": {
+            "task": "alarm",
+            "success": true,
+            "value": -0.0003442038571639868,
+            "duration": 3.829027265884522,
+            "contacts": 1215,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.2294463757134451,
+            "fall": false,
+            "max_tilt_deg": 1.585199503775726,
+            "profile": {
+              "code": "F",
+              "speed": 0.025,
+              "depth": 0.0008,
+              "force": 0.3,
+              "brake": 0.0005,
+              "hold": 0.4
+            },
+            "phase": "release",
+            "contact_progress": -0.0041078389407188665
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 15.903905273999996,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19000,
+          "task": "alarm",
+          "pose": [
+            -0.375,
+            0.025,
+            1.5707963267948966
+          ],
+          "observation": {
+            "domain": "alarm",
+            "object_state": 0.0,
+            "relative_position_mm": [
+              0.0,
+              15.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": 4.4,
+            "material_cue": "soft"
+          },
+          "result": {
+            "task": "alarm",
+            "success": true,
+            "value": -0.00034420379724289324,
+            "duration": 3.5674370171477414,
+            "contacts": 1043,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.2294463757134451,
+            "fall": false,
+            "max_tilt_deg": 1.585199503775726,
+            "profile": {
+              "code": "G",
+              "speed": 0.035,
+              "depth": 0.0004,
+              "force": 0.25,
+              "brake": 0.001,
+              "hold": 0.3
+            },
+            "phase": "release",
+            "contact_progress": -0.004101281005708574
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 18.250386575000007,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19000,
+          "task": "alarm",
+          "pose": [
+            -0.375,
+            0.025,
+            1.5707963267948966
+          ],
+          "observation": {
+            "domain": "alarm",
+            "object_state": 0.0,
+            "relative_position_mm": [
+              0.0,
+              15.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": 4.4,
+            "material_cue": "soft"
+          },
+          "result": {
+            "task": "alarm",
+            "success": true,
+            "value": -0.00034420387073340943,
+            "duration": 3.4824201863082878,
+            "contacts": 987,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.23931058290518992,
+            "fall": false,
+            "max_tilt_deg": 1.591281316762666,
+            "profile": {
+              "code": "H",
+              "speed": 0.05,
+              "depth": 0.0003,
+              "force": 0.18,
+              "brake": 0.001,
+              "hold": 0.25
+            },
+            "phase": "release",
+            "contact_progress": -0.004100257465457628
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 18.115047892999996,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19000,
+          "task": "laptop",
+          "pose": [
+            0.33,
+            0.27,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.31546,
+            "relative_position_mm": [
+              0.0,
+              0.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.3124883522448505,
+            "duration": 12.000452660795357,
+            "contacts": 9945,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.20995478394477468,
+            "fall": false,
+            "max_tilt_deg": 1.3651114356918408,
+            "profile": {
+              "code": "A",
+              "speed": 0.012,
+              "depth": 0.0002,
+              "force": 0.055,
+              "brake": 0.001,
+              "hold": 0.3
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 25.58665261600001,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19000,
+          "task": "laptop",
+          "pose": [
+            0.33,
+            0.27,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.31546,
+            "relative_position_mm": [
+              0.0,
+              0.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.311632749298732,
+            "duration": 12.000452660795357,
+            "contacts": 10647,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.3074742843805903,
+            "fall": false,
+            "max_tilt_deg": 3.2918918986739567,
+            "profile": {
+              "code": "B",
+              "speed": 0.025,
+              "depth": 0.0003,
+              "force": 0.12,
+              "brake": 0.001,
+              "hold": 0.35
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 25.037540043999996,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19000,
+          "task": "laptop",
+          "pose": [
+            0.33,
+            0.27,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.31546,
+            "relative_position_mm": [
+              0.0,
+              0.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.301508265006783,
+            "duration": 7.2705739758260135,
+            "contacts": 4753,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.5905523944754001,
+            "fall": true,
+            "max_tilt_deg": 30.0887463815107,
+            "profile": {
+              "code": "C",
+              "speed": 0.04,
+              "depth": 0.0006,
+              "force": 0.22,
+              "brake": 0.002,
+              "hold": 0.25
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 24.835986304000002,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19000,
+          "task": "laptop",
+          "pose": [
+            0.33,
+            0.27,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.31546,
+            "relative_position_mm": [
+              0.0,
+              0.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.311770689203372,
+            "duration": 12.000452660795357,
+            "contacts": 10282,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.27055352720193754,
+            "fall": false,
+            "max_tilt_deg": 2.4104588382512797,
+            "profile": {
+              "code": "D",
+              "speed": 0.016,
+              "depth": 0.0005,
+              "force": 0.22,
+              "brake": 0.004,
+              "hold": 0.5
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 27.961929558999998,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19000,
+          "task": "laptop",
+          "pose": [
+            0.33,
+            0.27,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.31546,
+            "relative_position_mm": [
+              0.0,
+              0.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.312396524848517,
+            "duration": 12.000452660795357,
+            "contacts": 10886,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.2163132937062204,
+            "fall": false,
+            "max_tilt_deg": 1.5903151255104828,
+            "profile": {
+              "code": "E",
+              "speed": 0.04,
+              "depth": 0.0002,
+              "force": 0.08,
+              "brake": 0.005,
+              "hold": 0.25
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 25.667667248,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19000,
+          "task": "laptop",
+          "pose": [
+            0.33,
+            0.27,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.31546,
+            "relative_position_mm": [
+              0.0,
+              0.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.3052449460731284,
+            "duration": 12.000452660795357,
+            "contacts": 10648,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.40907374742411284,
+            "fall": false,
+            "max_tilt_deg": 4.632556270203635,
+            "profile": {
+              "code": "F",
+              "speed": 0.025,
+              "depth": 0.0008,
+              "force": 0.3,
+              "brake": 0.0005,
+              "hold": 0.4
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 24.947453436999993,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19000,
+          "task": "laptop",
+          "pose": [
+            0.33,
+            0.27,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.31546,
+            "relative_position_mm": [
+              0.0,
+              0.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.307110826156236,
+            "duration": 10.460340071358399,
+            "contacts": 8298,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.7071050509269413,
+            "fall": true,
+            "max_tilt_deg": 30.138592697501856,
+            "profile": {
+              "code": "G",
+              "speed": 0.035,
+              "depth": 0.0004,
+              "force": 0.25,
+              "brake": 0.001,
+              "hold": 0.3
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 27.534485215000004,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19000,
+          "task": "laptop",
+          "pose": [
+            0.33,
+            0.27,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.31546,
+            "relative_position_mm": [
+              0.0,
+              0.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.3115412706469076,
+            "duration": 12.000452660795357,
+            "contacts": 10949,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.3298610047838978,
+            "fall": false,
+            "max_tilt_deg": 3.3004800444539404,
+            "profile": {
+              "code": "H",
+              "speed": 0.05,
+              "depth": 0.0003,
+              "force": 0.18,
+              "brake": 0.001,
+              "hold": 0.25
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 27.206995248,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19001,
+          "task": "alarm",
+          "pose": [
+            -0.375,
+            0.015,
+            1.5707963267948966
+          ],
+          "observation": {
+            "domain": "alarm",
+            "object_state": 0.0,
+            "relative_position_mm": [
+              0.0,
+              25.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": 5.3,
+            "material_cue": "firm"
+          },
+          "result": {
+            "task": "alarm",
+            "success": false,
+            "value": 0.0013792324231579817,
+            "duration": 10.000104727487376,
+            "contacts": 7823,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.07690721856912727,
+            "fall": false,
+            "max_tilt_deg": 1.2785737435966884,
+            "profile": {
+              "code": "A",
+              "speed": 0.012,
+              "depth": 0.0002,
+              "force": 0.055,
+              "brake": 0.001,
+              "hold": 0.3
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 24.321176452000003,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19001,
+          "task": "alarm",
+          "pose": [
+            -0.375,
+            0.015,
+            1.5707963267948966
+          ],
+          "observation": {
+            "domain": "alarm",
+            "object_state": 0.0,
+            "relative_position_mm": [
+              0.0,
+              25.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": 5.3,
+            "material_cue": "firm"
+          },
+          "result": {
+            "task": "alarm",
+            "success": false,
+            "value": 0.002942387531794787,
+            "duration": 10.000104727487376,
+            "contacts": 8417,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.10427902114287926,
+            "fall": false,
+            "max_tilt_deg": 1.2785737435966884,
+            "profile": {
+              "code": "B",
+              "speed": 0.025,
+              "depth": 0.0003,
+              "force": 0.12,
+              "brake": 0.001,
+              "hold": 0.35
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 24.819829309,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19001,
+          "task": "alarm",
+          "pose": [
+            -0.375,
+            0.015,
+            1.5707963267948966
+          ],
+          "observation": {
+            "domain": "alarm",
+            "object_state": 0.0,
+            "relative_position_mm": [
+              0.0,
+              25.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": 5.3,
+            "material_cue": "firm"
+          },
+          "result": {
+            "task": "alarm",
+            "success": false,
+            "value": 0.003568019158941153,
+            "duration": 10.000104727487376,
+            "contacts": 8467,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.11556927368563824,
+            "fall": false,
+            "max_tilt_deg": 1.2865011061892562,
+            "profile": {
+              "code": "C",
+              "speed": 0.04,
+              "depth": 0.0006,
+              "force": 0.22,
+              "brake": 0.002,
+              "hold": 0.25
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 28.28000314799999,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19001,
+          "task": "alarm",
+          "pose": [
+            -0.375,
+            0.015,
+            1.5707963267948966
+          ],
+          "observation": {
+            "domain": "alarm",
+            "object_state": 0.0,
+            "relative_position_mm": [
+              0.0,
+              25.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": 5.3,
+            "material_cue": "firm"
+          },
+          "result": {
+            "task": "alarm",
+            "success": false,
+            "value": 0.00287199482481628,
+            "duration": 10.000104727487376,
+            "contacts": 8126,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.10004919353246158,
+            "fall": false,
+            "max_tilt_deg": 1.2785745455494473,
+            "profile": {
+              "code": "D",
+              "speed": 0.016,
+              "depth": 0.0005,
+              "force": 0.22,
+              "brake": 0.004,
+              "hold": 0.5
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 27.173932964999977,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19001,
+          "task": "alarm",
+          "pose": [
+            -0.375,
+            0.015,
+            1.5707963267948966
+          ],
+          "observation": {
+            "domain": "alarm",
+            "object_state": 0.0,
+            "relative_position_mm": [
+              0.0,
+              25.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": 5.3,
+            "material_cue": "firm"
+          },
+          "result": {
+            "task": "alarm",
+            "success": false,
+            "value": 0.0025742840186065426,
+            "duration": 10.000104727487376,
+            "contacts": 8463,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.09603561880105893,
+            "fall": false,
+            "max_tilt_deg": 1.2862707856827904,
+            "profile": {
+              "code": "E",
+              "speed": 0.04,
+              "depth": 0.0002,
+              "force": 0.08,
+              "brake": 0.005,
+              "hold": 0.25
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 24.191116655000002,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19001,
+          "task": "alarm",
+          "pose": [
+            -0.375,
+            0.015,
+            1.5707963267948966
+          ],
+          "observation": {
+            "domain": "alarm",
+            "object_state": 0.0,
+            "relative_position_mm": [
+              0.0,
+              25.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": 5.3,
+            "material_cue": "firm"
+          },
+          "result": {
+            "task": "alarm",
+            "success": false,
+            "value": 0.002994004155945978,
+            "duration": 10.000104727487376,
+            "contacts": 8420,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.10529428284656521,
+            "fall": false,
+            "max_tilt_deg": 1.2785737435966884,
+            "profile": {
+              "code": "F",
+              "speed": 0.025,
+              "depth": 0.0008,
+              "force": 0.3,
+              "brake": 0.0005,
+              "hold": 0.4
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 24.957172488999987,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19001,
+          "task": "alarm",
+          "pose": [
+            -0.375,
+            0.015,
+            1.5707963267948966
+          ],
+          "observation": {
+            "domain": "alarm",
+            "object_state": 0.0,
+            "relative_position_mm": [
+              0.0,
+              25.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": 5.3,
+            "material_cue": "firm"
+          },
+          "result": {
+            "task": "alarm",
+            "success": false,
+            "value": 0.0034374751667982733,
+            "duration": 10.000104727487376,
+            "contacts": 8468,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.1134158756117416,
+            "fall": false,
+            "max_tilt_deg": 1.2860556356944215,
+            "profile": {
+              "code": "G",
+              "speed": 0.035,
+              "depth": 0.0004,
+              "force": 0.25,
+              "brake": 0.001,
+              "hold": 0.3
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 28.476512423000003,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19001,
+          "task": "alarm",
+          "pose": [
+            -0.375,
+            0.015,
+            1.5707963267948966
+          ],
+          "observation": {
+            "domain": "alarm",
+            "object_state": 0.0,
+            "relative_position_mm": [
+              0.0,
+              25.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": 5.3,
+            "material_cue": "firm"
+          },
+          "result": {
+            "task": "alarm",
+            "success": false,
+            "value": 0.0037226978877711275,
+            "duration": 10.000104727487376,
+            "contacts": 8455,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.11589608897522496,
+            "fall": false,
+            "max_tilt_deg": 1.286920581588108,
+            "profile": {
+              "code": "H",
+              "speed": 0.05,
+              "depth": 0.0003,
+              "force": 0.18,
+              "brake": 0.001,
+              "hold": 0.25
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 27.852947789000012,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19001,
+          "task": "alarm",
+          "pose": [
+            -0.375,
+            0.025,
+            1.5707963267948966
+          ],
+          "observation": {
+            "domain": "alarm",
+            "object_state": 0.0,
+            "relative_position_mm": [
+              0.0,
+              15.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": 5.3,
+            "material_cue": "firm"
+          },
+          "result": {
+            "task": "alarm",
+            "success": false,
+            "value": 0.0014386159901394074,
+            "duration": 10.000104727487376,
+            "contacts": 8518,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.23374303736465737,
+            "fall": false,
+            "max_tilt_deg": 1.5952655571632477,
+            "profile": {
+              "code": "A",
+              "speed": 0.012,
+              "depth": 0.0002,
+              "force": 0.055,
+              "brake": 0.001,
+              "hold": 0.3
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 21.064788537999988,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19001,
+          "task": "alarm",
+          "pose": [
+            -0.375,
+            0.025,
+            1.5707963267948966
+          ],
+          "observation": {
+            "domain": "alarm",
+            "object_state": 0.0,
+            "relative_position_mm": [
+              0.0,
+              15.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": 5.3,
+            "material_cue": "firm"
+          },
+          "result": {
+            "task": "alarm",
+            "success": true,
+            "value": -0.0005907499940452824,
+            "duration": 4.058736203056475,
+            "contacts": 1572,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.23374303736465737,
+            "fall": false,
+            "max_tilt_deg": 1.5952655571632477,
+            "profile": {
+              "code": "B",
+              "speed": 0.025,
+              "depth": 0.0003,
+              "force": 0.12,
+              "brake": 0.001,
+              "hold": 0.35
+            },
+            "phase": "release",
+            "contact_progress": -0.005093694106176789
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 16.16023677300001,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19001,
+          "task": "alarm",
+          "pose": [
+            -0.375,
+            0.025,
+            1.5707963267948966
+          ],
+          "observation": {
+            "domain": "alarm",
+            "object_state": 0.0,
+            "relative_position_mm": [
+              0.0,
+              15.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": 5.3,
+            "material_cue": "firm"
+          },
+          "result": {
+            "task": "alarm",
+            "success": true,
+            "value": -0.0005907495552812819,
+            "duration": 3.827392326829917,
+            "contacts": 1468,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.23374303736465737,
+            "fall": false,
+            "max_tilt_deg": 1.5952655571632477,
+            "profile": {
+              "code": "C",
+              "speed": 0.04,
+              "depth": 0.0006,
+              "force": 0.22,
+              "brake": 0.002,
+              "hold": 0.25
+            },
+            "phase": "release",
+            "contact_progress": -0.005097490324376236
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 17.320368457,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19001,
+          "task": "alarm",
+          "pose": [
+            -0.375,
+            0.025,
+            1.5707963267948966
+          ],
+          "observation": {
+            "domain": "alarm",
+            "object_state": 0.0,
+            "relative_position_mm": [
+              0.0,
+              15.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": 5.3,
+            "material_cue": "firm"
+          },
+          "result": {
+            "task": "alarm",
+            "success": true,
+            "value": -0.0005907499965731107,
+            "duration": 4.794458777628271,
+            "contacts": 2135,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.23374303736465737,
+            "fall": false,
+            "max_tilt_deg": 1.5952655571632477,
+            "profile": {
+              "code": "D",
+              "speed": 0.016,
+              "depth": 0.0005,
+              "force": 0.22,
+              "brake": 0.004,
+              "hold": 0.5
+            },
+            "phase": "release",
+            "contact_progress": -0.00509451407834947
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 16.966452007000015,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19001,
+          "task": "alarm",
+          "pose": [
+            -0.375,
+            0.025,
+            1.5707963267948966
+          ],
+          "observation": {
+            "domain": "alarm",
+            "object_state": 0.0,
+            "relative_position_mm": [
+              0.0,
+              15.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": 5.3,
+            "material_cue": "firm"
+          },
+          "result": {
+            "task": "alarm",
+            "success": false,
+            "value": 0.0029688385441391358,
+            "duration": 10.000104727487376,
+            "contacts": 9339,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.23374303736465737,
+            "fall": false,
+            "max_tilt_deg": 1.5952655571632477,
+            "profile": {
+              "code": "E",
+              "speed": 0.04,
+              "depth": 0.0002,
+              "force": 0.08,
+              "brake": 0.005,
+              "hold": 0.25
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 20.990285692000015,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19001,
+          "task": "alarm",
+          "pose": [
+            -0.375,
+            0.025,
+            1.5707963267948966
+          ],
+          "observation": {
+            "domain": "alarm",
+            "object_state": 0.0,
+            "relative_position_mm": [
+              0.0,
+              15.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": 5.3,
+            "material_cue": "firm"
+          },
+          "result": {
+            "task": "alarm",
+            "success": true,
+            "value": -0.0005907500310681467,
+            "duration": 4.178086754042567,
+            "contacts": 1715,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.23604949846116063,
+            "fall": false,
+            "max_tilt_deg": 1.592785156468391,
+            "profile": {
+              "code": "F",
+              "speed": 0.025,
+              "depth": 0.0008,
+              "force": 0.3,
+              "brake": 0.0005,
+              "hold": 0.4
+            },
+            "phase": "release",
+            "contact_progress": -0.005100261697584209
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 18.160340883000003,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19001,
+          "task": "alarm",
+          "pose": [
+            -0.375,
+            0.025,
+            1.5707963267948966
+          ],
+          "observation": {
+            "domain": "alarm",
+            "object_state": 0.0,
+            "relative_position_mm": [
+              0.0,
+              15.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": 5.3,
+            "material_cue": "firm"
+          },
+          "result": {
+            "task": "alarm",
+            "success": true,
+            "value": -0.0005907498860420892,
+            "duration": 3.872353150831551,
+            "contacts": 1500,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.23374303736465737,
+            "fall": false,
+            "max_tilt_deg": 1.5952655571632477,
+            "profile": {
+              "code": "G",
+              "speed": 0.035,
+              "depth": 0.0004,
+              "force": 0.25,
+              "brake": 0.001,
+              "hold": 0.3
+            },
+            "phase": "release",
+            "contact_progress": -0.005100335169128906
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 17.679529446999993,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19001,
+          "task": "alarm",
+          "pose": [
+            -0.375,
+            0.025,
+            1.5707963267948966
+          ],
+          "observation": {
+            "domain": "alarm",
+            "object_state": 0.0,
+            "relative_position_mm": [
+              0.0,
+              15.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": 5.3,
+            "material_cue": "firm"
+          },
+          "result": {
+            "task": "alarm",
+            "success": true,
+            "value": -0.0005907496555205638,
+            "duration": 3.7881537895194,
+            "contacts": 1423,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.23374303736465737,
+            "fall": false,
+            "max_tilt_deg": 1.5952655571632477,
+            "profile": {
+              "code": "H",
+              "speed": 0.05,
+              "depth": 0.0003,
+              "force": 0.18,
+              "brake": 0.001,
+              "hold": 0.25
+            },
+            "phase": "release",
+            "contact_progress": -0.005095215293670788
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 15.891539244,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19001,
+          "task": "laptop",
+          "pose": [
+            0.33,
+            0.27,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.26246,
+            "relative_position_mm": [
+              0.0,
+              0.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.2588535247259716,
+            "duration": 12.000452660795357,
+            "contacts": 9801,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.2726839101300001,
+            "fall": false,
+            "max_tilt_deg": 1.3998904818826639,
+            "profile": {
+              "code": "A",
+              "speed": 0.012,
+              "depth": 0.0002,
+              "force": 0.055,
+              "brake": 0.001,
+              "hold": 0.3
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 30.054863709999978,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19001,
+          "task": "laptop",
+          "pose": [
+            0.33,
+            0.27,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.26246,
+            "relative_position_mm": [
+              0.0,
+              0.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.256385102060967,
+            "duration": 12.000452660795357,
+            "contacts": 10355,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.4141627324043578,
+            "fall": false,
+            "max_tilt_deg": 3.6823957079687477,
+            "profile": {
+              "code": "B",
+              "speed": 0.025,
+              "depth": 0.0003,
+              "force": 0.12,
+              "brake": 0.001,
+              "hold": 0.35
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 26.443399638000017,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19001,
+          "task": "laptop",
+          "pose": [
+            0.33,
+            0.27,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.26246,
+            "relative_position_mm": [
+              0.0,
+              0.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.201616502123983,
+            "duration": 12.000452660795357,
+            "contacts": 9784,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.8875861507243411,
+            "fall": false,
+            "max_tilt_deg": 5.854282282979504,
+            "profile": {
+              "code": "C",
+              "speed": 0.04,
+              "depth": 0.0006,
+              "force": 0.22,
+              "brake": 0.002,
+              "hold": 0.25
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 26.57225021399998,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19001,
+          "task": "laptop",
+          "pose": [
+            0.33,
+            0.27,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.26246,
+            "relative_position_mm": [
+              0.0,
+              0.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.25728242522667,
+            "duration": 12.000452660795357,
+            "contacts": 10061,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.3609433235062048,
+            "fall": false,
+            "max_tilt_deg": 2.52029053030937,
+            "profile": {
+              "code": "D",
+              "speed": 0.016,
+              "depth": 0.0005,
+              "force": 0.22,
+              "brake": 0.004,
+              "hold": 0.5
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 28.42837724300003,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19001,
+          "task": "laptop",
+          "pose": [
+            0.33,
+            0.27,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.26246,
+            "relative_position_mm": [
+              0.0,
+              0.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.2586707017615308,
+            "duration": 12.000452660795357,
+            "contacts": 10557,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.3197706630772153,
+            "fall": false,
+            "max_tilt_deg": 1.9906688418506735,
+            "profile": {
+              "code": "E",
+              "speed": 0.04,
+              "depth": 0.0002,
+              "force": 0.08,
+              "brake": 0.005,
+              "hold": 0.25
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 26.307449151999975,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19001,
+          "task": "laptop",
+          "pose": [
+            0.33,
+            0.27,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.26246,
+            "relative_position_mm": [
+              0.0,
+              0.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.249268823759376,
+            "duration": 12.000452660795357,
+            "contacts": 10350,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.5261104391969152,
+            "fall": false,
+            "max_tilt_deg": 4.372467165852386,
+            "profile": {
+              "code": "F",
+              "speed": 0.025,
+              "depth": 0.0008,
+              "force": 0.3,
+              "brake": 0.0005,
+              "hold": 0.4
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 29.445360219999998,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19001,
+          "task": "laptop",
+          "pose": [
+            0.33,
+            0.27,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.26246,
+            "relative_position_mm": [
+              0.0,
+              0.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.2525267299150056,
+            "duration": 10.05487518581661,
+            "contacts": 7474,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.6568587128185316,
+            "fall": true,
+            "max_tilt_deg": 30.118826087507465,
+            "profile": {
+              "code": "G",
+              "speed": 0.035,
+              "depth": 0.0004,
+              "force": 0.25,
+              "brake": 0.001,
+              "hold": 0.3
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 25.25526629899997,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19001,
+          "task": "laptop",
+          "pose": [
+            0.33,
+            0.27,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.26246,
+            "relative_position_mm": [
+              0.0,
+              0.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.256393400094779,
+            "duration": 12.000452660795357,
+            "contacts": 10626,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.44157160633932596,
+            "fall": false,
+            "max_tilt_deg": 3.7488277109692416,
+            "profile": {
+              "code": "H",
+              "speed": 0.05,
+              "depth": 0.0003,
+              "force": 0.18,
+              "brake": 0.001,
+              "hold": 0.25
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 29.11233331799997,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        }
+      ]
+    },
+    {
+      "workflow_run": "44280539635",
+      "source_sha": "d30c8bf0b95f39e8da73eb3c75502b473cf870c0",
+      "phase": "laptop-stance-calibration-2; training-scenario isolated contact calibration, not held-out evaluation",
+      "rollouts": 32,
+      "artifact_sha256": "0c08e1bd82e8de9ea9428aa420b909c16cca0d3c86e87474ba8381cf67b74b6a",
+      "rows": [
+        {
+          "seed": 19000,
+          "task": "laptop",
+          "pose": [
+            0.32,
+            0.23,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.31546,
+            "relative_position_mm": [
+              10.0,
+              40.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.303048886971022,
+            "duration": 12.000452660795357,
+            "contacts": 10617,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.8773615887039837,
+            "fall": false,
+            "max_tilt_deg": 5.2577899486351525,
+            "profile": {
+              "code": "B",
+              "speed": 0.025,
+              "depth": 0.0003,
+              "force": 0.12,
+              "brake": 0.001,
+              "hold": 0.35
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 22.981637760999998,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19000,
+          "task": "laptop",
+          "pose": [
+            0.32,
+            0.23,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.31546,
+            "relative_position_mm": [
+              10.0,
+              40.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.2739649020169233,
+            "duration": 9.183452669712683,
+            "contacts": 6683,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.8773845173870988,
+            "fall": true,
+            "max_tilt_deg": 30.104917184935275,
+            "profile": {
+              "code": "C",
+              "speed": 0.04,
+              "depth": 0.0006,
+              "force": 0.22,
+              "brake": 0.002,
+              "hold": 0.25
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 27.710894921,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19000,
+          "task": "laptop",
+          "pose": [
+            0.32,
+            0.23,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.31546,
+            "relative_position_mm": [
+              10.0,
+              40.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.301877543502603,
+            "duration": 12.000452660795357,
+            "contacts": 10603,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.8773845173870988,
+            "fall": false,
+            "max_tilt_deg": 5.329899155140146,
+            "profile": {
+              "code": "F",
+              "speed": 0.025,
+              "depth": 0.0008,
+              "force": 0.3,
+              "brake": 0.0005,
+              "hold": 0.4
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 28.668727435999998,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19000,
+          "task": "laptop",
+          "pose": [
+            0.32,
+            0.23,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.31546,
+            "relative_position_mm": [
+              10.0,
+              40.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.2773545239773307,
+            "duration": 8.68234384947656,
+            "contacts": 6176,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.8773845173870988,
+            "fall": true,
+            "max_tilt_deg": 30.060974899744306,
+            "profile": {
+              "code": "H",
+              "speed": 0.05,
+              "depth": 0.0003,
+              "force": 0.18,
+              "brake": 0.001,
+              "hold": 0.25
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 29.201321664999995,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19000,
+          "task": "laptop",
+          "pose": [
+            0.33,
+            0.23,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.31546,
+            "relative_position_mm": [
+              0.0,
+              40.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.3110989455618176,
+            "duration": 12.000452660795357,
+            "contacts": 10501,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.19223179409795046,
+            "fall": false,
+            "max_tilt_deg": 5.058600176808256,
+            "profile": {
+              "code": "B",
+              "speed": 0.025,
+              "depth": 0.0003,
+              "force": 0.12,
+              "brake": 0.001,
+              "hold": 0.35
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 20.82002425,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19000,
+          "task": "laptop",
+          "pose": [
+            0.33,
+            0.23,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.31546,
+            "relative_position_mm": [
+              0.0,
+              40.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.3021928874803737,
+            "duration": 6.536486340308822,
+            "contacts": 3811,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.2919252115200189,
+            "fall": true,
+            "max_tilt_deg": 30.143900800641784,
+            "profile": {
+              "code": "C",
+              "speed": 0.04,
+              "depth": 0.0006,
+              "force": 0.22,
+              "brake": 0.002,
+              "hold": 0.25
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 23.031901368999996,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19000,
+          "task": "laptop",
+          "pose": [
+            0.33,
+            0.23,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.31546,
+            "relative_position_mm": [
+              0.0,
+              40.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.3110715988682422,
+            "duration": 12.000452660795357,
+            "contacts": 10485,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.19295591953903113,
+            "fall": false,
+            "max_tilt_deg": 5.012604266057947,
+            "profile": {
+              "code": "F",
+              "speed": 0.025,
+              "depth": 0.0008,
+              "force": 0.3,
+              "brake": 0.0005,
+              "hold": 0.4
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 27.67058882,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19000,
+          "task": "laptop",
+          "pose": [
+            0.33,
+            0.23,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.31546,
+            "relative_position_mm": [
+              0.0,
+              40.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.298374641878671,
+            "duration": 5.786866783772893,
+            "contacts": 2929,
+            "non_hand_contact_steps": 4,
+            "max_force_n": 0.4505833384501285,
+            "fall": true,
+            "max_tilt_deg": 30.08777678785103,
+            "profile": {
+              "code": "H",
+              "speed": 0.05,
+              "depth": 0.0003,
+              "force": 0.18,
+              "brake": 0.001,
+              "hold": 0.25
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 24.160920746000002,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19000,
+          "task": "laptop",
+          "pose": [
+            0.32,
+            0.25,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.31546,
+            "relative_position_mm": [
+              10.0,
+              20.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.305738728302577,
+            "duration": 12.000452660795357,
+            "contacts": 9338,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.2662068213959792,
+            "fall": false,
+            "max_tilt_deg": 4.419067721295319,
+            "profile": {
+              "code": "B",
+              "speed": 0.025,
+              "depth": 0.0003,
+              "force": 0.12,
+              "brake": 0.001,
+              "hold": 0.35
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 22.23132632,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19000,
+          "task": "laptop",
+          "pose": [
+            0.32,
+            0.25,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.31546,
+            "relative_position_mm": [
+              10.0,
+              20.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.2822532733704515,
+            "duration": 7.409543795467353,
+            "contacts": 4654,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.6463474285254838,
+            "fall": true,
+            "max_tilt_deg": 30.12406507429402,
+            "profile": {
+              "code": "C",
+              "speed": 0.04,
+              "depth": 0.0006,
+              "force": 0.22,
+              "brake": 0.002,
+              "hold": 0.25
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 23.441147179999994,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19000,
+          "task": "laptop",
+          "pose": [
+            0.32,
+            0.25,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.31546,
+            "relative_position_mm": [
+              10.0,
+              20.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.2990758808469547,
+            "duration": 12.000452660795357,
+            "contacts": 10348,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.26825488692569577,
+            "fall": false,
+            "max_tilt_deg": 5.669231557216038,
+            "profile": {
+              "code": "F",
+              "speed": 0.025,
+              "depth": 0.0008,
+              "force": 0.3,
+              "brake": 0.0005,
+              "hold": 0.4
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 29.250437720000008,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19000,
+          "task": "laptop",
+          "pose": [
+            0.32,
+            0.25,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.31546,
+            "relative_position_mm": [
+              10.0,
+              20.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.2884787100541106,
+            "duration": 12.000452660795357,
+            "contacts": 10712,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.5945043077133614,
+            "fall": false,
+            "max_tilt_deg": 5.005570259314172,
+            "profile": {
+              "code": "H",
+              "speed": 0.05,
+              "depth": 0.0003,
+              "force": 0.18,
+              "brake": 0.001,
+              "hold": 0.25
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 30.156362959999996,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19000,
+          "task": "laptop",
+          "pose": [
+            0.34,
+            0.24,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.31546,
+            "relative_position_mm": [
+              -10.0,
+              30.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.3123121505175834,
+            "duration": 12.000452660795357,
+            "contacts": 10769,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.17291987867896247,
+            "fall": false,
+            "max_tilt_deg": 3.8909366533077883,
+            "profile": {
+              "code": "B",
+              "speed": 0.025,
+              "depth": 0.0003,
+              "force": 0.12,
+              "brake": 0.001,
+              "hold": 0.35
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 19.538045260000004,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19000,
+          "task": "laptop",
+          "pose": [
+            0.34,
+            0.24,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.31546,
+            "relative_position_mm": [
+              -10.0,
+              30.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.3093254186039835,
+            "duration": 6.717147105842563,
+            "contacts": 4187,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.2593598595123203,
+            "fall": true,
+            "max_tilt_deg": 30.035351319816524,
+            "profile": {
+              "code": "C",
+              "speed": 0.04,
+              "depth": 0.0006,
+              "force": 0.22,
+              "brake": 0.002,
+              "hold": 0.25
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 22.112425748999996,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19000,
+          "task": "laptop",
+          "pose": [
+            0.34,
+            0.24,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.31546,
+            "relative_position_mm": [
+              -10.0,
+              30.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.312276233007633,
+            "duration": 12.000452660795357,
+            "contacts": 10755,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.1726953393007999,
+            "fall": false,
+            "max_tilt_deg": 3.8954828093046867,
+            "profile": {
+              "code": "F",
+              "speed": 0.025,
+              "depth": 0.0008,
+              "force": 0.3,
+              "brake": 0.0005,
+              "hold": 0.4
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 20.166064449999993,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19000,
+          "task": "laptop",
+          "pose": [
+            0.34,
+            0.24,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.31546,
+            "relative_position_mm": [
+              -10.0,
+              30.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.3064006835663928,
+            "duration": 5.718199343479525,
+            "contacts": 2990,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.4428231199730828,
+            "fall": true,
+            "max_tilt_deg": 30.137766902946392,
+            "profile": {
+              "code": "H",
+              "speed": 0.05,
+              "depth": 0.0003,
+              "force": 0.18,
+              "brake": 0.001,
+              "hold": 0.25
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 21.924118055999998,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19001,
+          "task": "laptop",
+          "pose": [
+            0.32,
+            0.23,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.26246,
+            "relative_position_mm": [
+              10.0,
+              40.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.2542676526510417,
+            "duration": 12.000452660795357,
+            "contacts": 10801,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.6360701656604667,
+            "fall": false,
+            "max_tilt_deg": 4.759668986074422,
+            "profile": {
+              "code": "B",
+              "speed": 0.025,
+              "depth": 0.0003,
+              "force": 0.12,
+              "brake": 0.001,
+              "hold": 0.35
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 28.525653363000004,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19001,
+          "task": "laptop",
+          "pose": [
+            0.32,
+            0.23,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.26246,
+            "relative_position_mm": [
+              10.0,
+              40.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.2219794000850523,
+            "duration": 12.000452660795357,
+            "contacts": 10109,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.6360701656604667,
+            "fall": false,
+            "max_tilt_deg": 23.772718578039505,
+            "profile": {
+              "code": "C",
+              "speed": 0.04,
+              "depth": 0.0006,
+              "force": 0.22,
+              "brake": 0.002,
+              "hold": 0.25
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 27.510345645,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19001,
+          "task": "laptop",
+          "pose": [
+            0.32,
+            0.23,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.26246,
+            "relative_position_mm": [
+              10.0,
+              40.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.2522001735186543,
+            "duration": 12.000452660795357,
+            "contacts": 10793,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.6146061935591157,
+            "fall": false,
+            "max_tilt_deg": 5.507588301150649,
+            "profile": {
+              "code": "F",
+              "speed": 0.025,
+              "depth": 0.0008,
+              "force": 0.3,
+              "brake": 0.0005,
+              "hold": 0.4
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 20.204561434,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19001,
+          "task": "laptop",
+          "pose": [
+            0.32,
+            0.23,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.26246,
+            "relative_position_mm": [
+              10.0,
+              40.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.2304717791456927,
+            "duration": 9.46956700426838,
+            "contacts": 7345,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.6360701656604667,
+            "fall": true,
+            "max_tilt_deg": 30.11717790674215,
+            "profile": {
+              "code": "H",
+              "speed": 0.05,
+              "depth": 0.0003,
+              "force": 0.18,
+              "brake": 0.001,
+              "hold": 0.25
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 27.496486345999983,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19001,
+          "task": "laptop",
+          "pose": [
+            0.33,
+            0.23,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.26246,
+            "relative_position_mm": [
+              0.0,
+              40.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.2580601901603814,
+            "duration": 12.000452660795357,
+            "contacts": 10571,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.20788922824035752,
+            "fall": false,
+            "max_tilt_deg": 4.742995237972263,
+            "profile": {
+              "code": "B",
+              "speed": 0.025,
+              "depth": 0.0003,
+              "force": 0.12,
+              "brake": 0.001,
+              "hold": 0.35
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 27.552425177999993,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19001,
+          "task": "laptop",
+          "pose": [
+            0.33,
+            0.23,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.26246,
+            "relative_position_mm": [
+              0.0,
+              40.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.2499099591806544,
+            "duration": 6.421223136959241,
+            "contacts": 3941,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.3126031746842097,
+            "fall": true,
+            "max_tilt_deg": 30.13754133554462,
+            "profile": {
+              "code": "C",
+              "speed": 0.04,
+              "depth": 0.0006,
+              "force": 0.22,
+              "brake": 0.002,
+              "hold": 0.25
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 15.943477803999997,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19001,
+          "task": "laptop",
+          "pose": [
+            0.33,
+            0.23,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.26246,
+            "relative_position_mm": [
+              0.0,
+              40.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.257939049243819,
+            "duration": 12.000452660795357,
+            "contacts": 9559,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.20694804197514027,
+            "fall": false,
+            "max_tilt_deg": 4.7846180230436905,
+            "profile": {
+              "code": "F",
+              "speed": 0.025,
+              "depth": 0.0008,
+              "force": 0.3,
+              "brake": 0.0005,
+              "hold": 0.4
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 26.68112532699999,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19001,
+          "task": "laptop",
+          "pose": [
+            0.33,
+            0.23,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.26246,
+            "relative_position_mm": [
+              0.0,
+              40.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.2471881949137829,
+            "duration": 5.571054828565166,
+            "contacts": 2911,
+            "non_hand_contact_steps": 4,
+            "max_force_n": 0.38010439357254255,
+            "fall": true,
+            "max_tilt_deg": 30.063375084956775,
+            "profile": {
+              "code": "H",
+              "speed": 0.05,
+              "depth": 0.0003,
+              "force": 0.18,
+              "brake": 0.001,
+              "hold": 0.25
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 20.766214959000024,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19001,
+          "task": "laptop",
+          "pose": [
+            0.32,
+            0.25,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.26246,
+            "relative_position_mm": [
+              10.0,
+              20.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.2524074135344996,
+            "duration": 12.000452660795357,
+            "contacts": 10662,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.3140975121448327,
+            "fall": false,
+            "max_tilt_deg": 4.027778624028461,
+            "profile": {
+              "code": "B",
+              "speed": 0.025,
+              "depth": 0.0003,
+              "force": 0.12,
+              "brake": 0.001,
+              "hold": 0.35
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 20.166045722999996,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19001,
+          "task": "laptop",
+          "pose": [
+            0.32,
+            0.25,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.26246,
+            "relative_position_mm": [
+              10.0,
+              20.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.2284108941467178,
+            "duration": 7.4307980031772045,
+            "contacts": 4712,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.7998387452302231,
+            "fall": true,
+            "max_tilt_deg": 30.135604454930753,
+            "profile": {
+              "code": "C",
+              "speed": 0.04,
+              "depth": 0.0006,
+              "force": 0.22,
+              "brake": 0.002,
+              "hold": 0.25
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 24.214007444999993,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19001,
+          "task": "laptop",
+          "pose": [
+            0.32,
+            0.25,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.26246,
+            "relative_position_mm": [
+              10.0,
+              20.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.2466073138005576,
+            "duration": 12.000452660795357,
+            "contacts": 10736,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.3155650999871318,
+            "fall": false,
+            "max_tilt_deg": 5.254168455367679,
+            "profile": {
+              "code": "F",
+              "speed": 0.025,
+              "depth": 0.0008,
+              "force": 0.3,
+              "brake": 0.0005,
+              "hold": 0.4
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 27.25980780399999,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19001,
+          "task": "laptop",
+          "pose": [
+            0.32,
+            0.25,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.26246,
+            "relative_position_mm": [
+              10.0,
+              20.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.2298396124755115,
+            "duration": 12.000452660795357,
+            "contacts": 10885,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.6061783209049302,
+            "fall": false,
+            "max_tilt_deg": 4.390561474759935,
+            "profile": {
+              "code": "H",
+              "speed": 0.05,
+              "depth": 0.0003,
+              "force": 0.18,
+              "brake": 0.001,
+              "hold": 0.25
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 27.56073862300002,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19001,
+          "task": "laptop",
+          "pose": [
+            0.34,
+            0.24,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.26246,
+            "relative_position_mm": [
+              -10.0,
+              30.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.2586572604928112,
+            "duration": 12.000452660795357,
+            "contacts": 10698,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.19419129440460045,
+            "fall": false,
+            "max_tilt_deg": 3.42148050538059,
+            "profile": {
+              "code": "B",
+              "speed": 0.025,
+              "depth": 0.0003,
+              "force": 0.12,
+              "brake": 0.001,
+              "hold": 0.35
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 19.622164153,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19001,
+          "task": "laptop",
+          "pose": [
+            0.34,
+            0.24,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.26246,
+            "relative_position_mm": [
+              -10.0,
+              30.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.2561047138568973,
+            "duration": 7.2787486710990335,
+            "contacts": 4885,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.3016523104959261,
+            "fall": true,
+            "max_tilt_deg": 30.003801883213153,
+            "profile": {
+              "code": "C",
+              "speed": 0.04,
+              "depth": 0.0006,
+              "force": 0.22,
+              "brake": 0.002,
+              "hold": 0.25
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 23.34188695100002,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19001,
+          "task": "laptop",
+          "pose": [
+            0.34,
+            0.24,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.26246,
+            "relative_position_mm": [
+              -10.0,
+              30.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.2585382231977458,
+            "duration": 12.000452660795357,
+            "contacts": 10743,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.192805197252881,
+            "fall": false,
+            "max_tilt_deg": 3.7078325407428916,
+            "profile": {
+              "code": "F",
+              "speed": 0.025,
+              "depth": 0.0008,
+              "force": 0.3,
+              "brake": 0.0005,
+              "hold": 0.4
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 26.38155556000001,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        },
+        {
+          "seed": 19001,
+          "task": "laptop",
+          "pose": [
+            0.34,
+            0.24,
+            3.141592653589793
+          ],
+          "observation": {
+            "domain": "laptop",
+            "object_state": 1.26246,
+            "relative_position_mm": [
+              -10.0,
+              30.0
+            ],
+            "body_tilt_degrees": 0.0,
+            "button_travel_mm": null,
+            "material_cue": "friction hinge"
+          },
+          "result": {
+            "task": "laptop",
+            "success": false,
+            "value": 1.247020414470137,
+            "duration": 12.000452660795357,
+            "contacts": 10693,
+            "non_hand_contact_steps": 0,
+            "max_force_n": 0.355947345865252,
+            "fall": false,
+            "max_tilt_deg": 5.900010611218607,
+            "profile": {
+              "code": "H",
+              "speed": 0.05,
+              "depth": 0.0003,
+              "force": 0.18,
+              "brake": 0.001,
+              "hold": 0.25
+            },
+            "phase": "push",
+            "contact_progress": 0.0
+          },
+          "receipt": {
+            "provider": "Modal",
+            "cpu": 1,
+            "wall_s": 19.353841278999994,
+            "mujoco": "3.3.7",
+            "isolated_initialization_before_physics": true
+          }
+        }
+      ]
+    }
+  ]
+}
