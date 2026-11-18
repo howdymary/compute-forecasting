@@ -57,7 +57,7 @@ class PathRunner:
      if self.settle>.55:
       distance=math.dist(w.d.qpos[:2],leg['goal'][:2]);heading=abs(wrap(leg['goal'][2]-w.yaw()))
       h=leg['goal'][2];R=np.array([[math.cos(h),math.sin(h)],[-math.sin(h),math.cos(h)]]);drift=R@(w.d.qpos[:2]-stop_start);self.stop_trials.append({'t':float(w.d.time),'drift_body_m':drift.tolist(),'end_error_mm':distance*1000});self.stop_bias=np.clip(.5*self.stop_bias+.5*drift,[-.015,-.015],[.025,.025])
-      if distance>.010 or heading>math.radians(10):self.settle=0.;break
+      if distance>(.004 if leg['task']=='alarm' else .010) or heading>math.radians(10):self.settle=0.;break
       self.arrivals.append({'station':leg['task'],'arrived':True,'t':float(w.d.time),'position_error_mm':distance*1000,'heading_error_degrees':math.degrees(heading),'travel_time_s':float(w.d.time)-self.leg_start});self.mode='task';break
     else:self.settle=0.;w.step(MOVES[action])
   else:
