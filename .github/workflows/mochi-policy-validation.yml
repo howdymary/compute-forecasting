@@ -1,0 +1,46 @@
+name: Mochi frozen-policy closed-loop validation
+on:
+  push:
+    branches: [mochi-desk-v3]
+    paths: ['mochi/configs/policy-validation.json']
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: mochi-curriculum-v6
+  cancel-in-progress: false
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 80
+    env:
+      PYTHONPATH: ${{ github.workspace }}/mochi/src
+      MOCHI_ROOT: ${{ github.workspace }}/mochi
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - run: |
+          python -m pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install './mochi[remote,dev]' pyyaml==6.0.2
+          python mochi/scripts/fetch_visual_models.py
+      - name: Restore the frozen 64-update study
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mochi_source_run=$(python -c 'import json;print(json.load(open("mochi/configs/policy-validation.json"))["source_run"])')
+          gh run download "$mochi_source_run" --repo "$GITHUB_REPOSITORY" --dir mochi/.cache/policy-source
+      - name: Run actual model decisions inside Modal physics
+        env:
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+          EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
+          PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
+        run: python -u -m mochi.curriculum.validate
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mochi-policy-validation-${{ github.run_id }}
+          path: mochi/artifacts/policy-validation/
+          retention-days: 30

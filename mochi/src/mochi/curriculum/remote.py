@@ -73,8 +73,12 @@ class Runner:
 @app.function(image=image,cpu=1,memory=2048,max_containers=8,timeout=900)
 def replay(seed,actions,record=True):
     runner=Runner();status=runner.reset(seed,record)
-    for action in actions:
+    from .world import MOVES,PROFILES
+    for index,action in enumerate(actions):
         if status['mode']=='done':break
+        allowed=set(MOVES) if status['mode']=='walk' else {p.code for p in PROFILES}
+        if action not in allowed:
+            return {'mode':'diverged','mismatch':{'action_index':index,'expected_mode':status['mode'],'received_action':action},'episode':runner.w.episode(),'arrivals':runner.arrivals,'receipt':receipt(runner.start)}
         status=runner.advance(action)
     if status['mode']!='done':
         status={'mode':'incomplete','episode':runner.w.episode(),'arrivals':runner.arrivals,'receipt':receipt(runner.start)}
