@@ -67,6 +67,8 @@ if iso:
  extra='\nSeparate task and recovery probes use the same held-out seed block after checkpoint selection. Recovery choices start from shared post-task states, so walking failure cannot hide them. '
  for label in ['starting_model','post_trained_model']:
   x=iso['recovery_summary'][label];extra+=f"{label.replace('_',' ')}: {x['successes']}/{x['n']} valid recoveries. "
+ motion=iso.get('matched_motion',{});nmatched=motion.get('n',0)
+ if nmatched:extra+=f"Across {nmatched} shared states where both recoveries passed, mean hand travel was {motion['starting_hand_path_m']/nmatched*100:.1f} cm before and {motion['trained_hand_path_m']/nmatched*100:.1f} cm after. "
  extra+='These isolated resets are not part of the continuous demo. [Probe evidence](evidence/control-v8/isolated-controls.json).\n'
  block=block.replace('### What was fixed before training',extra+'\n### What was fixed before training')
 if a.revision=='clearance':

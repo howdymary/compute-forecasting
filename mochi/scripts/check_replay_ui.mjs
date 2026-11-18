@@ -14,7 +14,7 @@ await settle();
 assert.equal(stages[0].episode.scenario.seed,manifest.default_view==='checkpoints'?manifest.development_seed:(manifest.showcase?.seed??manifest.development_seed));
 assert.equal(nodes.get('#checkpoints').children.length,manifest.checkpoints.length);
 assert.equal(nodes.get('#case-results').children.length,manifest.fresh.cases.length);
-assert.equal(nodes.get('#evaluation-rows').children.length,3+(manifest.study?.startsWith('mochi-control-v')?2:0)+(manifest.held_out_isolated_contact?4:0)+(manifest.held_out_isolated_walking?1:0)+(manifest.isolated_control?1:0));
+assert.equal(nodes.get('#evaluation-rows').children.length,3+(manifest.study?.startsWith('mochi-control-v')?2:0)+(manifest.held_out_isolated_contact?4:0)+(manifest.held_out_isolated_walking?1:0)+(manifest.isolated_control?1:0)+(manifest.isolated_control?.matched_motion?.n?1:0));
 assert.equal(nodes.get('#memory-handoffs').children.length,manifest.memory_handoffs?.length??0);
 context.nextFrame(performance.now()+100);assert(nodes.get('#live-phase').textContent.length>0);
 for(const cp of manifest.checkpoints){
