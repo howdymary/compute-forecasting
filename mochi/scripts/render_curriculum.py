@@ -3,7 +3,7 @@ import bpy,json,math,sys,argparse
 from pathlib import Path
 from mathutils import Vector
 root=Path(__file__).resolve().parents[1];assets=root/'web/desk/assets'
-p=argparse.ArgumentParser();p.add_argument('--input',required=True);p.add_argument('--out',required=True);p.add_argument('--time',type=float,default=9);p.add_argument('--animate',action='store_true');p.add_argument('--samples',type=int,default=48);args=p.parse_args(sys.argv[sys.argv.index('--')+1:])
+p=argparse.ArgumentParser();p.add_argument('--input',required=True);p.add_argument('--out',required=True);p.add_argument('--time',type=float,default=9);p.add_argument('--animate',action='store_true');p.add_argument('--samples',type=int,default=48);p.add_argument('--camera',choices=['follow','side','feet','wide'],default='follow');args=p.parse_args(sys.argv[sys.argv.index('--')+1:])
 out=Path(args.out);out.mkdir(parents=True,exist_ok=True);r=json.loads(Path(args.input).read_text());frames=r['trajectory']['frames'];bpy.ops.wm.read_factory_settings(use_empty=True);scene=bpy.context.scene;scene.render.engine='CYCLES';scene.cycles.samples=args.samples;scene.cycles.use_denoising=True
 try:
  prefs=bpy.context.preferences.addons['cycles'].preferences;prefs.compute_device_type='METAL';prefs.get_devices()
@@ -91,6 +91,9 @@ for f in selected:
  q=f['quaternions'][1];yaw=math.atan2(2*(q[0]*q[3]+q[1]*q[2]),1-2*(q[2]**2+q[3]**2));pos=f['positions'][1];target=Vector((pos[0]+.025*math.cos(yaw),pos[1]+.025*math.sin(yaw),.115));camera.location=target+Vector((.18*math.cos(yaw)+.4*math.sin(yaw),.18*math.sin(yaw)-.4*math.cos(yaw),.25));
  if f.get('task')=='alarm':
   target=Vector(((pos[0]-.36)/2,(pos[1]+.11)/2,.107));camera.location=target+Vector((.24,-.38,.23))
+ if args.camera in ['side','feet']:
+  target=Vector((pos[0],pos[1],.032 if args.camera=='feet' else .112));camera.location=target+Vector((.10,-.27,.055) if args.camera=='feet' else (0,-.52,.035))
+ elif args.camera=='wide':target=Vector((0,.1,.08));camera.location=Vector((1.05,-1.35,.95))
  camera.rotation_euler=(target-camera.location).to_track_quat('-Z','Y').to_euler()
  if args.animate:camera.keyframe_insert('location',frame=frame);camera.keyframe_insert('rotation_euler',frame=frame)
 scene.frame_end=round(r['duration']*25)+1;scene.render.image_settings.file_format='PNG';scene.render.filepath=str(out/'measured-trajectory.png');bpy.ops.wm.save_as_mainfile(filepath=str(out/'measured-trajectory.blend'))

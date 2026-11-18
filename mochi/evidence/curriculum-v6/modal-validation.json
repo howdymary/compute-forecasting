@@ -1,0 +1,124 @@
+{
+  "status": "completed",
+  "created_at": "2026-11-18T06:41:49.470787+00:00",
+  "completed_at": "2026-11-18T07:25:25.043894+00:00",
+  "source_sha": "6c7a6c525d02a08fdb546bd041062550c36713d6",
+  "extra_optimizer_updates": 0,
+  "remote_inference_probe_passed": true,
+  "modal_held_out": {
+    "starting_model": {
+      "n": 4,
+      "full_successes": 0,
+      "wilson_95_full_success_rate": [
+        0.0,
+        0.48989083645458353
+      ],
+      "task_successes": {
+        "alarm": 0,
+        "drawer": 0,
+        "laptop": 0,
+        "globe": 0
+      },
+      "stations_reached": 0,
+      "station_opportunities": 20,
+      "falls": 0,
+      "mean_duration_s": 24.32298831534563,
+      "arrival_measurement_n": 0,
+      "mean_arrival_position_error_mm": null,
+      "mean_arrival_heading_error_degrees": null,
+      "mean_foot_slip_estimate_m": 0.15457039396945804
+    },
+    "post_trained_model": {
+      "n": 4,
+      "full_successes": 0,
+      "wilson_95_full_success_rate": [
+        0.0,
+        0.48989083645458353
+      ],
+      "task_successes": {
+        "alarm": 4,
+        "drawer": 1,
+        "laptop": 0,
+        "globe": 0
+      },
+      "stations_reached": 6,
+      "station_opportunities": 20,
+      "falls": 1,
+      "mean_duration_s": 45.79300798046517,
+      "arrival_measurement_n": 6,
+      "mean_arrival_position_error_mm": 16.183333333333334,
+      "mean_arrival_heading_error_degrees": 6.233333333333333,
+      "mean_foot_slip_estimate_m": 0.31767884370263877
+    },
+    "classical_fixed": {
+      "n": 4,
+      "full_successes": 2,
+      "wilson_95_full_success_rate": [
+        0.1500389891521544,
+        0.8499610108478456
+      ],
+      "task_successes": {
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 2,
+        "globe": 4
+      },
+      "stations_reached": 20,
+      "station_opportunities": 20,
+      "falls": 0,
+      "mean_duration_s": 85.05688684647792,
+      "arrival_measurement_n": 20,
+      "mean_arrival_position_error_mm": 16.005,
+      "mean_arrival_heading_error_degrees": 3.970000000000001,
+      "mean_foot_slip_estimate_m": 0.4733683602825455
+    }
+  },
+  "modal_isolated_walking": {
+    "starting_model": {
+      "n": 8,
+      "successes": 0,
+      "wilson_95_success_rate": [
+        0.0,
+        0.3244075648838681
+      ],
+      "falls": 0,
+      "mean_position_error_mm": 84.82499999999999,
+      "mean_heading_error_degrees": 8.2375,
+      "mean_duration_s": 24.086433070882613
+    },
+    "post_trained_model": {
+      "n": 8,
+      "successes": 8,
+      "wilson_95_success_rate": [
+        0.6755924351161318,
+        1.0
+      ],
+      "falls": 0,
+      "mean_position_error_mm": 11.575,
+      "mean_heading_error_degrees": 4.2250000000000005,
+      "mean_duration_s": 7.899616777084894
+    },
+    "classical_fixed": {
+      "n": 8,
+      "successes": 8,
+      "wilson_95_success_rate": [
+        0.6755924351161318,
+        1.0
+      ],
+      "falls": 0,
+      "mean_position_error_mm": 11.95,
+      "mean_heading_error_degrees": 3.8375,
+      "mean_duration_s": 5.046954677873577
+    }
+  },
+  "modal_rollouts_completed": 41,
+  "action_replay_cross_runtime": "Original open-loop replay diverged in mode. Replication instead makes fresh model decisions from the changing physical state, with each before/after/classical triplet on one Modal worker. No trajectories or states are resynchronized.",
+  "workflow_url": "https://github.com/howdymary/mochi-demo/actions/runs/44253028615",
+  "memory": {
+    "writers": 10,
+    "readers": 9,
+    "cross_agent_reads": 13,
+    "isolation_passed": true
+  },
+  "scope": "Separate closed-loop Modal replication of frozen V6 weights. Do not merge with the earlier Linux reference as independent samples."
+}
