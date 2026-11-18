@@ -1,0 +1,21 @@
+name: Mochi control study progress
+on:
+  push:
+    branches: [mochi-desk-v3]
+    paths: ['mochi/src/mochi/control_v8/monitor.py']
+permissions:
+  contents: read
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      PYTHONPATH: ${{ github.workspace }}/mochi/src
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - run: python -m pip install modal==1.6.4
+      - run: python -m modal deploy -m mochi.control_v8.monitor

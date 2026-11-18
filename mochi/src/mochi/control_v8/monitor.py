@@ -1,0 +1,9 @@
+"""Credential-free numerical progress; no model paths or memory payloads."""
+import modal
+app=modal.App('mochi-control-v8-monitor')
+image=modal.Image.debian_slim(python_version='3.11').pip_install('fastapi==0.121.1')
+@app.function(image=image,serialized=True,cpu=.25,memory=256,max_containers=1)
+@modal.fastapi_endpoint(method='GET')
+def status():
+ r=modal.Dict.from_name('mochi-control-v8-progress',create_if_missing=True).get('latest',{})
+ return {k:r.get(k) for k in ['study','status','phase','source_sha','optimizer_updates_completed','parent_optimizer_updates','rollouts','data_audit','checkpoints','selected_checkpoint','held_out','error_type','error']}|{'training_domains':list((r.get('training_log') or [{}])[-1].get('domain_counts',{})),'memory':r.get('services',{}).get('eligibility',{}),'exa_searches':len(r.get('services',{}).get('sources',[])),'updated_at':(r.get('training_log') or [{}])[-1].get('at')}
