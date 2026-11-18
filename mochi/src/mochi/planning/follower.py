@@ -19,9 +19,9 @@ def teacher(obs):
  return 'side_left' if l>0 else 'side_right'
 
 class PathRunner:
- def __init__(self,route):self.route=route
+ def __init__(self,route,world_class=World):self.route=route;self.world_class=world_class
  def reset(self,seed,record=True):
-  self.w=World(seed,record);self.index=0;self.segment=0;self.mode='walk';self.arrivals=[];self.leg_start=0.;self.settle=0.;self.start=time.perf_counter();self.path_trace=[];self.calls=0;self.failure=None;self.aligning=False;self.stop_bias=np.array([.010,.003]);self.stop_trials=[];return self.status()
+  self.w=self.world_class(seed,record);self.index=0;self.segment=0;self.mode='walk';self.arrivals=[];self.leg_start=0.;self.settle=0.;self.start=time.perf_counter();self.path_trace=[];self.calls=0;self.failure=None;self.aligning=False;self.stop_bias=np.array([.010,.003]);self.stop_trials=[];return self.status()
  def observation(self):
   w=self.w;leg=self.route['legs'][self.index];segments=leg['segments'];s=segments[self.segment];p=w.d.qpos[:2];distance=float(np.linalg.norm(p-np.array(s['to'])))
   if distance<.012 and self.segment<len(segments)-1:self.segment+=1;s=segments[self.segment];distance=float(np.linalg.norm(p-np.array(s['to'])))

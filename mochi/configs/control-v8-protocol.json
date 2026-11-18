@@ -1,0 +1,71 @@
+{
+  "study": "mochi-control-v8",
+  "revision": 1,
+  "train_seeds": [
+    23000,
+    23001,
+    23002,
+    23003,
+    23004,
+    23005,
+    23006,
+    23007
+  ],
+  "development_seeds": [
+    24000,
+    24001
+  ],
+  "held_out_seeds": [
+    25000,
+    25001,
+    25002,
+    25003
+  ],
+  "training": {
+    "base_model": "Qwen/Qwen3.5-4B",
+    "rank": 16,
+    "seed": 11823,
+    "updates": 64,
+    "checkpoints": [
+      0,
+      8,
+      16,
+      32,
+      64
+    ],
+    "learning_rate": 0.0002
+  },
+  "maximum_modal_rollouts": 512,
+  "maximum_modal_workers": 4,
+  "frozen_physics_sha256": {
+    "src/mochi/curriculum/world.py": "1cb415d6d66e367e3d2c28146ab6067c1da671461c5ec34728d4487cb13152f6",
+    "src/mochi/curriculum/locomotion.py": "a46937561ccfcce13296ac4d5f2c7422f18e44818941249520d338ac429f4391",
+    "src/mochi/desk/g1_model.py": "7b3d54c7b95e02d5f93515bd01a67115a010ae23a830b3ea16475a2d20be114c"
+  },
+  "engineering_changes": [
+    "Laptop upper-edge force-controlled press at front-right stance; no object mass/friction/hinge or success tolerance changes.",
+    "Explicit active-arm recovery with safe outward withdrawal versus direct fold, old parking and delayed fold.",
+    "Checked laptop corridor route and state-based route observations. These are engineering changes, not learned weight gains."
+  ],
+  "scope": "Actual Tinker LoRA post-training of repeated observed-state walking commands, four physical task-profile choices, and post-task arm recovery. Native Unitree gait network, standing balance and IK solver remain fixed. Simulation only.",
+  "selection": "Best development full sequences, then fewer falls, more successful tasks/arrivals/recoveries, fewer recovery contacts, shorter episode time. No test-based selection.",
+  "comparison": "Parent96 and trained weights use identical frozen V8 code, route, observations, primitives and verifier. Original-stack parent is reported separately to distinguish engineering gains.",
+  "checkpoint_retention": "Reuse parent96 full state; add full states at8/16/32/64 plus ephemeral inference snapshots. No deletion or billing changes.",
+  "budget": "64 additional optimizer updates, 384 completed domain gradient calls if run completes, 80 examples per update including repeats. At most512 Modal rollouts, max4 workers. Stop on missing physical domain, credentials, or storage headroom.",
+  "task_order": [
+    "alarm",
+    "drawer",
+    "laptop",
+    "globe"
+  ],
+  "uncertainty": "Four fresh held-out scenarios, one training run; report paired raw outcomes and Wilson intervals. Intermediate regressions retained. No guaranteed improvement.",
+  "split_note": "23000/24000/25000 seed blocks are newly reserved; prior19000-series used only for engineering calibration.",
+  "route_version": "70e063c2ea0936f8",
+  "frozen_controller_sha256": {
+    "src/mochi/control_v8/manipulation.py": "08f6ff5b95ff6fa8f2f59c34ef14171be19f346e1a018b82a4f1dbfe3b2b17ca",
+    "src/mochi/control_v8/recovery.py": "47e58e9f37c1a990942dbcd9e4f3b84d944201f803554c44ee3ae862290cea11",
+    "src/mochi/planning/follower.py": "7fa7dc6357a7cf97a075e68896c3d1202ca6a72294d52d120954b3736330360a",
+    "src/mochi/control_v8/verification.py": "4e78da28198bb373c515fcab604d4a756dde886f8bf4fe1aa84a7e437d347b1c",
+    "src/mochi/control_v8/decisions.py": "20741c229f0f0a8cc020055522228c954752a4a1fc216e69692579f44824329e"
+  }
+}
