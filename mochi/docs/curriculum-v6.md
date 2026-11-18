@@ -38,3 +38,31 @@ PYTHONPATH=mochi/src mochi/.venv/bin/python -m mochi.curriculum.train
 ```
 
 The additive GitHub workflow explicitly injects the existing Tinker, Modal, Exa and past.dev secret references. No credential enters the public interface. Artifacts belong to `mochi/artifacts/curriculum`. A configured service is not evidence of a completed run: inspect `report.json` and provider receipts before making performance claims.
+
+## Data flow
+
+```mermaid
+flowchart LR
+  E[Exa: failure-derived sources] --> M[past.dev: sourced proposals and verified recall]
+  M --> B[Walking/contact batch allocation]
+  P[Modal: physical candidate trials] --> L[Training-only labels]
+  L --> T[Tinker: five-domain gradients and LoRA updates]
+  B --> T
+  T --> C[Saved optimizer and sampling checkpoints]
+  C --> D[Closed-loop decisions from changing observations]
+  D --> U[MuJoCo: gait, standing control, IK and passive contacts]
+  U --> R[Measured trajectories and task verification]
+  R --> M
+  R --> V[Independent Modal replay]
+  V --> W[Three.js / Blender physical replay]
+```
+
+The replay interface offers all five actual training checkpoints and a separate fresh-scenario comparison. It interpolates recorded body transforms by their true timestamps, with display-only decimal rounding. Stopped or failed episodes remain stopped. It does not splice successful task clips into an artificial continuous run.
+
+The object bases are fixed benchmark fixtures: the button cap slides, the drawer slides, the laptop lid hinges and the globe rotates. The robot itself is unsupported. This simplifies object dynamics and does not represent arbitrary loose objects or real-world deployment.
+
+Pre-training integration attempts are retained separately. The first completed service run retrieved Exa evidence and verified cross-role past.dev recalls, but its Modal trials failed while resolving a native asset path. It completed zero optimizer updates. The fix supplies an explicit `MOCHI_ROOT=/app` inside workers rather than assuming Modal's automatic module mount preserves the checkout layout.
+
+Before optimizer updates, the final engineering revision adds actual loaded-foot contacts and the last two walking commands to the model observation, plus arrival error and an estimated loaded-contact slip distance. The laptop arm first lifts outside the lid's edge before approaching its contact point. A complete manually selected calibration sequence passed all four tasks, with no reset or fall. This establishes physical feasibility; it is not a learned-policy result. Starting and trained weights share this revised foundation.
+
+Completed earlier alarm, drawer and globe contact trials can be reused because their dynamics and controllers are unchanged. Earlier laptop trials remain archived and are superseded by fresh trials using the corrected approach. The report records source run IDs, dataset hashes, reused rows, regenerated rows and all completed physical trial counts. Held-out scenarios remain unused until model selection.

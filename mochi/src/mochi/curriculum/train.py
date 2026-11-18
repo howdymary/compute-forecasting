@@ -6,7 +6,7 @@ from pathlib import Path
 import numpy as np
 import modal
 from .world import World, TASKS, PROFILES, ROOT, ROUTE
-from .remote import app,contact_trial,expert_sequence,replay,Runner
+from .remote import app,contact_trial,expert_sequence,replay,Runner,walking_coverage
 from .decisions import decision,choose
 from ..desk.services import DeskServices
 from ..integrations import now,digest
@@ -20,9 +20,17 @@ def rank(row):
     r=row['result'];t=r['task'];error=abs(r['value'])/(.005 if t=='alarm' else .03 if t=='drawer' else 1.)
     return (not r['success'],r['fall'],r['non_hand_contact_steps']>0,error if not r['success'] else r['duration'],r['max_force_n'])
 def task_summary(rows):
-    return {t:{'n':len(a:=[r for r in rows if r['result']['task']==t]),'successes':sum(r['result']['success'] for r in a),'mean_duration_s':float(np.mean([r['result']['duration'] for r in a])) if a else None} for t in TASKS}
+    return {t:{'n':len(a:=[r for r in rows if r['result']['task']==t]),'successes':sum(r['result']['success'] for r in a),'wilson_95_success_rate':wilson(sum(r['result']['success'] for r in a),len(a)),'mean_duration_s':float(np.mean([r['result']['duration'] for r in a])) if a else None} for t in TASKS}
+def wilson(successes,n):
+    if not n:return None
+    z=1.95996398454;p=successes/n;den=1+z*z/n;center=(p+z*z/(2*n))/den;half=z*((p*(1-p)/n+z*z/(4*n*n))**.5)/den
+    return [max(0.,center-half),min(1.,center+half)]
+def complete(row):
+    ep=row['episode'];states=ep.get('final_object_states',{});speeds=ep.get('final_object_speeds',{})
+    return bool(all(ep['results'].get(t,{}).get('success',False) for t in TASKS) and not ep['fall'] and states.get('drawer',1)<.002 and states.get('laptop',9)<np.deg2rad(5) and abs(states.get('globe',9))<np.deg2rad(3) and all(abs(speeds.get(t,9))<v for t,v in [('drawer',.01),('laptop',.15),('globe',.07)]))
 def sequence_summary(rows):
-    return {'n':len(rows),'full_successes':sum(all(x['episode']['results'].get(t,{}).get('success',False) for t in TASKS) and not x['episode']['fall'] for x in rows),'task_successes':{t:sum(x['episode']['results'].get(t,{}).get('success',False) for x in rows) for t in TASKS},'stations_reached':sum(len(x['arrivals']) for x in rows),'falls':sum(x['episode']['fall'] for x in rows),'mean_duration_s':float(np.mean([x['episode']['duration'] for x in rows]))}
+    successes=sum(complete(x) for x in rows);arrivals=[a for x in rows for a in x['arrivals']]
+    return {'n':len(rows),'full_successes':successes,'wilson_95_full_success_rate':wilson(successes,len(rows)),'task_successes':{t:sum(x['episode']['results'].get(t,{}).get('success',False) for x in rows) for t in TASKS},'stations_reached':len(arrivals),'station_opportunities':len(rows)*len(ROUTE),'falls':sum(x['episode']['fall'] for x in rows),'mean_duration_s':float(np.mean([x['episode']['duration'] for x in rows])),'arrival_measurement_n':len(arrivals),'mean_arrival_position_error_mm':float(np.mean([a['position_error_mm'] for a in arrivals])) if arrivals else None,'mean_arrival_heading_error_degrees':float(np.mean([a['heading_error_degrees'] for a in arrivals])) if arrivals else None,'mean_foot_slip_estimate_m':float(np.mean([sum(x['episode']['foot_slip_estimate_m'].values()) for x in rows]))}
 
 async def drive(sampler,renderer,seed,record=False,expert=False,fixed=None):
     """LLM decisions observe changing physical state; every integration step is local.
@@ -67,7 +75,17 @@ async def main():
             await services.read('experimenter',proposal);report['research_focus']=focus;allocation={'walk':16,**{t:4 for t in TASKS}} if focus=='precision_arrival' else {'walk':8,**{t:6 for t in TASKS}};report['research_allocation']=[{'update':0,'focus':focus,'domain_batch_counts':allocation.copy(),'proposal_record':proposal}]
             train_seeds=PROTOCOL['train_seeds'];dev_seeds=PROTOCOL['development_seeds'];test_seeds=PROTOCOL['held_out_seeds']
             jobs=[(seed,t,p.code,False) for seed in train_seeds+dev_seeds for t in TASKS for p in PROFILES]
-            report['phase']='Modal contact experiments';await publish(report);log('contact_labels_start',rollouts=len(jobs));rows=[r async for r in contact_trial.starmap.aio(jobs,order_outputs=True)];report['rollouts']+=len(rows);assert report['rollouts']<PROTOCOL['validity']['maximum_rollouts'];save('contact-outcomes',rows)
+            report['phase']='Modal contact experiments';await publish(report);log('contact_labels_start',rollouts=len(jobs))
+            phase=json.loads((ROOT/'configs/curriculum-phase.json').read_text());bootstrap=list((ROOT/'.cache/bootstrap').rglob('contact-outcomes.json')) if phase.get('reuse_contact_run') else []
+            if phase.get('reuse_contact_run'):
+                if len(bootstrap)!=1:raise RuntimeError('Expected exactly one verified prior contact dataset')
+                rows=json.loads(bootstrap[0].read_text());expected={(seed,t,code) for seed,t,code,_ in jobs};actual={(r['seed'],r['result']['task'],r['result']['profile']['code']) for r in rows}
+                if len(rows)!=len(jobs) or actual!=expected:raise RuntimeError('Prior contact dataset does not match frozen trials')
+                report['contact_dataset_provenance']={'source_github_run':phase['reuse_contact_run'],'sha256':hashlib.sha256(bootstrap[0].read_bytes()).hexdigest(),'prior_completed_rollouts':len(rows),'reused_rows':sum(r['result']['task']!='laptop' for r in rows),'superseded_domain':'laptop','reason':'Before any optimizer updates, added measured walking observations and a collision-free laptop approach. Reuse unchanged alarm/drawer/globe trials; regenerate all laptop trials.'}
+                replacement_jobs=[j for j in jobs if j[1]=='laptop'];replacement=[r async for r in contact_trial.starmap.aio(replacement_jobs,order_outputs=True)];report['rollouts']+=len(replacement);rows=[r for r in rows if r['result']['task']!='laptop']+replacement
+                report['contact_dataset_provenance']['regenerated_laptop_rows']=len(replacement);report['rollouts']+=6;report['contact_dataset_provenance']['superseded_walking_rollouts']=6
+            else:rows=[r async for r in contact_trial.starmap.aio(jobs,order_outputs=True)]
+            report['rollouts']+=len(rows);assert report['rollouts']<PROTOCOL['validity']['maximum_rollouts'];save('contact-outcomes',rows)
             groups={}
             for r in rows:groups.setdefault((r['seed'],r['result']['task']),[]).append(r)
             domain_data={t:[] for t in TASKS};audit={}
@@ -76,9 +94,15 @@ async def main():
                 domain_data[t]=[(r['observation'],r['result']['profile']['code']) for r in best]
                 audit[t]={'n':len(cells),'teacher_successes':sum(r['result']['success'] for r in best),'label_counts':dict(Counter(label for _,label in domain_data[t])),'informative_cases':sum(len({r['result']['success'] for r in c})>1 for c in cells)}
                 if not audit[t]['teacher_successes']:raise RuntimeError('No valid physical training example for '+t)
-            fixed={t:min(PROFILES,key=lambda p:sum(rank(next(r for r in groups[(seed,t)] if r['result']['profile']['code']==p.code))[0] for seed in train_seeds)).code for t in TASKS}
+            def fixed_key(task,profile):
+                selected=[next(r for r in groups[(seed,task)] if r['result']['profile']['code']==profile.code) for seed in train_seeds]
+                return (-sum(r['result']['success'] for r in selected),sum(r['result']['duration'] for r in selected),sum(r['result']['max_force_n'] for r in selected))
+            fixed={t:min(PROFILES,key=lambda p:fixed_key(t,p)).code for t in TASKS}
+
             log('walking_labels_start');experts=[r async for r in expert_sequence.starmap.aio([(seed,False) for seed in train_seeds[:6]],order_outputs=True)];report['rollouts']+=len(experts);save('walking-teachers',experts)
-            domain_data['walk']=[(x['observation'],x['action']) for ep in experts for x in ep['episode']['decisions'] if x['observation']['domain']=='walk']
+            coverage_jobs=[(train_seeds[i],offset) for i,offset in enumerate([(.015,.050,0.),(.015,-.05,0.),(.045,.035,.35),(.045,-.035,-.35),(.025,.050,-.2),(.025,-.050,.2)])]
+            coverage=[r async for r in walking_coverage.starmap.aio(coverage_jobs,order_outputs=True)];report['rollouts']+=len(coverage);save('walking-coverage',coverage)
+            domain_data['walk']=[(x['observation'],x['action']) for ep in experts+coverage for x in ep['episode']['decisions'] if x['observation']['domain']=='walk']
             audit['walk']={'n':len(domain_data['walk']),'label_counts':dict(Counter(y for _,y in domain_data['walk']))}
             if len(audit['walk']['label_counts'])<5:raise RuntimeError('Insufficient walking action coverage')
             report['data_audit']=audit;report['fixed_baseline']=fixed;save('data-audit',audit);save('frozen',report);report['phase']='Tinker post-training';await publish(report)
@@ -132,12 +156,23 @@ async def main():
             for name,update in [('starting_model',0),('post_trained_model',selected)]:
                 sampler=await services.service.create_sampling_client(model_path=paths[str(update)]['weights']);results[name]=await asyncio.gather(*(drive(sampler,renderer,seed,True) for seed in test_seeds));save('held-out-'+name,results[name])
             results['classical_fixed']=await asyncio.gather(*(drive(None,None,seed,True,expert=True,fixed=fixed) for seed in test_seeds))
+            isolated_jobs=[(seed,t,p.code,False) for seed in test_seeds for t in TASKS for p in PROFILES]
+            isolated=[r async for r in contact_trial.starmap.aio(isolated_jobs,order_outputs=True)];report['rollouts']+=len(isolated);save('held-out-isolated-outcomes',isolated);isolated_evaluation={}
+            for name,update in [('starting_model',0),('post_trained_model',selected)]:
+                sampler=await services.service.create_sampling_client(model_path=paths[str(update)]['weights']);picked=[]
+                for seed in test_seeds:
+                    for t in TASKS:
+                        cell=[r for r in isolated if r['seed']==seed and r['result']['task']==t];action,dist=await choose(sampler,renderer,cell[0]['observation']);picked.append(next(r for r in cell if r['result']['profile']['code']==action))
+                isolated_evaluation[name]=picked
+            isolated_evaluation['fixed_profiles']=[r for r in isolated if r['result']['profile']['code']==fixed[r['result']['task']]]
+            report['held_out_isolated_contact']={k:task_summary(v) for k,v in isolated_evaluation.items()};save('held-out-isolated-evaluation',isolated_evaluation)
+
             # Independently execute every selected action sequence on Modal.
             replay_jobs=[(x['seed'],x['actions'],False) for group in results.values() for x in group];verified=[r async for r in replay.starmap.aio(replay_jobs,order_outputs=True)];report['rollouts']+=len(verified);save('modal-replays',verified)
             all_local=[x for group in results.values() for x in group]
             report['remote_replay_checks']=[{'seed':a['seed'],'same_task_success':{t:a['episode']['results'].get(t,{}).get('success',False)==b['episode']['results'].get(t,{}).get('success',False) for t in TASKS},'duration_delta_s':abs(a['episode']['duration']-b['episode']['duration']),'receipt':b['receipt']} for a,b in zip(all_local,verified)]
             if any(x['duration_delta_s']>.01 or not all(x['same_task_success'].values()) for x in report['remote_replay_checks']):raise RuntimeError('Local/Modal replay disagreement')
-            report['held_out']={name:sequence_summary(group) for name,group in results.items()};report['held_out_not_yet_run']=False;save('held-out-classical',results['classical_fixed'])
+            report['held_out']={name:sequence_summary(group) for name,group in results.items()};report['paired_outcomes']=[{'seed':a['seed'],'starting_full':complete(a),'trained_full':complete(b),'starting_tasks':sum(v['success'] for v in a['episode']['results'].values()),'trained_tasks':sum(v['success'] for v in b['episode']['results'].values()),'starting_arrivals':len(a['arrivals']),'trained_arrivals':len(b['arrivals'])} for a,b in zip(results['starting_model'],results['post_trained_model'])];delta=np.array([int(x['trained_full'])-int(x['starting_full']) for x in report['paired_outcomes']]);boot=delta[np.random.default_rng(8312).integers(0,len(delta),(10000,len(delta)))].mean(1);report['paired_full_success_gain']={'percentage_points':float(delta.mean()*100),'bootstrap_95_percentage_points':(np.quantile(boot,[.025,.975])*100).tolist(),'n':len(delta)};report['held_out_not_yet_run']=False;report['local_continuous_rollouts']=len(dev_seeds)*len(cfg['checkpoints'])+len(test_seeds)*3;save('held-out-classical',results['classical_fixed'])
             conclusion=await services.write('experimenter',{'kind':'observation','held_out':report['held_out'],'selected_update':selected,'optimizer_updates_completed':len(report['training_log']),'checkpoint_summaries':report['checkpoints']})
             checked=await services.read('critic',conclusion);verdict=await services.write('critic',{'kind':'conclusion','evidence':checked,'limits':'Small simulation pilot; shared fixed gait and IK; state observations; no raw-torque post-training, hardware validation or causal sponsor ablation. Nonmonotonic checkpoints retained.'});await services.read('researcher',verdict)
         report.update(status='completed',completed_at=now(),duration_seconds=time.perf_counter()-start,services=services.report(),optimizer_updates_completed=len(report['training_log']));save('report',report);await publish(report);log('completed',held_out=report['held_out'])

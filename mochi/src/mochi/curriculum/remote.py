@@ -60,7 +60,8 @@ class Runner:
                 if action=='stop' and arrived:
                     w.step(standing=True);self.settle+=DT
                     if self.settle>.4:
-                        self.arrivals.append({'station':ROUTE[self.index][0],'arrived':True,'t':float(w.d.time)})
+                        if obs['distance_mm']>=32 or abs(obs['heading_error_degrees'])>=12:self.settle=0.;break
+                        self.arrivals.append({'station':ROUTE[self.index][0],'arrived':True,'t':float(w.d.time),'position_error_mm':obs['distance_mm'],'heading_error_degrees':abs(obs['heading_error_degrees']),'travel_time_s':float(w.d.time)-self.leg_start})
                         if ROUTE[self.index][0]=='transit':self.next_station()
                         else:self.mode='task'
                         break
@@ -84,3 +85,9 @@ def replay(seed,actions,record=True):
 def progress():
     """Public numerical status only: no credentials or model checkpoint paths."""
     return modal.Dict.from_name('mochi-curriculum-v6-progress',create_if_missing=True).get('latest',{'status':'waiting'})
+
+@app.function(image=image,cpu=1,memory=2048,max_containers=8,timeout=600)
+def walking_coverage(seed,offset):
+    from .world import World
+    start=time.perf_counter();w=World(seed,False);goal=(float(w.d.qpos[0])+offset[0],float(w.d.qpos[1])+offset[1],offset[2]);arrived=w.walk_to(goal)
+    return {'seed':seed,'goal':goal,'arrived':arrived,'episode':w.episode(),'receipt':receipt(start)}

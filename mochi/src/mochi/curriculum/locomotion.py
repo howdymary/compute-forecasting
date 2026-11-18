@@ -30,14 +30,16 @@ def vendor_xml(scale=1.):
  return ET.tostring(r,encoding='unicode')
 
 class Walker:
- def __init__(self,m,d,scale=1.,offsets=None):
-  self.m=m;self.d=d;self.scale=scale;self.time_scale=math.sqrt(scale);self.policy=torch.jit.load(str(SOURCE/'deploy/pre_train/g1/motion.pt'),map_location='cpu').eval();self.action=np.zeros(12,dtype=np.float32);self.target=DEFAULT.copy();self.offsets=np.zeros(12) if offsets is None else np.array(offsets)
+ def __init__(self,m,d,scale=1.,offsets=None,velocity_feedback=True):
+  self.velocity_feedback=velocity_feedback;self.m=m;self.d=d;self.scale=scale;self.time_scale=math.sqrt(scale);self.policy=torch.jit.load(str(SOURCE/'deploy/pre_train/g1/motion.pt'),map_location='cpu').eval();self.action=np.zeros(12,dtype=np.float32);self.target=DEFAULT.copy();self.offsets=np.zeros(12) if offsets is None else np.array(offsets)
   js=[mujoco.mj_name2id(m,mujoco.mjtObj.mjOBJ_JOINT,n) for n in LEGS];self.qids=np.array([m.jnt_qposadr[j] for j in js]);self.vids=np.array([m.jnt_dofadr[j] for j in js]);self.aids=np.array([mujoco.mj_name2id(m,mujoco.mjtObj.mjOBJ_ACTUATOR,n) for n in LEGS]);self.last=-1.;self.velocity_integral=np.zeros(2);self.yaw_integral=0.
  def command(self,velocity):
   m,d=self.m,self.d
   if d.time-self.last>=.02*self.time_scale-1e-9:
    self.last=float(d.time);q=d.qpos[3:7];w,x,y,z=q;gravity=np.array([2*(-z*x+w*y),-2*(z*y+w*x),1-2*(w*w+z*z)])
-   desired=np.array(velocity,dtype=float);rotation=d.xmat[1].reshape(3,3);actual=rotation.T@d.qvel[:3];error=desired[:2]-actual[:2];self.velocity_integral=np.clip(self.velocity_integral+error*.02*self.time_scale,-.025,.025);desired[:2]=np.clip(desired[:2]+.7*error+1.4*self.velocity_integral,-.12,.12);yaw_error=desired[2]-d.qvel[5];self.yaw_integral=float(np.clip(self.yaw_integral+yaw_error*.02*self.time_scale,-.25,.25));desired[2]=float(np.clip(desired[2]+.35*yaw_error+.4*self.yaw_integral,-1.8,1.8))
+   desired=np.array(velocity,dtype=float)
+   if self.velocity_feedback:
+    rotation=d.xmat[1].reshape(3,3);actual=rotation.T@d.qvel[:3];error=desired[:2]-actual[:2];self.velocity_integral=np.clip(self.velocity_integral+error*.02*self.time_scale,-.025,.025);desired[:2]=np.clip(desired[:2]+.7*error+1.4*self.velocity_integral,-.12,.12);yaw_error=desired[2]-d.qvel[5];self.yaw_integral=float(np.clip(self.yaw_integral+yaw_error*.02*self.time_scale,-.25,.25));desired[2]=float(np.clip(desired[2]+.35*yaw_error+.4*self.yaw_integral,-1.8,1.8))
    phase=(d.time/self.time_scale% .8)/.8;obs=np.r_[d.qvel[3:6]*self.time_scale*.25,gravity,desired*np.array([1/self.time_scale,1/self.time_scale,self.time_scale])*np.array(CFG['cmd_scale']),(d.qpos[self.qids]+self.offsets-DEFAULT),d.qvel[self.vids]*self.time_scale*.05,self.action,[math.sin(2*math.pi*phase),math.cos(2*math.pi*phase)]].astype(np.float32)
    with torch.no_grad():self.action=self.policy(torch.from_numpy(obs)[None]).numpy().reshape(12)
    self.target=self.action*.25+DEFAULT-self.offsets
@@ -45,7 +47,7 @@ class Walker:
   self.d.ctrl[self.aids]=tau
 
 def smoke(scale=1.,seconds=4.,velocity=(.3,0,0)):
- m=mujoco.MjModel.from_xml_string(vendor_xml(scale));d=mujoco.MjData(m);w=Walker(m,d,scale);d.qpos[w.qids]=DEFAULT;mujoco.mj_forward(m,d);start=d.qpos[:3].copy();max_tilt=0.;frames=[]
+ m=mujoco.MjModel.from_xml_string(vendor_xml(scale));d=mujoco.MjData(m);w=Walker(m,d,scale,velocity_feedback=False);d.qpos[w.qids]=DEFAULT;mujoco.mj_forward(m,d);start=d.qpos[:3].copy();max_tilt=0.;frames=[]
  for step in range(int(seconds/m.opt.timestep)):
   w.command(np.array(velocity)*np.array([math.sqrt(scale),math.sqrt(scale),1/math.sqrt(scale)]));mujoco.mj_step(m,d);tilt=math.acos(float(np.clip(d.xmat[1].reshape(3,3)[2,2],-1,1)));max_tilt=max(max_tilt,tilt)
   if step%50==0:frames.append({'t':float(d.time),'base':d.qpos[:7].tolist()})

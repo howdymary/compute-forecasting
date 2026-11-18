@@ -46,7 +46,7 @@ def wrap(a):return float((a+math.pi)%(2*math.pi)-math.pi)
 
 class World:
  def __init__(self,seed=12000,record=False,start_task=None):
-  self.s=scenario(seed);self.m=mujoco.MjModel.from_xml_string(xml(self.s));self.d=mujoco.MjData(self.m);self.meta=robot_template()[1];self.walker=Walker(self.m,self.d,SCALE,[self.meta['home_joint_offsets'][n] for n in LEGS]);self.standing_mode=None;self.m.actuator_ctrllimited[self.walker.aids]=False;self.m.actuator_forcelimited[self.walker.aids]=True;self.m.actuator_forcerange[self.walker.aids]=np.array([-139,139])*SCALE**4;self.d.qpos[self.walker.qids]=DEFAULT-self.walker.offsets;self.record=record;self.viz=mujoco.MjData(self.m);self.frames=[];self.events=[];self.decisions=[];self.last_frame=-.04;self.last_arm=-.02;self.task=None;self.phase='walk';self.profile=PROFILES[1];self.t0=0.;self.activated=False;self.hold_start=None;self.release_at=None;self.hand_contacts=0;self.max_force=0.;self.bad_contacts=0;self.fall=False;self.max_tilt=0.;self.base_force=0.;self.ik_cache={};self.results={};self.next_frame=0.;self.prev_angle=None;self.progress_contact=0.;self.stroke=math.pi-.25
+  self.s=scenario(seed);self.m=mujoco.MjModel.from_xml_string(xml(self.s));self.d=mujoco.MjData(self.m);self.meta=robot_template()[1];self.walker=Walker(self.m,self.d,SCALE,[self.meta['home_joint_offsets'][n] for n in LEGS]);self.standing_mode=None;self.m.actuator_ctrllimited[self.walker.aids]=False;self.m.actuator_forcelimited[self.walker.aids]=True;self.m.actuator_forcerange[self.walker.aids]=np.array([-139,139])*SCALE**4;self.d.qpos[self.walker.qids]=DEFAULT-self.walker.offsets;self.record=record;self.viz=mujoco.MjData(self.m);self.frames=[];self.events=[];self.decisions=[];self.last_frame=-.04;self.last_arm=-.02;self.task=None;self.phase='walk';self.profile=PROFILES[1];self.t0=0.;self.activated=False;self.hold_start=None;self.release_at=None;self.hand_contacts=0;self.max_force=0.;self.bad_contacts=0;self.fall=False;self.max_tilt=0.;self.base_force=0.;self.foot_slip_m={'left':0.,'right':0.};self.foot_peak_speed={'left':0.,'right':0.};self.last_foot_measure=0.;self.next_foot_measure=0.;self.ik_cache={};self.results={};self.next_frame=0.;self.prev_angle=None;self.progress_contact=0.;self.stroke=math.pi-.25
   self.arm={};self.arm_dofs=[];self.armrest=np.zeros(14)
   for side in ARMS:
    js=[self.id('joint',n) for n in ARMS[side]];qs=np.array([self.m.jnt_qposadr[j] for j in js]);vs=np.array([self.m.jnt_dofadr[j] for j in js]);acts=np.array([self.id('actuator',n) for n in ARMS[side]]);targets=np.zeros(7);self.d.qpos[qs]=targets;self.d.ctrl[acts]=targets;self.arm[side]={'qs':qs,'vs':vs,'acts':acts,'rest':targets,'limits':self.m.jnt_range[js],'tip':self.id('site',side+'-push-tip')};self.arm_dofs.extend(vs)
@@ -75,6 +75,17 @@ class World:
    if obj in [int(c.geom1),int(c.geom2)] and bool(self.hand_geoms[side].intersection([int(c.geom1),int(c.geom2)])):
     f=np.zeros(6);mujoco.mj_contactForce(self.m,self.d,i,f);force+=abs(float(f[0]))
   return good,force,bad
+ def foot_state(self):
+  contact={side:False for side in ['left','right']};speed={side:0. for side in contact};desk=self.id('geom','desk')
+  for ci,c in enumerate(self.d.contact):
+   if desk not in [int(c.geom1),int(c.geom2)]:continue
+   other=int(c.geom2) if int(c.geom1)==desk else int(c.geom1);body=int(self.m.geom_bodyid[other]);name=mujoco.mj_id2name(self.m,mujoco.mjtObj.mjOBJ_BODY,body) or ''
+   for side in contact:
+    if name==side+'_ankle_roll_link':
+     f=np.zeros(6);mujoco.mj_contactForce(self.m,self.d,ci,f)
+     if f[0]>.05:
+      contact[side]=True;J=np.zeros((3,self.m.nv));mujoco.mj_jac(self.m,self.d,J,None,c.pos,body);v=J@self.d.qvel;speed[side]=max(speed[side],float(np.linalg.norm(v[:2])))
+  return contact,speed
  def capture(self):
   if not self.record:return
   self.viz.qpos[:]=self.d.qpos;self.viz.qvel[:]=self.d.qvel;mujoco.mj_forward(self.m,self.viz);self.frames.append({'t':round(float(self.d.time),6),'positions':self.viz.xpos.tolist(),'quaternions':self.viz.xquat.tolist(),'phase':self.phase,'task':self.task,'objects':{t:self.value(t) for t in TASKS},'base_tilt_degrees':math.degrees(math.acos(float(np.clip(self.viz.xmat[1,8],-1,1)))),'hand_contact':bool(self.contacts(self.task)[0]) if self.task else False,'alarm_activated':self.activated});self.last_frame=float(self.d.time)
@@ -90,10 +101,14 @@ class World:
   else:self.d.qfrc_applied[self.walker.vids]=0;self.walker.command(velocity)
   self.d.qfrc_applied[self.arm_dofs]=self.d.qfrc_bias[self.arm_dofs];mujoco.mj_step(self.m,self.d)
   tilt=math.acos(float(np.clip(self.d.xmat[1,8],-1,1)));self.max_tilt=max(self.max_tilt,tilt);self.fall=bool(self.fall or tilt>math.radians(30) or self.d.qpos[2]<.105 or abs(self.d.qpos[0])>.59 or abs(self.d.qpos[1])>.39);self.base_force=max(self.base_force,float(np.max(np.abs(self.d.qfrc_applied[:6]))))
+  if self.d.time>=self.next_foot_measure:
+   contacts,speeds=self.foot_state();elapsed=float(self.d.time)-self.last_foot_measure
+   for side in contacts:self.foot_slip_m[side]+=speeds[side]*elapsed;self.foot_peak_speed[side]=max(self.foot_peak_speed[side],speeds[side])
+   self.last_foot_measure=float(self.d.time);self.next_foot_measure=float(self.d.time)+.02
   if self.d.time-self.last_frame>=.04-1e-7:self.capture()
  def walk_observation(self,goal):
   delta=np.array(goal[:2])-self.d.qpos[:2];yaw=self.yaw();bearing=wrap(math.atan2(delta[1],delta[0])-yaw);distance=float(np.linalg.norm(delta));final=wrap(goal[2]-yaw)
-  return {'domain':'walk','distance_mm':round(distance*1000,1),'bearing_degrees':round(math.degrees(bearing),1),'heading_error_degrees':round(math.degrees(final),1),'speed_mm_s':round(float(np.linalg.norm(self.d.qvel[:2]))*1000,1),'body_tilt_degrees':round(math.degrees(math.acos(float(np.clip(self.d.xmat[1,8],-1,1)))),2),'target_forward_mm':round(float(math.cos(yaw)*delta[0]+math.sin(yaw)*delta[1])*1000,1),'target_left_mm':round(float(-math.sin(yaw)*delta[0]+math.cos(yaw)*delta[1])*1000,1),'near_station':distance<.07}
+  return {'domain':'walk','foot_contacts':self.foot_state()[0],'recent_commands':[x['action'] for x in self.decisions if x['observation']['domain']=='walk'][-2:],'distance_mm':round(distance*1000,1),'bearing_degrees':round(math.degrees(bearing),1),'heading_error_degrees':round(math.degrees(final),1),'speed_mm_s':round(float(np.linalg.norm(self.d.qvel[:2]))*1000,1),'body_tilt_degrees':round(math.degrees(math.acos(float(np.clip(self.d.xmat[1,8],-1,1)))),2),'target_forward_mm':round(float(math.cos(yaw)*delta[0]+math.sin(yaw)*delta[1])*1000,1),'target_left_mm':round(float(-math.sin(yaw)*delta[0]+math.cos(yaw)*delta[1])*1000,1),'near_station':distance<.07}
  @staticmethod
  def teacher_move(obs):
   if obs['distance_mm']<18 and abs(obs['heading_error_degrees'])<9:return 'stop'
@@ -106,7 +121,7 @@ class World:
   error=obs['bearing_degrees']
   if abs(error)>10:return ('left' if error>0 else 'right')+('_slow' if abs(error)<25 else '')
   return 'forward' if obs['distance_mm']>100 else 'slow'
- def walk_to(self,goal,decide=None,max_seconds=22.):
+ def walk_to(self,goal,decide=None,max_seconds=24.):
   self.task=None;self.phase='walk';start=float(self.d.time);self.walker.last=-1.;self.walker.action[:]=0;self.walker.velocity_integral[:]=0;self.walker.yaw_integral=0;command='stop';next_command=-1.;settle=0.
   while self.d.time-start<max_seconds and not self.fall:
    if self.d.time>=next_command and settle==0:
@@ -129,6 +144,7 @@ class World:
    normal=np.array([0.,-1.,0.]);point=np.array([-.092,.103-a,.130]);target=point+normal*(.0025+PAD_RADIUS+(.014 if hover or release else -p.depth))
   elif t=='laptop':
    normal=np.array([0,math.sin(a),math.cos(a)]);point=np.array([.259,.249-.14*math.cos(a),.0185+.14*math.sin(a)]);target=point+normal*(.0035+PAD_RADIUS+(.014 if hover or release else -p.depth))
+   if phase=='approach' and self.d.time-self.t0<1.8:target=np.array([.30,.225,.188])
    if release:target+=np.array([.025,0,.015])
   else:
    normal=np.array([math.cos(self.stroke),math.sin(self.stroke),0.]);target=np.array([.47,.22,.123])+normal*(.058+PAD_RADIUS+(.014 if hover or release else -p.depth))
@@ -146,7 +162,8 @@ class World:
    return np.r_[tmp.site_xpos[tip]-target,(.006 if self.task=='alarm' else .0005)*(tmp.site_xmat[tip].reshape(3,3)[:,0]+normal),4*penalty]
   opt=least_squares(residual,np.clip(arm['rest'] if from_home else self.d.qpos[qs],limits[:,0]+.00101,limits[:,1]-.00101),bounds=(limits[:,0]+.001,limits[:,1]-.001),max_nfev=35,ftol=1e-7,xtol=1e-7,gtol=1e-8)
   return opt.x
- def do_task(self,t,profile=None,max_seconds=10.):
+ def do_task(self,t,profile=None,max_seconds=None):
+  max_seconds=(12. if t=='laptop' else 10.) if max_seconds is None else max_seconds
   self.approach_path=[];self.approach_side='left' if t=='laptop' else 'right';self.task=t;self.profile=profile or PROFILES[1];self.phase='approach';self.t0=float(self.d.time);self.hand_contacts=0;self.max_force=0.;self.bad_contacts=0;self.hold_start=None;self.hold_pose=None;self.release_at=None;self.stroke=math.pi-.25;self.progress_contact=0.;first_angle=None;side='left' if t=='laptop' else 'right';arm=self.arm[side];next_control=-1.;next_ik=-1.;qtarget=self.d.qpos[arm['qs']].copy();dwell=0.
   while self.d.time-self.t0<max_seconds and not self.fall:
    elapsed=float(self.d.time)-self.t0;contact,force,bad=self.contacts(t);self.hand_contacts+=int(contact);self.max_force=max(self.max_force,force);self.bad_contacts+=int(bad);value=self.value(t)
@@ -185,7 +202,7 @@ class World:
      if index==1:break
      index+=1
    self.step(standing=True)
- def episode(self):return {'scenario':self.s,'events':self.events,'results':self.results,'fall':self.fall,'max_tilt_deg':math.degrees(self.max_tilt),'maximum_applied_base_force':self.base_force,'duration':float(self.d.time),'decisions':self.decisions,'trajectory':{'body_names':[mujoco.mj_id2name(self.m,mujoco.mjtObj.mjOBJ_BODY,i) or 'world' for i in range(self.m.nbody)],'frames':self.frames,'sample_hz':25}}
+ def episode(self):return {'scenario':self.s,'events':self.events,'results':self.results,'fall':self.fall,'max_tilt_deg':math.degrees(self.max_tilt),'maximum_applied_base_force':self.base_force,'foot_slip_estimate_m':self.foot_slip_m,'peak_loaded_contact_speed_m_s':self.foot_peak_speed,'final_object_states':{t:self.value(t) for t in TASKS},'final_object_speeds':{t:float(self.d.qvel[self.v[t]]) for t in TASKS},'duration':float(self.d.time),'decisions':self.decisions,'trajectory':{'body_names':[mujoco.mj_id2name(self.m,mujoco.mjtObj.mjOBJ_BODY,i) or 'world' for i in range(self.m.nbody)],'frames':self.frames,'sample_hz':25}}
 
 if __name__=='__main__':
  import argparse

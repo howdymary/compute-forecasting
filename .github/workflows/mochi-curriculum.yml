@@ -5,6 +5,7 @@ on:
     paths: ['mochi/configs/curriculum-phase.json', '.github/workflows/mochi-curriculum.yml']
 permissions:
   contents: read
+  actions: read
 concurrency:
   group: mochi-curriculum-v6
   cancel-in-progress: false
@@ -38,6 +39,15 @@ jobs:
           python -m pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu
           python -m pip install './mochi[remote,dev]' pyyaml==6.0.2
           python mochi/scripts/fetch_visual_models.py
+      - name: Restore completed contact trials if configured
+        if: steps.phase.outputs.phase == 'train'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mochi_contact_run=$(python -c 'import json;print(json.load(open("mochi/configs/curriculum-phase.json")).get("reuse_contact_run", ""))')
+          if [ -n "$mochi_contact_run" ]; then
+            gh run download "$mochi_contact_run" --repo "$GITHUB_REPOSITORY" --dir mochi/.cache/bootstrap
+          fi
       - name: Publish credential-free numerical monitor
         if: steps.phase.outputs.phase == 'train'
         env:
