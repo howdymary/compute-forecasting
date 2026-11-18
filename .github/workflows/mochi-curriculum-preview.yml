@@ -21,4 +21,20 @@ jobs:
         env:
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
           MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
-        run: python -m modal deploy mochi/scripts/deploy_curriculum.py
+        run: python -m modal deploy --strategy recreate mochi/scripts/deploy_curriculum.py
+      - name: Verify the actual published release
+        run: |
+          python - <<'PYCODE'
+          import json,os,time,urllib.request
+          base='https://howdymary--mochi-curriculum-demo-web.us-east.modal.run'
+          for attempt in range(6):
+              try:
+                  health=json.load(urllib.request.urlopen(base+'/api/health',timeout=20))
+                  assert health['release']==os.environ['GITHUB_SHA'], 'Previous release is still serving'
+                  status=json.load(urllib.request.urlopen(base+'/api/training',timeout=20))
+                  print('Verified release',health['release'],'training',status.get('status'))
+                  break
+              except Exception:
+                  if attempt==5:raise
+                  time.sleep(5)
+          PYCODE
