@@ -1,0 +1,818 @@
+{
+  "scope": "Local ARM64 training-only controller engineering calibration; no Tinker training, no held-out evaluation.",
+  "source_code_sha256": "cee9f98a6b176db43fda4be929c77bdb557acb95109a411df76751c08d6dbde4",
+  "recording_sha256": "47bfd6e3fce1be6cce3a55c6bab9a48243384f34c646fdc74dfb6f77fa95d576",
+  "rows": [
+    {
+      "gait": "native",
+      "seed": 18000,
+      "goal": [
+        -0.39,
+        0.0206996304815,
+        0
+      ],
+      "success": true,
+      "fall": false,
+      "end_observation": {
+        "domain": "walk",
+        "foot_contacts": {
+          "left": true,
+          "right": true
+        },
+        "recent_commands": [
+          "side_left",
+          "stop"
+        ],
+        "distance_mm": 6.9,
+        "bearing_degrees": 126.4,
+        "heading_error_degrees": 6.7,
+        "speed_mm_s": 33.2,
+        "body_tilt_degrees": 1.58,
+        "target_forward_mm": -4.1,
+        "target_left_mm": 5.5,
+        "near_station": true
+      },
+      "motion": {
+        "trajectory_sample_hz": 25,
+        "frames_analyzed": 123,
+        "maximum_time_s": null,
+        "walking_duration_s": 4.886833,
+        "walking_path_m": 0.18998848554729333,
+        "walking_yaw_travel_degrees": 43.63976864781551,
+        "walking_torso_tilt_rms_degrees": 3.4504543794469162,
+        "walking_torso_peak_tilt_degrees": 4.6244019308999595,
+        "command_change_rms_m_s2": 0.04662333691040761,
+        "yaw_command_change_rms_rad_s2": 0.5307693723153954,
+        "turn_direction_reversals": 0,
+        "loaded_foot_slip_entire_episode_m": 0.033668857856788595,
+        "loaded_foot_slip_entire_episode_m_per_s": 0.006889709347344202,
+        "foot_clearance_m": null,
+        "motor_work_j": null,
+        "limits": [
+          "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+          "Command changes describe requested velocity, not actual body jerk.",
+          "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+          "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+          "No aggregate naturalness score or causal gait-training claim."
+        ]
+      }
+    },
+    {
+      "gait": "native",
+      "seed": 18001,
+      "goal": [
+        -0.41,
+        0.0486518265866,
+        0.35
+      ],
+      "success": true,
+      "fall": false,
+      "end_observation": {
+        "domain": "walk",
+        "foot_contacts": {
+          "left": true,
+          "right": true
+        },
+        "recent_commands": [
+          "side_left",
+          "stop"
+        ],
+        "distance_mm": 6.0,
+        "bearing_degrees": 118.9,
+        "heading_error_degrees": 8.8,
+        "speed_mm_s": 34.5,
+        "body_tilt_degrees": 1.62,
+        "target_forward_mm": -2.9,
+        "target_left_mm": 5.3,
+        "near_station": true
+      },
+      "motion": {
+        "trajectory_sample_hz": 25,
+        "frames_analyzed": 123,
+        "maximum_time_s": null,
+        "walking_duration_s": 4.886833,
+        "walking_path_m": 0.1887908974293427,
+        "walking_yaw_travel_degrees": 52.97392334052088,
+        "walking_torso_tilt_rms_degrees": 3.453442082376801,
+        "walking_torso_peak_tilt_degrees": 4.653972295592387,
+        "command_change_rms_m_s2": 0.041701180267819854,
+        "yaw_command_change_rms_rad_s2": 0.3753106224103659,
+        "turn_direction_reversals": 0,
+        "loaded_foot_slip_entire_episode_m": 0.033754420769431435,
+        "loaded_foot_slip_entire_episode_m_per_s": 0.006907218215673768,
+        "foot_clearance_m": null,
+        "motor_work_j": null,
+        "limits": [
+          "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+          "Command changes describe requested velocity, not actual body jerk.",
+          "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+          "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+          "No aggregate naturalness score or causal gait-training claim."
+        ]
+      }
+    },
+    {
+      "gait": "native",
+      "seed": 18002,
+      "goal": [
+        -0.45499999999999996,
+        0.019284697603,
+        1.57
+      ],
+      "success": true,
+      "fall": false,
+      "end_observation": {
+        "domain": "walk",
+        "foot_contacts": {
+          "left": true,
+          "right": true
+        },
+        "recent_commands": [
+          "slow",
+          "stop"
+        ],
+        "distance_mm": 11.7,
+        "bearing_degrees": -105.4,
+        "heading_error_degrees": 3.7,
+        "speed_mm_s": 23.7,
+        "body_tilt_degrees": 0.96,
+        "target_forward_mm": -3.1,
+        "target_left_mm": -11.3,
+        "near_station": true
+      },
+      "motion": {
+        "trajectory_sample_hz": 25,
+        "frames_analyzed": 75,
+        "maximum_time_s": null,
+        "walking_duration_s": 2.964145,
+        "walking_path_m": 0.10878505960729075,
+        "walking_yaw_travel_degrees": 92.04698897320984,
+        "walking_torso_tilt_rms_degrees": 3.3218076813317663,
+        "walking_torso_peak_tilt_degrees": 4.86953254283879,
+        "command_change_rms_m_s2": 0.05516547618325326,
+        "yaw_command_change_rms_rad_s2": 0.8722427647342722,
+        "turn_direction_reversals": 0,
+        "loaded_foot_slip_entire_episode_m": 0.022704108924543883,
+        "loaded_foot_slip_entire_episode_m_per_s": 0.007659582344449659,
+        "foot_clearance_m": null,
+        "motor_work_j": null,
+        "limits": [
+          "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+          "Command changes describe requested velocity, not actual body jerk.",
+          "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+          "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+          "No aggregate naturalness score or causal gait-training claim."
+        ]
+      }
+    },
+    {
+      "gait": "smooth",
+      "seed": 18000,
+      "goal": [
+        -0.39,
+        0.0206996304815,
+        0
+      ],
+      "success": true,
+      "fall": false,
+      "end_observation": {
+        "domain": "walk",
+        "foot_contacts": {
+          "left": true,
+          "right": true
+        },
+        "recent_commands": [
+          "right_slow",
+          "stop"
+        ],
+        "distance_mm": 6.3,
+        "bearing_degrees": -165.1,
+        "heading_error_degrees": -0.1,
+        "speed_mm_s": 36.6,
+        "body_tilt_degrees": 1.45,
+        "target_forward_mm": -6.0,
+        "target_left_mm": -1.6,
+        "near_station": true
+      },
+      "motion": {
+        "trajectory_sample_hz": 25,
+        "frames_analyzed": 147,
+        "maximum_time_s": null,
+        "walking_duration_s": 5.848177,
+        "walking_path_m": 0.25324286741962,
+        "walking_yaw_travel_degrees": 73.55171224171114,
+        "walking_torso_tilt_rms_degrees": 3.6479676735529285,
+        "walking_torso_peak_tilt_degrees": 4.931484044177647,
+        "command_change_rms_m_s2": 0.04230998882565527,
+        "yaw_command_change_rms_rad_s2": 0.681177680218355,
+        "turn_direction_reversals": 0,
+        "loaded_foot_slip_entire_episode_m": 0.05405756836059457,
+        "loaded_foot_slip_entire_episode_m_per_s": 0.009243490471666404,
+        "foot_clearance_m": null,
+        "motor_work_j": null,
+        "limits": [
+          "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+          "Command changes describe requested velocity, not actual body jerk.",
+          "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+          "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+          "No aggregate naturalness score or causal gait-training claim."
+        ]
+      }
+    },
+    {
+      "gait": "smooth",
+      "seed": 18001,
+      "goal": [
+        -0.41,
+        0.0486518265866,
+        0.35
+      ],
+      "success": true,
+      "fall": false,
+      "end_observation": {
+        "domain": "walk",
+        "foot_contacts": {
+          "left": true,
+          "right": true
+        },
+        "recent_commands": [
+          "right_slow",
+          "stop"
+        ],
+        "distance_mm": 10.7,
+        "bearing_degrees": 166.4,
+        "heading_error_degrees": -3.1,
+        "speed_mm_s": 35.5,
+        "body_tilt_degrees": 1.36,
+        "target_forward_mm": -10.4,
+        "target_left_mm": 2.5,
+        "near_station": true
+      },
+      "motion": {
+        "trajectory_sample_hz": 25,
+        "frames_analyzed": 147,
+        "maximum_time_s": null,
+        "walking_duration_s": 5.848177,
+        "walking_path_m": 0.2496974800575675,
+        "walking_yaw_travel_degrees": 85.0292061342517,
+        "walking_torso_tilt_rms_degrees": 3.647170790267834,
+        "walking_torso_peak_tilt_degrees": 5.641209585079469,
+        "command_change_rms_m_s2": 0.026759186493072015,
+        "yaw_command_change_rms_rad_s2": 0.5899171755600703,
+        "turn_direction_reversals": 0,
+        "loaded_foot_slip_entire_episode_m": 0.05268490659493663,
+        "loaded_foot_slip_entire_episode_m_per_s": 0.009008774291555555,
+        "foot_clearance_m": null,
+        "motor_work_j": null,
+        "limits": [
+          "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+          "Command changes describe requested velocity, not actual body jerk.",
+          "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+          "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+          "No aggregate naturalness score or causal gait-training claim."
+        ]
+      }
+    },
+    {
+      "gait": "smooth",
+      "seed": 18002,
+      "goal": [
+        -0.45499999999999996,
+        0.019284697603,
+        1.57
+      ],
+      "success": true,
+      "fall": false,
+      "end_observation": {
+        "domain": "walk",
+        "foot_contacts": {
+          "left": true,
+          "right": true
+        },
+        "recent_commands": [
+          "side_right",
+          "stop"
+        ],
+        "distance_mm": 11.7,
+        "bearing_degrees": -87.7,
+        "heading_error_degrees": -10.7,
+        "speed_mm_s": 52.4,
+        "body_tilt_degrees": 1.19,
+        "target_forward_mm": 0.5,
+        "target_left_mm": -11.7,
+        "near_station": true
+      },
+      "motion": {
+        "trajectory_sample_hz": 25,
+        "frames_analyzed": 83,
+        "maximum_time_s": null,
+        "walking_duration_s": 3.284593,
+        "walking_path_m": 0.12919549931206406,
+        "walking_yaw_travel_degrees": 107.05768965938174,
+        "walking_torso_tilt_rms_degrees": 3.518064288967599,
+        "walking_torso_peak_tilt_degrees": 5.264501569329723,
+        "command_change_rms_m_s2": 0.03677698412216882,
+        "yaw_command_change_rms_rad_s2": 0.8223583650459994,
+        "turn_direction_reversals": 0,
+        "loaded_foot_slip_entire_episode_m": 0.026793991820676412,
+        "loaded_foot_slip_entire_episode_m_per_s": 0.008157478081530218,
+        "foot_clearance_m": null,
+        "motor_work_j": null,
+        "limits": [
+          "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+          "Command changes describe requested velocity, not actual body jerk.",
+          "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+          "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+          "No aggregate naturalness score or causal gait-training claim."
+        ]
+      }
+    },
+    {
+      "gait": "steady",
+      "seed": 18000,
+      "goal": [
+        -0.39,
+        0.0206996304815,
+        0
+      ],
+      "success": true,
+      "fall": false,
+      "end_observation": {
+        "domain": "walk",
+        "foot_contacts": {
+          "left": true,
+          "right": true
+        },
+        "recent_commands": [
+          "side_left",
+          "stop"
+        ],
+        "distance_mm": 9.2,
+        "bearing_degrees": 122.4,
+        "heading_error_degrees": 7.6,
+        "speed_mm_s": 34.4,
+        "body_tilt_degrees": 1.61,
+        "target_forward_mm": -5.0,
+        "target_left_mm": 7.8,
+        "near_station": true
+      },
+      "motion": {
+        "trajectory_sample_hz": 25,
+        "frames_analyzed": 139,
+        "maximum_time_s": null,
+        "walking_duration_s": 5.527729,
+        "walking_path_m": 0.20820804437890908,
+        "walking_yaw_travel_degrees": 57.07741365850643,
+        "walking_torso_tilt_rms_degrees": 3.459871981327768,
+        "walking_torso_peak_tilt_degrees": 4.634241357764633,
+        "command_change_rms_m_s2": 0.05851182344485661,
+        "yaw_command_change_rms_rad_s2": 0.8599446681581507,
+        "turn_direction_reversals": 0,
+        "loaded_foot_slip_entire_episode_m": 0.03700234658836238,
+        "loaded_foot_slip_entire_episode_m_per_s": 0.006693950981638146,
+        "foot_clearance_m": null,
+        "motor_work_j": null,
+        "limits": [
+          "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+          "Command changes describe requested velocity, not actual body jerk.",
+          "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+          "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+          "No aggregate naturalness score or causal gait-training claim."
+        ]
+      }
+    },
+    {
+      "gait": "steady",
+      "seed": 18001,
+      "goal": [
+        -0.41,
+        0.0486518265866,
+        0.35
+      ],
+      "success": true,
+      "fall": false,
+      "end_observation": {
+        "domain": "walk",
+        "foot_contacts": {
+          "left": true,
+          "right": true
+        },
+        "recent_commands": [
+          "side_left",
+          "stop"
+        ],
+        "distance_mm": 8.4,
+        "bearing_degrees": 117.8,
+        "heading_error_degrees": 8.9,
+        "speed_mm_s": 35.0,
+        "body_tilt_degrees": 1.62,
+        "target_forward_mm": -3.9,
+        "target_left_mm": 7.5,
+        "near_station": true
+      },
+      "motion": {
+        "trajectory_sample_hz": 25,
+        "frames_analyzed": 123,
+        "maximum_time_s": null,
+        "walking_duration_s": 4.886833,
+        "walking_path_m": 0.1894337879412673,
+        "walking_yaw_travel_degrees": 51.7497381861945,
+        "walking_torso_tilt_rms_degrees": 3.468541407834389,
+        "walking_torso_peak_tilt_degrees": 4.691778502956136,
+        "command_change_rms_m_s2": 0.041701180267819854,
+        "yaw_command_change_rms_rad_s2": 0.3753106224103659,
+        "turn_direction_reversals": 0,
+        "loaded_foot_slip_entire_episode_m": 0.03356649784076543,
+        "loaded_foot_slip_entire_episode_m_per_s": 0.006868763262324365,
+        "foot_clearance_m": null,
+        "motor_work_j": null,
+        "limits": [
+          "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+          "Command changes describe requested velocity, not actual body jerk.",
+          "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+          "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+          "No aggregate naturalness score or causal gait-training claim."
+        ]
+      }
+    },
+    {
+      "gait": "steady",
+      "seed": 18002,
+      "goal": [
+        -0.45499999999999996,
+        0.019284697603,
+        1.57
+      ],
+      "success": true,
+      "fall": false,
+      "end_observation": {
+        "domain": "walk",
+        "foot_contacts": {
+          "left": true,
+          "right": true
+        },
+        "recent_commands": [
+          "slow",
+          "stop"
+        ],
+        "distance_mm": 11.7,
+        "bearing_degrees": -108.3,
+        "heading_error_degrees": 2.1,
+        "speed_mm_s": 20.2,
+        "body_tilt_degrees": 0.92,
+        "target_forward_mm": -3.7,
+        "target_left_mm": -11.1,
+        "near_station": true
+      },
+      "motion": {
+        "trajectory_sample_hz": 25,
+        "frames_analyzed": 83,
+        "maximum_time_s": null,
+        "walking_duration_s": 3.284593,
+        "walking_path_m": 0.1163332479334836,
+        "walking_yaw_travel_degrees": 92.85937384181317,
+        "walking_torso_tilt_rms_degrees": 3.3510529888037106,
+        "walking_torso_peak_tilt_degrees": 4.936420049195248,
+        "command_change_rms_m_s2": 0.052010509728751125,
+        "yaw_command_change_rms_rad_s2": 0.8223583650460083,
+        "turn_direction_reversals": 0,
+        "loaded_foot_slip_entire_episode_m": 0.02924989778086764,
+        "loaded_foot_slip_entire_episode_m_per_s": 0.008905182983981502,
+        "foot_clearance_m": null,
+        "motor_work_j": null,
+        "limits": [
+          "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+          "Command changes describe requested velocity, not actual body jerk.",
+          "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+          "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+          "No aggregate naturalness score or causal gait-training claim."
+        ]
+      }
+    },
+    {
+      "gait": "brisk",
+      "seed": 18000,
+      "goal": [
+        -0.39,
+        0.0206996304815,
+        0
+      ],
+      "success": true,
+      "fall": false,
+      "end_observation": {
+        "domain": "walk",
+        "foot_contacts": {
+          "left": true,
+          "right": true
+        },
+        "recent_commands": [
+          "right_slow",
+          "stop"
+        ],
+        "distance_mm": 14.9,
+        "bearing_degrees": 150.3,
+        "heading_error_degrees": -9.5,
+        "speed_mm_s": 16.3,
+        "body_tilt_degrees": 0.56,
+        "target_forward_mm": -13.0,
+        "target_left_mm": 7.4,
+        "near_station": true
+      },
+      "motion": {
+        "trajectory_sample_hz": 25,
+        "frames_analyzed": 144,
+        "maximum_time_s": null,
+        "walking_duration_s": 5.728009,
+        "walking_path_m": 0.23204192949533436,
+        "walking_yaw_travel_degrees": 83.61886479038286,
+        "walking_torso_tilt_rms_degrees": 3.3606858301620934,
+        "walking_torso_peak_tilt_degrees": 5.612652606124529,
+        "command_change_rms_m_s2": 0.04361213823671691,
+        "yaw_command_change_rms_rad_s2": 0.7021418813383576,
+        "turn_direction_reversals": 0,
+        "loaded_foot_slip_entire_episode_m": 0.058181580599993385,
+        "loaded_foot_slip_entire_episode_m_per_s": 0.010116955532806875,
+        "foot_clearance_m": null,
+        "motor_work_j": null,
+        "limits": [
+          "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+          "Command changes describe requested velocity, not actual body jerk.",
+          "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+          "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+          "No aggregate naturalness score or causal gait-training claim."
+        ]
+      }
+    },
+    {
+      "gait": "brisk",
+      "seed": 18001,
+      "goal": [
+        -0.41,
+        0.0486518265866,
+        0.35
+      ],
+      "success": true,
+      "fall": false,
+      "end_observation": {
+        "domain": "walk",
+        "foot_contacts": {
+          "left": true,
+          "right": true
+        },
+        "recent_commands": [
+          "right_slow",
+          "stop"
+        ],
+        "distance_mm": 13.1,
+        "bearing_degrees": 155.2,
+        "heading_error_degrees": -8.5,
+        "speed_mm_s": 16.9,
+        "body_tilt_degrees": 0.81,
+        "target_forward_mm": -11.9,
+        "target_left_mm": 5.5,
+        "near_station": true
+      },
+      "motion": {
+        "trajectory_sample_hz": 25,
+        "frames_analyzed": 147,
+        "maximum_time_s": null,
+        "walking_duration_s": 5.848177,
+        "walking_path_m": 0.22401335704889652,
+        "walking_yaw_travel_degrees": 84.3428111889656,
+        "walking_torso_tilt_rms_degrees": 3.2613838535978226,
+        "walking_torso_peak_tilt_degrees": 4.444666469858253,
+        "command_change_rms_m_s2": 0.03784320445656675,
+        "yaw_command_change_rms_rad_s2": 0.7615797988620282,
+        "turn_direction_reversals": 0,
+        "loaded_foot_slip_entire_episode_m": 0.0661009942964456,
+        "loaded_foot_slip_entire_episode_m_per_s": 0.01130283750225553,
+        "foot_clearance_m": null,
+        "motor_work_j": null,
+        "limits": [
+          "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+          "Command changes describe requested velocity, not actual body jerk.",
+          "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+          "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+          "No aggregate naturalness score or causal gait-training claim."
+        ]
+      }
+    },
+    {
+      "gait": "brisk",
+      "seed": 18002,
+      "goal": [
+        -0.45499999999999996,
+        0.019284697603,
+        1.57
+      ],
+      "success": true,
+      "fall": false,
+      "end_observation": {
+        "domain": "walk",
+        "foot_contacts": {
+          "left": true,
+          "right": true
+        },
+        "recent_commands": [
+          "right_slow",
+          "stop"
+        ],
+        "distance_mm": 9.0,
+        "bearing_degrees": -126.1,
+        "heading_error_degrees": -6.9,
+        "speed_mm_s": 16.3,
+        "body_tilt_degrees": 0.7,
+        "target_forward_mm": -5.3,
+        "target_left_mm": -7.3,
+        "near_station": true
+      },
+      "motion": {
+        "trajectory_sample_hz": 25,
+        "frames_analyzed": 99,
+        "maximum_time_s": null,
+        "walking_duration_s": 3.925489,
+        "walking_path_m": 0.1305852228273373,
+        "walking_yaw_travel_degrees": 116.38979103576621,
+        "walking_torso_tilt_rms_degrees": 3.232134223221553,
+        "walking_torso_peak_tilt_degrees": 5.150731167385219,
+        "command_change_rms_m_s2": 0.03326603379657055,
+        "yaw_command_change_rms_rad_s2": 0.9549148128251973,
+        "turn_direction_reversals": 0,
+        "loaded_foot_slip_entire_episode_m": 0.04054718576329115,
+        "loaded_foot_slip_entire_episode_m_per_s": 0.01032920718178868,
+        "foot_clearance_m": null,
+        "motor_work_j": null,
+        "limits": [
+          "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+          "Command changes describe requested velocity, not actual body jerk.",
+          "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+          "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+          "No aggregate naturalness score or causal gait-training claim."
+        ]
+      }
+    },
+    {
+      "gait": "measured",
+      "seed": 18000,
+      "goal": [
+        -0.39,
+        0.0206996304815,
+        0
+      ],
+      "success": true,
+      "fall": false,
+      "end_observation": {
+        "domain": "walk",
+        "foot_contacts": {
+          "left": true,
+          "right": true
+        },
+        "recent_commands": [
+          "side_left",
+          "stop"
+        ],
+        "distance_mm": 8.3,
+        "bearing_degrees": 126.7,
+        "heading_error_degrees": 7.8,
+        "speed_mm_s": 33.7,
+        "body_tilt_degrees": 1.59,
+        "target_forward_mm": -5.0,
+        "target_left_mm": 6.6,
+        "near_station": true
+      },
+      "motion": {
+        "trajectory_sample_hz": 25,
+        "frames_analyzed": 139,
+        "maximum_time_s": null,
+        "walking_duration_s": 5.527729,
+        "walking_path_m": 0.20932181608882763,
+        "walking_yaw_travel_degrees": 57.18165348838293,
+        "walking_torso_tilt_rms_degrees": 3.4590682464055744,
+        "walking_torso_peak_tilt_degrees": 4.6210301124748625,
+        "command_change_rms_m_s2": 0.05160257786400588,
+        "yaw_command_change_rms_rad_s2": 0.7021418813381641,
+        "turn_direction_reversals": 0,
+        "loaded_foot_slip_entire_episode_m": 0.03691038647779685,
+        "loaded_foot_slip_entire_episode_m_per_s": 0.006677314834767794,
+        "foot_clearance_m": null,
+        "motor_work_j": null,
+        "limits": [
+          "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+          "Command changes describe requested velocity, not actual body jerk.",
+          "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+          "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+          "No aggregate naturalness score or causal gait-training claim."
+        ]
+      }
+    },
+    {
+      "gait": "measured",
+      "seed": 18001,
+      "goal": [
+        -0.41,
+        0.0486518265866,
+        0.35
+      ],
+      "success": true,
+      "fall": false,
+      "end_observation": {
+        "domain": "walk",
+        "foot_contacts": {
+          "left": true,
+          "right": true
+        },
+        "recent_commands": [
+          "side_left",
+          "stop"
+        ],
+        "distance_mm": 7.9,
+        "bearing_degrees": 116.2,
+        "heading_error_degrees": 8.6,
+        "speed_mm_s": 33.7,
+        "body_tilt_degrees": 1.55,
+        "target_forward_mm": -3.5,
+        "target_left_mm": 7.0,
+        "near_station": true
+      },
+      "motion": {
+        "trajectory_sample_hz": 25,
+        "frames_analyzed": 123,
+        "maximum_time_s": null,
+        "walking_duration_s": 4.886833,
+        "walking_path_m": 0.18897567584612915,
+        "walking_yaw_travel_degrees": 50.68112899020139,
+        "walking_torso_tilt_rms_degrees": 3.4657345809990305,
+        "walking_torso_peak_tilt_degrees": 4.724251578765062,
+        "command_change_rms_m_s2": 0.041701180267819854,
+        "yaw_command_change_rms_rad_s2": 0.3753106224103659,
+        "turn_direction_reversals": 0,
+        "loaded_foot_slip_entire_episode_m": 0.03367467226212291,
+        "loaded_foot_slip_entire_episode_m_per_s": 0.006890899157908952,
+        "foot_clearance_m": null,
+        "motor_work_j": null,
+        "limits": [
+          "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+          "Command changes describe requested velocity, not actual body jerk.",
+          "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+          "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+          "No aggregate naturalness score or causal gait-training claim."
+        ]
+      }
+    },
+    {
+      "gait": "measured",
+      "seed": 18002,
+      "goal": [
+        -0.45499999999999996,
+        0.019284697603,
+        1.57
+      ],
+      "success": true,
+      "fall": false,
+      "end_observation": {
+        "domain": "walk",
+        "foot_contacts": {
+          "left": true,
+          "right": true
+        },
+        "recent_commands": [
+          "side_right",
+          "stop"
+        ],
+        "distance_mm": 17.1,
+        "bearing_degrees": -96.7,
+        "heading_error_degrees": 0.2,
+        "speed_mm_s": 31.2,
+        "body_tilt_degrees": 1.25,
+        "target_forward_mm": -2.0,
+        "target_left_mm": -17.0,
+        "near_station": true
+      },
+      "motion": {
+        "trajectory_sample_hz": 25,
+        "frames_analyzed": 83,
+        "maximum_time_s": null,
+        "walking_duration_s": 3.284593,
+        "walking_path_m": 0.11529473501765472,
+        "walking_yaw_travel_degrees": 107.10248343424034,
+        "walking_torso_tilt_rms_degrees": 3.3712132177416954,
+        "walking_torso_peak_tilt_degrees": 4.834627784915309,
+        "command_change_rms_m_s2": 0.05201050972875113,
+        "yaw_command_change_rms_rad_s2": 1.0556980469645385,
+        "turn_direction_reversals": 0,
+        "loaded_foot_slip_entire_episode_m": 0.03151199677335459,
+        "loaded_foot_slip_entire_episode_m_per_s": 0.0095938830131882,
+        "foot_clearance_m": null,
+        "motor_work_j": null,
+        "limits": [
+          "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+          "Command changes describe requested velocity, not actual body jerk.",
+          "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+          "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+          "No aggregate naturalness score or causal gait-training claim."
+        ]
+      }
+    }
+  ],
+  "decision": "Do not promote cadence changes: slower cadence increased slip; faster cadence reduced tilt but increased slip. Retain native gait for the frozen V7 study. Slew-limited profiles showed mixed, small local changes and require matched Modal trials before training use."
+}
