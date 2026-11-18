@@ -1,34 +1,81 @@
 # Mochi · A tiny robot with a scientific method
 
 <!-- MOCHI_CURRICULUM_START -->
-## Walking and contact policy learning
+## Current: Post-training locomotion and contact decisions
 
-Mochi is a 22.1 cm Unitree G1 that walks across one human-size desk to silence an alarm, close a drawer, close a laptop and align a globe. Each run uses one continuous MuJoCo world. Three.js and Blender replay the measured motion.
+[Live demo](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/) · [Methods and results](docs/refinement-v7-results.md) · [Numerical evidence](evidence/refinement-v7/results.json) · [Execution receipt](https://github.com/howdymary/mochi-demo/actions/runs/44266707804)
 
-**[Open the learned demo](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/)** · **[Methods and reproduction](docs/curriculum-v6.md)** · **[Numerical evidence](evidence/curriculum-v6/reference-results.json)** · **[Actual training execution](https://github.com/howdymary/mochi-demo/actions/runs/44244443083)**
+![Recorded Mochi globe interaction](web/desk/curriculum/v7-complete-example.png)
 
-Tinker completed **64 optimizer updates** of Qwen3.5-4B with LoRA rank 16. Every update included gradients for walking and all four contact tasks: 768 walking examples and 320 examples per task, including repeats. This trains repeated velocity-command choices and contact-profile choices. The official Unitree gait, standing balance and arm IK stay fixed. It is state-based simulation, without hardware validation or a learned vision system.
+*Test scenario 16001, selected after evaluation for this illustration. One of four complete test routes passed.*
 
-| Held-out reference test | Starting weights | Update 64 |
-|---|---:|---:|
-| Complete four-task routes | 0/4 | 1/4 |
-| Navigation waypoints reached | 0/20 | 10/20 |
-| Laptop close, tested separately | 0/4 | 4/4 |
-| Drawer close, tested separately | 4/4 | 3/4 |
+A 22.1 cm Unitree G1 moves around one desk: silence the clock, close the drawer, close the laptop, and align the globe. Every checkpoint is a recorded, uninterrupted MuJoCo episode. Blender and Three.js replay its measured motion.
 
-The opening scene is the successful scenario **14001, chosen after evaluation**. It is not a reliability estimate. All four test cases, including failures, are available in the demo. Checkpoints 0, 8, 16, 32 and 64 share the same development scenario and preserve early regressions. The test conditions change starting pose and physical parameters within the same desk layout.
+Tinker completed **96 optimizer updates and 480 domain-gradient calls**, training Qwen3.5-4B LoRA rank 16 to choose walking commands and task-contact profiles. The model reads simulation state rather than camera images. The native gait network, standing balance and arm IK remain fixed. This is command/profile learning, not motor-torque or gait-network training.
 
-The [model-decision trace](web/desk/curriculum/model-decisions-14001.json) contains actual checkpoint probabilities and actions. With an identical initial walking observation, the starting policy chose `left`; the trained policy chose `forward`. On identical isolated laptop observations, the chosen profile changed from A to C. [Provenance checks](web/desk/curriculum/provenance-checks.json) verify these comparisons against the source records.
+| Matched Modal test | Starting weights | Update 96 | Classical + fixed profiles |
+|---|---:|---:|---:|
+| Full four-task routes | 0/4 | 1/4 | 1/4 |
+| Waypoints reached | 0/20 | 20/20 | 19/20 |
+| Falls | 1 | 0 | 1 |
+| Isolated walking goals | 0/8 | 8/8 | 8/8 |
 
-Exa ran three failure-directed searches. past.dev supplied eleven source-verified cross-role recalls and a passed private-audience canary. Recalled proposals changed the training allocation. Modal completed 706 source trials, including the contact experiments used for training and held-out task evaluation. Sponsor calls and outcomes are retained; no causal benefit from search or memory has been established by an ablation.
+Four fresh routes are a small simulation pilot. Individual outcomes and uncertainty are published; isolated tests are separate from full routes. The default checkpoint scenario is the first declared development seed. All test recordings and regressions remain inspectable. A separate complete-test button is labeled as a successful example selected after evaluation.
 
-Open-loop action replay diverged between runtimes. A [separate closed-loop Modal replication](https://github.com/howdymary/mochi-demo/actions?query=workflow%3A%22Mochi+frozen-policy+closed-loop+validation%22) keeps each before/after/classical triplet on one worker and reports its results separately. The demo exposes its numerical status. We do not claim identical cross-runtime replay.
+Update 64 reached 10/10 development waypoints with 0 falls. Update 96 reached 8/10 with 2 falls. The frozen stopping rule selected update 96; later training was not monotonically better. Laptop contact remains a limitation wherever its verifier fails.
 
-The traditional clock uses attributed Sand3D/NVIDIA SimReady geometry. Its native hammer and stem are adapted as the benchmark's spring-loaded silencer, replacing the floating button housing. The source asset is rigid; it does not provide a working stop mechanism. Fine visual geometry uses simplified collision envelopes.
+The interface includes synchronized before/after playback, all saved checkpoints, side and foot cameras, and matched-window movement diagnostics. Those diagnostics were added after training began and are labeled post-hoc. The separate cadence calibration found tradeoffs rather than a consistent gain, so those profiles are not promoted. [Calibration evidence](docs/gait-calibration.md).
 
-The proposed 96-update refinement was stopped during dependency installation and completed **zero** optimizer updates. Its protocol remains a future study. The current demonstration uses the measured 64-update policy.
+### What the services actually do
 
-## Archived supported-pushing studies
+- **Tinker:** actual supervised weight updates for walking and all four contact tasks. Canonical starting/final states are retained; intermediate inference snapshots have limited retention. This V7 study starts from archived update zero, not from V6 update 64.
+- **Exa:** 3 failure-directed searches with retained sources. The final recovery search informs future investigation, not the frozen test policy.
+- **past.dev:** verified shared evidence handoffs select the predeclared walking/contact training allocation. The frozen training adaptation occurs at initialization and update 16. It is not a memory call at every optimizer step.
+- **Modal:** 274 recorded executions including two short recovery inference probes. Held-out policies run closed-loop on the same worker per scenario. Reused older training trials are identified separately.
+
+### past.dev challenge
+
+**Agents:** separate research, design/training, execution/evaluation and criticism identities write and recall evidence. The demo exposes verified source handoffs and the bounded decisions they informed.
+
+**Layers:** prompts hold working context; past.dev holds episodic findings and provenance; versioned code holds procedures; artifact files hold exact numerical results and trajectories.
+
+**Results:** 11 writes, 11 recall requests, 244 ingestion polls, and 9 verified cross-role recalls. Private-audience isolation passed.
+
+**Caveats:** no causal search or memory ablation. Exact numerical payloads are resolved only after verifying their source IDs. API call counts do not establish credit charges. Recovery uses additional identities while retaining earlier source provenance.
+
+### Reproduce and inspect
+
+Run commands from the repository root. Install the independent package and fetch the pinned assets using the setup instructions below. Provider credentials are configured in existing GitHub Actions secrets; the replay frontend receives none.
+
+```sh
+node mochi/scripts/check_replay_ui.mjs
+PYTHONPATH=mochi/src mochi/.venv/bin/python -m pytest mochi/tests/test_motion_metrics.py mochi/tests/test_gait_control.py -q
+```
+
+Artifact download, evidence checks and export commands are in [the results document](docs/refinement-v7-results.md). Render a recorded episode with:
+
+```sh
+blender --background --python mochi/scripts/render_curriculum.py -- --input mochi/web/desk/curriculum/checkpoint-64.json --out mochi/artifacts/inspection --time 1.5 --camera side --samples 16
+```
+
+The final training state was saved before the free checkpoint-storage limit closed its original client. Evaluation recovery uses fresh clients and in-memory snapshots, with **zero additional optimizer updates**, no canonical checkpoint deletion, and no billing changes. Additional persistent training checkpoints need available storage. The original failures remain archived.
+
+Exact integration paths: [training](src/mochi/curriculum/refine.py), [memory](src/mochi/desk/services.py), [Exa and model decisions](src/mochi/integrations.py), [Modal feedback evaluation](src/mochi/curriculum/remote_policy.py), [evaluation recovery](src/mochi/curriculum/finalize_refinement.py).
+
+```mermaid
+flowchart LR
+  E[Exa sources] --> M[past.dev verified findings]
+  M --> B[Bounded training allocation]
+  B --> T[Tinker weight updates]
+  T --> S[Walking commands and contact profiles]
+  S --> C[Fixed gait, balance and IK]
+  C --> P[MuJoCo on Modal]
+  P --> R[Metrics and recorded trajectories]
+  R --> M
+  R --> V[Three.js and Blender replay]
+```
+
+The earlier V6 reference success, its negative Modal replication, and the original supported-pushing studies are archived separately. They are not merged into the V7 test counts. See [V6 replication](evidence/curriculum-v6/modal-validation.json).
 <!-- MOCHI_CURRICULUM_END -->
 
 An original supported humanoid pushes a star-stamped puck into a target. A
