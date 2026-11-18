@@ -53,22 +53,15 @@ def rod(parent,name,start,end,radius,mat):
  delta=Vector(end)-Vector(start);o=cylinder(parent,name,radius,delta.length,(Vector(start)+Vector(end))/2,mat);o.rotation_euler=delta.to_track_quat('Z','Y').to_euler();return o
 def lettering(parent,label,pos,size,mat):
  bpy.ops.object.text_add();o=bpy.context.object;o.parent=parent;o.location=pos;o.rotation_euler=(math.pi/2,0,0);o.data.body=label;o.data.size=size;o.data.align_x='CENTER';o.data.align_y='CENTER';o.data.extrude=.00002;o.data.materials.append(mat);return o
-clock=empty('Alarm clock',(-.36,.11,.06));enamel=material('Sage enamel',(.098,.147,.123),.3,.26);brass=material('Aged brass',(.47,.36,.21),.86,.28);dial=material('Warm paper dial',(.84,.79,.67),0,.75);ink=material('Dial ink',(.028,.044,.033),.2,.44)
-cylinder(clock,'Round enamel chassis',.037,.041,(0,0,0),enamel,'y');cylinder(clock,'Cream dial',.0324,.001,(0,-.024,0),dial,'y')
-for rad,tube,y in [(.0353,.0018,-.022),(.0326,.0006,-.0242)]:
- bpy.ops.mesh.primitive_torus_add(major_radius=rad,minor_radius=tube,major_segments=80,minor_segments=12);o=bpy.context.object;o.name='Brass bezel';o.parent=clock;o.location=(0,y,0);o.rotation_euler.x=math.pi/2;o.data.materials.append(brass)
+clock=asset('sand-clock-case.glb','Alarm clock');clock.location=(-.36,.11,.06);cap=asset('sand-clock-stop.glb','Alarm silencer');cap.location=(-.335,.1,.124)
+brass=material('Aged brass',(.47,.36,.21),.86,.3);dial=material('Warm paper dial',(.84,.79,.67),0,.78);ink=material('Dial ink',(.028,.044,.033),.1,.5);cx=.025;cy=-.0434;cz=-.001679;rad=.0495
+cylinder(clock,'Printed cream dial',rad,.0004,(cx,cy+.0002,cz),dial,'y')
 for i in range(60):
- angle=i*math.pi/30;length=.0025 if i%5 else .0045;o=part(clock,'Dial index',(.00022 if i%5 else .0005,.00025,length),(.029*math.sin(angle),-.0248,.029*math.cos(angle)),ink,.00003);o.rotation_euler.y=angle
+ angle=i*math.pi/30;length=.003 if i%5 else .0055;o=part(clock,'Dial index',(.00023 if i%5 else .0005,.00022,length),(cx+.0445*math.sin(angle),cy-.0002,cz+.0445*math.cos(angle)),ink,.00003);o.rotation_euler.y=angle
 for i in range(1,13):
- angle=i*math.pi/6;lettering(clock,str(i),(.0216*math.sin(angle),-.025,.0216*math.cos(angle)),.0075,ink)
-lettering(clock,'M O C H I',(0,-.025,-.010),.0019,ink);lettering(clock,'MECHANICAL ALARM',(0,-.025,-.013),.00135,ink)
-rod(clock,'Hour hand',(0,-.0254,0),(-.010,-.0254,-.0173),.0013,ink);rod(clock,'Minute hand',(0,-.0262,0),(0,-.0262,.025),.00085,ink);rod(clock,'Second hand',(-.004,-.027,.002),(.021,-.027,-.012),.00028,coral);cylinder(clock,'Hand pin',.0025,.0015,(0,-.0274,0),brass,'y')
-for x in [-.024,.024]:
- rod(clock,'Bell bracket',(x*.65,.013,.028),(x,.018,.052),.0016,brass);sphere(clock,'Twin bell',.014,(x,.018,.055),brass,(1,1,.62));cylinder(clock,'Bell rim',.0145,.0017,(x,.018,.050),brass);sphere(clock,'Bell finial',.0022,(x,.018,.064),ink)
- rod(clock,'Angled metal foot',(x*.85,0,-.027),(x*1.2,-.002,-.055),.0022,brass);part(clock,'Rubber foot',(.014,.012,.0035),(x*1.2,-.002,-.057),black,.0014)
-rod(clock,'Hammer stem',(0,.017,.033),(0,.017,.061),.0014,ink);rod(clock,'Hammer head',(-.006,.017,.061),(.006,.017,.061),.002,ink);cylinder(clock,'Winding knob',.006,.007,(0,.026,-.005),brass,'y')
-part(clock,'Plunger housing',(.026,.019,.016),(.025,-.010,.054),enamel,.003)
-cap=empty('Alarm button',(-.335,.1,.124));part(cap,'Snooze cap',(.025,.018,.004),(0,0,0),brass,.0015);part(cap,'Button inlay',(.015,.008,.0003),(0,0,.0021),coral,.001)
+ angle=i*math.pi/6;lettering(clock,str(i),(cx+.033*math.sin(angle),cy-.0004,cz+.033*math.cos(angle)),.0113,ink)
+lettering(clock,'M O C H I',(cx,cy-.0004,cz-.015),.0028,ink);lettering(clock,'MECHANICAL ALARM',(cx,cy-.0004,cz-.0195),.00205,ink)
+rod(clock,'Hour hand',(cx,cy-.0007,cz),(cx-.015,cy-.0007,cz-.026),.0014,ink);rod(clock,'Minute hand',(cx,cy-.0013,cz),(cx,cy-.0013,cz+.039),.00095,ink);rod(clock,'Second hand',(cx-.006,cy-.0019,cz+.003),(cx+.032,cy-.0019,cz-.018),.00028,coral);cylinder(clock,'Hand pin',.0026,.0012,(cx,cy-.0025,cz),brass,'y')
 cabinet=empty('Drawer cabinet',(-.1,.15,0))
 for x in [-.052,.052]:part(cabinet,'Side',(.004,.09,.145),(x,0,.0725),walnut)
 for size,pos in [((.108,.09,.004),(0,0,.147)),((.108,.004,.145),(0,.046,.0725)),((.108,.09,.004),(0,0,.002))]:part(cabinet,'Cabinet panel',size,pos,walnut)

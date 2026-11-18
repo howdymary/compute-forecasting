@@ -4,7 +4,7 @@ from pathlib import Path
 from mochi.curriculum.world import World
 p=argparse.ArgumentParser();p.add_argument('--source',type=Path,required=True);p.add_argument('--out',type=Path,required=True);a=p.parse_args()
 rows=[]
-for f in sorted(a.source.glob('checkpoint-*.json'),key=lambda p:int(p.stem.split('-')[-1])):
+for f in sorted((p for p in a.source.glob('checkpoint-*.json') if p.stem.split('-')[-1].isdigit()),key=lambda p:int(p.stem.split('-')[-1])):
  if f.stem=='checkpoint-paths':continue
  update=int(f.stem.split('-')[-1])
  for trial in json.loads(f.read_text()):

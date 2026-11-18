@@ -17,5 +17,8 @@ if __name__=='__main__':
   source=root/'assets/realism/sand3d';m=json.loads((source/'downloads.json').read_text())
   for r in m['records']:fetch(client,f"https://huggingface.co/datasets/{m['dataset']}/resolve/{m['revision']}/{r['usda_path']}",source/(r['entry']+'.usda'),r['usda_sha256'])
 
+  clock=json.loads((root/'assets/realism/sand3d/clock-source.json').read_text())
+  fetch(client,f"https://huggingface.co/datasets/{clock['dataset']}/resolve/{clock['revision']}/{clock['usda_path']}",root/'assets/realism/sand3d/traditional_alarm_clock.usda',clock['usda_sha256'])
+
   source=root/'assets/robot/locomotion';m=json.loads((source/'source.json').read_text())
   for item in m['files']:fetch(client,f"https://raw.githubusercontent.com/{m['repository']}/{m['revision']}/{item['path']}",source/item['path'],item['sha256'])

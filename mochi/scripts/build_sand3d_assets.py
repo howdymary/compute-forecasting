@@ -2,7 +2,7 @@
 import bpy,json,math,hashlib
 from pathlib import Path
 from mathutils import Matrix,Vector
-root=Path(__file__).resolve().parents[1];source=root/'assets/realism/sand3d';dest=root/'web/desk/assets';records=json.loads((source/'selected.json').read_text());manifest=[]
+root=Path(__file__).resolve().parents[1];source=root/'assets/realism/sand3d';dest=root/'web/desk/assets';records=json.loads((source/'selected.json').read_text());manifest=[r for r in json.loads((dest/'sand3d-attribution.json').read_text()) if r['file'].startswith('sand-clock-')]
 
 def load(name):
     bpy.ops.wm.read_factory_settings(use_empty=True);path=source/(name+'.usda');record=next(r for r in records if r['entry']==name);assert hashlib.sha256(path.read_bytes()).hexdigest()==record['usda_sha256'];bpy.ops.wm.usd_import(filepath=str(path));return record
