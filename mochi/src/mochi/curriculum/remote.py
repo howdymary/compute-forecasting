@@ -54,7 +54,7 @@ class Runner:
         from .world import ROUTE,MOVES,DT,PROFILES
         self.calls+=1;w=self.w
         if self.mode=='walk':
-            w.task=None;w.phase='walk';obs=w.walk_observation(self.goal);w.decisions.append({'t':float(w.d.time),'observation':obs,'action':action});end=float(w.d.time)+(.64 if obs['distance_mm']>100 else .32)
+            w.task=None;w.phase='walk';obs=w.walk_observation(self.goal);w.decisions.append({'t':float(w.d.time),'observation':obs,'action':action});end=float(w.d.time)+(.45 if action=='stop' else .64 if obs['distance_mm']>100 else .32)
             while w.d.time<end and not w.fall:
                 obs=w.walk_observation(self.goal);arrived=(self.settle>0 or obs['distance_mm']<22) and abs(obs['heading_error_degrees'])<12
                 if action=='stop' and arrived:
