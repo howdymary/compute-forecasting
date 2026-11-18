@@ -1,4 +1,21 @@
-# Capability inventory · November 15, 2026
+# Current capability inventory · November 17, 2026
+
+The active checkout remains the unborn `metagame` branch and the remote default remains `compute-observatory`. Mochi changes are published on `mochi-desk-v3` through a separate Git index. Forecasting source, results, deployments and unique checkpoints are preserved.
+
+| Service | Verified runtime | Current evidence |
+|---|---|---|
+| Tinker | Existing GitHub Actions secret; no local key | 64 completed LoRA optimizer steps, with five domain gradient calls per step; canonical optimizer states retained |
+| Exa | Existing Actions secret | Three actual failure-directed searches in the training loop |
+| past.dev | Existing Actions secret | Eleven verified cross-role recalls, seven writing/reading identities, passed private-audience canary |
+| Modal | Existing Actions token references | 706 completed source trials and an independent closed-loop validation; the static web app receives no provider keys |
+| Blender | Local 5.1.2 | Actual calibrated and trained trajectories rendered with the fitted G1 and Sand3D assets |
+| GitHub | Authenticated `gh` | Additive Mochi workflows, archived training/evaluation artifacts and a separate public branch |
+
+The local Modal CLI was checked directly: it has no usable token. Existing Actions credentials provide the working path; no new credentials or billing changes were requested. The web backend exposes only allowlisted numerical validation status. The model-snapshot serialization used for remote feedback control explicitly strips credentials; workers obtain the existing Tinker key through a backend Modal secret.
+
+The proposed geometry-encoded follow-up completed zero updates. It is not included in the current model's training count. The original November 15 inventory and first supported-pushing experiment below are historical records, not results for the later walking curriculum.
+
+# Original capability inventory · November 15, 2026
 
 The existing checkout contains Git metadata only, with an unborn `metagame`
 branch. Remote `origin/compute-observatory` was fetched for read-only source
@@ -25,8 +42,8 @@ pattern. A missing recall fails the live run; it never counts a fallback as
 successful sponsor use. Author/audience identifiers are short, namespaced, and
 unique per run. No forecasting checkpoint, audience or storage is reused.
 
-Mochi is its own package. The only root-level addition is an additive Actions
-workflow. It references existing secrets; those values stay on the runner.
+Mochi is its own package. The only root-level additions are additive Mochi Actions
+workflows. They reference existing secrets; those values stay on the runner.
 No forecasting deployment or billing configuration is changed.
 
 ## Executed verification
