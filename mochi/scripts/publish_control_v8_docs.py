@@ -1,7 +1,7 @@
 """Write the README from completed evidence, never prospective performance."""
 import argparse,json,re
 from pathlib import Path
-p=argparse.ArgumentParser();p.add_argument('--source',type=Path,required=True);p.add_argument('--run-id',required=True);p.add_argument('--isolated-source',type=Path);a=p.parse_args();root=Path(__file__).resolve().parents[1];r=json.load(open(a.source/'report.json'));assert r['status']=='completed';b=r['held_out']['starting_model'];t=r['held_out']['post_trained_model'];f=r['held_out']['classical_fixed'];n=r['optimizer_updates_completed'];selected=r['selected_checkpoint']['update'];s=r['services'];m=s['eligibility'];calls=s['calls'];writes=sum(c['method']=='POST' and c['kind']=='ingest' for c in calls);reads=sum(c['method']=='POST' and c['kind']=='recall' for c in calls);iso=json.load(open(a.isolated_source/'report.json')) if a.isolated_source else None;rollouts=r['rollouts']+(iso['rollouts'] if iso else 0)
+p=argparse.ArgumentParser();p.add_argument('--source',type=Path,required=True);p.add_argument('--revision',choices=['v8','clearance'],default='v8');p.add_argument('--run-id',required=True);p.add_argument('--isolated-source',type=Path);a=p.parse_args();root=Path(__file__).resolve().parents[1];r=json.load(open(a.source/'report.json'));assert r['status']=='completed';b=r['held_out']['starting_model'];t=r['held_out']['post_trained_model'];f=r['held_out']['classical_fixed'];n=r['optimizer_updates_completed'];selected=r['selected_checkpoint']['update'];s=r['services'];m=s['eligibility'];calls=s['calls'];writes=sum(c['method']=='POST' and c['kind']=='ingest' for c in calls);reads=sum(c['method']=='POST' and c['kind']=='recall' for c in calls);iso=json.load(open(a.isolated_source/'report.json')) if a.isolated_source else json.load(open(a.source/'isolated-report.json')) if (a.source/'isolated-report.json').exists() else None;rollouts=r['rollouts'] if r.get('training_reused') else r['rollouts']+(iso['rollouts'] if iso else 0)
 block=f'''<!-- MOCHI_CURRICULUM_START -->
 ## Current: Learning walking, task and arm-recovery decisions
 
@@ -52,6 +52,7 @@ Run from the repository root. Provider credentials stay on the backend, using th
 ```sh
 PYTHONPATH=mochi/src python -m pytest mochi/tests/test_control_v8.py -q
 node mochi/scripts/check_replay_ui.mjs
+python3 -m http.server 4028 --directory mochi/web/desk
 PYTHONPATH=mochi/src python -m mochi.control_v8.train
 ```
 
@@ -68,4 +69,8 @@ if iso:
   x=iso['recovery_summary'][label];extra+=f"{label.replace('_',' ')}: {x['successes']}/{x['n']} valid recoveries. "
  extra+='These isolated resets are not part of the continuous demo. [Probe evidence](evidence/control-v8/isolated-controls.json).\n'
  block=block.replace('### What was fixed before training',extra+'\n### What was fixed before training')
+if a.revision=='clearance':
+ block=block.replace('evidence/control-v8/','evidence/control-v8-clearance/').replace('[V8 methods](docs/control-v8-study.md)','[Methods and clearance revision](docs/laptop-clearance-revision.md)').replace('Parent weights, V8 setup','Parent weights, revised setup')
+ block=block.replace('### What was fixed before training',f'The {n} training updates occurred in the retained V8 source run. The revised laptop stance and XY-balanced press are engineering changes; these checkpoint weights are tested unchanged, with zero additional optimizer updates. Both sides of the comparison use that same revision. The original V8 results remain separately available.\n\n### Engineering and training are separate')
+ block=block.replace('The hinge, object properties and success criteria remain unchanged.','The hinge, object properties and success criteria remain unchanged. The revised stance clears the falling lid, and a bounded lateral arm-force component balances its reaction about the foot support center. No base force is applied.')
 readme=root/'README.md';text=readme.read_text();assert '<!-- MOCHI_CURRICULUM_START -->' in text;readme.write_text(re.sub(r'<!-- MOCHI_CURRICULUM_START -->.*?<!-- MOCHI_CURRICULUM_END -->',lambda _:block.strip(),text,flags=re.S))

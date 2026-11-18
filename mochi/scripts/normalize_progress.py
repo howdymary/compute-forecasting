@@ -19,6 +19,6 @@ def normalize():
 def main():
     from pathlib import Path
     manifest=Path(__file__).resolve().parents[1]/'web/desk/curriculum/manifest.json'
-    if json.loads(manifest.read_text()).get('study')=='mochi-control-v8':
+    if json.loads(manifest.read_text()).get('study','').startswith('mochi-control-v'):
         print(json.dumps({'normalized':False,'reason':'V8 produces plain JSON; archived V7 status preserved'}));return
     print(json.dumps(normalize.remote()))

@@ -34,7 +34,7 @@ def web():
  @api.get('/api/training')
  def training():
   try:
-   study=json.loads(Path('/web/curriculum/manifest.json').read_text()).get('study');store='mochi-control-v8-progress' if study=='mochi-control-v8' else 'mochi-curriculum-v7-progress';report=modal.Dict.from_name(store).get('latest',{})
-   return {'study':report.get('study'),'status':report.get('status'),'phase':report.get('phase'),'optimizer_updates_completed':report.get('optimizer_updates_completed',0),'checkpoints':[{'update':c['update'],'development':c['continuous_development']} for c in report.get('checkpoints',[])],'memory':report.get('services',{}).get('eligibility',{}),'held_out':report.get('held_out')}
+   study=json.loads(Path('/web/curriculum/manifest.json').read_text()).get('study');store='mochi-control-clearance-progress' if study=='mochi-control-v8-clearance' else 'mochi-control-v8-progress' if study=='mochi-control-v8' else 'mochi-curriculum-v7-progress';report=modal.Dict.from_name(store).get('latest',{})
+   return {'study':report.get('study'),'status':report.get('status'),'phase':report.get('phase'),'new_optimizer_updates':report.get('new_optimizer_updates'),'training_study':report.get('training_study'),'optimizer_updates_completed':report.get('optimizer_updates_completed',0),'checkpoints':[{'update':c['update'],'development':c['continuous_development']} for c in report.get('checkpoints',[])],'memory':report.get('services',{}).get('eligibility',{}),'held_out':report.get('held_out')}
   except Exception:return {'status':'unavailable','phase':'See the training execution receipt'}
  api.mount('/',StaticFiles(directory='/web',html=True));return api

@@ -51,3 +51,9 @@ def test_less_arm_travel_beats_speed_after_both_routes_complete():
  assert rank(slower_direct)>rank(fast_busy)
  incomplete={**slower_direct,'full_successes':1,'successful_recovery_mean_joint_travel_rad':0.}
  assert rank(incomplete)<rank(fast_busy)
+
+def test_xy_support_press_line_passes_through_feet_when_unclipped():
+ from mochi.control_v8.support import lateral_factor
+ point=np.array([-.05,.04,.16]);feet=np.zeros(3);force=np.array([lateral_factor(point,feet),-.04/.16,-1.])*.45
+ np.testing.assert_allclose(np.cross(point-feet,force),np.zeros(3),atol=1e-12)
+ assert abs(lateral_factor(np.array([-.4,0,.1]),feet))<=.5

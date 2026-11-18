@@ -1,11 +1,20 @@
-# Laptop swept-volume clearance revision
+# Laptop clearance and support-force revision
 
-The retained training failure23000 closed the laptop but failed validity: the falling lid briefly contacted the robot's left hip. Moving the hand's target3mm outward did not fix it. Separate initial-state interventions15mm and20mm farther sideways both closed the lid without non-hand contact or a fall. Those are engineering diagnostics on known training data, not held-out results or learned-policy gains.
+The retained training failure, seed 23000, closed the laptop but failed validity: the falling lid briefly contacted the robot's left hip. Moving the hand target 3 mm outward did not fix it. Moving the initial stance 15–20 mm farther sideways removed that contact in isolated diagnostics.
 
-The revised route moves the laptop stance from x0.300to0.320m, with corresponding approach/departure segments. The robot, object properties, controller code and success verifier are unchanged. A conservative planning copy checks neutral standing against17 lid angles from0to80degrees at5degree increments, with a10mm allowance. This is sampled clearance, not continuous dynamic certification. Full uninterrupted rollouts must still verify it.
+The continuous route exposed another problem. From the farther stance, the downward press could tip the robot sideways. A route-only revision produced a timeout in one calibration and a fall in another. Those failures remain in the artifacts.
 
-The current Tinker training run continues unchanged. Its checkpoints0/8/16/32/64 will be evaluated without further training on the revised stance. Both parent and trained weights receive the same revised setup. Development24000/24001 selects the checkpoint; fresh26000–26003 scenarios are opened only afterward. The original V8 tests25000–25003 remain separately reported. Neither changes to the route nor physical closure are attributed to weight training.
+The revision therefore makes two engineering changes:
 
-The protocol was declared before the new tests: [clearance-protocol.json](../configs/clearance-protocol.json). The execution module is [clearance.py](../src/mochi/control_v8/clearance.py). The original training source and results remain in their own artifacts and evidence directory. Additional evaluation performs zero optimizer updates and remains inside the512-completed-rollout campaign budget.
+- Move the laptop stance from x = 0.300 m to 0.320 m, outside more of the lid's swept volume.
+- Add a bounded X component to the existing Y-balanced arm press. The requested force points toward the foot support center, reducing the reaction moment. This changes arm actuator targets; it adds no base force.
 
-This revision also runs separate task and shared-state recovery probes. The main demonstration stays a single physical episode: alarm, drawer, laptop, globe, with walking and recovery between them. Isolated probes have resets and are labeled separately.
+The robot, object properties, standing controller, native gait, IK solver and success verifier remain unchanged. A conservative planning copy checks neutral standing at 17 lid angles from 0° to 80°, with a 10 mm allowance. This is sampled clearance, not continuous dynamic certification.
+
+With the combined revision, fixed controls completed all four tasks and recoveries on known calibration seeds 19000, 19001 and 23000 without falling. These are engineering checks, not held-out or learned-policy results.
+
+The Tinker training campaign continues unchanged. Its checkpoints 0/8/16/32/64 will be evaluated without further training on this revision. Both parent and trained weights receive the same revised setup. Development seeds 24000/24001 select the checkpoint; fresh seeds 26000–26003 are opened only afterward. The original V8 tests, 25000–25003, remain separately reported. Neither the stance change nor the force correction is attributed to weight training.
+
+The protocol is [clearance-protocol.json](../configs/clearance-protocol.json). Execution is in [clearance.py](../src/mochi/control_v8/clearance.py), and the additional controller is [support.py](../src/mochi/control_v8/support.py). Source and revision results keep separate evidence directories. Evaluation adds zero optimizer updates and remains within the 512-rollout campaign budget.
+
+The main demonstration remains one uninterrupted physical episode: alarm, drawer, laptop, globe, with walking and recovery between them. Separate task and shared-state recovery probes have resets and are labeled as isolated tests.

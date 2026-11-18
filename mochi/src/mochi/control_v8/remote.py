@@ -52,6 +52,7 @@ def evaluate(seed,route,models,fixed,recovery_fixed,record=True):
   from tinker_cookbook import model_info,renderers
   from tinker_cookbook.recipes.decisions import DecisionRenderer
   from .runner import ControlRunner
+  from .support import SupportRunner
   from .legacy import LegacyRunner
   from ..curriculum.features import CachedSelector
   from .decisions import Selector,encode
@@ -59,7 +60,7 @@ def evaluate(seed,route,models,fixed,recovery_fixed,record=True):
   from .verification import full_success,sequence_success
   start=time.perf_counter();results={}
   for label,payload in models:
-   sampler=_unpickle_sampling_client(pickle.loads(payload)) if payload else None;renderer=DecisionRenderer(renderers.get_renderer(model_info.get_recommended_renderer_name('Qwen/Qwen3.5-4B'),sampler.get_tokenizer())) if sampler else None;legacy=label=='legacy_original_stack';selector=CachedSelector() if legacy else Selector();r=LegacyRunner() if legacy else ControlRunner(route);r.reset(seed,record);decisions=[]
+   sampler=_unpickle_sampling_client(pickle.loads(payload)) if payload else None;renderer=DecisionRenderer(renderers.get_renderer(model_info.get_recommended_renderer_name('Qwen/Qwen3.5-4B'),sampler.get_tokenizer())) if sampler else None;legacy=label=='legacy_original_stack';selector=CachedSelector() if legacy else Selector();r=LegacyRunner() if legacy else SupportRunner(route) if route.get('controller_revision')=='xy-support-v1' else ControlRunner(route);r.reset(seed,record);decisions=[]
    for _ in range(1500):
     s=r.status() if legacy else route_observation(r)
     if s['mode']=='done':break

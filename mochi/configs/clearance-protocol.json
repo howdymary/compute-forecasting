@@ -1,8 +1,8 @@
 {
   "study": "mochi-control-v8-clearance",
-  "revision": 1,
+  "revision": 2,
   "source_training_run": 44382265039,
-  "route_version": "ce2259a6336d6be9",
+  "route_version": "0ce7463f8f2c9105",
   "development_seeds": [
     24000,
     24001
@@ -22,7 +22,7 @@
   ],
   "new_optimizer_updates": 0,
   "selection": "Use the frozen V8 development ranking: full success first, safety and task/arrival/recovery counts next; when both development routes complete, least recovery joint travel before duration. Select before opening the26000-series tests.",
-  "scope": "Unchanged, actually post-trained V8 weights retested on a separately frozen20mm outward laptop stance. Before/after share the revised route, controllers and verifiers. Native gait, balance and IK remain fixed. No new optimizer updates in this evaluation.",
+  "scope": "Unchanged V8 model checkpoints retested on a separately frozen20mm outward laptop stance and XY-balanced press. Before/after share the revision, route and verifiers. Native gait, standing balance and IK remain fixed. No new optimizer updates during this evaluation.",
   "engineering_evidence": {
     "known_training_seed": 23000,
     "original_failure": "Falling lid contacted left_hip_roll_link; lid closure alone did not pass validity.",
@@ -30,8 +30,22 @@
     "initial_robot_outward_shift_15mm": "Closed through contact, zero non-hand contact, no fall in isolated known-state diagnostic.",
     "initial_robot_outward_shift_20mm": "Closed through contact, zero non-hand contact, no fall in isolated known-state diagnostic.",
     "sweep_check": "17 static neutral-standing configurations, lid0\u201380degrees in5degree increments, conservative10mm clearance model. Sampled, not a continuous certificate.",
-    "changed_only": "Laptop stance x0.300to0.320m and corresponding approach/departure segments; object physics and controller code unchanged."
+    "changed_only": "Laptop stance x0.300to0.320m and corresponding approach/departure segments; object physics and controller code unchanged.",
+    "stance_alone_dynamic": "Two continuous calibration routes failed: one lid timeout and one sideways fall. Isolated clearance alone was insufficient.",
+    "additional_control": "Add a bounded X component to the existing Y-balanced arm press, aligning the contact-force reaction toward the foot support center. Arm actuator targets only; no base force. Same verifier and all object properties.",
+    "controller_source_sha256": "f180ea19f692f6d6eb7e871750fcc9e59d23fe0361ff5e81ea9e757c2ad5ec68",
+    "combined_known_calibration": {
+      "seeds": [
+        19000,
+        19001,
+        23000
+      ],
+      "complete_sequences": 3,
+      "falls": 0,
+      "scope": "Fixed control, known cases. Not learned or held-out results."
+    }
   },
   "limits": "The new26000-series cases are distinct from the original25000-series tests. Report source V8 results and this revised-condition evaluation separately. Fixed desk layout; one training run; no hardware or new-layout claim.",
-  "budget": "At most10 development +12 full-sequence held-out +80 isolated rollouts. With255 source-study completed rollouts,357 total remains within512. No checkpoint deletion or billing change."
+  "budget": "At most10 development +12 full-sequence held-out +80 isolated rollouts. With255 completed source-study rollouts,357 total planned remains within512. Interrupted attempts are recorded separately. No checkpoint deletion or billing change.",
+  "source_training_completion": "Complete all64 source optimizer updates, five development checkpoints and original25000-series tests. Then evaluate unchanged checkpoints on this separately frozen revision and fresh26000-series tests."
 }
