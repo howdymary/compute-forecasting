@@ -36,6 +36,14 @@ for r in services['reads']:
 calls=services['calls'];m['memory_usage']={'writes':sum(c['method']=='POST' and c['kind']=='ingest' for c in calls),'recalls':sum(c['method']=='POST' and c['kind']=='recall' for c in calls),'ingestion_polls':sum(c['method']=='GET' and c['kind']=='ingest' for c in calls)};
 if isolated:m['held_out_isolated_contact']=isolated['task_summary'];m['isolated_control']={k:v for k,v in isolated.items() if k not in ['results','inference']};m['rollouts']=report['rollouts']+isolated['rollouts']
 write('manifest-v8.json',m);write('manifest.json',m)
-evidence=root/'evidence/control-v8';evidence.mkdir(parents=True,exist_ok=True);public={k:v for k,v in report.items() if k not in ['services','last_hypothesis']};public['search']=services['sources'];public['memory']={k:services[k] for k in ['audiences','reads','decisions','eligibility','calls']};public['workflow_url']=m['workflow_url'];text=json.dumps(public,indent=2);assert 'tinker://' not in text and 'api_key' not in text.lower();(evidence/'results.json').write_text(text+'\n');
+evidence=root/'evidence/control-v8';evidence.mkdir(parents=True,exist_ok=True);branches=[];training=json.load(open(a.source/'training-observations.json'));labels={d:{json.dumps(o,sort_keys=True):label for o,label in examples} for d,examples in training.items()}
+for seed in report['protocol']['train_seeds']:
+ row=json.load(open(a.source/f'teacher-{seed}.json'))
+ for trial in row['trials']:
+  e=next((e for e in row['examples'] if e['domain']==trial['domain'] and e['task']==trial['task']),None);label=labels[trial['domain']].get(json.dumps(e['model_observation'],sort_keys=True)) if e else None
+  branches.append({'seed':seed,'domain':trial['domain'],'task':trial['task'],'initial_state_sha256':trial['outcomes'][0]['initial_state_sha256'],'actual_behavior_action':e['action'] if e else None,'supervised_label':label,'outcomes':trial['outcomes']})
+(evidence/'training-branches.json').write_text(json.dumps({'scope':'Measured training-only counterfactual branches. Supervised choices are relabeled from these outcomes; they are not claims about learned-model performance.','source_dataset_run':report['protocol']['source_dataset_run'],'objectives':report['protocol']['label_objective'],'trials':branches},indent=2)+'\n')
+(evidence/'training-observations.json').write_text(json.dumps(training,indent=2)+'\n')
+public={k:v for k,v in report.items() if k not in ['services','last_hypothesis']};public['search']=services['sources'];public['memory']={k:services[k] for k in ['audiences','reads','decisions','eligibility','calls']};public['workflow_url']=m['workflow_url'];text=json.dumps(public,indent=2);assert 'tinker://' not in text and 'api_key' not in text.lower();(evidence/'results.json').write_text(text+'\n');
 if isolated:(evidence/'isolated-controls.json').write_text(json.dumps(isolated,indent=2)+'\n')
 print(json.dumps({'selected_update':selected,'checkpoints':len(m['checkpoints']),'test_pairs':len(m['fresh']['cases']),'held_out':m['held_out']},indent=2))
