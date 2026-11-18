@@ -35,3 +35,19 @@ def test_walk_encoding_preserves_teacher_thresholds():
     key=str(encode(o));label=teacher(o)
     assert key not in seen or seen[key]==label
     seen[key]=label
+
+def test_completed_sequence_still_requires_four_safe_recoveries():
+ ep={'results':{t:{'success':True} for t in ['alarm','drawer','laptop','globe']},'fall':False,'final_object_states':{'drawer':0,'laptop':0,'globe':0},'final_object_speeds':{'drawer':0,'laptop':0,'globe':0},'recoveries':[{'success':True} for _ in range(4)]}
+ row={'episode':ep,'mode':'done','failure':None,'arrivals':[{} for _ in range(4)]}
+ assert sequence_success(row)
+ ep['recoveries'][-1]['success']=False
+ assert not sequence_success(row)
+
+def test_less_arm_travel_beats_speed_after_both_routes_complete():
+ from mochi.control_v8.train import rank
+ common={'n':2,'full_successes':2,'falls':0,'task_successes':{t:2 for t in ['alarm','drawer','laptop','globe']},'stations_reached':8,'recovery_successes':8,'recovery_contact_steps':0}
+ fast_busy={**common,'successful_recovery_mean_joint_travel_rad':6.,'mean_duration_s':70.}
+ slower_direct={**common,'successful_recovery_mean_joint_travel_rad':4.,'mean_duration_s':80.}
+ assert rank(slower_direct)>rank(fast_busy)
+ incomplete={**slower_direct,'full_successes':1,'successful_recovery_mean_joint_travel_rad':0.}
+ assert rank(incomplete)<rank(fast_busy)

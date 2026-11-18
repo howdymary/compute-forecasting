@@ -49,3 +49,29 @@ After development selection, the same held-out seed block also receives separate
 ## Timing and deployment limits
 
 The selector runs between bounded simulation actions. MuJoCo time pauses while remote model inference is pending; the fast native gait, balance and arm feedback execute inside each action. Completion time is simulated physical time, not real-time inference throughput. Worker wall time and actual Tinker inference calls are retained separately. This is not a real-time hardware control or sim-to-real demonstration.
+
+## Execution architecture
+
+```mermaid
+flowchart LR
+  E[Exa sources] --> M[past.dev verified findings]
+  M --> A[Bounded training allocation]
+  P[MuJoCo candidate branches on Modal] --> D[Measured successful supervision]
+  D --> T[Tinker LoRA forward/backward and optimizer]
+  A --> T
+  T --> C[Immutable model checkpoints]
+  C --> S[Walking / task / recovery choices]
+  S --> F[Fixed gait, balance, IK and contact primitives]
+  F --> P
+  P --> V[Development selection then held-out evaluation]
+  V --> R[Recorded trajectory viewer and Blender]
+  V --> M
+```
+
+The data-capture phase generated eight physical behavior episodes and their counterfactual branches. Supervision was subsequently relabeled from those same measured branches: lower-force successful task controls and minimum-travel safe recovery. The stored behavior trajectories do not pretend to follow those new labels. They supply visited physical states; every alternative label has an actual experiment from the same state. The new checkpoint-selection rule was frozen before optimizer updates or held-out evaluation.
+
+The new scenarios draw initial robot position/yaw and fixture stroke, spring, mass, friction and starting angle from the existing parameter ranges. The desk layout and object locations stay fixed. This is not a test on unseen room or desk layouts.
+
+## Run provenance
+
+The physical-label collection run was [44378183870](https://github.com/howdymary/mochi-demo/actions/runs/44378183870): 229 completed rollouts, seven valid full behavior sequences from eight training seeds, and zero optimizer updates. It was stopped before completing the baseline evaluation to correct the objective. A label-preparation attempt, [44381735488](https://github.com/howdymary/mochi-demo/actions/runs/44381735488), was stopped before weight updates to align checkpoint selection with the same motion objective. Both artifacts remain retained. The final training source is `7836634e434bb0b2c8f600afeb4847b7cf00b684`, [run 44382265039](https://github.com/howdymary/mochi-demo/actions/runs/44382265039). The initial checkpoint lookup preflight, run44377705298, performed no training or physical rollout.
