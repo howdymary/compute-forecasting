@@ -1,0 +1,219 @@
+{
+  "scope": "Measured reference-run data; no model or simulation behavior was changed by these checks.",
+  "optimizer_updates": 64,
+  "gradient_domains_per_update": 5,
+  "actual_training_example_counts": {
+    "walk": 768,
+    "alarm": 320,
+    "drawer": 320,
+    "laptop": 320,
+    "globe": 320
+  },
+  "checkpoint_checks": [
+    {
+      "checkpoint": 0,
+      "same_development_initial_state": true,
+      "strictly_increasing_simulation_time": true
+    },
+    {
+      "checkpoint": 8,
+      "same_development_initial_state": true,
+      "strictly_increasing_simulation_time": true
+    },
+    {
+      "checkpoint": 16,
+      "same_development_initial_state": true,
+      "strictly_increasing_simulation_time": true
+    },
+    {
+      "checkpoint": 32,
+      "same_development_initial_state": true,
+      "strictly_increasing_simulation_time": true
+    },
+    {
+      "checkpoint": 64,
+      "same_development_initial_state": true,
+      "strictly_increasing_simulation_time": true
+    }
+  ],
+  "fresh_scenarios_with_identical_initial_states": 4,
+  "first_walking_decision": {
+    "starting_model": {
+      "action": "left",
+      "distribution": {
+        "forward": 0.0263114795088768,
+        "slow": 0.049156319350004196,
+        "back": 0.009679452516138554,
+        "left": 0.6785820126533508,
+        "right": 0.08104506880044937,
+        "left_slow": 0.049156319350004196,
+        "right_slow": 0.0180836021900177,
+        "stop": 0.07152201235294342,
+        "side_left": 0.012428665533661842,
+        "side_right": 0.004034996498376131
+      }
+    },
+    "post_trained_model": {
+      "action": "forward",
+      "distribution": {
+        "forward": 0.6315381526947021,
+        "slow": 0.180938720703125,
+        "back": 0.0010759009746834636,
+        "left": 0.0009494791738688946,
+        "right": 0.0007394551066681743,
+        "left_slow": 0.180938720703125,
+        "right_slow": 0.002277682302519679,
+        "stop": 0.00039580182055942714,
+        "side_left": 0.0008379124337807298,
+        "side_right": 0.00030825092107988894
+      }
+    }
+  },
+  "isolated_contact_pairs": [
+    {
+      "seed": 14000,
+      "task": "alarm",
+      "same_observation": true,
+      "starting_profile": "D",
+      "trained_profile": "H",
+      "starting_success": true,
+      "trained_success": true
+    },
+    {
+      "seed": 14000,
+      "task": "drawer",
+      "same_observation": true,
+      "starting_profile": "D",
+      "trained_profile": "C",
+      "starting_success": true,
+      "trained_success": true
+    },
+    {
+      "seed": 14000,
+      "task": "laptop",
+      "same_observation": true,
+      "starting_profile": "A",
+      "trained_profile": "C",
+      "starting_success": false,
+      "trained_success": true
+    },
+    {
+      "seed": 14000,
+      "task": "globe",
+      "same_observation": true,
+      "starting_profile": "D",
+      "trained_profile": "H",
+      "starting_success": true,
+      "trained_success": true
+    },
+    {
+      "seed": 14001,
+      "task": "alarm",
+      "same_observation": true,
+      "starting_profile": "D",
+      "trained_profile": "H",
+      "starting_success": true,
+      "trained_success": true
+    },
+    {
+      "seed": 14001,
+      "task": "drawer",
+      "same_observation": true,
+      "starting_profile": "D",
+      "trained_profile": "C",
+      "starting_success": true,
+      "trained_success": true
+    },
+    {
+      "seed": 14001,
+      "task": "laptop",
+      "same_observation": true,
+      "starting_profile": "A",
+      "trained_profile": "C",
+      "starting_success": false,
+      "trained_success": true
+    },
+    {
+      "seed": 14001,
+      "task": "globe",
+      "same_observation": true,
+      "starting_profile": "A",
+      "trained_profile": "H",
+      "starting_success": true,
+      "trained_success": true
+    },
+    {
+      "seed": 14002,
+      "task": "alarm",
+      "same_observation": true,
+      "starting_profile": "A",
+      "trained_profile": "H",
+      "starting_success": true,
+      "trained_success": true
+    },
+    {
+      "seed": 14002,
+      "task": "drawer",
+      "same_observation": true,
+      "starting_profile": "D",
+      "trained_profile": "C",
+      "starting_success": true,
+      "trained_success": true
+    },
+    {
+      "seed": 14002,
+      "task": "laptop",
+      "same_observation": true,
+      "starting_profile": "A",
+      "trained_profile": "C",
+      "starting_success": false,
+      "trained_success": true
+    },
+    {
+      "seed": 14002,
+      "task": "globe",
+      "same_observation": true,
+      "starting_profile": "A",
+      "trained_profile": "H",
+      "starting_success": true,
+      "trained_success": true
+    },
+    {
+      "seed": 14003,
+      "task": "alarm",
+      "same_observation": true,
+      "starting_profile": "A",
+      "trained_profile": "H",
+      "starting_success": false,
+      "trained_success": true
+    },
+    {
+      "seed": 14003,
+      "task": "drawer",
+      "same_observation": true,
+      "starting_profile": "D",
+      "trained_profile": "C",
+      "starting_success": true,
+      "trained_success": false
+    },
+    {
+      "seed": 14003,
+      "task": "laptop",
+      "same_observation": true,
+      "starting_profile": "A",
+      "trained_profile": "C",
+      "starting_success": false,
+      "trained_success": true
+    },
+    {
+      "seed": 14003,
+      "task": "globe",
+      "same_observation": true,
+      "starting_profile": "D",
+      "trained_profile": "H",
+      "starting_success": true,
+      "trained_success": true
+    }
+  ],
+  "showcase_selection": "Chosen after observing its successful held-out reference run. One of four reference test scenarios completed; this is a success example, not representative reliability."
+}
