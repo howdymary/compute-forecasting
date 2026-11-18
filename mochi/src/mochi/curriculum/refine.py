@@ -4,7 +4,8 @@ from pathlib import Path
 from collections import defaultdict,Counter
 import numpy as np,modal
 from .world import ROOT,TASKS,PROFILES,World
-from .remote import app,walking_coverage,contact_trial,replay,Runner,image
+from .remote import app,walking_coverage,contact_trial,Runner,image
+from .remote_policy import app as policy_app,evaluate_bundle,sampler_payload
 from .decisions import decision
 from .features import encode,CachedSelector
 from ..desk.services import DeskServices
@@ -43,7 +44,7 @@ async def research(services,report,observation,update):
  counts={'walk':48,**{t:4 for t in TASKS}} if proposal['allocation']=='locomotion_first' else {'walk':32,**{t:8 for t in TASKS}}
  report.setdefault('research_allocation',[]).append({'update':update,'focus':allocation,'domain_batch_counts':counts,'proposal_record':pid});return counts,proposal,pid
 async def main():
- from .train import drive,complete,sequence_summary,task_summary
+ from .train import complete,sequence_summary,task_summary
  import tinker
  from tinker_cookbook.recipes.decisions import decision_choice_datums
  protocol=json.loads((ROOT/'configs/refinement-protocol.json').read_text());cfg=protocol['training'];services=DeskServices();started=time.perf_counter();report={'study':protocol['study'],'status':'running','phase':'Freeze and research','source_sha':os.getenv('GITHUB_SHA'),'created_at':now(),'protocol':protocol,'protocol_sha256':digest(protocol),'scope':protocol['scope'],'training_log':[],'checkpoints':[],'rollouts':0,'optimizer_updates_completed':0,'prior_study_updates':64,'checkpoint_retention':protocol['checkpoint_retention']};snapshots={};selectors={};private_paths={}
@@ -52,11 +53,13 @@ async def main():
  source=next((ROOT/'.cache/refine-source').rglob('contact-outcomes.json')).parent;rows=json.loads((source/'contact-outcomes.json').read_text());prior=json.loads((source/'incomplete.json').read_text());old_paths=json.loads((source/'checkpoint-paths.json').read_text());train_seeds=protocol['train_seeds'];dev_seeds=protocol['development_seeds'];test_seeds=protocol['held_out_seeds'];dev_route_seeds=protocol['checkpoint_development_seeds'];base_path=old_paths['0']['optimizer'];report['source_data']={'workflow_run':protocol['source_dataset_run'],'contact_sha256':hashlib.sha256((source/'contact-outcomes.json').read_bytes()).hexdigest(),'prior_completed_modal_rollouts':prior['rollouts'],'prior_study_source_sha':prior['source_sha'],'new_physics_trials_are_counted_separately':True}
  try:
   await services.setup()
-  async with app.run():
-   allocation,proposal,pid=await research(services,report,{'prior_development':prior['checkpoints'][-1]['continuous_development'],'limits':'V6 reached 3/10 waypoints and zero full routes. New development and test seeds are untouched. Same frozen world, gait, action catalogue and success rules.'},0)
+  async with app.run(),policy_app.run():
+   allocation,proposal,pid=await research(services,report,{'prior_development':prior['checkpoints'][-1]['continuous_development'],'prior_replication':protocol['prior_replication'],'limits':'V6 reached 3/10 waypoints and zero full routes. New development and test seeds are untouched. Same frozen world, gait, action catalogue and success rules.'},0)
    coverage_focus=await services.decide('experimenter','Select equal-budget training navigation coverage. near_waypoints emphasizes final alignment; turn_recovery includes goals behind the robot. Only training seeds may be used.',proposal,['near_waypoints','turn_recovery'],[pid]);rng=np.random.default_rng(cfg['seed']);jobs=[]
    for i in range(protocol['additional_training_navigation_rollouts']):
-    dx=float(rng.uniform(.025,.11)) if coverage_focus=='near_waypoints' else float(rng.uniform(-.05,.11));dy=float(rng.uniform(-.055,.055));yaw=float(rng.choice([-1.57,-.35,0,.35,1.57]));jobs.append((train_seeds[i%len(train_seeds)],[dx,dy,yaw]))
+    dx=float(rng.uniform(.025,.11)) if coverage_focus=='near_waypoints' else float(rng.uniform(-.05,.11));dy=float(rng.uniform(-.055,.055));yaw=float(rng.choice([-1.57,-.35,0,.35,1.57]));
+    if dx>.06 and dy>.025:dy=.02
+    jobs.append((train_seeds[i%len(train_seeds)],[dx,dy,yaw]))
    report['phase']='Training-only navigation coverage';await publish(report,services);coverage=[r async for r in walking_coverage.starmap.aio(jobs,order_outputs=True)];report['rollouts']+=len(coverage);save('extra-navigation',coverage)
    teachers=json.loads((source/'walking-teachers.json').read_text())+json.loads((source/'walking-coverage.json').read_text())+coverage;walking={};conflicts=[];physical_states=0
    for trial in teachers:
@@ -81,20 +84,20 @@ async def main():
    fixed={t:min(PROFILES,key=lambda p:fixed_key(t,p.code)).code for t in TASKS};report['fixed_baseline']=fixed
    dev_jobs=[(seed,t,p.code,False) for seed in dev_seeds for t in TASKS for p in PROFILES];report['phase']='Development contact measurements';await publish(report,services);dev_contact=[r async for r in contact_trial.starmap.aio(dev_jobs,order_outputs=True)];report['rollouts']+=len(dev_contact);save('development-contact-outcomes',dev_contact)
    canary=await services.write('critic',{'kind':'private-test','text':'MOCHI_PRIVATE_CANARY'},private=True);await services.read('designer',canary,False)
-   trainer=await services.service.create_training_client_from_state_with_optimizer(base_path);renderer=services.renderer;datums={d:decision_choice_datums(renderer,[(decision(o),label) for o,label in examples]) for d,examples in data.items()};private_paths['0']={'optimizer':base_path};report['phase']='Tinker post-training';save('frozen',report)
+   trainer=await services.service.create_training_client_from_state_with_optimizer(base_path);renderer=services.renderer;datums={d:decision_choice_datums(renderer,[(decision(o),label) for o,label in examples]) for d,examples in data.items()};private_paths['0']={'optimizer':base_path};report['phase']='Tinker post-training';save('frozen',report);selected=None
    for update in range(cfg['updates']+1):
     if update in cfg['checkpoints']:
      sampler=await trainer.save_weights_and_get_sampling_client(kind='snapshot');session=getattr(sampler,'_sampling_session_id',None)
      if not isinstance(session,str):raise RuntimeError('Pinned SDK snapshot receipt missing')
      snapshots[update]=sampler;selector=CachedSelector();selectors[update]=selector;private_paths[str(update)]={'sampling_session_id':session,'kind':'fixed_ephemeral_snapshot',**private_paths.get(str(update),{})};cp={'update':update,'checkpoint_id':digest(session)[:20],'checkpoint_id_kind':'fixed_ephemeral_snapshot','created_at':now()}
-     if update==cfg['updates']:
-      state=await trainer.save_state('mochi_geometry_walk_tasks_96');private_paths[str(update)]['optimizer']=state.path;cp['optimizer_state_id']=digest(state.path)[:20]
      save('checkpoint-paths',private_paths);report['phase']='Development evaluation at update '+str(update);await publish(report,services)
-     dev=await asyncio.gather(*(drive(sampler,renderer,seed,True,choose_fn=selector) for seed in dev_route_seeds));save('checkpoint-'+str(update),dev);picked=[]
+     payload=sampler_payload(sampler);remote_dev=[r async for r in evaluate_bundle.starmap.aio([(seed,[('policy',payload)],fixed,None,True,False,True) for seed in dev_route_seeds],order_outputs=True)];report['rollouts']+=len(remote_dev);dev=[r['results']['policy'] for r in remote_dev];save('checkpoint-'+str(update),dev);save('checkpoint-receipts-'+str(update),remote_dev);picked=[]
      for seed in dev_seeds:
       for task in TASKS:
        cell=[r for r in dev_contact if r['seed']==seed and r['result']['task']==task];action,_=await selector(sampler,renderer,cell[0]['observation']);picked.append(next(r for r in cell if r['result']['profile']['code']==action))
-     cp.update(continuous_development=sequence_summary(dev),isolated_contact_development=task_summary(picked),inference={'actual_tinker_calls':selector.calls,'identical_observation_cache_hits':selector.hits});report['checkpoints'].append(cp);save('inference-'+str(update),selector.receipt());await publish(report,services);log('checkpoint',**cp)
+     cp.update(continuous_development=sequence_summary(dev),isolated_contact_development=task_summary(picked),inference={'actual_tinker_calls':selector.calls+sum(r['results']['policy']['inference']['actual_tinker_inference_calls'] for r in remote_dev),'identical_observation_cache_hits':selector.hits+sum(r['results']['policy']['inference']['identical_observation_cache_hits'] for r in remote_dev)});report['checkpoints'].append(cp);save('inference-'+str(update),selector.receipt());await publish(report,services);log('checkpoint',**cp)
+     if update>=64 and (cp['continuous_development']['full_successes']==len(dev_route_seeds) or update==cfg['updates']):
+      selected=update;state=await trainer.save_state('mochi_geometry_walk_tasks_'+str(update));private_paths[str(update)]['optimizer']=state.path;cp['optimizer_state_id']=digest(state.path)[:20];save('checkpoint-paths',private_paths);report['selected_checkpoint']=cp;report['stopping_rule_trigger']='both development routes passed' if cp['continuous_development']['full_successes']==len(dev_route_seeds) else '96-update budget';save('selection-freeze',report);break
      if update==16:allocation,_,_=await research(services,report,{'development':cp['continuous_development'],'isolated_contact':cp['isolated_contact_development'],'scope':'Development evidence only; held-out still sealed.'},update)
     if update==cfg['updates']:break
     pending=[];batch={}
@@ -104,32 +107,24 @@ async def main():
     for domain,future in pending:losses[domain]=(await future).metrics
     await optimizer;report['training_log'].append({'update':update+1,'domain_counts':{d:len(v) for d,v in batch.items()},'domain_loss_metrics':losses,'batch_sha256':digest(batch),'forward_backward_completed':True,'optimizer_completed':True,'at':now()});report['optimizer_updates_completed']=len(report['training_log']);report['phase']='Tinker post-training'
     if (update+1)%4==0:await publish(report,services);log('optimizer_update',update=update+1)
-   assert report['optimizer_updates_completed']==96 and all(set(x['domain_counts'])=={'walk',*TASKS} for x in report['training_log'])
-   report['selected_checkpoint']=report['checkpoints'][-1];report['held_out_not_yet_run']=True;save('selection-freeze',report);result={}
-   for name,update in [('starting_model',0),('post_trained_model',96)]:
-    report['phase']='Fresh continuous routes: '+name;await publish(report,services);result[name]=await asyncio.gather(*(drive(snapshots[update],renderer,seed,True,choose_fn=selectors[update]) for seed in test_seeds));save('held-out-'+name,result[name])
-   result['classical_fixed']=await asyncio.gather(*(drive(None,None,seed,True,expert=True,fixed=fixed) for seed in test_seeds));save('held-out-classical',result['classical_fixed']);report['held_out']={k:sequence_summary(v) for k,v in result.items()}
+   assert selected in [64,96] and report['optimizer_updates_completed']==selected and all(set(x['domain_counts'])=={'walk',*TASKS} for x in report['training_log'])
+   report['held_out_not_yet_run']=True;save('selection-freeze',report);report['phase']='Fresh paired Modal routes';await publish(report,services)
+   models=[('starting_model',sampler_payload(snapshots[0])),('post_trained_model',sampler_payload(snapshots[selected])),('classical_fixed',None)];paired=[r async for r in evaluate_bundle.starmap.aio([(seed,models,fixed,None,True,False,True) for seed in test_seeds],order_outputs=True)];report['rollouts']+=len(paired)*len(models);save('paired-held-out-routes',paired);result={name:[r['results'][name] for r in paired] for name,_ in models}
+   for name,group in result.items():save('held-out-'+('classical' if name=='classical_fixed' else name),group)
+   report['held_out']={k:sequence_summary(v) for k,v in result.items()};report['evaluation_runtime']='All checkpoint and held-out physics executes on Modal. Each held-out before/after/classical triplet shares one worker.'
    report['phase']='Fresh isolated contact tasks';await publish(report,services);test_jobs=[(seed,t,p.code,False) for seed in test_seeds for t in TASKS for p in PROFILES];isolated=[r async for r in contact_trial.starmap.aio(test_jobs,order_outputs=True)];report['rollouts']+=len(isolated);save('held-out-isolated-outcomes',isolated);picked_groups={}
-   for name,update in [('starting_model',0),('post_trained_model',96)]:
+   for name,update in [('starting_model',0),('post_trained_model',selected)]:
     picked=[]
     for seed in test_seeds:
      for task in TASKS:
       cell=[r for r in isolated if r['seed']==seed and r['result']['task']==task];action,_=await selectors[update](snapshots[update],renderer,cell[0]['observation']);picked.append(next(r for r in cell if r['result']['profile']['code']==action))
     picked_groups[name]=picked
    picked_groups['fixed_profiles']=[r for r in isolated if r['result']['profile']['code']==fixed[r['result']['task']]];report['held_out_isolated_contact']={k:task_summary(v) for k,v in picked_groups.items()};save('held-out-isolated-evaluation',picked_groups)
-   # Fresh walking is measured independently of the contact tasks.
+   # Walking is tested independently, with all three policies on each worker.
    from .walk_audit import summary as walk_summary
-   offsets=json.loads((ROOT/'configs/walking-audit-protocol.json').read_text())['goal_offsets'];nav={}
-   for name,update in [('starting_model',0),('post_trained_model',96),('classical_fixed',None)]:
-    report['phase']='Fresh isolated navigation: '+name;await publish(report,services);nav[name]=await asyncio.gather(*(navigation(snapshots.get(update),renderer,selectors.get(update),16500+i,offset,update is None) for i,offset in enumerate(offsets)))
-   report['held_out_isolated_walking']={k:walk_summary(v) for k,v in nav.items()};save('held-out-navigation',nav)
-   # The exact same physical actions execute again on independent Modal workers.
-   report['phase']='Independent Modal replay';await publish(report,services);local=[r for group in result.values() for r in group];remote=[r async for r in replay.starmap.aio([(r['seed'],r['actions'],False) for r in local],order_outputs=True)];report['rollouts']+=len(remote)
-   checks=[{'seed':a['seed'],'same_task_success':all(a['episode']['results'].get(t,{}).get('success',False)==b['episode']['results'].get(t,{}).get('success',False) for t in TASKS),'duration_delta_s':abs(a['episode']['duration']-b['episode']['duration']),'receipt':b['receipt']} for a,b in zip(local,remote)];save('modal-replays',remote)
-   nav_local=[r for group in nav.values() for r in group];nav_remote=[r async for r in replay_navigation.starmap.aio([(r['seed'],r['goal'],r['actions']) for r in nav_local],order_outputs=True)];report['rollouts']+=len(nav_remote);nav_checks=[{'seed':a['seed'],'same_success':a['success']==b['success'],'duration_delta_s':abs(a['episode']['duration']-b['duration_s']),'receipt':b} for a,b in zip(nav_local,nav_remote)];save('modal-navigation-replays',nav_remote)
-   if any(not c['same_task_success'] or c['duration_delta_s']>.01 for c in checks) or any(not c['same_success'] or c['duration_delta_s']>.01 for c in nav_checks):raise RuntimeError('Reference/Modal replay mismatch')
-   report['remote_replay_checks']=checks;report['navigation_replay_checks']=nav_checks;report['paired_outcomes']=[{'seed':a['seed'],'starting_full':complete(a),'trained_full':complete(b),'starting_tasks':sum(x['success'] for x in a['episode']['results'].values()),'trained_tasks':sum(x['success'] for x in b['episode']['results'].values()),'starting_arrivals':len(a['arrivals']),'trained_arrivals':len(b['arrivals'])} for a,b in zip(result['starting_model'],result['post_trained_model'])];delta=np.array([int(r['trained_full'])-int(r['starting_full']) for r in report['paired_outcomes']]);boot=delta[np.random.default_rng(8312).integers(0,len(delta),(10000,len(delta)))].mean(1);report['paired_full_success_gain']={'n':len(delta),'percentage_points':float(delta.mean()*100),'bootstrap_95_percentage_points':(np.quantile(boot,[.025,.975])*100).tolist()};report['held_out_not_yet_run']=False
-   rid=await services.write('experimenter',{'kind':'observation','held_out':report['held_out'],'isolated_walking':report['held_out_isolated_walking'],'isolated_contact':report['held_out_isolated_contact'],'optimizer_updates_completed':96});evidence=await services.read('critic',rid);view=await services.decide('critic','Does the evidence support a qualified gain, or is an improvement not established? Simulation pilot only; report task, walking and full-route results separately.',evidence,['qualified_improvement','improvement_not_established'],[rid]);cid=await services.write('critic',{'kind':'conclusion','model_assessment':view,'evidence':evidence,'numerically_verified_full_route_gain':report['paired_full_success_gain'],'limits':'One training run, four held-out routes, fixed Unitree gait and classical balance/IK. Discrete command/profile post-training, not raw torque learning. Search and memory have no causal ablation.'});await services.read('researcher',cid)
+   offsets=json.loads((ROOT/'configs/walking-audit-protocol.json').read_text())['goal_offsets'];report['phase']='Fresh paired isolated walking';await publish(report,services);nav_paired=[r async for r in evaluate_bundle.starmap.aio([(16500+i,models,fixed,offset,False,False,True) for i,offset in enumerate(offsets)],order_outputs=True)];report['rollouts']+=len(nav_paired)*len(models);save('paired-held-out-navigation',nav_paired);nav={name:[r['results'][name] for r in nav_paired] for name,_ in models};report['held_out_isolated_walking']={k:walk_summary(v) for k,v in nav.items()};save('held-out-navigation',nav)
+   report['modal_execution_receipts']=[r['receipt'] for r in paired+nav_paired];report['paired_outcomes']=[{'seed':a['seed'],'starting_full':complete(a),'trained_full':complete(b),'starting_tasks':sum(x['success'] for x in a['episode']['results'].values()),'trained_tasks':sum(x['success'] for x in b['episode']['results'].values()),'starting_arrivals':len(a['arrivals']),'trained_arrivals':len(b['arrivals'])} for a,b in zip(result['starting_model'],result['post_trained_model'])];delta=np.array([int(r['trained_full'])-int(r['starting_full']) for r in report['paired_outcomes']]);boot=delta[np.random.default_rng(8312).integers(0,len(delta),(10000,len(delta)))].mean(1);report['paired_full_success_gain']={'n':len(delta),'percentage_points':float(delta.mean()*100),'bootstrap_95_percentage_points':(np.quantile(boot,[.025,.975])*100).tolist()};report['held_out_not_yet_run']=False
+   rid=await services.write('experimenter',{'kind':'observation','held_out':report['held_out'],'isolated_walking':report['held_out_isolated_walking'],'isolated_contact':report['held_out_isolated_contact'],'optimizer_updates_completed':selected});evidence=await services.read('critic',rid);view=await services.decide('critic','Does the evidence support a qualified gain, or is an improvement not established? Simulation pilot only; report task, walking and full-route results separately.',evidence,['qualified_improvement','improvement_not_established'],[rid]);cid=await services.write('critic',{'kind':'conclusion','model_assessment':view,'evidence':evidence,'numerically_verified_full_route_gain':report['paired_full_success_gain'],'limits':'One training run, four held-out routes, fixed Unitree gait and classical balance/IK. Discrete command/profile post-training, not raw torque learning. Search and memory have no causal ablation.'});await services.read('researcher',cid)
    for update,selector in selectors.items():save('inference-'+str(update),selector.receipt())
   report.update(status='completed',completed_at=now(),duration_seconds=time.perf_counter()-started,phase='Completed',services=services.report());save('report',report);await publish(report,services);log('completed',held_out=report['held_out'],walking=report['held_out_isolated_walking'])
  except Exception as exc:

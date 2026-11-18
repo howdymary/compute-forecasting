@@ -69,7 +69,7 @@
     "globe": "Within 3 degrees of target and 0.07 rad/s for the release dwell",
     "full_sequence": "All four task verifications in order, no fall, with drawer/laptop/globe still within terminal position and speed tolerances."
   },
-  "selection": "The final update-96 policy is fixed before new evaluations. Development checkpoints show the learning path and do not select weights.",
+  "selection": "Stop at update 64 only if both development routes complete all four tasks without falling; otherwise continue to the fixed cap of 96. The selected final checkpoint is frozen before test seeds are unsealed.",
   "scope": "Command-level locomotion and task-profile post-training. Native Unitree gait, classical leg servos and arm IK are fixed. State observations, simulation only.",
   "uncertainty": "Report raw paired scenario outcomes and Wilson intervals; four fresh test seeds are a pilot, not evidence of broad robotics generalization.",
   "labels": "Walking imitates a fixed waypoint policy. Task labels are chosen only from actual MuJoCo training trials. No hidden mass, friction, seed, teacher labels or evaluation outcomes enter the model observation.",
@@ -77,7 +77,8 @@
   "held_out_isolated_contact": true,
   "controller_revision": "v6-pretrain-final: cached arm recovery, laptop prelift, measured foot contacts",
   "checkpoint_development_seeds": [
-    15000
+    15000,
+    15001
   ],
   "source_dataset_run": 44244443083,
   "representation": "Independent, documented bins of observed relative target geometry. No teacher action or hidden simulator parameter. Identical encodings reuse the actual Tinker distribution from the same fixed checkpoint.",
@@ -91,7 +92,7 @@
     "estimated_minutes": 35,
     "billing_plan_changes": false
   },
-  "checkpoint_retention": "All six fixed snapshots are evaluated while alive; only the final full optimizer state is persisted, plus the already archived starting full state. Intermediate inference snapshots expire; trajectories and receipts persist.",
+  "checkpoint_retention": "Starting full state is already archived. Every evaluated checkpoint uses real fixed ephemeral inference weights. Persist exactly one new full optimizer state at the development-selected stopping update, 64 or 96.",
   "prior_study": "V6: 64 completed updates, development 0 to 3 waypoints/10, 0 full routes/2; all source records retained. New representation tested against starting weights under the same representation.",
   "frozen_physics_sha256": {
     "src/mochi/curriculum/world.py": "1cb415d6d66e367e3d2c28146ab6067c1da671461c5ec34728d4487cb13152f6",
@@ -114,5 +115,18 @@
     "signed forward/lateral offset bands",
     "larger offset axis"
   ],
-  "controlled_comparison": "Starting and trained policies use identical feature encoding, physics and cache implementation. The comparison measures learning given this engineered representation; no causal claim for encoding versus v6 is made."
+  "controlled_comparison": "Starting and trained policies use identical feature encoding, physics and cache implementation. The comparison measures learning given this engineered representation; no causal claim for encoding versus v6 is made.",
+  "revision": 2,
+  "execution": "All full-route and navigation evaluation is closed-loop on Modal. Each final before/after/classical triplet shares one worker; no open-loop cross-runtime replay agreement is assumed.",
+  "prior_replication": {
+    "run": 44253028615,
+    "completed_route_pairs": 4,
+    "trained_full_routes": 0,
+    "starting_full_routes": 0,
+    "classical_full_routes": 2,
+    "trained_waypoints": 6,
+    "starting_waypoints": 0,
+    "waypoint_opportunities": 20,
+    "scope": "Completed route portion of an ongoing V6 replication; not V7 training or test data."
+  }
 }
