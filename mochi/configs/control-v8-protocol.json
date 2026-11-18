@@ -1,6 +1,6 @@
 {
   "study": "mochi-control-v8",
-  "revision": 3,
+  "revision": 4,
   "train_seeds": [
     23000,
     23001,
@@ -48,7 +48,7 @@
     "Checked laptop corridor route and state-based route observations. These are engineering changes, not learned weight gains."
   ],
   "scope": "Actual Tinker LoRA post-training of repeated observed-state walking commands, four physical task-profile choices, and post-task arm recovery. Native Unitree gait network, standing balance and IK solver remain fixed. Simulation only.",
-  "selection": "Best development full sequences, then fewer falls, more successful tasks/arrivals/recoveries, fewer recovery contacts, shorter episode time. No test-based selection.",
+  "selection": "Best development full sequences, then fewer falls, more successful tasks/arrivals/recoveries, fewer recovery contacts. If both development episodes fully complete, prefer less mean recovery joint travel before duration. Motion comparisons are otherwise neutral to avoid reward for a different task mix. No held-out-based selection.",
   "comparison": "Parent96 and trained weights use identical frozen V8 code, route, observations, primitives and verifier. Original-stack parent is reported separately to distinguish engineering gains.",
   "checkpoint_retention": "Reuse parent96 full state; add full states at8/16/32/64 plus ephemeral inference snapshots. No deletion or billing changes.",
   "budget": "64 additional optimizer updates, 384 completed domain gradient calls if run completes, 80 examples per update including repeats. At most512 Modal rollouts, max4 workers. Stop on missing physical domain, credentials, or storage headroom.",

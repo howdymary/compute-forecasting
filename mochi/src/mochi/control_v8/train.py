@@ -18,7 +18,9 @@ def log(event,**fields):print('MOCHI_CONTROL_V8 '+json.dumps({'event':event,'at'
 def summary(rows):
  n=len(rows);success=sum(sequence_success(r) for r in rows);arrivals=[a for r in rows for a in r['arrivals']];recoveries=[x for r in rows for x in r['episode'].get('recoveries',[])];completed=[r for r in recoveries if r['success']]
  return {'n':n,'full_successes':success,'wilson_95_full_success_rate':wilson(success,n),'task_successes':{t:sum(r['episode']['results'].get(t,{}).get('success',False) for r in rows) for t in TASKS},'stations_reached':len(arrivals),'station_opportunities':n*4,'falls':sum(r['episode']['fall'] for r in rows),'mean_duration_s':float(np.mean([r['episode']['duration'] for r in rows])),'recovery_successes':len(completed),'recovery_attempts':len(recoveries),'recovery_contact_steps':sum(r['fixture_contact_steps'] for r in recoveries),'successful_recovery_mean_s':float(np.mean([r['duration_s'] for r in completed])) if completed else None,'successful_recovery_mean_joint_travel_rad':float(np.mean([r['arm_joint_travel_rad'] for r in completed])) if completed else None,'mean_arrival_position_error_mm':float(np.mean([r['position_error_mm'] for r in arrivals])) if arrivals else None}
-def rank(s):return (s['full_successes'],-s['falls'],sum(s['task_successes'].values()),s['stations_reached'],s['recovery_successes'],-s['recovery_contact_steps'],-s['mean_duration_s'])
+def rank(s):
+ motion=s['successful_recovery_mean_joint_travel_rad'] if s['full_successes']==s['n'] else 0.
+ return (s['full_successes'],-s['falls'],sum(s['task_successes'].values()),s['stations_reached'],s['recovery_successes'],-s['recovery_contact_steps'],-(motion or 0.),-s['mean_duration_s'])
 def balanced(data,n,rng,by_task=False):
  groups=defaultdict(list)
  for i,(o,a) in enumerate(data):groups[o['task'] if by_task else a].append(i)
