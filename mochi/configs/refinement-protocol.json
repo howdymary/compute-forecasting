@@ -1,0 +1,118 @@
+{
+  "study": "mochi-curriculum-v7",
+  "task_order": [
+    "alarm",
+    "drawer",
+    "laptop",
+    "globe"
+  ],
+  "train_seeds": [
+    12000,
+    12001,
+    12002,
+    12003,
+    12004,
+    12005,
+    12006,
+    12007,
+    12008,
+    12009,
+    12010,
+    12011
+  ],
+  "development_seeds": [
+    15000,
+    15001
+  ],
+  "held_out_seeds": [
+    16000,
+    16001,
+    16002,
+    16003
+  ],
+  "training": {
+    "base_model": "Qwen/Qwen3.5-4B",
+    "rank": 16,
+    "seed": 9723,
+    "updates": 96,
+    "checkpoints": [
+      0,
+      8,
+      16,
+      32,
+      64,
+      96
+    ],
+    "learning_rate": 0.0002,
+    "walking_batch": 48,
+    "task_batch": 4
+  },
+  "validity": {
+    "maximum_tilt_degrees": 30,
+    "minimum_pelvis_height_m": 0.105,
+    "maximum_hand_force_n": 0.8,
+    "dwell_seconds": 0.35,
+    "task_horizon_seconds": {
+      "alarm": 10,
+      "drawer": 10,
+      "laptop": 12,
+      "globe": 10
+    },
+    "walking_leg_horizon_seconds": 24,
+    "maximum_rollouts": 3000,
+    "maximum_modal_workers": 8
+  },
+  "success": {
+    "alarm": "At least 85% button travel, then below 20%, hand contact and release dwell",
+    "drawer": "Below 2 mm open and 10 mm/s for the dwell",
+    "laptop": "Below 5 degrees and 0.15 rad/s, at least 4 degrees of contact-driven progress, release dwell",
+    "globe": "Within 3 degrees of target and 0.07 rad/s for the release dwell",
+    "full_sequence": "All four task verifications in order, no fall, with drawer/laptop/globe still within terminal position and speed tolerances."
+  },
+  "selection": "The final update-96 policy is fixed before new evaluations. Development checkpoints show the learning path and do not select weights.",
+  "scope": "Command-level locomotion and task-profile post-training. Native Unitree gait, classical leg servos and arm IK are fixed. State observations, simulation only.",
+  "uncertainty": "Report raw paired scenario outcomes and Wilson intervals; four fresh test seeds are a pilot, not evidence of broad robotics generalization.",
+  "labels": "Walking imitates a fixed waypoint policy. Task labels are chosen only from actual MuJoCo training trials. No hidden mass, friction, seed, teacher labels or evaluation outcomes enter the model observation.",
+  "observation_version": 3,
+  "held_out_isolated_contact": true,
+  "controller_revision": "v6-pretrain-final: cached arm recovery, laptop prelift, measured foot contacts",
+  "checkpoint_development_seeds": [
+    15000
+  ],
+  "source_dataset_run": 44244443083,
+  "representation": "Independent, documented bins of observed relative target geometry. No teacher action or hidden simulator parameter. Identical encodings reuse the actual Tinker distribution from the same fixed checkpoint.",
+  "walking_sampling": "Uniform action class, then uniform unique encoded training observation within class. More repeats are not new physical evidence.",
+  "contact_label_objective": "Successful profiles only; choose lowest measured peak force, then duration. Cases without a successful profile are excluded and counted.",
+  "additional_training_navigation_rollouts": 32,
+  "budget": {
+    "additional_optimizer_updates": 96,
+    "maximum_total_physical_rollouts": 3000,
+    "maximum_modal_workers": 8,
+    "estimated_minutes": 35,
+    "billing_plan_changes": false
+  },
+  "checkpoint_retention": "All six fixed snapshots are evaluated while alive; only the final full optimizer state is persisted, plus the already archived starting full state. Intermediate inference snapshots expire; trajectories and receipts persist.",
+  "prior_study": "V6: 64 completed updates, development 0 to 3 waypoints/10, 0 full routes/2; all source records retained. New representation tested against starting weights under the same representation.",
+  "frozen_physics_sha256": {
+    "src/mochi/curriculum/world.py": "1cb415d6d66e367e3d2c28146ab6067c1da671461c5ec34728d4487cb13152f6",
+    "src/mochi/curriculum/locomotion.py": "a46937561ccfcce13296ac4d5f2c7422f18e44818941249520d338ac429f4391",
+    "src/mochi/desk/g1_model.py": "7b3d54c7b95e02d5f93515bd01a67115a010ae23a830b3ea16475a2d20be114c"
+  },
+  "raw_trajectory_fields": [
+    "target-relative position",
+    "bearing",
+    "final heading error",
+    "speed",
+    "body tilt",
+    "loaded left/right foot contacts",
+    "last two walking commands"
+  ],
+  "walking_observations": [
+    "range band",
+    "signed bearing band",
+    "signed final-heading band",
+    "signed forward/lateral offset bands",
+    "larger offset axis"
+  ],
+  "controlled_comparison": "Starting and trained policies use identical feature encoding, physics and cache implementation. The comparison measures learning given this engineered representation; no causal claim for encoding versus v6 is made."
+}

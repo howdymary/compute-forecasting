@@ -32,7 +32,7 @@ def sequence_summary(rows):
     successes=sum(complete(x) for x in rows);arrivals=[a for x in rows for a in x['arrivals']]
     return {'n':len(rows),'full_successes':successes,'wilson_95_full_success_rate':wilson(successes,len(rows)),'task_successes':{t:sum(x['episode']['results'].get(t,{}).get('success',False) for x in rows) for t in TASKS},'stations_reached':len(arrivals),'station_opportunities':len(rows)*len(ROUTE),'falls':sum(x['episode']['fall'] for x in rows),'mean_duration_s':float(np.mean([x['episode']['duration'] for x in rows])),'arrival_measurement_n':len(arrivals),'mean_arrival_position_error_mm':float(np.mean([a['position_error_mm'] for a in arrivals])) if arrivals else None,'mean_arrival_heading_error_degrees':float(np.mean([a['heading_error_degrees'] for a in arrivals])) if arrivals else None,'mean_foot_slip_estimate_m':float(np.mean([sum(x['episode']['foot_slip_estimate_m'].values()) for x in rows]))}
 
-async def drive(sampler,renderer,seed,record=False,expert=False,fixed=None):
+async def drive(sampler,renderer,seed,record=False,expert=False,fixed=None,choose_fn=None):
     """LLM decisions observe changing physical state; every integration step is local.
 
     The exact action transcript is independently replayed on Modal below. This
@@ -44,7 +44,7 @@ async def drive(sampler,renderer,seed,record=False,expert=False,fixed=None):
         obs=status['observation']
         if expert:
             action=World.teacher_move(obs) if obs['domain']=='walk' else (fixed or {}).get(obs['domain'],'B');dist=None
-        else:action,dist=await choose(sampler,renderer,obs)
+        else:action,dist=await (choose_fn or choose)(sampler,renderer,obs)
         actions.append(action);decisions.append({'observation':obs,'action':action,'distribution':dist})
         status=runner.advance(action)
     if status['mode']!='done':status={'mode':'budget_exhausted','episode':runner.w.episode(),'arrivals':runner.arrivals}
