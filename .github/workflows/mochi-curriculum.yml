@@ -39,7 +39,7 @@ jobs:
           TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
         run: python -u mochi/scripts/check_tinker_storage.py
       - name: Install curriculum runtime
-        if: contains(fromJSON('["train","resume"]'), steps.phase.outputs.phase)
+        if: contains(fromJSON('["train","resume","evaluate"]'), steps.phase.outputs.phase)
         run: |
           python -m pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu
           python -m pip install './mochi[remote,dev]' pyyaml==6.0.2
@@ -54,14 +54,14 @@ jobs:
             gh run download "$mochi_contact_run" --repo "$GITHUB_REPOSITORY" --dir mochi/.cache/bootstrap
           fi
       - name: Restore the saved training campaign
-        if: steps.phase.outputs.phase == 'resume'
+        if: contains(fromJSON('["resume","evaluate"]'), steps.phase.outputs.phase)
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           mochi_resume_run=$(python -c 'import json;print(json.load(open("mochi/configs/curriculum-phase.json"))["resume_source_run"])')
           gh run download "$mochi_resume_run" --repo "$GITHUB_REPOSITORY" --dir mochi/.cache/resume-source
       - name: Publish credential-free numerical monitor
-        if: contains(fromJSON('["train","resume"]'), steps.phase.outputs.phase)
+        if: contains(fromJSON('["train","resume","evaluate"]'), steps.phase.outputs.phase)
         env:
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
           MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
@@ -84,6 +84,15 @@ jobs:
           EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
           PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
         run: python -u -m mochi.curriculum.resume
+      - name: Complete saved checkpoint evaluation without training
+        if: steps.phase.outputs.phase == 'evaluate'
+        env:
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+          EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
+          PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
+        run: python -u -m mochi.curriculum.finalize
       - uses: actions/upload-artifact@v4
         if: always()
         with:

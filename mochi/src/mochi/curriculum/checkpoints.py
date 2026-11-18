@@ -23,11 +23,10 @@ async def retire_reconstructible_mochi_samplers(rest,training_run_id,archive):
 class StateSampler:
     """Read-only inference after training, one fixed snapshot per evaluation.
 
-    Loading another state happens only after the preceding evaluation finishes.
+    Each state uses a fresh client: Tinker permits load_state only as the first call.
     The canonical saved states stay immutable. This object never takes gradients.
     """
     def __init__(self,service,client=None):self.service=service;self.client=client
     async def load(self,path):
-        if self.client is None:self.client=await self.service.create_training_client_from_state(path)
-        else:await self.client.load_state(path)
+        self.client=await self.service.create_training_client_from_state(path)
         return await self.client.save_weights_and_get_sampling_client(kind='snapshot')
