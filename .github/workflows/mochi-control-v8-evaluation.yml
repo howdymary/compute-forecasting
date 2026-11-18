@@ -6,6 +6,9 @@ on:
 permissions:
   contents: read
   actions: read
+concurrency:
+  group: mochi-source-control-probes
+  cancel-in-progress: false
 jobs:
   evaluate:
     runs-on: ubuntu-latest
