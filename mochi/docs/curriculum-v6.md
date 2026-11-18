@@ -92,3 +92,17 @@ The trained study records Linux x86 trajectories. Native MuJoCo contact dynamics
 ## Direct walking audit
 
 A separately registered `configs/walking-audit-protocol.json` tests eight fresh navigation goals with every saved checkpoint and the classical waypoint controller. It holds contact tasks out of these episodes, so failures during manipulation cannot explain the measured walking result. The main study's development-selected checkpoint remains frozen. This adds no gradient updates and at most 48 local navigation episodes plus 48 independent Modal replays, within the overall 3,000-trial pilot budget.
+
+## Checkpoint storage and recovery
+
+The first run completed update 32 and saved its full optimizer state, then stopped while trying to create an additional sampler copy: the organization's free checkpoint-count limit had been reached. The recovery verifies canonical full optimizer states at 0, 8, 16 and 32 before retiring only three reconstructible sampler copies from this exact Mochi training run. Other projects' checkpoints and all canonical model/Adam states are preserved. The retired-copy mapping is archived in `sampler-cache-recovery.json`. No billing plan was changed.
+
+`resume.py` restores both weights and optimizer state at update 32. Its random batch generator is reconstructed from the saved update-16 generator state, and hashes for batches 17–32 must match the original receipts before training can continue. Only updates 33–64 execute. Evaluation uses fixed ephemeral inference snapshots derived from canonical optimizer states, avoiding redundant persistent sampler checkpoints. The original failure and recovery source revision remain part of the final provenance.
+
+Tinker documents the distinction between [full optimizer and sampler checkpoints](https://tinker-docs.thinkingmachines.ai/tinker/howto/checkpoints/), [fixed ephemeral snapshots](https://tinker-docs.thinkingmachines.ai/tinker/howto/inflight_sampling/), and [organization checkpoint limits](https://tinker-docs.thinkingmachines.ai/administration/checkpoint-storage-pricing/).
+
+A navigation diagnostic can describe executed actions and agreement with the unchanged waypoint teacher. Agreement is a diagnostic, not evidence of task success:
+
+```sh
+PYTHONPATH=mochi/src mochi/.venv/bin/python mochi/scripts/diagnose_curriculum.py --source mochi/artifacts/curriculum --out mochi/artifacts/curriculum/navigation-diagnostic.json
+```
