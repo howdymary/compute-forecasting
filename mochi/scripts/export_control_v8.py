@@ -19,8 +19,12 @@ isolated=json.load(open(a.isolated_source/'report.json')) if a.isolated_source e
 old=json.load(open(out/'manifest.json'))
 if old.get('study')=='mochi-curriculum-v7' and not(out/'manifest-v7.json').exists():shutil.copyfile(out/'manifest.json',out/'manifest-v7.json')
 m={k:report[k] for k in ['study','status','source_sha','optimizer_updates_completed','held_out','rollouts','training_log','selected_checkpoint','protocol','research_allocation','data_audit','evaluation_runtime','paired_outcomes']};m.update(selected_update=selected,parent_optimizer_updates=96,development_seed=dev,default_view='checkpoints',checkpoints=[],workflow_url=f'https://github.com/howdymary/mochi-demo/actions/runs/{a.run_id}',scope=report['scope'],route_file=revision+'-route.json',plot_file=revision+'-checkpoint-results.svg',legacy_original_stack=report.get('legacy_original_stack'),training_counts={d:sum(x['domain_counts'][d] for x in report['training_log']) for d in ['walk','alarm','drawer','laptop','globe','recovery']});write(revision+'-route.json',json.load(open(root/'configs'/('desk-route-clearance.json' if revision=='clearance' else 'desk-route-v8.json'))));m.update({k:report.get(k) for k in ['training_reused','training_study','new_optimizer_updates','training_workflow_url','evaluation_workflow_url','engineering_revision','new_modal_rollouts','source_training_rollouts']})
+m['development_cases']=report['protocol']['development_seeds']
 for cp in report['checkpoints']:
- row=next(x for x in json.load(open(a.source/f"checkpoint-{cp['update']}.json")) if x['seed']==dev);name=f"{revision}-checkpoint-{cp['update']}.json";trace=export(name,row,cp['update']);m['checkpoints'].append({**cp,'file':name,'trace_file':trace})
+ rows=json.load(open(a.source/f"checkpoint-{cp['update']}.json"));cases=[]
+ for seed in m['development_cases']:
+  row=next(x for x in rows if x['seed']==seed);name=f"{revision}-checkpoint-{cp['update']}"+('' if seed==dev else f'-seed-{seed}')+'.json';trace=export(name,row,cp['update']);cases.append({'seed':seed,'file':name,'trace_file':trace})
+ m['checkpoints'].append({**cp,'file':cases[0]['file'],'trace_file':cases[0]['trace_file'],'cases':cases})
 m['fresh']={'cases':[]}
 for seed in report['protocol']['held_out_seeds']:
  pair={'seed':seed}

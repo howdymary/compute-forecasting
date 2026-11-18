@@ -88,4 +88,6 @@ V7 used a different observation representation and navigation tolerance. The V8 
 
 ## Presentation rule
 
-For the public walkthrough, the first successful held-out seed (in declared order) opens as a synchronized before/after example, explicitly labeled as selected after evaluation. The full four-case success rate and every attempt remain available. If no held-out sequence completes, the viewer opens the first development seed. Checkpoint comparison always uses the first declared development seed. This rule is declared before the held-out tests; it changes presentation, not model selection or the reported cohort.
+For the public walkthrough, the first successful held-out seed (in declared order) opens as a synchronized before/after example, explicitly labeled as selected after evaluation. The full four-case success rate and every attempt remain available. If no held-out sequence completes, the viewer opens the first development seed. Checkpoint comparison initially uses the first declared development seed. This default rule was declared before the held-out tests; it changes presentation, not model selection or the reported cohort.
+
+The viewer subsequently added a selector for both development scenarios. Scenario 24001 shows complete sequences from update 8 onward; scenario 24000 retains the laptop failure. The displayed development completion rate remains 1/2. Choosing a walkthrough scenario does not change the selected model or evaluation result.

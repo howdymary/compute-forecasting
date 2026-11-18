@@ -25,6 +25,17 @@ for(const cp of manifest.checkpoints){
  assert.equal(stages[0].episode.duration,expected.duration);
  if(cp.trace_file)assert.equal(nodes.get('#model-trace').href,'curriculum/'+cp.trace_file);
 }
+for(const seed of manifest.development_cases||[]){
+ nodes.get('#development').value=String(seed);nodes.get('#development').onchange();await settle();
+ for(const cp of manifest.checkpoints){
+  nodes.get('#checkpoints').children.find(b=>b.dataset.update===cp.update).onclick();await settle();
+  const c=cp.cases.find(x=>x.seed===seed),expected=JSON.parse(fs.readFileSync('mochi/web/desk/curriculum/'+c.file,'utf8'));
+  assert.equal(stages[0].episode.scenario.seed,seed);assert.equal(stages[1].episode.scenario.seed,seed);
+  assert.equal(stages[0].episode.full_sequence_verified,expected.full_sequence_verified);
+  assert.equal(nodes.get('#model-trace').href,'curriculum/'+c.trace_file);
+  assert.deepEqual(stages[0].episode.trajectory.frames[0],stages[1].episode.trajectory.frames[0]);
+ }
+}
 for(const pair of manifest.fresh.cases){
  nodes.get('#scenario').value=String(pair.seed);nodes.get('#fresh').onclick();await settle();
  assert.equal(stages[0].episode.scenario.seed,pair.seed);
