@@ -135,7 +135,7 @@ class World:
    if phase=='hold' and self.hold_pose is not None:target=self.hold_pose.copy()
    if release:target[2]+=.012
   return target,normal
- def ik(self,side,target,normal):
+ def ik(self,side,target,normal,from_home=False):
   arm=self.arm[side];tmp=self.viz;tmp.qpos[:]=self.d.qpos;tmp.qvel[:]=0;qs=arm['qs'];limits=arm['limits'];tip=arm['tip'];jp=np.zeros((3,self.m.nv));mujoco.mj_forward(self.m,tmp)
   # Solve in separate kinematics data; physical qpos are never overwritten.
   def residual(q):
@@ -144,7 +144,7 @@ class World:
     b1=int(self.m.geom_bodyid[contact.geom1]);b2=int(self.m.geom_bodyid[contact.geom2]);
     if b1 in self.robot_bodies and b2 in self.robot_bodies and contact.dist<-.0003:penalty[b1]=max(penalty[b1],-float(contact.dist)-.0003)
    return np.r_[tmp.site_xpos[tip]-target,(.006 if self.task=='alarm' else .0005)*(tmp.site_xmat[tip].reshape(3,3)[:,0]+normal),4*penalty]
-  opt=least_squares(residual,np.clip(self.d.qpos[qs],limits[:,0]+.00101,limits[:,1]-.00101),bounds=(limits[:,0]+.001,limits[:,1]-.001),max_nfev=35,ftol=1e-7,xtol=1e-7,gtol=1e-8)
+  opt=least_squares(residual,np.clip(arm['rest'] if from_home else self.d.qpos[qs],limits[:,0]+.00101,limits[:,1]-.00101),bounds=(limits[:,0]+.001,limits[:,1]-.001),max_nfev=35,ftol=1e-7,xtol=1e-7,gtol=1e-8)
   return opt.x
  def do_task(self,t,profile=None,max_seconds=10.):
   self.approach_path=[];self.approach_side='left' if t=='laptop' else 'right';self.task=t;self.profile=profile or PROFILES[1];self.phase='approach';self.t0=float(self.d.time);self.hand_contacts=0;self.max_force=0.;self.bad_contacts=0;self.hold_start=None;self.hold_pose=None;self.release_at=None;self.stroke=math.pi-.25;self.progress_contact=0.;first_angle=None;side='left' if t=='laptop' else 'right';arm=self.arm[side];next_control=-1.;next_ik=-1.;qtarget=self.d.qpos[arm['qs']].copy();dwell=0.
@@ -176,14 +176,15 @@ class World:
    if dwell>.35:break
   value=self.value(t);success=bool(dwell>.35 and self.hand_contacts>0 and self.bad_contacts==0 and not self.fall and self.max_force<.8)
   result={'task':t,'success':success,'value':value,'duration':float(self.d.time)-self.t0,'contacts':self.hand_contacts,'non_hand_contact_steps':self.bad_contacts,'max_force_n':self.max_force,'fall':self.fall,'max_tilt_deg':math.degrees(self.max_tilt),'profile':asdict(self.profile),'phase':self.phase,'contact_progress':self.progress_contact};self.results[t]=result;self.events.append({**result,'t':float(self.d.time)});return result
- def rest_arms(self,max_seconds=9.):
-  self.task=None;self.phase='recover';start=float(self.d.time);arm=self.arm[self.approach_side];next_control=-1.;index=0;tip=self.d.site_xpos[arm['tip']].copy();rot=self.d.xmat[1].reshape(3,3);parking=self.d.qpos[:3]+rot@np.array([.015,.045 if self.approach_side=='left' else -.045,0.]);parking[2]=.195;tip[2]=.195;targets=[tip,parking]
+ def rest_arms(self,max_seconds=7.):
+  self.task=None;self.phase='recover';start=float(self.d.time);arm=self.arm[self.approach_side];next_control=-1.;index=0;rot=self.d.xmat[1].reshape(3,3);parking=self.d.qpos[:3]+rot@np.array([.012,.045 if self.approach_side=='left' else -.045,0.]);parking[2]=.145;targets=[self.ik(self.approach_side,parking,np.array([0.,0.,1.]),from_home=True),arm['rest']]
   while self.d.time-start<max_seconds and not self.fall:
    if self.d.time>=next_control:
-    target=self.ik(self.approach_side,targets[index],np.array([0.,0.,1.])) if index<2 else arm['rest'];change=target-self.d.ctrl[arm['acts']];change*=min(1.,.014/max(float(np.max(np.abs(change))),1e-8));self.d.ctrl[arm['acts']]+=change;next_control=float(self.d.time)+CONTROL_DT
-    if index<2 and np.linalg.norm(self.d.site_xpos[arm['tip']]-targets[index])<.006:index+=1
+    target=targets[index];change=target-self.d.ctrl[arm['acts']];change*=min(1.,.014/max(float(np.max(np.abs(change))),1e-8));self.d.ctrl[arm['acts']]=np.clip(self.d.ctrl[arm['acts']]+change,arm['limits'][:,0]+.001,arm['limits'][:,1]-.001);next_control=float(self.d.time)+CONTROL_DT
+    if np.max(np.abs(self.d.qpos[arm['qs']]-target))<.035:
+     if index==1:break
+     index+=1
    self.step(standing=True)
-   if index==2 and np.max(np.abs(self.d.qpos[arm['qs']]-arm['rest']))<.03:break
  def episode(self):return {'scenario':self.s,'events':self.events,'results':self.results,'fall':self.fall,'max_tilt_deg':math.degrees(self.max_tilt),'maximum_applied_base_force':self.base_force,'duration':float(self.d.time),'decisions':self.decisions,'trajectory':{'body_names':[mujoco.mj_id2name(self.m,mujoco.mjtObj.mjOBJ_BODY,i) or 'world' for i in range(self.m.nbody)],'frames':self.frames,'sample_hz':25}}
 
 if __name__=='__main__':
