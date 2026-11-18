@@ -1,0 +1,73 @@
+{
+  "study": "mochi-control-v8-clearance",
+  "status": "rejected-on-development",
+  "workflow_run": 44399512738,
+  "new_optimizer_updates": 0,
+  "promoted": false,
+  "reason": "The originally selected update8 completed0/2 development routes on the wider stance plus XY-balanced press, versus1/2 in the source setup. Reject the engineering revision before new tests. This does not establish that every checkpoint would fail.",
+  "completed_development": [
+    {
+      "update": 0,
+      "cumulative_parent_plus_updates": 96,
+      "checkpoint_id": "85c8fced6732179ac5b3",
+      "created_at": "2026-11-18T21:27:49.724894+00:00",
+      "continuous_development": {
+        "n": 2,
+        "full_successes": 0,
+        "wilson_95_full_success_rate": [
+          0.0,
+          0.6576197724933345
+        ],
+        "task_successes": {
+          "alarm": 0,
+          "drawer": 0,
+          "laptop": 0,
+          "globe": 0
+        },
+        "stations_reached": 0,
+        "station_opportunities": 8,
+        "falls": 0,
+        "mean_duration_s": 35.08906198992633,
+        "recovery_successes": 0,
+        "recovery_attempts": 0,
+        "recovery_contact_steps": 0,
+        "successful_recovery_mean_s": null,
+        "successful_recovery_mean_joint_travel_rad": null,
+        "mean_arrival_position_error_mm": null
+      }
+    },
+    {
+      "update": 8,
+      "cumulative_parent_plus_updates": 104,
+      "checkpoint_id": "0188b0e78f749d276c61",
+      "created_at": "2026-11-18T21:29:58.173714+00:00",
+      "continuous_development": {
+        "n": 2,
+        "full_successes": 0,
+        "wilson_95_full_success_rate": [
+          0.0,
+          0.6576197724933345
+        ],
+        "task_successes": {
+          "alarm": 2,
+          "drawer": 2,
+          "laptop": 0,
+          "globe": 0
+        },
+        "stations_reached": 6,
+        "station_opportunities": 8,
+        "falls": 0,
+        "mean_duration_s": 62.24948703465315,
+        "recovery_successes": 4,
+        "recovery_attempts": 6,
+        "recovery_contact_steps": 68,
+        "successful_recovery_mean_s": 1.4070694238693493,
+        "successful_recovery_mean_joint_travel_rad": 4.4740609868061565,
+        "mean_arrival_position_error_mm": 4.285877895582668
+      }
+    }
+  ],
+  "new_modal_rollouts_completed_in_progress": 4,
+  "fresh_tests_opened": false,
+  "scope": "Early-stopped engineering candidate; not a completed frozen study. Interrupted in-flight calls are not promoted or credited as successful rollouts."
+}
