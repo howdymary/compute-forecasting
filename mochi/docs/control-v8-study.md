@@ -32,6 +32,8 @@ PYTHONPATH=mochi/src python -m pytest mochi/tests/test_control_v8.py -q
 PYTHONPATH=mochi/src python -m mochi.control_v8.train
 ```
 
+Live numerical progress: https://howdymary--mochi-control-v8-monitor-status.us-east.modal.run/
+
 The additive workflow is `.github/workflows/mochi-control-v8.yml`. Configuration and split/selection rules are in `mochi/configs/control-v8-protocol.json`. Exact outputs, trajectories, unsuccessful branches and private model-state references go to ignored `mochi/artifacts/control-v8/`. Public exports must omit private state paths and credentials.
 
 ## Engineering calibration
@@ -39,3 +41,7 @@ The additive workflow is `.github/workflows/mochi-control-v8.yml`. Configuration
 On calibration seed 19001, fixed controls completed all four tasks, all four arrival checks and all four recoveries, without falling. This establishes a working vertical slice before training. It does not establish learned improvement. Isolated laptop calibration seeds 19000 and 19001 also closed the lid through contact.
 
 Results from new training and held-out evaluation will be reported separately after the run completes. Improvement is not assumed in advance.
+
+## Isolated control checks
+
+After development selection, the same held-out seed block also receives separate task and arm-recovery probes. Navigation failure must not hide the quality of those decisions. Before/after task choices share an initial fixture state. Recovery choices share a post-task state produced by the predeclared B/A/P1/A engineering controls. If that reference task fails, the recovery pair is unavailable and counted as such. These resets belong only to isolated tests; the primary demo remains one continuous four-task episode. The additional batch is bounded at 80 physical rollouts and stays within the study’s 512-rollout cap. No resulting outcomes may select training checkpoints.
