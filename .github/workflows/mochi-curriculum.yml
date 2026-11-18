@@ -33,6 +33,11 @@ jobs:
           EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
           PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
         run: python -u mochi/scripts/curriculum_probe.py
+      - name: Inspect checkpoint storage without mutation
+        if: steps.phase.outputs.phase == 'storage'
+        env:
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+        run: python -u mochi/scripts/check_tinker_storage.py
       - name: Install curriculum runtime
         if: steps.phase.outputs.phase == 'train'
         run: |
