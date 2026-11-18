@@ -2,7 +2,7 @@ name: Mochi control study progress
 on:
   push:
     branches: [mochi-desk-v3]
-    paths: ['mochi/src/mochi/control_v8/monitor.py']
+    paths: ['mochi/src/mochi/control_v8/monitor.py', '.github/workflows/mochi-control-monitor.yml']
 permissions:
   contents: read
 jobs:
@@ -18,4 +18,24 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: '3.11'}
       - run: python -m pip install modal==1.6.4
+      - name: Close a confirmed cancelled engineering study
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PYCODE'
+          import json,os,subprocess,time,modal
+          from pathlib import Path
+          p=Path('mochi/evidence/control-v8-clearance/rejection.json')
+          if p.exists():
+              record=json.loads(p.read_text());run=str(record['workflow_run'])
+              status=json.loads(subprocess.check_output(['gh','run','view',run,'--repo',os.environ['GITHUB_REPOSITORY'],'--json','status,conclusion']))
+              assert status=={'status':'completed','conclusion':'cancelled'},status
+              store=modal.Dict.from_name('mochi-control-clearance-progress')
+              latest=store.get('latest',{})
+              if str(latest.get('workflow_run'))==run and latest.get('status')=='running':
+                  assert latest.get('held_out') is None
+                  latest.update(status='incomplete',phase='Rejected on development before fresh tests',outcome='rejected-on-development',stopped_at_utc=time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime()),new_optimizer_updates=0)
+                  store.put('latest',latest)
+                  print('Closed cancelled engineering run',run,'without modifying the source training record')
+          PYCODE
       - run: python -m modal deploy -m mochi.control_v8.monitor
