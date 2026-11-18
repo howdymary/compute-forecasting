@@ -3,17 +3,30 @@
 <!-- MOCHI_CURRICULUM_START -->
 ## Walking and contact policy learning
 
-Mochi is now a 22.1 cm Unitree G1 that walks across one human-size desk to silence a traditional alarm clock, close a drawer, close a laptop and align a globe. One MuJoCo world and clock carry the robot through the sequence. Blender and Three.js display its recorded physical motion.
+Mochi is a 22.1 cm Unitree G1 that walks across one human-size desk to silence an alarm, close a drawer, close a laptop and align a globe. Each run uses one continuous MuJoCo world. Three.js and Blender replay the measured motion.
 
-**[Open the current visual demo](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/)** · **[Methods and reproduction](docs/curriculum-v6.md)** · **[Refinement campaign](https://github.com/howdymary/mochi-demo/actions/runs/44249364166)**
+**[Open the learned demo](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/)** · **[Methods and reproduction](docs/curriculum-v6.md)** · **[Numerical evidence](evidence/curriculum-v6/reference-results.json)** · **[Actual training execution](https://github.com/howdymary/mochi-demo/actions/runs/44244443083)**
 
-The public preview currently shows a **manual engineering calibration**: all four tasks completed in 86.33 simulated seconds, with no fall or task-boundary resets. It has zero trained-selector updates and is labeled accordingly.
+Tinker completed **64 optimizer updates** of Qwen3.5-4B with LoRA rank 16. Every update included gradients for walking and all four contact tasks: 768 walking examples and 320 examples per task, including repeats. This trains repeated velocity-command choices and contact-profile choices. The official Unitree gait, standing balance and arm IK stay fixed. It is state-based simulation, without hardware validation or a learned vision system.
 
-The first Tinker campaign completed **64 real optimizer updates** of one Qwen3.5-4B LoRA model, with gradients for walking and every contact task. Development waypoint arrivals rose from 0/10 to 3/10, and the model completed two alarm tasks. It did **not** complete a full four-task route. Fresh-scenario evaluation is running from the saved weights; training has not been repeated for API recovery.
+| Held-out reference test | Starting weights | Update 64 |
+|---|---:|---:|
+| Complete four-task routes | 0/4 | 1/4 |
+| Navigation waypoints reached | 0/20 | 10/20 |
+| Laptop close, tested separately | 0/4 | 4/4 |
+| Drawer close, tested separately | 4/4 | 3/4 |
 
-A separate **[96-update refinement](docs/refinement-v7.md)** is queued with the same frozen physics, explicit encodings of observed geometry, balanced walking examples and lower-force successful contact labels. It compares starting and trained weights under the same encoding on new scenarios. Its results are pending.
+The opening scene is the successful scenario **14001, chosen after evaluation**. It is not a reliability estimate. All four test cases, including failures, are available in the demo. Checkpoints 0, 8, 16, 32 and 64 share the same development scenario and preserve early regressions. The test conditions change starting pose and physical parameters within the same desk layout.
 
-The learned interface chooses repeated walking commands and task-contact profiles. The official Unitree gait, classical standing balance and arm inverse kinematics are fixed. Observations are simulator state. The refinement uses explicit geometry bins; raw observations remain in the recorded trajectories. Exa searches and source-verified past.dev handoffs inform training allocation; Modal runs the physical experiments. Claims about learned improvement require completed evaluation.
+The [model-decision trace](web/desk/curriculum/model-decisions-14001.json) contains actual checkpoint probabilities and actions. With an identical initial walking observation, the starting policy chose `left`; the trained policy chose `forward`. On identical isolated laptop observations, the chosen profile changed from A to C. [Provenance checks](web/desk/curriculum/provenance-checks.json) verify these comparisons against the source records.
+
+Exa ran three failure-directed searches. past.dev supplied eleven source-verified cross-role recalls and a passed private-audience canary. Recalled proposals changed the training allocation. Modal completed 706 source trials, including the contact experiments used for training and held-out task evaluation. Sponsor calls and outcomes are retained; no causal benefit from search or memory has been established by an ablation.
+
+Open-loop action replay diverged between runtimes. A [separate closed-loop Modal replication](https://github.com/howdymary/mochi-demo/actions?query=workflow%3A%22Mochi+frozen-policy+closed-loop+validation%22) keeps each before/after/classical triplet on one worker and reports its results separately. The demo exposes its numerical status. We do not claim identical cross-runtime replay.
+
+The traditional clock uses attributed Sand3D/NVIDIA SimReady geometry. Its native hammer and stem are adapted as the benchmark's spring-loaded silencer, replacing the floating button housing. The source asset is rigid; it does not provide a working stop mechanism. Fine visual geometry uses simplified collision envelopes.
+
+The proposed 96-update refinement was stopped during dependency installation and completed **zero** optimizer updates. Its protocol remains a future study. The current demonstration uses the measured 64-update policy.
 
 ## Archived supported-pushing studies
 <!-- MOCHI_CURRICULUM_END -->
