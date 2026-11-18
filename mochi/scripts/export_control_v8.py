@@ -28,6 +28,9 @@ for seed in report['protocol']['held_out_seeds']:
   row=next(x for x in json.load(open(a.source/f'held-out-{label}.json')) if x['seed']==seed);name=f'{revision}-held-out-{seed}-{key}.json';pair[key]=name;pair[key+'_trace']=export(name,row,0 if key=='before' else selected)
  m['fresh']['cases'].append(pair)
 m['fresh'].update(m['fresh']['cases'][0]);successful=[x for x in report['paired_outcomes'] if x['trained_full']]
+m['full_route_timing']={}
+for label in ['starting_model','post_trained_model','classical_fixed']:
+ rows=json.load(open(a.source/f'held-out-{label}.json'));times=[x['episode']['duration'] for x in rows if x['full_success']];m['full_route_timing'][label]={'completed':len(times),'attempted':len(rows),'mean_simulation_seconds':sum(times)/len(times) if times else None,'scope':'Completed full routes only; remote inference waiting time excluded.'}
 if successful:m['default_view']='showcase';m['presentation_rule']='Default: first successful held-out seed, chosen after evaluation and explicitly labeled. All four outcomes remain visible. Checkpoint view uses the first declared development seed.';m['showcase']={**next(x for x in m['fresh']['cases'] if x['seed']==successful[0]['seed']),'selection':'Successful example chosen after evaluation for presentation. Every held-out attempt remains available; this is not an average result.'}
 services=report['services'];m['memory']=services['eligibility'];m['search_calls']=len(services['sources']);m['sources']=list({s['url']:s for r in services['sources'] for s in r['sources']}.values());records={r['id']:r for r in services['records']};m['memory_handoffs']=[]
 for r in services['reads']:

@@ -63,6 +63,10 @@ No checkpoint deletion or billing-plan changes are part of this training study. 
 Integration paths: [training](src/mochi/control_v8/train.py), [Modal execution](src/mochi/control_v8/remote.py), [physical controls](src/mochi/control_v8/manipulation.py), [recovery](src/mochi/control_v8/recovery.py), [memory](src/mochi/desk/services.py), [search](src/mochi/integrations.py).
 <!-- MOCHI_CURRICULUM_END -->
 '''
+design_path=root/'evidence/control-v8/recovery-design-audit.json'
+if design_path.exists():
+ design=json.load(open(design_path))['summary'];note=f"The recovery primitives were checked on training-only branches before learning. Across {design['both_valid']} shared states where both choices passed, the parking-detour option averaged {design['parking_mean_hand_path_m']*100:.1f} cm of hand travel; the chosen safe labels averaged {design['selected_mean_hand_path_m']*100:.1f} cm. This measures the engineered alternatives, not a held-out gain from trained weights. [Design audit](evidence/control-v8/recovery-design-audit.json).\n\n"
+ block=block.replace('### Services used',note+'### Services used')
 if iso:
  extra='\nSeparate task and recovery probes use the same held-out seed block after checkpoint selection. Recovery choices start from shared post-task states, so walking failure cannot hide them. '
  for label in ['starting_model','post_trained_model']:

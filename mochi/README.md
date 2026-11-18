@@ -26,6 +26,8 @@ The old laptop press could not sustain enough closing torque. The new controller
 
 A universal parking detour caused unnecessary arm travel. The revised options include direct folding where safe and outward shoulder clearance before lowering beside the alarm. These are engineered primitives. Tinker learns which commands and primitives to choose; their implementation is frozen across the weight comparison. Recovery checks include stable joints, low speed, no fall and no fixture-contact steps above 0.01 N.
 
+The recovery primitives were checked on training-only branches before learning. Across 22 shared states where both choices passed, the parking-detour option averaged 19.6 cm of hand travel; the chosen safe labels averaged 9.3 cm. This measures the engineered alternatives, not a held-out gain from trained weights. [Design audit](evidence/control-v8/recovery-design-audit.json).
+
 ### Services used
 
 - **Tinker:** real supervised post-training, completed forward/backward and optimizer calls, durable intermediate states, and fixed-checkpoint inference in closed-loop simulation. No extra optimizer updates are credited to evaluation-only probes.
