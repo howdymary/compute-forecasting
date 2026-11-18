@@ -1,1 +1,13 @@
-{"study":"mochi-curriculum-v7","source_run":44255635428,"extra_optimizer_updates":0,"revision":1,"inference":"Fresh SamplingClient instances read the existing saved training weights; no checkpoint writes."}
+{
+  "study": "mochi-curriculum-v7",
+  "source_run": 44255635428,
+  "extra_optimizer_updates": 0,
+  "revision": 2,
+  "inference": "Restore immutable full states in fresh clients; create only in-memory inference snapshots. No gradients or persistent checkpoint writes.",
+  "prior_evaluation_attempts": [
+    {
+      "run": 44266166654,
+      "failure": "Live API requires sampler weights for direct SamplingClient paths; full-state direct sampling is unsupported."
+    }
+  ]
+}

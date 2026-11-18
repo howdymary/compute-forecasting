@@ -19,15 +19,16 @@ async def main():
  from tinker_cookbook.recipes.decisions import DecisionRenderer
  cfg=json.loads((ROOT/'configs/refinement-evaluation.json').read_text());source=next((ROOT/'.cache/refinement-source').rglob('incomplete.json')).parent
  shutil.copytree(source,OUT,dirs_exist_ok=True);report=json.loads((source/'incomplete.json').read_text());paths=json.loads((source/'checkpoint-paths.json').read_text());prior_services=report['services'];protocol=report['protocol'];selected=report['selected_checkpoint']['update'];assert selected==96 and report['optimizer_updates_completed']==96
- report.update(status='running',phase='Restore saved states for inference',recovery={'training_run':cfg['source_run'],'evaluation_run':os.getenv('GITHUB_RUN_ID'),'evaluation_source_sha':os.getenv('GITHUB_SHA'),'extra_optimizer_updates':0,'reason':'Final full training checkpoint was saved; free storage limit then closed the original service client. Use fresh inference clients on the immutable saved states.','original_error_type':report.pop('error_type',None),'original_error':report.pop('error',None)})
+ report.update(status='running',phase='Restore saved states for inference',recovery={'prior_evaluation_attempts':cfg.get('prior_evaluation_attempts',[]),'training_run':cfg['source_run'],'evaluation_run':os.getenv('GITHUB_RUN_ID'),'evaluation_source_sha':os.getenv('GITHUB_SHA'),'extra_optimizer_updates':0,'reason':'Final full training checkpoint was saved; free storage limit then closed the original service client. Use fresh inference clients on the immutable saved states.','original_error_type':report.pop('error_type',None),'original_error':report.pop('error',None)})
  services=DeskServices();clients=[];snapshots={};selectors={};start=time.perf_counter()
  async def publish():
   report['services']=merged_services(prior_services,services.report());save('progress',report);await modal.Dict.from_name('mochi-curriculum-v7-progress',create_if_missing=True).put.aio('latest',report)
  try:
-  # Official SamplingClient supports saved training weights. No training client,
-  # checkpoint write, gradient operation or billing change is needed here.
+  # Restore each full state into a fresh client, then make an in-memory
+  # inference snapshot. The live API rejects full-state paths for direct
+  # sampling despite an upstream example. No persistent checkpoint is written.
   for u in [0,selected]:
-   service=tinker.ServiceClient(display_name='mochi-v7-readonly-'+str(u));clients.append(service);snapshots[u]=await service.create_sampling_client(model_path=paths[str(u)]['optimizer']);selectors[u]=CachedSelector()
+   service=tinker.ServiceClient(display_name='mochi-v7-readonly-'+str(u));clients.append(service);restored=await service.create_training_client_from_state(paths[str(u)]['optimizer']);snapshots[u]=await restored.save_weights_and_get_sampling_client(kind='snapshot');selectors[u]=CachedSelector()
   renderer=DecisionRenderer(renderers.get_renderer(model_info.get_recommended_renderer_name('Qwen/Qwen3.5-4B'),snapshots[0].get_tokenizer()));models=[('starting_model',sampler_payload(snapshots[0])),('post_trained_model',sampler_payload(snapshots[selected])),('classical_fixed',None)];fixed=report['fixed_baseline'];test_seeds=protocol['held_out_seeds']
   async with physics_app.run(),policy_app.run():
    report['phase']='Read-only saved-state inference probe';await publish();probe=await evaluate_bundle.remote.aio(12000,models[:2],fixed,record=False,probe=True,encoded=True);save('recovery-probe',probe)
