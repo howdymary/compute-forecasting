@@ -25,4 +25,10 @@ def web():
    report=modal.Dict.from_name('mochi-curriculum-v6-validation-progress').get('latest',{})
    return {key:report.get(key) for key in ['status','phase','extra_optimizer_updates','remote_inference_probe_passed','modal_held_out','modal_isolated_walking','modal_rollouts_completed']}
   except Exception:return {'status':'unavailable','phase':'See the validation execution receipt'}
+ @api.get('/api/training')
+ def training():
+  try:
+   report=modal.Dict.from_name('mochi-curriculum-v7-progress').get('latest',{})
+   return {'study':report.get('study'),'status':report.get('status'),'phase':report.get('phase'),'optimizer_updates_completed':report.get('optimizer_updates_completed',0),'checkpoints':[{'update':c['update'],'development':c['continuous_development']} for c in report.get('checkpoints',[])],'memory':report.get('services',{}).get('eligibility',{}),'held_out':report.get('held_out')}
+  except Exception:return {'status':'unavailable','phase':'See the training execution receipt'}
  api.mount('/',StaticFiles(directory='/web',html=True));return api
