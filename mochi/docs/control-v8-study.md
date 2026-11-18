@@ -50,7 +50,9 @@ These are four fixed-layout simulation cases from one training run, not a genera
 
 ## Isolated control checks
 
-The revised clearance study runs separate task and arm-recovery probes on seeds 26000–26003 after its development selection. The original V8 source study evaluates full routes only. Navigation failure must not hide the quality of those decisions. Before/after task choices share an initial fixture state. Recovery choices share a post-task state produced by the predeclared B/A/P1/A engineering controls. If that reference task fails, the recovery pair is unavailable and counted as such. These resets belong only to isolated tests; the primary demo remains one continuous four-task episode. The additional batch is bounded at 80 physical rollouts and stays within the study’s 512-rollout cap. No resulting outcomes may select training checkpoints.
+Separate task and arm-recovery probes use the original source test seeds 25000–25003 after immutable checkpoint selection. These are diagnostics on the same four scenario parameters, not four additional independent full-route tests. Navigation failure must not hide the quality of those decisions. Before/after task choices share an initial fixture state. Recovery choices share a post-task state produced by the predeclared B/A/P1/A engineering controls. If that reference task fails, the recovery pair is unavailable and counted as such. These resets belong only to isolated tests; the primary demo remains one continuous four-task episode. The additional batch is bounded at 80 physical rollouts and stays within the 512-rollout cap, including the separately recorded rejected revision. No resulting outcomes may select training checkpoints.
+
+The wider-stance/XY-force engineering candidate was stopped after update 8 regressed from 1/2 to 0/2 development completions. It was not promoted, and its fresh 26000-series tests stayed unopened. [The rejection record](../evidence/control-v8-clearance/rejection.json) preserves the observed failure; it is not presented as a completed frozen study or evidence that every checkpoint would fail.
 
 ## Timing and deployment limits
 

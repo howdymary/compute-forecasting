@@ -14,7 +14,7 @@ The completed source study is [run 44382265039](https://github.com/howdymary/moc
 
 Tinker learns walking commands, task-contact profiles and arm-recovery choices from simulation state. The native Unitree gait network, standing balance and IK remain fixed. Parent and selected weights share the same physical setup. The selected model and fixed baseline each completed4/4 source test routes; the parent weights completed0/4 through the V8 interface. These four fixed-layout cases do not establish broad robotics performance.
 
-The clearance workflow reuses those same weights with zero additional optimizer updates. It tests the outward stance and XY-balanced press separately and retains the original source results. Exact numerical records: [source evidence](../evidence/control-v8/results.json), [clearance protocol](../configs/clearance-protocol.json).
+The clearance candidate reused those same weights with zero additional optimizer updates. It regressed on development and was stopped before fresh testing; it is not deployed. Separate task/recovery diagnostics use the original setup and immutable selected weights. Exact numerical records: [source evidence](../evidence/control-v8/results.json), [clearance protocol](../configs/clearance-protocol.json).
 
 Local Modal credentials remain unavailable; existing Actions credentials are the usable path. Provider keys remain on the backend. No credential is copied into the replay. Service receipts establish actual use, not billed credit amounts or a causal gain from search/memory. Canonical model-state paths are private; public exports contain hashes and measured trajectories. No new checkpoint deletion or billing change is part of this study.
 <!-- MOCHI_CONTROL_INTEGRATIONS_END -->
