@@ -3,14 +3,16 @@ import time
 from pathlib import Path
 import modal
 ROOT=Path(__file__).resolve().parents[3]
-image=(modal.Image.debian_slim(python_version='3.11')
+base_image=(modal.Image.debian_slim(python_version='3.11')
  .apt_install('libgl1','libglib2.0-0')
  .run_commands('pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu')
  .pip_install('mujoco==3.3.7','numpy==2.3.4','scipy==1.16.3','pyyaml==6.0.2')
- .env({'MOCHI_ROOT':'/app','PYTHONPATH':'/app/src','MUJOCO_GL':'disable','PYTHONWARNINGS':'ignore'})
- .add_local_dir(ROOT/'src',remote_path='/app/src')
- .add_local_dir(ROOT/'assets/robot/g1',remote_path='/app/assets/robot/g1')
- .add_local_dir(ROOT/'assets/robot/locomotion',remote_path='/app/assets/robot/locomotion'))
+ .env({'MOCHI_ROOT':'/app','PYTHONPATH':'/app/src','MUJOCO_GL':'disable','PYTHONWARNINGS':'ignore'}))
+def with_assets(base):
+    return (base.add_local_dir(ROOT/'src',remote_path='/app/src')
+      .add_local_dir(ROOT/'assets/robot/g1',remote_path='/app/assets/robot/g1')
+      .add_local_dir(ROOT/'assets/robot/locomotion',remote_path='/app/assets/robot/locomotion'))
+image=with_assets(base_image)
 app=modal.App('mochi-curriculum-v6')
 
 def receipt(start):

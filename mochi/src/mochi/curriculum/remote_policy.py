@@ -5,10 +5,10 @@ Workers receive the existing key only as a backend Modal secret.
 """
 import asyncio,dataclasses,os,pickle,time,platform
 import modal
-from .remote import image as physics_image,Runner
+from .remote import base_image,with_assets,Runner
 from .world import World
 app=modal.App('mochi-curriculum-v6-closed-loop')
-image=physics_image.pip_install('httpx==0.28.1','tinker==0.39.0','tinker-cookbook==0.6.1','transformers==5.23.0')
+image=with_assets(base_image.pip_install('httpx==0.28.1','tinker==0.39.0','tinker-cookbook==0.6.1','transformers==5.23.0'))
 backend_key=modal.Secret.from_dict({k:os.environ[k] for k in ['TINKER_API_KEY'] if k in os.environ})
 
 def sampler_payload(sampler):
