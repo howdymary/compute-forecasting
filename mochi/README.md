@@ -1,103 +1,69 @@
-# MOCHI — Navigation and Manipulation Policy Learning
+# MOCHI — Walking, Contact and Recovery Policy Learning
 
-A 22.1 cm Unitree G1 walks across one desk to silence an alarm, close a drawer,
-close a laptop and align a globe. MuJoCo produces the motion and outcomes.
-The web demo replays measured trajectories; Blender renders the same recordings.
+<!-- MOCHI_CURRICULUM_START -->
+## Current: Learning walking, task and arm-recovery decisions
 
-[Trained checkpoints](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/)
-· [Route study](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/planning.html)
-· [V7 results](docs/refinement-v7-results.md)
-· [Planning methods](docs/path-planning-study.md)
+[Interactive before/after demo](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/) · [V8 methods](docs/control-v8-study.md) · [Numerical evidence](evidence/control-v8/results.json) · [Training execution](https://github.com/howdymary/mochi-demo/actions/runs/44382265039) · [Archived V7 viewer](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/?study=v7)
 
-## What has actually run
+A 22.1 cm Unitree G1 walks around one desk, silences an alarm, closes a drawer and laptop, then aligns a globe. Each displayed checkpoint is a separate uninterrupted MuJoCo episode. The interface replays the recorded robot and object transforms, with synchronized before/after views and actual model decisions.
 
-**Completed V7 training:** Tinker post-trained Qwen3.5-4B with rank-16 LoRA for
-96 optimizer updates. Every update included walking-command selection and all
-four task-profile domains. The native Unitree gait network, standing balance
-and arm IK were fixed. This was supervised controller selection from simulation
-state, not motor-level gait training.
+Tinker completed **64 additional optimizer updates and 384 domain-gradient calls**, resuming the retained V7 update-96 state. Every update trains walking commands, all four task-profile choices and active-arm recovery. The Qwen3.5-4B LoRA selector reads simulation state. The native gait network, standing balance, arm IK and physical motion primitives remain fixed. This is command/profile learning, not learning motor torques or gait-network weights.
 
-The selected model completed one of four held-out full routes and reached all
-20 waypoints without falling. It reached eight of eight isolated navigation
-goals, versus zero for the starting weights. The fixed controller also reached
-eight and completed one of four full routes. Superiority over fixed control
-was not established. Alarm performance regressed in isolated tests; laptop
-reliability remains limited. The viewer retains six checkpoints and all four
-test pairs, including failures.
+Development selection chose **8 additional updates**. Counts describe the whole training campaign; the selected checkpoint may precede update 64. The latest checkpoint is not automatically the selected one. Checkpoints 0/8/16/32/64, including regressions, are retained and shown.
 
-**Current route study:** structured reference planning, local targets, latched
-final alignment and measured stopping drift are being tested with fixed control.
-This phase has performed **zero additional Tinker optimizer updates**.
-[Its calibration results](evidence/planning/results.json) are an engineering
-comparison, not a gain from new model weights.
+| Four matched held-out scenarios | Parent weights, V8 setup | Selected V8 weights | Fixed controller |
+|---|---:|---:|---:|
+| Complete four-task sequences | 0/4 | 4/4 | 4/4 |
+| Walking stations reached | 0/16 | 16/16 | 16/16 |
+| Falls | 0 | 0 | 0 |
+| Valid arm recoveries / attempts | 0/0 | 16/16 | 16/16 |
 
-The storage audit found 100 checkpoints at the free checkpoint-count limit,
-including six Mochi full states. They were preserved; billing was not changed.
-Further training is gated on physical feasibility and durable storage.
+Four scenarios and one training run are a small simulation pilot. Walking failures can prevent later tasks from being attempted. Task success, recovery success and full-sequence success are distinct checks. Raw paired outcomes and uncertainty are in the evidence. The original V7 stack is evaluated separately; its engineering differences are not attributed to weight training.
 
-## Inspect the demo
+### What was fixed before training
 
-The original viewer shows actual V7 checkpoints, paired tests, model-decision
-traces and verified memory handoffs. The successful test example was selected
-after evaluation and is labeled as one of four; the default remains the
-predeclared development case.
+The old laptop press could not sustain enough closing torque. The new controller contacts the upper lid edge from a front-right stance, applies bounded actuator force, then withdraws while gravity finishes closing. The hinge, object properties and success criteria remain unchanged.
 
-The planning viewer adds a top-down desk plan, planned/executed paths, local
-targets, approach directions and tracking error. Old and new fixed-control
-episodes play at the same simulation time. Top-down, follow, side and foot
-views inspect the same physical sequence. The path overlay can be hidden.
+A universal parking detour caused unnecessary arm travel. The revised options include direct folding where safe and outward shoulder clearance before lowering beside the alarm. These are engineered primitives. Tinker learns which commands and primitives to choose; their implementation is frozen across the weight comparison. Recovery checks include stable joints, low speed, no fall and no fixture-contact steps above 0.01 N.
 
-Each four-task attempt preserves physical state throughout. No task resets,
-teleports, external base forces or animated root motion determine the result.
-The planning study's primary calibration seed, 19000, was declared before its
-paired results. Proposed new held-out scenarios remain unopened.
+### Services used
 
-## Sponsor integrations
+- **Tinker:** real supervised post-training, completed forward/backward and optimizer calls, durable intermediate states, and fixed-checkpoint inference in closed-loop simulation. No extra optimizer updates are credited to evaluation-only probes.
+- **Modal:** 255 physical rollouts across the training/evaluation evidence, bounded at four CPU workers per function. The before/selected/fixed comparisons share one worker per scenario. Small MuJoCo experiments run on CPUs.
+- **Exa:** 2 searches inside the research/training loop. Retrieved evidence informs bounded proposals; it is not executed as code.
+- **past.dev:** 11 writes, 11 recall requests and 8 source-verified cross-role handoffs. Recalled proposals select between predeclared training allocations. Credit charges are not available from these API receipts.
 
-| Service | Actual use | Source |
-|---|---|---|
-| Tinker | V7 LoRA training, saved-state recovery and inference. Planning roles use inference only. | [Training](src/mochi/curriculum/refine.py), [recovery](src/mochi/curriculum/finalize_refinement.py), [receipts](evidence/refinement-v7/results.json) |
-| Modal | Pinned CPU MuJoCo trials, parallel contact calibration and paired closed-loop evaluation. | [Planning workers](src/mochi/planning/remote.py), [V7 workers](src/mochi/curriculum/remote_policy.py) |
-| Exa | Failure-derived searches in the main research loop, with request IDs and source links. | [HTTP adapter](src/mochi/integrations.py), [planning loop](src/mochi/planning/baseline.py) |
-| past.dev | Real ingestion, audience controls and source-verified cross-identity recalls. | [Memory client](src/mochi/desk/services.py), [planning evidence](evidence/planning/results.json) |
+### past.dev challenge
 
-Search and memory have no causal ablation. Service receipts establish use,
-not that either service caused a control improvement.
+**Agents:** research, policy design, experiment execution and criticism use separate identities and explicit audiences.
 
-## past.dev challenge
+**Layers:** prompts hold working context; past.dev stores sourced findings, outcomes and qualified conclusions; versioned code stores procedures; Mochi artifacts store numerical measurements and trajectories.
 
-### Agents
+**Results:** 4 writing identities, 4 verified reading identities and 8 cross-role recalls. Private critic audience isolation passed.
 
-Four application roles use distinct instructions and identities: research,
-policy design, experiment execution and criticism. Research writes a sourced
-proposal; design recalls it; execution recalls the plan and writes results;
-criticism recalls evidence and writes a verdict; research recalls the verdict.
-In the planning loop, the recalled plan selects a real additional physical probe.
+**Caveats:** canonical payloads are resolved only after verifying returned source IDs. No causal memory or search ablation is claimed. Training examples include repetitions, not new market or physical observations at each update.
 
-### Layers
+### Inspect and run
 
-Prompts hold working context. past.dev holds findings and conclusions.
-Versioned code holds procedures. Exact measurements and trajectories live in
-Mochi artifacts. Fixed shared and critic-only audiences enforce access;
-a synthetic private canary checks isolation.
+Run from the repository root. Provider credentials stay on the backend, using the repository's existing GitHub Actions secrets.
 
-### Results
+```sh
+PYTHONPATH=mochi/src python -m pytest mochi/tests/test_control_v8.py -q
+node mochi/scripts/check_replay_ui.mjs
+python3 -m http.server 4028 --directory mochi/web/desk
+PYTHONPATH=mochi/src python -m mochi.control_v8.train
+```
 
-The V7 training/recovery campaign recorded 11 writes, 11 recalls and nine
-verified cross-identity recalls. The new planning receipts are reported
-separately in [its evidence](evidence/planning/results.json).
-Dependent reads require completed ingestion and the expected source ID.
+The training command starts a new research run and requires access to the retained parent checkpoint. Canonical trained states remain in the owner's Tinker account; public receipts identify them by hash. Archived trajectories can be replayed without service credentials. The numerical evidence and execution artifacts support inspection; trained state access is required for an exact policy rerun.
 
-### Caveats
+No checkpoint deletion or billing-plan changes are part of this training study. Forecasting code, deployments and archived results remain separate. The older V6/V7 studies and their failures remain in their original evidence directories.
 
-Canonical numerical records are resolved only after verifying recalled source
-IDs. There is no silent memory fallback. Memory's performance benefit is
-unestablished. Corrections retain provenance; native semantic supersession
-is not assumed.
+Integration paths: [training](src/mochi/control_v8/train.py), [Modal execution](src/mochi/control_v8/remote.py), [physical controls](src/mochi/control_v8/manipulation.py), [recovery](src/mochi/control_v8/recovery.py), [memory](src/mochi/desk/services.py), [search](src/mochi/integrations.py).
+<!-- MOCHI_CURRICULUM_END -->
 
-## Run from the repository root
+## Fresh environment and rendering
 
-Reuse the existing Mochi environment when present. For a new environment:
+Reuse `mochi/.venv` when available. For a new environment, run from the repository root:
 
 ```sh
 uv venv --python 3.11 mochi/.venv
@@ -106,56 +72,20 @@ uv pip install --python mochi/.venv/bin/python -e './mochi[remote,dev,plots]' py
 mochi/.venv/bin/python mochi/scripts/fetch_visual_models.py
 ```
 
-Backend integrations use existing `TINKER_API_KEY`, `EXA_API_KEY`,
-`PAST_API_KEY`, `MODAL_TOKEN_ID` and `MODAL_TOKEN_SECRET`.
-See [integration setup](docs/integrations.md). Mochi workflows explicitly
-inject existing GitHub secret references. No credential belongs in the viewer.
-
-Local planning and fixed control need no service credentials:
-
-```sh
-PYTHONPATH=mochi/src mochi/.venv/bin/python -m mochi.planning.route
-PYTHONPATH=mochi/src mochi/.venv/bin/python -m mochi.planning.follower --seed 19000
-mochi/.venv/bin/python mochi/scripts/draw_route.py
-PYTHONPATH=mochi/src mochi/.venv/bin/python -m pytest -q mochi/tests/test_planning.py
-python3 -m http.server 8047 --directory mochi/web/desk
-```
-
-Open `http://localhost:8047/planning.html` or `curriculum.html`.
-The additive `mochi-planning*.yml` workflows run remote calibration and actual
-service handoffs. The [next training plan](configs/path-training-plan.json)
-has not run. Rerunning the old V7 entrypoint is not a continuation of the new
-tracking interface.
-
-Render an episode exported from the workflow artifact:
+See [the integration inventory](docs/integrations.md) for local versus remote credentials. The additive Mochi workflows inject existing backend secret references. The local replay server requires no provider credentials.
 
 ```sh
 blender -b -t 4 -P mochi/scripts/render_curriculum.py -- \
-  --input mochi/artifacts/planning/episode.json \
-  --out mochi/artifacts/planning/render --time 30 --samples 32 \
-  --camera topdown --route mochi/configs/desk-route-v1.json
+  --input mochi/web/desk/curriculum/v8-held-out-25000-after.json \
+  --out mochi/artifacts/inspection --time 53.394657 --samples 32 --camera follow
 ```
 
-Use `--camera side` or `--camera feet` for inspection.
-`--animate` writes the recorded animation into a Blender scene. Large outputs
-and caches stay out of Git.
+The source-study render uses actual selected-checkpoint motion. Use `--camera side` or `feet` to inspect gait, or `--animate` to save the recorded animation in a Blender scene. Large generated outputs and caches stay out of Git.
 
-## Limits and provenance
+## Provenance and limits
 
-This is a small fixed-layout simulation study. Waist and fingers are fixed.
-There is no camera input or hardware validation. Seven sampled planning
-configurations and a 25 Hz replay audit do not certify continuous collision
-freedom. Tracking/braking margins remain assumptions to test. Longer paths,
-failed tasks and checkpoint regressions are retained.
+This is a fixed-layout, state-observation simulation study. Waist and fingers are fixed. There is no camera input or hardware validation. Remote model inference pauses simulation time; displayed completion times exclude those waits. Sampled clearance checks do not certify continuous collision freedom.
 
-The original supported puck hackathon slice is preserved in
-[the archived README](docs/archive/initial-puck-slice.md). Free walking,
-the four-task curriculum and subsequent training are later iterations;
-they are not all claimed as work built during the original hackathon.
+The original supported puck slice is in [the initial archive](docs/archive/initial-puck-slice.md). The preceding navigation/planning README is [preserved separately](docs/archive/planning-v1-readme.md). Later walking, task and recovery training is not all claimed as work built during the original hackathon.
 
-Dependencies include MuJoCo, NumPy, SciPy, PyTorch, Three.js, Blender, FastAPI
-and the service SDKs. Robot revisions, hashes and licenses are recorded in
-[G1 provenance](assets/robot/g1/source.json) and
-[locomotion provenance](assets/robot/locomotion/source.json).
-[Scene attribution](web/desk/assets/sand3d-attribution.json) records visual assets.
-The forecasting application and its archived results remain separate.
+Dependencies include MuJoCo, NumPy, SciPy, PyTorch, Three.js, Blender, FastAPI and the provider SDKs. Robot hashes and licenses are recorded in [G1 provenance](assets/robot/g1/source.json) and [locomotion provenance](assets/robot/locomotion/source.json). [Scene attribution](web/desk/assets/sand3d-attribution.json) records visual assets. Forecasting code, deployments and archived results remain separate.

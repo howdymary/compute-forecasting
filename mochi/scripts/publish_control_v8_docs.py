@@ -75,4 +75,40 @@ if a.revision=='clearance':
  block=block.replace('evidence/control-v8/','evidence/control-v8-clearance/').replace('[V8 methods](docs/control-v8-study.md)','[Methods and clearance revision](docs/laptop-clearance-revision.md)').replace('Parent weights, V8 setup','Parent weights, revised setup')
  block=block.replace('### What was fixed before training',f'The {n} training updates occurred in the retained V8 source run. The revised laptop stance and XY-balanced press are engineering changes; these checkpoint weights are tested unchanged, with zero additional optimizer updates. Both sides of the comparison use that same revision. The original V8 results remain separately available.\n\n### Engineering and training are separate')
  block=block.replace('The hinge, object properties and success criteria remain unchanged.','The hinge, object properties and success criteria remain unchanged. The revised stance clears the falling lid, and a bounded lateral arm-force component balances its reaction about the foot support center. No base force is applied.')
-readme=root/'README.md';text=readme.read_text();assert '<!-- MOCHI_CURRICULUM_START -->' in text;readme.write_text(re.sub(r'<!-- MOCHI_CURRICULUM_START -->.*?<!-- MOCHI_CURRICULUM_END -->',lambda _:block.strip(),text,flags=re.S))
+readme=root/'README.md';text=readme.read_text()
+if '<!-- MOCHI_CURRICULUM_START -->' in text:
+ readme.write_text(re.sub(r'<!-- MOCHI_CURRICULUM_START -->.*?<!-- MOCHI_CURRICULUM_END -->',lambda _:block.strip(),text,flags=re.S))
+else:
+ archive=root/'docs/archive/planning-v1-readme.md';archive.parent.mkdir(parents=True,exist_ok=True)
+ if not archive.exists():archive.write_text(text)
+ footer='''
+## Fresh environment and rendering
+
+Reuse `mochi/.venv` when available. For a new environment, run from the repository root:
+
+```sh
+uv venv --python 3.11 mochi/.venv
+uv pip install --python mochi/.venv/bin/python torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu
+uv pip install --python mochi/.venv/bin/python -e './mochi[remote,dev,plots]' pyyaml==6.0.2
+mochi/.venv/bin/python mochi/scripts/fetch_visual_models.py
+```
+
+See [the integration inventory](docs/integrations.md) for local versus remote credentials. The additive Mochi workflows inject existing backend secret references. The local replay server requires no provider credentials.
+
+```sh
+blender -b -t 4 -P mochi/scripts/render_curriculum.py -- \\
+  --input mochi/web/desk/curriculum/v8-held-out-25000-after.json \\
+  --out mochi/artifacts/inspection --time 53.394657 --samples 32 --camera follow
+```
+
+The source-study render uses actual selected-checkpoint motion. Use `--camera side` or `feet` to inspect gait, or `--animate` to save the recorded animation in a Blender scene. Large generated outputs and caches stay out of Git.
+
+## Provenance and limits
+
+This is a fixed-layout, state-observation simulation study. Waist and fingers are fixed. There is no camera input or hardware validation. Remote model inference pauses simulation time; displayed completion times exclude those waits. Sampled clearance checks do not certify continuous collision freedom.
+
+The original supported puck slice is in [the initial archive](docs/archive/initial-puck-slice.md). The preceding navigation/planning README is [preserved separately](docs/archive/planning-v1-readme.md). Later walking, task and recovery training is not all claimed as work built during the original hackathon.
+
+Dependencies include MuJoCo, NumPy, SciPy, PyTorch, Three.js, Blender, FastAPI and the provider SDKs. Robot hashes and licenses are recorded in [G1 provenance](assets/robot/g1/source.json) and [locomotion provenance](assets/robot/locomotion/source.json). [Scene attribution](web/desk/assets/sand3d-attribution.json) records visual assets. Forecasting code, deployments and archived results remain separate.
+'''
+ readme.write_text('# MOCHI — Walking, Contact and Recovery Policy Learning\n\n'+block.strip()+'\n'+footer)
