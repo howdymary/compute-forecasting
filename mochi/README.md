@@ -1,5 +1,21 @@
 # Mochi · A tiny robot with a scientific method
 
+<!-- MOCHI_CURRICULUM_START -->
+## Walking and contact policy learning
+
+Mochi is now a 22.1 cm Unitree G1 that walks across one human-size desk to press an alarm button, close a drawer, close a laptop and align a globe. One MuJoCo world and clock carry the robot through the sequence. Blender and Three.js display its recorded physical motion.
+
+**[Open the current visual demo](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/)** · **[Methods and reproduction](docs/curriculum-v6.md)** · **[Active training campaign](https://github.com/howdymary/mochi-demo/actions/runs/44244443083)**
+
+The public preview currently shows a **manual engineering calibration**: all four tasks completed in 86.33 simulated seconds, with no fall or task-boundary resets. It has zero trained-selector updates and is labeled accordingly.
+
+The separate Tinker campaign has completed **32 real optimizer updates** of one Qwen3.5-4B LoRA model, with gradients for walking and every contact task. Its 32-update state survived a checkpoint-storage limit; training is resuming with optimizer state and a verified batch RNG sequence. All unique model states are retained. Actual comparisons at 0, 8, 16, 32 and 64 updates, plus fresh evaluation, are in progress.
+
+The learned interface chooses repeated walking commands and task-contact profiles. The official Unitree gait, classical standing balance and arm inverse kinematics are fixed. Observations are simulator state, including foot contacts and recent commands. Exa searches and source-verified past.dev handoffs inform training allocation; Modal runs the physical experiments. Claims about learned improvement require completed evaluation.
+
+## Archived supported-pushing studies
+<!-- MOCHI_CURRICULUM_END -->
+
 An original supported humanoid pushes a star-stamped puck into a target. A
 bounded research loop diagnoses failures, searches Exa, proposes controller
 changes, evaluates them on Modal, and shares evidence through past.dev. A critic
