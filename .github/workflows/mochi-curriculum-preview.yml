@@ -1,0 +1,24 @@
+name: Mochi continuous checkpoint demo
+on:
+  push:
+    branches: [mochi-desk-v3]
+    paths: ['mochi/configs/curriculum-preview.json']
+permissions:
+  contents: read
+concurrency:
+  group: mochi-curriculum-demo
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - run: python -m pip install modal==1.6.4
+      - name: Publish recorded checkpoint viewer
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: python -m modal deploy mochi/scripts/deploy_curriculum.py
