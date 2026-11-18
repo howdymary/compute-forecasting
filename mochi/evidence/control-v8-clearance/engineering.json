@@ -1,0 +1,1925 @@
+{
+  "scope": "Known training/calibration cases. Includes rejected changes, stance-only failures, and combined XY-support successes. Not evidence of learned-policy improvement.",
+  "diagnostics": [
+    {
+      "file": "training-contact-x-0.263-shift-0.015.json",
+      "sha256": "16fb2499c30486f1dad89def4620da5df6c2bf9a029dc0cc30b2dff4a520008a",
+      "scope": "Engineering diagnosis on known training seed23000. Not a held-out trial or trained-policy result. Frozen V8 code unchanged.",
+      "contact_x": 0.263,
+      "initial_robot_shift_x": 0.015,
+      "result": {
+        "task": "laptop",
+        "success": true,
+        "value": -0.002739547276665144,
+        "duration": 8.896520865666268,
+        "contacts": 586,
+        "non_hand_contact_steps": 0,
+        "max_force_n": 0.4484914015643383,
+        "fall": false,
+        "max_tilt_deg": 0.9961149153394225,
+        "profile": {
+          "code": "P0",
+          "force": 0.45,
+          "radius": 0.15,
+          "contact_x": 0.263,
+          "pulse_on": 10,
+          "pulse_off": 0,
+          "slew": 0.012,
+          "release_degrees": 56.0
+        },
+        "phase": "release",
+        "contact_progress": 1.2020903162213135,
+        "abort": null,
+        "approach_stage": 1,
+        "final_tip": [
+          0.2647097704390474,
+          0.15426399120098483,
+          0.15431226269863063
+        ],
+        "final_target": [
+          0.2630790564377931,
+          0.15359561610685762,
+          0.159964358445599
+        ]
+      },
+      "contact_steps_by_body_pair": {
+        "left_wrist_yaw_link / laptop-screen": 523,
+        "laptop-screen / left_hand_middle_1_link": 68
+      },
+      "first_contacts": {
+        "left_wrist_yaw_link / laptop-screen": {
+          "t": 66.6499255001389,
+          "phase": "push",
+          "force_n": 0.12877759903506333,
+          "angle": 1.199350510683146
+        },
+        "laptop-screen / left_hand_middle_1_link": {
+          "t": 67.07255724575587,
+          "phase": "push",
+          "force_n": 0.2206041600936132,
+          "angle": 1.005346026717897
+        }
+      }
+    },
+    {
+      "file": "training-contact-x-0.263-shift-0.020-xy-True.json",
+      "sha256": "66db0f957705f5cbe4bf3ec7a45db96dffda6e6ebd1453ab747744d5d9795f0e",
+      "scope": "Engineering diagnosis on known training seed23000. Not a held-out trial or trained-policy result. Frozen V8 code unchanged.",
+      "contact_x": 0.263,
+      "initial_robot_shift_x": 0.02,
+      "support_xy": true,
+      "result": {
+        "task": "laptop",
+        "success": true,
+        "value": -0.002739551361695458,
+        "duration": 9.261112274844542,
+        "contacts": 581,
+        "non_hand_contact_steps": 0,
+        "max_force_n": 0.4749254525488161,
+        "fall": false,
+        "max_tilt_deg": 0.9905514275924596,
+        "profile": {
+          "code": "P0",
+          "force": 0.45,
+          "radius": 0.15,
+          "contact_x": 0.263,
+          "pulse_on": 10,
+          "pulse_off": 0,
+          "slew": 0.012,
+          "release_degrees": 56.0
+        },
+        "phase": "release",
+        "contact_progress": 1.2019878754096243,
+        "abort": null,
+        "approach_stage": 1,
+        "final_tip": [
+          0.2656324924371479,
+          0.15278750873855007,
+          0.15912790067004073
+        ],
+        "final_target": [
+          0.2654834199696009,
+          0.15262334419630655,
+          0.15959561057629512
+        ],
+        "support_x_peak_n": 0.15240877409194534
+      },
+      "contact_steps_by_body_pair": {
+        "left_wrist_yaw_link / laptop-screen": 508,
+        "laptop-screen / left_hand_middle_1_link": 73
+      },
+      "first_contacts": {
+        "left_wrist_yaw_link / laptop-screen": {
+          "t": 66.99898498829837,
+          "phase": "push",
+          "force_n": 0.07766329906437597,
+          "angle": 1.1992480657850715
+        },
+        "laptop-screen / left_hand_middle_1_link": {
+          "t": 67.43306130729762,
+          "phase": "push",
+          "force_n": 0.22620141850704173,
+          "angle": 0.9992665749787861
+        }
+      }
+    },
+    {
+      "file": "training-contact-x-0.263-shift-0.020.json",
+      "sha256": "31c47775dda7d2580334f682e069e4a0001f631cf40cace45818a81f1c85f54f",
+      "scope": "Engineering diagnosis on known training seed23000. Not a held-out trial or trained-policy result. Frozen V8 code unchanged.",
+      "contact_x": 0.263,
+      "initial_robot_shift_x": 0.02,
+      "result": {
+        "task": "laptop",
+        "success": true,
+        "value": -0.0027396043177394525,
+        "duration": 9.238223128079987,
+        "contacts": 585,
+        "non_hand_contact_steps": 0,
+        "max_force_n": 0.43774060033396,
+        "fall": false,
+        "max_tilt_deg": 1.0217466731067764,
+        "profile": {
+          "code": "P0",
+          "force": 0.45,
+          "radius": 0.15,
+          "contact_x": 0.263,
+          "pulse_on": 10,
+          "pulse_off": 0,
+          "slew": 0.012,
+          "release_degrees": 56.0
+        },
+        "phase": "release",
+        "contact_progress": 1.2019879283832333,
+        "abort": null,
+        "approach_stage": 1,
+        "final_tip": [
+          0.2630823790094897,
+          0.1533465906216836,
+          0.15965540252210086
+        ],
+        "final_target": [
+          0.2630653617461922,
+          0.15335229954055557,
+          0.15966162850826082
+        ]
+      },
+      "contact_steps_by_body_pair": {
+        "left_wrist_yaw_link / laptop-screen": 568,
+        "laptop-screen / left_hand_middle_1_link": 30
+      },
+      "first_contacts": {
+        "left_wrist_yaw_link / laptop-screen": {
+          "t": 66.99898498829837,
+          "phase": "push",
+          "force_n": 0.07766329906437597,
+          "angle": 1.1992480657850715
+        },
+        "laptop-screen / left_hand_middle_1_link": {
+          "t": 67.45104563689834,
+          "phase": "push",
+          "force_n": 0.21437148058040112,
+          "angle": 0.9857745457569278
+        }
+      }
+    },
+    {
+      "file": "training-contact-x-0.263.json",
+      "sha256": "46d1a2175ebd3effcd7dcf50287b5b3c75c4cdf231c6c38674bb2655c3dbe105",
+      "scope": "Engineering diagnosis on known training seed23000. Not a held-out trial or trained-policy result. Frozen V8 code unchanged.",
+      "contact_x": 0.263,
+      "result": {
+        "task": "laptop",
+        "success": false,
+        "value": -0.0027395522788788984,
+        "duration": 9.444225448960985,
+        "contacts": 600,
+        "non_hand_contact_steps": 20,
+        "max_force_n": 0.5926788207801988,
+        "fall": false,
+        "max_tilt_deg": 1.0234711016996263,
+        "profile": {
+          "code": "P0",
+          "force": 0.45,
+          "radius": 0.15,
+          "contact_x": 0.263,
+          "pulse_on": 10,
+          "pulse_off": 0,
+          "slew": 0.012,
+          "release_degrees": 56.0
+        },
+        "phase": "release",
+        "contact_progress": 1.2019434778214262,
+        "abort": null,
+        "approach_stage": 1,
+        "final_tip": [
+          0.26712815251351035,
+          0.15426696246604846,
+          0.1525314296224435
+        ],
+        "final_target": [
+          0.2629317404730661,
+          0.15397026007695136,
+          0.16000064463222977
+        ]
+      },
+      "contact_steps_by_body_pair": {
+        "left_wrist_yaw_link / laptop-screen": 541,
+        "laptop-screen / left_hand_middle_1_link": 62,
+        "laptop-screen / left_hip_roll_link": 20
+      },
+      "first_contacts": {
+        "left_wrist_yaw_link / laptop-screen": {
+          "t": 67.1502168508499,
+          "phase": "push",
+          "force_n": 0.501890202129213,
+          "angle": 1.1992036672793858
+        },
+        "laptop-screen / left_hand_middle_1_link": {
+          "t": 67.56630884024842,
+          "phase": "push",
+          "force_n": 0.21663977651984342,
+          "angle": 1.0132243735850333
+        },
+        "laptop-screen / left_hip_roll_link": {
+          "t": 67.9309002494267,
+          "phase": "release",
+          "force_n": 0.6127731796440873,
+          "angle": 0.8752268756234952
+        }
+      }
+    },
+    {
+      "file": "training-contact-x-0.266.json",
+      "sha256": "6fb9456169891f583bb6703793e090a847264d74ed39124b2b1adc9753d92214",
+      "scope": "Engineering diagnosis on known training seed23000. Not a held-out trial or trained-policy result. Frozen V8 code unchanged.",
+      "contact_x": 0.266,
+      "result": {
+        "task": "laptop",
+        "success": false,
+        "value": -0.0027396514126203364,
+        "duration": 10.382680466307754,
+        "contacts": 975,
+        "non_hand_contact_steps": 23,
+        "max_force_n": 0.4833929826094219,
+        "fall": false,
+        "max_tilt_deg": 7.687586767191687,
+        "profile": {
+          "code": "P0",
+          "force": 0.45,
+          "radius": 0.15,
+          "contact_x": 0.266,
+          "pulse_on": 10,
+          "pulse_off": 0,
+          "slew": 0.012,
+          "release_degrees": 56.0
+        },
+        "phase": "release",
+        "contact_progress": 1.201898940919072,
+        "abort": null,
+        "approach_stage": 1,
+        "final_tip": [
+          0.2737775370098202,
+          0.14527428682101354,
+          0.1390139887227601
+        ],
+        "final_target": [
+          0.27511473731262265,
+          0.15743671558716024,
+          0.1508336604675971
+        ]
+      },
+      "contact_steps_by_body_pair": {
+        "left_wrist_yaw_link / laptop-screen": 121,
+        "laptop-screen / left_hand_middle_1_link": 379,
+        "laptop-screen / left_hand_middle_0_link": 512,
+        "laptop-screen / left_hip_roll_link": 23
+      },
+      "first_contacts": {
+        "left_wrist_yaw_link / laptop-screen": {
+          "t": 67.30226618292873,
+          "phase": "push",
+          "force_n": 0.11986644833314483,
+          "angle": 1.1991590312104081
+        },
+        "laptop-screen / left_hand_middle_1_link": {
+          "t": 67.55322932781154,
+          "phase": "push",
+          "force_n": 0.2485638134167814,
+          "angle": 1.1786917727547914
+        },
+        "laptop-screen / left_hand_middle_0_link": {
+          "t": 67.97831348201042,
+          "phase": "push",
+          "force_n": 0.22762065951801028,
+          "angle": 1.1259487867466051
+        },
+        "laptop-screen / left_hip_roll_link": {
+          "t": 68.9478323413948,
+          "phase": "release",
+          "force_n": 2.2947231074328327,
+          "angle": 0.8391746931001101
+        }
+      }
+    },
+    {
+      "file": "clearance-fixed-19000.json",
+      "scope": "Known-case engineering calibration with fixed control; no trained policy inference.",
+      "seed": 19000,
+      "sha256": "6c02c939c5c6ef8a0a4aaee32364e518c62483886b02ad75469c03d270674cdd",
+      "controller_revision": "original-y-only",
+      "arrivals": [
+        {
+          "station": "alarm",
+          "arrived": true,
+          "t": 11.285166824406112,
+          "position_error_mm": 3.309946644823357,
+          "heading_error_degrees": 2.8274618560928437,
+          "travel_time_s": 11.285166824406112
+        },
+        {
+          "station": "drawer",
+          "arrived": true,
+          "t": 29.59321435786159,
+          "position_error_mm": 5.043925330401556,
+          "heading_error_degrees": 1.90061056933522,
+          "travel_time_s": 12.72718307056476
+        },
+        {
+          "station": "laptop",
+          "arrived": true,
+          "t": 51.39349171203548,
+          "position_error_mm": 9.693395054539057,
+          "heading_error_degrees": 2.7844672196060127,
+          "travel_time_s": 15.611215562954044
+        },
+        {
+          "station": "globe",
+          "arrived": true,
+          "t": 73.65890922725667,
+          "position_error_mm": 8.426600984357483,
+          "heading_error_degrees": 2.797644719456304,
+          "travel_time_s": 8.68070891045761
+        }
+      ],
+      "tasks": {
+        "alarm": {
+          "task": "alarm",
+          "success": true,
+          "value": -0.00034420376837013814,
+          "duration": 3.748097782679647,
+          "contacts": 1100,
+          "non_hand_contact_steps": 0,
+          "max_force_n": 0.16642537833119778,
+          "fall": false,
+          "max_tilt_deg": 4.892293826221008,
+          "profile": {
+            "code": "C",
+            "speed": 0.04,
+            "depth": 0.0006,
+            "force": 0.22,
+            "brake": 0.002,
+            "hold": 0.25
+          },
+          "phase": "release",
+          "contact_progress": -0.004111225230600016
+        },
+        "drawer": {
+          "task": "drawer",
+          "success": true,
+          "value": -8.232447395068109e-07,
+          "duration": 5.419005496498016,
+          "contacts": 1479,
+          "non_hand_contact_steps": 0,
+          "max_force_n": 0.35002748001663264,
+          "fall": false,
+          "max_tilt_deg": 5.209322457221007,
+          "profile": {
+            "code": "A",
+            "speed": 0.012,
+            "depth": 0.0002,
+            "force": 0.055,
+            "brake": 0.001,
+            "hold": 0.3
+          },
+          "phase": "release",
+          "contact_progress": 0.01771716925718618
+        },
+        "laptop": {
+          "task": "laptop",
+          "success": false,
+          "value": 1.2324579476641264,
+          "duration": 12.00045266084544,
+          "contacts": 673,
+          "non_hand_contact_steps": 0,
+          "max_force_n": 0.6147433795554598,
+          "fall": false,
+          "max_tilt_deg": 9.928798683465201,
+          "profile": {
+            "code": "P0",
+            "force": 0.45,
+            "radius": 0.15,
+            "contact_x": 0.263,
+            "pulse_on": 10,
+            "pulse_off": 0,
+            "slew": 0.012,
+            "release_degrees": 56.0
+          },
+          "phase": "push",
+          "contact_progress": 0.07047956177690895,
+          "abort": null,
+          "approach_stage": 1,
+          "final_tip": [
+            0.2688318815713311,
+            0.19900596662643005,
+            0.15097476649525057
+          ],
+          "final_target": [
+            0.263,
+            0.19838233769533123,
+            0.16235444818569394
+          ]
+        },
+        "globe": {
+          "task": "globe",
+          "success": true,
+          "value": -0.010815843719907032,
+          "duration": 5.8563516936169435,
+          "contacts": 2917,
+          "non_hand_contact_steps": 0,
+          "max_force_n": 0.19361418149674633,
+          "fall": false,
+          "max_tilt_deg": 9.928798683465201,
+          "profile": {
+            "code": "A",
+            "speed": 0.012,
+            "depth": 0.0002,
+            "force": 0.055,
+            "brake": 0.001,
+            "hold": 0.3
+          },
+          "phase": "release",
+          "contact_progress": -0.3937968907565275
+        }
+      },
+      "recoveries": [
+        {
+          "task": "alarm",
+          "action": "R1",
+          "success": true,
+          "duration_s": 1.8327666802110727,
+          "arm_joint_travel_rad": 5.901342277865444,
+          "hand_path_m": 0.23203010575354976,
+          "fixture_contact_steps": 0,
+          "peak_fixture_force_n": 0.0,
+          "end_max_joint_error_rad": 5.458482893393118e-06,
+          "end_max_joint_speed_rad_s": 0.0003755577978550662,
+          "fall": false,
+          "observation": {
+            "domain": "recovery",
+            "task": "alarm",
+            "active_arm": "right",
+            "joint_error_degrees": [
+              -86.5,
+              -17.8,
+              64.7,
+              5.3,
+              -5.3,
+              5.9,
+              52.1
+            ],
+            "joint_speed_degrees_s": [
+              -50.4,
+              -23.3,
+              -4.6,
+              0.3,
+              4.7,
+              1.1,
+              70.0
+            ],
+            "hand_body_offset_mm": [
+              79.5,
+              -38.7,
+              7.4
+            ],
+            "body_tilt_degrees": 1.3,
+            "hand_contact": false,
+            "maximum_joint_error_degrees": 86.5
+          },
+          "profile": {
+            "code": "R1",
+            "waypoint": "clearance",
+            "slew": 0.04,
+            "pause": 0
+          }
+        },
+        {
+          "task": "drawer",
+          "action": "R0",
+          "success": true,
+          "duration_s": 0.7700562947218259,
+          "arm_joint_travel_rad": 2.8787702566870244,
+          "hand_path_m": 0.08906161726118535,
+          "fixture_contact_steps": 0,
+          "peak_fixture_force_n": 0.0,
+          "end_max_joint_error_rad": 1.8084808982456407e-06,
+          "end_max_joint_speed_rad_s": 0.0006770946990028373,
+          "fall": false,
+          "observation": {
+            "domain": "recovery",
+            "task": "drawer",
+            "active_arm": "right",
+            "joint_error_degrees": [
+              -14.3,
+              12.1,
+              -21.8,
+              -36.3,
+              27.1,
+              -18.8,
+              33.9
+            ],
+            "joint_speed_degrees_s": [
+              102.8,
+              16.5,
+              4.0,
+              -66.5,
+              10.4,
+              -67.3,
+              84.6
+            ],
+            "hand_body_offset_mm": [
+              64.9,
+              -34.3,
+              -0.3
+            ],
+            "body_tilt_degrees": 1.0,
+            "hand_contact": false,
+            "maximum_joint_error_degrees": 36.3
+          },
+          "profile": {
+            "code": "R0",
+            "waypoint": "direct",
+            "slew": 0.02,
+            "pause": 0
+          }
+        },
+        {
+          "task": "laptop",
+          "action": "R0",
+          "success": true,
+          "duration_s": 1.5842559439181443,
+          "arm_joint_travel_rad": 5.953790696117013,
+          "hand_path_m": 0.09993893463744437,
+          "fixture_contact_steps": 0,
+          "peak_fixture_force_n": 0.0,
+          "end_max_joint_error_rad": 3.7591423463006393e-06,
+          "end_max_joint_speed_rad_s": 9.946647552468964e-05,
+          "fall": false,
+          "observation": {
+            "domain": "recovery",
+            "task": "laptop",
+            "active_arm": "left",
+            "joint_error_degrees": [
+              81.6,
+              39.2,
+              50.8,
+              -24.7,
+              34.7,
+              -47.9,
+              -62.0
+            ],
+            "joint_speed_degrees_s": [
+              23.7,
+              13.4,
+              6.9,
+              6.3,
+              8.2,
+              6.8,
+              -5.2
+            ],
+            "hand_body_offset_mm": [
+              -59.2,
+              67.0,
+              19.4
+            ],
+            "body_tilt_degrees": 0.7,
+            "hand_contact": false,
+            "maximum_joint_error_degrees": 81.6
+          },
+          "profile": {
+            "code": "R0",
+            "waypoint": "direct",
+            "slew": 0.02,
+            "pause": 0
+          }
+        },
+        {
+          "task": "globe",
+          "action": "R0",
+          "success": true,
+          "duration_s": 1.1305603562635724,
+          "arm_joint_travel_rad": 4.0836785174307355,
+          "hand_path_m": 0.07921019533683536,
+          "fixture_contact_steps": 0,
+          "peak_fixture_force_n": 0.0,
+          "end_max_joint_error_rad": 1.5791230348297162e-06,
+          "end_max_joint_speed_rad_s": 5.975895746751682e-05,
+          "fall": false,
+          "observation": {
+            "domain": "recovery",
+            "task": "globe",
+            "active_arm": "right",
+            "joint_error_degrees": [
+              9.5,
+              -8.3,
+              50.6,
+              -52.2,
+              8.1,
+              -56.2,
+              -48.9
+            ],
+            "joint_speed_degrees_s": [
+              37.0,
+              -9.7,
+              2.3,
+              -24.0,
+              -16.8,
+              -36.8,
+              -9.7
+            ],
+            "hand_body_offset_mm": [
+              41.5,
+              -22.1,
+              1.2
+            ],
+            "body_tilt_degrees": 0.8,
+            "hand_contact": false,
+            "maximum_joint_error_degrees": 56.2
+          },
+          "profile": {
+            "code": "R0",
+            "waypoint": "direct",
+            "slew": 0.02,
+            "pause": 0
+          }
+        }
+      ],
+      "fall": false,
+      "failure": null
+    },
+    {
+      "file": "clearance-fixed-19001.json",
+      "scope": "Known-case engineering calibration with fixed control; no trained policy inference.",
+      "seed": 19001,
+      "sha256": "28876e2da2cbcdd6a137b27304b3a1d22416e6baf9d793e582e3da3f9af5566f",
+      "controller_revision": "original-y-only",
+      "arrivals": [
+        {
+          "station": "alarm",
+          "arrived": true,
+          "t": 10.96471876970373,
+          "position_error_mm": 3.4512014608852555,
+          "heading_error_degrees": 1.2844359545597006,
+          "travel_time_s": 10.96471876970373
+        },
+        {
+          "station": "drawer",
+          "arrived": true,
+          "t": 29.873606405726175,
+          "position_error_mm": 2.171903997525254,
+          "heading_error_degrees": 0.7432959133282662,
+          "travel_time_s": 13.166981676253233
+        },
+        {
+          "station": "laptop",
+          "arrived": true,
+          "t": 53.3717679681149,
+          "position_error_mm": 7.263121430749814,
+          "heading_error_degrees": 5.044006789035954,
+          "travel_time_s": 16.252111672361593
+        }
+      ],
+      "tasks": {
+        "alarm": {
+          "task": "alarm",
+          "success": true,
+          "value": -0.0005907499476059646,
+          "duration": 3.9295760177406898,
+          "contacts": 1552,
+          "non_hand_contact_steps": 0,
+          "max_force_n": 0.22671152645224618,
+          "fall": false,
+          "max_tilt_deg": 5.017285620476105,
+          "profile": {
+            "code": "C",
+            "speed": 0.04,
+            "depth": 0.0006,
+            "force": 0.22,
+            "brake": 0.002,
+            "hold": 0.25
+          },
+          "phase": "release",
+          "contact_progress": -0.005103905291629641
+        },
+        "drawer": {
+          "task": "drawer",
+          "success": true,
+          "value": -1.54984145777757e-06,
+          "duration": 6.499700211597169,
+          "contacts": 3622,
+          "non_hand_contact_steps": 0,
+          "max_force_n": 0.33445909507124943,
+          "fall": false,
+          "max_tilt_deg": 5.2774543573651975,
+          "profile": {
+            "code": "A",
+            "speed": 0.012,
+            "depth": 0.0002,
+            "force": 0.055,
+            "brake": 0.001,
+            "hold": 0.3
+          },
+          "phase": "release",
+          "contact_progress": 0.024553485800572535
+        },
+        "laptop": {
+          "task": "laptop",
+          "success": false,
+          "value": 1.0679076379772363,
+          "duration": 8.170607925418949,
+          "contacts": 919,
+          "non_hand_contact_steps": 0,
+          "max_force_n": 0.5689205775777373,
+          "fall": true,
+          "max_tilt_deg": 30.02879946931685,
+          "profile": {
+            "code": "P0",
+            "force": 0.45,
+            "radius": 0.15,
+            "contact_x": 0.263,
+            "pulse_on": 10,
+            "pulse_off": 0,
+            "slew": 0.012,
+            "release_degrees": 56.0
+          },
+          "phase": "push",
+          "contact_progress": 0.17938686712718543,
+          "abort": null,
+          "approach_stage": 1,
+          "final_tip": [
+            0.27848287585165565,
+            0.2178764066756331,
+            0.14695067845510654
+          ],
+          "final_target": [
+            0.263,
+            0.1755021650302658,
+            0.152120051843882
+          ]
+        }
+      },
+      "recoveries": [
+        {
+          "task": "alarm",
+          "action": "R1",
+          "success": true,
+          "duration_s": 1.8123299420285228,
+          "arm_joint_travel_rad": 5.836289658001384,
+          "hand_path_m": 0.23253609170260842,
+          "fixture_contact_steps": 0,
+          "peak_fixture_force_n": 0.0,
+          "end_max_joint_error_rad": 5.497158213155564e-06,
+          "end_max_joint_speed_rad_s": 0.00037392636924449117,
+          "fall": false,
+          "observation": {
+            "domain": "recovery",
+            "task": "alarm",
+            "active_arm": "right",
+            "joint_error_degrees": [
+              -84.2,
+              -17.1,
+              62.1,
+              3.8,
+              -7.7,
+              6.5,
+              50.8
+            ],
+            "joint_speed_degrees_s": [
+              -54.4,
+              -26.7,
+              -5.4,
+              -0.3,
+              8.2,
+              1.1,
+              100.8
+            ],
+            "hand_body_offset_mm": [
+              79.1,
+              -37.7,
+              5.2
+            ],
+            "body_tilt_degrees": 1.3,
+            "hand_contact": false,
+            "maximum_joint_error_degrees": 84.2
+          },
+          "profile": {
+            "code": "R1",
+            "waypoint": "clearance",
+            "slew": 0.04,
+            "pause": 0
+          }
+        },
+        {
+          "task": "drawer",
+          "action": "R0",
+          "success": true,
+          "duration_s": 0.746349678429965,
+          "arm_joint_travel_rad": 2.922158808049057,
+          "hand_path_m": 0.09081756030215357,
+          "fixture_contact_steps": 0,
+          "peak_fixture_force_n": 0.0,
+          "end_max_joint_error_rad": 3.3816084100255852e-06,
+          "end_max_joint_speed_rad_s": 0.00018532898975875598,
+          "fall": false,
+          "observation": {
+            "domain": "recovery",
+            "task": "drawer",
+            "active_arm": "right",
+            "joint_error_degrees": [
+              -21.8,
+              -14.4,
+              18.3,
+              -24.6,
+              -34.9,
+              -22.2,
+              -31.1
+            ],
+            "joint_speed_degrees_s": [
+              48.3,
+              -13.5,
+              -2.3,
+              -33.0,
+              -2.6,
+              -37.4,
+              -43.0
+            ],
+            "hand_body_offset_mm": [
+              68.7,
+              -38.0,
+              -0.4
+            ],
+            "body_tilt_degrees": 1.0,
+            "hand_contact": false,
+            "maximum_joint_error_degrees": 34.9
+          },
+          "profile": {
+            "code": "R0",
+            "waypoint": "direct",
+            "slew": 0.02,
+            "pause": 0
+          }
+        }
+      ],
+      "fall": true,
+      "failure": "fall"
+    },
+    {
+      "file": "clearance-xy-fixed-19000.json",
+      "scope": "Known-case engineering calibration with fixed control; no trained policy inference.",
+      "seed": 19000,
+      "sha256": "8c9db1eea98a60375961f90a19976a4cdffec1bbe801a981487acd7aeb65926c",
+      "controller_revision": "xy-support-v1",
+      "arrivals": [
+        {
+          "station": "alarm",
+          "arrived": true,
+          "t": 11.285166824406112,
+          "position_error_mm": 3.309946644823357,
+          "heading_error_degrees": 2.8274618560928437,
+          "travel_time_s": 11.285166824406112
+        },
+        {
+          "station": "drawer",
+          "arrived": true,
+          "t": 29.59321435786159,
+          "position_error_mm": 5.043925330401556,
+          "heading_error_degrees": 1.90061056933522,
+          "travel_time_s": 12.72718307056476
+        },
+        {
+          "station": "laptop",
+          "arrived": true,
+          "t": 51.39349171203548,
+          "position_error_mm": 9.693395054539057,
+          "heading_error_degrees": 2.7844672196060127,
+          "travel_time_s": 15.611215562954044
+        },
+        {
+          "station": "globe",
+          "arrived": true,
+          "t": 76.01812628306048,
+          "position_error_mm": 8.682567006846678,
+          "heading_error_degrees": 6.340681167218001,
+          "travel_time_s": 11.002322368005366
+        }
+      ],
+      "tasks": {
+        "alarm": {
+          "task": "alarm",
+          "success": true,
+          "value": -0.00034420376837013814,
+          "duration": 3.748097782679647,
+          "contacts": 1100,
+          "non_hand_contact_steps": 0,
+          "max_force_n": 0.16642537833119778,
+          "fall": false,
+          "max_tilt_deg": 4.892293826221008,
+          "profile": {
+            "code": "C",
+            "speed": 0.04,
+            "depth": 0.0006,
+            "force": 0.22,
+            "brake": 0.002,
+            "hold": 0.25
+          },
+          "phase": "release",
+          "contact_progress": -0.004111225230600016
+        },
+        "drawer": {
+          "task": "drawer",
+          "success": true,
+          "value": -8.232447395068109e-07,
+          "duration": 5.419005496498016,
+          "contacts": 1479,
+          "non_hand_contact_steps": 0,
+          "max_force_n": 0.35002748001663264,
+          "fall": false,
+          "max_tilt_deg": 5.209322457221007,
+          "profile": {
+            "code": "A",
+            "speed": 0.012,
+            "depth": 0.0002,
+            "force": 0.055,
+            "brake": 0.001,
+            "hold": 0.3
+          },
+          "phase": "release",
+          "contact_progress": 0.01771716925718618
+        },
+        "laptop": {
+          "task": "laptop",
+          "success": true,
+          "value": -0.0027758621932703065,
+          "duration": 11.428223991731556,
+          "contacts": 1076,
+          "non_hand_contact_steps": 0,
+          "max_force_n": 0.4991217939428493,
+          "fall": false,
+          "max_tilt_deg": 5.3556213489889535,
+          "profile": {
+            "code": "P0",
+            "force": 0.45,
+            "radius": 0.15,
+            "contact_x": 0.263,
+            "pulse_on": 10,
+            "pulse_off": 0,
+            "slew": 0.012,
+            "release_degrees": 56.0
+          },
+          "phase": "release",
+          "contact_progress": 1.3057138612843542,
+          "abort": null,
+          "approach_stage": 1,
+          "final_tip": [
+            0.2683311857977422,
+            0.15099406698668788,
+            0.1557845250355755
+          ],
+          "final_target": [
+            0.2680563166793668,
+            0.15061291874038416,
+            0.15677052628421798
+          ],
+          "support_x_peak_n": 0.17359027705650742
+        },
+        "globe": {
+          "task": "globe",
+          "success": true,
+          "value": -0.010003352143793533,
+          "duration": 5.606206018261446,
+          "contacts": 2709,
+          "non_hand_contact_steps": 0,
+          "max_force_n": 0.21874574106449138,
+          "fall": false,
+          "max_tilt_deg": 6.253576731673186,
+          "profile": {
+            "code": "A",
+            "speed": 0.012,
+            "depth": 0.0002,
+            "force": 0.055,
+            "brake": 0.001,
+            "hold": 0.3
+          },
+          "phase": "release",
+          "contact_progress": -0.3938265810704144
+        }
+      },
+      "recoveries": [
+        {
+          "task": "alarm",
+          "action": "R1",
+          "success": true,
+          "duration_s": 1.8327666802110727,
+          "arm_joint_travel_rad": 5.901342277865444,
+          "hand_path_m": 0.23203010575354976,
+          "fixture_contact_steps": 0,
+          "peak_fixture_force_n": 0.0,
+          "end_max_joint_error_rad": 5.458482893393118e-06,
+          "end_max_joint_speed_rad_s": 0.0003755577978550662,
+          "fall": false,
+          "observation": {
+            "domain": "recovery",
+            "task": "alarm",
+            "active_arm": "right",
+            "joint_error_degrees": [
+              -86.5,
+              -17.8,
+              64.7,
+              5.3,
+              -5.3,
+              5.9,
+              52.1
+            ],
+            "joint_speed_degrees_s": [
+              -50.4,
+              -23.3,
+              -4.6,
+              0.3,
+              4.7,
+              1.1,
+              70.0
+            ],
+            "hand_body_offset_mm": [
+              79.5,
+              -38.7,
+              7.4
+            ],
+            "body_tilt_degrees": 1.3,
+            "hand_contact": false,
+            "maximum_joint_error_degrees": 86.5
+          },
+          "profile": {
+            "code": "R1",
+            "waypoint": "clearance",
+            "slew": 0.04,
+            "pause": 0
+          }
+        },
+        {
+          "task": "drawer",
+          "action": "R0",
+          "success": true,
+          "duration_s": 0.7700562947218259,
+          "arm_joint_travel_rad": 2.8787702566870244,
+          "hand_path_m": 0.08906161726118535,
+          "fixture_contact_steps": 0,
+          "peak_fixture_force_n": 0.0,
+          "end_max_joint_error_rad": 1.8084808982456407e-06,
+          "end_max_joint_speed_rad_s": 0.0006770946990028373,
+          "fall": false,
+          "observation": {
+            "domain": "recovery",
+            "task": "drawer",
+            "active_arm": "right",
+            "joint_error_degrees": [
+              -14.3,
+              12.1,
+              -21.8,
+              -36.3,
+              27.1,
+              -18.8,
+              33.9
+            ],
+            "joint_speed_degrees_s": [
+              102.8,
+              16.5,
+              4.0,
+              -66.5,
+              10.4,
+              -67.3,
+              84.6
+            ],
+            "hand_body_offset_mm": [
+              64.9,
+              -34.3,
+              -0.3
+            ],
+            "body_tilt_degrees": 1.0,
+            "hand_contact": false,
+            "maximum_joint_error_degrees": 36.3
+          },
+          "profile": {
+            "code": "R0",
+            "waypoint": "direct",
+            "slew": 0.02,
+            "pause": 0
+          }
+        },
+        {
+          "task": "laptop",
+          "action": "R0",
+          "success": true,
+          "duration_s": 2.194088211288083,
+          "arm_joint_travel_rad": 6.706024474135758,
+          "hand_path_m": 0.1185848629592206,
+          "fixture_contact_steps": 0,
+          "peak_fixture_force_n": 0.0,
+          "end_max_joint_error_rad": 3.4114493130109247e-06,
+          "end_max_joint_speed_rad_s": 7.292534315651947e-05,
+          "fall": false,
+          "observation": {
+            "domain": "recovery",
+            "task": "laptop",
+            "active_arm": "left",
+            "joint_error_degrees": [
+              115.8,
+              26.6,
+              62.3,
+              -89.2,
+              -7.3,
+              -63.5,
+              -19.3
+            ],
+            "joint_speed_degrees_s": [
+              22.9,
+              4.3,
+              7.9,
+              1.2,
+              57.9,
+              -6.9,
+              75.9
+            ],
+            "hand_body_offset_mm": [
+              6.2,
+              49.1,
+              25.0
+            ],
+            "body_tilt_degrees": 0.6,
+            "hand_contact": false,
+            "maximum_joint_error_degrees": 115.8
+          },
+          "profile": {
+            "code": "R0",
+            "waypoint": "direct",
+            "slew": 0.02,
+            "pause": 0
+          }
+        },
+        {
+          "task": "globe",
+          "action": "R0",
+          "success": true,
+          "duration_s": 1.2401012729225158,
+          "arm_joint_travel_rad": 3.873669447769893,
+          "hand_path_m": 0.07681272139353608,
+          "fixture_contact_steps": 0,
+          "peak_fixture_force_n": 0.0,
+          "end_max_joint_error_rad": 2.280263776831255e-06,
+          "end_max_joint_speed_rad_s": 5.986817858272593e-05,
+          "fall": false,
+          "observation": {
+            "domain": "recovery",
+            "task": "globe",
+            "active_arm": "right",
+            "joint_error_degrees": [
+              7.2,
+              -1.6,
+              44.8,
+              -44.8,
+              16.2,
+              -62.7,
+              -42.6
+            ],
+            "joint_speed_degrees_s": [
+              78.2,
+              -8.8,
+              7.5,
+              -52.1,
+              -38.5,
+              -91.6,
+              -9.2
+            ],
+            "hand_body_offset_mm": [
+              43.8,
+              -26.7,
+              0.4
+            ],
+            "body_tilt_degrees": 0.8,
+            "hand_contact": false,
+            "maximum_joint_error_degrees": 62.7
+          },
+          "profile": {
+            "code": "R0",
+            "waypoint": "direct",
+            "slew": 0.02,
+            "pause": 0
+          }
+        }
+      ],
+      "fall": false,
+      "failure": null
+    },
+    {
+      "file": "clearance-xy-fixed-19001.json",
+      "scope": "Known-case engineering calibration with fixed control; no trained policy inference.",
+      "seed": 19001,
+      "sha256": "a021efd51b19987e47a81749eddbcf1eaacd163a944918dd20422ba5c4498c6e",
+      "controller_revision": "xy-support-v1",
+      "arrivals": [
+        {
+          "station": "alarm",
+          "arrived": true,
+          "t": 10.96471876970373,
+          "position_error_mm": 3.4512014608852555,
+          "heading_error_degrees": 1.2844359545597006,
+          "travel_time_s": 10.96471876970373
+        },
+        {
+          "station": "drawer",
+          "arrived": true,
+          "t": 29.873606405726175,
+          "position_error_mm": 2.171903997525254,
+          "heading_error_degrees": 0.7432959133282662,
+          "travel_time_s": 13.166981676253233
+        },
+        {
+          "station": "laptop",
+          "arrived": true,
+          "t": 53.3717679681149,
+          "position_error_mm": 7.263121430749814,
+          "heading_error_degrees": 5.044006789035954,
+          "travel_time_s": 16.252111672361593
+        },
+        {
+          "station": "globe",
+          "arrived": true,
+          "t": 73.64419477576517,
+          "position_error_mm": 4.7098302382820645,
+          "heading_error_degrees": 4.229038086445648,
+          "travel_time_s": 7.879588773698174
+        }
+      ],
+      "tasks": {
+        "alarm": {
+          "task": "alarm",
+          "success": true,
+          "value": -0.0005907499476059646,
+          "duration": 3.9295760177406898,
+          "contacts": 1552,
+          "non_hand_contact_steps": 0,
+          "max_force_n": 0.22671152645224618,
+          "fall": false,
+          "max_tilt_deg": 5.017285620476105,
+          "profile": {
+            "code": "C",
+            "speed": 0.04,
+            "depth": 0.0006,
+            "force": 0.22,
+            "brake": 0.002,
+            "hold": 0.25
+          },
+          "phase": "release",
+          "contact_progress": -0.005103905291629641
+        },
+        "drawer": {
+          "task": "drawer",
+          "success": true,
+          "value": -1.54984145777757e-06,
+          "duration": 6.499700211597169,
+          "contacts": 3622,
+          "non_hand_contact_steps": 0,
+          "max_force_n": 0.33445909507124943,
+          "fall": false,
+          "max_tilt_deg": 5.2774543573651975,
+          "profile": {
+            "code": "A",
+            "speed": 0.012,
+            "depth": 0.0002,
+            "force": 0.055,
+            "brake": 0.001,
+            "hold": 0.3
+          },
+          "phase": "release",
+          "contact_progress": 0.024553485800572535
+        },
+        "laptop": {
+          "task": "laptop",
+          "success": true,
+          "value": -0.0028582592239352334,
+          "duration": 10.110463113715014,
+          "contacts": 957,
+          "non_hand_contact_steps": 0,
+          "max_force_n": 0.4776578535087219,
+          "fall": false,
+          "max_tilt_deg": 5.443699510174159,
+          "profile": {
+            "code": "P0",
+            "force": 0.45,
+            "radius": 0.15,
+            "contact_x": 0.263,
+            "pulse_on": 10,
+            "pulse_off": 0,
+            "slew": 0.012,
+            "release_degrees": 56.0
+          },
+          "phase": "release",
+          "contact_progress": 1.2501533804724536,
+          "abort": null,
+          "approach_stage": 1,
+          "final_tip": [
+            0.268617064360053,
+            0.1503763174545077,
+            0.15718477561217878
+          ],
+          "final_target": [
+            0.2686175522003294,
+            0.1503792746463307,
+            0.15718489022173276
+          ],
+          "support_x_peak_n": 0.18039812775005526
+        },
+        "globe": {
+          "task": "globe",
+          "success": true,
+          "value": -0.009379994231115654,
+          "duration": 5.707572239647334,
+          "contacts": 2793,
+          "non_hand_contact_steps": 0,
+          "max_force_n": 0.10388184072917978,
+          "fall": false,
+          "max_tilt_deg": 5.443699510174159,
+          "profile": {
+            "code": "A",
+            "speed": 0.012,
+            "depth": 0.0002,
+            "force": 0.055,
+            "brake": 0.001,
+            "hold": 0.3
+          },
+          "phase": "release",
+          "contact_progress": -0.3789616201051064
+        }
+      },
+      "recoveries": [
+        {
+          "task": "alarm",
+          "action": "R1",
+          "success": true,
+          "duration_s": 1.8123299420285228,
+          "arm_joint_travel_rad": 5.836289658001384,
+          "hand_path_m": 0.23253609170260842,
+          "fixture_contact_steps": 0,
+          "peak_fixture_force_n": 0.0,
+          "end_max_joint_error_rad": 5.497158213155564e-06,
+          "end_max_joint_speed_rad_s": 0.00037392636924449117,
+          "fall": false,
+          "observation": {
+            "domain": "recovery",
+            "task": "alarm",
+            "active_arm": "right",
+            "joint_error_degrees": [
+              -84.2,
+              -17.1,
+              62.1,
+              3.8,
+              -7.7,
+              6.5,
+              50.8
+            ],
+            "joint_speed_degrees_s": [
+              -54.4,
+              -26.7,
+              -5.4,
+              -0.3,
+              8.2,
+              1.1,
+              100.8
+            ],
+            "hand_body_offset_mm": [
+              79.1,
+              -37.7,
+              5.2
+            ],
+            "body_tilt_degrees": 1.3,
+            "hand_contact": false,
+            "maximum_joint_error_degrees": 84.2
+          },
+          "profile": {
+            "code": "R1",
+            "waypoint": "clearance",
+            "slew": 0.04,
+            "pause": 0
+          }
+        },
+        {
+          "task": "drawer",
+          "action": "R0",
+          "success": true,
+          "duration_s": 0.746349678429965,
+          "arm_joint_travel_rad": 2.922158808049057,
+          "hand_path_m": 0.09081756030215357,
+          "fixture_contact_steps": 0,
+          "peak_fixture_force_n": 0.0,
+          "end_max_joint_error_rad": 3.3816084100255852e-06,
+          "end_max_joint_speed_rad_s": 0.00018532898975875598,
+          "fall": false,
+          "observation": {
+            "domain": "recovery",
+            "task": "drawer",
+            "active_arm": "right",
+            "joint_error_degrees": [
+              -21.8,
+              -14.4,
+              18.3,
+              -24.6,
+              -34.9,
+              -22.2,
+              -31.1
+            ],
+            "joint_speed_degrees_s": [
+              48.3,
+              -13.5,
+              -2.3,
+              -33.0,
+              -2.6,
+              -37.4,
+              -43.0
+            ],
+            "hand_body_offset_mm": [
+              68.7,
+              -38.0,
+              -0.4
+            ],
+            "body_tilt_degrees": 1.0,
+            "hand_contact": false,
+            "maximum_joint_error_degrees": 34.9
+          },
+          "profile": {
+            "code": "R0",
+            "waypoint": "direct",
+            "slew": 0.02,
+            "pause": 0
+          }
+        },
+        {
+          "task": "laptop",
+          "action": "R0",
+          "success": true,
+          "duration_s": 2.282374920237082,
+          "arm_joint_travel_rad": 6.395072146918813,
+          "hand_path_m": 0.1227426593056765,
+          "fixture_contact_steps": 0,
+          "peak_fixture_force_n": 0.0,
+          "end_max_joint_error_rad": 5.284066381515299e-06,
+          "end_max_joint_speed_rad_s": 0.00017012446718336644,
+          "fall": false,
+          "observation": {
+            "domain": "recovery",
+            "task": "laptop",
+            "active_arm": "left",
+            "joint_error_degrees": [
+              121.5,
+              30.8,
+              58.4,
+              -78.0,
+              0.5,
+              -72.4,
+              -3.8
+            ],
+            "joint_speed_degrees_s": [
+              0.0,
+              -0.0,
+              0.0,
+              -0.0,
+              -0.0,
+              0.0,
+              -0.0
+            ],
+            "hand_body_offset_mm": [
+              2.7,
+              51.7,
+              26.4
+            ],
+            "body_tilt_degrees": 0.6,
+            "hand_contact": false,
+            "maximum_joint_error_degrees": 121.5
+          },
+          "profile": {
+            "code": "R0",
+            "waypoint": "direct",
+            "slew": 0.02,
+            "pause": 0
+          }
+        },
+        {
+          "task": "globe",
+          "action": "R0",
+          "success": true,
+          "duration_s": 1.1959579184480162,
+          "arm_joint_travel_rad": 3.6773923320653696,
+          "hand_path_m": 0.07964368492731368,
+          "fixture_contact_steps": 0,
+          "peak_fixture_force_n": 0.0,
+          "end_max_joint_error_rad": 1.4170090519059753e-06,
+          "end_max_joint_speed_rad_s": 2.65409339168019e-05,
+          "fall": false,
+          "observation": {
+            "domain": "recovery",
+            "task": "globe",
+            "active_arm": "right",
+            "joint_error_degrees": [
+              5.6,
+              -3.5,
+              46.0,
+              -43.7,
+              13.6,
+              -59.6,
+              -36.8
+            ],
+            "joint_speed_degrees_s": [
+              83.2,
+              -19.6,
+              4.8,
+              -56.7,
+              -33.3,
+              -101.0,
+              -13.2
+            ],
+            "hand_body_offset_mm": [
+              45.4,
+              -20.7,
+              0.5
+            ],
+            "body_tilt_degrees": 0.8,
+            "hand_contact": false,
+            "maximum_joint_error_degrees": 59.6
+          },
+          "profile": {
+            "code": "R0",
+            "waypoint": "direct",
+            "slew": 0.02,
+            "pause": 0
+          }
+        }
+      ],
+      "fall": false,
+      "failure": null
+    },
+    {
+      "file": "clearance-xy-fixed-23000.json",
+      "scope": "Known-case engineering calibration with fixed control; no trained policy inference.",
+      "seed": 23000,
+      "sha256": "0b136d579373162f3b7d27b2792c5e3b776d071630a9e25e4e5cf090aea4fc3b",
+      "controller_revision": "xy-support-v1",
+      "arrivals": [
+        {
+          "station": "alarm",
+          "arrived": true,
+          "t": 21.661307534450334,
+          "position_error_mm": 1.5869259541460026,
+          "heading_error_degrees": 1.7058761348842442,
+          "travel_time_s": 21.661307534450334
+        },
+        {
+          "station": "drawer",
+          "arrived": true,
+          "t": 38.3703846725308,
+          "position_error_mm": 3.7966963862043834,
+          "heading_error_degrees": 6.204246069029249,
+          "travel_time_s": 11.285166824431727
+        },
+        {
+          "station": "laptop",
+          "arrived": true,
+          "t": 61.35517537178088,
+          "position_error_mm": 6.533196707912707,
+          "heading_error_degrees": 0.8331918568704084,
+          "travel_time_s": 16.091887645009706
+        },
+        {
+          "station": "globe",
+          "arrived": true,
+          "t": 80.82566457314441,
+          "position_error_mm": 2.1556598532431193,
+          "heading_error_degrees": 5.846480519041454,
+          "travel_time_s": 7.920462250063451
+        }
+      ],
+      "tasks": {
+        "alarm": {
+          "task": "alarm",
+          "success": true,
+          "value": -0.0004668064943688575,
+          "duration": 3.570706895255114,
+          "contacts": 1210,
+          "non_hand_contact_steps": 0,
+          "max_force_n": 0.22703062071981644,
+          "fall": false,
+          "max_tilt_deg": 5.704622352855573,
+          "profile": {
+            "code": "C",
+            "speed": 0.04,
+            "depth": 0.0006,
+            "force": 0.22,
+            "brake": 0.002,
+            "hold": 0.25
+          },
+          "phase": "release",
+          "contact_progress": -0.004695525604144876
+        },
+        "drawer": {
+          "task": "drawer",
+          "success": true,
+          "value": -7.277364646211671e-07,
+          "duration": 6.169442522574968,
+          "contacts": 1848,
+          "non_hand_contact_steps": 0,
+          "max_force_n": 0.34779340668006414,
+          "fall": false,
+          "max_tilt_deg": 5.704622352855573,
+          "profile": {
+            "code": "A",
+            "speed": 0.012,
+            "depth": 0.0002,
+            "force": 0.055,
+            "brake": 0.001,
+            "hold": 0.3
+          },
+          "phase": "release",
+          "contact_progress": 0.028077219776704073
+        },
+        "laptop": {
+          "task": "laptop",
+          "success": true,
+          "value": -0.0027396551212659492,
+          "duration": 9.191627365023571,
+          "contacts": 513,
+          "non_hand_contact_steps": 0,
+          "max_force_n": 0.44907257252540367,
+          "fall": false,
+          "max_tilt_deg": 5.704622352855573,
+          "profile": {
+            "code": "P0",
+            "force": 0.45,
+            "radius": 0.15,
+            "contact_x": 0.263,
+            "pulse_on": 10,
+            "pulse_off": 0,
+            "slew": 0.012,
+            "release_degrees": 56.0
+          },
+          "phase": "release",
+          "contact_progress": 1.201622423702666,
+          "abort": null,
+          "approach_stage": 1,
+          "final_tip": [
+            0.2671968584141623,
+            0.15524144356037844,
+            0.15954052104157676
+          ],
+          "final_target": [
+            0.2671492780008134,
+            0.15518396274824933,
+            0.15967239914895698
+          ],
+          "support_x_peak_n": 0.17498601488945853
+        },
+        "globe": {
+          "task": "globe",
+          "success": true,
+          "value": -0.009305250730897404,
+          "duration": 6.167807583520357,
+          "contacts": 3193,
+          "non_hand_contact_steps": 0,
+          "max_force_n": 0.22181167632234522,
+          "fall": false,
+          "max_tilt_deg": 5.704622352855573,
+          "profile": {
+            "code": "A",
+            "speed": 0.012,
+            "depth": 0.0002,
+            "force": 0.055,
+            "brake": 0.001,
+            "hold": 0.3
+          },
+          "phase": "release",
+          "contact_progress": -0.4426116344412215
+        }
+      },
+      "recoveries": [
+        {
+          "task": "alarm",
+          "action": "R1",
+          "success": true,
+          "duration_s": 1.8532034183936226,
+          "arm_joint_travel_rad": 6.01393728205773,
+          "hand_path_m": 0.2347629415289807,
+          "fixture_contact_steps": 0,
+          "peak_fixture_force_n": 0.0,
+          "end_max_joint_error_rad": 5.582034688368302e-06,
+          "end_max_joint_speed_rad_s": 0.00037796202734832133,
+          "fall": false,
+          "observation": {
+            "domain": "recovery",
+            "task": "alarm",
+            "active_arm": "right",
+            "joint_error_degrees": [
+              -87.5,
+              -17.5,
+              62.9,
+              3.0,
+              -6.4,
+              6.8,
+              58.2
+            ],
+            "joint_speed_degrees_s": [
+              -14.8,
+              -6.8,
+              -1.5,
+              -0.3,
+              1.2,
+              0.2,
+              15.6
+            ],
+            "hand_body_offset_mm": [
+              77.5,
+              -35.3,
+              7.4
+            ],
+            "body_tilt_degrees": 1.3,
+            "hand_contact": false,
+            "maximum_joint_error_degrees": 87.5
+          },
+          "profile": {
+            "code": "R1",
+            "waypoint": "clearance",
+            "slew": 0.04,
+            "pause": 0
+          }
+        },
+        {
+          "task": "drawer",
+          "action": "R0",
+          "success": true,
+          "duration_s": 0.7234605316654097,
+          "arm_joint_travel_rad": 2.8248828721270898,
+          "hand_path_m": 0.09215905546417774,
+          "fixture_contact_steps": 0,
+          "peak_fixture_force_n": 0.0,
+          "end_max_joint_error_rad": 3.164762312422972e-06,
+          "end_max_joint_speed_rad_s": 3.291827000737687e-05,
+          "fall": false,
+          "observation": {
+            "domain": "recovery",
+            "task": "drawer",
+            "active_arm": "right",
+            "joint_error_degrees": [
+              -22.3,
+              9.7,
+              -18.5,
+              -27.1,
+              32.8,
+              -17.9,
+              33.5
+            ],
+            "joint_speed_degrees_s": [
+              7.6,
+              0.3,
+              -0.3,
+              -2.8,
+              0.5,
+              -3.4,
+              4.9
+            ],
+            "hand_body_offset_mm": [
+              69.7,
+              -31.4,
+              -0.3
+            ],
+            "body_tilt_degrees": 1.0,
+            "hand_contact": false,
+            "maximum_joint_error_degrees": 33.5
+          },
+          "profile": {
+            "code": "R0",
+            "waypoint": "direct",
+            "slew": 0.02,
+            "pause": 0
+          }
+        },
+        {
+          "task": "laptop",
+          "action": "R0",
+          "success": true,
+          "duration_s": 2.358399586276505,
+          "arm_joint_travel_rad": 6.4307144331227,
+          "hand_path_m": 0.12408099162393732,
+          "fixture_contact_steps": 0,
+          "peak_fixture_force_n": 0.0,
+          "end_max_joint_error_rad": 3.4805652859328704e-06,
+          "end_max_joint_speed_rad_s": 7.548497619358228e-05,
+          "fall": false,
+          "observation": {
+            "domain": "recovery",
+            "task": "laptop",
+            "active_arm": "left",
+            "joint_error_degrees": [
+              125.2,
+              26.2,
+              58.2,
+              -79.4,
+              -1.8,
+              -73.2,
+              -4.1
+            ],
+            "joint_speed_degrees_s": [
+              -5.5,
+              -9.0,
+              2.4,
+              -3.1,
+              -1.9,
+              1.8,
+              -8.2
+            ],
+            "hand_body_offset_mm": [
+              1.4,
+              52.1,
+              28.7
+            ],
+            "body_tilt_degrees": 0.6,
+            "hand_contact": false,
+            "maximum_joint_error_degrees": 125.2
+          },
+          "profile": {
+            "code": "R0",
+            "waypoint": "direct",
+            "slew": 0.02,
+            "pause": 0
+          }
+        },
+        {
+          "task": "globe",
+          "action": "R0",
+          "success": true,
+          "duration_s": 1.279339810233182,
+          "arm_joint_travel_rad": 3.944662767437171,
+          "hand_path_m": 0.08442157192514949,
+          "fixture_contact_steps": 0,
+          "peak_fixture_force_n": 0.0,
+          "end_max_joint_error_rad": 3.057999077821714e-06,
+          "end_max_joint_speed_rad_s": 7.965001057784051e-05,
+          "fall": false,
+          "observation": {
+            "domain": "recovery",
+            "task": "globe",
+            "active_arm": "right",
+            "joint_error_degrees": [
+              -11.7,
+              -4.9,
+              56.6,
+              -31.7,
+              5.3,
+              -50.4,
+              -65.1
+            ],
+            "joint_speed_degrees_s": [
+              8.0,
+              -2.2,
+              -0.1,
+              -7.4,
+              -5.6,
+              -10.0,
+              -7.7
+            ],
+            "hand_body_offset_mm": [
+              52.1,
+              -24.4,
+              0.7
+            ],
+            "body_tilt_degrees": 0.9,
+            "hand_contact": false,
+            "maximum_joint_error_degrees": 65.1
+          },
+          "profile": {
+            "code": "R0",
+            "waypoint": "direct",
+            "slew": 0.02,
+            "pause": 0
+          }
+        }
+      ],
+      "fall": false,
+      "failure": null
+    }
+  ]
+}
