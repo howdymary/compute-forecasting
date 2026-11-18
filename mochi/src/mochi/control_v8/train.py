@@ -44,19 +44,26 @@ async def main():
    allocation=await research(services,report,{'engineering_changes':cfg['engineering_changes'],'new_physical_training_results':'Not yet measured; no improvement claimed.'},0)
    report['phase']='Modal branch experiments for training labels';await publish(report,services)
    teachers=[]
-   async for row in collect_teacher.starmap.aio([(seed,route) for seed in cfg['train_seeds']],order_outputs=True):
-    teachers.append(row);report['rollouts']+=row['receipt']['physical_rollouts'];save('teacher-'+str(row['seed']),row);log('teacher',seed=row['seed'],valid=row['valid'],failure_task=row.get('failure_task'),rollouts=row['receipt']['physical_rollouts']);await publish(report,services)
+   if cfg.get('source_dataset_run'):
+    source=next((ROOT/'.cache/control-reuse').rglob('teacher-summaries.json')).parent;prior=json.load(open(source/'progress.json'));assert prior['optimizer_updates_completed']==0;assert prior['protocol']['frozen_controller_sha256']==cfg['frozen_controller_sha256'];assert prior['protocol']['frozen_physics_sha256']==cfg['frozen_physics_sha256'];assert prior['protocol']['route_version']==cfg['route_version']
+    teachers=[json.load(open(source/f'teacher-{seed}.json')) for seed in cfg['train_seeds']];report['rollouts']=sum(row['receipt']['physical_rollouts'] for row in teachers);report['source_data']={'workflow_run':cfg['source_dataset_run'],'optimizer_updates':0,'reused_completed_physical_rollouts':report['rollouts'],'dataset_sha256':{str(row['seed']):digest(row) for row in teachers},'interrupted_development_calls_at_most':2,'reason':'Before any gradient updates, replace fastest-only labels with lower-force contacts and least-travel safe recovery. Reuse identical frozen physical branches.'}
+    for row in teachers:save('teacher-'+str(row['seed']),row)
+   else:
+    async for row in collect_teacher.starmap.aio([(seed,route) for seed in cfg['train_seeds']],order_outputs=True):
+     teachers.append(row);report['rollouts']+=row['receipt']['physical_rollouts'];save('teacher-'+str(row['seed']),row);log('teacher',seed=row['seed'],valid=row['valid'],failure_task=row.get('failure_task'),rollouts=row['receipt']['physical_rollouts']);await publish(report,services)
    save('teacher-summaries',[{k:r[k] for k in ['seed','valid','receipt']} for r in teachers]);data=defaultdict(list);unique=defaultdict(dict);conflicts=[]
    for row in teachers:
     for e in row['examples']:
-     d=e['domain'];o=e['model_observation'];key=json.dumps(o,sort_keys=True);old=unique[d].get(key)
-     if old and old[1]!=e['action']:conflicts.append({'domain':d,'observation':o,'labels':[old[1],e['action']]})
-     unique[d][key]=(o,e['action'])
+     d=e['domain'];o=e['model_observation'];key=json.dumps(o,sort_keys=True);old=unique[d].get(key);label=e['action']
+     if d!='walk':
+      trial=next(t for t in row['trials'] if t['domain']==d and t['task']==e['task']);candidates=[x for x in trial['outcomes'] if x['result']['success']];best=min(candidates,key=lambda x:(x['result']['arm_joint_travel_rad'],x['result']['duration_s']) if d=='recovery' else (x['result']['max_force_n'],x['result']['duration']));label=best['action']
+     if old and old[1]!=label:conflicts.append({'domain':d,'observation':o,'labels':[old[1],label]})
+     unique[d][key]=(o,label)
    if any(c['domain']=='walk' for c in conflicts):raise RuntimeError('Walking encoding aliases different teacher commands')
    data={d:list(v.values()) for d,v in unique.items()};domains=['walk',*TASKS,'recovery'];assert set(data)==set(domains),'Missing physical supervision domain'
    report['data_audit']={d:{'unique_observations':len(data[d]),'label_counts':dict(Counter(a for _,a in data[d])),'physical_observations':sum(e['domain']==d for r in teachers for e in r['examples'])} for d in domains};report['data_audit']['recovery']['task_counts']=dict(Counter(o['task'] for o,_ in data['recovery']));assert len(report['data_audit']['walk']['label_counts'])>=5;assert set(report['data_audit']['recovery']['task_counts'])==set(TASKS);save('training-observations',data);save('label-conflicts',conflicts)
    def fixed_action(domain,task):
-    values=[e for r in teachers for e in r['examples'] if e['domain']==domain and e['task']==task];return Counter(e['action'] for e in values).most_common(1)[0][0]
+    values=[a for o,a in data[domain] if domain!='recovery' or o['task']==task];return Counter(values).most_common(1)[0][0]
    fixed={t:fixed_action(t,t) for t in TASKS};recovery_fixed={t:fixed_action('recovery',t) for t in TASKS};report['fixed_baseline']=fixed;report['fixed_recovery_baseline']=recovery_fixed
    rid=await services.write('experimenter',{'kind':'observation','data_audit':report['data_audit'],'valid_teacher_sequences':sum(r['valid'] for r in teachers),'training_only':True});evidence=await services.read('critic',rid);verdict=await services.write('critic',{'kind':'qualified-conclusion','evidence':evidence,'conclusion':'Training labels are real physical measurements. No held-out improvement has been tested. Failed branches remain archived.'});await services.read('researcher',verdict);canary=await services.write('critic',{'kind':'private-test','text':'MOCHI_PRIVATE_CANARY'},private=True);await services.read('designer',canary,False)
    trainer=await services.service.create_training_client_from_state_with_optimizer(parent);renderer=services.renderer;datums={d:decision_choice_datums(renderer,[(decision(o),a) for o,a in data[d]]) for d in domains};paths['0']={'optimizer':parent};save('frozen',report);best=None

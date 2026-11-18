@@ -5,6 +5,7 @@ on:
     paths: ['mochi/configs/control-v8-protocol.json']
 permissions:
   contents: read
+  actions: read
 concurrency:
   group: mochi-control-v8
   cancel-in-progress: false
@@ -26,6 +27,14 @@ jobs:
           python mochi/scripts/fetch_visual_models.py
       - name: Check physics and decision contracts
         run: python -m pytest mochi/tests/test_control_v8.py -q
+      - name: Restore frozen measured training branches when configured
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mochi_source_run=$(python -c 'import json;print(json.load(open("mochi/configs/control-v8-protocol.json")).get("source_dataset_run",0))')
+          if [ "$mochi_source_run" != "0" ]; then
+            gh run download "$mochi_source_run" --repo "$GITHUB_REPOSITORY" --dir mochi/.cache/control-reuse
+          fi
       - name: Measure labels, resume Tinker, train and evaluate all six domains
         env:
           TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}

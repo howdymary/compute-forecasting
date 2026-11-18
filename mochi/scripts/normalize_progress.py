@@ -16,4 +16,9 @@ def normalize():
     plain=json.loads(json.dumps(report));store.put('latest',plain)
     return {'normalized':True,'status':plain['status'],'optimizer_updates_completed':plain.get('optimizer_updates_completed')}
 @app.local_entrypoint()
-def main():print(json.dumps(normalize.remote()))
+def main():
+    from pathlib import Path
+    manifest=Path(__file__).resolve().parents[1]/'web/desk/curriculum/manifest.json'
+    if json.loads(manifest.read_text()).get('study')=='mochi-control-v8':
+        print(json.dumps({'normalized':False,'reason':'V8 produces plain JSON; archived V7 status preserved'}));return
+    print(json.dumps(normalize.remote()))

@@ -45,3 +45,7 @@ Results from new training and held-out evaluation will be reported separately af
 ## Isolated control checks
 
 After development selection, the same held-out seed block also receives separate task and arm-recovery probes. Navigation failure must not hide the quality of those decisions. Before/after task choices share an initial fixture state. Recovery choices share a post-task state produced by the predeclared B/A/P1/A engineering controls. If that reference task fails, the recovery pair is unavailable and counted as such. These resets belong only to isolated tests; the primary demo remains one continuous four-task episode. The additional batch is bounded at 80 physical rollouts and stays within the study’s 512-rollout cap. No resulting outcomes may select training checkpoints.
+
+## Timing and deployment limits
+
+The selector runs between bounded simulation actions. MuJoCo time pauses while remote model inference is pending; the fast native gait, balance and arm feedback execute inside each action. Completion time is simulated physical time, not real-time inference throughput. Worker wall time and actual Tinker inference calls are retained separately. This is not a real-time hardware control or sim-to-real demonstration.

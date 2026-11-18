@@ -1,6 +1,6 @@
 {
   "study": "mochi-control-v8",
-  "revision": 2,
+  "revision": 3,
   "train_seeds": [
     23000,
     23001,
@@ -68,5 +68,12 @@
     "src/mochi/control_v8/verification.py": "4e78da28198bb373c515fcab604d4a756dde886f8bf4fe1aa84a7e437d347b1c",
     "src/mochi/control_v8/decisions.py": "20741c229f0f0a8cc020055522228c954752a4a1fc216e69692579f44824329e"
   },
-  "parent_checkpoint_sha256": "85c8fced6732179ac5b3297852d9e9bf80ab08667578314b851a47877ec1c51e"
+  "parent_checkpoint_sha256": "85c8fced6732179ac5b3297852d9e9bf80ab08667578314b851a47877ec1c51e",
+  "source_dataset_run": 44378183870,
+  "label_objective": {
+    "tasks": "Successful physical candidates only, lowest measured peak force, then duration.",
+    "recovery": "Successful physical candidates only, least measured arm joint travel, then duration.",
+    "walking": "Fixed reference follower; balance unique observed states across action classes.",
+    "provenance": "Supervision is relabeled from actual identical-state counterfactual branches, not invented trajectories. Underlying source episodes used faster behavior to visit states. No held-out evidence informs labels."
+  }
 }
