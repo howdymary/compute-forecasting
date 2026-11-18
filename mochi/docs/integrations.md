@@ -1,5 +1,26 @@
+<!-- MOCHI_CONTROL_INTEGRATIONS_START -->
+# Current capability inventory · V8 source study
+
+The completed source study is [run 44382265039](https://github.com/howdymary/mochi-demo/actions/runs/44382265039). Its numerical results and the separately frozen laptop-clearance evaluation remain separate.
+
+| Service | Working execution path | Completed source evidence |
+|---|---|---|
+| Tinker | Existing GitHub Actions secret; no local key | 64 additional LoRA optimizer updates, 384 domain-gradient calls, five retained checkpoints; development selected update8 |
+| Modal | Existing Actions token references | 255 completed physical rollouts including retained training-label branches; four paired held-out cases |
+| Exa | Existing Actions secret | 2 actual searches inside the research/training loop |
+| past.dev | Existing Actions secret | 4 writing identities, 4 reading identities, 8 source-verified handoffs in the retained report; private-audience isolation passed |
+| Blender | Local 5.1.2 | Rendered the actual selected-checkpoint laptop attempt from held-out seed25000 |
+| GitHub | Authenticated gh and existing Actions secrets | Scoped mochi-desk-v3 publication; preserved active checkout and forecasting default branch |
+
+Tinker learns walking commands, task-contact profiles and arm-recovery choices from simulation state. The native Unitree gait network, standing balance and IK remain fixed. Parent and selected weights share the same physical setup. The selected model and fixed baseline each completed4/4 source test routes; the parent weights completed0/4 through the V8 interface. These four fixed-layout cases do not establish broad robotics performance.
+
+The clearance workflow reuses those same weights with zero additional optimizer updates. It tests the outward stance and XY-balanced press separately and retains the original source results. Exact numerical records: [source evidence](../evidence/control-v8/results.json), [clearance protocol](../configs/clearance-protocol.json).
+
+Local Modal credentials remain unavailable; existing Actions credentials are the usable path. Provider keys remain on the backend. No credential is copied into the replay. Service receipts establish actual use, not billed credit amounts or a causal gain from search/memory. Canonical model-state paths are private; public exports contain hashes and measured trajectories. No new checkpoint deletion or billing change is part of this study.
+<!-- MOCHI_CONTROL_INTEGRATIONS_END -->
+
 <!-- MOCHI_V7_INTEGRATIONS_START -->
-# Current capability inventory
+# Archived V7 capability inventory
 
 V7 completed 96 real optimizer updates and a separate evaluation-only recovery. All current figures below refer to V7; the historical inventories are not added to these counts.
 
