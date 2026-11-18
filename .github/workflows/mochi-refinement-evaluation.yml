@@ -1,0 +1,45 @@
+name: Mochi saved-state evaluation recovery
+on:
+  push:
+    branches: [mochi-desk-v3]
+    paths: ['mochi/configs/refinement-evaluation.json']
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: mochi-curriculum-v6
+  cancel-in-progress: false
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 100
+    env:
+      PYTHONPATH: ${{ github.workspace }}/mochi/src
+      MOCHI_ROOT: ${{ github.workspace }}/mochi
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - name: Install pinned runtime
+        run: |
+          python -m pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install './mochi[remote,dev]' pyyaml==6.0.2
+          python mochi/scripts/fetch_visual_models.py
+      - name: Restore all completed training evidence
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run download 44255635428 --repo "$GITHUB_REPOSITORY" --dir mochi/.cache/refinement-source
+      - name: Evaluate immutable saved model states without training
+        env:
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+          EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
+          PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
+        run: python -u -m mochi.curriculum.finalize_refinement
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mochi-refinement-evaluation-${{ github.run_id }}
+          path: mochi/artifacts/refinement-v7/
+          retention-days: 30
