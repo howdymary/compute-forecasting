@@ -1,8 +1,8 @@
 """Pinned Unitree walking policy, with explicit miniature similarity scaling."""
 from pathlib import Path
-import hashlib,json,math,xml.etree.ElementTree as ET
+import hashlib,json,math,os,xml.etree.ElementTree as ET
 import mujoco,numpy as np,torch,yaml
-ROOT=Path(__file__).resolve().parents[3]
+ROOT=Path(os.environ.get('MOCHI_ROOT',Path(__file__).resolve().parents[3]))
 SOURCE=ROOT/'assets/robot/locomotion'
 CFG=yaml.safe_load((SOURCE/'deploy/deploy_mujoco/configs/g1.yaml').read_text())
 LEGS=[side+'_'+part+'_joint' for side in ['left','right'] for part in ['hip_pitch','hip_roll','hip_yaw','knee','ankle_pitch','ankle_roll']]

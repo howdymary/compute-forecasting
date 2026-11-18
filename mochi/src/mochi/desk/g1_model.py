@@ -4,10 +4,10 @@ Legs, waist and fingers are held at the vendor stand keyframe. Both seven-DOF
 arms retain their native joint axes. The pelvis is fixed to the experiment.
 """
 from pathlib import Path
-import copy,json,math,xml.etree.ElementTree as ET
+import copy,json,math,os,xml.etree.ElementTree as ET
 import mujoco,numpy as np
 
-ROOT=Path(__file__).resolve().parents[3];SOURCE=ROOT/'assets/robot/g1';HEIGHT=.221;PAD_RADIUS=.0025
+ROOT=Path(os.environ.get('MOCHI_ROOT',Path(__file__).resolve().parents[3]));SOURCE=ROOT/'assets/robot/g1';HEIGHT=.221;PAD_RADIUS=.0025
 ARMS={side:[side+'_'+suffix+'_joint' for suffix in ['shoulder_pitch','shoulder_roll','shoulder_yaw','elbow','wrist_roll','wrist_pitch','wrist_yaw']] for side in ['left','right']}
 def values(v):return np.fromstring(v,sep=' ')
 def fmt(v):return ' '.join(f'{float(x):.12g}' for x in np.atleast_1d(v))
