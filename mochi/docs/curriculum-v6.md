@@ -106,3 +106,5 @@ A navigation diagnostic can describe executed actions and agreement with the unc
 ```sh
 PYTHONPATH=mochi/src mochi/.venv/bin/python mochi/scripts/diagnose_curriculum.py --source mochi/artifacts/curriculum --out mochi/artifacts/curriculum/navigation-diagnostic.json
 ```
+
+The traditional twin-bell alarm clock is an original procedural visual shell (`web/desk/vintage-clock.js`, mirrored in `scripts/render_curriculum.py`). Its dial, bells and feet are decoration. The existing passive chassis collider and active rectangular snooze cap retain exactly the same dimensions, contact position, travel and recorded transforms; no training or evaluation dynamics changed for this visual replacement.

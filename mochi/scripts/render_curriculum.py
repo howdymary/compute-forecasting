@@ -40,9 +40,35 @@ def empty(name,pos):
  o=bpy.data.objects.new(name,None);bpy.context.collection.objects.link(o);o.location=pos;return o
 def part(parent,name,size,pos,mat,bevel=.001):
  o=box(name,size,pos,mat,bevel);o.parent=parent;o.location=pos;return o
-clock=empty('Alarm clock',(-.36,.11,.06));part(clock,'Clock case',(.075,.05,.116),(0,0,-.002),black,.005);part(clock,'Clock face',(.066,.001,.046),(0,-.0258,.005),material('Dark glass',(.004,.009,.01),.2,.15),.001)
-bpy.ops.object.text_add();text=bpy.context.object;text.parent=clock;text.location=(-.027,-.0266,-.003);text.rotation_euler=(math.pi/2,0,0);text.data.body='07:00';text.data.size=.019;text.data.extrude=.00003;text.data.materials.append(material('Amber digits',(.76,.49,.16),0,.4))
-cap=empty('Alarm button',(-.335,.1,.124));part(cap,'Snooze cap',(.025,.018,.004),(0,0,0),coral,.0012)
+# Traditional mechanical clock; passive chassis and active cap use the same pivots.
+def cylinder(parent,name,radius,depth,pos,mat,axis='z'):
+ bpy.ops.mesh.primitive_cylinder_add(vertices=64,radius=radius,depth=depth);o=bpy.context.object;o.name=name;o.parent=parent;o.location=pos
+ if axis=='y':o.rotation_euler.x=math.pi/2
+ o.data.materials.append(mat);bevel=o.modifiers.new('Machined edge','BEVEL');bevel.width=.0004;bevel.segments=3;o.modifiers.new('Normals','WEIGHTED_NORMAL');return o
+def sphere(parent,name,radius,pos,mat,scale=(1,1,1)):
+ bpy.ops.mesh.primitive_uv_sphere_add(segments=40,ring_count=24,radius=radius);o=bpy.context.object;o.name=name;o.parent=parent;o.location=pos;o.scale=scale;o.data.materials.append(mat)
+ for poly in o.data.polygons:poly.use_smooth=True
+ return o
+def rod(parent,name,start,end,radius,mat):
+ delta=Vector(end)-Vector(start);o=cylinder(parent,name,radius,delta.length,(Vector(start)+Vector(end))/2,mat);o.rotation_euler=delta.to_track_quat('Z','Y').to_euler();return o
+def lettering(parent,label,pos,size,mat):
+ bpy.ops.object.text_add();o=bpy.context.object;o.parent=parent;o.location=pos;o.rotation_euler=(math.pi/2,0,0);o.data.body=label;o.data.size=size;o.data.align_x='CENTER';o.data.align_y='CENTER';o.data.extrude=.00002;o.data.materials.append(mat);return o
+clock=empty('Alarm clock',(-.36,.11,.06));enamel=material('Sage enamel',(.098,.147,.123),.3,.26);brass=material('Aged brass',(.47,.36,.21),.86,.28);dial=material('Warm paper dial',(.84,.79,.67),0,.75);ink=material('Dial ink',(.028,.044,.033),.2,.44)
+cylinder(clock,'Round enamel chassis',.037,.041,(0,0,0),enamel,'y');cylinder(clock,'Cream dial',.0324,.001,(0,-.024,0),dial,'y')
+for rad,tube,y in [(.0353,.0018,-.022),(.0326,.0006,-.0242)]:
+ bpy.ops.mesh.primitive_torus_add(major_radius=rad,minor_radius=tube,major_segments=80,minor_segments=12);o=bpy.context.object;o.name='Brass bezel';o.parent=clock;o.location=(0,y,0);o.rotation_euler.x=math.pi/2;o.data.materials.append(brass)
+for i in range(60):
+ angle=i*math.pi/30;length=.0025 if i%5 else .0045;o=part(clock,'Dial index',(.00022 if i%5 else .0005,.00025,length),(.029*math.sin(angle),-.0248,.029*math.cos(angle)),ink,.00003);o.rotation_euler.y=angle
+for i in range(1,13):
+ angle=i*math.pi/6;lettering(clock,str(i),(.0216*math.sin(angle),-.025,.0216*math.cos(angle)),.0075,ink)
+lettering(clock,'M O C H I',(0,-.025,-.010),.0019,ink);lettering(clock,'MECHANICAL ALARM',(0,-.025,-.013),.00135,ink)
+rod(clock,'Hour hand',(0,-.0254,0),(-.010,-.0254,-.0173),.0013,ink);rod(clock,'Minute hand',(0,-.0262,0),(0,-.0262,.025),.00085,ink);rod(clock,'Second hand',(-.004,-.027,.002),(.021,-.027,-.012),.00028,coral);cylinder(clock,'Hand pin',.0025,.0015,(0,-.0274,0),brass,'y')
+for x in [-.024,.024]:
+ rod(clock,'Bell bracket',(x*.65,.013,.028),(x,.018,.052),.0016,brass);sphere(clock,'Twin bell',.014,(x,.018,.055),brass,(1,1,.62));cylinder(clock,'Bell rim',.0145,.0017,(x,.018,.050),brass);sphere(clock,'Bell finial',.0022,(x,.018,.064),ink)
+ rod(clock,'Angled metal foot',(x*.85,0,-.027),(x*1.2,-.002,-.055),.0022,brass);part(clock,'Rubber foot',(.014,.012,.0035),(x*1.2,-.002,-.057),black,.0014)
+rod(clock,'Hammer stem',(0,.017,.033),(0,.017,.061),.0014,ink);rod(clock,'Hammer head',(-.006,.017,.061),(.006,.017,.061),.002,ink);cylinder(clock,'Winding knob',.006,.007,(0,.026,-.005),brass,'y')
+part(clock,'Plunger housing',(.026,.019,.016),(.025,-.010,.054),enamel,.003)
+cap=empty('Alarm button',(-.335,.1,.124));part(cap,'Snooze cap',(.025,.018,.004),(0,0,0),brass,.0015);part(cap,'Button inlay',(.015,.008,.0003),(0,0,.0021),coral,.001)
 cabinet=empty('Drawer cabinet',(-.1,.15,0))
 for x in [-.052,.052]:part(cabinet,'Side',(.004,.09,.145),(x,0,.0725),walnut)
 for size,pos in [((.108,.09,.004),(0,0,.147)),((.108,.004,.145),(0,.046,.0725)),((.108,.09,.004),(0,0,.002))]:part(cabinet,'Cabinet panel',size,pos,walnut)
@@ -69,7 +95,10 @@ for f in selected:
   if o:
    o.location=pos;o.rotation_mode='QUATERNION';o.rotation_quaternion=q
    if args.animate:o.keyframe_insert('location',frame=frame);o.keyframe_insert('rotation_quaternion',frame=frame)
- q=f['quaternions'][1];yaw=math.atan2(2*(q[0]*q[3]+q[1]*q[2]),1-2*(q[2]**2+q[3]**2));pos=f['positions'][1];target=Vector((pos[0]+.025*math.cos(yaw),pos[1]+.025*math.sin(yaw),.115));camera.location=target+Vector((.18*math.cos(yaw)+.4*math.sin(yaw),.18*math.sin(yaw)-.4*math.cos(yaw),.25));camera.rotation_euler=(target-camera.location).to_track_quat('-Z','Y').to_euler()
+ q=f['quaternions'][1];yaw=math.atan2(2*(q[0]*q[3]+q[1]*q[2]),1-2*(q[2]**2+q[3]**2));pos=f['positions'][1];target=Vector((pos[0]+.025*math.cos(yaw),pos[1]+.025*math.sin(yaw),.115));camera.location=target+Vector((.18*math.cos(yaw)+.4*math.sin(yaw),.18*math.sin(yaw)-.4*math.cos(yaw),.25));
+ if f.get('task')=='alarm':
+  target=Vector(((pos[0]-.36)/2,(pos[1]+.11)/2,.107));camera.location=target+Vector((.24,-.38,.23))
+ camera.rotation_euler=(target-camera.location).to_track_quat('-Z','Y').to_euler()
  if args.animate:camera.keyframe_insert('location',frame=frame);camera.keyframe_insert('rotation_euler',frame=frame)
 scene.frame_end=round(r['duration']*25)+1;scene.render.image_settings.file_format='PNG';scene.render.filepath=str(out/'measured-trajectory.png');bpy.ops.wm.save_as_mainfile(filepath=str(out/'measured-trajectory.blend'))
 if not args.animate:bpy.ops.render.render(write_still=True)

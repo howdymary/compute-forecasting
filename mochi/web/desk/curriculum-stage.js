@@ -1,3 +1,4 @@
+import {vintageClock} from './vintage-clock.js';
 import * as THREE from 'three';
 import {loadG1} from './g1-stage.js';
 import {photographicRenderer} from './realism.js';
@@ -28,10 +29,8 @@ export function createCurriculumStage(element){
  const group=(name,pos)=>{let g=new THREE.Group();g.position.set(...pos);scene.add(g);bindings[name]=g;return g};
  function asset(file,parent,scale=[1,1,1],offset=[0,0,0]){pending.push(loader.loadAsync('assets/'+file).then(({scene:model})=>{const axes=new THREE.Group();axes.rotation.x=Math.PI/2;axes.scale.set(scale[0],scale[2],scale[1]);axes.add(model);parent.add(axes);axes.position.set(...offset);model.traverse(o=>{if(o.isMesh)o.castShadow=o.receiveShadow=true})}));}
  // Object shells use the same metre-scale pivots and envelopes as MuJoCo.
- const clock=group('alarm-clock',[-.36,.11,.06]);box([.075,.05,.116],[0,0,-.002],'frame',clock,.006);box([.066,.001,.046],[0,-.0258,.005],'visor',clock,.002);text('07:00',[0,-.0265,.010],.052,clock,'#e5bb79',.018);text('MOCHI / SNOOZE',[0,-.0265,-.012],.048,clock,'#9e9c87',.004);
- const alarmLEDMaterial=new THREE.MeshStandardMaterial({color:'#bd6045',emissive:'#bd6045',emissiveIntensity:.7});ball(.0015,[.026,-.0265,-.012],alarmLEDMaterial,clock);
- for(const x of[-.021,.021])box([.014,.020,.005],[x,0,-.057],'rubber',clock);
- const cap=group('alarm-button',[-.335,.100,.124]);box([.025,.018,.004],[0,0,0],'accent',cap,.0015);
+ const clock=group('alarm-clock',[-.36,.11,.06]);const cap=group('alarm-button',[-.335,.100,.124]);
+ const alarmLEDMaterial=vintageClock({clock,cap,mesh,box,ball,cyl,bar});
  const cabinet=group('drawer-cabinet',[-.10,.15,0]);const walnut=new THREE.MeshStandardMaterial({color:'#68523c',roughness:.65});for(const x of[-.052,.052])box([.004,.09,.145],[x,0,.0725],walnut,cabinet);box([.108,.09,.004],[0,0,.147],walnut,cabinet);box([.108,.004,.145],[0,.046,.0725],walnut,cabinet);box([.108,.09,.004],[0,0,.002],walnut,cabinet);for(const x of[-.048,.048])box([.001,.078,.002],[x,0,.10],'metal',cabinet,.0002);
  const drawer=group('drawer',[-.1,.075,.12]);box([.095,.005,.043],[0,0,0],walnut,drawer,.001);box([.091,.065,.002],[0,.033,-.021],walnut,drawer);bar([-.015,-.006,.003],[.015,-.006,.003],.0017,'metal',drawer);text('FIELD NOTES',[0,-.0027,-.008],.044,drawer,'#c5b99c',.004);
  const laptop=group('laptop-base',[.14,.17,.007]);asset('sand-laptop-base.glb',laptop,[.25/.29,.17/.195,1]);const lid=group('laptop-screen',[.14,.249,.0185]);asset('sand-laptop-lid.glb',lid,[.25/.29,1,.15/.175],[0,0,-.0043]);
@@ -42,13 +41,14 @@ export function createCurriculumStage(element){
  mesh(new THREE.CircleGeometry(.0036,32),new THREE.MeshStandardMaterial({color:'#bf6947',side:THREE.DoubleSide}),globe,[-.0583,0,0]).rotation.y=-Math.PI/2;bar([-.077,0,.012],[-.077,0,.123],.0014,brass,base);let arrow=mesh(new THREE.ConeGeometry(.003,.010,16),brass,base,[-.069,0,.123]);arrow.rotation.z=-Math.PI/2;
 
  const photography=photographicRenderer({renderer,scene,camera,materials,joints:{},mesh,box,cyl,bar,text});
- const ready=Promise.all([photography.ready,...pending,loadG1(scene).then(robot=>{Object.assign(bindings,robot);box([.002,.020,.019],[.012,0,.063],'visor',robot['torso_link'],.0015)})]);
- let episode=null,follow=true,lastTime=-1;const A=new THREE.Vector3(),B=new THREE.Vector3(),QA=new THREE.Quaternion(),QB=new THREE.Quaternion(),PQ=new THREE.Quaternion();
+ const ready=Promise.all([photography.ready,...pending,loadG1(scene).then(robot=>{Object.assign(bindings,robot);box([.002,.020,.019],[.012,0,.063],new THREE.MeshPhysicalMaterial({color:'#020609',roughness:.36,metalness:.03,clearcoat:.35,envMapIntensity:.25}),robot['torso_link'],.0015)})]);
+ let episode=null,follow=true,lastTime=-1,cameraTask=null;const A=new THREE.Vector3(),B=new THREE.Vector3(),QA=new THREE.Quaternion(),QB=new THREE.Quaternion(),PQ=new THREE.Quaternion();
  function frame(time){if(!episode)return null;const frames=episode.trajectory.frames;if(!frames.length)return null;let lo=0,hi=frames.length-1;while(lo<hi){let mid=Math.ceil((lo+hi)/2);if(frames[mid].t<=time)lo=mid;else hi=mid-1}const a=frames[lo],b=frames[Math.min(lo+1,frames.length-1)],mix=Math.min(1,Math.max(0,(time-a.t)/Math.max(.0001,b.t-a.t)));
   episode.trajectory.body_names.forEach((name,k)=>{let obj=bindings[name];if(!obj)return;A.fromArray(a.positions[k]);B.fromArray(b.positions[k]);A.lerp(B,mix);let q=a.quaternions[k],r=b.quaternions[k];QA.set(q[1],q[2],q[3],q[0]);QB.set(r[1],r[2],r[3],r[0]);QA.slerp(QB,mix);obj.parent.updateWorldMatrix(true,false);obj.position.copy(obj.parent.worldToLocal(A));PQ.copy(obj.parent.getWorldQuaternion(PQ)).invert();obj.quaternion.copy(PQ.multiply(QA));obj.updateMatrixWorld(true)});
   alarmLEDMaterial.color.set(a.alarm_activated?'#72a47a':'#bd6045');alarmLEDMaterial.emissive.copy(alarmLEDMaterial.color);alarmLEDMaterial.emissiveIntensity=a.alarm_activated?.2:.25+.6*Math.abs(Math.sin(time*5));
-  if(follow){const pelvis=a.positions[1];const q=a.quaternions[1],yaw=Math.atan2(2*(q[0]*q[3]+q[1]*q[2]),1-2*(q[2]*q[2]+q[3]*q[3]));let target=new THREE.Vector3(pelvis[0]+.025*Math.cos(yaw),pelvis[1]+.025*Math.sin(yaw),.115),position=target.clone().add(new THREE.Vector3(.18*Math.cos(yaw)+.4*Math.sin(yaw),.18*Math.sin(yaw)-.4*Math.cos(yaw),.25));let jump=lastTime<0||Math.abs(time-lastTime)>.5;camera.position.lerp(position,jump?1:.09);orbit.target.lerp(target,jump?1:.09)}lastTime=time;orbit.update();photography.render();return a;
+  if(a.task)cameraTask=a.task;else if(a.phase==='walk')cameraTask=null;
+  if(follow){const pelvis=a.positions[1];const q=a.quaternions[1],yaw=Math.atan2(2*(q[0]*q[3]+q[1]*q[2]),1-2*(q[2]*q[2]+q[3]*q[3]));let target=new THREE.Vector3(pelvis[0]+.025*Math.cos(yaw),pelvis[1]+.025*Math.sin(yaw),.115),position=target.clone().add(new THREE.Vector3(.18*Math.cos(yaw)+.4*Math.sin(yaw),.18*Math.sin(yaw)-.4*Math.cos(yaw),.25));if(cameraTask==='alarm'){target.set((pelvis[0]-.36)/2,(pelvis[1]+.11)/2,.107);position.copy(target).add(new THREE.Vector3(.24,-.38,.23))}if(cameraTask==='globe'){target.set((pelvis[0]+.47)/2,(pelvis[1]+.22)/2,.12);position.copy(target).add(new THREE.Vector3(-.27,-.34,.24))}let jump=lastTime<0||Math.abs(time-lastTime)>.5;camera.position.lerp(position,jump?1:.09);orbit.target.lerp(target,jump?1:.09)}lastTime=time;orbit.update();photography.render();return a;
  }
  function resize(){let{width,height}=element.getBoundingClientRect();if(!width||!height)return;camera.aspect=width/height;camera.updateProjectionMatrix();renderer.setSize(width,height,false);photography.resize(width,height);frame(Math.max(0,lastTime))}new ResizeObserver(resize).observe(element);
- return{ready,frame,setEpisode(data){episode=data;lastTime=-1;resize();frame(0)},view(wide){follow=!wide;if(wide){camera.position.set(1.05,-1.35,.95);orbit.target.set(0,.1,.08);orbit.update()}},dispose(){renderer.dispose()}};
+ return{ready,frame,setEpisode(data){episode=data;lastTime=-1;cameraTask=null;resize();frame(0)},view(wide){follow=!wide;if(wide){camera.position.set(1.05,-1.35,.95);orbit.target.set(0,.1,.08);orbit.update()}},dispose(){renderer.dispose()}};
 }
