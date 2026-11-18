@@ -22,7 +22,7 @@ async def main():
  report.update(status='running',phase='Restore saved states for inference',recovery={'prior_evaluation_attempts':cfg.get('prior_evaluation_attempts',[]),'training_run':cfg['source_run'],'evaluation_run':os.getenv('GITHUB_RUN_ID'),'evaluation_source_sha':os.getenv('GITHUB_SHA'),'extra_optimizer_updates':0,'reason':'Final full training checkpoint was saved; free storage limit then closed the original service client. Use fresh inference clients on the immutable saved states.','original_error_type':report.pop('error_type',None),'original_error':report.pop('error',None)})
  services=DeskServices();clients=[];snapshots={};selectors={};start=time.perf_counter()
  async def publish():
-  report['services']=merged_services(prior_services,services.report());save('progress',report);await modal.Dict.from_name('mochi-curriculum-v7-progress',create_if_missing=True).put.aio('latest',report)
+  report['services']=merged_services(prior_services,services.report());save('progress',report);await modal.Dict.from_name('mochi-curriculum-v7-progress',create_if_missing=True).put.aio('latest',json.loads(json.dumps(report)))
  try:
   # Restore each full state into a fresh client, then make an in-memory
   # inference snapshot. The live API rejects full-state paths for direct

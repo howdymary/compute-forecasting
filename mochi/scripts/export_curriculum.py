@@ -9,24 +9,30 @@ def write(name,x):
   if isinstance(v,list):return [rounded(x) for x in v]
   return v
  (OUT/name).write_text(json.dumps(rounded(x),separators=(',',':')))
-p=argparse.ArgumentParser();p.add_argument('--calibration',action='store_true');p.add_argument('--run-id',type=int);p.add_argument('--source',type=Path,default=ROOT/'artifacts/curriculum');p.add_argument('--report',default='report.json');a=p.parse_args();source=a.source
+def trace(name,row,update):
+ if not row.get('model_decisions'):return None
+ target=name.replace('.json','-decisions.json');(OUT/target).write_text(json.dumps({'seed':row['seed'],'checkpoint_update':update,'source':'Actual fixed-checkpoint model distributions; identical encoded observations may reuse the same scored distribution.','decisions':row['model_decisions']},separators=(',',':')));return target
+p=argparse.ArgumentParser();p.add_argument('--calibration',action='store_true');p.add_argument('--run-id',type=int);p.add_argument('--source',type=Path,default=ROOT/'artifacts/curriculum');p.add_argument('--report',default='report.json');a=p.parse_args();source=a.source;verification=json.loads((source/'episode-verification.json').read_text()) if (source/'episode-verification.json').exists() else {}
 if a.calibration:
  e=json.loads((source/'calibration-sequence.json').read_text());write('calibration.json',e);write('manifest.json',{'status':'calibration','development_seed':e['scenario']['seed'],'checkpoints':[{'update':0,'file':'calibration.json'}],'selected_update':0,'optimizer_updates_completed':0})
 else:
  report=json.loads((source/a.report).read_text());manifest={k:report[k] for k in ['status','selected_checkpoint','held_out','optimizer_updates_completed','rollouts']};manifest['study']=report['study'];manifest['evaluation_runtime']=report.get('evaluation_runtime');manifest['movement_diagnostics']=json.loads((source/'movement-diagnostics.json').read_text()) if (source/'movement-diagnostics.json').exists() else None;manifest['source_sha']=report['source_sha'];manifest['held_out_isolated_walking']=report.get('held_out_isolated_walking');manifest['checkpoint_retention']=report.get('checkpoint_retention');manifest['observation_representation']=report['protocol'].get('representation');manifest['model']=report['protocol']['training'];manifest['training_log']=report['training_log'];manifest['workflow_url']=f'https://github.com/howdymary/mochi-demo/actions/runs/{a.run_id}' if a.run_id else None;manifest['held_out_isolated_contact']=report.get('held_out_isolated_contact',{});manifest['paired_outcomes']=report.get('paired_outcomes',[]);manifest['paired_full_success_gain']=report.get('paired_full_success_gain');manifest['research_allocation']=report.get('research_allocation',[]);manifest['training_audit']=report.get('data_audit',{});manifest['selected_update']=report['selected_checkpoint']['update'];manifest['development_seed']=report['protocol']['development_seeds'][0];manifest['checkpoints']=[]
  for cp in report['checkpoints']:
-  episodes=json.loads((source/f"checkpoint-{cp['update']}.json").read_text());ep=next(e for e in episodes if e['seed']==manifest['development_seed']);name=f"checkpoint-{cp['update']}.json";write(name,ep['episode']);manifest['checkpoints'].append({**cp,'file':name})
+  episodes=json.loads((source/f"checkpoint-{cp['update']}.json").read_text());ep=next(e for e in episodes if e['seed']==manifest['development_seed']);name=f"checkpoint-{cp['update']}.json";write(name,{**ep['episode'],'full_sequence_verified':verification.get(name,{}).get(str(ep['seed']))});manifest['checkpoints'].append({**cp,'file':name,'trace_file':trace(name,ep,cp['update'])})
  manifest['fresh']={'seed':report['protocol']['held_out_seeds'][0],'cases':[]}
  for seed in report['protocol']['held_out_seeds']:
   item={'seed':seed}
   for key,label in [('before','starting_model'),('after','post_trained_model')]:
-   e=next(e for e in json.loads((source/f'held-out-{label}.json').read_text()) if e['seed']==seed);name=f'held-out-{seed}-{key}.json';write(name,e['episode']);item[key]=name
+   e=next(e for e in json.loads((source/f'held-out-{label}.json').read_text()) if e['seed']==seed);name=f'held-out-{seed}-{key}.json';write(name,{**e['episode'],'full_sequence_verified':verification.get(name,{}).get(str(e['seed']))});item[key]=name;item[key+'_trace']=trace(name,e,0 if key=='before' else manifest['selected_update'])
   manifest['fresh']['cases'].append(item)
  manifest['fresh'].update(manifest['fresh']['cases'][0])
  if report.get('showcase'):
   manifest['showcase']={**report['showcase'],**next(x for x in manifest['fresh']['cases'] if x['seed']==report['showcase']['seed'])}
+ if report['study']=='mochi-curriculum-v7':
+  manifest['default_view']='checkpoints';manifest['presentation_rule']='Default: first declared development seed. The complete-example button is a successful test case selected after evaluation and is labeled separately.';successful=[r for r in report.get('paired_outcomes',[]) if r['trained_full']]
+  if successful:manifest['showcase']={**next(x for x in manifest['fresh']['cases'] if x['seed']==successful[0]['seed']),'selection':'Successful test example selected after evaluation for presentation. '+str(report['held_out']['post_trained_model']['full_successes'])+'/'+str(report['held_out']['post_trained_model']['n'])+' test routes passed; every attempt remains available.'}
  for key in ['cross_runtime_status','reference_runtime','training_workflow_url','evaluation_workflow_url','validation_workflow_url']:manifest[key]=report.get(key)
- manifest['memory']=report['services']['eligibility'];services=report['services'];records={r['id']:r for r in services.get('records',[])};handoffs=[]
+ recovery=report.get('recovery',{});manifest['training_workflow_url']=manifest.get('training_workflow_url') or (f"https://github.com/howdymary/mochi-demo/actions/runs/{recovery['training_run']}" if recovery.get('training_run') else manifest['workflow_url']);manifest['evaluation_workflow_url']=manifest.get('evaluation_workflow_url') or manifest['workflow_url'];manifest['memory']=report['services']['eligibility'];services=report['services'];records={r['id']:r for r in services.get('records',[])};handoffs=[]
  for recall in services.get('reads',[]):
   if not recall.get('cross_agent_use') or not recall.get('source_id_verified'):continue
   record=records.get(recall['record_id'])

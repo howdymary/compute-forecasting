@@ -1,6 +1,8 @@
-# Current training and movement assessment
+# Training plan and completed assessment
 
-The pre-existing V7 run (Actions 44255635428, source b459cadaaa34dfbecfaef5fa841a7298475fced0) was already active when this request arrived. It trains Qwen3.5-4B LoRA command/profile decisions with five domain-gradient calls per optimizer update. The fixed cap is 96 updates; it stops at 64 only if both development routes pass. No duplicate study is launched.
+Final outcome: 96 updates and 480 domain-gradient calls completed. Fresh Modal tests reached 20/20 waypoints versus 0/20, and one of four full routes versus zero. Isolated laptop closing improved from 0/4 to 2/4; alarm success regressed from 4/4 to 3/4. The fixed classical controller also completed one of four routes. [Full results](refinement-v7-results.md).
+
+The following plan was recorded while the run was active. The pre-existing V7 run (Actions 44255635428, source b459cadaaa34dfbecfaef5fa841a7298475fced0) was already active when this request arrived. It trains Qwen3.5-4B LoRA command/profile decisions with five domain-gradient calls per optimizer update. The fixed cap is 96 updates; it stops at 64 only if both development routes pass. No duplicate study is launched.
 
 ## Learned and fixed components
 

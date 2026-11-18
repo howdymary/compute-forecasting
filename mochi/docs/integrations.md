@@ -1,4 +1,29 @@
-# Current capability inventory · November 17, 2026
+<!-- MOCHI_V7_INTEGRATIONS_START -->
+# Current capability inventory
+
+V7 completed 96 real optimizer updates and a separate evaluation-only recovery. All current figures below refer to V7; the historical inventories are not added to these counts.
+
+| Service | Verified runtime | Current evidence |
+|---|---|---|
+| Tinker | Existing GitHub Actions secret; no local key | 96 LoRA optimizer updates, 480 domain-gradient calls, durable starting/final states; native gait weights remain fixed |
+| Exa | Existing Actions secret | 3 actual searches: two during training research, one for future investigation after evaluation |
+| past.dev | Existing Actions secret | 9 verified cross-role recalls; private-audience canary passed; 11 writes and 11 recall requests |
+| Modal | Existing Actions token references | 274 new executions including two short inference probes; matched starting/trained/classical feedback evaluation |
+| Blender | Local 5.1.2 | Measured checkpoint and complete held-out trajectories rendered with the detailed G1 and Sand3D objects |
+| GitHub | Authenticated gh and existing Actions secrets | Separate mochi-desk-v3 branch, additive Mochi workflows and retained execution artifacts |
+
+The new full-route result is 0/4 starting versus 1/4 trained, with waypoint arrivals 0/20 versus 20/20. Isolated laptop closing improved from 0/4 to 2/4, while alarm success regressed from 4/4 to 3/4. The fixed classical controller also completed 1/4 routes. See [full results](refinement-v7-results.md).
+
+The final training state was saved before the free checkpoint-storage limit closed the original service client. Recovery restores immutable full states into fresh clients and creates only in-memory inference snapshots. It takes zero additional optimizer updates, deletes no canonical checkpoint, and changes no billing settings. Additional persistent checkpoint writes need available storage.
+
+The local Modal CLI has no usable token; existing Actions credentials are the working path. No new credentials were requested. Provider keys stay on the backend. Remote inference serialization strips the key; Modal injects it as a backend secret. The frontend receives recordings and allowlisted numerical status only.
+
+past.dev credit charges are not inferred from API calls. Training uses verified memory handoffs at initialization and update 16; evaluation writes qualified criticism and a future hypothesis. No causal search or memory ablation was performed. Playback makes no past.dev or Tinker calls.
+
+The local checkout remains the unborn metagame branch, with publishing through a separate Git index. Forecasting source, experiments, deployments and canonical states are preserved.
+<!-- MOCHI_V7_INTEGRATIONS_END -->
+
+# Archived V6 capability inventory · November 17, 2026
 
 The active checkout remains the unborn `metagame` branch and the remote default remains `compute-observatory`. Mochi changes are published on `mochi-desk-v3` through a separate Git index. Forecasting source, results, deployments and unique checkpoints are preserved.
 

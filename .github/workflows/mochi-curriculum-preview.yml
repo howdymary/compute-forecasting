@@ -17,6 +17,14 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: '3.11'}
       - run: python -m pip install modal==1.6.4
+      - name: Check recorded data and replay controls
+        run: node mochi/scripts/check_replay_ui.mjs
+      - name: Normalize completed numerical progress
+        env:
+          PYTHONPATH: ${{ github.workspace }}/mochi/src
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: python -m modal run mochi/scripts/normalize_progress.py
       - name: Publish recorded checkpoint viewer
         env:
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
@@ -32,6 +40,7 @@ jobs:
                   health=json.load(urllib.request.urlopen(base+'/api/health',timeout=20))
                   assert health['release']==os.environ['GITHUB_SHA'], 'Previous release is still serving'
                   status=json.load(urllib.request.urlopen(base+'/api/training',timeout=20))
+                  assert status.get('status') not in [None,'unavailable'], 'Numerical status is unavailable'
                   print('Verified release',health['release'],'training',status.get('status'))
                   break
               except Exception:

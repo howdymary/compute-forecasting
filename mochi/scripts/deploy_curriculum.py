@@ -19,12 +19,12 @@ def web():
  @api.get('/api/health')
  def health():
   report=json.loads(Path('/web/curriculum/manifest.json').read_text())
-  return {'status':'ok','release':os.environ.get('MOCHI_RELEASE'),'study_status':report['status'],'trained_optimizer_updates':report.get('optimizer_updates_completed',0),'mode':'recorded MuJoCo checkpoint replay','tasks':['alarm','drawer','laptop_close','globe']}
+  return {'status':'ok','study':report.get('study'),'release':os.environ.get('MOCHI_RELEASE'),'study_status':report['status'],'trained_optimizer_updates':report.get('optimizer_updates_completed',0),'mode':'recorded MuJoCo checkpoint replay','tasks':['alarm','drawer','laptop_close','globe']}
  @api.get('/api/validation')
  def validation():
   try:
    report=modal.Dict.from_name('mochi-curriculum-v6-validation-progress').get('latest',{})
-   return {key:report.get(key) for key in ['status','phase','extra_optimizer_updates','remote_inference_probe_passed','modal_held_out','modal_isolated_walking','modal_rollouts_completed']}
+   return {'study':'mochi-curriculum-v6','scope':'Archived V6 replication. Current V7 results are in /api/training and the manifest.',**{key:report.get(key) for key in ['status','phase','extra_optimizer_updates','remote_inference_probe_passed','modal_held_out','modal_isolated_walking','modal_rollouts_completed']}}
   except Exception:return {'status':'unavailable','phase':'See the validation execution receipt'}
  @api.get('/api/training')
  def training():

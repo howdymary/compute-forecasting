@@ -72,7 +72,7 @@ for row in range(4):
 lid=empty('Laptop screen',(.14,.249,.0185));shell=asset('sand-laptop-lid.glb','Lid visual shell');shell.parent=lid;shell.location=(0,0,-.004286);shell.scale=(.25/.29,1,.15/.175)
 globe=asset('sand-earth.glb','Globe');stand=asset('sand-globe-base.glb','Globe base');stand.location=(.47,.22,0)
 bpy.ops.mesh.primitive_uv_sphere_add(segments=16,ring_count=8,radius=.0035);marker=bpy.context.object;marker.parent=globe;marker.location=(-.0583,0,0);marker.data.materials.append(coral)
-part(stand,'Alignment pointer',(.002,.002,.112),(-.077,0,.067),metal,.0003);part(stand,'Pointer tip',(.012,.002,.002),(-.071,0,.123),metal,.0003)
+part(stand,'Fixed zero index',(.015,.001,.0003),(-.027,0,.0128),coral,.00005);rod(stand,'Index arrow left',(-.035,0,.0128),(-.030,-.002,.0128),.00035,coral);rod(stand,'Index arrow right',(-.035,0,.0128),(-.030,.002,.0128),.00035,coral)
 old=set(bpy.data.objects);bpy.ops.import_scene.gltf(filepath=str(assets/'g1-mini.glb'));robot={o.name:o for o in bpy.data.objects if o not in old and o.type=='EMPTY'};bindings={**robot,'alarm-clock':clock,'alarm-button':cap,'drawer-cabinet':cabinet,'drawer':drawer,'laptop-base':base,'laptop-screen':lid,'globe':globe,'globe-base':stand}
 part(robot['torso_link'],'Display-only face panel',(.002,.020,.019),(.012,0,.063),material('Black visor glass',(.004,.009,.012),.2,.15),.0015)
 for name,pos,energy,size in [('Window',(-.4,-.3,1),75,.7),('Fill',(.5,.3,.7),20,.6)]:
@@ -88,9 +88,12 @@ for f in selected:
   if o:
    o.location=pos;o.rotation_mode='QUATERNION';o.rotation_quaternion=q
    if args.animate:o.keyframe_insert('location',frame=frame);o.keyframe_insert('rotation_quaternion',frame=frame)
- q=f['quaternions'][1];yaw=math.atan2(2*(q[0]*q[3]+q[1]*q[2]),1-2*(q[2]**2+q[3]**2));pos=f['positions'][1];target=Vector((pos[0]+.025*math.cos(yaw),pos[1]+.025*math.sin(yaw),.115));camera.location=target+Vector((.18*math.cos(yaw)+.4*math.sin(yaw),.18*math.sin(yaw)-.4*math.cos(yaw),.25));
+ q=f['quaternions'][1];yaw=math.atan2(2*(q[0]*q[3]+q[1]*q[2]),1-2*(q[2]**2+q[3]**2));pos=f['positions'][1];target=Vector((pos[0]+.015,pos[1]+.025,.112));camera.location=target+Vector((.28,-.39,.24));
  if f.get('task')=='alarm':
   target=Vector(((pos[0]-.36)/2,(pos[1]+.11)/2,.107));camera.location=target+Vector((.24,-.38,.23))
+ if f.get('task')=='drawer':target=Vector(((pos[0]-.10)/2,(pos[1]+.12)/2,.105));camera.location=target+Vector((.24,-.38,.23))
+ if f.get('task')=='laptop':target=Vector(((pos[0]+.23)/2,(pos[1]+.20)/2,.105));camera.location=target+Vector((.26,-.32,.27))
+ if f.get('task')=='globe':target=Vector(((pos[0]+.47)/2,(pos[1]+.22)/2,.115));camera.location=target+Vector((-.31,-.39,.28))
  if args.camera in ['side','feet']:
   target=Vector((pos[0],pos[1],.032 if args.camera=='feet' else .112));camera.location=target+Vector((.10,-.27,.055) if args.camera=='feet' else (0,-.52,.035))
  elif args.camera=='wide':target=Vector((0,.1,.08));camera.location=Vector((1.05,-1.35,.95))

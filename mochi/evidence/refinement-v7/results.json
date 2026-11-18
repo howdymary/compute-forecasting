@@ -1,0 +1,5806 @@
+{
+  "study": "mochi-curriculum-v7",
+  "status": "completed",
+  "source_sha": "b459cadaaa34dfbecfaef5fa841a7298475fced0",
+  "protocol": {
+    "study": "mochi-curriculum-v7",
+    "task_order": [
+      "alarm",
+      "drawer",
+      "laptop",
+      "globe"
+    ],
+    "train_seeds": [
+      12000,
+      12001,
+      12002,
+      12003,
+      12004,
+      12005,
+      12006,
+      12007,
+      12008,
+      12009,
+      12010,
+      12011
+    ],
+    "development_seeds": [
+      15000,
+      15001
+    ],
+    "held_out_seeds": [
+      16000,
+      16001,
+      16002,
+      16003
+    ],
+    "training": {
+      "base_model": "Qwen/Qwen3.5-4B",
+      "rank": 16,
+      "seed": 9723,
+      "updates": 96,
+      "checkpoints": [
+        0,
+        8,
+        16,
+        32,
+        64,
+        96
+      ],
+      "learning_rate": 0.0002,
+      "walking_batch": 48,
+      "task_batch": 4
+    },
+    "validity": {
+      "maximum_tilt_degrees": 30,
+      "minimum_pelvis_height_m": 0.105,
+      "maximum_hand_force_n": 0.8,
+      "dwell_seconds": 0.35,
+      "task_horizon_seconds": {
+        "alarm": 10,
+        "drawer": 10,
+        "laptop": 12,
+        "globe": 10
+      },
+      "walking_leg_horizon_seconds": 24,
+      "maximum_rollouts": 3000,
+      "maximum_modal_workers": 8
+    },
+    "success": {
+      "alarm": "At least 85% button travel, then below 20%, hand contact and release dwell",
+      "drawer": "Below 2 mm open and 10 mm/s for the dwell",
+      "laptop": "Below 5 degrees and 0.15 rad/s, at least 4 degrees of contact-driven progress, release dwell",
+      "globe": "Within 3 degrees of target and 0.07 rad/s for the release dwell",
+      "full_sequence": "All four task verifications in order, no fall, with drawer/laptop/globe still within terminal position and speed tolerances."
+    },
+    "selection": "Stop at update 64 only if both development routes complete all four tasks without falling; otherwise continue to the fixed cap of 96. The selected final checkpoint is frozen before test seeds are unsealed.",
+    "scope": "Command-level locomotion and task-profile post-training. Native Unitree gait, classical leg servos and arm IK are fixed. State observations, simulation only.",
+    "uncertainty": "Report raw paired scenario outcomes and Wilson intervals; four fresh test seeds are a pilot, not evidence of broad robotics generalization.",
+    "labels": "Walking imitates a fixed waypoint policy. Task labels are chosen only from actual MuJoCo training trials. No hidden mass, friction, seed, teacher labels or evaluation outcomes enter the model observation.",
+    "observation_version": 3,
+    "held_out_isolated_contact": true,
+    "controller_revision": "v6-pretrain-final: cached arm recovery, laptop prelift, measured foot contacts",
+    "checkpoint_development_seeds": [
+      15000,
+      15001
+    ],
+    "source_dataset_run": 44244443083,
+    "representation": "Independent, documented bins of observed relative target geometry. No teacher action or hidden simulator parameter. Identical encodings reuse the actual Tinker distribution from the same fixed checkpoint.",
+    "walking_sampling": "Uniform action class, then uniform unique encoded training observation within class. More repeats are not new physical evidence.",
+    "contact_label_objective": "Successful profiles only; choose lowest measured peak force, then duration. Cases without a successful profile are excluded and counted.",
+    "additional_training_navigation_rollouts": 32,
+    "budget": {
+      "additional_optimizer_updates": 96,
+      "maximum_total_physical_rollouts": 3000,
+      "maximum_modal_workers": 8,
+      "estimated_minutes": 35,
+      "billing_plan_changes": false
+    },
+    "checkpoint_retention": "Starting full state is already archived. Every evaluated checkpoint uses real fixed ephemeral inference weights. Persist exactly one new full optimizer state at the development-selected stopping update, 64 or 96.",
+    "prior_study": "V6: 64 completed updates, development 0 to 3 waypoints/10, 0 full routes/2; all source records retained. New representation tested against starting weights under the same representation.",
+    "frozen_physics_sha256": {
+      "src/mochi/curriculum/world.py": "1cb415d6d66e367e3d2c28146ab6067c1da671461c5ec34728d4487cb13152f6",
+      "src/mochi/curriculum/locomotion.py": "a46937561ccfcce13296ac4d5f2c7422f18e44818941249520d338ac429f4391",
+      "src/mochi/desk/g1_model.py": "7b3d54c7b95e02d5f93515bd01a67115a010ae23a830b3ea16475a2d20be114c"
+    },
+    "raw_trajectory_fields": [
+      "target-relative position",
+      "bearing",
+      "final heading error",
+      "speed",
+      "body tilt",
+      "loaded left/right foot contacts",
+      "last two walking commands"
+    ],
+    "walking_observations": [
+      "range band",
+      "signed bearing band",
+      "signed final-heading band",
+      "signed forward/lateral offset bands",
+      "larger offset axis"
+    ],
+    "controlled_comparison": "Starting and trained policies use identical feature encoding, physics and cache implementation. The comparison measures learning given this engineered representation; no causal claim for encoding versus v6 is made.",
+    "revision": 2,
+    "execution": "All full-route and navigation evaluation is closed-loop on Modal. Each final before/after/classical triplet shares one worker; no open-loop cross-runtime replay agreement is assumed.",
+    "prior_replication": {
+      "run": 44253028615,
+      "completed_route_pairs": 4,
+      "trained_full_routes": 0,
+      "starting_full_routes": 0,
+      "classical_full_routes": 2,
+      "trained_waypoints": 6,
+      "starting_waypoints": 0,
+      "waypoint_opportunities": 20,
+      "scope": "Completed route portion of an ongoing V6 replication; not V7 training or test data."
+    }
+  },
+  "protocol_sha256": "00f908a3f427140f454ce3adfaa411e4e0a18c871cfcb1a17242d54482573b58",
+  "scope": "Command-level locomotion and task-profile post-training. Native Unitree gait, classical leg servos and arm IK are fixed. State observations, simulation only.",
+  "created_at": "2026-11-18T07:27:12.792744+00:00",
+  "completed_at": "2026-11-18T08:49:01.370323+00:00",
+  "optimizer_updates_completed": 96,
+  "rollouts": 274,
+  "source_data": {
+    "workflow_run": 44244443083,
+    "contact_sha256": "93ccdf3288fc43866a320177b5ea805731e8c17ac57c08adc661eaf7b8fc246e",
+    "prior_completed_modal_rollouts": 578,
+    "prior_study_source_sha": "53c29b25cfd32280dc170b88f363f5346a8c5679",
+    "new_physics_trials_are_counted_separately": true
+  },
+  "data_audit": {
+    "walk": {
+      "physical_observations": 1282,
+      "unique_encoded_observations": 158,
+      "label_counts": {
+        "left_slow": 25,
+        "forward": 12,
+        "slow": 20,
+        "left": 15,
+        "side_right": 3,
+        "stop": 22,
+        "right": 25,
+        "right_slow": 29,
+        "back": 4,
+        "side_left": 3
+      },
+      "ambiguous_encodings": 0
+    },
+    "alarm": {
+      "n": 12,
+      "excluded_no_successful_profile": [],
+      "label_counts": {
+        "E": 1,
+        "B": 7,
+        "A": 4
+      }
+    },
+    "drawer": {
+      "n": 12,
+      "excluded_no_successful_profile": [],
+      "label_counts": {
+        "A": 10,
+        "E": 2
+      }
+    },
+    "laptop": {
+      "n": 9,
+      "excluded_no_successful_profile": [
+        12003,
+        12004,
+        12005
+      ],
+      "label_counts": {
+        "C": 6,
+        "F": 1,
+        "D": 1,
+        "G": 1
+      }
+    },
+    "globe": {
+      "n": 12,
+      "excluded_no_successful_profile": [],
+      "label_counts": {
+        "A": 9,
+        "B": 2,
+        "G": 1
+      }
+    }
+  },
+  "training_log": [
+    {
+      "update": 1,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4035905.0,
+          "loss:sum": 79.3471907377243
+        },
+        "alarm": {
+          "clock_cycle:unique": 4035905.0,
+          "loss:sum": 14.615176439285278
+        },
+        "drawer": {
+          "clock_cycle:unique": 4035905.0,
+          "loss:sum": 16.489678382873535
+        },
+        "laptop": {
+          "clock_cycle:unique": 4035905.0,
+          "loss:sum": 18.191370010375977
+        },
+        "globe": {
+          "clock_cycle:unique": 4035905.0,
+          "loss:sum": 11.972219705581665
+        }
+      },
+      "batch_sha256": "1725e019f29367b51f4c7a0020572e15ca66981f74b46bba04a615ad42f0f0ba",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:38:08.523515+00:00"
+    },
+    {
+      "update": 2,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4035907.0,
+          "loss:sum": 80.17549157142639
+        },
+        "alarm": {
+          "clock_cycle:unique": 4035907.0,
+          "loss:sum": 15.392544984817505
+        },
+        "drawer": {
+          "clock_cycle:unique": 4035907.0,
+          "loss:sum": 4.52263905107975
+        },
+        "laptop": {
+          "clock_cycle:unique": 4035907.0,
+          "loss:sum": 27.324426412582397
+        },
+        "globe": {
+          "clock_cycle:unique": 4035907.0,
+          "loss:sum": 4.809300467371941
+        }
+      },
+      "batch_sha256": "51a494f1f9e21b9095eaab7a3407040f38fdef3a20d668c928b538f6210f139a",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:38:25.490797+00:00"
+    },
+    {
+      "update": 3,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4035909.0,
+          "loss:sum": 71.56232953071594
+        },
+        "alarm": {
+          "clock_cycle:unique": 4035910.0,
+          "loss:sum": 12.112438440322876
+        },
+        "drawer": {
+          "clock_cycle:unique": 4035910.0,
+          "loss:sum": 10.239367485046387
+        },
+        "laptop": {
+          "clock_cycle:unique": 4035910.0,
+          "loss:sum": 16.30277383327484
+        },
+        "globe": {
+          "clock_cycle:unique": 4035910.0,
+          "loss:sum": 10.3634672164917
+        }
+      },
+      "batch_sha256": "e972ad1a075e3dc994ac6b501f0433a51360dc028be1163ce22410e2e0016f10",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:38:34.244352+00:00"
+    },
+    {
+      "update": 4,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4035912.0,
+          "loss:sum": 66.23896193504333
+        },
+        "alarm": {
+          "clock_cycle:unique": 4035912.0,
+          "loss:sum": 11.856801152229309
+        },
+        "drawer": {
+          "clock_cycle:unique": 4035912.0,
+          "loss:sum": 9.723655223846436
+        },
+        "laptop": {
+          "clock_cycle:unique": 4035912.0,
+          "loss:sum": 12.57046103477478
+        },
+        "globe": {
+          "clock_cycle:unique": 4035912.0,
+          "loss:sum": 7.485832929611206
+        }
+      },
+      "batch_sha256": "0a963ce4181de97012c50dbfcfdb2b57d5db765533a0b2641528259886bd6521",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:38:42.031438+00:00"
+    },
+    {
+      "update": 5,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4035914.0,
+          "loss:sum": 69.73318967223167
+        },
+        "alarm": {
+          "clock_cycle:unique": 4035914.0,
+          "loss:sum": 12.829941481351852
+        },
+        "drawer": {
+          "clock_cycle:unique": 4035914.0,
+          "loss:sum": 8.691494822502136
+        },
+        "laptop": {
+          "clock_cycle:unique": 4035914.0,
+          "loss:sum": 20.227903127670288
+        },
+        "globe": {
+          "clock_cycle:unique": 4035914.0,
+          "loss:sum": 5.92643004655838
+        }
+      },
+      "batch_sha256": "6a240d0a95d9ea93436357cee3559ff92e134cb4da938a0627ce0a5e541d79d6",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:38:49.655223+00:00"
+    },
+    {
+      "update": 6,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4035917.0,
+          "loss:sum": 63.472577691078186
+        },
+        "alarm": {
+          "clock_cycle:unique": 4035917.0,
+          "loss:sum": 8.981119871139526
+        },
+        "drawer": {
+          "clock_cycle:unique": 4035917.0,
+          "loss:sum": 10.216159880161285
+        },
+        "laptop": {
+          "clock_cycle:unique": 4035917.0,
+          "loss:sum": 19.320514917373657
+        },
+        "globe": {
+          "clock_cycle:unique": 4035917.0,
+          "loss:sum": 5.155940592288971
+        }
+      },
+      "batch_sha256": "f6a16461b0e9c627da97608ee9554e0b76ea7dec2940813e82a8d215e5506496",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:38:58.499337+00:00"
+    },
+    {
+      "update": 7,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4035920.0,
+          "loss:sum": 60.106221079826355
+        },
+        "alarm": {
+          "clock_cycle:unique": 4035921.0,
+          "loss:sum": 10.290585398674011
+        },
+        "drawer": {
+          "clock_cycle:unique": 4035921.0,
+          "loss:sum": 7.075932741165161
+        },
+        "laptop": {
+          "clock_cycle:unique": 4035921.0,
+          "loss:sum": 19.605631589889526
+        },
+        "globe": {
+          "clock_cycle:unique": 4035921.0,
+          "loss:sum": 7.853481590747833
+        }
+      },
+      "batch_sha256": "36959e28f027fd0dda2e411e9e317d070fce69966ce38485d79b8fc0d703fd0f",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:39:06.840047+00:00"
+    },
+    {
+      "update": 8,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4035923.0,
+          "loss:sum": 56.75155574083328
+        },
+        "alarm": {
+          "clock_cycle:unique": 4035923.0,
+          "loss:sum": 10.729695796966553
+        },
+        "drawer": {
+          "clock_cycle:unique": 4035923.0,
+          "loss:sum": 7.154385685920715
+        },
+        "laptop": {
+          "clock_cycle:unique": 4035923.0,
+          "loss:sum": 16.952685594558716
+        },
+        "globe": {
+          "clock_cycle:unique": 4035923.0,
+          "loss:sum": 8.193397164344788
+        }
+      },
+      "batch_sha256": "57afa1dbf48ce9fd33d44a94adec66cebe32239165fac3b73ab019607a2b322e",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:39:15.327441+00:00"
+    },
+    {
+      "update": 9,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4035953.0,
+          "loss:sum": 53.33172273635864
+        },
+        "alarm": {
+          "clock_cycle:unique": 4035953.0,
+          "loss:sum": 9.612344980239868
+        },
+        "drawer": {
+          "clock_cycle:unique": 4035953.0,
+          "loss:sum": 6.335795044898987
+        },
+        "laptop": {
+          "clock_cycle:unique": 4035953.0,
+          "loss:sum": 13.724079608917236
+        },
+        "globe": {
+          "clock_cycle:unique": 4035953.0,
+          "loss:sum": 7.635684847831726
+        }
+      },
+      "batch_sha256": "feed932f6e224bcc38ec73433dec2310cead381f236911dea6baa147176ecb56",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:42:03.304756+00:00"
+    },
+    {
+      "update": 10,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4035956.0,
+          "loss:sum": 44.40525108575821
+        },
+        "alarm": {
+          "clock_cycle:unique": 4035956.0,
+          "loss:sum": 8.321490585803986
+        },
+        "drawer": {
+          "clock_cycle:unique": 4035956.0,
+          "loss:sum": 4.373641103506088
+        },
+        "laptop": {
+          "clock_cycle:unique": 4035956.0,
+          "loss:sum": 10.553064227104187
+        },
+        "globe": {
+          "clock_cycle:unique": 4035956.0,
+          "loss:sum": 2.382116198539734
+        }
+      },
+      "batch_sha256": "a13a508dd015b296584839b8664205df904a30a5977b28a4c90c53ec51d04761",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:42:20.014401+00:00"
+    },
+    {
+      "update": 11,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4035958.0,
+          "loss:sum": 40.8932069092989
+        },
+        "alarm": {
+          "clock_cycle:unique": 4035958.0,
+          "loss:sum": 5.384071230888367
+        },
+        "drawer": {
+          "clock_cycle:unique": 4035958.0,
+          "loss:sum": 3.414437860250473
+        },
+        "laptop": {
+          "clock_cycle:unique": 4035958.0,
+          "loss:sum": 10.279843866825104
+        },
+        "globe": {
+          "clock_cycle:unique": 4035958.0,
+          "loss:sum": 11.504461579024792
+        }
+      },
+      "batch_sha256": "1c8e4720f1dbd2d4647bf601c7b895ec7530b4fec5d10128d2f077a42ba8a212",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:42:28.649885+00:00"
+    },
+    {
+      "update": 12,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4035959.0,
+          "loss:sum": 29.50330549478531
+        },
+        "alarm": {
+          "clock_cycle:unique": 4035959.0,
+          "loss:sum": 5.545859009027481
+        },
+        "drawer": {
+          "clock_cycle:unique": 4035959.0,
+          "loss:sum": 5.729576304554939
+        },
+        "laptop": {
+          "clock_cycle:unique": 4035959.0,
+          "loss:sum": 7.7046356201171875
+        },
+        "globe": {
+          "clock_cycle:unique": 4035959.0,
+          "loss:sum": 11.559473022818565
+        }
+      },
+      "batch_sha256": "80d564dd02c721973ba67bab1a91a94fea18203f303a7fd6cceecd8a55964366",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:42:45.145796+00:00"
+    },
+    {
+      "update": 13,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4035961.0,
+          "loss:sum": 51.517188653349876
+        },
+        "alarm": {
+          "clock_cycle:unique": 4035962.0,
+          "loss:sum": 14.364052478224039
+        },
+        "drawer": {
+          "clock_cycle:unique": 4035962.0,
+          "loss:sum": 4.894883826375008
+        },
+        "laptop": {
+          "clock_cycle:unique": 4035962.0,
+          "loss:sum": 17.310531795024872
+        },
+        "globe": {
+          "clock_cycle:unique": 4035962.0,
+          "loss:sum": 8.36395800113678
+        }
+      },
+      "batch_sha256": "f6c64bdc55fec63604e4c039c0c9f973a55c173c60c248d95d2982b414a25f73",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:42:54.363534+00:00"
+    },
+    {
+      "update": 14,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4035964.0,
+          "loss:sum": 25.146851561963558
+        },
+        "alarm": {
+          "clock_cycle:unique": 4035964.0,
+          "loss:sum": 10.403974294662476
+        },
+        "drawer": {
+          "clock_cycle:unique": 4035964.0,
+          "loss:sum": 2.806971587240696
+        },
+        "laptop": {
+          "clock_cycle:unique": 4035964.0,
+          "loss:sum": 10.240867376327515
+        },
+        "globe": {
+          "clock_cycle:unique": 4035964.0,
+          "loss:sum": 13.849343612790108
+        }
+      },
+      "batch_sha256": "3151c561514763712f550da69bc268a4190ae0a011fae86093e3b1b8d4842721",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:43:04.854625+00:00"
+    },
+    {
+      "update": 15,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4035965.0,
+          "loss:sum": 32.287929609417915
+        },
+        "alarm": {
+          "clock_cycle:unique": 4035966.0,
+          "loss:sum": 5.349193751811981
+        },
+        "drawer": {
+          "clock_cycle:unique": 4035966.0,
+          "loss:sum": 3.08071918040514
+        },
+        "laptop": {
+          "clock_cycle:unique": 4035966.0,
+          "loss:sum": 4.573999226093292
+        },
+        "globe": {
+          "clock_cycle:unique": 4035966.0,
+          "loss:sum": 12.214789643883705
+        }
+      },
+      "batch_sha256": "cd00013f633a0938b7579aab1a2150127c2cbb2a13033707a858f16e502236bf",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:43:14.401003+00:00"
+    },
+    {
+      "update": 16,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4035967.0,
+          "loss:sum": 22.961429834365845
+        },
+        "alarm": {
+          "clock_cycle:unique": 4035967.0,
+          "loss:sum": 2.937197506427765
+        },
+        "drawer": {
+          "clock_cycle:unique": 4035967.0,
+          "loss:sum": 3.3664369881153107
+        },
+        "laptop": {
+          "clock_cycle:unique": 4035967.0,
+          "loss:sum": 7.816800341010094
+        },
+        "globe": {
+          "clock_cycle:unique": 4035967.0,
+          "loss:sum": 7.443940967321396
+        }
+      },
+      "batch_sha256": "2641584b477e39920932afa4c05fa800611f5de56fef58151effa879850ba6d2",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:43:30.824584+00:00"
+    },
+    {
+      "update": 17,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036025.0,
+          "loss:sum": 26.403334364295006
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036025.0,
+          "loss:sum": 6.390493139624596
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036025.0,
+          "loss:sum": 3.513538360595703
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036025.0,
+          "loss:sum": 1.5385257005691528
+        },
+        "globe": {
+          "clock_cycle:unique": 4036025.0,
+          "loss:sum": 8.651152610778809
+        }
+      },
+      "batch_sha256": "ea9ce85eae2ef889da865a039f73c20015979aab24b398a7f4d9f32e75fa5ac4",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:46:52.111613+00:00"
+    },
+    {
+      "update": 18,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036027.0,
+          "loss:sum": 33.055284172296524
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036027.0,
+          "loss:sum": 3.7070321142673492
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036027.0,
+          "loss:sum": 2.99447825551033
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036027.0,
+          "loss:sum": 7.946903973817825
+        },
+        "globe": {
+          "clock_cycle:unique": 4036027.0,
+          "loss:sum": 6.970126748085022
+        }
+      },
+      "batch_sha256": "56a77fbb1adec6aa2ce5e1e317553b58ca9719aa9436d9e90682108263465a51",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:47:02.835478+00:00"
+    },
+    {
+      "update": 19,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036029.0,
+          "loss:sum": 18.18884075433016
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036030.0,
+          "loss:sum": 4.739009201526642
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036030.0,
+          "loss:sum": 3.7089706510305405
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036030.0,
+          "loss:sum": 1.2464895397424698
+        },
+        "globe": {
+          "clock_cycle:unique": 4036030.0,
+          "loss:sum": 7.595418214797974
+        }
+      },
+      "batch_sha256": "a836e7b73c236a100ff08c6734b7e023f85627162710fed2112c00cdae1781d2",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:47:15.529525+00:00"
+    },
+    {
+      "update": 20,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036033.0,
+          "loss:sum": 21.164389703422785
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036033.0,
+          "loss:sum": 4.235561907291412
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036033.0,
+          "loss:sum": 1.4520360380411148
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036033.0,
+          "loss:sum": 13.178503021597862
+        },
+        "globe": {
+          "clock_cycle:unique": 4036033.0,
+          "loss:sum": 5.701781749725342
+        }
+      },
+      "batch_sha256": "c9d32fa80f07cbb427bea5bf386a3e50f3e6c09fff838d9d4a8c2517fe5ec9fb",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:47:47.942560+00:00"
+    },
+    {
+      "update": 21,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036035.0,
+          "loss:sum": 20.94824977964163
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036035.0,
+          "loss:sum": 5.84504783898592
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036035.0,
+          "loss:sum": 4.679454572498798
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036035.0,
+          "loss:sum": 14.252485141158104
+        },
+        "globe": {
+          "clock_cycle:unique": 4036035.0,
+          "loss:sum": 7.419801712036133
+        }
+      },
+      "batch_sha256": "a8d0d9a420f112dee40d02db3e4afc160d5becb3974b922415008de20f487bd8",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:48:03.780756+00:00"
+    },
+    {
+      "update": 22,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036036.0,
+          "loss:sum": 28.00627188105136
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036037.0,
+          "loss:sum": 3.5351396910846233
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036037.0,
+          "loss:sum": 2.4395843520760536
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036037.0,
+          "loss:sum": 4.781093776226044
+        },
+        "globe": {
+          "clock_cycle:unique": 4036037.0,
+          "loss:sum": 7.530883997678757
+        }
+      },
+      "batch_sha256": "5608af1031bc71866ace5bd2b59970cad75dc6da4b518b65237537735fdef7b3",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:48:12.906565+00:00"
+    },
+    {
+      "update": 23,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036039.0,
+          "loss:sum": 16.39167037885636
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036040.0,
+          "loss:sum": 3.348869103938341
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036040.0,
+          "loss:sum": 2.540323868393898
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036040.0,
+          "loss:sum": 12.087396129965782
+        },
+        "globe": {
+          "clock_cycle:unique": 4036040.0,
+          "loss:sum": 5.769987553358078
+        }
+      },
+      "batch_sha256": "170b3057f2aab23bf4e788b51d366a35f639e138c47ea25b14fa09142cebb12b",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:48:22.106879+00:00"
+    },
+    {
+      "update": 24,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036042.0,
+          "loss:sum": 11.915621833875775
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036042.0,
+          "loss:sum": 5.749748095870018
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036042.0,
+          "loss:sum": 4.219356428831816
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036042.0,
+          "loss:sum": 13.898617625236511
+        },
+        "globe": {
+          "clock_cycle:unique": 4036042.0,
+          "loss:sum": 5.907491385936737
+        }
+      },
+      "batch_sha256": "8aaa180fb40aaf9f47bd850393baa7d8251a4935155307f741a5215cee0ae34d",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:48:57.812803+00:00"
+    },
+    {
+      "update": 25,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036044.0,
+          "loss:sum": 9.747450097464025
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036044.0,
+          "loss:sum": 1.0718284025788307
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036044.0,
+          "loss:sum": 3.311803210526705
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036044.0,
+          "loss:sum": 14.536117672920227
+        },
+        "globe": {
+          "clock_cycle:unique": 4036044.0,
+          "loss:sum": 5.825014442205429
+        }
+      },
+      "batch_sha256": "61d7b799ea1818c8eb25026bd1197935b1dfe54a95b970a2788fb99e578aa928",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:49:30.457125+00:00"
+    },
+    {
+      "update": 26,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036046.0,
+          "loss:sum": 6.650167885236442
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036046.0,
+          "loss:sum": 0.7286983132362366
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036046.0,
+          "loss:sum": 0.8103029765188694
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036046.0,
+          "loss:sum": 9.54038655757904
+        },
+        "globe": {
+          "clock_cycle:unique": 4036046.0,
+          "loss:sum": 6.126854836940765
+        }
+      },
+      "batch_sha256": "36152a6e4cd7e313a01447a7f3bee4f8c2ef49d551624055c90ef69d592c8fb7",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:49:49.591583+00:00"
+    },
+    {
+      "update": 27,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036047.0,
+          "loss:sum": 20.422866083332337
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036048.0,
+          "loss:sum": 3.803618799895048
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036048.0,
+          "loss:sum": 1.6003314219415188
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036048.0,
+          "loss:sum": 10.429946601390839
+        },
+        "globe": {
+          "clock_cycle:unique": 4036048.0,
+          "loss:sum": 7.599446147680283
+        }
+      },
+      "batch_sha256": "c71a77f9729edbe1c20371e05e71813a4875489f230361f1f466b3d55b545404",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:49:57.755079+00:00"
+    },
+    {
+      "update": 28,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036049.0,
+          "loss:sum": 7.212607530411333
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036050.0,
+          "loss:sum": 3.662639319896698
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036050.0,
+          "loss:sum": 1.9856768883764744
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036050.0,
+          "loss:sum": 7.673825204372406
+        },
+        "globe": {
+          "clock_cycle:unique": 4036050.0,
+          "loss:sum": 7.645810186862946
+        }
+      },
+      "batch_sha256": "e57b3f389bedea9a019ae5e0782e2eb8a5de8e02f9bba7bca1071133ed8ef383",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:50:05.901712+00:00"
+    },
+    {
+      "update": 29,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036051.0,
+          "loss:sum": 15.060390284634195
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036052.0,
+          "loss:sum": 6.008335307240486
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036052.0,
+          "loss:sum": 5.515787757001817
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036052.0,
+          "loss:sum": 9.648656189441681
+        },
+        "globe": {
+          "clock_cycle:unique": 4036052.0,
+          "loss:sum": 2.73476180434227
+        }
+      },
+      "batch_sha256": "4c2de6526ed7460a27216fa22aaca0fddc71d953bf873585aa1538fb082b1257",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:50:13.854155+00:00"
+    },
+    {
+      "update": 30,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036054.0,
+          "loss:sum": 11.646175072994083
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036054.0,
+          "loss:sum": 1.371951438486576
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036054.0,
+          "loss:sum": 4.6473753079771996
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036054.0,
+          "loss:sum": 6.449343621730804
+        },
+        "globe": {
+          "clock_cycle:unique": 4036054.0,
+          "loss:sum": 7.91080778837204
+        }
+      },
+      "batch_sha256": "1e446c0bde7fdab44d11297d2a3fd0fd1e6b2655d153065f453ec0cc5668a264",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:50:21.144496+00:00"
+    },
+    {
+      "update": 31,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036055.0,
+          "loss:sum": 13.880644883029163
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036056.0,
+          "loss:sum": 0.7312127649784088
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036056.0,
+          "loss:sum": 4.800829453393817
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036056.0,
+          "loss:sum": 6.740265369415283
+        },
+        "globe": {
+          "clock_cycle:unique": 4036056.0,
+          "loss:sum": 4.222186177968979
+        }
+      },
+      "batch_sha256": "f7e8b9a44e6a4fc76a6a159d525955f617441e3ad12639ca80dbdfe8e8a8567b",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:50:29.108162+00:00"
+    },
+    {
+      "update": 32,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036059.0,
+          "loss:sum": 6.702336035086773
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036059.0,
+          "loss:sum": 10.15542890690267
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036059.0,
+          "loss:sum": 2.0438120989128947
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036059.0,
+          "loss:sum": 4.313267320394516
+        },
+        "globe": {
+          "clock_cycle:unique": 4036059.0,
+          "loss:sum": 3.483875259757042
+        }
+      },
+      "batch_sha256": "6b17b4d29a0596e8771af89fba85592b74d7b9b97671ab0a137ec3a91b97f6fb",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:50:46.827629+00:00"
+    },
+    {
+      "update": 33,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036085.0,
+          "loss:sum": 7.793568072433118
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036085.0,
+          "loss:sum": 3.6597135961055756
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036085.0,
+          "loss:sum": 2.2630679523572326
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036085.0,
+          "loss:sum": 8.429537206888199
+        },
+        "globe": {
+          "clock_cycle:unique": 4036085.0,
+          "loss:sum": 6.521956495940685
+        }
+      },
+      "batch_sha256": "49b35a2304b8a975ba2d3267db28d6ddc72766ac52787af33e1eff73d783d39b",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:54:15.071547+00:00"
+    },
+    {
+      "update": 34,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036087.0,
+          "loss:sum": 6.334963438217528
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036087.0,
+          "loss:sum": 3.3414660170674324
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036087.0,
+          "loss:sum": 3.817554115317762
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036087.0,
+          "loss:sum": 16.205543518066406
+        },
+        "globe": {
+          "clock_cycle:unique": 4036087.0,
+          "loss:sum": 7.9634446650743484
+        }
+      },
+      "batch_sha256": "601419cf8d578f7f48aae592fb966e18b67e9c2f2a144345ff89c9b96f5068eb",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:54:31.711720+00:00"
+    },
+    {
+      "update": 35,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036088.0,
+          "loss:sum": 1.3963749054237269
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036089.0,
+          "loss:sum": 1.317284026183188
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036089.0,
+          "loss:sum": 3.497349275276065
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036089.0,
+          "loss:sum": 10.22114172577858
+        },
+        "globe": {
+          "clock_cycle:unique": 4036089.0,
+          "loss:sum": 4.444463908672333
+        }
+      },
+      "batch_sha256": "4b77902d389747a8eb49d8dacb7a2c6471e71241dd684f6a97c42d804bdebf39",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:54:39.805470+00:00"
+    },
+    {
+      "update": 36,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036090.0,
+          "loss:sum": 10.753270529326983
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036091.0,
+          "loss:sum": 2.363507346250117
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036091.0,
+          "loss:sum": 2.1673911809921265
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036091.0,
+          "loss:sum": 9.27041545510292
+        },
+        "globe": {
+          "clock_cycle:unique": 4036091.0,
+          "loss:sum": 13.194104373455048
+        }
+      },
+      "batch_sha256": "76ee5f1485352ed209323453d7522002b71b18b379122a5c481297f5320c9106",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:54:47.866163+00:00"
+    },
+    {
+      "update": 37,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036092.0,
+          "loss:sum": 2.5921237701550126
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036093.0,
+          "loss:sum": 4.115733863785863
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036093.0,
+          "loss:sum": 2.405358698219061
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036093.0,
+          "loss:sum": 7.7496455907821655
+        },
+        "globe": {
+          "clock_cycle:unique": 4036093.0,
+          "loss:sum": 4.356343865394592
+        }
+      },
+      "batch_sha256": "591034d00f2ec36f0898c8948754df67954478ee0ac13bb446e013ea5228eb5a",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:54:57.226746+00:00"
+    },
+    {
+      "update": 38,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036094.0,
+          "loss:sum": 5.59403918706812
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036095.0,
+          "loss:sum": 3.70808532088995
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036095.0,
+          "loss:sum": 2.9458260536193848
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036095.0,
+          "loss:sum": 4.985713481903076
+        },
+        "globe": {
+          "clock_cycle:unique": 4036095.0,
+          "loss:sum": 12.055316627025604
+        }
+      },
+      "batch_sha256": "6a6c9630cf7a8006d033ea3560ebf9fa85bbcd50cd19e0913a676de240fb8f24",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:55:32.725910+00:00"
+    },
+    {
+      "update": 39,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036101.0,
+          "loss:sum": 3.578328785370104
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036101.0,
+          "loss:sum": 2.63819239102304
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036101.0,
+          "loss:sum": 3.5378951616585255
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036101.0,
+          "loss:sum": 7.284790098667145
+        },
+        "globe": {
+          "clock_cycle:unique": 4036101.0,
+          "loss:sum": 5.370795398950577
+        }
+      },
+      "batch_sha256": "f39e7c606a9c61fc328cfc6f2c692bade4c047a36bef2807c91019d2ce61f389",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:55:51.060763+00:00"
+    },
+    {
+      "update": 40,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036103.0,
+          "loss:sum": 6.1816729655256495
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036103.0,
+          "loss:sum": 4.757683634757996
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036103.0,
+          "loss:sum": 1.1239978857338428
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036103.0,
+          "loss:sum": 8.600043684244156
+        },
+        "globe": {
+          "clock_cycle:unique": 4036103.0,
+          "loss:sum": 5.822313576936722
+        }
+      },
+      "batch_sha256": "2c4f813a8af8544022a81a64c3e939da2175309dc67d19e27393a0930130f2b4",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:55:57.121228+00:00"
+    },
+    {
+      "update": 41,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036113.0,
+          "loss:sum": 2.639613783801906
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036113.0,
+          "loss:sum": 8.323613410815597
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036113.0,
+          "loss:sum": 1.1186473835259676
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036113.0,
+          "loss:sum": 10.58099901676178
+        },
+        "globe": {
+          "clock_cycle:unique": 4036113.0,
+          "loss:sum": 5.914546310901642
+        }
+      },
+      "batch_sha256": "379bc24790b51ee2ce4919f0f3cd086991882cdceae456992e36e249e331e912",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:57:27.825475+00:00"
+    },
+    {
+      "update": 42,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036115.0,
+          "loss:sum": 7.7648524675751105
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036115.0,
+          "loss:sum": 7.321727946400642
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036115.0,
+          "loss:sum": 0.18099490273743868
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036115.0,
+          "loss:sum": 9.140987545251846
+        },
+        "globe": {
+          "clock_cycle:unique": 4036115.0,
+          "loss:sum": 9.333433911204338
+        }
+      },
+      "batch_sha256": "d14e7bb5019ec209ea26231a6b1d2712fe17c5a06e37ee2e89a91309b5ebc782",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:58:00.349478+00:00"
+    },
+    {
+      "update": 43,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036116.0,
+          "loss:sum": 8.356539203610737
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036116.0,
+          "loss:sum": 1.3460428230464458
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036116.0,
+          "loss:sum": 9.953211437910795
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036116.0,
+          "loss:sum": 12.431917876005173
+        },
+        "globe": {
+          "clock_cycle:unique": 4036116.0,
+          "loss:sum": 4.946469455957413
+        }
+      },
+      "batch_sha256": "31e822d03979d0ecb7b77fe66b9160a59ed94c685b24054013a6dd5f97a5194b",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:58:15.348832+00:00"
+    },
+    {
+      "update": 44,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036117.0,
+          "loss:sum": 5.550952879420947
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036118.0,
+          "loss:sum": 5.420547086745501
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036118.0,
+          "loss:sum": 5.930643809959292
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036118.0,
+          "loss:sum": 8.878010660409927
+        },
+        "globe": {
+          "clock_cycle:unique": 4036118.0,
+          "loss:sum": 8.534799247980118
+        }
+      },
+      "batch_sha256": "7522052fa61715e0e6e43700fc3b6c9590f161dc9ee6a75998838dd92eaf6ee1",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:58:23.434205+00:00"
+    },
+    {
+      "update": 45,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036120.0,
+          "loss:sum": 2.4412519831676036
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036120.0,
+          "loss:sum": 3.05563722923398
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036120.0,
+          "loss:sum": 2.8512659706175327
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036120.0,
+          "loss:sum": 7.132798403501511
+        },
+        "globe": {
+          "clock_cycle:unique": 4036120.0,
+          "loss:sum": 6.122890084981918
+        }
+      },
+      "batch_sha256": "743eb5252b6bdb30b0812c71b7077b2fb3d156bb016d7cd2b096ed19a753477b",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:58:30.304358+00:00"
+    },
+    {
+      "update": 46,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036121.0,
+          "loss:sum": 3.127652090159245
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036123.0,
+          "loss:sum": 5.0389440059661865
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036123.0,
+          "loss:sum": 2.635345473885536
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036123.0,
+          "loss:sum": 7.108069181442261
+        },
+        "globe": {
+          "clock_cycle:unique": 4036123.0,
+          "loss:sum": 5.5292171239852905
+        }
+      },
+      "batch_sha256": "04fea4fe3f0834d87526c9d9665eaa56fe0dc25f9bbbdc6f575fe55b294151ba",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:58:44.473667+00:00"
+    },
+    {
+      "update": 47,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036125.0,
+          "loss:sum": 2.3204186566290446
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036125.0,
+          "loss:sum": 3.229544550180435
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036125.0,
+          "loss:sum": 3.9236801490187645
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036125.0,
+          "loss:sum": 8.520106166601181
+        },
+        "globe": {
+          "clock_cycle:unique": 4036125.0,
+          "loss:sum": 7.0932846665382385
+        }
+      },
+      "batch_sha256": "911ac2ef2cf4a198232a7c094178143e3e72b262c11b431af5baaf5461d77c7d",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:58:51.547501+00:00"
+    },
+    {
+      "update": 48,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036126.0,
+          "loss:sum": 9.388680586067494
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036126.0,
+          "loss:sum": 2.1178456358611584
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036126.0,
+          "loss:sum": 3.745094195008278
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036126.0,
+          "loss:sum": 8.436294913291931
+        },
+        "globe": {
+          "clock_cycle:unique": 4036126.0,
+          "loss:sum": 4.39913135766983
+        }
+      },
+      "batch_sha256": "7cd3d6fdf213be095bdcf54213bced1f3b53816c791a465b0c8d1ef8dd1fbf21",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:59:08.904702+00:00"
+    },
+    {
+      "update": 49,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036128.0,
+          "loss:sum": 5.298216942581348
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036129.0,
+          "loss:sum": 3.342961175367236
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036129.0,
+          "loss:sum": 3.049031600356102
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036129.0,
+          "loss:sum": 8.456678986549377
+        },
+        "globe": {
+          "clock_cycle:unique": 4036129.0,
+          "loss:sum": 8.925150990486145
+        }
+      },
+      "batch_sha256": "8895d2dc953eecfba679c673a671e2e722346f1a17da06451616ba3e33d203c2",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:59:16.896115+00:00"
+    },
+    {
+      "update": 50,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036130.0,
+          "loss:sum": 4.129655056312913
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036131.0,
+          "loss:sum": 5.916470063850284
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036131.0,
+          "loss:sum": 2.439984180033207
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036131.0,
+          "loss:sum": 5.427882343530655
+        },
+        "globe": {
+          "clock_cycle:unique": 4036131.0,
+          "loss:sum": 4.180905401706696
+        }
+      },
+      "batch_sha256": "ec6105ec082750e1fe3367f78ba4923c300cd70ae95282547a296041434b918b",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:59:25.000602+00:00"
+    },
+    {
+      "update": 51,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036133.0,
+          "loss:sum": 4.228930578334257
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036133.0,
+          "loss:sum": 5.334701357409358
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036133.0,
+          "loss:sum": 2.800161950290203
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036133.0,
+          "loss:sum": 11.214128613471985
+        },
+        "globe": {
+          "clock_cycle:unique": 4036133.0,
+          "loss:sum": 3.8217729330062866
+        }
+      },
+      "batch_sha256": "0b09b10e5f2d951737a49f51d478cd0575a0e98a82ff85e5724972b70149503e",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:59:32.170861+00:00"
+    },
+    {
+      "update": 52,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036134.0,
+          "loss:sum": 2.4659596455312567
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036135.0,
+          "loss:sum": 3.391150187700987
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036135.0,
+          "loss:sum": 3.571833673864603
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036135.0,
+          "loss:sum": 8.61266177892685
+        },
+        "globe": {
+          "clock_cycle:unique": 4036135.0,
+          "loss:sum": 8.534837201237679
+        }
+      },
+      "batch_sha256": "6de555cd16671fbdc62f2934b22ceafecae7b3b409ea2609a6e719d3ba851b7a",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:59:40.163398+00:00"
+    },
+    {
+      "update": 53,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036136.0,
+          "loss:sum": 4.6350225581700215
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036137.0,
+          "loss:sum": 4.021386794280261
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036137.0,
+          "loss:sum": 3.028544668108225
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036137.0,
+          "loss:sum": 10.80338340997696
+        },
+        "globe": {
+          "clock_cycle:unique": 4036137.0,
+          "loss:sum": 5.791895240545273
+        }
+      },
+      "batch_sha256": "641195b8c0d9ad51ea5f6db893780a74024d6986386beb23a08549361d7b1cff",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:59:48.254388+00:00"
+    },
+    {
+      "update": 54,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036139.0,
+          "loss:sum": 3.0477421307732584
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036139.0,
+          "loss:sum": 3.132377266185358
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036139.0,
+          "loss:sum": 2.0315706226974726
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036139.0,
+          "loss:sum": 6.614843845367432
+        },
+        "globe": {
+          "clock_cycle:unique": 4036139.0,
+          "loss:sum": 7.958766520023346
+        }
+      },
+      "batch_sha256": "7aae9b63a50cbd9c75cf066511843b41c087cd2c3e4c759df7c60309057baff8",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T07:59:55.433864+00:00"
+    },
+    {
+      "update": 55,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036140.0,
+          "loss:sum": 2.5315760483426857
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036141.0,
+          "loss:sum": 1.016013573622331
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036141.0,
+          "loss:sum": 4.268795993179083
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036141.0,
+          "loss:sum": 8.482483148574829
+        },
+        "globe": {
+          "clock_cycle:unique": 4036141.0,
+          "loss:sum": 7.570461750030518
+        }
+      },
+      "batch_sha256": "148da4a7bb2dae21ee694215f200b6e79758d2cd3e5dd9c7c1be2567f18b945e",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:00:03.452888+00:00"
+    },
+    {
+      "update": 56,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036143.0,
+          "loss:sum": 3.274115414918924
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036143.0,
+          "loss:sum": 4.303181848023087
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036143.0,
+          "loss:sum": 3.8689717275556177
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036143.0,
+          "loss:sum": 8.661507785320282
+        },
+        "globe": {
+          "clock_cycle:unique": 4036143.0,
+          "loss:sum": 9.497831672430038
+        }
+      },
+      "batch_sha256": "3d60fb0028ddd0da2bbbb529ba4cca628c7fc646d0a4204452c2b146e4738e85",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:00:20.457651+00:00"
+    },
+    {
+      "update": 57,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036146.0,
+          "loss:sum": 2.734190919854882
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036146.0,
+          "loss:sum": 3.9255147996009327
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036146.0,
+          "loss:sum": 1.333592756651342
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036146.0,
+          "loss:sum": 9.947701007127762
+        },
+        "globe": {
+          "clock_cycle:unique": 4036146.0,
+          "loss:sum": 7.437185704708099
+        }
+      },
+      "batch_sha256": "5cb2bc5e65a8e546921c188174bd7e0603cf93b4abcd4efc0fa6cce2503fd0fe",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:00:35.707350+00:00"
+    },
+    {
+      "update": 58,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036150.0,
+          "loss:sum": 7.560221816340345
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036150.0,
+          "loss:sum": 3.219708069751505
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036150.0,
+          "loss:sum": 6.006179439718835
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036150.0,
+          "loss:sum": 8.509159982204437
+        },
+        "globe": {
+          "clock_cycle:unique": 4036150.0,
+          "loss:sum": 6.5013885498046875
+        }
+      },
+      "batch_sha256": "7c340589fa1a364e2bf2d6bd1d5cae92eda706e7c23c6bd484f0c89405e32777",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:00:51.071227+00:00"
+    },
+    {
+      "update": 59,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036151.0,
+          "loss:sum": 5.504497038060435
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036152.0,
+          "loss:sum": 2.6021303246961907
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036152.0,
+          "loss:sum": 1.9834756564814597
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036152.0,
+          "loss:sum": 8.46070185303688
+        },
+        "globe": {
+          "clock_cycle:unique": 4036152.0,
+          "loss:sum": 4.733878135681152
+        }
+      },
+      "batch_sha256": "53b4052e83406474e1d4adc2939c64f27ee3c0ca9e8f644e6ebea8e7fa27e69b",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:00:59.517720+00:00"
+    },
+    {
+      "update": 60,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036155.0,
+          "loss:sum": 13.53792254354812
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036155.0,
+          "loss:sum": 1.9914936636341736
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036155.0,
+          "loss:sum": 3.106542120454833
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036155.0,
+          "loss:sum": 10.939468204975128
+        },
+        "globe": {
+          "clock_cycle:unique": 4036155.0,
+          "loss:sum": 8.25913518667221
+        }
+      },
+      "batch_sha256": "38000b3579121eb3393c40e057c62467a485fb5df479154d9410f61b04a7d811",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:01:27.922535+00:00"
+    },
+    {
+      "update": 61,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036157.0,
+          "loss:sum": 9.163676956619383
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036157.0,
+          "loss:sum": 3.198318402050063
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036157.0,
+          "loss:sum": 3.4139879492577165
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036157.0,
+          "loss:sum": 6.980483651161194
+        },
+        "globe": {
+          "clock_cycle:unique": 4036157.0,
+          "loss:sum": 8.3903888463974
+        }
+      },
+      "batch_sha256": "0286dacf07d6f93a6306b8f26615b541e3cae22a47b9da059ba9f72d4a92d805",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:01:43.613754+00:00"
+    },
+    {
+      "update": 62,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036158.0,
+          "loss:sum": 8.563015776773682
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036158.0,
+          "loss:sum": 4.518610803410411
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036158.0,
+          "loss:sum": 1.9486382862669416
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036158.0,
+          "loss:sum": 13.17315000295639
+        },
+        "globe": {
+          "clock_cycle:unique": 4036158.0,
+          "loss:sum": 4.944980055093765
+        }
+      },
+      "batch_sha256": "10aa433ef04eb2930724868ca435ddb76c4f754a3080d0dce34b0133cf8fbb31",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:01:59.126059+00:00"
+    },
+    {
+      "update": 63,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036159.0,
+          "loss:sum": 4.694538534153253
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036159.0,
+          "loss:sum": 0.8999185154680163
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036159.0,
+          "loss:sum": 1.546412737807259
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036159.0,
+          "loss:sum": 8.530897319316864
+        },
+        "globe": {
+          "clock_cycle:unique": 4036159.0,
+          "loss:sum": 5.362278878688812
+        }
+      },
+      "batch_sha256": "a4a37cabda0629e5a1abeca5d2c57da334a642ac074ef05d41193b3db2a7f078",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:02:15.569780+00:00"
+    },
+    {
+      "update": 64,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036160.0,
+          "loss:sum": 6.4014358902932145
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036161.0,
+          "loss:sum": 5.190155623946339
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036161.0,
+          "loss:sum": 4.227377136703581
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036161.0,
+          "loss:sum": 8.555141746997833
+        },
+        "globe": {
+          "clock_cycle:unique": 4036161.0,
+          "loss:sum": 2.259391948580742
+        }
+      },
+      "batch_sha256": "cafa97e156ec4f25e241ff19d78033e770aab9a0968c28b896a69886c9bba714",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:02:23.754015+00:00"
+    },
+    {
+      "update": 65,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036188.0,
+          "loss:sum": 3.6149435970000923
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036188.0,
+          "loss:sum": 4.595861693844199
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036188.0,
+          "loss:sum": 1.4033520505181514
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036188.0,
+          "loss:sum": 8.59803456068039
+        },
+        "globe": {
+          "clock_cycle:unique": 4036188.0,
+          "loss:sum": 8.588804729282856
+        }
+      },
+      "batch_sha256": "43402d653d3ca8b2c76380307e04176a1059e40d6e045328485db944bb47f456",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:07:24.471346+00:00"
+    },
+    {
+      "update": 66,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 4036190.0,
+          "loss:sum": 5.379454815556528
+        },
+        "alarm": {
+          "clock_cycle:unique": 4036191.0,
+          "loss:sum": 4.896249772980809
+        },
+        "drawer": {
+          "clock_cycle:unique": 4036191.0,
+          "loss:sum": 3.5615686292003375
+        },
+        "laptop": {
+          "clock_cycle:unique": 4036191.0,
+          "loss:sum": 11.785080373287201
+        },
+        "globe": {
+          "clock_cycle:unique": 4036191.0,
+          "loss:sum": 0.6131097972393036
+        }
+      },
+      "batch_sha256": "4c00b050f94cf0521d63bfa6fc6e4d7a26ba0b5c1592b884f0886aa77ac979eb",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:07:32.571564+00:00"
+    },
+    {
+      "update": 67,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 9661645.0,
+          "loss:sum": 7.181049880571663
+        },
+        "alarm": {
+          "clock_cycle:unique": 9661646.0,
+          "loss:sum": 9.348338664509356
+        },
+        "drawer": {
+          "clock_cycle:unique": 9661646.0,
+          "loss:sum": 0.8571978287072852
+        },
+        "laptop": {
+          "clock_cycle:unique": 9661646.0,
+          "loss:sum": 7.889438629150391
+        },
+        "globe": {
+          "clock_cycle:unique": 9661646.0,
+          "loss:sum": 10.649303395301104
+        }
+      },
+      "batch_sha256": "1f4517062a17ed6a3346c8809f217744688f407a32d88a18acb7b0c7110720bf",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:08:09.200273+00:00"
+    },
+    {
+      "update": 68,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 9661647.0,
+          "loss:sum": 1.772339017217746
+        },
+        "alarm": {
+          "clock_cycle:unique": 9661648.0,
+          "loss:sum": 3.3073428738862276
+        },
+        "drawer": {
+          "clock_cycle:unique": 9661648.0,
+          "loss:sum": 5.259044476348208
+        },
+        "laptop": {
+          "clock_cycle:unique": 9661648.0,
+          "loss:sum": 5.047236382961273
+        },
+        "globe": {
+          "clock_cycle:unique": 9661648.0,
+          "loss:sum": 11.320952109992504
+        }
+      },
+      "batch_sha256": "027dd9f9e1c668249e5b4270e0990db1634983b32bac39a292e79490baee7fac",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:08:17.567755+00:00"
+    },
+    {
+      "update": 69,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 9661650.0,
+          "loss:sum": 2.4153763556678314
+        },
+        "alarm": {
+          "clock_cycle:unique": 9661650.0,
+          "loss:sum": 2.937074459157884
+        },
+        "drawer": {
+          "clock_cycle:unique": 9661650.0,
+          "loss:sum": 2.260155481926631
+        },
+        "laptop": {
+          "clock_cycle:unique": 9661650.0,
+          "loss:sum": 3.80892077088356
+        },
+        "globe": {
+          "clock_cycle:unique": 9661650.0,
+          "loss:sum": 3.289370007812977
+        }
+      },
+      "batch_sha256": "2e1da70d4265df9a51fd6dc3a094a019c0052d8cb1eb25b7394ec85562c8ffc6",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:08:25.588601+00:00"
+    },
+    {
+      "update": 70,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 9661652.0,
+          "loss:sum": 2.4194070546946023
+        },
+        "alarm": {
+          "clock_cycle:unique": 9661653.0,
+          "loss:sum": 4.599722669459879
+        },
+        "drawer": {
+          "clock_cycle:unique": 9661653.0,
+          "loss:sum": 1.1822426258586347
+        },
+        "laptop": {
+          "clock_cycle:unique": 9661653.0,
+          "loss:sum": 8.47037310898304
+        },
+        "globe": {
+          "clock_cycle:unique": 9661653.0,
+          "loss:sum": 3.875962421298027
+        }
+      },
+      "batch_sha256": "dce89ff193ea4966b83d84ba0b763ac663dd1f29282fb18bacccc1cdbc8f2e3a",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:08:33.937005+00:00"
+    },
+    {
+      "update": 71,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 9661655.0,
+          "loss:sum": 2.468371634342475
+        },
+        "alarm": {
+          "clock_cycle:unique": 9661655.0,
+          "loss:sum": 4.438794405199587
+        },
+        "drawer": {
+          "clock_cycle:unique": 9661655.0,
+          "loss:sum": 2.4479153817519546
+        },
+        "laptop": {
+          "clock_cycle:unique": 9661655.0,
+          "loss:sum": 5.296191409230232
+        },
+        "globe": {
+          "clock_cycle:unique": 9661655.0,
+          "loss:sum": 5.5366669446229935
+        }
+      },
+      "batch_sha256": "130fe82f7d2996e4a0474421f243e829d642f3cad0be3b926e5c15fee068aa29",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:08:41.834422+00:00"
+    },
+    {
+      "update": 72,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 9661657.0,
+          "loss:sum": 0.859079256253608
+        },
+        "alarm": {
+          "clock_cycle:unique": 9661658.0,
+          "loss:sum": 2.1651524328626692
+        },
+        "drawer": {
+          "clock_cycle:unique": 9661658.0,
+          "loss:sum": 0.9237349044997245
+        },
+        "laptop": {
+          "clock_cycle:unique": 9661658.0,
+          "loss:sum": 6.037190869450569
+        },
+        "globe": {
+          "clock_cycle:unique": 9661658.0,
+          "loss:sum": 7.450673624873161
+        }
+      },
+      "batch_sha256": "6144c7d36e494848bb78daa701ce60bb3eccee4b776bdaca9a2b510664f2008e",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:08:51.774017+00:00"
+    },
+    {
+      "update": 73,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 9661660.0,
+          "loss:sum": 0.5921492800844135
+        },
+        "alarm": {
+          "clock_cycle:unique": 9661660.0,
+          "loss:sum": 3.7712077610194683
+        },
+        "drawer": {
+          "clock_cycle:unique": 9661660.0,
+          "loss:sum": 2.8796395115787163
+        },
+        "laptop": {
+          "clock_cycle:unique": 9661660.0,
+          "loss:sum": 7.282747134566307
+        },
+        "globe": {
+          "clock_cycle:unique": 9661660.0,
+          "loss:sum": 6.183859646320343
+        }
+      },
+      "batch_sha256": "7dd46238e2a6340943ebcc983fc0bbcf4f34e8becb2df11b75df774e1d949ca6",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:08:59.710544+00:00"
+    },
+    {
+      "update": 74,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 9661662.0,
+          "loss:sum": 0.5228576362351305
+        },
+        "alarm": {
+          "clock_cycle:unique": 9661663.0,
+          "loss:sum": 5.585966814309359
+        },
+        "drawer": {
+          "clock_cycle:unique": 9661663.0,
+          "loss:sum": 2.9762475080788136
+        },
+        "laptop": {
+          "clock_cycle:unique": 9661663.0,
+          "loss:sum": 4.541424795985222
+        },
+        "globe": {
+          "clock_cycle:unique": 9661663.0,
+          "loss:sum": 4.721746534109116
+        }
+      },
+      "batch_sha256": "5cd2bad31be8ac1eff483cf94073fee411dee9c50e899b6ecb927aad34053a28",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:09:08.102961+00:00"
+    },
+    {
+      "update": 75,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 9661665.0,
+          "loss:sum": 4.568065875137108
+        },
+        "alarm": {
+          "clock_cycle:unique": 9661665.0,
+          "loss:sum": 2.9395940182730556
+        },
+        "drawer": {
+          "clock_cycle:unique": 9661665.0,
+          "loss:sum": 2.3315139752812684
+        },
+        "laptop": {
+          "clock_cycle:unique": 9661665.0,
+          "loss:sum": 3.8997260332107544
+        },
+        "globe": {
+          "clock_cycle:unique": 9661665.0,
+          "loss:sum": 5.339868724346161
+        }
+      },
+      "batch_sha256": "d500b4d148b6b45a9ec87455bad7a159412f0cffc2e9b9185ad14c9b60965607",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:09:15.840102+00:00"
+    },
+    {
+      "update": 76,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 9661667.0,
+          "loss:sum": 0.46335498750704573
+        },
+        "alarm": {
+          "clock_cycle:unique": 9661668.0,
+          "loss:sum": 6.709415975725278
+        },
+        "drawer": {
+          "clock_cycle:unique": 9661668.0,
+          "loss:sum": 4.265683062374592
+        },
+        "laptop": {
+          "clock_cycle:unique": 9661668.0,
+          "loss:sum": 9.938362434506416
+        },
+        "globe": {
+          "clock_cycle:unique": 9661668.0,
+          "loss:sum": 8.738711461424828
+        }
+      },
+      "batch_sha256": "58326b6f6aadafc231ace330679419c936435ade539952e159b843428760c9b7",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:09:24.416675+00:00"
+    },
+    {
+      "update": 77,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 9661670.0,
+          "loss:sum": 0.5478241791097389
+        },
+        "alarm": {
+          "clock_cycle:unique": 9661670.0,
+          "loss:sum": 0.587741038762033
+        },
+        "drawer": {
+          "clock_cycle:unique": 9661670.0,
+          "loss:sum": 3.4577336837537587
+        },
+        "laptop": {
+          "clock_cycle:unique": 9661670.0,
+          "loss:sum": 4.221802830696106
+        },
+        "globe": {
+          "clock_cycle:unique": 9661670.0,
+          "loss:sum": 5.367775738239288
+        }
+      },
+      "batch_sha256": "f1b15f76cd91eeab185765f8a2bab5e3caf45c6252105120199b9383fa5af401",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:09:32.164893+00:00"
+    },
+    {
+      "update": 78,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 9661672.0,
+          "loss:sum": 7.33889575147623
+        },
+        "alarm": {
+          "clock_cycle:unique": 9661673.0,
+          "loss:sum": 4.6441675797104836
+        },
+        "drawer": {
+          "clock_cycle:unique": 9661673.0,
+          "loss:sum": 1.0817921604029834
+        },
+        "laptop": {
+          "clock_cycle:unique": 9661673.0,
+          "loss:sum": 7.26769994199276
+        },
+        "globe": {
+          "clock_cycle:unique": 9661673.0,
+          "loss:sum": 3.7985050678253174
+        }
+      },
+      "batch_sha256": "098a895f9a151cd85e38e967c0c3198d8f6058b2fae83beccd1d20076bae49b7",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:09:40.398703+00:00"
+    },
+    {
+      "update": 79,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 9661675.0,
+          "loss:sum": 0.16946462048144895
+        },
+        "alarm": {
+          "clock_cycle:unique": 9661675.0,
+          "loss:sum": 2.195929433219135
+        },
+        "drawer": {
+          "clock_cycle:unique": 9661675.0,
+          "loss:sum": 4.669465616112575
+        },
+        "laptop": {
+          "clock_cycle:unique": 9661675.0,
+          "loss:sum": 5.934575378894806
+        },
+        "globe": {
+          "clock_cycle:unique": 9661675.0,
+          "loss:sum": 11.292951330542564
+        }
+      },
+      "batch_sha256": "b1a812e768676e429f9907726ffc4fd392f951f9497a961ed9d0c30666f3003d",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:09:48.487102+00:00"
+    },
+    {
+      "update": 80,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 9661677.0,
+          "loss:sum": 19.525438362215937
+        },
+        "alarm": {
+          "clock_cycle:unique": 9661678.0,
+          "loss:sum": 5.2008451437577605
+        },
+        "drawer": {
+          "clock_cycle:unique": 9661678.0,
+          "loss:sum": 2.9096308138687164
+        },
+        "laptop": {
+          "clock_cycle:unique": 9661678.0,
+          "loss:sum": 3.572890281677246
+        },
+        "globe": {
+          "clock_cycle:unique": 9661678.0,
+          "loss:sum": 7.685003414750099
+        }
+      },
+      "batch_sha256": "597252b1bcd56bcaba274aa1a401d1997aca37f9cc727c16b1cfd6f86326eeea",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:09:56.476582+00:00"
+    },
+    {
+      "update": 81,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 9661680.0,
+          "loss:sum": 12.839365913736401
+        },
+        "alarm": {
+          "clock_cycle:unique": 9661680.0,
+          "loss:sum": 2.6373258251696825
+        },
+        "drawer": {
+          "clock_cycle:unique": 9661680.0,
+          "loss:sum": 1.4380162102170289
+        },
+        "laptop": {
+          "clock_cycle:unique": 9661680.0,
+          "loss:sum": 3.7736432552337646
+        },
+        "globe": {
+          "clock_cycle:unique": 9661680.0,
+          "loss:sum": 5.453515499830246
+        }
+      },
+      "batch_sha256": "1bd4ead99223351fc12c9fec9dce2d874892f3d72442559624bab857433697ac",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:10:04.628108+00:00"
+    },
+    {
+      "update": 82,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 9661682.0,
+          "loss:sum": 2.257392658269964
+        },
+        "alarm": {
+          "clock_cycle:unique": 9661683.0,
+          "loss:sum": 2.722738668322563
+        },
+        "drawer": {
+          "clock_cycle:unique": 9661683.0,
+          "loss:sum": 3.9112062230706215
+        },
+        "laptop": {
+          "clock_cycle:unique": 9661683.0,
+          "loss:sum": 7.066802978515625
+        },
+        "globe": {
+          "clock_cycle:unique": 9661683.0,
+          "loss:sum": 6.214324861764908
+        }
+      },
+      "batch_sha256": "024c0c720d00f92b4d39201cd401e49d48edb73347717bbdc32b967fc44e1c56",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:10:12.670699+00:00"
+    },
+    {
+      "update": 83,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 9661685.0,
+          "loss:sum": 1.195981439203024
+        },
+        "alarm": {
+          "clock_cycle:unique": 9661685.0,
+          "loss:sum": 6.208465747535229
+        },
+        "drawer": {
+          "clock_cycle:unique": 9661685.0,
+          "loss:sum": 1.8718703873455524
+        },
+        "laptop": {
+          "clock_cycle:unique": 9661685.0,
+          "loss:sum": 10.87052834033966
+        },
+        "globe": {
+          "clock_cycle:unique": 9661685.0,
+          "loss:sum": 5.115300536155701
+        }
+      },
+      "batch_sha256": "33f94b4b3fef9639e0619d7bcaa990da9741a0777893587100704f1973b12821",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:10:19.567696+00:00"
+    },
+    {
+      "update": 84,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 9661687.0,
+          "loss:sum": 3.67084290785715
+        },
+        "alarm": {
+          "clock_cycle:unique": 9661687.0,
+          "loss:sum": 6.686606016010046
+        },
+        "drawer": {
+          "clock_cycle:unique": 9661687.0,
+          "loss:sum": 2.753084996715188
+        },
+        "laptop": {
+          "clock_cycle:unique": 9661687.0,
+          "loss:sum": 4.244430705904961
+        },
+        "globe": {
+          "clock_cycle:unique": 9661687.0,
+          "loss:sum": 2.725926101207733
+        }
+      },
+      "batch_sha256": "0195f334a2c10928896ba1baffb246b1bf0eda30cd685288a1796bff63a994a2",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:10:26.777100+00:00"
+    },
+    {
+      "update": 85,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 9661690.0,
+          "loss:sum": 2.057662036269903
+        },
+        "alarm": {
+          "clock_cycle:unique": 9661690.0,
+          "loss:sum": 3.0388862304389477
+        },
+        "drawer": {
+          "clock_cycle:unique": 9661690.0,
+          "loss:sum": 2.0835937317460775
+        },
+        "laptop": {
+          "clock_cycle:unique": 9661690.0,
+          "loss:sum": 5.768059015274048
+        },
+        "globe": {
+          "clock_cycle:unique": 9661690.0,
+          "loss:sum": 6.287858635187149
+        }
+      },
+      "batch_sha256": "cabbd64bfc7ddf4724da4d22a52c9e73e09ed366ad567322e54530e77ca27e94",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:10:42.764866+00:00"
+    },
+    {
+      "update": 86,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 9661692.0,
+          "loss:sum": 5.597206396283582
+        },
+        "alarm": {
+          "clock_cycle:unique": 9661693.0,
+          "loss:sum": 3.285897744819522
+        },
+        "drawer": {
+          "clock_cycle:unique": 9661693.0,
+          "loss:sum": 4.608952128328383
+        },
+        "laptop": {
+          "clock_cycle:unique": 9661693.0,
+          "loss:sum": 3.373689651489258
+        },
+        "globe": {
+          "clock_cycle:unique": 9661693.0,
+          "loss:sum": 3.4147769808769226
+        }
+      },
+      "batch_sha256": "2dd86ca807d46de1a94b08b33ce2191b04908a2665dfbf70598b4fca6f132624",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:10:50.748524+00:00"
+    },
+    {
+      "update": 87,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 9661694.0,
+          "loss:sum": 1.1221957466332242
+        },
+        "alarm": {
+          "clock_cycle:unique": 9661695.0,
+          "loss:sum": 2.8048701025545597
+        },
+        "drawer": {
+          "clock_cycle:unique": 9661695.0,
+          "loss:sum": 4.893397417385131
+        },
+        "laptop": {
+          "clock_cycle:unique": 9661695.0,
+          "loss:sum": 10.790106505155563
+        },
+        "globe": {
+          "clock_cycle:unique": 9661695.0,
+          "loss:sum": 4.034423068165779
+        }
+      },
+      "batch_sha256": "1c62ada3c6dc4ca3dddcac7d70d8579b9a662c004bb251741a99d13931ba0cf8",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:10:58.734578+00:00"
+    },
+    {
+      "update": 88,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 9661696.0,
+          "loss:sum": 0.6878163752844557
+        },
+        "alarm": {
+          "clock_cycle:unique": 9661697.0,
+          "loss:sum": 2.230166813591495
+        },
+        "drawer": {
+          "clock_cycle:unique": 9661697.0,
+          "loss:sum": 4.494479389395565
+        },
+        "laptop": {
+          "clock_cycle:unique": 9661697.0,
+          "loss:sum": 5.017387740314007
+        },
+        "globe": {
+          "clock_cycle:unique": 9661697.0,
+          "loss:sum": 2.0696700140833855
+        }
+      },
+      "batch_sha256": "a95cfc37029449b3481092a6c3d3799bfbc9308b97098cf2e847fffb587d51d2",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:11:06.735008+00:00"
+    },
+    {
+      "update": 89,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 9661698.0,
+          "loss:sum": 0.48537798787583597
+        },
+        "alarm": {
+          "clock_cycle:unique": 9661699.0,
+          "loss:sum": 1.8104954375885427
+        },
+        "drawer": {
+          "clock_cycle:unique": 9661699.0,
+          "loss:sum": 4.219555852585472
+        },
+        "laptop": {
+          "clock_cycle:unique": 9661699.0,
+          "loss:sum": 1.5549923405051231
+        },
+        "globe": {
+          "clock_cycle:unique": 9661699.0,
+          "loss:sum": 5.249769423156977
+        }
+      },
+      "batch_sha256": "d6272a8f7635d181c6d9f2bbabc845893f9f3a4ee6be0fea9a30ea7934092c87",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:11:15.002718+00:00"
+    },
+    {
+      "update": 90,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 9661700.0,
+          "loss:sum": 1.4512412005569786
+        },
+        "alarm": {
+          "clock_cycle:unique": 9661701.0,
+          "loss:sum": 3.0158456813078374
+        },
+        "drawer": {
+          "clock_cycle:unique": 9661701.0,
+          "loss:sum": 1.2392107208725065
+        },
+        "laptop": {
+          "clock_cycle:unique": 9661701.0,
+          "loss:sum": 7.049658641219139
+        },
+        "globe": {
+          "clock_cycle:unique": 9661701.0,
+          "loss:sum": 1.036314431577921
+        }
+      },
+      "batch_sha256": "529eb100c36030799e35b9059fe212e95bbb4beb860774cd6a4f5c1b49b055df",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:11:23.005224+00:00"
+    },
+    {
+      "update": 91,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 9661702.0,
+          "loss:sum": 0.22480824930244125
+        },
+        "alarm": {
+          "clock_cycle:unique": 9661703.0,
+          "loss:sum": 0.1904631800716743
+        },
+        "drawer": {
+          "clock_cycle:unique": 9661703.0,
+          "loss:sum": 4.567022668372374
+        },
+        "laptop": {
+          "clock_cycle:unique": 9661703.0,
+          "loss:sum": 5.921397164463997
+        },
+        "globe": {
+          "clock_cycle:unique": 9661703.0,
+          "loss:sum": 0.6983396839350462
+        }
+      },
+      "batch_sha256": "db599278df10b5d0c6dea72cfe5c7a87b384fa1cdf55a81f412e4150121884f1",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:11:31.354338+00:00"
+    },
+    {
+      "update": 92,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 9661705.0,
+          "loss:sum": 0.9755452367753605
+        },
+        "alarm": {
+          "clock_cycle:unique": 9661705.0,
+          "loss:sum": 0.05483732141146902
+        },
+        "drawer": {
+          "clock_cycle:unique": 9661705.0,
+          "loss:sum": 4.070805135546834
+        },
+        "laptop": {
+          "clock_cycle:unique": 9661705.0,
+          "loss:sum": 1.9741619750857353
+        },
+        "globe": {
+          "clock_cycle:unique": 9661705.0,
+          "loss:sum": 5.4477573381736875
+        }
+      },
+      "batch_sha256": "bb29196de31cf635ec1d3ea9229647dda322b080a3df6de783777866606c043c",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:11:39.464226+00:00"
+    },
+    {
+      "update": 93,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 9661707.0,
+          "loss:sum": 0.0921805998768832
+        },
+        "alarm": {
+          "clock_cycle:unique": 9661708.0,
+          "loss:sum": 6.1377578034225735
+        },
+        "drawer": {
+          "clock_cycle:unique": 9661708.0,
+          "loss:sum": 0.5339185365664889
+        },
+        "laptop": {
+          "clock_cycle:unique": 9661708.0,
+          "loss:sum": 5.831740074791014
+        },
+        "globe": {
+          "clock_cycle:unique": 9661708.0,
+          "loss:sum": 2.0872288008686155
+        }
+      },
+      "batch_sha256": "b50e82cae9533f2c36fe6164a479e425123624bffac9ce3dc3869e26f8419c53",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:11:47.927745+00:00"
+    },
+    {
+      "update": 94,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 9661710.0,
+          "loss:sum": 0.07965122657697066
+        },
+        "alarm": {
+          "clock_cycle:unique": 9661710.0,
+          "loss:sum": 0.5351367137336638
+        },
+        "drawer": {
+          "clock_cycle:unique": 9661710.0,
+          "loss:sum": 2.315995031683997
+        },
+        "laptop": {
+          "clock_cycle:unique": 9661710.0,
+          "loss:sum": 4.006975440308452
+        },
+        "globe": {
+          "clock_cycle:unique": 9661710.0,
+          "loss:sum": 0.08696231432259083
+        }
+      },
+      "batch_sha256": "ce93cf6303a09a394214622f84cddf6ad3c7eb3d188bf755343bff0b7d2b347b",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:11:55.533734+00:00"
+    },
+    {
+      "update": 95,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 9661713.0,
+          "loss:sum": 0.05884849405083514
+        },
+        "alarm": {
+          "clock_cycle:unique": 9661714.0,
+          "loss:sum": 0.025168421416310593
+        },
+        "drawer": {
+          "clock_cycle:unique": 9661714.0,
+          "loss:sum": 3.3857199968624627
+        },
+        "laptop": {
+          "clock_cycle:unique": 9661714.0,
+          "loss:sum": 2.1926527293398976
+        },
+        "globe": {
+          "clock_cycle:unique": 9661714.0,
+          "loss:sum": 0.26431012246757746
+        }
+      },
+      "batch_sha256": "ef4299800fa767a4db1da0ef1a27d5caaec04684cd69d0db6ba42b06f4218859",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:12:03.569791+00:00"
+    },
+    {
+      "update": 96,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 9661715.0,
+          "loss:sum": 0.22081286528191413
+        },
+        "alarm": {
+          "clock_cycle:unique": 9661716.0,
+          "loss:sum": 5.597918514162302
+        },
+        "drawer": {
+          "clock_cycle:unique": 9661716.0,
+          "loss:sum": 2.898529954654805
+        },
+        "laptop": {
+          "clock_cycle:unique": 9661716.0,
+          "loss:sum": 2.215559070929885
+        },
+        "globe": {
+          "clock_cycle:unique": 9661716.0,
+          "loss:sum": 0.5464281127788126
+        }
+      },
+      "batch_sha256": "dd711347941894d92322e86ddc9d85d6d2f7ba5ed9a0337f238bb49b7950ce13",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T08:12:11.731161+00:00"
+    }
+  ],
+  "checkpoints": [
+    {
+      "update": 0,
+      "checkpoint_id": "5d021bc712f25b87218b",
+      "checkpoint_id_kind": "fixed_ephemeral_snapshot",
+      "created_at": "2026-11-18T07:35:48.119787+00:00",
+      "continuous_development": {
+        "n": 2,
+        "full_successes": 0,
+        "wilson_95_full_success_rate": [
+          0.0,
+          0.6576197724933345
+        ],
+        "task_successes": {
+          "alarm": 0,
+          "drawer": 0,
+          "laptop": 0,
+          "globe": 0
+        },
+        "stations_reached": 0,
+        "station_opportunities": 10,
+        "falls": 0,
+        "mean_duration_s": 24.022568264062144,
+        "arrival_measurement_n": 0,
+        "mean_arrival_position_error_mm": null,
+        "mean_arrival_heading_error_degrees": null,
+        "mean_foot_slip_estimate_m": 0.1549966570203541
+      },
+      "isolated_contact_development": {
+        "alarm": {
+          "n": 2,
+          "successes": 2,
+          "wilson_95_success_rate": [
+            0.34238022750666547,
+            1.0
+          ],
+          "mean_duration_s": 5.610702100639313
+        },
+        "drawer": {
+          "n": 2,
+          "successes": 2,
+          "wilson_95_success_rate": [
+            0.34238022750666547,
+            1.0
+          ],
+          "mean_duration_s": 5.243249548117066
+        },
+        "laptop": {
+          "n": 2,
+          "successes": 0,
+          "wilson_95_success_rate": [
+            0.0,
+            0.6576197724933345
+          ],
+          "mean_duration_s": 12.000452660795357
+        },
+        "globe": {
+          "n": 2,
+          "successes": 2,
+          "wilson_95_success_rate": [
+            0.34238022750666547,
+            1.0
+          ],
+          "mean_duration_s": 6.047230828218578
+        }
+      },
+      "inference": {
+        "actual_tinker_calls": 35,
+        "identical_observation_cache_hits": 96
+      }
+    },
+    {
+      "update": 8,
+      "checkpoint_id": "cc8292a6c0d438896bd3",
+      "checkpoint_id_kind": "fixed_ephemeral_snapshot",
+      "created_at": "2026-11-18T07:39:38.663010+00:00",
+      "continuous_development": {
+        "n": 2,
+        "full_successes": 0,
+        "wilson_95_full_success_rate": [
+          0.0,
+          0.6576197724933345
+        ],
+        "task_successes": {
+          "alarm": 0,
+          "drawer": 0,
+          "laptop": 0,
+          "globe": 0
+        },
+        "stations_reached": 0,
+        "station_opportunities": 10,
+        "falls": 0,
+        "mean_duration_s": 24.02910802028056,
+        "arrival_measurement_n": 0,
+        "mean_arrival_position_error_mm": null,
+        "mean_arrival_heading_error_degrees": null,
+        "mean_foot_slip_estimate_m": 0.15509450602191252
+      },
+      "isolated_contact_development": {
+        "alarm": {
+          "n": 2,
+          "successes": 1,
+          "wilson_95_success_rate": [
+            0.09453120573423457,
+            0.9054687942657654
+          ],
+          "mean_duration_s": 7.830949336791532
+        },
+        "drawer": {
+          "n": 2,
+          "successes": 2,
+          "wilson_95_success_rate": [
+            0.34238022750666547,
+            1.0
+          ],
+          "mean_duration_s": 6.606379984893143
+        },
+        "laptop": {
+          "n": 2,
+          "successes": 0,
+          "wilson_95_success_rate": [
+            0.0,
+            0.6576197724933345
+          ],
+          "mean_duration_s": 8.003026672288602
+        },
+        "globe": {
+          "n": 2,
+          "successes": 2,
+          "wilson_95_success_rate": [
+            0.34238022750666547,
+            1.0
+          ],
+          "mean_duration_s": 6.047230828218578
+        }
+      },
+      "inference": {
+        "actual_tinker_calls": 49,
+        "identical_observation_cache_hits": 98
+      }
+    },
+    {
+      "update": 16,
+      "checkpoint_id": "c4ef233173f1e66b75da",
+      "checkpoint_id_kind": "fixed_ephemeral_snapshot",
+      "created_at": "2026-11-18T07:43:43.251518+00:00",
+      "continuous_development": {
+        "n": 2,
+        "full_successes": 0,
+        "wilson_95_full_success_rate": [
+          0.0,
+          0.6576197724933345
+        ],
+        "task_successes": {
+          "alarm": 1,
+          "drawer": 0,
+          "laptop": 0,
+          "globe": 0
+        },
+        "stations_reached": 1,
+        "station_opportunities": 10,
+        "falls": 1,
+        "mean_duration_s": 28.334720020603307,
+        "arrival_measurement_n": 1,
+        "mean_arrival_position_error_mm": 11.8,
+        "mean_arrival_heading_error_degrees": 2.7,
+        "mean_foot_slip_estimate_m": 0.17777564104866284
+      },
+      "isolated_contact_development": {
+        "alarm": {
+          "n": 2,
+          "successes": 2,
+          "wilson_95_success_rate": [
+            0.34238022750666547,
+            1.0
+          ],
+          "mean_duration_s": 5.379766959176499
+        },
+        "drawer": {
+          "n": 2,
+          "successes": 2,
+          "wilson_95_success_rate": [
+            0.34238022750666547,
+            1.0
+          ],
+          "mean_duration_s": 6.606379984893143
+        },
+        "laptop": {
+          "n": 2,
+          "successes": 0,
+          "wilson_95_success_rate": [
+            0.0,
+            0.6576197724933345
+          ],
+          "mean_duration_s": 8.003026672288602
+        },
+        "globe": {
+          "n": 2,
+          "successes": 2,
+          "wilson_95_success_rate": [
+            0.34238022750666547,
+            1.0
+          ],
+          "mean_duration_s": 6.047230828218578
+        }
+      },
+      "inference": {
+        "actual_tinker_calls": 35,
+        "identical_observation_cache_hits": 51
+      }
+    },
+    {
+      "update": 32,
+      "checkpoint_id": "56bbfdce13e88ee93f12",
+      "checkpoint_id_kind": "fixed_ephemeral_snapshot",
+      "created_at": "2026-11-18T07:51:03.243263+00:00",
+      "continuous_development": {
+        "n": 2,
+        "full_successes": 0,
+        "wilson_95_full_success_rate": [
+          0.0,
+          0.6576197724933345
+        ],
+        "task_successes": {
+          "alarm": 1,
+          "drawer": 0,
+          "laptop": 0,
+          "globe": 0
+        },
+        "stations_reached": 1,
+        "station_opportunities": 10,
+        "falls": 0,
+        "mean_duration_s": 33.09402760855428,
+        "arrival_measurement_n": 1,
+        "mean_arrival_position_error_mm": 9.0,
+        "mean_arrival_heading_error_degrees": 7.3,
+        "mean_foot_slip_estimate_m": 0.25037037836546033
+      },
+      "isolated_contact_development": {
+        "alarm": {
+          "n": 2,
+          "successes": 2,
+          "wilson_95_success_rate": [
+            0.34238022750666547,
+            1.0
+          ],
+          "mean_duration_s": 5.379766959176499
+        },
+        "drawer": {
+          "n": 2,
+          "successes": 2,
+          "wilson_95_success_rate": [
+            0.34238022750666547,
+            1.0
+          ],
+          "mean_duration_s": 6.606379984893143
+        },
+        "laptop": {
+          "n": 2,
+          "successes": 0,
+          "wilson_95_success_rate": [
+            0.0,
+            0.6576197724933345
+          ],
+          "mean_duration_s": 8.003026672288602
+        },
+        "globe": {
+          "n": 2,
+          "successes": 2,
+          "wilson_95_success_rate": [
+            0.34238022750666547,
+            1.0
+          ],
+          "mean_duration_s": 6.047230828218578
+        }
+      },
+      "inference": {
+        "actual_tinker_calls": 48,
+        "identical_observation_cache_hits": 95
+      }
+    },
+    {
+      "update": 64,
+      "checkpoint_id": "f75add1306c6e23a5a1d",
+      "checkpoint_id_kind": "fixed_ephemeral_snapshot",
+      "created_at": "2026-11-18T08:02:27.973936+00:00",
+      "continuous_development": {
+        "n": 2,
+        "full_successes": 0,
+        "wilson_95_full_success_rate": [
+          0.0,
+          0.6576197724933345
+        ],
+        "task_successes": {
+          "alarm": 2,
+          "drawer": 2,
+          "laptop": 0,
+          "globe": 2
+        },
+        "stations_reached": 10,
+        "station_opportunities": 10,
+        "falls": 0,
+        "mean_duration_s": 95.8254129296739,
+        "arrival_measurement_n": 10,
+        "mean_arrival_position_error_mm": 17.42,
+        "mean_arrival_heading_error_degrees": 3.72,
+        "mean_foot_slip_estimate_m": 0.5024478817704379
+      },
+      "isolated_contact_development": {
+        "alarm": {
+          "n": 2,
+          "successes": 2,
+          "wilson_95_success_rate": [
+            0.34238022750666547,
+            1.0
+          ],
+          "mean_duration_s": 5.379766959176499
+        },
+        "drawer": {
+          "n": 2,
+          "successes": 2,
+          "wilson_95_success_rate": [
+            0.34238022750666547,
+            1.0
+          ],
+          "mean_duration_s": 6.606379984893143
+        },
+        "laptop": {
+          "n": 2,
+          "successes": 0,
+          "wilson_95_success_rate": [
+            0.0,
+            0.6576197724933345
+          ],
+          "mean_duration_s": 8.003026672288602
+        },
+        "globe": {
+          "n": 2,
+          "successes": 2,
+          "wilson_95_success_rate": [
+            0.34238022750666547,
+            1.0
+          ],
+          "mean_duration_s": 6.047230828218578
+        }
+      },
+      "inference": {
+        "actual_tinker_calls": 101,
+        "identical_observation_cache_hits": 129
+      }
+    },
+    {
+      "update": 96,
+      "checkpoint_id": "02a2571a44b733fabfd9",
+      "checkpoint_id_kind": "fixed_ephemeral_snapshot",
+      "created_at": "2026-11-18T08:12:14.058353+00:00",
+      "continuous_development": {
+        "n": 2,
+        "full_successes": 0,
+        "wilson_95_full_success_rate": [
+          0.0,
+          0.6576197724933345
+        ],
+        "task_successes": {
+          "alarm": 2,
+          "drawer": 1,
+          "laptop": 0,
+          "globe": 0
+        },
+        "stations_reached": 8,
+        "station_opportunities": 10,
+        "falls": 2,
+        "mean_duration_s": 76.59893838221107,
+        "arrival_measurement_n": 8,
+        "mean_arrival_position_error_mm": 14.8,
+        "mean_arrival_heading_error_degrees": 4.5,
+        "mean_foot_slip_estimate_m": 0.43962391561222824
+      },
+      "isolated_contact_development": {
+        "alarm": {
+          "n": 2,
+          "successes": 2,
+          "wilson_95_success_rate": [
+            0.34238022750666547,
+            1.0
+          ],
+          "mean_duration_s": 5.379766959176499
+        },
+        "drawer": {
+          "n": 2,
+          "successes": 2,
+          "wilson_95_success_rate": [
+            0.34238022750666547,
+            1.0
+          ],
+          "mean_duration_s": 6.606379984893143
+        },
+        "laptop": {
+          "n": 2,
+          "successes": 0,
+          "wilson_95_success_rate": [
+            0.0,
+            0.6576197724933345
+          ],
+          "mean_duration_s": 8.003026672288602
+        },
+        "globe": {
+          "n": 2,
+          "successes": 2,
+          "wilson_95_success_rate": [
+            0.34238022750666547,
+            1.0
+          ],
+          "mean_duration_s": 6.047230828218578
+        }
+      },
+      "inference": {
+        "actual_tinker_calls": 86,
+        "identical_observation_cache_hits": 114
+      },
+      "optimizer_state_id": "85c8fced6732179ac5b3"
+    }
+  ],
+  "selected_checkpoint": {
+    "update": 96,
+    "checkpoint_id": "02a2571a44b733fabfd9",
+    "checkpoint_id_kind": "fixed_ephemeral_snapshot",
+    "created_at": "2026-11-18T08:12:14.058353+00:00",
+    "continuous_development": {
+      "n": 2,
+      "full_successes": 0,
+      "wilson_95_full_success_rate": [
+        0.0,
+        0.6576197724933345
+      ],
+      "task_successes": {
+        "alarm": 2,
+        "drawer": 1,
+        "laptop": 0,
+        "globe": 0
+      },
+      "stations_reached": 8,
+      "station_opportunities": 10,
+      "falls": 2,
+      "mean_duration_s": 76.59893838221107,
+      "arrival_measurement_n": 8,
+      "mean_arrival_position_error_mm": 14.8,
+      "mean_arrival_heading_error_degrees": 4.5,
+      "mean_foot_slip_estimate_m": 0.43962391561222824
+    },
+    "isolated_contact_development": {
+      "alarm": {
+        "n": 2,
+        "successes": 2,
+        "wilson_95_success_rate": [
+          0.34238022750666547,
+          1.0
+        ],
+        "mean_duration_s": 5.379766959176499
+      },
+      "drawer": {
+        "n": 2,
+        "successes": 2,
+        "wilson_95_success_rate": [
+          0.34238022750666547,
+          1.0
+        ],
+        "mean_duration_s": 6.606379984893143
+      },
+      "laptop": {
+        "n": 2,
+        "successes": 0,
+        "wilson_95_success_rate": [
+          0.0,
+          0.6576197724933345
+        ],
+        "mean_duration_s": 8.003026672288602
+      },
+      "globe": {
+        "n": 2,
+        "successes": 2,
+        "wilson_95_success_rate": [
+          0.34238022750666547,
+          1.0
+        ],
+        "mean_duration_s": 6.047230828218578
+      }
+    },
+    "inference": {
+      "actual_tinker_calls": 86,
+      "identical_observation_cache_hits": 114
+    },
+    "optimizer_state_id": "85c8fced6732179ac5b3"
+  },
+  "stopping_rule_trigger": "96-update budget",
+  "fixed_baseline": {
+    "alarm": "B",
+    "drawer": "A",
+    "laptop": "C",
+    "globe": "A"
+  },
+  "held_out": {
+    "starting_model": {
+      "n": 4,
+      "full_successes": 0,
+      "wilson_95_full_success_rate": [
+        0.0,
+        0.48989083645458353
+      ],
+      "task_successes": {
+        "alarm": 0,
+        "drawer": 0,
+        "laptop": 0,
+        "globe": 0
+      },
+      "stations_reached": 0,
+      "station_opportunities": 20,
+      "falls": 1,
+      "mean_duration_s": 22.381906922767044,
+      "arrival_measurement_n": 0,
+      "mean_arrival_position_error_mm": null,
+      "mean_arrival_heading_error_degrees": null,
+      "mean_foot_slip_estimate_m": 0.1405000574402136
+    },
+    "post_trained_model": {
+      "n": 4,
+      "full_successes": 1,
+      "wilson_95_full_success_rate": [
+        0.04558726080970238,
+        0.6993581574175893
+      ],
+      "task_successes": {
+        "alarm": 3,
+        "drawer": 4,
+        "laptop": 2,
+        "globe": 4
+      },
+      "stations_reached": 20,
+      "station_opportunities": 20,
+      "falls": 0,
+      "mean_duration_s": 95.61491452639272,
+      "arrival_measurement_n": 20,
+      "mean_arrival_position_error_mm": 15.209999999999999,
+      "mean_arrival_heading_error_degrees": 3.34,
+      "mean_foot_slip_estimate_m": 0.5285397228822138
+    },
+    "classical_fixed": {
+      "n": 4,
+      "full_successes": 1,
+      "wilson_95_full_success_rate": [
+        0.04558726080970238,
+        0.6993581574175893
+      ],
+      "task_successes": {
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 1,
+        "globe": 3
+      },
+      "stations_reached": 19,
+      "station_opportunities": 20,
+      "falls": 1,
+      "mean_duration_s": 87.59778650472539,
+      "arrival_measurement_n": 19,
+      "mean_arrival_position_error_mm": 16.10526315789474,
+      "mean_arrival_heading_error_degrees": 3.689473684210525,
+      "mean_foot_slip_estimate_m": 0.5059659543578492
+    }
+  },
+  "held_out_isolated_contact": {
+    "starting_model": {
+      "alarm": {
+        "n": 4,
+        "successes": 4,
+        "wilson_95_success_rate": [
+          0.5101091635454165,
+          1.0
+        ],
+        "mean_duration_s": 5.622351041403366
+      },
+      "drawer": {
+        "n": 4,
+        "successes": 4,
+        "wilson_95_success_rate": [
+          0.5101091635454165,
+          1.0
+        ],
+        "mean_duration_s": 5.043582616073554
+      },
+      "laptop": {
+        "n": 4,
+        "successes": 0,
+        "wilson_95_success_rate": [
+          0.0,
+          0.48989083645458353
+        ],
+        "mean_duration_s": 12.000452660795357
+      },
+      "globe": {
+        "n": 4,
+        "successes": 4,
+        "wilson_95_success_rate": [
+          0.5101091635454165,
+          1.0
+        ],
+        "mean_duration_s": 5.123285894985498
+      }
+    },
+    "post_trained_model": {
+      "alarm": {
+        "n": 4,
+        "successes": 3,
+        "wilson_95_success_rate": [
+          0.30064184258241056,
+          0.9544127391902976
+        ],
+        "mean_duration_s": 6.064193320910094
+      },
+      "drawer": {
+        "n": 4,
+        "successes": 4,
+        "wilson_95_success_rate": [
+          0.5101091635454165,
+          1.0
+        ],
+        "mean_duration_s": 6.156158642731569
+      },
+      "laptop": {
+        "n": 4,
+        "successes": 2,
+        "wilson_95_success_rate": [
+          0.1500389891521544,
+          0.8499610108478456
+        ],
+        "mean_duration_s": 8.530498884780213
+      },
+      "globe": {
+        "n": 4,
+        "successes": 4,
+        "wilson_95_success_rate": [
+          0.5101091635454165,
+          1.0
+        ],
+        "mean_duration_s": 4.20261083986145
+      }
+    },
+    "fixed_profiles": {
+      "alarm": {
+        "n": 4,
+        "successes": 4,
+        "wilson_95_success_rate": [
+          0.5101091635454165,
+          1.0
+        ],
+        "mean_duration_s": 4.9984174246901185
+      },
+      "drawer": {
+        "n": 4,
+        "successes": 4,
+        "wilson_95_success_rate": [
+          0.5101091635454165,
+          1.0
+        ],
+        "mean_duration_s": 6.156158642731569
+      },
+      "laptop": {
+        "n": 4,
+        "successes": 2,
+        "wilson_95_success_rate": [
+          0.1500389891521544,
+          0.8499610108478456
+        ],
+        "mean_duration_s": 7.8237964784276395
+      },
+      "globe": {
+        "n": 4,
+        "successes": 4,
+        "wilson_95_success_rate": [
+          0.5101091635454165,
+          1.0
+        ],
+        "mean_duration_s": 5.950769423996943
+      }
+    }
+  },
+  "held_out_isolated_walking": {
+    "starting_model": {
+      "n": 8,
+      "successes": 0,
+      "wilson_95_success_rate": [
+        0.0,
+        0.3244075648838681
+      ],
+      "falls": 0,
+      "mean_position_error_mm": 90.6375,
+      "mean_heading_error_degrees": 50.5625,
+      "mean_duration_s": 24.02563377478953
+    },
+    "post_trained_model": {
+      "n": 8,
+      "successes": 8,
+      "wilson_95_success_rate": [
+        0.6755924351161318,
+        1.0
+      ],
+      "falls": 0,
+      "mean_position_error_mm": 9.587499999999999,
+      "mean_heading_error_degrees": 6.0,
+      "mean_duration_s": 5.006898671035736
+    },
+    "classical_fixed": {
+      "n": 8,
+      "successes": 8,
+      "wilson_95_success_rate": [
+        0.6755924351161318,
+        1.0
+      ],
+      "falls": 0,
+      "mean_position_error_mm": 9.587499999999999,
+      "mean_heading_error_degrees": 6.0,
+      "mean_duration_s": 5.006898671035736
+    }
+  },
+  "paired_outcomes": [
+    {
+      "seed": 16000,
+      "starting_full": false,
+      "trained_full": false,
+      "starting_tasks": 0,
+      "trained_tasks": 3,
+      "starting_arrivals": 0,
+      "trained_arrivals": 5,
+      "trained_fall": false
+    },
+    {
+      "seed": 16001,
+      "starting_full": false,
+      "trained_full": true,
+      "starting_tasks": 0,
+      "trained_tasks": 4,
+      "starting_arrivals": 0,
+      "trained_arrivals": 5,
+      "trained_fall": false
+    },
+    {
+      "seed": 16002,
+      "starting_full": false,
+      "trained_full": false,
+      "starting_tasks": 0,
+      "trained_tasks": 3,
+      "starting_arrivals": 0,
+      "trained_arrivals": 5,
+      "trained_fall": false
+    },
+    {
+      "seed": 16003,
+      "starting_full": false,
+      "trained_full": false,
+      "starting_tasks": 0,
+      "trained_tasks": 3,
+      "starting_arrivals": 0,
+      "trained_arrivals": 5,
+      "trained_fall": false
+    }
+  ],
+  "paired_full_success_gain": {
+    "n": 4,
+    "percentage_points": 25.0,
+    "bootstrap_95_percentage_points": [
+      0.0,
+      75.0
+    ]
+  },
+  "evaluation_runtime": "All checkpoint and held-out physics executes on Modal. Each held-out before/after/classical triplet shares one worker.",
+  "modal_execution_receipts": [
+    {
+      "provider": "Modal",
+      "cpu": 1,
+      "memory_mib": 3072,
+      "duration_seconds": 341.31419453,
+      "architecture": "x86_64",
+      "python": "3.11.18",
+      "mujoco": "3.3.7",
+      "numpy": "2.3.4",
+      "torch": "2.15.0+cpu",
+      "paired_on_one_worker": true,
+      "keys_serialized_in_payload": false
+    },
+    {
+      "provider": "Modal",
+      "cpu": 1,
+      "memory_mib": 3072,
+      "duration_seconds": 411.324956964,
+      "architecture": "x86_64",
+      "python": "3.11.18",
+      "mujoco": "3.3.7",
+      "numpy": "2.3.4",
+      "torch": "2.15.0+cpu",
+      "paired_on_one_worker": true,
+      "keys_serialized_in_payload": false
+    },
+    {
+      "provider": "Modal",
+      "cpu": 1,
+      "memory_mib": 3072,
+      "duration_seconds": 429.35890888800003,
+      "architecture": "x86_64",
+      "python": "3.11.18",
+      "mujoco": "3.3.7",
+      "numpy": "2.3.4",
+      "torch": "2.15.0+cpu",
+      "paired_on_one_worker": true,
+      "keys_serialized_in_payload": false
+    },
+    {
+      "provider": "Modal",
+      "cpu": 1,
+      "memory_mib": 3072,
+      "duration_seconds": 472.780051815,
+      "architecture": "x86_64",
+      "python": "3.11.18",
+      "mujoco": "3.3.7",
+      "numpy": "2.3.4",
+      "torch": "2.15.0+cpu",
+      "paired_on_one_worker": true,
+      "keys_serialized_in_payload": false
+    },
+    {
+      "provider": "Modal",
+      "cpu": 1,
+      "memory_mib": 3072,
+      "duration_seconds": 68.418972659,
+      "architecture": "x86_64",
+      "python": "3.11.18",
+      "mujoco": "3.3.7",
+      "numpy": "2.3.4",
+      "torch": "2.15.0+cpu",
+      "paired_on_one_worker": true,
+      "keys_serialized_in_payload": false
+    },
+    {
+      "provider": "Modal",
+      "cpu": 1,
+      "memory_mib": 3072,
+      "duration_seconds": 68.071789532,
+      "architecture": "x86_64",
+      "python": "3.11.18",
+      "mujoco": "3.3.7",
+      "numpy": "2.3.4",
+      "torch": "2.15.0+cpu",
+      "paired_on_one_worker": true,
+      "keys_serialized_in_payload": false
+    },
+    {
+      "provider": "Modal",
+      "cpu": 1,
+      "memory_mib": 3072,
+      "duration_seconds": 54.324520115,
+      "architecture": "x86_64",
+      "python": "3.11.18",
+      "mujoco": "3.3.7",
+      "numpy": "2.3.4",
+      "torch": "2.15.0+cpu",
+      "paired_on_one_worker": true,
+      "keys_serialized_in_payload": false
+    },
+    {
+      "provider": "Modal",
+      "cpu": 1,
+      "memory_mib": 3072,
+      "duration_seconds": 64.868538711,
+      "architecture": "x86_64",
+      "python": "3.11.18",
+      "mujoco": "3.3.7",
+      "numpy": "2.3.4",
+      "torch": "2.15.0+cpu",
+      "paired_on_one_worker": true,
+      "keys_serialized_in_payload": false
+    },
+    {
+      "provider": "Modal",
+      "cpu": 1,
+      "memory_mib": 3072,
+      "duration_seconds": 105.789995138,
+      "architecture": "x86_64",
+      "python": "3.11.18",
+      "mujoco": "3.3.7",
+      "numpy": "2.3.4",
+      "torch": "2.15.0+cpu",
+      "paired_on_one_worker": true,
+      "keys_serialized_in_payload": false
+    },
+    {
+      "provider": "Modal",
+      "cpu": 1,
+      "memory_mib": 3072,
+      "duration_seconds": 64.57478379700001,
+      "architecture": "x86_64",
+      "python": "3.11.18",
+      "mujoco": "3.3.7",
+      "numpy": "2.3.4",
+      "torch": "2.15.0+cpu",
+      "paired_on_one_worker": true,
+      "keys_serialized_in_payload": false
+    },
+    {
+      "provider": "Modal",
+      "cpu": 1,
+      "memory_mib": 3072,
+      "duration_seconds": 69.939565866,
+      "architecture": "x86_64",
+      "python": "3.11.18",
+      "mujoco": "3.3.7",
+      "numpy": "2.3.4",
+      "torch": "2.15.0+cpu",
+      "paired_on_one_worker": true,
+      "keys_serialized_in_payload": false
+    },
+    {
+      "provider": "Modal",
+      "cpu": 1,
+      "memory_mib": 3072,
+      "duration_seconds": 66.51281450500001,
+      "architecture": "x86_64",
+      "python": "3.11.18",
+      "mujoco": "3.3.7",
+      "numpy": "2.3.4",
+      "torch": "2.15.0+cpu",
+      "paired_on_one_worker": true,
+      "keys_serialized_in_payload": false
+    }
+  ],
+  "research_allocation": [
+    {
+      "update": 0,
+      "focus": "balanced_updates",
+      "domain_batch_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "proposal_record": "mochi-desk-0474247d-r2"
+    },
+    {
+      "update": 16,
+      "focus": "balanced_updates",
+      "domain_batch_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8
+      },
+      "proposal_record": "mochi-desk-0474247d-r6"
+    }
+  ],
+  "recovery": {
+    "prior_evaluation_attempts": [
+      {
+        "run": 44266166654,
+        "failure": "Live API requires sampler weights for direct SamplingClient paths; full-state direct sampling is unsupported."
+      }
+    ],
+    "training_run": 44255635428,
+    "evaluation_run": "44266707804",
+    "evaluation_source_sha": "99604848a208e6632c17fdb829b050022c9537a9",
+    "extra_optimizer_updates": 0,
+    "reason": "Final full training checkpoint was saved; free storage limit then closed the original service client. Use fresh inference clients on the immutable saved states.",
+    "original_error_type": "BadRequestError",
+    "original_error": "Error code: 400 - {'detail': 'This ServiceClient is poisoned. We cannot run further operations against it. Please create a new ServiceClient if you wish to continue. Failure reason: training run eb2fe132-6afd-5b11-8e5f-c161238c465b:train:0 ",
+    "saved_state_inference_probe_passed": true
+  },
+  "workflow_url": "https://github.com/howdymary/mochi-demo/actions/runs/44266707804",
+  "training_workflow_url": "https://github.com/howdymary/mochi-demo/actions/runs/44255635428",
+  "memory": {
+    "eligibility": {
+      "writers": 6,
+      "readers": 6,
+      "cross_agent_reads": 9,
+      "isolation_passed": true
+    },
+    "writes": 11,
+    "recalls": 11,
+    "ingestion_polls": 244,
+    "failed_http_calls": 0,
+    "authoritative_credit_usage": null,
+    "reads": [
+      {
+        "reader": "mochi-desk-0474247d-researcher",
+        "reader_role": "researcher",
+        "author": "mochi-desk-0474247d-experimenter",
+        "record_id": "mochi-desk-0474247d-r0",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "59daace603b28c142c7d7f4ffb110b616a29164b1856476909569b06fb742d31",
+        "at": "2026-11-18T07:31:26.618472+00:00"
+      },
+      {
+        "reader": "mochi-desk-0474247d-designer",
+        "reader_role": "designer",
+        "author": "mochi-desk-0474247d-researcher",
+        "record_id": "mochi-desk-0474247d-r1",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "c5874ee20bfd29d39e5de98469b0db35e5137e1a418cd0de4cccb9073b34060f",
+        "at": "2026-11-18T07:32:03.960015+00:00"
+      },
+      {
+        "reader": "mochi-desk-0474247d-experimenter",
+        "reader_role": "experimenter",
+        "author": "mochi-desk-0474247d-designer",
+        "record_id": "mochi-desk-0474247d-r2",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "be1fab33fc3483e2d175ede1bb2710ae37a0b1cb18f377a43b1b70a60a330db3",
+        "at": "2026-11-18T07:32:11.233657+00:00"
+      },
+      {
+        "reader": "mochi-desk-0474247d-designer",
+        "reader_role": "designer",
+        "author": "mochi-desk-0474247d-critic",
+        "record_id": "mochi-desk-0474247d-r3",
+        "source_id_verified": false,
+        "expected_access": false,
+        "cross_agent_use": false,
+        "sha256": null,
+        "at": "2026-11-18T07:35:19.607867+00:00"
+      },
+      {
+        "reader": "mochi-desk-0474247d-researcher",
+        "reader_role": "researcher",
+        "author": "mochi-desk-0474247d-experimenter",
+        "record_id": "mochi-desk-0474247d-r4",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "e02f164313c73e5f59a14c675cbaca5bdf7b2ca7f062521d4c58873bde4e57c3",
+        "at": "2026-11-18T07:46:28.104291+00:00"
+      },
+      {
+        "reader": "mochi-desk-0474247d-designer",
+        "reader_role": "designer",
+        "author": "mochi-desk-0474247d-researcher",
+        "record_id": "mochi-desk-0474247d-r5",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "dd6fe68d251cfc970bd8e79237e873c1593681d05a0c6ba06e9509e85e52ce3e",
+        "at": "2026-11-18T07:46:36.511098+00:00"
+      },
+      {
+        "reader": "mochi-desk-0474247d-experimenter",
+        "reader_role": "experimenter",
+        "author": "mochi-desk-0474247d-designer",
+        "record_id": "mochi-desk-0474247d-r6",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "09c179c7b553dfa0157f21d5237125c17865dd81967db18ceb2b7e7b18550d41",
+        "at": "2026-11-18T07:46:45.519771+00:00"
+      },
+      {
+        "reader": "mochi-desk-8e626540-designer",
+        "reader_role": "designer",
+        "author": "mochi-desk-8e626540-critic",
+        "record_id": "mochi-desk-8e626540-r0",
+        "source_id_verified": false,
+        "expected_access": false,
+        "cross_agent_use": false,
+        "sha256": null,
+        "at": "2026-11-18T08:48:21.974693+00:00"
+      },
+      {
+        "reader": "mochi-desk-8e626540-critic",
+        "reader_role": "critic",
+        "author": "mochi-desk-8e626540-experimenter",
+        "record_id": "mochi-desk-8e626540-r1",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "01d7fb5cd42be7e1d1f56ead322946bd8c4cf219f3510f1ee2202cdbd4ae1bde",
+        "at": "2026-11-18T08:48:28.839024+00:00"
+      },
+      {
+        "reader": "mochi-desk-8e626540-researcher",
+        "reader_role": "researcher",
+        "author": "mochi-desk-8e626540-critic",
+        "record_id": "mochi-desk-8e626540-r2",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "078ccef8781af165143c77a62baf37fc675e4b3e1568987692fa4186d58fa49e",
+        "at": "2026-11-18T08:48:45.905062+00:00"
+      },
+      {
+        "reader": "mochi-desk-8e626540-designer",
+        "reader_role": "designer",
+        "author": "mochi-desk-8e626540-researcher",
+        "record_id": "mochi-desk-8e626540-r3",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "abfeda807320e248c52f52910714ea8a90f74dc3748fab58e6e134775050d7be",
+        "at": "2026-11-18T08:49:01.370313+00:00"
+      }
+    ],
+    "decisions": [
+      {
+        "role": "researcher",
+        "question": "Choose which observed failure needs targeted literature before the next bounded experiments.",
+        "selected": "contact_margin",
+        "distribution": {
+          "waypoint_stopping": 0.4687906503677368,
+          "contact_margin": 0.531209409236908
+        },
+        "input_record_ids": [
+          "mochi-desk-0474247d-r0"
+        ],
+        "context_sha256": "32a36d1763d536528dea40cc1d24d117696c64aebb4231f07cd8e5d337027698",
+        "at": "2026-11-18T07:31:29.224285+00:00"
+      },
+      {
+        "role": "designer",
+        "question": "Choose locomotion_first (48 walking + 4 per task) or balanced_updates (32 walking + 8 per task). Both are 64-example batches and train all five domains.",
+        "selected": "balanced_updates",
+        "distribution": {
+          "locomotion_first": 0.4073334336280823,
+          "balanced_updates": 0.5926666259765625
+        },
+        "input_record_ids": [
+          "mochi-desk-0474247d-r1"
+        ],
+        "context_sha256": "50983380717b4387ea7451b11abeb4406ae8b06f59ac2e313ef725a7f68f0498",
+        "at": "2026-11-18T07:32:06.376881+00:00"
+      },
+      {
+        "role": "experimenter",
+        "question": "Select equal-budget training navigation coverage. near_waypoints emphasizes final alignment; turn_recovery includes goals behind the robot. Only training seeds may be used.",
+        "selected": "near_waypoints",
+        "distribution": {
+          "near_waypoints": 0.622459352016449,
+          "turn_recovery": 0.3775406777858734
+        },
+        "input_record_ids": [
+          "mochi-desk-0474247d-r2"
+        ],
+        "context_sha256": "647875a6cae641087517a5b3aa7823235fb4d7f33bfb3e2c5cb0a8703b482479",
+        "at": "2026-11-18T07:32:13.655667+00:00"
+      },
+      {
+        "role": "researcher",
+        "question": "Choose which observed failure needs targeted literature before the next bounded experiments.",
+        "selected": "contact_margin",
+        "distribution": {
+          "waypoint_stopping": 0.3208213150501251,
+          "contact_margin": 0.6791787147521973
+        },
+        "input_record_ids": [
+          "mochi-desk-0474247d-r4"
+        ],
+        "context_sha256": "d3a5a2e4c4a7f24126b5a14523081162d0ec6d757bb9da35cd1338863257ca66",
+        "at": "2026-11-18T07:46:30.551977+00:00"
+      },
+      {
+        "role": "designer",
+        "question": "Choose locomotion_first (48 walking + 4 per task) or balanced_updates (32 walking + 8 per task). Both are 64-example batches and train all five domains.",
+        "selected": "balanced_updates",
+        "distribution": {
+          "locomotion_first": 0.3775406777858734,
+          "balanced_updates": 0.622459352016449
+        },
+        "input_record_ids": [
+          "mochi-desk-0474247d-r5"
+        ],
+        "context_sha256": "3bce5b62ff2ab8c60a95c3ed9dfbdee5c56dc8f12778d729d339c31cdaabbf4f",
+        "at": "2026-11-18T07:46:38.908292+00:00"
+      },
+      {
+        "role": "critic",
+        "question": "Qualify walking, contact and full-route changes separately. Retain the worse update-96 development outcome relative to update 64. Cadence trials were engineering-only and are not promoted.",
+        "selected": "improvement_not_established",
+        "distribution": {
+          "qualified_improvement": 0.24508501589298248,
+          "improvement_not_established": 0.7549149990081787
+        },
+        "input_record_ids": [
+          "mochi-desk-8e626540-r1"
+        ],
+        "context_sha256": "534521e6c1b30a49eab50c590270942bff0a4dcc581fc7341fe8f055964be356",
+        "at": "2026-11-18T08:48:32.604505+00:00"
+      },
+      {
+        "role": "researcher",
+        "question": "Choose the next unresolved problem. This cannot change the frozen policy or test results.",
+        "selected": "locomotion_robustness",
+        "distribution": {
+          "laptop_contact_stability": 0.4378235340118408,
+          "locomotion_robustness": 0.562176525592804
+        },
+        "input_record_ids": [
+          "mochi-desk-8e626540-r2"
+        ],
+        "context_sha256": "d03fcec318e381539ddf5df696bbabc93f58f58d3f9bde5ae33be96aedcc1883",
+        "at": "2026-11-18T08:48:48.294988+00:00"
+      }
+    ]
+  },
+  "search": [
+    {
+      "query": "humanoid manipulation force margin contact control uncertainty",
+      "request_id": "616c60dda8a316047662b17f51f93512",
+      "cost_dollars": {
+        "total": 0.007,
+        "search": {
+          "neural": 0.007
+        }
+      },
+      "at": "2026-11-18T07:31:30.495281+00:00",
+      "sources": [
+        {
+          "url": "https://doi.org/10.1109/lra.2025.3621978",
+          "title": "Stability-Aware Retargeting for Humanoid Multi-Contact Teleoperation",
+          "retrieved_at": "2026-11-18T07:31:30.495097+00:00"
+        },
+        {
+          "url": "http://www.cs.cmu.edu/%7Ebstephe1/papers/iros10.pdf",
+          "title": "Dynamic Balance Force Control for Compliant Humanoid Robots",
+          "retrieved_at": "2026-11-18T07:31:30.495149+00:00"
+        },
+        {
+          "url": "https://doi.org/10.48550/arxiv.2609.25486",
+          "title": "Brace Yourself: Task-Conditioned Environmental Bracing for Forceful Humanoid Manipulation",
+          "retrieved_at": "2026-11-18T07:31:30.495199+00:00"
+        }
+      ]
+    },
+    {
+      "query": "humanoid manipulation force margin contact control uncertainty",
+      "request_id": "3caa1e3af1951ad803e4379da659dca8",
+      "cost_dollars": {
+        "total": 0.007,
+        "search": {
+          "neural": 0.007
+        }
+      },
+      "at": "2026-11-18T07:46:31.897045+00:00",
+      "sources": [
+        {
+          "url": "https://doi.org/10.1109/lra.2025.3621978",
+          "title": "Stability-Aware Retargeting for Humanoid Multi-Contact Teleoperation",
+          "retrieved_at": "2026-11-18T07:46:31.896851+00:00"
+        },
+        {
+          "url": "http://www.cs.cmu.edu/%7Ebstephe1/papers/iros10.pdf",
+          "title": "Dynamic Balance Force Control for Compliant Humanoid Robots",
+          "retrieved_at": "2026-11-18T07:46:31.896913+00:00"
+        },
+        {
+          "url": "https://doi.org/10.48550/arxiv.2609.25486",
+          "title": "Brace Yourself: Task-Conditioned Environmental Bracing for Forceful Humanoid Manipulation",
+          "retrieved_at": "2026-11-18T07:46:31.896951+00:00"
+        }
+      ]
+    },
+    {
+      "query": "humanoid locomotion waypoint stopping imitation learning compounding errors",
+      "request_id": "b7f5e6688cb650f1df4655c800dd90a6",
+      "cost_dollars": {
+        "total": 0.007,
+        "search": {
+          "neural": 0.007
+        }
+      },
+      "at": "2026-11-18T08:48:49.816930+00:00",
+      "sources": [
+        {
+          "url": "https://www.frontiersin.org/journals/robotics-and-ai/articles/10.3389/frobt.2025.1678567/full",
+          "title": "Frontiers | Imitation learning for legged robot locomotion: a survey",
+          "retrieved_at": "2026-11-18T08:48:49.816723+00:00"
+        },
+        {
+          "url": "https://arxiv.org/html/2306.17237v2",
+          "title": "HYDRA: Hybrid Robot Actions for Imitation Learning",
+          "retrieved_at": "2026-11-18T08:48:49.816794+00:00"
+        },
+        {
+          "url": "https://ar5iv.labs.arxiv.org/html/1703.09327",
+          "title": "[1703.09327] DART: Noise Injection for Robust Imitation Learning",
+          "retrieved_at": "2026-11-18T08:48:49.816855+00:00"
+        }
+      ]
+    }
+  ],
+  "provenance_checks": {
+    "completed_optimizer_updates": 96,
+    "completed_domain_gradient_calls": 480,
+    "domain_examples_including_repeats": {
+      "alarm": 768,
+      "drawer": 768,
+      "globe": 768,
+      "laptop": 768,
+      "walk": 3072
+    },
+    "checkpoint_ids": [
+      "5d021bc712f25b87218b",
+      "cc8292a6c0d438896bd3",
+      "c4ef233173f1e66b75da",
+      "56bbfdce13e88ee93f12",
+      "f75add1306c6e23a5a1d",
+      "02a2571a44b733fabfd9"
+    ],
+    "decision_distributions_checked": 2232,
+    "paired_initial_states_checked": 4,
+    "matched_isolated_contact_observations": 16,
+    "isolated_contact_choices": [
+      {
+        "seed": 16000,
+        "task": "alarm",
+        "starting_profile": "D",
+        "trained_profile": "E",
+        "starting_success": true,
+        "trained_success": true
+      },
+      {
+        "seed": 16000,
+        "task": "drawer",
+        "starting_profile": "D",
+        "trained_profile": "A",
+        "starting_success": true,
+        "trained_success": true
+      },
+      {
+        "seed": 16000,
+        "task": "laptop",
+        "starting_profile": "A",
+        "trained_profile": "G",
+        "starting_success": false,
+        "trained_success": false
+      },
+      {
+        "seed": 16000,
+        "task": "globe",
+        "starting_profile": "D",
+        "trained_profile": "A",
+        "starting_success": true,
+        "trained_success": true
+      },
+      {
+        "seed": 16001,
+        "task": "alarm",
+        "starting_profile": "D",
+        "trained_profile": "B",
+        "starting_success": true,
+        "trained_success": true
+      },
+      {
+        "seed": 16001,
+        "task": "drawer",
+        "starting_profile": "D",
+        "trained_profile": "A",
+        "starting_success": true,
+        "trained_success": true
+      },
+      {
+        "seed": 16001,
+        "task": "laptop",
+        "starting_profile": "A",
+        "trained_profile": "C",
+        "starting_success": false,
+        "trained_success": true
+      },
+      {
+        "seed": 16001,
+        "task": "globe",
+        "starting_profile": "D",
+        "trained_profile": "G",
+        "starting_success": true,
+        "trained_success": true
+      },
+      {
+        "seed": 16002,
+        "task": "alarm",
+        "starting_profile": "A",
+        "trained_profile": "E",
+        "starting_success": true,
+        "trained_success": true
+      },
+      {
+        "seed": 16002,
+        "task": "drawer",
+        "starting_profile": "D",
+        "trained_profile": "A",
+        "starting_success": true,
+        "trained_success": true
+      },
+      {
+        "seed": 16002,
+        "task": "laptop",
+        "starting_profile": "A",
+        "trained_profile": "C",
+        "starting_success": false,
+        "trained_success": false
+      },
+      {
+        "seed": 16002,
+        "task": "globe",
+        "starting_profile": "D",
+        "trained_profile": "G",
+        "starting_success": true,
+        "trained_success": true
+      },
+      {
+        "seed": 16003,
+        "task": "alarm",
+        "starting_profile": "D",
+        "trained_profile": "E",
+        "starting_success": true,
+        "trained_success": false
+      },
+      {
+        "seed": 16003,
+        "task": "drawer",
+        "starting_profile": "D",
+        "trained_profile": "A",
+        "starting_success": true,
+        "trained_success": true
+      },
+      {
+        "seed": 16003,
+        "task": "laptop",
+        "starting_profile": "A",
+        "trained_profile": "C",
+        "starting_success": false,
+        "trained_success": true
+      },
+      {
+        "seed": 16003,
+        "task": "globe",
+        "starting_profile": "D",
+        "trained_profile": "G",
+        "starting_success": true,
+        "trained_success": true
+      }
+    ],
+    "verified_cross_role_recalls": 9,
+    "held_out_scenarios": [
+      16000,
+      16001,
+      16002,
+      16003
+    ],
+    "physics_hashes": {
+      "src/mochi/curriculum/world.py": "1cb415d6d66e367e3d2c28146ab6067c1da671461c5ec34728d4487cb13152f6",
+      "src/mochi/curriculum/locomotion.py": "a46937561ccfcce13296ac4d5f2c7422f18e44818941249520d338ac429f4391",
+      "src/mochi/desk/g1_model.py": "7b3d54c7b95e02d5f93515bd01a67115a010ae23a830b3ea16475a2d20be114c"
+    },
+    "status": "passed",
+    "scope": "Completed training and final held-out evaluation"
+  },
+  "movement_diagnostics": {
+    "scope": "Post-hoc physical diagnostics, not a frozen training reward. Per seed, compare the same initial window: the minimum of 20 seconds and the shortest recorded checkpoint episode.",
+    "rows": [
+      {
+        "checkpoint": 0,
+        "seed": 15000,
+        "whole_episode": {
+          "trajectory_sample_hz": 25,
+          "frames_analyzed": 600,
+          "maximum_time_s": null,
+          "walking_duration_s": 23.993548,
+          "walking_path_m": 0.9464229934993738,
+          "walking_yaw_travel_degrees": 517.0798754417968,
+          "walking_torso_tilt_rms_degrees": 3.442400965142241,
+          "walking_torso_peak_tilt_degrees": 5.2178035343499145,
+          "command_change_rms_m_s2": 0.0203182981190458,
+          "yaw_command_change_rms_rad_s2": 0.8940051172380152,
+          "turn_direction_reversals": 0,
+          "loaded_foot_slip_entire_episode_m": 0.16376407588179986,
+          "loaded_foot_slip_entire_episode_m_per_s": 0.006819993736477182,
+          "foot_clearance_m": null,
+          "motor_work_j": null,
+          "limits": [
+            "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+            "Command changes describe requested velocity, not actual body jerk.",
+            "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+            "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+            "No aggregate naturalness score or causal gait-training claim."
+          ]
+        },
+        "matched_initial_window": {
+          "trajectory_sample_hz": 25,
+          "frames_analyzed": 500,
+          "maximum_time_s": 20.0,
+          "walking_duration_s": 19.987947,
+          "walking_path_m": 0.7924130188210433,
+          "walking_yaw_travel_degrees": 458.1292406154944,
+          "walking_torso_tilt_rms_degrees": 3.450590171823738,
+          "walking_torso_peak_tilt_degrees": 5.2178035343499145,
+          "command_change_rms_m_s2": 0.019979148334618113,
+          "yaw_command_change_rms_rad_s2": 0.879082526723197,
+          "turn_direction_reversals": 0,
+          "loaded_foot_slip_entire_episode_m": null,
+          "loaded_foot_slip_entire_episode_m_per_s": null,
+          "foot_clearance_m": null,
+          "motor_work_j": null,
+          "limits": [
+            "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+            "Command changes describe requested velocity, not actual body jerk.",
+            "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+            "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+            "No aggregate naturalness score or causal gait-training claim."
+          ]
+        },
+        "task_successes": {},
+        "fall": false
+      },
+      {
+        "checkpoint": 0,
+        "seed": 15001,
+        "whole_episode": {
+          "trajectory_sample_hz": 25,
+          "frames_analyzed": 600,
+          "maximum_time_s": null,
+          "walking_duration_s": 23.993548,
+          "walking_path_m": 0.8859731256315165,
+          "walking_yaw_travel_degrees": 165.55341429965344,
+          "walking_torso_tilt_rms_degrees": 3.45386937862797,
+          "walking_torso_peak_tilt_degrees": 4.798349864787029,
+          "command_change_rms_m_s2": 0.14145768940074485,
+          "yaw_command_change_rms_rad_s2": 0.0,
+          "turn_direction_reversals": 0,
+          "loaded_foot_slip_entire_episode_m": 0.14622923815890834,
+          "loaded_foot_slip_entire_episode_m_per_s": 0.006084572729372296,
+          "foot_clearance_m": null,
+          "motor_work_j": null,
+          "limits": [
+            "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+            "Command changes describe requested velocity, not actual body jerk.",
+            "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+            "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+            "No aggregate naturalness score or causal gait-training claim."
+          ]
+        },
+        "matched_initial_window": {
+          "trajectory_sample_hz": 25,
+          "frames_analyzed": 351,
+          "maximum_time_s": 14.022872271340493,
+          "walking_duration_s": 14.019602,
+          "walking_path_m": 0.5202593421369758,
+          "walking_yaw_travel_degrees": 97.49427754049121,
+          "walking_torso_tilt_rms_degrees": 3.458617843946208,
+          "walking_torso_peak_tilt_degrees": 4.706678505772222,
+          "command_change_rms_m_s2": 0.1296542384397629,
+          "yaw_command_change_rms_rad_s2": 0.0,
+          "turn_direction_reversals": 0,
+          "loaded_foot_slip_entire_episode_m": null,
+          "loaded_foot_slip_entire_episode_m_per_s": null,
+          "foot_clearance_m": null,
+          "motor_work_j": null,
+          "limits": [
+            "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+            "Command changes describe requested velocity, not actual body jerk.",
+            "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+            "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+            "No aggregate naturalness score or causal gait-training claim."
+          ]
+        },
+        "task_successes": {},
+        "fall": false
+      },
+      {
+        "checkpoint": 8,
+        "seed": 15000,
+        "whole_episode": {
+          "trajectory_sample_hz": 25,
+          "frames_analyzed": 600,
+          "maximum_time_s": null,
+          "walking_duration_s": 23.993548,
+          "walking_path_m": 0.8068759952337704,
+          "walking_yaw_travel_degrees": 613.2261768360817,
+          "walking_torso_tilt_rms_degrees": 3.4488770218665183,
+          "walking_torso_peak_tilt_degrees": 4.979724105745779,
+          "command_change_rms_m_s2": 0.08291604943179337,
+          "yaw_command_change_rms_rad_s2": 2.63879323695301,
+          "turn_direction_reversals": 29,
+          "loaded_foot_slip_entire_episode_m": 0.16298909901659525,
+          "loaded_foot_slip_entire_episode_m_per_s": 0.00678310120243735,
+          "foot_clearance_m": null,
+          "motor_work_j": null,
+          "limits": [
+            "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+            "Command changes describe requested velocity, not actual body jerk.",
+            "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+            "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+            "No aggregate naturalness score or causal gait-training claim."
+          ]
+        },
+        "matched_initial_window": {
+          "trajectory_sample_hz": 25,
+          "frames_analyzed": 500,
+          "maximum_time_s": 20.0,
+          "walking_duration_s": 19.987947,
+          "walking_path_m": 0.6234549340596923,
+          "walking_yaw_travel_degrees": 584.7590101650611,
+          "walking_torso_tilt_rms_degrees": 3.4563026231727267,
+          "walking_torso_peak_tilt_degrees": 4.979724105745779,
+          "command_change_rms_m_s2": 0.021493911966706396,
+          "yaw_command_change_rms_rad_s2": 2.9078085231912567,
+          "turn_direction_reversals": 29,
+          "loaded_foot_slip_entire_episode_m": null,
+          "loaded_foot_slip_entire_episode_m_per_s": null,
+          "foot_clearance_m": null,
+          "motor_work_j": null,
+          "limits": [
+            "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+            "Command changes describe requested velocity, not actual body jerk.",
+            "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+            "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+            "No aggregate naturalness score or causal gait-training claim."
+          ]
+        },
+        "task_successes": {},
+        "fall": false
+      },
+      {
+        "checkpoint": 8,
+        "seed": 15001,
+        "whole_episode": {
+          "trajectory_sample_hz": 25,
+          "frames_analyzed": 600,
+          "maximum_time_s": null,
+          "walking_duration_s": 23.993548,
+          "walking_path_m": 0.8490516201406197,
+          "walking_yaw_travel_degrees": 275.8072037412269,
+          "walking_torso_tilt_rms_degrees": 3.461596395186062,
+          "walking_torso_peak_tilt_degrees": 5.184686905134892,
+          "command_change_rms_m_s2": 0.12726434445533608,
+          "yaw_command_change_rms_rad_s2": 0.4612750195288828,
+          "turn_direction_reversals": 2,
+          "loaded_foot_slip_entire_episode_m": 0.1471999130272298,
+          "loaded_foot_slip_entire_episode_m_per_s": 0.006125795808870354,
+          "foot_clearance_m": null,
+          "motor_work_j": null,
+          "limits": [
+            "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+            "Command changes describe requested velocity, not actual body jerk.",
+            "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+            "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+            "No aggregate naturalness score or causal gait-training claim."
+          ]
+        },
+        "matched_initial_window": {
+          "trajectory_sample_hz": 25,
+          "frames_analyzed": 351,
+          "maximum_time_s": 14.022872271340493,
+          "walking_duration_s": 14.019602,
+          "walking_path_m": 0.5156499696310674,
+          "walking_yaw_travel_degrees": 209.02749612013537,
+          "walking_torso_tilt_rms_degrees": 3.4557083066300645,
+          "walking_torso_peak_tilt_degrees": 5.184686905134892,
+          "command_change_rms_m_s2": 0.13128592727339028,
+          "yaw_command_change_rms_rad_s2": 0.6215737753403942,
+          "turn_direction_reversals": 2,
+          "loaded_foot_slip_entire_episode_m": null,
+          "loaded_foot_slip_entire_episode_m_per_s": null,
+          "foot_clearance_m": null,
+          "motor_work_j": null,
+          "limits": [
+            "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+            "Command changes describe requested velocity, not actual body jerk.",
+            "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+            "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+            "No aggregate naturalness score or causal gait-training claim."
+          ]
+        },
+        "task_successes": {},
+        "fall": false
+      },
+      {
+        "checkpoint": 16,
+        "seed": 15000,
+        "whole_episode": {
+          "trajectory_sample_hz": 25,
+          "frames_analyzed": 1065,
+          "maximum_time_s": null,
+          "walking_duration_s": 30.082061,
+          "walking_path_m": 0.8371316960495632,
+          "walking_yaw_travel_degrees": 373.79782061484235,
+          "walking_torso_tilt_rms_degrees": 3.229697751864302,
+          "walking_torso_peak_tilt_degrees": 5.027805121044792,
+          "command_change_rms_m_s2": 0.03818500599632829,
+          "yaw_command_change_rms_rad_s2": 0.6628136704616463,
+          "turn_direction_reversals": 1,
+          "loaded_foot_slip_entire_episode_m": 0.2625479698934523,
+          "loaded_foot_slip_entire_episode_m_per_s": 0.006156368111737413,
+          "foot_clearance_m": null,
+          "motor_work_j": null,
+          "limits": [
+            "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+            "Command changes describe requested velocity, not actual body jerk.",
+            "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+            "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+            "No aggregate naturalness score or causal gait-training claim."
+          ]
+        },
+        "matched_initial_window": {
+          "trajectory_sample_hz": 25,
+          "frames_analyzed": 500,
+          "maximum_time_s": 20.0,
+          "walking_duration_s": 7.450416999999998,
+          "walking_path_m": 0.2813597648189587,
+          "walking_yaw_travel_degrees": 134.93864878607894,
+          "walking_torso_tilt_rms_degrees": 3.419764540066388,
+          "walking_torso_peak_tilt_degrees": 5.027805121044792,
+          "command_change_rms_m_s2": 0.06288304939904824,
+          "yaw_command_change_rms_rad_s2": 0.8493089028485181,
+          "turn_direction_reversals": 0,
+          "loaded_foot_slip_entire_episode_m": null,
+          "loaded_foot_slip_entire_episode_m_per_s": null,
+          "foot_clearance_m": null,
+          "motor_work_j": null,
+          "limits": [
+            "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+            "Command changes describe requested velocity, not actual body jerk.",
+            "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+            "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+            "No aggregate naturalness score or causal gait-training claim."
+          ]
+        },
+        "task_successes": {
+          "alarm": true
+        },
+        "fall": false
+      },
+      {
+        "checkpoint": 16,
+        "seed": 15001,
+        "whole_episode": {
+          "trajectory_sample_hz": 25,
+          "frames_analyzed": 351,
+          "maximum_time_s": null,
+          "walking_duration_s": 14.019602,
+          "walking_path_m": 0.6268473329348951,
+          "walking_yaw_travel_degrees": 196.55742349849876,
+          "walking_torso_tilt_rms_degrees": 3.590523295850039,
+          "walking_torso_peak_tilt_degrees": 4.926768551144278,
+          "command_change_rms_m_s2": 0.025226039987882063,
+          "yaw_command_change_rms_rad_s2": 0.34599962685703795,
+          "turn_direction_reversals": 0,
+          "loaded_foot_slip_entire_episode_m": 0.09300331220387334,
+          "loaded_foot_slip_entire_episode_m_per_s": 0.00663225838503504,
+          "foot_clearance_m": null,
+          "motor_work_j": null,
+          "limits": [
+            "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+            "Command changes describe requested velocity, not actual body jerk.",
+            "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+            "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+            "No aggregate naturalness score or causal gait-training claim."
+          ]
+        },
+        "matched_initial_window": {
+          "trajectory_sample_hz": 25,
+          "frames_analyzed": 351,
+          "maximum_time_s": 14.022872271340493,
+          "walking_duration_s": 14.019602,
+          "walking_path_m": 0.6268473329348951,
+          "walking_yaw_travel_degrees": 196.55742349849876,
+          "walking_torso_tilt_rms_degrees": 3.590523295850039,
+          "walking_torso_peak_tilt_degrees": 4.926768551144278,
+          "command_change_rms_m_s2": 0.025226039987882063,
+          "yaw_command_change_rms_rad_s2": 0.34599962685703795,
+          "turn_direction_reversals": 0,
+          "loaded_foot_slip_entire_episode_m": null,
+          "loaded_foot_slip_entire_episode_m_per_s": null,
+          "foot_clearance_m": null,
+          "motor_work_j": null,
+          "limits": [
+            "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+            "Command changes describe requested velocity, not actual body jerk.",
+            "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+            "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+            "No aggregate naturalness score or causal gait-training claim."
+          ]
+        },
+        "task_successes": {},
+        "fall": true
+      },
+      {
+        "checkpoint": 32,
+        "seed": 15000,
+        "whole_episode": {
+          "trajectory_sample_hz": 25,
+          "frames_analyzed": 603,
+          "maximum_time_s": null,
+          "walking_duration_s": 24.113716,
+          "walking_path_m": 0.7703669985308056,
+          "walking_yaw_travel_degrees": 183.72765358741702,
+          "walking_torso_tilt_rms_degrees": 3.4638177618249193,
+          "walking_torso_peak_tilt_degrees": 4.7022763171571365,
+          "command_change_rms_m_s2": 0.020074709911912975,
+          "yaw_command_change_rms_rad_s2": 0.5700055050060793,
+          "turn_direction_reversals": 0,
+          "loaded_foot_slip_entire_episode_m": 0.14390419554720885,
+          "loaded_foot_slip_entire_episode_m_per_s": 0.0059677320099824314,
+          "foot_clearance_m": null,
+          "motor_work_j": null,
+          "limits": [
+            "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+            "Command changes describe requested velocity, not actual body jerk.",
+            "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+            "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+            "No aggregate naturalness score or causal gait-training claim."
+          ]
+        },
+        "matched_initial_window": {
+          "trajectory_sample_hz": 25,
+          "frames_analyzed": 500,
+          "maximum_time_s": 20.0,
+          "walking_duration_s": 19.987947,
+          "walking_path_m": 0.6479202201176871,
+          "walking_yaw_travel_degrees": 156.7050412793581,
+          "walking_torso_tilt_rms_degrees": 3.4682469514077408,
+          "walking_torso_peak_tilt_degrees": 4.7022763171571365,
+          "command_change_rms_m_s2": 0.021950868454945177,
+          "yaw_command_change_rms_rad_s2": 0.623277542434521,
+          "turn_direction_reversals": 0,
+          "loaded_foot_slip_entire_episode_m": null,
+          "loaded_foot_slip_entire_episode_m_per_s": null,
+          "foot_clearance_m": null,
+          "motor_work_j": null,
+          "limits": [
+            "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+            "Command changes describe requested velocity, not actual body jerk.",
+            "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+            "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+            "No aggregate naturalness score or causal gait-training claim."
+          ]
+        },
+        "task_successes": {},
+        "fall": false
+      },
+      {
+        "checkpoint": 32,
+        "seed": 15001,
+        "whole_episode": {
+          "trajectory_sample_hz": 25,
+          "frames_analyzed": 1051,
+          "maximum_time_s": null,
+          "walking_duration_s": 31.123517000000003,
+          "walking_path_m": 1.1913970462017025,
+          "walking_yaw_travel_degrees": 489.0932481816704,
+          "walking_torso_tilt_rms_degrees": 3.6206082239532433,
+          "walking_torso_peak_tilt_degrees": 5.628470768532395,
+          "command_change_rms_m_s2": 0.04109049277640795,
+          "yaw_command_change_rms_rad_s2": 1.083668122447549,
+          "turn_direction_reversals": 0,
+          "loaded_foot_slip_entire_episode_m": 0.3568365611837118,
+          "loaded_foot_slip_entire_episode_m_per_s": 0.008481097239084905,
+          "foot_clearance_m": null,
+          "motor_work_j": null,
+          "limits": [
+            "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+            "Command changes describe requested velocity, not actual body jerk.",
+            "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+            "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+            "No aggregate naturalness score or causal gait-training claim."
+          ]
+        },
+        "matched_initial_window": {
+          "trajectory_sample_hz": 25,
+          "frames_analyzed": 351,
+          "maximum_time_s": 14.022872271340493,
+          "walking_duration_s": 6.769465,
+          "walking_path_m": 0.260257912026817,
+          "walking_yaw_travel_degrees": 125.858600116055,
+          "walking_torso_tilt_rms_degrees": 3.4817953492828733,
+          "walking_torso_peak_tilt_degrees": 4.979324449584144,
+          "command_change_rms_m_s2": 0.05572681636476528,
+          "yaw_command_change_rms_rad_s2": 1.4894363519307456,
+          "turn_direction_reversals": 0,
+          "loaded_foot_slip_entire_episode_m": null,
+          "loaded_foot_slip_entire_episode_m_per_s": null,
+          "foot_clearance_m": null,
+          "motor_work_j": null,
+          "limits": [
+            "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+            "Command changes describe requested velocity, not actual body jerk.",
+            "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+            "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+            "No aggregate naturalness score or causal gait-training claim."
+          ]
+        },
+        "task_successes": {
+          "alarm": true
+        },
+        "fall": false
+      },
+      {
+        "checkpoint": 64,
+        "seed": 15000,
+        "whole_episode": {
+          "trajectory_sample_hz": 25,
+          "frames_analyzed": 2306,
+          "maximum_time_s": null,
+          "walking_duration_s": 43.74116,
+          "walking_path_m": 1.9931360592808745,
+          "walking_yaw_travel_degrees": 1013.5543041584249,
+          "walking_torso_tilt_rms_degrees": 3.55463507658739,
+          "walking_torso_peak_tilt_degrees": 5.199492116651891,
+          "command_change_rms_m_s2": 0.04727754586666283,
+          "yaw_command_change_rms_rad_s2": 0.9362126656072002,
+          "turn_direction_reversals": 1,
+          "loaded_foot_slip_entire_episode_m": 0.5396525375019279,
+          "loaded_foot_slip_entire_episode_m_per_s": 0.0058445183399931325,
+          "foot_clearance_m": null,
+          "motor_work_j": null,
+          "limits": [
+            "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+            "Command changes describe requested velocity, not actual body jerk.",
+            "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+            "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+            "No aggregate naturalness score or causal gait-training claim."
+          ]
+        },
+        "matched_initial_window": {
+          "trajectory_sample_hz": 25,
+          "frames_analyzed": 500,
+          "maximum_time_s": 20.0,
+          "walking_duration_s": 7.370304999999998,
+          "walking_path_m": 0.27252942701141675,
+          "walking_yaw_travel_degrees": 217.6128291201283,
+          "walking_torso_tilt_rms_degrees": 3.4571003920117827,
+          "walking_torso_peak_tilt_degrees": 5.069008325652521,
+          "command_change_rms_m_s2": 0.06274124329916544,
+          "yaw_command_change_rms_rad_s2": 1.1008549944320365,
+          "turn_direction_reversals": 0,
+          "loaded_foot_slip_entire_episode_m": null,
+          "loaded_foot_slip_entire_episode_m_per_s": null,
+          "foot_clearance_m": null,
+          "motor_work_j": null,
+          "limits": [
+            "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+            "Command changes describe requested velocity, not actual body jerk.",
+            "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+            "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+            "No aggregate naturalness score or causal gait-training claim."
+          ]
+        },
+        "task_successes": {
+          "alarm": true,
+          "drawer": true,
+          "laptop": false,
+          "globe": true
+        },
+        "fall": false
+      },
+      {
+        "checkpoint": 64,
+        "seed": 15001,
+        "whole_episode": {
+          "trajectory_sample_hz": 25,
+          "frames_analyzed": 2480,
+          "maximum_time_s": null,
+          "walking_duration_s": 45.543679999999995,
+          "walking_path_m": 2.066666296323575,
+          "walking_yaw_travel_degrees": 1049.0611923960837,
+          "walking_torso_tilt_rms_degrees": 3.587588798318067,
+          "walking_torso_peak_tilt_degrees": 5.520028407954971,
+          "command_change_rms_m_s2": 0.05395777494088668,
+          "yaw_command_change_rms_rad_s2": 0.7865972011912304,
+          "turn_direction_reversals": 0,
+          "loaded_foot_slip_entire_episode_m": 0.46524322603894774,
+          "loaded_foot_slip_entire_episode_m_per_s": 0.0046844736945433315,
+          "foot_clearance_m": null,
+          "motor_work_j": null,
+          "limits": [
+            "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+            "Command changes describe requested velocity, not actual body jerk.",
+            "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+            "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+            "No aggregate naturalness score or causal gait-training claim."
+          ]
+        },
+        "matched_initial_window": {
+          "trajectory_sample_hz": 25,
+          "frames_analyzed": 351,
+          "maximum_time_s": 14.022872271340493,
+          "walking_duration_s": 6.769465,
+          "walking_path_m": 0.259570000885101,
+          "walking_yaw_travel_degrees": 131.74918617177903,
+          "walking_torso_tilt_rms_degrees": 3.4792608329975447,
+          "walking_torso_peak_tilt_degrees": 4.914443121384073,
+          "command_change_rms_m_s2": 0.07201144624435087,
+          "yaw_command_change_rms_rad_s2": 1.113256839461238,
+          "turn_direction_reversals": 0,
+          "loaded_foot_slip_entire_episode_m": null,
+          "loaded_foot_slip_entire_episode_m_per_s": null,
+          "foot_clearance_m": null,
+          "motor_work_j": null,
+          "limits": [
+            "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+            "Command changes describe requested velocity, not actual body jerk.",
+            "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+            "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+            "No aggregate naturalness score or causal gait-training claim."
+          ]
+        },
+        "task_successes": {
+          "alarm": true,
+          "drawer": true,
+          "laptop": false,
+          "globe": true
+        },
+        "fall": false
+      },
+      {
+        "checkpoint": 96,
+        "seed": 15000,
+        "whole_episode": {
+          "trajectory_sample_hz": 25,
+          "frames_analyzed": 1940,
+          "maximum_time_s": null,
+          "walking_duration_s": 40.296344000000005,
+          "walking_path_m": 1.8531989882147148,
+          "walking_yaw_travel_degrees": 843.3458460266826,
+          "walking_torso_tilt_rms_degrees": 3.5724429453172872,
+          "walking_torso_peak_tilt_degrees": 6.172323005493526,
+          "command_change_rms_m_s2": 0.04943098571752182,
+          "yaw_command_change_rms_rad_s2": 0.9350737619955465,
+          "turn_direction_reversals": 0,
+          "loaded_foot_slip_entire_episode_m": 0.4515903811662952,
+          "loaded_foot_slip_entire_episode_m_per_s": 0.005811632506170586,
+          "foot_clearance_m": null,
+          "motor_work_j": null,
+          "limits": [
+            "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+            "Command changes describe requested velocity, not actual body jerk.",
+            "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+            "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+            "No aggregate naturalness score or causal gait-training claim."
+          ]
+        },
+        "matched_initial_window": {
+          "trajectory_sample_hz": 25,
+          "frames_analyzed": 500,
+          "maximum_time_s": 20.0,
+          "walking_duration_s": 7.370304999999998,
+          "walking_path_m": 0.27247123651492844,
+          "walking_yaw_travel_degrees": 207.0398521774103,
+          "walking_torso_tilt_rms_degrees": 3.450019362311544,
+          "walking_torso_peak_tilt_degrees": 5.069008325652521,
+          "command_change_rms_m_s2": 0.06274124329916544,
+          "yaw_command_change_rms_rad_s2": 1.1265757269964323,
+          "turn_direction_reversals": 0,
+          "loaded_foot_slip_entire_episode_m": null,
+          "loaded_foot_slip_entire_episode_m_per_s": null,
+          "foot_clearance_m": null,
+          "motor_work_j": null,
+          "limits": [
+            "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+            "Command changes describe requested velocity, not actual body jerk.",
+            "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+            "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+            "No aggregate naturalness score or causal gait-training claim."
+          ]
+        },
+        "task_successes": {
+          "alarm": true,
+          "drawer": false,
+          "laptop": false
+        },
+        "fall": true
+      },
+      {
+        "checkpoint": 96,
+        "seed": 15001,
+        "whole_episode": {
+          "trajectory_sample_hz": 25,
+          "frames_analyzed": 1885,
+          "maximum_time_s": null,
+          "walking_duration_s": 40.05600700000001,
+          "walking_path_m": 1.8715257191914882,
+          "walking_yaw_travel_degrees": 842.1434396989141,
+          "walking_torso_tilt_rms_degrees": 3.6022001682548446,
+          "walking_torso_peak_tilt_degrees": 5.520028407954971,
+          "command_change_rms_m_s2": 0.0549956686639724,
+          "yaw_command_change_rms_rad_s2": 0.9125901144773455,
+          "turn_direction_reversals": 0,
+          "loaded_foot_slip_entire_episode_m": 0.42765745005816136,
+          "loaded_foot_slip_entire_episode_m_per_s": 0.005664838980602432,
+          "foot_clearance_m": null,
+          "motor_work_j": null,
+          "limits": [
+            "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+            "Command changes describe requested velocity, not actual body jerk.",
+            "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+            "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+            "No aggregate naturalness score or causal gait-training claim."
+          ]
+        },
+        "matched_initial_window": {
+          "trajectory_sample_hz": 25,
+          "frames_analyzed": 351,
+          "maximum_time_s": 14.022872271340493,
+          "walking_duration_s": 6.769465,
+          "walking_path_m": 0.259570000885101,
+          "walking_yaw_travel_degrees": 131.74918617177903,
+          "walking_torso_tilt_rms_degrees": 3.4792608329975447,
+          "walking_torso_peak_tilt_degrees": 4.914443121384073,
+          "command_change_rms_m_s2": 0.07201144624435087,
+          "yaw_command_change_rms_rad_s2": 1.113256839461238,
+          "turn_direction_reversals": 0,
+          "loaded_foot_slip_entire_episode_m": null,
+          "loaded_foot_slip_entire_episode_m_per_s": null,
+          "foot_clearance_m": null,
+          "motor_work_j": null,
+          "limits": [
+            "25 Hz replay diagnostics; not high-frequency actuator telemetry.",
+            "Command changes describe requested velocity, not actual body jerk.",
+            "Recorded foot slip covers walking and manipulation; it is not a walking-only metric.",
+            "Episode durations and paths differ; compare matched initial intervals as well as whole episodes.",
+            "No aggregate naturalness score or causal gait-training claim."
+          ]
+        },
+        "task_successes": {
+          "alarm": true,
+          "drawer": true,
+          "laptop": false
+        },
+        "fall": true
+      }
+    ]
+  }
+}

@@ -15,7 +15,7 @@ def save(name,value):
  OUT.mkdir(exist_ok=True,parents=True);(OUT/(name+'.json')).write_text(json.dumps(value,indent=2))
 def log(event,**fields):print('MOCHI_REFINEMENT '+json.dumps({'event':event,'at':now(),**fields}),flush=True)
 async def publish(report,services):
- report['services']=services.report();save('progress',report);await modal.Dict.from_name('mochi-curriculum-v7-progress',create_if_missing=True).put.aio('latest',report)
+ report['services']=services.report();save('progress',report);await modal.Dict.from_name('mochi-curriculum-v7-progress',create_if_missing=True).put.aio('latest',json.loads(json.dumps(report)))
 def contact_rank(row):
  r=row['result'];return (not r['success'],r['max_force_n'],r['duration'])
 def balanced_indices(data,count,rng):
