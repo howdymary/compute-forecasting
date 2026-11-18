@@ -20,6 +20,7 @@ jobs:
       - name: Check recorded data and replay controls
         run: |
           node mochi/scripts/check_replay_ui.mjs
+          if [ -f mochi/web/desk/curriculum/manifest-v7.json ]; then node mochi/scripts/check_replay_ui.mjs --archive-v7; fi
           node mochi/scripts/check_planning_ui.mjs
       - name: Normalize completed numerical progress
         env:

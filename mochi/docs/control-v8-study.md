@@ -75,3 +75,9 @@ The new scenarios draw initial robot position/yaw and fixture stroke, spring, ma
 ## Run provenance
 
 The physical-label collection run was [44378183870](https://github.com/howdymary/mochi-demo/actions/runs/44378183870): 229 completed rollouts, seven valid full behavior sequences from eight training seeds, and zero optimizer updates. It was stopped before completing the baseline evaluation to correct the objective. A label-preparation attempt, [44381735488](https://github.com/howdymary/mochi-demo/actions/runs/44381735488), was stopped before weight updates to align checkpoint selection with the same motion objective. Both artifacts remain retained. The final training source is `7836634e434bb0b2c8f600afeb4847b7cf00b684`, [run 44382265039](https://github.com/howdymary/mochi-demo/actions/runs/44382265039). The initial checkpoint lookup preflight, run44377705298, performed no training or physical rollout.
+
+V7 used a different observation representation and navigation tolerance. The V8 baseline retests its weights through the V8 interface. Its result is not a claim that V7 failed its original task; the original-stack reference is reported separately. The weight comparison measures learning given the engineered V8 inputs and primitives.
+
+## Presentation rule
+
+For the public walkthrough, the first successful held-out seed (in declared order) opens as a synchronized before/after example, explicitly labeled as selected after evaluation. The full four-case success rate and every attempt remain available. If no held-out sequence completes, the viewer opens the first development seed. Checkpoint comparison always uses the first declared development seed. This rule is declared before the held-out tests; it changes presentation, not model selection or the reported cohort.

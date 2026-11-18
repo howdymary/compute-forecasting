@@ -9,7 +9,7 @@ def clean(v):
  return v
 def write(name,v):(out/name).write_text(json.dumps(clean(v),separators=(',',':')))
 def export(name,row,update):
- ep=copy.deepcopy(row['episode']);ep.pop('control_telemetry',None);ep['full_sequence_verified']=row['full_success'];ep['reference_tracking']=row.get('path_trace',[])
+ ep=copy.deepcopy(row['episode']);ep.pop('control_telemetry',None);ep['decisions']=[{k:d[k] for k in ['t','observation','action']} for d in row['model_decisions']];ep['full_sequence_verified']=row['full_success'];ep['reference_tracking']=row.get('path_trace',[])
  for f in ep['trajectory']['frames']:
   if f['phase']!='recover':continue
   event=next((e for e in ep['events'] if e.get('phase')=='recover' and e['t']-e['duration_s']-.002<=f['t']<=e['t']+.002),None)
@@ -28,7 +28,7 @@ for seed in report['protocol']['held_out_seeds']:
   row=next(x for x in json.load(open(a.source/f'held-out-{label}.json')) if x['seed']==seed);name=f'v8-held-out-{seed}-{key}.json';pair[key]=name;pair[key+'_trace']=export(name,row,0 if key=='before' else selected)
  m['fresh']['cases'].append(pair)
 m['fresh'].update(m['fresh']['cases'][0]);successful=[x for x in report['paired_outcomes'] if x['trained_full']]
-if successful:m['showcase']={**next(x for x in m['fresh']['cases'] if x['seed']==successful[0]['seed']),'selection':'Successful example chosen after evaluation for presentation. Every held-out attempt remains available; this is not an average result.'}
+if successful:m['default_view']='showcase';m['presentation_rule']='Default: first successful held-out seed, chosen after evaluation and explicitly labeled. All four outcomes remain visible. Checkpoint view uses the first declared development seed.';m['showcase']={**next(x for x in m['fresh']['cases'] if x['seed']==successful[0]['seed']),'selection':'Successful example chosen after evaluation for presentation. Every held-out attempt remains available; this is not an average result.'}
 services=report['services'];m['memory']=services['eligibility'];m['search_calls']=len(services['sources']);m['sources']=list({s['url']:s for r in services['sources'] for s in r['sources']}.values());records={r['id']:r for r in services['records']};m['memory_handoffs']=[]
 for r in services['reads']:
  if not r['cross_agent_use'] or not r['source_id_verified'] or r['record_id'] not in records:continue
