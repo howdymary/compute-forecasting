@@ -17,7 +17,7 @@ export function createTaskObjects({scene,mesh,box,cyl,bar,text,materials}){
  box([.090,.011,.0014],[0,-.041,.0078],keyMaterial,laptop,.0008);
  const screen=new THREE.Group();screen.position.set(-.12,.070,.014);screen.rotation.x=Math.PI/9;scene.add(screen);asset('sand-laptop-lid.glb',screen);
  const displayMaterial=new THREE.MeshPhysicalMaterial({roughness:.27,metalness:0,clearcoat:.6,emissive:'#ffffff',emissiveIntensity:.17});
- pending.push(new THREE.TextureLoader().loadAsync('assets/laptop-display.png').then(t=>{t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=8;displayMaterial.map=t;displayMaterial.emissiveMap=t;displayMaterial.needsUpdate=true}));
+ pending.push(new THREE.TextureLoader().loadAsync('assets/laptop-display.png?v=free-base-v5').then(t=>{t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=8;displayMaterial.map=t;displayMaterial.emissiveMap=t;displayMaterial.needsUpdate=true}));
  const display=mesh(new THREE.PlaneGeometry(.265,.149),displayMaterial,screen,[0,-.0037,.094]);display.rotation.x=Math.PI/2;
  const ghost=new THREE.Group();scene.add(ghost);const corners=[[-.265,.070,.019],[.025,.070,.019],[.025,.070,.194],[-.265,.070,.194],[-.265,.070,.019]];
  let ghostGeo=new THREE.BufferGeometry().setFromPoints(corners.map(p=>new THREE.Vector3(...p)));let goal=new THREE.Line(ghostGeo,new THREE.LineDashedMaterial({color:'#6e8b58',transparent:true,opacity:.55,dashSize:.006,gapSize:.004}));goal.computeLineDistances();ghost.add(goal);text('90° TARGET',[.027,.067,.204],.048,ghost,'#4f714b',.005);

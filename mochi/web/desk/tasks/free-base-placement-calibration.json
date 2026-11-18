@@ -1,0 +1,805 @@
+{
+  "scope": "8 development trials with a shorter reach, two hand-specified settings. Not post-training.",
+  "results": [
+    {
+      "initial_collision_pairs": [],
+      "final_q": [
+        -0.2514917116178045,
+        -0.7336901353658501,
+        0.24992779670922793,
+        -0.5221074728510952,
+        -0.31866520188384057,
+        -0.9541125783360037,
+        0.13865225995399613
+      ],
+      "final_ctrl": [
+        -0.2514917116178043,
+        -0.7336901353658505,
+        0.2499277967092278,
+        -0.5221074728510953,
+        -0.31866520188384045,
+        -0.954112578336004,
+        0.13865225995399602
+      ],
+      "task": "globe",
+      "scenario": {
+        "task": "globe",
+        "seed": 9000,
+        "initial_angle": -0.45490371680826036,
+        "target_angle": 0.0,
+        "mass": 0.037065049827538804,
+        "hinge_friction": 3.780670984189687e-05,
+        "contact_friction": 0.733230485446819,
+        "robot_position": [
+          0.08,
+          0.045,
+          0.132360363952
+        ],
+        "robot_yaw": 0,
+        "hinge_position": [
+          -0.12,
+          0.07,
+          0.014
+        ],
+        "globe_position": [
+          0.2,
+          0.04,
+          0.123
+        ],
+        "globe_radius": 0.058,
+        "target_tolerance": 0.05235987755982989,
+        "dwell_seconds": 0.4,
+        "hinge_damping": 0.0005
+      },
+      "controller": {
+        "speed": 0.2,
+        "brake": 0.025,
+        "depth": 0.0002
+      },
+      "success": true,
+      "error_degrees": 1.3395362356967468,
+      "final_angle": -0.02337931776267903,
+      "contact_steps": 1726,
+      "other_object_contact_steps": 0,
+      "contact_pairs": {
+        "right_hand_middle_1_link": 311,
+        "right_wrist_yaw_link": 1419
+      },
+      "dwell_seconds": 1.6160000000000012,
+      "invalid": false,
+      "initial_ik_error_m": 1.601677765744198e-05,
+      "initial_ik_rotation_error_rad": 1.3278276039982086,
+      "control_effort": 0.0035829461836856973,
+      "max_angular_speed": 0.5466954230862877,
+      "duration_seconds": 3.397309208288789,
+      "source": "Local MuJoCo G1 contact preview; no model post-training",
+      "robot": {
+        "name": "Unitree G1 miniature free-base model",
+        "height_m": 0.221,
+        "scale": 0.16706410701699295,
+        "source_revision": "370c43965323c0944b433b202aac5058b5f907a9",
+        "active_arm": "right",
+        "active_arm_dofs": 7,
+        "fingers": "fixed stand pose",
+        "scope": "Free six-DOF pelvis supported by foot contact only. Native arm feedback and joint gravity compensation; legs, waist and fingers held rigid. No external support force or learned balance controller.",
+        "base": "free",
+        "base_dofs": 6,
+        "legs": "rigid stand configuration"
+      },
+      "balance": {
+        "max_tilt_degrees": 0.2962283669325039,
+        "minimum_pelvis_height_m": 0.13224212412997213,
+        "maximum_horizontal_drift_m": 0.0007191819165941978,
+        "non_foot_ground_contact_steps": 0,
+        "both_feet_contact_fraction": 0.9885714285714285,
+        "terminal_support_feet": [
+          "left_ankle_roll_link",
+          "right_ankle_roll_link"
+        ],
+        "maximum_applied_base_generalized_force": 0.0,
+        "fall": false
+      },
+      "candidate": 0
+    },
+    {
+      "initial_collision_pairs": [],
+      "final_q": [
+        -0.2505595328286807,
+        -0.7342570348423837,
+        0.24919780403682906,
+        -0.5210293674049059,
+        -0.3173419707787721,
+        -0.9553582973303981,
+        0.13942856760386835
+      ],
+      "final_ctrl": [
+        -0.2505595328286809,
+        -0.7342570348423832,
+        0.24919780403682926,
+        -0.5210293674049056,
+        -0.3173419707787722,
+        -0.9553582973303976,
+        0.1394285676038684
+      ],
+      "task": "globe",
+      "scenario": {
+        "task": "globe",
+        "seed": 9001,
+        "initial_angle": -0.40118991901521867,
+        "target_angle": 0.0,
+        "mass": 0.047253954061148074,
+        "hinge_friction": 2.866338951850027e-05,
+        "contact_friction": 0.8111056476602759,
+        "robot_position": [
+          0.08,
+          0.045,
+          0.132360363952
+        ],
+        "robot_yaw": 0,
+        "hinge_position": [
+          -0.12,
+          0.07,
+          0.014
+        ],
+        "globe_position": [
+          0.2,
+          0.04,
+          0.123
+        ],
+        "globe_radius": 0.058,
+        "target_tolerance": 0.05235987755982989,
+        "dwell_seconds": 0.4,
+        "hinge_damping": 0.0005
+      },
+      "controller": {
+        "speed": 0.2,
+        "brake": 0.025,
+        "depth": 0.0002
+      },
+      "success": true,
+      "error_degrees": 1.272485489536765,
+      "final_angle": -0.022209061476268402,
+      "contact_steps": 1455,
+      "other_object_contact_steps": 0,
+      "contact_pairs": {
+        "right_hand_middle_1_link": 311,
+        "right_wrist_yaw_link": 1164
+      },
+      "dwell_seconds": 1.7580000000000013,
+      "invalid": false,
+      "initial_ik_error_m": 1.601677765744198e-05,
+      "initial_ik_rotation_error_rad": 1.3278276039982086,
+      "control_effort": 0.0034420058238547454,
+      "max_angular_speed": 0.537805068532959,
+      "duration_seconds": 3.3169684167951345,
+      "source": "Local MuJoCo G1 contact preview; no model post-training",
+      "robot": {
+        "name": "Unitree G1 miniature free-base model",
+        "height_m": 0.221,
+        "scale": 0.16706410701699295,
+        "source_revision": "370c43965323c0944b433b202aac5058b5f907a9",
+        "active_arm": "right",
+        "active_arm_dofs": 7,
+        "fingers": "fixed stand pose",
+        "scope": "Free six-DOF pelvis supported by foot contact only. Native arm feedback and joint gravity compensation; legs, waist and fingers held rigid. No external support force or learned balance controller.",
+        "base": "free",
+        "base_dofs": 6,
+        "legs": "rigid stand configuration"
+      },
+      "balance": {
+        "max_tilt_degrees": 0.2949846824270532,
+        "minimum_pelvis_height_m": 0.13224212412997213,
+        "maximum_horizontal_drift_m": 0.0007182278698898523,
+        "non_foot_ground_contact_steps": 0,
+        "both_feet_contact_fraction": 0.988,
+        "terminal_support_feet": [
+          "left_ankle_roll_link",
+          "right_ankle_roll_link"
+        ],
+        "maximum_applied_base_generalized_force": 0.0,
+        "fall": false
+      },
+      "candidate": 0
+    },
+    {
+      "initial_collision_pairs": [],
+      "final_q": [
+        -0.2513924910256967,
+        -0.7330000981436291,
+        0.2492995939134751,
+        -0.520681776072928,
+        -0.31692674750533006,
+        -0.9550180866416133,
+        0.13994173560915843
+      ],
+      "final_ctrl": [
+        -0.25139249102569705,
+        -0.7330000981436291,
+        0.24929959391347511,
+        -0.5206817760729275,
+        -0.31692674750533006,
+        -0.9550180866416131,
+        0.13994173560915837
+      ],
+      "task": "globe",
+      "scenario": {
+        "task": "globe",
+        "seed": 9004,
+        "initial_angle": -0.3906824691266214,
+        "target_angle": 0.0,
+        "mass": 0.03609788708390677,
+        "hinge_friction": 2.9281400177640946e-05,
+        "contact_friction": 0.8150826215290439,
+        "robot_position": [
+          0.08,
+          0.045,
+          0.132360363952
+        ],
+        "robot_yaw": 0,
+        "hinge_position": [
+          -0.12,
+          0.07,
+          0.014
+        ],
+        "globe_position": [
+          0.2,
+          0.04,
+          0.123
+        ],
+        "globe_radius": 0.058,
+        "target_tolerance": 0.05235987755982989,
+        "dwell_seconds": 0.4,
+        "hinge_damping": 0.0005
+      },
+      "controller": {
+        "speed": 0.2,
+        "brake": 0.025,
+        "depth": 0.0002
+      },
+      "success": true,
+      "error_degrees": 1.3023643855809668,
+      "final_angle": -0.02273054658910083,
+      "contact_steps": 1694,
+      "other_object_contact_steps": 0,
+      "contact_pairs": {
+        "right_hand_middle_1_link": 312,
+        "right_wrist_yaw_link": 1389
+      },
+      "dwell_seconds": 1.8060000000000014,
+      "invalid": false,
+      "initial_ik_error_m": 1.601677765744198e-05,
+      "initial_ik_rotation_error_rad": 1.3278276039982086,
+      "control_effort": 0.0033890837149390383,
+      "max_angular_speed": 0.5103454612946626,
+      "duration_seconds": 3.3621939159929752,
+      "source": "Local MuJoCo G1 contact preview; no model post-training",
+      "robot": {
+        "name": "Unitree G1 miniature free-base model",
+        "height_m": 0.221,
+        "scale": 0.16706410701699295,
+        "source_revision": "370c43965323c0944b433b202aac5058b5f907a9",
+        "active_arm": "right",
+        "active_arm_dofs": 7,
+        "fingers": "fixed stand pose",
+        "scope": "Free six-DOF pelvis supported by foot contact only. Native arm feedback and joint gravity compensation; legs, waist and fingers held rigid. No external support force or learned balance controller.",
+        "base": "free",
+        "base_dofs": 6,
+        "legs": "rigid stand configuration"
+      },
+      "balance": {
+        "max_tilt_degrees": 0.2960102052125827,
+        "minimum_pelvis_height_m": 0.13224212412997213,
+        "maximum_horizontal_drift_m": 0.0007186897143071904,
+        "non_foot_ground_contact_steps": 0,
+        "both_feet_contact_fraction": 0.9885714285714285,
+        "terminal_support_feet": [
+          "left_ankle_roll_link",
+          "right_ankle_roll_link"
+        ],
+        "maximum_applied_base_generalized_force": 0.0,
+        "fall": false
+      },
+      "candidate": 0
+    },
+    {
+      "initial_collision_pairs": [],
+      "final_q": [
+        -0.29624459885362686,
+        -0.6718667859439871,
+        0.267345930474878,
+        -0.5266341409824571,
+        -0.32571768881472696,
+        -0.9236839673068085,
+        0.14179587409106986
+      ],
+      "final_ctrl": [
+        -0.29624493333596336,
+        -0.6718663450998251,
+        0.26734607198083515,
+        -0.5266340681521863,
+        -0.32571777076710096,
+        -0.9236837193119392,
+        0.14179595127192088
+      ],
+      "task": "globe",
+      "scenario": {
+        "task": "globe",
+        "seed": 9005,
+        "initial_angle": -0.4648356034731421,
+        "target_angle": 0.0,
+        "mass": 0.04523603223749102,
+        "hinge_friction": 4.217269298734072e-05,
+        "contact_friction": 0.7680414409272427,
+        "robot_position": [
+          0.08,
+          0.045,
+          0.132360363952
+        ],
+        "robot_yaw": 0,
+        "hinge_position": [
+          -0.12,
+          0.07,
+          0.014
+        ],
+        "globe_position": [
+          0.2,
+          0.04,
+          0.123
+        ],
+        "globe_radius": 0.058,
+        "target_tolerance": 0.05235987755982989,
+        "dwell_seconds": 0.4,
+        "hinge_damping": 0.0005
+      },
+      "controller": {
+        "speed": 0.2,
+        "brake": 0.025,
+        "depth": 0.0002
+      },
+      "success": true,
+      "error_degrees": 0.2208682414472431,
+      "final_angle": -0.0038548780263441976,
+      "contact_steps": 2036,
+      "other_object_contact_steps": 0,
+      "contact_pairs": {
+        "right_hand_middle_1_link": 312,
+        "right_wrist_yaw_link": 1741
+      },
+      "dwell_seconds": 0.5100000000000003,
+      "invalid": false,
+      "initial_ik_error_m": 1.601677765744198e-05,
+      "initial_ik_rotation_error_rad": 1.3278276039982086,
+      "control_effort": 0.003828497428090658,
+      "max_angular_speed": 0.5309946530442755,
+      "duration_seconds": 3.3343653744086623,
+      "source": "Local MuJoCo G1 contact preview; no model post-training",
+      "robot": {
+        "name": "Unitree G1 miniature free-base model",
+        "height_m": 0.221,
+        "scale": 0.16706410701699295,
+        "source_revision": "370c43965323c0944b433b202aac5058b5f907a9",
+        "active_arm": "right",
+        "active_arm_dofs": 7,
+        "fingers": "fixed stand pose",
+        "scope": "Free six-DOF pelvis supported by foot contact only. Native arm feedback and joint gravity compensation; legs, waist and fingers held rigid. No external support force or learned balance controller.",
+        "base": "free",
+        "base_dofs": 6,
+        "legs": "rigid stand configuration"
+      },
+      "balance": {
+        "max_tilt_degrees": 0.5821001823970183,
+        "minimum_pelvis_height_m": 0.13224212412997213,
+        "maximum_horizontal_drift_m": 0.0016838875655337032,
+        "non_foot_ground_contact_steps": 0,
+        "both_feet_contact_fraction": 0.9825714285714285,
+        "terminal_support_feet": [
+          "left_ankle_roll_link",
+          "right_ankle_roll_link"
+        ],
+        "maximum_applied_base_generalized_force": 0.0,
+        "fall": false
+      },
+      "candidate": 0
+    },
+    {
+      "initial_collision_pairs": [],
+      "final_q": [
+        -0.25466158183119797,
+        -0.7282167597621428,
+        0.25236964368701476,
+        -0.5230554752501828,
+        -0.31815405746392555,
+        -0.9554314876734683,
+        0.14035699466849405
+      ],
+      "final_ctrl": [
+        -0.25466158183119786,
+        -0.7282167597621432,
+        0.25236964368701464,
+        -0.5230554752501826,
+        -0.3181540574639255,
+        -0.9554314876734682,
+        0.140356994668494
+      ],
+      "task": "globe",
+      "scenario": {
+        "task": "globe",
+        "seed": 9000,
+        "initial_angle": -0.45490371680826036,
+        "target_angle": 0.0,
+        "mass": 0.037065049827538804,
+        "hinge_friction": 3.780670984189687e-05,
+        "contact_friction": 0.733230485446819,
+        "robot_position": [
+          0.08,
+          0.045,
+          0.132360363952
+        ],
+        "robot_yaw": 0,
+        "hinge_position": [
+          -0.12,
+          0.07,
+          0.014
+        ],
+        "globe_position": [
+          0.2,
+          0.04,
+          0.123
+        ],
+        "globe_radius": 0.058,
+        "target_tolerance": 0.05235987755982989,
+        "dwell_seconds": 0.4,
+        "hinge_damping": 0.0005
+      },
+      "controller": {
+        "speed": 0.25,
+        "brake": 0.025,
+        "depth": 0.0003
+      },
+      "success": true,
+      "error_degrees": 1.20199583181768,
+      "final_angle": -0.02097878486046653,
+      "contact_steps": 1238,
+      "other_object_contact_steps": 0,
+      "contact_pairs": {
+        "right_hand_middle_1_link": 195,
+        "right_wrist_yaw_link": 1051
+      },
+      "dwell_seconds": 2.837999999999909,
+      "invalid": false,
+      "initial_ik_error_m": 1.601677765744198e-05,
+      "initial_ik_rotation_error_rad": 1.3278276039982086,
+      "control_effort": 0.0034079715745397,
+      "max_angular_speed": 0.4411547688312994,
+      "duration_seconds": 3.282309458591044,
+      "source": "Local MuJoCo G1 contact preview; no model post-training",
+      "robot": {
+        "name": "Unitree G1 miniature free-base model",
+        "height_m": 0.221,
+        "scale": 0.16706410701699295,
+        "source_revision": "370c43965323c0944b433b202aac5058b5f907a9",
+        "active_arm": "right",
+        "active_arm_dofs": 7,
+        "fingers": "fixed stand pose",
+        "scope": "Free six-DOF pelvis supported by foot contact only. Native arm feedback and joint gravity compensation; legs, waist and fingers held rigid. No external support force or learned balance controller.",
+        "base": "free",
+        "base_dofs": 6,
+        "legs": "rigid stand configuration"
+      },
+      "balance": {
+        "max_tilt_degrees": 0.4268102562954779,
+        "minimum_pelvis_height_m": 0.13224212412997213,
+        "maximum_horizontal_drift_m": 0.0010216510367366915,
+        "non_foot_ground_contact_steps": 0,
+        "both_feet_contact_fraction": 0.988,
+        "terminal_support_feet": [
+          "left_ankle_roll_link",
+          "right_ankle_roll_link"
+        ],
+        "maximum_applied_base_generalized_force": 0.0,
+        "fall": false
+      },
+      "candidate": 1
+    },
+    {
+      "initial_collision_pairs": [],
+      "final_q": [
+        -0.25575351429274773,
+        -0.7302050805180185,
+        0.2510320474614359,
+        -0.520562088499176,
+        -0.31857882048649344,
+        -0.9515986170700552,
+        0.13958638918349034
+      ],
+      "final_ctrl": [
+        -0.25575351429274723,
+        -0.7302050805180191,
+        0.2510320474614358,
+        -0.5205620884991762,
+        -0.31857882048649333,
+        -0.9515986170700558,
+        0.13958638918349028
+      ],
+      "task": "globe",
+      "scenario": {
+        "task": "globe",
+        "seed": 9001,
+        "initial_angle": -0.40118991901521867,
+        "target_angle": 0.0,
+        "mass": 0.047253954061148074,
+        "hinge_friction": 2.866338951850027e-05,
+        "contact_friction": 0.8111056476602759,
+        "robot_position": [
+          0.08,
+          0.045,
+          0.132360363952
+        ],
+        "robot_yaw": 0,
+        "hinge_position": [
+          -0.12,
+          0.07,
+          0.014
+        ],
+        "globe_position": [
+          0.2,
+          0.04,
+          0.123
+        ],
+        "globe_radius": 0.058,
+        "target_tolerance": 0.05235987755982989,
+        "dwell_seconds": 0.4,
+        "hinge_damping": 0.0005
+      },
+      "controller": {
+        "speed": 0.25,
+        "brake": 0.025,
+        "depth": 0.0003
+      },
+      "success": true,
+      "error_degrees": 0.7537315077433188,
+      "final_angle": -0.013155096486142047,
+      "contact_steps": 1379,
+      "other_object_contact_steps": 0,
+      "contact_pairs": {
+        "right_hand_middle_1_link": 195,
+        "right_wrist_yaw_link": 1192
+      },
+      "dwell_seconds": 2.7239999999999216,
+      "invalid": false,
+      "initial_ik_error_m": 1.601677765744198e-05,
+      "initial_ik_rotation_error_rad": 1.3278276039982086,
+      "control_effort": 0.0034318637263158424,
+      "max_angular_speed": 0.5022606251491207,
+      "duration_seconds": 3.3546793749555945,
+      "source": "Local MuJoCo G1 contact preview; no model post-training",
+      "robot": {
+        "name": "Unitree G1 miniature free-base model",
+        "height_m": 0.221,
+        "scale": 0.16706410701699295,
+        "source_revision": "370c43965323c0944b433b202aac5058b5f907a9",
+        "active_arm": "right",
+        "active_arm_dofs": 7,
+        "fingers": "fixed stand pose",
+        "scope": "Free six-DOF pelvis supported by foot contact only. Native arm feedback and joint gravity compensation; legs, waist and fingers held rigid. No external support force or learned balance controller.",
+        "base": "free",
+        "base_dofs": 6,
+        "legs": "rigid stand configuration"
+      },
+      "balance": {
+        "max_tilt_degrees": 0.432626904522821,
+        "minimum_pelvis_height_m": 0.13224212412997213,
+        "maximum_horizontal_drift_m": 0.0010353487641490992,
+        "non_foot_ground_contact_steps": 0,
+        "both_feet_contact_fraction": 0.9882857142857143,
+        "terminal_support_feet": [
+          "left_ankle_roll_link",
+          "right_ankle_roll_link"
+        ],
+        "maximum_applied_base_generalized_force": 0.0,
+        "fall": false
+      },
+      "candidate": 1
+    },
+    {
+      "initial_collision_pairs": [],
+      "final_q": [
+        -0.2382460895018651,
+        -0.7102520249828157,
+        0.2726921486616084,
+        -0.5562346856302055,
+        -0.31520882769955755,
+        -1.0089158627224575,
+        0.15203807484651807
+      ],
+      "final_ctrl": [
+        -0.23824608950186446,
+        -0.7102520249828164,
+        0.27269214866160824,
+        -0.5562346856302057,
+        -0.31520882769955744,
+        -1.0089158627224584,
+        0.15203807484651807
+      ],
+      "task": "globe",
+      "scenario": {
+        "task": "globe",
+        "seed": 9004,
+        "initial_angle": -0.3906824691266214,
+        "target_angle": 0.0,
+        "mass": 0.03609788708390677,
+        "hinge_friction": 2.9281400177640946e-05,
+        "contact_friction": 0.8150826215290439,
+        "robot_position": [
+          0.08,
+          0.045,
+          0.132360363952
+        ],
+        "robot_yaw": 0,
+        "hinge_position": [
+          -0.12,
+          0.07,
+          0.014
+        ],
+        "globe_position": [
+          0.2,
+          0.04,
+          0.123
+        ],
+        "globe_radius": 0.058,
+        "target_tolerance": 0.05235987755982989,
+        "dwell_seconds": 0.4,
+        "hinge_damping": 0.0005
+      },
+      "controller": {
+        "speed": 0.25,
+        "brake": 0.025,
+        "depth": 0.0003
+      },
+      "success": true,
+      "error_degrees": 1.3513754518206116,
+      "final_angle": -0.02358595106489567,
+      "contact_steps": 1371,
+      "other_object_contact_steps": 0,
+      "contact_pairs": {
+        "right_hand_middle_1_link": 195,
+        "right_wrist_yaw_link": 1184
+      },
+      "dwell_seconds": 3.145999999999875,
+      "invalid": false,
+      "initial_ik_error_m": 1.601677765744198e-05,
+      "initial_ik_rotation_error_rad": 1.3278276039982086,
+      "control_effort": 0.0034329813768159273,
+      "max_angular_speed": 0.3846412599022484,
+      "duration_seconds": 3.3309295419603586,
+      "source": "Local MuJoCo G1 contact preview; no model post-training",
+      "robot": {
+        "name": "Unitree G1 miniature free-base model",
+        "height_m": 0.221,
+        "scale": 0.16706410701699295,
+        "source_revision": "370c43965323c0944b433b202aac5058b5f907a9",
+        "active_arm": "right",
+        "active_arm_dofs": 7,
+        "fingers": "fixed stand pose",
+        "scope": "Free six-DOF pelvis supported by foot contact only. Native arm feedback and joint gravity compensation; legs, waist and fingers held rigid. No external support force or learned balance controller.",
+        "base": "free",
+        "base_dofs": 6,
+        "legs": "rigid stand configuration"
+      },
+      "balance": {
+        "max_tilt_degrees": 0.42848970467934405,
+        "minimum_pelvis_height_m": 0.13224212412997213,
+        "maximum_horizontal_drift_m": 0.0010254718625118363,
+        "non_foot_ground_contact_steps": 0,
+        "both_feet_contact_fraction": 0.9882857142857143,
+        "terminal_support_feet": [
+          "left_ankle_roll_link",
+          "right_ankle_roll_link"
+        ],
+        "maximum_applied_base_generalized_force": 0.0,
+        "fall": false
+      },
+      "candidate": 1
+    },
+    {
+      "initial_collision_pairs": [],
+      "final_q": [
+        -0.2539567776132537,
+        -0.733357976183268,
+        0.2511588077526051,
+        -0.5223746346088718,
+        -0.32058973087488196,
+        -0.9516989525669547,
+        0.13773797847066424
+      ],
+      "final_ctrl": [
+        -0.25395677761325364,
+        -0.7333579761832678,
+        0.2511588077526052,
+        -0.5223746346088719,
+        -0.320589730874882,
+        -0.9516989525669548,
+        0.13773797847066427
+      ],
+      "task": "globe",
+      "scenario": {
+        "task": "globe",
+        "seed": 9005,
+        "initial_angle": -0.4648356034731421,
+        "target_angle": 0.0,
+        "mass": 0.04523603223749102,
+        "hinge_friction": 4.217269298734072e-05,
+        "contact_friction": 0.7680414409272427,
+        "robot_position": [
+          0.08,
+          0.045,
+          0.132360363952
+        ],
+        "robot_yaw": 0,
+        "hinge_position": [
+          -0.12,
+          0.07,
+          0.014
+        ],
+        "globe_position": [
+          0.2,
+          0.04,
+          0.123
+        ],
+        "globe_radius": 0.058,
+        "target_tolerance": 0.05235987755982989,
+        "dwell_seconds": 0.4,
+        "hinge_damping": 0.0005
+      },
+      "controller": {
+        "speed": 0.25,
+        "brake": 0.025,
+        "depth": 0.0003
+      },
+      "success": true,
+      "error_degrees": 0.6820434816942456,
+      "final_angle": -0.011903904397330257,
+      "contact_steps": 1262,
+      "other_object_contact_steps": 0,
+      "contact_pairs": {
+        "right_hand_middle_1_link": 195,
+        "right_wrist_yaw_link": 1075
+      },
+      "dwell_seconds": 2.5319999999999427,
+      "invalid": false,
+      "initial_ik_error_m": 1.601677765744198e-05,
+      "initial_ik_rotation_error_rad": 1.3278276039982086,
+      "control_effort": 0.0037280733237742766,
+      "max_angular_speed": 0.6940143595799229,
+      "duration_seconds": 3.30579087510705,
+      "source": "Local MuJoCo G1 contact preview; no model post-training",
+      "robot": {
+        "name": "Unitree G1 miniature free-base model",
+        "height_m": 0.221,
+        "scale": 0.16706410701699295,
+        "source_revision": "370c43965323c0944b433b202aac5058b5f907a9",
+        "active_arm": "right",
+        "active_arm_dofs": 7,
+        "fingers": "fixed stand pose",
+        "scope": "Free six-DOF pelvis supported by foot contact only. Native arm feedback and joint gravity compensation; legs, waist and fingers held rigid. No external support force or learned balance controller.",
+        "base": "free",
+        "base_dofs": 6,
+        "legs": "rigid stand configuration"
+      },
+      "balance": {
+        "max_tilt_degrees": 0.4298925254362107,
+        "minimum_pelvis_height_m": 0.13224212412997213,
+        "maximum_horizontal_drift_m": 0.0010289964926301386,
+        "non_foot_ground_contact_steps": 0,
+        "both_feet_contact_fraction": 0.9877142857142858,
+        "terminal_support_feet": [
+          "left_ankle_roll_link",
+          "right_ankle_roll_link"
+        ],
+        "maximum_applied_base_generalized_force": 0.0,
+        "fall": false
+      },
+      "candidate": 1
+    }
+  ]
+}

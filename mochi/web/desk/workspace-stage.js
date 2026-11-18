@@ -1,7 +1,7 @@
 import * as THREE from 'three';
-import {loadG1} from './g1-stage.js?v=g1-v4';
-import {createTaskObjects} from './task-objects.js?v=g1-v4';
-import {photographicRenderer} from './realism.js?v=g1-v4';
+import {loadG1} from './g1-stage.js?v=free-base-v5';
+import {createTaskObjects} from './task-objects.js?v=free-base-v5';
+import {photographicRenderer} from './realism.js?v=free-base-v5';
 import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
@@ -36,7 +36,7 @@ export function createTaskStudy(element){
  let episode=null,playhead=0;const worldA=new THREE.Vector3(),worldB=new THREE.Vector3(),qA=new THREE.Quaternion(),qB=new THREE.Quaternion(),parentQ=new THREE.Quaternion();
  function applyFrame(time){if(!episode)return null;let frames=episode.trajectory.frames,x=Math.min(Math.max(time,0)*episode.trajectory.sample_hz,frames.length-1),i=Math.floor(x),a=frames[i],b=frames[Math.min(i+1,frames.length-1)],mix=x-i;
   episode.trajectory.body_names.forEach((name,k)=>{let obj=bindings[name];if(!obj)return;worldA.fromArray(a.positions[k]);worldB.fromArray(b.positions[k]);worldA.lerp(worldB,mix);let qa=a.quaternions[k],qb=b.quaternions[k];qA.set(qa[1],qa[2],qa[3],qa[0]);qB.set(qb[1],qb[2],qb[3],qb[0]);qA.slerp(qB,mix);obj.parent.updateWorldMatrix(true,false);obj.position.copy(obj.parent.worldToLocal(worldA));parentQ.copy(obj.parent.getWorldQuaternion(parentQ)).invert();obj.quaternion.copy(parentQ.multiply(qA));obj.updateMatrixWorld(true)});
-  return{angle:a.angle+(b.angle-a.angle)*mix,phase:a.phase,contact:a.hand_contact,time:a.t+(b.t-a.t)*mix};
+  return{angle:a.angle+(b.angle-a.angle)*mix,phase:a.phase,contact:a.hand_contact,time:a.t+(b.t-a.t)*mix,tilt:(a.base_tilt_degrees||0)+((b.base_tilt_degrees||0)-(a.base_tilt_degrees||0))*mix};
  }
  function view(which){const views={laptop:{p:[.30,-.45,.32],t:[-.045,.018,.105]},globe:{p:[.42,-.37,.27],t:[.145,.035,.112]},wide:{p:[.39,-.58,.37],t:[.015,.015,.10]},front:{p:[.02,-.56,.25],t:[.015,.015,.10]}};let v=views[which]||views[episode?.task]||views.wide;camera.position.set(...v.p);orbit.target.set(...v.t);orbit.update()}
  function frame(time){playhead=time;let state=applyFrame(time);orbit.update();photography.render();return state}

@@ -3,7 +3,8 @@ import bpy,json,math,sys,argparse
 from pathlib import Path
 from mathutils import Vector,Quaternion
 root=Path(__file__).resolve().parents[1];assets=root/'web/desk/assets';out=root/'artifacts/realism-v4'
-p=argparse.ArgumentParser();p.add_argument('--task',default='laptop');p.add_argument('--frame',type=int,default=0);p.add_argument('--samples',type=int,default=40);p.add_argument('--width',type=int,default=1200);p.add_argument('--height',type=int,default=800);args=p.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
+p=argparse.ArgumentParser();p.add_argument('--input');p.add_argument('--out');p.add_argument('--task',default='laptop');p.add_argument('--frame',type=int,default=0);p.add_argument('--samples',type=int,default=40);p.add_argument('--width',type=int,default=1200);p.add_argument('--height',type=int,default=800);args=p.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
+if args.out:out=Path(args.out);out.mkdir(parents=True,exist_ok=True)
 bpy.ops.wm.read_factory_settings(use_empty=True);scene=bpy.context.scene;scene.render.engine='CYCLES';scene.cycles.samples=args.samples;scene.cycles.use_denoising=True
 prefs=bpy.context.preferences.addons['cycles'].preferences
 try:
@@ -57,12 +58,13 @@ rod('Globe top spindle',(.2,.04,.18),(.2,.04,.19),.003,brass);rod('Lower spindle
 bpy.ops.mesh.primitive_circle_add(vertices=32,radius=.0037,fill_type='NGON');marker=bpy.context.object;marker.name='Coral alignment marker';marker.parent=globe;marker.location=(0,-.0583,0);marker.rotation_euler.x=math.pi/2;marker.data.materials.append(material('Coral paint',(.52,.13,.06),0,.6))
 lamp=asset('sand-desk-lamp.glb','Task lamp');lamp.location=(-.37,.25,0);lamp.rotation_euler.z=.45
 old=set(bpy.data.objects);bpy.ops.import_scene.gltf(filepath=str(assets/'g1-mini.glb'));robot={o.name:o for o in bpy.data.objects if o not in old and o.type=='EMPTY'}
-r=json.loads((out/(args.task+'.json')).read_text());frame=r['trajectory']['frames'][args.frame]
+r=json.loads((Path(args.input) if args.input else out/(args.task+'.json')).read_text());frame=r['trajectory']['frames'][args.frame]
 for name,pos,quat in zip(r['trajectory']['body_names'],frame['positions'],frame['quaternions']):
  ob=robot.get(name) or {'laptop-screen':screen,'globe':globe}.get(name)
  if ob:ob.location=pos;ob.rotation_mode='QUATERNION';ob.rotation_quaternion=quat
 # The stand makes the fixed-pelvis simplification visible.
-basepos=Vector(r['scenario']['robot_position']);yaw=r['scenario']['robot_yaw'];back=Vector((-math.cos(yaw)*.027,-math.sin(yaw)*.027,0));pole=basepos+back;steel=material('Support stand',(.02,.025,.028),.7,.4);rod('Supported pelvis column',(pole.x,pole.y,.002),(pole.x,pole.y,basepos.z),.0018,steel);rod('Pelvis clamp',pole,basepos,.0018,steel)
+if r['robot'].get('base','fixed')=='fixed':
+ basepos=Vector(r['scenario']['robot_position']);yaw=r['scenario']['robot_yaw'];back=Vector((-math.cos(yaw)*.027,-math.sin(yaw)*.027,0));pole=basepos+back;steel=material('Support stand',(.02,.025,.028),.7,.4);rod('Supported pelvis column',(pole.x,pole.y,.002),(pole.x,pole.y,basepos.z),.0018,steel);rod('Pelvis clamp',pole,basepos,.0018,steel)
 # Both fixtures are present, but only one is dynamic in each episode.
 if args.task=='globe':screen.rotation_mode='XYZ';screen.rotation_euler.x=math.radians(20)
 

@@ -5,7 +5,7 @@ from pathlib import Path
 import mujoco,numpy as np
 from scipy.optimize import least_squares
 from .tasks import scenario,Controller,DT,CONTROL_DT,HORIZON,TASKS
-from .g1_model import ROOT,ARMS,METADATA,model_xml,PAD_RADIUS
+from .g1_model import ROOT,ARMS,METADATA,model_xml,PAD_RADIUS,station
 
 def object_angle(s,d,q):return math.pi/2-float(d.qpos[q]) if s['task']=='laptop' else float(d.qpos[q])
 def quaternion(rot):
@@ -23,9 +23,10 @@ def target(s,a,stroke,depth,side,approach=False):
     position=p+n*(radius+(.010 if approach else -depth));x=-n;y=np.cross(up,x);y/=np.linalg.norm(y);z=np.cross(x,y)
     return position,np.column_stack([x,y,z])
 
-def rollout(task,seed=9000,controller=Controller(.35,.025,.0007),record=False):
-    started=time.perf_counter();controller.validate();s=scenario(task,seed);s['hinge_damping']=.006 if task=='laptop' else .0005;s['robot_position']=[.070 if task=='laptop' else .065,-.010 if task=='laptop' else .065,METADATA['pelvis_height_m']];s['robot_yaw']=math.pi/2 if task=='laptop' else 0
-    m=mujoco.MjModel.from_xml_string(model_xml(s));d=mujoco.MjData(m);viz=mujoco.MjData(m) if record else None;side='left' if task=='laptop' else 'right'
+def rollout(task,seed=9000,controller=Controller(.35,.025,.0007),record=False,free_base=False,base_xy=None):
+    started=time.perf_counter();controller.validate();s=scenario(task,seed);s['hinge_damping']=.006 if task=='laptop' else .0005;s['robot_position'],s['robot_yaw']=station(task,free_base,base_xy)
+    if base_xy is not None:s['free_base_xy']=list(base_xy)
+    m=mujoco.MjModel.from_xml_string(model_xml(s,free_base=free_base));d=mujoco.MjData(m);viz=mujoco.MjData(m) if record else None;side='left' if task=='laptop' else 'right'
     jids=[mujoco.mj_name2id(m,mujoco.mjtObj.mjOBJ_JOINT,n) for n in ARMS[side]];qids=np.array([m.jnt_qposadr[i] for i in jids]);vids=np.array([m.jnt_dofadr[i] for i in jids]);aids=np.array([mujoco.mj_name2id(m,mujoco.mjtObj.mjOBJ_ACTUATOR,n) for n in ARMS[side]])
     all_dofs=[int(m.jnt_dofadr[mujoco.mj_name2id(m,mujoco.mjtObj.mjOBJ_JOINT,n)]) for n in sum(ARMS.values(),[])];limits=m.jnt_range[jids]
     oj=mujoco.mj_name2id(m,mujoco.mjtObj.mjOBJ_JOINT,'object-angle');oq=int(m.jnt_qposadr[oj]);ov=int(m.jnt_dofadr[oj]);d.qpos[oq]=math.pi/2-s['initial_angle'] if task=='laptop' else s['initial_angle']
@@ -58,10 +59,20 @@ def rollout(task,seed=9000,controller=Controller(.35,.025,.0007),record=False):
     mujoco.mj_forward(m,d);d.ctrl[aids]=d.qpos[qids];initial_error=float(np.linalg.norm(position-d.site_xpos[tip]));initial_rotation=math.acos(float(np.clip(orientation[:,0]@d.site_xmat[tip].reshape(3,3)[:,0],-1,1)))
     initial_pairs=[(mujoco.mj_id2name(m,mujoco.mjtObj.mjOBJ_BODY,int(m.geom_bodyid[c.geom1])),mujoco.mj_id2name(m,mujoco.mjtObj.mjOBJ_BODY,int(m.geom_bodyid[c.geom2])),float(c.dist)) for c in d.contact if c.dist<-.00001]
     phase='approach';hold_time=None;hold_pose=None;contacts=0;other=0;dwell=0.;frames=[];pairs={};invalid=initial_error>.004;effort=0.;max_speed=0.
+    pelvis=mujoco.mj_name2id(m,mujoco.mjtObj.mjOBJ_BODY,'pelvis');desk=mujoco.mj_name2id(m,mujoco.mjtObj.mjOBJ_GEOM,'desk');start_position=d.xpos[pelvis].copy();max_tilt=0.;min_height=float(start_position[2]);max_drift=0.;body_ground_steps=0;foot_steps=0;base_force_max=0.;feet=set()
+    free_dof=int(m.jnt_dofadr[mujoco.mj_name2id(m,mujoco.mjtObj.mjOBJ_JOINT,'free-base')]) if free_base else None
+    def support_feet():
+        feet=set();bad=False
+        for c in d.contact:
+            if desk not in [int(c.geom1),int(c.geom2)]:continue
+            other=int(c.geom2) if int(c.geom1)==desk else int(c.geom1);name=mujoco.mj_id2name(m,mujoco.mjtObj.mjOBJ_BODY,int(m.geom_bodyid[other])) or ''
+            if 'ankle_roll_link' in name:feet.add(name)
+            elif name not in ['laptop-base','globe-base']:bad=True
+        return feet,bad
     def capture(t):
         if not record:return
         viz.qpos[:]=d.qpos;viz.qvel[:]=d.qvel;mujoco.mj_forward(m,viz)
-        frames.append({'t':round(t,4),'positions':viz.xpos.tolist(),'quaternions':viz.xquat.tolist(),'angle':object_angle(s,d,oq),'angular_velocity':float(d.qvel[ov]),'phase':phase,'hand_contact':any(is_hand(c) for c in d.contact)})
+        frames.append({'t':round(t,4),'positions':viz.xpos.tolist(),'quaternions':viz.xquat.tolist(),'angle':object_angle(s,d,oq),'angular_velocity':float(d.qvel[ov]),'phase':phase,'hand_contact':any(is_hand(c) for c in d.contact),'base_tilt_degrees':math.degrees(math.acos(float(np.clip(viz.xmat[pelvis].reshape(3,3)[2,2],-1,1)))),'support_feet':sorted(support_feet()[0])})
     capture(0.)
     for step in range(int(HORIZON/DT)):
         t=step*DT;a=object_angle(s,d,oq);error=s['target_angle']-a
@@ -80,6 +91,9 @@ def rollout(task,seed=9000,controller=Controller(.35,.025,.0007),record=False):
             if length>limit:delta*=limit/length
             d.ctrl[aids]=solve_position(d.site_xpos[tip]+delta,.10)
         d.qfrc_applied[all_dofs]=d.qfrc_bias[all_dofs];mujoco.mj_step(m,d)
+        if free_base:
+            tilt=math.acos(float(np.clip(d.xmat[pelvis].reshape(3,3)[2,2],-1,1)));max_tilt=max(max_tilt,tilt);min_height=min(min_height,float(d.xpos[pelvis,2]));max_drift=max(max_drift,float(np.linalg.norm(d.xpos[pelvis,:2]-start_position[:2])));feet,bad=support_feet();body_ground_steps+=int(bad);foot_steps+=int(len(feet)==2);base_force_max=max(base_force_max,float(np.max(np.abs(d.qfrc_applied[free_dof:free_dof+6]))))
+            invalid|=tilt>math.radians(30) or float(d.xpos[pelvis,2])<start_position[2]-.025 or bad
         contacts+=int(any(is_hand(c) for c in d.contact));other+=int(any(og in [int(c.geom1),int(c.geom2)] and not is_hand(c) for c in d.contact))
         for c in d.contact:
             if og in [int(c.geom1),int(c.geom2)]:
@@ -88,6 +102,11 @@ def rollout(task,seed=9000,controller=Controller(.35,.025,.0007),record=False):
         good=err<=s['target_tolerance'] and speed<=.07 and not invalid;dwell=dwell+DT if good else 0.;effort+=float(np.sum(d.actuator_force**2))*DT
         if record and (step+1)%20==0:capture(float(d.time))
     result={'initial_collision_pairs':initial_pairs,'final_q':d.qpos[qids].tolist(),'final_ctrl':d.ctrl[aids].tolist(),'task':task,'scenario':s,'controller':asdict(controller),'success':bool(dwell>=.4 and contacts>0 and other==0 and not invalid),'error_degrees':math.degrees(err),'final_angle':a,'contact_steps':contacts,'other_object_contact_steps':other,'contact_pairs':pairs,'dwell_seconds':dwell,'invalid':bool(invalid),'initial_ik_error_m':initial_error,'initial_ik_rotation_error_rad':initial_rotation,'control_effort':effort,'max_angular_speed':max_speed,'duration_seconds':time.perf_counter()-started,'source':'Local MuJoCo G1 contact preview; no model post-training','robot':{'name':'Unitree G1 miniature supported model','height_m':METADATA['height_m'],'scale':METADATA['scale'],'source_revision':METADATA['source']['revision'],'active_arm':side,'active_arm_dofs':7,'fingers':'fixed stand pose','scope':METADATA['scope']}}
+    if free_base:
+        result['success']=bool(result['success'] and len(feet)==2 and base_force_max==0)
+        result['robot'].update(name='Unitree G1 miniature free-base model',base='free',base_dofs=6,legs='rigid stand configuration',scope='Free six-DOF pelvis supported by foot contact only. Native arm feedback and joint gravity compensation; legs, waist and fingers held rigid. No external support force or learned balance controller.')
+        result['balance']={'max_tilt_degrees':math.degrees(max_tilt),'minimum_pelvis_height_m':min_height,'maximum_horizontal_drift_m':max_drift,'non_foot_ground_contact_steps':body_ground_steps,'both_feet_contact_fraction':foot_steps/(HORIZON/DT),'terminal_support_feet':sorted(feet),'maximum_applied_base_generalized_force':base_force_max,'fall':bool(max_tilt>math.radians(30) or min_height<start_position[2]-.025 or body_ground_steps>0)}
+    else:result['robot']['base']='fixed'
     if record:result['trajectory']={'body_names':[mujoco.mj_id2name(m,mujoco.mjtObj.mjOBJ_BODY,i) or 'world' for i in range(m.nbody)],'frames':frames,'sample_hz':25}
     return result
 

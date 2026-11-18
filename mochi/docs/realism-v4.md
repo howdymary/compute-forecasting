@@ -1,5 +1,7 @@
 # G1 desk laboratory — visual and physical refinement
 
+The current preview is the [free-base standing study](free-standing-and-tasks.md). The supported-base results below describe the preceding revision.
+
 17 November 2026. [Open the interactive replay](https://howdymary--mochi-desk-tasks-web.us-east.modal.run/).
 
 Mochi now uses a 22.1 cm miniature of the Unitree G1 model from

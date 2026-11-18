@@ -69,9 +69,16 @@ def build():
 
 TEMPLATE,METADATA=build()
 
-def model_xml(s):
+def station(task,free_base=False,base_xy=None):
+    xy=([.080,.045] if free_base else [.065,.065]) if task=='globe' else [.070,-.010]
+    if base_xy is not None:xy=list(base_xy)
+    return [*xy,METADATA['pelvis_height_m']],math.pi/2 if task=='laptop' else 0.
+
+def model_xml(s,free_base=False):
     from .tasks import xml as prototype_xml
-    root=ET.fromstring(TEMPLATE);old=ET.fromstring(prototype_xml(s));world=root.find('worldbody');pelvis=world.find('body');pelvis.set('pos',fmt([.070 if s['task']=='laptop' else .065,-.010 if s['task']=='laptop' else .065,METADATA['pelvis_height_m']]));pelvis.set('quat',fmt([math.cos((math.pi/2 if s['task']=='laptop' else 0)/2),0,0,math.sin((math.pi/2 if s['task']=='laptop' else 0)/2)]))
+    root=ET.fromstring(TEMPLATE);old=ET.fromstring(prototype_xml(s));world=root.find('worldbody');pelvis=world.find('body');position,yaw=station(s['task'],free_base,s.get('free_base_xy'));pelvis.set('pos',fmt(position));pelvis.set('quat',fmt([math.cos(yaw/2),0,0,math.sin(yaw/2)]))
+    if free_base:
+        root.set('model','Mochi miniature G1 free-base manipulation');ET.SubElement(pelvis,'freejoint',name='free-base')
     if s['task']=='globe':old.find(".//joint[@name='object-angle']").set('damping','.0005')
     for element in old.find('worldbody'):
         if element.get('name')!='pelvis':world.append(copy.deepcopy(element))

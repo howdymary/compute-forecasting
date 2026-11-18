@@ -1,5 +1,7 @@
 # Laptop screen and desktop globe
 
+The current preview is the [free-base standing study](free-standing-and-tasks.md). The supported-base results below describe the preceding revision.
+
 The current preview uses a 22.1 cm supported Unitree G1 miniature with native
 seven-joint arms. [Open the replay](https://howdymary--mochi-desk-tasks-web.us-east.modal.run/).
 See [the G1 refinement record](realism-v4.md) for assets, licenses, reproduction

@@ -17,6 +17,6 @@ def web():
     from fastapi.staticfiles import StaticFiles
     api=FastAPI()
     @api.get('/api/health')
-    def health():return {'status':'ok','service':'mochi-desk-tasks','mode':'recorded local MuJoCo contact preview','training':'not post-trained'}
+    def health():return {'status':'ok','service':'mochi-desk-tasks','mode':'recorded MuJoCo free-base contact study','base':'six free DOFs; foot support; rigid leg pose','training':'not post-trained'}
     api.mount('/',StaticFiles(directory='/web',html=True))
     return api
