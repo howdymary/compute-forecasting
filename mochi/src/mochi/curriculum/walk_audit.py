@@ -6,6 +6,7 @@ import modal
 from .remote import image as physics_image,Runner
 from .world import ROOT,World
 from .decisions import choose
+from .checkpoints import StateSampler
 from ..integrations import digest,now
 image=physics_image.add_local_file(ROOT/'configs/walking-audit-protocol.json',remote_path='/app/configs/walking-audit-protocol.json')
 app=modal.App('mochi-curriculum-v6-walking-audit')
@@ -37,8 +38,9 @@ async def main():
  from tinker_cookbook.recipes.decisions import DecisionRenderer
  source=ROOT/'.cache/training-source';report=json.loads(next(source.rglob('report.json')).read_text());paths=json.loads(next(source.rglob('checkpoint-paths.json')).read_text());service=tinker.ServiceClient(display_name='mochi-v6-walking-audit');all_rows={};result={'created_at':now(),'source_sha':os.getenv('GITHUB_SHA'),'protocol':PROTOCOL,'protocol_sha256':digest(PROTOCOL),'training_source_sha':report['source_sha'],'selected_update':report['selected_checkpoint']['update'],'extra_optimizer_updates':0,'checkpoints':[]}
  async with app.run():
+  inference=StateSampler(service)
   for update in PROTOCOL['checkpoints']:
-   sampler=await service.create_sampling_client(model_path=paths[str(update)]['weights']);renderer=DecisionRenderer(renderers.get_renderer(model_info.get_recommended_renderer_name('Qwen/Qwen3.5-4B'),sampler.get_tokenizer()));rows=await asyncio.gather(*(run_one(sampler,renderer,seed,offset) for seed,offset in zip(PROTOCOL['seeds'],PROTOCOL['goal_offsets'])));all_rows[str(update)]=rows;cp={'update':update,'checkpoint_id':next(c['checkpoint_id'] for c in report['checkpoints'] if c['update']==update),**summary(rows)};result['checkpoints'].append(cp);save('progress',result);save('checkpoint-'+str(update),rows);print('WALKING_CHECKPOINT',json.dumps(cp),flush=True)
+   sampler=await inference.load(paths[str(update)]['optimizer']);renderer=DecisionRenderer(renderers.get_renderer(model_info.get_recommended_renderer_name('Qwen/Qwen3.5-4B'),sampler.get_tokenizer()));rows=await asyncio.gather(*(run_one(sampler,renderer,seed,offset) for seed,offset in zip(PROTOCOL['seeds'],PROTOCOL['goal_offsets'])));all_rows[str(update)]=rows;cp={'update':update,'checkpoint_id':next(c['checkpoint_id'] for c in report['checkpoints'] if c['update']==update),**summary(rows)};result['checkpoints'].append(cp);save('progress',result);save('checkpoint-'+str(update),rows);print('WALKING_CHECKPOINT',json.dumps(cp),flush=True)
   baseline=await asyncio.gather(*(run_one(None,None,seed,offset,True) for seed,offset in zip(PROTOCOL['seeds'],PROTOCOL['goal_offsets'])));result['classical_waypoint']=summary(baseline);all_rows['classical']=baseline
   jobs=[(row['seed'],row['goal'],row['actions']) for rows in all_rows.values() for row in rows];remote=[x async for x in verify.starmap.aio(jobs,order_outputs=True)];local=[row for rows in all_rows.values() for row in rows]
   checks=[{'seed':a['seed'],'same_success':a['success']==b['success'],'duration_delta_s':abs(a['episode']['duration']-b['duration_s']),'receipt':b} for a,b in zip(local,remote)];result['remote_replay_checks']=checks;result['modal_rollouts']=len(remote)
