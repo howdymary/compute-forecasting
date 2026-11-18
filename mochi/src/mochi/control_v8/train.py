@@ -38,7 +38,7 @@ async def main():
  for p,expected in {**cfg['frozen_physics_sha256'],**cfg['frozen_controller_sha256']}.items():
   if hashlib.sha256((ROOT/p).read_bytes()).hexdigest()!=expected:raise RuntimeError('Frozen physics mismatch '+p)
  try:
-  records=await inventory(tinker.RestClient());parents=[c for c in records if c.checkpoint_id=='mochi_geometry_walk_tasks_96'];assert len(parents)==1,'Canonical parent missing or ambiguous';assert len(records)+4<100,'Insufficient checkpoint headroom';parent=parents[0].tinker_path;report['parent_checkpoint_id']=digest(parent);report['checkpoint_count_before']=len(records)
+  records=await inventory(tinker.RestClient());parents=[c for c in records if digest(c.tinker_path)==cfg['parent_checkpoint_sha256']];assert len(parents)==1,'Canonical parent missing or ambiguous';assert len(records)+4<100,'Insufficient checkpoint headroom';parent=parents[0].tinker_path;report['parent_checkpoint_id']=digest(parent);report['checkpoint_count_before']=len(records)
   await services.setup()
   async with app.run():
    allocation=await research(services,report,{'engineering_changes':cfg['engineering_changes'],'new_physical_training_results':'Not yet measured; no improvement claimed.'},0)
