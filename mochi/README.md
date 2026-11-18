@@ -20,6 +20,9 @@ Development selection chose **8 additional updates**. Counts describe the whole 
 
 Four scenarios and one training run are a small simulation pilot. Walking failures can prevent later tasks from being attempted. Task success, recovery success and full-sequence success are distinct checks. Raw paired outcomes and uncertainty are in the evidence. The original V7 stack is evaluated separately; its engineering differences are not attributed to weight training.
 
+
+Separate task and recovery probes use the same held-out seed block after checkpoint selection. Recovery choices start from shared post-task states, so walking failure cannot hide them. starting model: 12/16 valid recoveries. post trained model: 16/16 valid recoveries. Across 12 shared states where both recoveries passed, mean hand travel was 9.3 cm before and 9.3 cm after. These isolated resets are not part of the continuous demo. [Probe evidence](evidence/control-v8/isolated-controls.json).
+
 ### What was fixed before training
 
 The old laptop press could not sustain enough closing torque. The new controller contacts the upper lid edge from a front-right stance, applies bounded actuator force, then withdraws while gravity finishes closing. The hinge, object properties and success criteria remain unchanged.
@@ -31,9 +34,9 @@ The recovery primitives were checked on training-only branches before learning. 
 ### Services used
 
 - **Tinker:** real supervised post-training, completed forward/backward and optimizer calls, durable intermediate states, and fixed-checkpoint inference in closed-loop simulation. No extra optimizer updates are credited to evaluation-only probes.
-- **Modal:** 255 physical rollouts across the training/evaluation evidence, bounded at four CPU workers per function. The before/selected/fixed comparisons share one worker per scenario. Small MuJoCo experiments run on CPUs.
+- **Modal:** 335 physical rollouts across the training/evaluation evidence, bounded at four CPU workers per function. The before/selected/fixed comparisons share one worker per scenario. Small MuJoCo experiments run on CPUs.
 - **Exa:** 2 searches inside the research/training loop. Retrieved evidence informs bounded proposals; it is not executed as code.
-- **past.dev:** 11 writes, 11 recall requests and 8 source-verified cross-role handoffs. Recalled proposals select between predeclared training allocations. Credit charges are not available from these API receipts.
+- **past.dev:** 11 writes, 11 recall requests and 10 source-verified cross-role handoffs. Recalled proposals select between predeclared training allocations. Credit charges are not available from these API receipts.
 
 ### past.dev challenge
 
@@ -41,7 +44,7 @@ The recovery primitives were checked on training-only branches before learning. 
 
 **Layers:** prompts hold working context; past.dev stores sourced findings, outcomes and qualified conclusions; versioned code stores procedures; Mochi artifacts store numerical measurements and trajectories.
 
-**Results:** 4 writing identities, 4 verified reading identities and 8 cross-role recalls. Private critic audience isolation passed.
+**Results:** 4 writing identities, 4 verified reading identities and 10 cross-role recalls. Private critic audience isolation passed.
 
 **Caveats:** canonical payloads are resolved only after verifying returned source IDs. No causal memory or search ablation is claimed. Training examples include repetitions, not new market or physical observations at each update.
 

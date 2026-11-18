@@ -54,6 +54,14 @@ Separate task and arm-recovery probes use the original source test seeds 25000â€
 
 The wider-stance/XY-force engineering candidate was stopped after update 8 regressed from 1/2 to 0/2 development completions. It was not promoted, and its fresh 26000-series tests stayed unopened. [The rejection record](../evidence/control-v8-clearance/rejection.json) preserves the observed failure; it is not presented as a completed frozen study or evidence that every checkpoint would fail.
 
+The completed [probe run 44402967613](https://github.com/howdymary/mochi-demo/actions/runs/44402967613) executed 80 physical rollouts with zero optimizer updates. Both starting and selected models passed 4/4 isolated tests for each task. On shared post-task states, recovery improved from 12/16 to 16/16 valid attempts, and fixture-contact steps decreased from 1,481 to zero. The parent selected direct folding beside the alarm; the trained model selected outward clearance in all four alarm states. The primary full-route tests remain 4/4 selected versus 0/4 parent and 4/4 fixed control.
+
+Among the 12 shared states where both models recovered safely, mean hand travel was 9.33 cm before and 9.28 cm after. This does not establish a substantial learned reduction in hand travel. The much larger 19.6-to-9.3 cm reduction in the [recovery-design audit](../evidence/control-v8/recovery-design-audit.json) compares engineered options on 22 valid paired training states; it is not a learned held-out gain. Recovery safety, motion length and task success are reported separately in [the probe evidence](../evidence/control-v8/isolated-controls.json).
+
+The source study and probes account for 335 completed physical rollouts. The rejected revision separately reported four completed development rollouts at cancellation, with other in-flight work unconfirmed; those attempts are not credited as successful executions. A duplicate probe launch, run 44402969230, was canceled during installation before its model-evaluation step. Canonical training states were preserved throughout.
+
+Final memory receipts are read from the completed `progress.json`: the original runner saved `report.json` just before its last service-receipt refresh. The exporter checks identical source identity, selected checkpoint and measured performance before joining those final receipts. It records both file hashes and leaves the downloaded archive unchanged. The finalized source record has ten verified cross-role memory handoffs.
+
 ## Timing and deployment limits
 
 The selector runs between bounded simulation actions. MuJoCo time pauses while remote model inference is pending; the fast native gait, balance and arm feedback execute inside each action. Completion time is simulated physical time, not real-time inference throughput. Worker wall time and actual Tinker inference calls are retained separately. This is not a real-time hardware control or sim-to-real demonstration.

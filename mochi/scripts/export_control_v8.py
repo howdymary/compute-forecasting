@@ -1,7 +1,8 @@
 """Publish actual V8 physics recordings with no invented motion or model claims."""
 import argparse,copy,json,shutil
 from pathlib import Path
-p=argparse.ArgumentParser();p.add_argument('--source',required=True,type=Path);p.add_argument('--revision',choices=['v8','clearance'],default='v8');p.add_argument('--run-id',required=True);p.add_argument('--isolated-source',type=Path);a=p.parse_args();root=Path(__file__).resolve().parents[1];out=root/'web/desk/curriculum';report=json.load(open(a.source/'report.json'));assert report['status']=='completed';revision=a.revision;selected=report['selected_checkpoint']['update'];dev=report['protocol']['development_seeds'][0]
+from control_evidence import completed_report
+p=argparse.ArgumentParser();p.add_argument('--source',required=True,type=Path);p.add_argument('--revision',choices=['v8','clearance'],default='v8');p.add_argument('--run-id',required=True);p.add_argument('--isolated-source',type=Path);a=p.parse_args();root=Path(__file__).resolve().parents[1];out=root/'web/desk/curriculum';report=completed_report(a.source);assert report['status']=='completed';revision=a.revision;selected=report['selected_checkpoint']['update'];dev=report['protocol']['development_seeds'][0]
 def clean(v):
  if isinstance(v,float):return round(v,6)
  if isinstance(v,dict):return {k:clean(x) for k,x in v.items()}

@@ -6,13 +6,15 @@ The completed source study is [run 44382265039](https://github.com/howdymary/moc
 | Service | Working execution path | Completed source evidence |
 |---|---|---|
 | Tinker | Existing GitHub Actions secret; no local key | 64 additional LoRA optimizer updates, 384 domain-gradient calls, five retained checkpoints; development selected update8 |
-| Modal | Existing Actions token references | 255 completed physical rollouts including retained training-label branches; four paired held-out cases |
+| Modal | Existing Actions token references | 335 completed source/probe rollouts:255 source +80 isolated diagnostics; four paired full-route test cases |
 | Exa | Existing Actions secret | 2 actual searches inside the research/training loop |
-| past.dev | Existing Actions secret | 4 writing identities, 4 reading identities, 8 source-verified handoffs in the retained report; private-audience isolation passed |
+| past.dev | Existing Actions secret | 4 writing identities, 4 reading identities, 10 source-verified handoffs in the finalized receipts; private-audience isolation passed |
 | Blender | Local 5.1.2 | Rendered the actual selected-checkpoint laptop attempt from held-out seed25000 |
 | GitHub | Authenticated gh and existing Actions secrets | Scoped mochi-desk-v3 publication; preserved active checkout and forecasting default branch |
 
 Tinker learns walking commands, task-contact profiles and arm-recovery choices from simulation state. The native Unitree gait network, standing balance and IK remain fixed. Parent and selected weights share the same physical setup. The selected model and fixed baseline each completed4/4 source test routes; the parent weights completed0/4 through the V8 interface. These four fixed-layout cases do not establish broad robotics performance.
+
+The isolated probes improved recovery from12/16 to16/16 valid attempts and reduced fixture-contact steps from1,481 to zero. Isolated task success was4/4 for every task with either model. These are the same four scenario parameters, not additional independent full-route tests.
 
 The clearance candidate reused those same weights with zero additional optimizer updates. It regressed on development and was stopped before fresh testing; it is not deployed. Separate task/recovery diagnostics use the original setup and immutable selected weights. Exact numerical records: [source evidence](../evidence/control-v8/results.json), [clearance protocol](../configs/clearance-protocol.json).
 
