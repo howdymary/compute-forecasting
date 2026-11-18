@@ -19,4 +19,10 @@ def web():
  def health():
   report=json.loads(Path('/web/curriculum/manifest.json').read_text())
   return {'status':'ok','study_status':report['status'],'trained_optimizer_updates':report.get('optimizer_updates_completed',0),'mode':'recorded MuJoCo checkpoint replay','tasks':['alarm','drawer','laptop_close','globe']}
+ @api.get('/api/validation')
+ def validation():
+  try:
+   report=modal.Dict.from_name('mochi-curriculum-v6-validation-progress').get('latest',{})
+   return {key:report.get(key) for key in ['status','phase','extra_optimizer_updates','remote_inference_probe_passed','modal_held_out','modal_isolated_walking','modal_rollouts_completed']}
+  except Exception:return {'status':'unavailable','phase':'See the validation execution receipt'}
  api.mount('/',StaticFiles(directory='/web',html=True));return api
