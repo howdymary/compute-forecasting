@@ -1,0 +1,37 @@
+{
+  "study": "mochi-control-v8-clearance",
+  "revision": 1,
+  "source_training_run": 44382265039,
+  "route_version": "ce2259a6336d6be9",
+  "development_seeds": [
+    24000,
+    24001
+  ],
+  "held_out_seeds": [
+    26000,
+    26001,
+    26002,
+    26003
+  ],
+  "checkpoint_updates": [
+    0,
+    8,
+    16,
+    32,
+    64
+  ],
+  "new_optimizer_updates": 0,
+  "selection": "Use the frozen V8 development ranking: full success first, safety and task/arrival/recovery counts next; when both development routes complete, least recovery joint travel before duration. Select before opening the26000-series tests.",
+  "scope": "Unchanged, actually post-trained V8 weights retested on a separately frozen20mm outward laptop stance. Before/after share the revised route, controllers and verifiers. Native gait, balance and IK remain fixed. No new optimizer updates in this evaluation.",
+  "engineering_evidence": {
+    "known_training_seed": 23000,
+    "original_failure": "Falling lid contacted left_hip_roll_link; lid closure alone did not pass validity.",
+    "hand_target_shift_3mm": "Did not eliminate hip contact; rejected.",
+    "initial_robot_outward_shift_15mm": "Closed through contact, zero non-hand contact, no fall in isolated known-state diagnostic.",
+    "initial_robot_outward_shift_20mm": "Closed through contact, zero non-hand contact, no fall in isolated known-state diagnostic.",
+    "sweep_check": "17 static neutral-standing configurations, lid0\u201380degrees in5degree increments, conservative10mm clearance model. Sampled, not a continuous certificate.",
+    "changed_only": "Laptop stance x0.300to0.320m and corresponding approach/departure segments; object physics and controller code unchanged."
+  },
+  "limits": "The new26000-series cases are distinct from the original25000-series tests. Report source V8 results and this revised-condition evaluation separately. Fixed desk layout; one training run; no hardware or new-layout claim.",
+  "budget": "At most10 development +12 full-sequence held-out +80 isolated rollouts. With255 source-study completed rollouts,357 total remains within512. No checkpoint deletion or billing change."
+}
