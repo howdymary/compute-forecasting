@@ -11,7 +11,7 @@ A 22.1 cm Unitree G1 walks around one desk, silences an alarm, closes a drawer a
 
 Tinker completed **{n} additional optimizer updates and {n*6} domain-gradient calls**, resuming the retained V7 update-96 state. Every update trains walking commands, all four task-profile choices and active-arm recovery. The Qwen3.5-4B LoRA selector reads simulation state. The native gait network, standing balance, arm IK and physical motion primitives remain fixed. This is command/profile learning, not learning motor torques or gait-network weights.
 
-Development selection chose **{selected} additional updates**. The latest checkpoint is not automatically the selected one. Checkpoints 0/8/16/32/64, including regressions, are retained and shown.
+Development selection chose **{selected} additional updates**. Counts describe the whole training campaign; the selected checkpoint may precede update 64. The latest checkpoint is not automatically the selected one. Checkpoints 0/8/16/32/64, including regressions, are retained and shown.
 
 | Four matched held-out scenarios | Parent weights, V8 setup | Selected V8 weights | Fixed controller |
 |---|---:|---:|---:|

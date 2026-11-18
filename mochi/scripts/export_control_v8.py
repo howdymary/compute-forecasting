@@ -9,7 +9,7 @@ def clean(v):
  return v
 def write(name,v):(out/name).write_text(json.dumps(clean(v),separators=(',',':')))
 def export(name,row,update):
- ep=copy.deepcopy(row['episode']);ep.pop('control_telemetry',None);ep['decisions']=[{k:d[k] for k in ['t','observation','action']} for d in row['model_decisions']];ep['full_sequence_verified']=row['full_success'];ep['reference_tracking']=row.get('path_trace',[])
+ ep=copy.deepcopy(row['episode']);ep.pop('control_telemetry',None);ep['decisions']=[{k:d[k] for k in ['t','observation','action']} for d in row['model_decisions']];ep['full_sequence_verified']=row['full_success'];ep['stop_reason']=row.get('failure');ep['stations_reached']=len(row['arrivals']);ep['reference_tracking']=row.get('path_trace',[])
  for f in ep['trajectory']['frames']:
   if f['phase']!='recover':continue
   event=next((e for e in ep['events'] if e.get('phase')=='recover' and e['t']-e['duration_s']-.002<=f['t']<=e['t']+.002),None)
