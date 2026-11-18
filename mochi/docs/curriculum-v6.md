@@ -66,3 +66,29 @@ Pre-training integration attempts are retained separately. The first completed s
 Before optimizer updates, the final engineering revision adds actual loaded-foot contacts and the last two walking commands to the model observation, plus arrival error and an estimated loaded-contact slip distance. The laptop arm first lifts outside the lid's edge before approaching its contact point. A complete manually selected calibration sequence passed all four tasks, with no reset or fall. This establishes physical feasibility; it is not a learned-policy result. Starting and trained weights share this revised foundation.
 
 Completed earlier alarm, drawer and globe contact trials can be reused because their dynamics and controllers are unchanged. Earlier laptop trials remain archived and are superseded by fresh trials using the corrected approach. The report records source run IDs, dataset hashes, reused rows, regenerated rows and all completed physical trial counts. Held-out scenarios remain unused until model selection.
+
+## Reproduce a published physical episode
+
+Published episode JSON contains the actual chosen action sequence and measured poses. It can be replayed without an LLM or provider keys:
+
+```sh
+PYTHONPATH=mochi/src mochi/.venv/bin/python mochi/scripts/replay_curriculum.py --episode mochi/web/desk/curriculum/calibration.json
+```
+
+A manual calibration uses the fixed waypoint policy and profiles B/B/C/B:
+
+```sh
+PYTHONPATH=mochi/src mochi/.venv/bin/python mochi/scripts/calibrate_curriculum.py --seed 12001
+python mochi/scripts/export_curriculum.py --calibration
+blender -b -P mochi/scripts/render_curriculum.py -- --input mochi/web/desk/curriculum/calibration.json --out mochi/artifacts/curriculum/blender --time 9
+# Save all recorded motion as a Blender animation, without rendering every frame:
+blender -b -P mochi/scripts/render_curriculum.py -- --input mochi/web/desk/curriculum/calibration.json --out mochi/artifacts/curriculum/animation --animate
+```
+
+This calibration completed all four tasks in 86.33 simulated seconds, reached five route waypoints, and finished upright with the drawer, laptop and globe still within their terminal tolerances. It is one manually chosen development example, not a post-training result or a reliability estimate.
+
+The trained study records Linux x86 trajectories. Native MuJoCo contact dynamics may diverge across architectures; the independent Modal replays check the reference runtime. Inspect the final report for measured local/remote agreement rather than assuming cross-platform equality.
+
+## Direct walking audit
+
+A separately registered `configs/walking-audit-protocol.json` tests eight fresh navigation goals with every saved checkpoint and the classical waypoint controller. It holds contact tasks out of these episodes, so failures during manipulation cannot explain the measured walking result. The main study's development-selected checkpoint remains frozen. This adds no gradient updates and at most 48 local navigation episodes plus 48 independent Modal replays, within the overall 3,000-trial pilot budget.

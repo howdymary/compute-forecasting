@@ -1,0 +1,67 @@
+{
+  "study": "mochi-v6-isolated-walking",
+  "seeds": [
+    14500,
+    14501,
+    14502,
+    14503,
+    14504,
+    14505,
+    14506,
+    14507
+  ],
+  "goal_offsets": [
+    [
+      0.08,
+      0.03,
+      1.0471975512
+    ],
+    [
+      0.08,
+      -0.04,
+      -1.0471975512
+    ],
+    [
+      0.045,
+      0.04,
+      0
+    ],
+    [
+      0.045,
+      -0.04,
+      0
+    ],
+    [
+      0.1,
+      0.005,
+      1.5707963268
+    ],
+    [
+      0.07,
+      -0.04,
+      -1.5707963268
+    ],
+    [
+      0.06,
+      0,
+      0
+    ],
+    [
+      0.03,
+      0.05,
+      0.25
+    ]
+  ],
+  "checkpoints": [
+    0,
+    8,
+    16,
+    32,
+    64
+  ],
+  "selection": "Use the main study's frozen development selection; do not select a model on these results.",
+  "purpose": "Measure locomotion separately from contact-task failures and their effects on later navigation.",
+  "extra_optimizer_updates": 0,
+  "maximum_extra_physical_rollouts": 96,
+  "maximum_modal_workers": 8
+}
