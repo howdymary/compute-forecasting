@@ -1,0 +1,4923 @@
+{
+  "study": "mochi-control-v8",
+  "status": "completed",
+  "phase": "Held-out evaluation complete",
+  "source_sha": "7836634e434bb0b2c8f600afeb4847b7cf00b684",
+  "workflow_run": "44382265039",
+  "created_at": "2026-11-18T19:39:41.950636+00:00",
+  "protocol": {
+    "study": "mochi-control-v8",
+    "revision": 4,
+    "train_seeds": [
+      23000,
+      23001,
+      23002,
+      23003,
+      23004,
+      23005,
+      23006,
+      23007
+    ],
+    "development_seeds": [
+      24000,
+      24001
+    ],
+    "held_out_seeds": [
+      25000,
+      25001,
+      25002,
+      25003
+    ],
+    "training": {
+      "base_model": "Qwen/Qwen3.5-4B",
+      "rank": 16,
+      "seed": 11823,
+      "updates": 64,
+      "checkpoints": [
+        0,
+        8,
+        16,
+        32,
+        64
+      ],
+      "learning_rate": 0.0002
+    },
+    "maximum_modal_rollouts": 512,
+    "maximum_modal_workers": 4,
+    "frozen_physics_sha256": {
+      "src/mochi/curriculum/world.py": "1cb415d6d66e367e3d2c28146ab6067c1da671461c5ec34728d4487cb13152f6",
+      "src/mochi/curriculum/locomotion.py": "a46937561ccfcce13296ac4d5f2c7422f18e44818941249520d338ac429f4391",
+      "src/mochi/desk/g1_model.py": "7b3d54c7b95e02d5f93515bd01a67115a010ae23a830b3ea16475a2d20be114c"
+    },
+    "engineering_changes": [
+      "Laptop upper-edge force-controlled press at front-right stance; no object mass/friction/hinge or success tolerance changes.",
+      "Explicit active-arm recovery with safe outward withdrawal versus direct fold, old parking and delayed fold.",
+      "Checked laptop corridor route and state-based route observations. These are engineering changes, not learned weight gains."
+    ],
+    "scope": "Actual Tinker LoRA post-training of repeated observed-state walking commands, four physical task-profile choices, and post-task arm recovery. Native Unitree gait network, standing balance and IK solver remain fixed. Simulation only.",
+    "selection": "Best development full sequences, then fewer falls, more successful tasks/arrivals/recoveries, fewer recovery contacts. If both development episodes fully complete, prefer less mean recovery joint travel before duration. Motion comparisons are otherwise neutral to avoid reward for a different task mix. No held-out-based selection.",
+    "comparison": "Parent96 and trained weights use identical frozen V8 code, route, observations, primitives and verifier. Original-stack parent is reported separately to distinguish engineering gains.",
+    "checkpoint_retention": "Reuse parent96 full state; add full states at8/16/32/64 plus ephemeral inference snapshots. No deletion or billing changes.",
+    "budget": "64 additional optimizer updates, 384 completed domain gradient calls if run completes, 80 examples per update including repeats. At most512 Modal rollouts, max4 workers. Stop on missing physical domain, credentials, or storage headroom.",
+    "task_order": [
+      "alarm",
+      "drawer",
+      "laptop",
+      "globe"
+    ],
+    "uncertainty": "Four fresh held-out scenarios, one training run; report paired raw outcomes and Wilson intervals. Intermediate regressions retained. No guaranteed improvement.",
+    "split_note": "23000/24000/25000 seed blocks are newly reserved; prior19000-series used only for engineering calibration.",
+    "route_version": "70e063c2ea0936f8",
+    "frozen_controller_sha256": {
+      "src/mochi/control_v8/manipulation.py": "08f6ff5b95ff6fa8f2f59c34ef14171be19f346e1a018b82a4f1dbfe3b2b17ca",
+      "src/mochi/control_v8/recovery.py": "47e58e9f37c1a990942dbcd9e4f3b84d944201f803554c44ee3ae862290cea11",
+      "src/mochi/planning/follower.py": "7fa7dc6357a7cf97a075e68896c3d1202ca6a72294d52d120954b3736330360a",
+      "src/mochi/control_v8/verification.py": "4e78da28198bb373c515fcab604d4a756dde886f8bf4fe1aa84a7e437d347b1c",
+      "src/mochi/control_v8/decisions.py": "20741c229f0f0a8cc020055522228c954752a4a1fc216e69692579f44824329e"
+    },
+    "parent_checkpoint_sha256": "85c8fced6732179ac5b3297852d9e9bf80ab08667578314b851a47877ec1c51e",
+    "source_dataset_run": 44378183870,
+    "label_objective": {
+      "tasks": "Successful physical candidates only, lowest measured peak force, then duration.",
+      "recovery": "Successful physical candidates only, least measured arm joint travel, then duration.",
+      "walking": "Fixed reference follower; balance unique observed states across action classes.",
+      "provenance": "Supervision is relabeled from actual identical-state counterfactual branches, not invented trajectories. Underlying source episodes used faster behavior to visit states. No held-out evidence informs labels."
+    }
+  },
+  "scope": "Actual Tinker LoRA post-training of repeated observed-state walking commands, four physical task-profile choices, and post-task arm recovery. Native Unitree gait network, standing balance and IK solver remain fixed. Simulation only.",
+  "training_log": [
+    {
+      "update": 1,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 1870350.0,
+          "loss:sum": 64.94035693357
+        },
+        "alarm": {
+          "clock_cycle:unique": 1870350.0,
+          "loss:sum": 91.42402267456055
+        },
+        "drawer": {
+          "clock_cycle:unique": 1870350.0,
+          "loss:sum": 0.992572512011975
+        },
+        "laptop": {
+          "clock_cycle:unique": 1870350.0,
+          "loss:sum": 33.79741048812866
+        },
+        "globe": {
+          "clock_cycle:unique": 1870350.0,
+          "loss:sum": 5.46608005464077
+        },
+        "recovery": {
+          "clock_cycle:unique": 1870350.0,
+          "loss:sum": 24.255810283124447
+        }
+      },
+      "batch_sha256": "2b3ebd0d14227f416366375fba0f836285476b4772931b1d8b0692065c2e2cb8",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T19:48:49.166919+00:00"
+    },
+    {
+      "update": 2,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 1870353.0,
+          "loss:sum": 32.200001209042966
+        },
+        "alarm": {
+          "clock_cycle:unique": 1870354.0,
+          "loss:sum": 54.32009983062744
+        },
+        "drawer": {
+          "clock_cycle:unique": 1870354.0,
+          "loss:sum": 0.8625435645226389
+        },
+        "laptop": {
+          "clock_cycle:unique": 1870354.0,
+          "loss:sum": 1.1182684302330017
+        },
+        "globe": {
+          "clock_cycle:unique": 1870354.0,
+          "loss:sum": 9.35071462392807
+        },
+        "recovery": {
+          "clock_cycle:unique": 1870354.0,
+          "loss:sum": 14.251569259446114
+        }
+      },
+      "batch_sha256": "456a415c3d4180c20df98e5261d8419fbd5a68b975c2e04ce5963bbd403e617b",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T19:48:57.478536+00:00"
+    },
+    {
+      "update": 3,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 1870355.0,
+          "loss:sum": 13.862080880906433
+        },
+        "alarm": {
+          "clock_cycle:unique": 1870356.0,
+          "loss:sum": 10.082499265670776
+        },
+        "drawer": {
+          "clock_cycle:unique": 1870356.0,
+          "loss:sum": 1.820809562690556
+        },
+        "laptop": {
+          "clock_cycle:unique": 1870356.0,
+          "loss:sum": 2.8586342222988605
+        },
+        "globe": {
+          "clock_cycle:unique": 1870356.0,
+          "loss:sum": 7.033801406621933
+        },
+        "recovery": {
+          "clock_cycle:unique": 1870356.0,
+          "loss:sum": 5.2549660708755255
+        }
+      },
+      "batch_sha256": "5d4015650564a0cac58c20828a935af4f57a3e4c5a892ea12b8033f3fe22fc76",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T19:49:05.433224+00:00"
+    },
+    {
+      "update": 4,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 1870357.0,
+          "loss:sum": 18.126269188709557
+        },
+        "alarm": {
+          "clock_cycle:unique": 1870358.0,
+          "loss:sum": 1.5589550137519836
+        },
+        "drawer": {
+          "clock_cycle:unique": 1870358.0,
+          "loss:sum": 3.806096315383911
+        },
+        "laptop": {
+          "clock_cycle:unique": 1870358.0,
+          "loss:sum": 1.767268992960453
+        },
+        "globe": {
+          "clock_cycle:unique": 1870358.0,
+          "loss:sum": 1.9208638370037079
+        },
+        "recovery": {
+          "clock_cycle:unique": 1870358.0,
+          "loss:sum": 4.263968423008919
+        }
+      },
+      "batch_sha256": "4f5078f07a85790f7b9b6c090aa5af5ccc569dae1e1913288d96ff8702c50df0",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T19:49:13.476888+00:00"
+    },
+    {
+      "update": 5,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 1870359.0,
+          "loss:sum": 8.925343554466963
+        },
+        "alarm": {
+          "clock_cycle:unique": 1870360.0,
+          "loss:sum": 1.0163924545049667
+        },
+        "drawer": {
+          "clock_cycle:unique": 1870360.0,
+          "loss:sum": 0.6012828201055527
+        },
+        "laptop": {
+          "clock_cycle:unique": 1870360.0,
+          "loss:sum": 1.4042424224317074
+        },
+        "globe": {
+          "clock_cycle:unique": 1870360.0,
+          "loss:sum": 2.0886336863040924
+        },
+        "recovery": {
+          "clock_cycle:unique": 1870360.0,
+          "loss:sum": 4.900617748498917
+        }
+      },
+      "batch_sha256": "06ab64de08162cb54ecfdd29baf84c2e276375c10ed7efb4d355239aee3bfab3",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T19:49:21.390904+00:00"
+    },
+    {
+      "update": 6,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 1870361.0,
+          "loss:sum": 3.2589523773640394
+        },
+        "alarm": {
+          "clock_cycle:unique": 1870362.0,
+          "loss:sum": 0.8540442138910294
+        },
+        "drawer": {
+          "clock_cycle:unique": 1870362.0,
+          "loss:sum": 0.8818208128213882
+        },
+        "laptop": {
+          "clock_cycle:unique": 1870362.0,
+          "loss:sum": 1.0046071261167526
+        },
+        "globe": {
+          "clock_cycle:unique": 1870362.0,
+          "loss:sum": 1.9946672469377518
+        },
+        "recovery": {
+          "clock_cycle:unique": 1870362.0,
+          "loss:sum": 4.004415825009346
+        }
+      },
+      "batch_sha256": "7261c05e17a3ecad1a31ec8ab5988cc14d13335765d3770bbde9aae313f9094c",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T19:49:29.420094+00:00"
+    },
+    {
+      "update": 7,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 1870363.0,
+          "loss:sum": 3.459903983399272
+        },
+        "alarm": {
+          "clock_cycle:unique": 1870364.0,
+          "loss:sum": 0.5373629666864872
+        },
+        "drawer": {
+          "clock_cycle:unique": 1870364.0,
+          "loss:sum": 0.33695201203227043
+        },
+        "laptop": {
+          "clock_cycle:unique": 1870364.0,
+          "loss:sum": 0.5913700498640537
+        },
+        "globe": {
+          "clock_cycle:unique": 1870364.0,
+          "loss:sum": 1.747782178223133
+        },
+        "recovery": {
+          "clock_cycle:unique": 1870364.0,
+          "loss:sum": 3.5363085716962814
+        }
+      },
+      "batch_sha256": "fcdac8f219b2f56aab095c9b0f9e485b49cbed2a0fe2f8079a91cf77a1eb9d01",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T19:49:37.485729+00:00"
+    },
+    {
+      "update": 8,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 1870365.0,
+          "loss:sum": 3.0307515524327755
+        },
+        "alarm": {
+          "clock_cycle:unique": 1870366.0,
+          "loss:sum": 0.28665368631482124
+        },
+        "drawer": {
+          "clock_cycle:unique": 1870366.0,
+          "loss:sum": 0.17861628159880638
+        },
+        "laptop": {
+          "clock_cycle:unique": 1870366.0,
+          "loss:sum": 0.44036953523755074
+        },
+        "globe": {
+          "clock_cycle:unique": 1870366.0,
+          "loss:sum": 0.9885401204228401
+        },
+        "recovery": {
+          "clock_cycle:unique": 1870366.0,
+          "loss:sum": 1.965744636952877
+        }
+      },
+      "batch_sha256": "c65c13c10bead1c3cc3d035a8393bfae75e4d6e632e3897769a2ce57c1ce1a3a",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T19:49:45.489456+00:00"
+    },
+    {
+      "update": 9,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 1870413.0,
+          "loss:sum": 1.8594501670449972
+        },
+        "alarm": {
+          "clock_cycle:unique": 1870413.0,
+          "loss:sum": 0.1359104895964265
+        },
+        "drawer": {
+          "clock_cycle:unique": 1870414.0,
+          "loss:sum": 0.11960030719637871
+        },
+        "laptop": {
+          "clock_cycle:unique": 1870414.0,
+          "loss:sum": 0.22946750186383724
+        },
+        "globe": {
+          "clock_cycle:unique": 1870414.0,
+          "loss:sum": 0.5559009462594986
+        },
+        "recovery": {
+          "clock_cycle:unique": 1870414.0,
+          "loss:sum": 1.471719822846353
+        }
+      },
+      "batch_sha256": "baa0dad2aa30b53fda6a33077d719166741496dd19fcd3a1dbac1b25b0a25f24",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:00:23.547501+00:00"
+    },
+    {
+      "update": 10,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 1870416.0,
+          "loss:sum": 1.3936579101718962
+        },
+        "alarm": {
+          "clock_cycle:unique": 1870416.0,
+          "loss:sum": 0.07760870410129428
+        },
+        "drawer": {
+          "clock_cycle:unique": 1870416.0,
+          "loss:sum": 0.06843357160687447
+        },
+        "laptop": {
+          "clock_cycle:unique": 1870416.0,
+          "loss:sum": 0.14124031737446785
+        },
+        "globe": {
+          "clock_cycle:unique": 1870416.0,
+          "loss:sum": 0.23304456658661366
+        },
+        "recovery": {
+          "clock_cycle:unique": 1870416.0,
+          "loss:sum": 0.6695198244415224
+        }
+      },
+      "batch_sha256": "e8df08822043130fcd61b03df33bff124f591b4fd757e4c3b21e0d340f669dd3",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:00:31.185489+00:00"
+    },
+    {
+      "update": 11,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 1870417.0,
+          "loss:sum": 0.516274530091323
+        },
+        "alarm": {
+          "clock_cycle:unique": 1870418.0,
+          "loss:sum": 0.044851099606603384
+        },
+        "drawer": {
+          "clock_cycle:unique": 1870418.0,
+          "loss:sum": 0.029009486315771937
+        },
+        "laptop": {
+          "clock_cycle:unique": 1870418.0,
+          "loss:sum": 0.05366372875869274
+        },
+        "globe": {
+          "clock_cycle:unique": 1870418.0,
+          "loss:sum": 0.08591809496283531
+        },
+        "recovery": {
+          "clock_cycle:unique": 1870418.0,
+          "loss:sum": 0.14116745674982667
+        }
+      },
+      "batch_sha256": "b8922e560f7732505ec36c5e60f2b7619325a61194a49d969a6e52e142e08899",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:00:39.773630+00:00"
+    },
+    {
+      "update": 12,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 1870419.0,
+          "loss:sum": 2.20743714296259
+        },
+        "alarm": {
+          "clock_cycle:unique": 1870420.0,
+          "loss:sum": 0.020120873814448714
+        },
+        "drawer": {
+          "clock_cycle:unique": 1870420.0,
+          "loss:sum": 0.017033531796187162
+        },
+        "laptop": {
+          "clock_cycle:unique": 1870420.0,
+          "loss:sum": 0.02252853545360267
+        },
+        "globe": {
+          "clock_cycle:unique": 1870420.0,
+          "loss:sum": 0.03536946978420019
+        },
+        "recovery": {
+          "clock_cycle:unique": 1870420.0,
+          "loss:sum": 0.05292451346758753
+        }
+      },
+      "batch_sha256": "24152b091c48348d175e81566841962b13c2842089b3ff12d69719b3d71f1d6b",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:00:48.300514+00:00"
+    },
+    {
+      "update": 13,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 1870421.0,
+          "loss:sum": 1.4060513372824062
+        },
+        "alarm": {
+          "clock_cycle:unique": 1870422.0,
+          "loss:sum": 0.009942115284502506
+        },
+        "drawer": {
+          "clock_cycle:unique": 1870422.0,
+          "loss:sum": 0.006905935995746404
+        },
+        "laptop": {
+          "clock_cycle:unique": 1870422.0,
+          "loss:sum": 0.010722715291194618
+        },
+        "globe": {
+          "clock_cycle:unique": 1870422.0,
+          "loss:sum": 0.016600558999925852
+        },
+        "recovery": {
+          "clock_cycle:unique": 1870422.0,
+          "loss:sum": 0.026015436567831784
+        }
+      },
+      "batch_sha256": "2ab0bf1620d6fb64ea882ad120960a1667f70d9c19bd499c31bde3ce5a311362",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:00:57.141924+00:00"
+    },
+    {
+      "update": 14,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 1870423.0,
+          "loss:sum": 0.06239808713144157
+        },
+        "alarm": {
+          "clock_cycle:unique": 1870424.0,
+          "loss:sum": 0.0045485408627428114
+        },
+        "drawer": {
+          "clock_cycle:unique": 1870424.0,
+          "loss:sum": 0.004719167249277234
+        },
+        "laptop": {
+          "clock_cycle:unique": 1870424.0,
+          "loss:sum": 0.005947407276835293
+        },
+        "globe": {
+          "clock_cycle:unique": 1870424.0,
+          "loss:sum": 0.007117726723663509
+        },
+        "recovery": {
+          "clock_cycle:unique": 1870424.0,
+          "loss:sum": 0.015854994882829487
+        }
+      },
+      "batch_sha256": "2c7d1fd5c371182ceb86bff81b99bf0e200a545542d85dcc5d1c045cb69028e0",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:01:05.775654+00:00"
+    },
+    {
+      "update": 15,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 1870426.0,
+          "loss:sum": 0.03452306731196586
+        },
+        "alarm": {
+          "clock_cycle:unique": 1870426.0,
+          "loss:sum": 0.0027708245324902236
+        },
+        "drawer": {
+          "clock_cycle:unique": 1870426.0,
+          "loss:sum": 0.002586240749224089
+        },
+        "laptop": {
+          "clock_cycle:unique": 1870426.0,
+          "loss:sum": 0.0029825170640833676
+        },
+        "globe": {
+          "clock_cycle:unique": 1870426.0,
+          "loss:sum": 0.004599672567564994
+        },
+        "recovery": {
+          "clock_cycle:unique": 1870426.0,
+          "loss:sum": 0.009364455108880065
+        }
+      },
+      "batch_sha256": "df3375841eaf1aed66934d4ac531351f8ff8190bc0eb5ab001230a13af23b153",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:01:13.163927+00:00"
+    },
+    {
+      "update": 16,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 1870428.0,
+          "loss:sum": 0.08491878142376663
+        },
+        "alarm": {
+          "clock_cycle:unique": 1870428.0,
+          "loss:sum": 0.001352887789835222
+        },
+        "drawer": {
+          "clock_cycle:unique": 1870428.0,
+          "loss:sum": 0.0013998349459143355
+        },
+        "laptop": {
+          "clock_cycle:unique": 1870428.0,
+          "loss:sum": 0.0015521618770435452
+        },
+        "globe": {
+          "clock_cycle:unique": 1870428.0,
+          "loss:sum": 0.0020798540499527007
+        },
+        "recovery": {
+          "clock_cycle:unique": 1870428.0,
+          "loss:sum": 0.006761389900930226
+        }
+      },
+      "batch_sha256": "5b047ecf53ff0b06dd38fddf6261acea0d5094ad4635f5055589451f598838fb",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:01:20.605798+00:00"
+    },
+    {
+      "update": 17,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 1870606.0,
+          "loss:sum": 0.014678819261462195
+        },
+        "alarm": {
+          "clock_cycle:unique": 1870606.0,
+          "loss:sum": 0.0007039603879093193
+        },
+        "drawer": {
+          "clock_cycle:unique": 1870606.0,
+          "loss:sum": 0.0007876602612668648
+        },
+        "laptop": {
+          "clock_cycle:unique": 1870606.0,
+          "loss:sum": 0.0008370777795789763
+        },
+        "globe": {
+          "clock_cycle:unique": 1870606.0,
+          "loss:sum": 0.0012440682767191902
+        },
+        "recovery": {
+          "clock_cycle:unique": 1870606.0,
+          "loss:sum": 0.004073773910931777
+        }
+      },
+      "batch_sha256": "af474bf2eca117850bf04cf56b4c64a5fd6333b3cb45f742a6e9a8f0db4e4150",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:14:28.760438+00:00"
+    },
+    {
+      "update": 18,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 1870608.0,
+          "loss:sum": 0.005890397445909912
+        },
+        "alarm": {
+          "clock_cycle:unique": 1870608.0,
+          "loss:sum": 0.0004205359145998955
+        },
+        "drawer": {
+          "clock_cycle:unique": 1870608.0,
+          "loss:sum": 0.0005122580660099629
+        },
+        "laptop": {
+          "clock_cycle:unique": 1870608.0,
+          "loss:sum": 0.0003772521667997353
+        },
+        "globe": {
+          "clock_cycle:unique": 1870608.0,
+          "loss:sum": 0.0009107895821216516
+        },
+        "recovery": {
+          "clock_cycle:unique": 1870608.0,
+          "loss:sum": 0.002580974496595445
+        }
+      },
+      "batch_sha256": "5bcf6bb2b3f56b9eb24f8266e11649b44165e9b7a0d63761467ce089dd43bff5",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:14:40.559092+00:00"
+    },
+    {
+      "update": 19,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 1870610.0,
+          "loss:sum": 0.0036348995308799203
+        },
+        "alarm": {
+          "clock_cycle:unique": 1870610.0,
+          "loss:sum": 0.0002639619997353293
+        },
+        "drawer": {
+          "clock_cycle:unique": 1870610.0,
+          "loss:sum": 0.00021834531435160898
+        },
+        "laptop": {
+          "clock_cycle:unique": 1870610.0,
+          "loss:sum": 0.0005432724283309653
+        },
+        "globe": {
+          "clock_cycle:unique": 1870610.0,
+          "loss:sum": 0.00042573305472615175
+        },
+        "recovery": {
+          "clock_cycle:unique": 1870610.0,
+          "loss:sum": 0.00132705535270361
+        }
+      },
+      "batch_sha256": "f2b8cf3e0b390263dc733ceddd0d6adeebdb5a836de072c6238a872d5aaa1e25",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:14:56.829854+00:00"
+    },
+    {
+      "update": 20,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723286.0,
+          "loss:sum": 0.0038804726664238842
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723286.0,
+          "loss:sum": 0.0001437604523744085
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723286.0,
+          "loss:sum": 0.00010816940084623639
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723286.0,
+          "loss:sum": 0.00013841544387105387
+        },
+        "globe": {
+          "clock_cycle:unique": 5723286.0,
+          "loss:sum": 0.0001838476691773394
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723286.0,
+          "loss:sum": 0.0007982059419191501
+        }
+      },
+      "batch_sha256": "771842967c01b073adbb3f53661afd8c076849d46de50dafe2d6402266b28e19",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:15:37.355041+00:00"
+    },
+    {
+      "update": 21,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723288.0,
+          "loss:sum": 0.005027793573390227
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723288.0,
+          "loss:sum": 7.871992374930414e-05
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723288.0,
+          "loss:sum": 9.97747633846302e-05
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723288.0,
+          "loss:sum": 0.0001578200372023275
+        },
+        "globe": {
+          "clock_cycle:unique": 5723288.0,
+          "loss:sum": 0.00019125384278595448
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723288.0,
+          "loss:sum": 0.0005929043029482273
+        }
+      },
+      "batch_sha256": "fcd002d4696cde4673d579c347e75c0c7a74472c0698f018d7940244976bc112",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:15:48.992033+00:00"
+    },
+    {
+      "update": 22,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723291.0,
+          "loss:sum": 0.00521068895488952
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723291.0,
+          "loss:sum": 4.68130174340331e-05
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723291.0,
+          "loss:sum": 5.4165862366062356e-05
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723291.0,
+          "loss:sum": 3.84171653422527e-05
+        },
+        "globe": {
+          "clock_cycle:unique": 5723291.0,
+          "loss:sum": 8.62178903844324e-05
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723291.0,
+          "loss:sum": 0.0002829422489867284
+        }
+      },
+      "batch_sha256": "18e20173ab207d099ff06d5a9e0160767e75b21ac687177ccf96e6b310005b0c",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:16:27.778179+00:00"
+    },
+    {
+      "update": 23,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723292.0,
+          "loss:sum": 0.0008767528717612549
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723292.0,
+          "loss:sum": 3.112347758360556e-05
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723292.0,
+          "loss:sum": 4.32642555097118e-05
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723292.0,
+          "loss:sum": 3.468456088739913e-05
+        },
+        "globe": {
+          "clock_cycle:unique": 5723292.0,
+          "loss:sum": 8.360869378520874e-05
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723292.0,
+          "loss:sum": 0.0001774740950395426
+        }
+      },
+      "batch_sha256": "3f8853767057a5bfee06e7519f96aa844f40637f1d06d0f7451e8e1dfba99ad7",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:16:54.229124+00:00"
+    },
+    {
+      "update": 24,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723296.0,
+          "loss:sum": 0.002055219205516323
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723296.0,
+          "loss:sum": 2.3847958800615743e-05
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723296.0,
+          "loss:sum": 1.6874125435606402e-05
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723296.0,
+          "loss:sum": 1.9603735836426495e-05
+        },
+        "globe": {
+          "clock_cycle:unique": 5723296.0,
+          "loss:sum": 5.294756920193322e-05
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723296.0,
+          "loss:sum": 0.00013259192280656862
+        }
+      },
+      "batch_sha256": "2a4045cd0e6f8cfbbc0eb667c288346e463685ab1c38e26ddbe8da180edc68f2",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:18:17.127476+00:00"
+    },
+    {
+      "update": 25,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723298.0,
+          "loss:sum": 0.0011799791852524777
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723298.0,
+          "loss:sum": 1.3836084804097482e-05
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723298.0,
+          "loss:sum": 1.6895551084417093e-05
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723298.0,
+          "loss:sum": 7.629083711435669e-06
+        },
+        "globe": {
+          "clock_cycle:unique": 5723298.0,
+          "loss:sum": 1.796960100364231e-05
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723298.0,
+          "loss:sum": 9.628141106077237e-05
+        }
+      },
+      "batch_sha256": "d8ce536f4f0b8a63f5ff31eae5f4a736c122b51e9f3a84d1bf344789edaffe63",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:19:32.017013+00:00"
+    },
+    {
+      "update": 26,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723300.0,
+          "loss:sum": 0.0006451251015420212
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723300.0,
+          "loss:sum": 1.0937417584955256e-05
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723300.0,
+          "loss:sum": 9.044157820881082e-06
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723300.0,
+          "loss:sum": 6.718076065226342e-06
+        },
+        "globe": {
+          "clock_cycle:unique": 5723300.0,
+          "loss:sum": 1.1721870464498352e-05
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723300.0,
+          "loss:sum": 6.113523306794377e-05
+        }
+      },
+      "batch_sha256": "e3bc1a40c6713b76f6e64379be5eeb893819d2d67357558a570f6f82485c054b",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:20:04.725245+00:00"
+    },
+    {
+      "update": 27,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723302.0,
+          "loss:sum": 1.5024517691253294
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723302.0,
+          "loss:sum": 7.455336117345723e-06
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723302.0,
+          "loss:sum": 5.74483181026153e-06
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723302.0,
+          "loss:sum": 6.319955957678758e-06
+        },
+        "globe": {
+          "clock_cycle:unique": 5723302.0,
+          "loss:sum": 1.4416076851375692e-05
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723302.0,
+          "loss:sum": 4.2405770443565416e-05
+        }
+      },
+      "batch_sha256": "f7c204cbb8e342df0ccf6339a62a6287f07dc96d96d85e2579e39a4b64c5fbf7",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:20:34.079627+00:00"
+    },
+    {
+      "update": 28,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723303.0,
+          "loss:sum": 0.0007753034376136725
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723303.0,
+          "loss:sum": 1.1381337287730275e-05
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723303.0,
+          "loss:sum": 8.029388709474006e-06
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723303.0,
+          "loss:sum": 7.849001804061118e-06
+        },
+        "globe": {
+          "clock_cycle:unique": 5723303.0,
+          "loss:sum": 1.6377270753764606e-05
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723303.0,
+          "loss:sum": 5.070065692791559e-05
+        }
+      },
+      "batch_sha256": "197b70b7b406153f4220c688bc3659936bb13358ef1380b338c3306b5f9088a6",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:20:58.376391+00:00"
+    },
+    {
+      "update": 29,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723304.0,
+          "loss:sum": 0.22795194086495485
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723304.0,
+          "loss:sum": 2.5060549887712114e-05
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723304.0,
+          "loss:sum": 6.931249799890793e-06
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723304.0,
+          "loss:sum": 5.086098610718182e-06
+        },
+        "globe": {
+          "clock_cycle:unique": 5723304.0,
+          "loss:sum": 1.102850023926294e-05
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723304.0,
+          "loss:sum": 7.855738455475603e-05
+        }
+      },
+      "batch_sha256": "ddc3c099f10a8f183a3a407e3f8a010d14144a286e02921be4c6b7ebb40a842a",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:21:24.961428+00:00"
+    },
+    {
+      "update": 30,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723305.0,
+          "loss:sum": 0.04324145204783747
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723305.0,
+          "loss:sum": 5.633817022498988e-05
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723305.0,
+          "loss:sum": 1.2081315162504325e-05
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723305.0,
+          "loss:sum": 4.961815989190654e-06
+        },
+        "globe": {
+          "clock_cycle:unique": 5723305.0,
+          "loss:sum": 1.1128211781397113e-05
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723305.0,
+          "loss:sum": 6.678911528013032e-05
+        }
+      },
+      "batch_sha256": "9bd0c55f89c149c0c240377f5dc71befe07a7fe03556de7fddff8a06500c31d2",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:21:50.460414+00:00"
+    },
+    {
+      "update": 31,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723307.0,
+          "loss:sum": 0.00038762843820450144
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723307.0,
+          "loss:sum": 5.688876535714371e-05
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723307.0,
+          "loss:sum": 9.277836397814099e-06
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723307.0,
+          "loss:sum": 7.2290939669983345e-06
+        },
+        "globe": {
+          "clock_cycle:unique": 5723307.0,
+          "loss:sum": 6.858818437649461e-05
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723307.0,
+          "loss:sum": 0.00019680320429671383
+        }
+      },
+      "batch_sha256": "385caca149b16691cf516853f6ce484cee9844bfc756d7b69217a2a2d2d1c05f",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:21:59.112645+00:00"
+    },
+    {
+      "update": 32,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723309.0,
+          "loss:sum": 0.11520580586214635
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723309.0,
+          "loss:sum": 0.0001765057986631291
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723309.0,
+          "loss:sum": 1.2612110367626883e-05
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723309.0,
+          "loss:sum": 4.736816919148623e-06
+        },
+        "globe": {
+          "clock_cycle:unique": 5723309.0,
+          "loss:sum": 1.094015027547357e-05
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723309.0,
+          "loss:sum": 0.00013643885851877258
+        }
+      },
+      "batch_sha256": "0f49f3a40fb2614455d2563f278085c3c2c69464dc34ff91405344f7a3765920",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:22:07.166510+00:00"
+    },
+    {
+      "update": 33,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723419.0,
+          "loss:sum": 0.0019523628955155914
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723419.0,
+          "loss:sum": 0.0003011169537785463
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723420.0,
+          "loss:sum": 8.246542904544185e-06
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723420.0,
+          "loss:sum": 8.208920405650133e-06
+        },
+        "globe": {
+          "clock_cycle:unique": 5723420.0,
+          "loss:sum": 6.019673230639455e-05
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723420.0,
+          "loss:sum": 0.0007022873191431245
+        }
+      },
+      "batch_sha256": "2e07c3c3bf36ecc4ab0d14959e81254622a85a036f426ed35c7f25ba15c9729e",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:32:58.012665+00:00"
+    },
+    {
+      "update": 34,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723422.0,
+          "loss:sum": 0.0004759354140944083
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723422.0,
+          "loss:sum": 0.000392270929296501
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723422.0,
+          "loss:sum": 1.2990374102628266e-05
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723422.0,
+          "loss:sum": 7.1913050021521485e-06
+        },
+        "globe": {
+          "clock_cycle:unique": 5723422.0,
+          "loss:sum": 9.277830048404212e-05
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723422.0,
+          "loss:sum": 0.0021371862844716816
+        }
+      },
+      "batch_sha256": "afa94b84766a243f35f8c3794ed22a265d31f88cdf687f80a59977c806574ec2",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:33:06.895405+00:00"
+    },
+    {
+      "update": 35,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723424.0,
+          "loss:sum": 20.250312112092303
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723424.0,
+          "loss:sum": 0.0006832379658590071
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723424.0,
+          "loss:sum": 1.523769714140144e-05
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723424.0,
+          "loss:sum": 4.802935507086659e-06
+        },
+        "globe": {
+          "clock_cycle:unique": 5723424.0,
+          "loss:sum": 0.0001999513216901505
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723424.0,
+          "loss:sum": 0.011214265753643815
+        }
+      },
+      "batch_sha256": "efa312ed6395ca52e8f4c2963a6e37715d6e3fd13cedbe27503b2758254544f6",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:33:14.662309+00:00"
+    },
+    {
+      "update": 36,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723426.0,
+          "loss:sum": 0.00016766846309224093
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723426.0,
+          "loss:sum": 0.0002274431517435005
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723426.0,
+          "loss:sum": 1.0516641623325995e-05
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723426.0,
+          "loss:sum": 9.975473403756041e-06
+        },
+        "globe": {
+          "clock_cycle:unique": 5723426.0,
+          "loss:sum": 2.399473294190102e-05
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723426.0,
+          "loss:sum": 9.059491624441307e-05
+        }
+      },
+      "batch_sha256": "7bfc1700911d3d787e046ccca1eeb9509955f1ca019250e0c9a7f1dfcab4fdee",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:33:22.651807+00:00"
+    },
+    {
+      "update": 37,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723428.0,
+          "loss:sum": 0.0012531932994761519
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723428.0,
+          "loss:sum": 0.0002008928431678214
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723428.0,
+          "loss:sum": 9.88788599443069e-06
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723428.0,
+          "loss:sum": 1.2879868052095844e-05
+        },
+        "globe": {
+          "clock_cycle:unique": 5723428.0,
+          "loss:sum": 2.049186036856554e-05
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723428.0,
+          "loss:sum": 0.6331814127474331
+        }
+      },
+      "batch_sha256": "d909bdd17ee5e039db22f9457547dc7dba5db6455d852f06a94c17e14256960b",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:33:31.474428+00:00"
+    },
+    {
+      "update": 38,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723430.0,
+          "loss:sum": 0.03568400518608428
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723430.0,
+          "loss:sum": 0.00017060726440831786
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723430.0,
+          "loss:sum": 5.505151136731001e-06
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723430.0,
+          "loss:sum": 5.7892881386578665e-06
+        },
+        "globe": {
+          "clock_cycle:unique": 5723430.0,
+          "loss:sum": 1.578882620378863e-05
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723430.0,
+          "loss:sum": 1.859020665051503e-05
+        }
+      },
+      "batch_sha256": "4848d6177fec168edaacf24f016c5a6af01b417b92dc5e6d5b87b17749b6b1bd",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:33:39.274778+00:00"
+    },
+    {
+      "update": 39,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723432.0,
+          "loss:sum": 0.5428462777358618
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723432.0,
+          "loss:sum": 0.00021151774581085192
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723432.0,
+          "loss:sum": 5.074754028555617e-06
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723432.0,
+          "loss:sum": 5.936558920893731e-06
+        },
+        "globe": {
+          "clock_cycle:unique": 5723432.0,
+          "loss:sum": 1.1137161209262558e-05
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723432.0,
+          "loss:sum": 3.114544938398467e-05
+        }
+      },
+      "batch_sha256": "5474317830e4ea100c480bd3d64079e34b28ccdd1f4159bb442b42356c037990",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:33:49.004432+00:00"
+    },
+    {
+      "update": 40,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723434.0,
+          "loss:sum": 0.05048559517558715
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723434.0,
+          "loss:sum": 0.00033381414323230274
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723434.0,
+          "loss:sum": 6.155647781724838e-06
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723434.0,
+          "loss:sum": 6.5483785078868095e-06
+        },
+        "globe": {
+          "clock_cycle:unique": 5723434.0,
+          "loss:sum": 7.063908242344041e-05
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723434.0,
+          "loss:sum": 41.12521449050678
+        }
+      },
+      "batch_sha256": "03fb4a4acccfb8593073691fb47da239049f03f4b50cb67770e126c50072dab0",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:33:59.491432+00:00"
+    },
+    {
+      "update": 41,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723436.0,
+          "loss:sum": 0.010223815939752967
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723436.0,
+          "loss:sum": 0.0012244689132785425
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723436.0,
+          "loss:sum": 6.726706624249346e-05
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723436.0,
+          "loss:sum": 5.742997427660157e-05
+        },
+        "globe": {
+          "clock_cycle:unique": 5723436.0,
+          "loss:sum": 0.00012990299001103267
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723436.0,
+          "loss:sum": 0.00023470044084206165
+        }
+      },
+      "batch_sha256": "e466c4b42b6e39cae89a786cbc48d1e3c5d86318f933fbbce2c970ba9304918f",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:34:09.925799+00:00"
+    },
+    {
+      "update": 42,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723438.0,
+          "loss:sum": 0.017404142636223696
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723438.0,
+          "loss:sum": 0.0037631587183568627
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723438.0,
+          "loss:sum": 0.0008376491932722274
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723438.0,
+          "loss:sum": 0.0005675460888596717
+        },
+        "globe": {
+          "clock_cycle:unique": 5723438.0,
+          "loss:sum": 0.0018557680014055222
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723438.0,
+          "loss:sum": 0.5366227390099993
+        }
+      },
+      "batch_sha256": "5033ec704da8f85ba07f921de12ec47cfb9e7972d9deff7d056e404c9574ae90",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:34:18.402587+00:00"
+    },
+    {
+      "update": 43,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723440.0,
+          "loss:sum": 0.04472161231205973
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723440.0,
+          "loss:sum": 0.01005834253737703
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723440.0,
+          "loss:sum": 0.004501272342167795
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723440.0,
+          "loss:sum": 0.0030460101588687394
+        },
+        "globe": {
+          "clock_cycle:unique": 5723440.0,
+          "loss:sum": 0.006818340232712217
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723440.0,
+          "loss:sum": 0.4789754748535415
+        }
+      },
+      "batch_sha256": "455551defaf40d15a3f350b0cf7e5672f7ddacb04ca116760bb4911054d66630",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:34:27.371951+00:00"
+    },
+    {
+      "update": 44,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723442.0,
+          "loss:sum": 2.684262735041557
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723442.0,
+          "loss:sum": 0.021066520363092422
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723442.0,
+          "loss:sum": 0.014901843154802918
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723442.0,
+          "loss:sum": 0.02569902788673062
+        },
+        "globe": {
+          "clock_cycle:unique": 5723442.0,
+          "loss:sum": 0.032461779192090034
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723442.0,
+          "loss:sum": 0.133788028420895
+        }
+      },
+      "batch_sha256": "11c2d5ef75b2dc0de06c82b2efa914948ca67846cc07b79c72172aa70bf7fe74",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:34:36.181661+00:00"
+    },
+    {
+      "update": 45,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723444.0,
+          "loss:sum": 0.27619299276557285
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723444.0,
+          "loss:sum": 0.03391958470456302
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723444.0,
+          "loss:sum": 0.053808847442269325
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723444.0,
+          "loss:sum": 0.10361526615452021
+        },
+        "globe": {
+          "clock_cycle:unique": 5723444.0,
+          "loss:sum": 0.03550922096474096
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723444.0,
+          "loss:sum": 0.13587277590704616
+        }
+      },
+      "batch_sha256": "c9489e5a9c944b4ae50f7bb483f288b0603b0972f8ddfc2fa5b16450fd65c00c",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:34:46.728991+00:00"
+    },
+    {
+      "update": 46,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723446.0,
+          "loss:sum": 0.15200780858867802
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723446.0,
+          "loss:sum": 0.04073295136913657
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723446.0,
+          "loss:sum": 0.05541978217661381
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723446.0,
+          "loss:sum": 0.0902135764627019
+        },
+        "globe": {
+          "clock_cycle:unique": 5723446.0,
+          "loss:sum": 0.08609524532221258
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723446.0,
+          "loss:sum": 0.15790152223053155
+        }
+      },
+      "batch_sha256": "daabdb8ef60980ccc9addc7ad99d7e4dcda045db9e2a45139af8e195b0dfee1b",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:34:55.460816+00:00"
+    },
+    {
+      "update": 47,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723447.0,
+          "loss:sum": 0.18451722089957912
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723447.0,
+          "loss:sum": 0.039446773706004024
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723447.0,
+          "loss:sum": 0.09906222485005856
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723447.0,
+          "loss:sum": 0.11222417623503134
+        },
+        "globe": {
+          "clock_cycle:unique": 5723447.0,
+          "loss:sum": 0.06845666444860399
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723447.0,
+          "loss:sum": 0.17638948736566817
+        }
+      },
+      "batch_sha256": "92f41550b2a91b38b7eda9e73841bc9c92d57853b5d4e1a648dc6e71d0fb05da",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:35:23.769526+00:00"
+    },
+    {
+      "update": 48,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723449.0,
+          "loss:sum": 0.15169743851583917
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723449.0,
+          "loss:sum": 0.03600321616977453
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723449.0,
+          "loss:sum": 0.07844483060762286
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723449.0,
+          "loss:sum": 0.24279695018776692
+        },
+        "globe": {
+          "clock_cycle:unique": 5723449.0,
+          "loss:sum": 0.07766658533364534
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723449.0,
+          "loss:sum": 0.19049692898988724
+        }
+      },
+      "batch_sha256": "96c82dbda43d9987c2760549b23f39077d7804d1b185319993c132cd8445d33b",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:35:30.710187+00:00"
+    },
+    {
+      "update": 49,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723451.0,
+          "loss:sum": 0.18314388795988634
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723451.0,
+          "loss:sum": 0.02994777844287455
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723451.0,
+          "loss:sum": 0.04862344381399453
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723451.0,
+          "loss:sum": 0.24146089312853292
+        },
+        "globe": {
+          "clock_cycle:unique": 5723451.0,
+          "loss:sum": 0.0686605991795659
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723451.0,
+          "loss:sum": 0.15077899905736558
+        }
+      },
+      "batch_sha256": "e0a76af68e09a65a5d78e025eee6b148cf89246d2a3a79966486b64c9e0f7309",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:35:39.521261+00:00"
+    },
+    {
+      "update": 50,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723453.0,
+          "loss:sum": 0.21246076197712682
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723453.0,
+          "loss:sum": 0.02605997654609382
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723453.0,
+          "loss:sum": 0.03647498623467982
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723453.0,
+          "loss:sum": 0.07608271791832522
+        },
+        "globe": {
+          "clock_cycle:unique": 5723453.0,
+          "loss:sum": 0.03888830170035362
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723453.0,
+          "loss:sum": 0.10973124345764518
+        }
+      },
+      "batch_sha256": "b786dbda81acaca12f48f2d1def5ba111634c3f23f9c7d5508031b235865e0d7",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:35:48.789080+00:00"
+    },
+    {
+      "update": 51,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723455.0,
+          "loss:sum": 0.19467689510202035
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723455.0,
+          "loss:sum": 0.01773820142261684
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723455.0,
+          "loss:sum": 0.03021119232289493
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723455.0,
+          "loss:sum": 0.02508032409241423
+        },
+        "globe": {
+          "clock_cycle:unique": 5723455.0,
+          "loss:sum": 0.03170279785990715
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723455.0,
+          "loss:sum": 0.06093246935051866
+        }
+      },
+      "batch_sha256": "5c2f671f18242263ef6bba6e59308b3a87898049d7099677bf8fbd1f76d959fd",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:35:57.432352+00:00"
+    },
+    {
+      "update": 52,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723457.0,
+          "loss:sum": 0.15582941249886062
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723457.0,
+          "loss:sum": 0.015107516315765679
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723457.0,
+          "loss:sum": 0.013569277478381991
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723457.0,
+          "loss:sum": 0.01914034126093611
+        },
+        "globe": {
+          "clock_cycle:unique": 5723457.0,
+          "loss:sum": 0.021829238859936595
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723457.0,
+          "loss:sum": 0.03760720349964686
+        }
+      },
+      "batch_sha256": "54e33ca7ca79cd2fbabfec2241a54976160f0121a1a349bc724cc8ecfcf0713c",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:36:06.306868+00:00"
+    },
+    {
+      "update": 53,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723459.0,
+          "loss:sum": 0.31396846009010915
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723459.0,
+          "loss:sum": 0.00926451082341373
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723459.0,
+          "loss:sum": 0.011198960128240287
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723459.0,
+          "loss:sum": 0.010924684931524098
+        },
+        "globe": {
+          "clock_cycle:unique": 5723459.0,
+          "loss:sum": 0.01683399616740644
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723459.0,
+          "loss:sum": 0.024202202446758747
+        }
+      },
+      "batch_sha256": "e6ea2f2e001034633afef4c1d6c854daa3ad69f6ffa05ce6aa11c870c7e9c3a3",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:36:14.827818+00:00"
+    },
+    {
+      "update": 54,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723461.0,
+          "loss:sum": 0.14033402359928004
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723461.0,
+          "loss:sum": 0.008434015209786594
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723461.0,
+          "loss:sum": 0.0075561282283160836
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723461.0,
+          "loss:sum": 0.007296127965673804
+        },
+        "globe": {
+          "clock_cycle:unique": 5723461.0,
+          "loss:sum": 0.01177421712782234
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723461.0,
+          "loss:sum": 0.016325878503266722
+        }
+      },
+      "batch_sha256": "adcff500e31736c5c2a29f6421e611252f95a10eb9eb3648efb3451e2466b438",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:36:31.913448+00:00"
+    },
+    {
+      "update": 55,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723463.0,
+          "loss:sum": 0.831230754047283
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723463.0,
+          "loss:sum": 0.006436846684664488
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723463.0,
+          "loss:sum": 0.006289699027547613
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723463.0,
+          "loss:sum": 0.005526780500076711
+        },
+        "globe": {
+          "clock_cycle:unique": 5723463.0,
+          "loss:sum": 0.009109563427045941
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723463.0,
+          "loss:sum": 0.011833969329018146
+        }
+      },
+      "batch_sha256": "50aeb9af9cf224735e81d0edbdd1b849acb006025ee866fab367035d43a75fa5",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:37:14.699524+00:00"
+    },
+    {
+      "update": 56,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723465.0,
+          "loss:sum": 0.08784448666847311
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723465.0,
+          "loss:sum": 0.005027774430345744
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723465.0,
+          "loss:sum": 0.0027662874199450016
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723465.0,
+          "loss:sum": 0.003912701096851379
+        },
+        "globe": {
+          "clock_cycle:unique": 5723465.0,
+          "loss:sum": 0.0067660510540008545
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723465.0,
+          "loss:sum": 0.009177895466564223
+        }
+      },
+      "batch_sha256": "52888ff5565fc8f7fdfd5d329dc5e4efb924aa51540e885d4583e32c8a829e5b",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:37:33.339958+00:00"
+    },
+    {
+      "update": 57,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723467.0,
+          "loss:sum": 0.039270661560294684
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723467.0,
+          "loss:sum": 0.004155226692091674
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723467.0,
+          "loss:sum": 0.003039853516384028
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723467.0,
+          "loss:sum": 0.0031764100422151387
+        },
+        "globe": {
+          "clock_cycle:unique": 5723467.0,
+          "loss:sum": 0.005508595088031143
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723467.0,
+          "loss:sum": 0.0068170200975146145
+        }
+      },
+      "batch_sha256": "a01a8508023b93b0246c05c5adb25d8908b0a87ded50133e45660416515f3bfa",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:37:51.230446+00:00"
+    },
+    {
+      "update": 58,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723469.0,
+          "loss:sum": 0.06184736675641034
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723469.0,
+          "loss:sum": 0.003151102690026164
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723469.0,
+          "loss:sum": 0.0023553184437332675
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723469.0,
+          "loss:sum": 0.002747467631706968
+        },
+        "globe": {
+          "clock_cycle:unique": 5723469.0,
+          "loss:sum": 0.004669334040954709
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723469.0,
+          "loss:sum": 0.0056195337092503905
+        }
+      },
+      "batch_sha256": "2e6efba8ffda79fd67fac2ac548abf0c63b265f7041ad4b1d6d79d682638bd7b",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:38:00.967358+00:00"
+    },
+    {
+      "update": 59,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723470.0,
+          "loss:sum": 0.12731078234355664
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723470.0,
+          "loss:sum": 0.0027984087355434895
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723470.0,
+          "loss:sum": 0.0015924550316412933
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723470.0,
+          "loss:sum": 0.0026008076238213107
+        },
+        "globe": {
+          "clock_cycle:unique": 5723470.0,
+          "loss:sum": 0.0035201239224988967
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723470.0,
+          "loss:sum": 0.004559896682621911
+        }
+      },
+      "batch_sha256": "3c622a1bc97fefef5196c3f972ce65ca8b7dfe26c7d623e616dc777fb2a2d0db",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:38:28.014245+00:00"
+    },
+    {
+      "update": 60,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723471.0,
+          "loss:sum": 0.18736745907517616
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723471.0,
+          "loss:sum": 0.002267208430566825
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723471.0,
+          "loss:sum": 0.0013936657705926336
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723471.0,
+          "loss:sum": 0.0019901092164218426
+        },
+        "globe": {
+          "clock_cycle:unique": 5723471.0,
+          "loss:sum": 0.0033700975764077157
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723471.0,
+          "loss:sum": 0.003816087410086766
+        }
+      },
+      "batch_sha256": "91c0e9bbff9a3f93e73123eeec89970d306b305eb99850a69a2303b3c8ec7ed6",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:38:54.626372+00:00"
+    },
+    {
+      "update": 61,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723473.0,
+          "loss:sum": 0.013348306136322208
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723473.0,
+          "loss:sum": 0.0016547681880183518
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723473.0,
+          "loss:sum": 0.001391926227370277
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723473.0,
+          "loss:sum": 0.0018497622077120468
+        },
+        "globe": {
+          "clock_cycle:unique": 5723473.0,
+          "loss:sum": 0.0026477087230887264
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723473.0,
+          "loss:sum": 0.002941816797829233
+        }
+      },
+      "batch_sha256": "149e4a3027bb622847b63539fa945e49acf6f57098244d20cd9b56fec1b90601",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:39:01.059386+00:00"
+    },
+    {
+      "update": 62,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723475.0,
+          "loss:sum": 0.013739840447669849
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723475.0,
+          "loss:sum": 0.001351882194285281
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723475.0,
+          "loss:sum": 0.0008033644662646111
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723475.0,
+          "loss:sum": 0.0018761331230052747
+        },
+        "globe": {
+          "clock_cycle:unique": 5723475.0,
+          "loss:sum": 0.002362250437727198
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723475.0,
+          "loss:sum": 0.0024441127534373663
+        }
+      },
+      "batch_sha256": "56776004ed8d5af696c5db9356ce8240376fbf1e898e05fd62b85bee7edffb6c",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:39:10.143851+00:00"
+    },
+    {
+      "update": 63,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723477.0,
+          "loss:sum": 0.007607545223436318
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723477.0,
+          "loss:sum": 0.0010650705953594297
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723477.0,
+          "loss:sum": 0.0006503647673525847
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723477.0,
+          "loss:sum": 0.001995038786844816
+        },
+        "globe": {
+          "clock_cycle:unique": 5723477.0,
+          "loss:sum": 0.0019954447488998994
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723477.0,
+          "loss:sum": 0.002046083303866908
+        }
+      },
+      "batch_sha256": "97f1cf72a67d61c89f5744297ad0f3458a21337b7fbb8145bfde9f3ed1d25f46",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:39:19.554405+00:00"
+    },
+    {
+      "update": 64,
+      "domain_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "domain_loss_metrics": {
+        "walk": {
+          "clock_cycle:unique": 5723479.0,
+          "loss:sum": 0.020406465457199374
+        },
+        "alarm": {
+          "clock_cycle:unique": 5723479.0,
+          "loss:sum": 0.0008238303489633836
+        },
+        "drawer": {
+          "clock_cycle:unique": 5723479.0,
+          "loss:sum": 0.0004121471538383048
+        },
+        "laptop": {
+          "clock_cycle:unique": 5723479.0,
+          "loss:sum": 0.002195847235270776
+        },
+        "globe": {
+          "clock_cycle:unique": 5723479.0,
+          "loss:sum": 0.0018197392346337438
+        },
+        "recovery": {
+          "clock_cycle:unique": 5723479.0,
+          "loss:sum": 0.0017733847780618817
+        }
+      },
+      "batch_sha256": "06d335ff2cea8d22d2f33318b7cfc345c45b9945b86cdfcfa92cae79a8791879",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-18T20:39:29.622669+00:00"
+    }
+  ],
+  "checkpoints": [
+    {
+      "update": 0,
+      "cumulative_parent_plus_updates": 96,
+      "checkpoint_id": "85c8fced6732179ac5b3",
+      "created_at": "2026-11-18T19:48:18.817576+00:00",
+      "continuous_development": {
+        "n": 2,
+        "full_successes": 0,
+        "wilson_95_full_success_rate": [
+          0.0,
+          0.6576197724933345
+        ],
+        "task_successes": {
+          "alarm": 0,
+          "drawer": 0,
+          "laptop": 0,
+          "globe": 0
+        },
+        "stations_reached": 0,
+        "station_opportunities": 8,
+        "falls": 0,
+        "mean_duration_s": 35.08906198992633,
+        "recovery_successes": 0,
+        "recovery_attempts": 0,
+        "recovery_contact_steps": 0,
+        "successful_recovery_mean_s": null,
+        "successful_recovery_mean_joint_travel_rad": null,
+        "mean_arrival_position_error_mm": null
+      }
+    },
+    {
+      "update": 8,
+      "cumulative_parent_plus_updates": 104,
+      "checkpoint_id": "0188b0e78f749d276c61",
+      "created_at": "2026-11-18T20:00:13.782636+00:00",
+      "continuous_development": {
+        "n": 2,
+        "full_successes": 1,
+        "wilson_95_full_success_rate": [
+          0.09453120573423457,
+          0.9054687942657654
+        ],
+        "task_successes": {
+          "alarm": 2,
+          "drawer": 2,
+          "laptop": 1,
+          "globe": 1
+        },
+        "stations_reached": 7,
+        "station_opportunities": 8,
+        "falls": 0,
+        "mean_duration_s": 70.19815198340864,
+        "recovery_successes": 6,
+        "recovery_attempts": 7,
+        "recovery_contact_steps": 21,
+        "successful_recovery_mean_s": 1.493380581462467,
+        "successful_recovery_mean_joint_travel_rad": 4.6596383680336055,
+        "mean_arrival_position_error_mm": 3.886013663410607
+      }
+    },
+    {
+      "update": 16,
+      "cumulative_parent_plus_updates": 112,
+      "checkpoint_id": "75bfe2af6826089d45e2",
+      "created_at": "2026-11-18T20:11:06.597688+00:00",
+      "continuous_development": {
+        "n": 2,
+        "full_successes": 1,
+        "wilson_95_full_success_rate": [
+          0.09453120573423457,
+          0.9054687942657654
+        ],
+        "task_successes": {
+          "alarm": 2,
+          "drawer": 2,
+          "laptop": 1,
+          "globe": 1
+        },
+        "stations_reached": 7,
+        "station_opportunities": 8,
+        "falls": 0,
+        "mean_duration_s": 75.05759958847646,
+        "recovery_successes": 6,
+        "recovery_attempts": 7,
+        "recovery_contact_steps": 21,
+        "successful_recovery_mean_s": 1.3980091366110035,
+        "successful_recovery_mean_joint_travel_rad": 4.725596024824914,
+        "mean_arrival_position_error_mm": 3.7023134723763986
+      }
+    },
+    {
+      "update": 32,
+      "cumulative_parent_plus_updates": 128,
+      "checkpoint_id": "3618d249dd856098e058",
+      "created_at": "2026-11-18T20:32:47.955844+00:00",
+      "continuous_development": {
+        "n": 2,
+        "full_successes": 1,
+        "wilson_95_full_success_rate": [
+          0.09453120573423457,
+          0.9054687942657654
+        ],
+        "task_successes": {
+          "alarm": 2,
+          "drawer": 2,
+          "laptop": 1,
+          "globe": 1
+        },
+        "stations_reached": 7,
+        "station_opportunities": 8,
+        "falls": 0,
+        "mean_duration_s": 75.53949787482308,
+        "recovery_successes": 6,
+        "recovery_attempts": 7,
+        "recovery_contact_steps": 22,
+        "successful_recovery_mean_s": 1.4910644178026342,
+        "successful_recovery_mean_joint_travel_rad": 4.6657085843276205,
+        "mean_arrival_position_error_mm": 3.786033619999484
+      }
+    },
+    {
+      "update": 64,
+      "cumulative_parent_plus_updates": 160,
+      "checkpoint_id": "12492b4f79753b166ce7",
+      "created_at": "2026-11-18T20:51:08.944612+00:00",
+      "continuous_development": {
+        "n": 2,
+        "full_successes": 1,
+        "wilson_95_full_success_rate": [
+          0.09453120573423457,
+          0.9054687942657654
+        ],
+        "task_successes": {
+          "alarm": 2,
+          "drawer": 2,
+          "laptop": 1,
+          "globe": 1
+        },
+        "stations_reached": 7,
+        "station_opportunities": 8,
+        "falls": 0,
+        "mean_duration_s": 75.09152457385964,
+        "recovery_successes": 6,
+        "recovery_attempts": 7,
+        "recovery_contact_steps": 23,
+        "successful_recovery_mean_s": 1.4083637506235405,
+        "successful_recovery_mean_joint_travel_rad": 4.7198569889611415,
+        "mean_arrival_position_error_mm": 3.628442478105136
+      }
+    }
+  ],
+  "rollouts": 255,
+  "optimizer_updates_completed": 64,
+  "parent_optimizer_updates": 96,
+  "evaluation_runtime": "Paired closed-loop Modal physics; fixed gait, standing balance, IK and success verifiers.",
+  "parent_checkpoint_id": "85c8fced6732179ac5b3297852d9e9bf80ab08667578314b851a47877ec1c51e",
+  "checkpoint_count_before": 44,
+  "research_allocation": [
+    {
+      "update": 0,
+      "domain_batch_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "proposal_record": "mochi-desk-a2abaabf-r2"
+    },
+    {
+      "update": 16,
+      "domain_batch_counts": {
+        "walk": 32,
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 8,
+        "globe": 8,
+        "recovery": 16
+      },
+      "proposal_record": "mochi-desk-a2abaabf-r8"
+    }
+  ],
+  "source_data": {
+    "workflow_run": 44378183870,
+    "optimizer_updates": 0,
+    "reused_completed_physical_rollouts": 229,
+    "dataset_sha256": {
+      "23000": "d0faf56a5509aa86cca48be2813f6459c26eb81ab88c156c026bb7c93c87057a",
+      "23001": "85121c609fae2939883b5105097ee6a328907dd2129792d4e0acc708540674ac",
+      "23002": "02ee1639d6f9c6882ed35f3ae919ee32f9d92e821425bb87ee777e69c1474a58",
+      "23003": "0d2d056146b83e43b7f4deb44144d8e18134fc6bc80feac718d016e6fa30ad0b",
+      "23004": "60b748ff88f4014d30bd3bdf71729bb0beec4a0a6dcdcf10cf0971c07e42d7da",
+      "23005": "4df51c3ca8c1d748ffbaeabb1cf00b8d942999de954079d427813d546436a4c5",
+      "23006": "46ad7650608108f05773ec1ab27748bf55a3a8eae0182ee9073a068d2c489d28",
+      "23007": "bd78edc16052785d4f600cb9fecd5eced7ffefe05cbf4b681e5f988c712e4360"
+    },
+    "interrupted_development_calls_at_most": 2,
+    "reason": "Before any gradient updates, replace fastest-only labels with lower-force contacts and least-travel safe recovery. Reuse identical frozen physical branches."
+  },
+  "data_audit": {
+    "walk": {
+      "unique_observations": 995,
+      "label_counts": {
+        "right_slow": 141,
+        "forward": 122,
+        "left_slow": 159,
+        "slow": 150,
+        "left": 86,
+        "side_right": 87,
+        "stop": 75,
+        "back": 94,
+        "side_left": 18,
+        "right": 63
+      },
+      "physical_observations": 1997
+    },
+    "alarm": {
+      "unique_observations": 8,
+      "label_counts": {
+        "C": 8
+      },
+      "physical_observations": 8
+    },
+    "drawer": {
+      "unique_observations": 8,
+      "label_counts": {
+        "A": 8
+      },
+      "physical_observations": 8
+    },
+    "laptop": {
+      "unique_observations": 7,
+      "label_counts": {
+        "P0": 6,
+        "P1": 1
+      },
+      "physical_observations": 7
+    },
+    "globe": {
+      "unique_observations": 7,
+      "label_counts": {
+        "A": 6,
+        "B": 1
+      },
+      "physical_observations": 7
+    },
+    "recovery": {
+      "unique_observations": 30,
+      "label_counts": {
+        "R1": 8,
+        "R0": 22
+      },
+      "physical_observations": 30,
+      "task_counts": {
+        "alarm": 8,
+        "drawer": 8,
+        "laptop": 7,
+        "globe": 7
+      }
+    }
+  },
+  "fixed_baseline": {
+    "alarm": "C",
+    "drawer": "A",
+    "laptop": "P0",
+    "globe": "A"
+  },
+  "fixed_recovery_baseline": {
+    "alarm": "R1",
+    "drawer": "R0",
+    "laptop": "R0",
+    "globe": "R0"
+  },
+  "selected_checkpoint": {
+    "update": 8,
+    "cumulative_parent_plus_updates": 104,
+    "checkpoint_id": "0188b0e78f749d276c61",
+    "created_at": "2026-11-18T20:00:13.782636+00:00",
+    "continuous_development": {
+      "n": 2,
+      "full_successes": 1,
+      "wilson_95_full_success_rate": [
+        0.09453120573423457,
+        0.9054687942657654
+      ],
+      "task_successes": {
+        "alarm": 2,
+        "drawer": 2,
+        "laptop": 1,
+        "globe": 1
+      },
+      "stations_reached": 7,
+      "station_opportunities": 8,
+      "falls": 0,
+      "mean_duration_s": 70.19815198340864,
+      "recovery_successes": 6,
+      "recovery_attempts": 7,
+      "recovery_contact_steps": 21,
+      "successful_recovery_mean_s": 1.493380581462467,
+      "successful_recovery_mean_joint_travel_rad": 4.6596383680336055,
+      "mean_arrival_position_error_mm": 3.886013663410607
+    }
+  },
+  "held_out_not_yet_run": false,
+  "held_out": {
+    "starting_model": {
+      "n": 4,
+      "full_successes": 0,
+      "wilson_95_full_success_rate": [
+        0.0,
+        0.48989083645458353
+      ],
+      "task_successes": {
+        "alarm": 0,
+        "drawer": 0,
+        "laptop": 0,
+        "globe": 0
+      },
+      "stations_reached": 0,
+      "station_opportunities": 16,
+      "falls": 0,
+      "mean_duration_s": 35.08906198992633,
+      "recovery_successes": 0,
+      "recovery_attempts": 0,
+      "recovery_contact_steps": 0,
+      "successful_recovery_mean_s": null,
+      "successful_recovery_mean_joint_travel_rad": null,
+      "mean_arrival_position_error_mm": null
+    },
+    "post_trained_model": {
+      "n": 4,
+      "full_successes": 4,
+      "wilson_95_full_success_rate": [
+        0.5101091635454165,
+        1.0
+      ],
+      "task_successes": {
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 4,
+        "globe": 4
+      },
+      "stations_reached": 16,
+      "station_opportunities": 16,
+      "falls": 0,
+      "mean_duration_s": 75.78862171326945,
+      "recovery_successes": 16,
+      "recovery_attempts": 16,
+      "recovery_contact_steps": 0,
+      "successful_recovery_mean_s": 1.483349549138484,
+      "successful_recovery_mean_joint_travel_rad": 4.958976188712678,
+      "mean_arrival_position_error_mm": 4.2679733406962015
+    },
+    "classical_fixed": {
+      "n": 4,
+      "full_successes": 4,
+      "wilson_95_full_success_rate": [
+        0.5101091635454165,
+        1.0
+      ],
+      "task_successes": {
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 4,
+        "globe": 4
+      },
+      "stations_reached": 16,
+      "station_opportunities": 16,
+      "falls": 0,
+      "mean_duration_s": 90.34509721861751,
+      "recovery_successes": 16,
+      "recovery_attempts": 16,
+      "recovery_contact_steps": 0,
+      "successful_recovery_mean_s": 1.540930058968948,
+      "successful_recovery_mean_joint_travel_rad": 4.817822410549406,
+      "mean_arrival_position_error_mm": 3.42782166750922
+    }
+  },
+  "legacy_original_stack": {
+    "n": 4,
+    "task_successes": {
+      "alarm": 4,
+      "drawer": 4,
+      "laptop": 3,
+      "globe": 4
+    },
+    "falls": 0
+  },
+  "modal_execution_receipts": [
+    {
+      "provider": "Modal",
+      "cpu": 1,
+      "memory_mib": 3072,
+      "wall_seconds": 1072.8052890689999,
+      "physical_rollouts": 4,
+      "architecture": "x86_64",
+      "paired_on_one_worker": true,
+      "torch": "2.15.0+cpu",
+      "mujoco": "3.3.7",
+      "numpy": "2.3.4",
+      "keys_serialized": false
+    },
+    {
+      "provider": "Modal",
+      "cpu": 1,
+      "memory_mib": 3072,
+      "wall_seconds": 1080.609833523,
+      "physical_rollouts": 4,
+      "architecture": "x86_64",
+      "paired_on_one_worker": true,
+      "torch": "2.15.0+cpu",
+      "mujoco": "3.3.7",
+      "numpy": "2.3.4",
+      "keys_serialized": false
+    },
+    {
+      "provider": "Modal",
+      "cpu": 1,
+      "memory_mib": 3072,
+      "wall_seconds": 1052.433371607,
+      "physical_rollouts": 4,
+      "architecture": "x86_64",
+      "paired_on_one_worker": true,
+      "torch": "2.15.0+cpu",
+      "mujoco": "3.3.7",
+      "numpy": "2.3.4",
+      "keys_serialized": false
+    },
+    {
+      "provider": "Modal",
+      "cpu": 1,
+      "memory_mib": 3072,
+      "wall_seconds": 1226.583307262,
+      "physical_rollouts": 4,
+      "architecture": "x86_64",
+      "paired_on_one_worker": true,
+      "torch": "2.15.0+cpu",
+      "mujoco": "3.3.7",
+      "numpy": "2.3.4",
+      "keys_serialized": false
+    }
+  ],
+  "paired_outcomes": [
+    {
+      "seed": 25000,
+      "starting_full": false,
+      "trained_full": true,
+      "starting_arrivals": 0,
+      "trained_arrivals": 4,
+      "trained_tasks": 4,
+      "trained_fall": false
+    },
+    {
+      "seed": 25001,
+      "starting_full": false,
+      "trained_full": true,
+      "starting_arrivals": 0,
+      "trained_arrivals": 4,
+      "trained_tasks": 4,
+      "trained_fall": false
+    },
+    {
+      "seed": 25002,
+      "starting_full": false,
+      "trained_full": true,
+      "starting_arrivals": 0,
+      "trained_arrivals": 4,
+      "trained_tasks": 4,
+      "trained_fall": false
+    },
+    {
+      "seed": 25003,
+      "starting_full": false,
+      "trained_full": true,
+      "starting_arrivals": 0,
+      "trained_arrivals": 4,
+      "trained_tasks": 4,
+      "trained_fall": false
+    }
+  ],
+  "completed_at": "2026-11-18T21:13:53.678406+00:00",
+  "duration_seconds": 5651.727794961,
+  "search": [
+    {
+      "query": "humanoid manipulation collision free arm retraction contact force laptop lid closing locomotion imitation learning waypoint error",
+      "request_id": "51f8f01e4d5af6d4752504d3f80ff580",
+      "cost_dollars": {
+        "total": 0.007,
+        "search": {
+          "neural": 0.007
+        }
+      },
+      "sources": [
+        {
+          "url": "https://arxiv.org/abs/2610.35862",
+          "title": "Learning Force-Reactive Humanoid Loco-Manipulation",
+          "excerpt": "Many everyday tasks require controlling contact force as well as motion. On a humanoid, this force must often be coordinated across both hands and",
+          "retrieved_at": "2026-11-18T19:39:59.520560+00:00"
+        },
+        {
+          "url": "https://arxiv.org/html/2409.20514v4",
+          "title": "Opt2Skill: Imitating Dynamically-feasible Whole-Body Trajectories for Versatile Humanoid Loco-Manipulation",
+          "excerpt": "To address these challenges, we introduce Opt2Skill, an end-to-end pipeline that combines model-based trajectory optimization with RL to achieve robust whole-body loco-manipulation. Opt2Skill generates",
+          "retrieved_at": "2026-11-18T19:39:59.520600+00:00"
+        },
+        {
+          "url": "https://arxiv.org/pdf/2506.15146",
+          "title": "TACT: Humanoid Whole-body Contact Manipulation through Deep Imitation Learning with Tactile Modality",
+          "excerpt": "Manipulation with whole-body contact by humanoid robots offers distinct advantages, including enhanced stability and reduced load. On the other hand, we need to address",
+          "retrieved_at": "2026-11-18T19:39:59.520652+00:00"
+        }
+      ],
+      "response_sha256": "c5146b6c9e038c9f06395a12a533f8a9c479fa0f7f3204906a54b17dc77f3dea",
+      "at": "2026-11-18T19:39:59.520781+00:00"
+    },
+    {
+      "query": "humanoid manipulation collision free arm retraction contact force laptop lid closing locomotion imitation learning waypoint error",
+      "request_id": "45eef41c2f9d123bde75856843f80764",
+      "cost_dollars": {
+        "total": 0.007,
+        "search": {
+          "neural": 0.007
+        }
+      },
+      "sources": [
+        {
+          "url": "https://arxiv.org/html/2409.20514v4",
+          "title": "Opt2Skill: Imitating Dynamically-feasible Whole-Body Trajectories for Versatile Humanoid Loco-Manipulation",
+          "excerpt": "Humanoid robots are designed to perform diverse loco-manipulation tasks. However, they face challenges due to their high-dimensional and unstable dynamics, as well as the",
+          "retrieved_at": "2026-11-18T20:13:58.118441+00:00"
+        },
+        {
+          "url": "https://arxiv.org/abs/2610.35862",
+          "title": "Learning Force-Reactive Humanoid Loco-Manipulation",
+          "excerpt": "###### Abstract Many everyday tasks require controlling contact force as well as motion. On a humanoid, this force must often be coordinated across both",
+          "retrieved_at": "2026-11-18T20:13:58.118493+00:00"
+        },
+        {
+          "url": "https://arxiv.org/html/2501.02116",
+          "title": "Humanoid Locomotion and Manipulation: Current Progress and Challenges in Control, Planning, and Learning",
+          "excerpt": "learn directly from data. To synthesize plausible motion, a naive supervised learning approach often ... the contact positions with a large, dynamic object, which",
+          "retrieved_at": "2026-11-18T20:13:58.118500+00:00"
+        }
+      ],
+      "response_sha256": "b3ccc0c5585a0aea5dda015419248ffb7bc65af4ce0c985749aec5d51cecd35c",
+      "at": "2026-11-18T20:13:58.118616+00:00"
+    }
+  ],
+  "memory": {
+    "audiences": {
+      "shared": "mochi-desk-a2abaabf-shared",
+      "critic_private": "mochi-desk-a2abaabf-critic"
+    },
+    "reads": [
+      {
+        "reader": "mochi-desk-a2abaabf-researcher",
+        "reader_role": "researcher",
+        "author": "mochi-desk-a2abaabf-experimenter",
+        "record_id": "mochi-desk-a2abaabf-r0",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "53615d6f4087832a7faab16c7d2f950bd8fbb6204ca629172b03539a1200c6e1",
+        "at": "2026-11-18T19:39:59.377619+00:00"
+      },
+      {
+        "reader": "mochi-desk-a2abaabf-designer",
+        "reader_role": "designer",
+        "author": "mochi-desk-a2abaabf-researcher",
+        "record_id": "mochi-desk-a2abaabf-r1",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "55645e71386ff676cc462599993126b03677c3dd16e012253febbca79a149ccc",
+        "at": "2026-11-18T19:40:05.964417+00:00"
+      },
+      {
+        "reader": "mochi-desk-a2abaabf-experimenter",
+        "reader_role": "experimenter",
+        "author": "mochi-desk-a2abaabf-designer",
+        "record_id": "mochi-desk-a2abaabf-r2",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "53845985f0bb18302e87bf5ac9f30f7da0b0cb7dafb2842ac9ec25aac5352412",
+        "at": "2026-11-18T19:40:16.980018+00:00"
+      },
+      {
+        "reader": "mochi-desk-a2abaabf-critic",
+        "reader_role": "critic",
+        "author": "mochi-desk-a2abaabf-experimenter",
+        "record_id": "mochi-desk-a2abaabf-r3",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "c3993d53dc0443d07e8a4d9a03db883f45cdc9bd4986af32bd6af7f1fcf364a0",
+        "at": "2026-11-18T19:41:03.689166+00:00"
+      },
+      {
+        "reader": "mochi-desk-a2abaabf-researcher",
+        "reader_role": "researcher",
+        "author": "mochi-desk-a2abaabf-critic",
+        "record_id": "mochi-desk-a2abaabf-r4",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "fbf333c728b8ec0c041cc00d50696bd234f385c39bd92b47fe3e5b35717e990d",
+        "at": "2026-11-18T19:41:30.764168+00:00"
+      },
+      {
+        "reader": "mochi-desk-a2abaabf-designer",
+        "reader_role": "designer",
+        "author": "mochi-desk-a2abaabf-critic",
+        "record_id": "mochi-desk-a2abaabf-r5",
+        "source_id_verified": false,
+        "expected_access": false,
+        "cross_agent_use": false,
+        "sha256": null,
+        "at": "2026-11-18T19:41:35.301250+00:00"
+      },
+      {
+        "reader": "mochi-desk-a2abaabf-researcher",
+        "reader_role": "researcher",
+        "author": "mochi-desk-a2abaabf-experimenter",
+        "record_id": "mochi-desk-a2abaabf-r6",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "7033a917adb70f15a6cf22ea26c299b33826d6b8ebd570ce53ce09b5973ece9e",
+        "at": "2026-11-18T20:13:56.486420+00:00"
+      },
+      {
+        "reader": "mochi-desk-a2abaabf-designer",
+        "reader_role": "designer",
+        "author": "mochi-desk-a2abaabf-researcher",
+        "record_id": "mochi-desk-a2abaabf-r7",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "48295f5515b59417773c58e6cd215ff172d84f07a27c263a69bee9be4fdf0781",
+        "at": "2026-11-18T20:14:06.812094+00:00"
+      },
+      {
+        "reader": "mochi-desk-a2abaabf-experimenter",
+        "reader_role": "experimenter",
+        "author": "mochi-desk-a2abaabf-designer",
+        "record_id": "mochi-desk-a2abaabf-r8",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "806bc50903c49ff5113b31438f2fc2980667f63c6a39fe95d6cbe87d28baca10",
+        "at": "2026-11-18T20:14:17.986713+00:00"
+      },
+      {
+        "reader": "mochi-desk-a2abaabf-critic",
+        "reader_role": "critic",
+        "author": "mochi-desk-a2abaabf-experimenter",
+        "record_id": "mochi-desk-a2abaabf-r9",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "7e17d5ba6140c5d1982a585a88b2db3c4c0dbf9a2f70afec95d2c4e102f8b07e",
+        "at": "2026-11-18T21:13:12.300063+00:00"
+      },
+      {
+        "reader": "mochi-desk-a2abaabf-researcher",
+        "reader_role": "researcher",
+        "author": "mochi-desk-a2abaabf-critic",
+        "record_id": "mochi-desk-a2abaabf-r10",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "1598f989a2c4e77b4964b985728cd1388e392933854ac5f17b7c3bdd16467d0a",
+        "at": "2026-11-18T21:13:53.572149+00:00"
+      }
+    ],
+    "decisions": [
+      {
+        "role": "designer",
+        "question": "Choose equal-size 80-example batches. balanced: 32 walk + 8 per task + 16 recovery; recovery_first: 24 walk + 8 per task + 24 recovery. All six domains always receive gradients. Recovery samples are balanced across tasks.",
+        "selected": "balanced",
+        "distribution": {
+          "balanced": 0.5926666259765625,
+          "recovery_first": 0.4073334336280823
+        },
+        "input_record_ids": [
+          "mochi-desk-a2abaabf-r1"
+        ],
+        "context_sha256": "7cd81bb406c3cc96cd0a09764a1e5a502467f5648fa23a6d5b110708f4d56581",
+        "at": "2026-11-18T19:40:08.428881+00:00"
+      },
+      {
+        "role": "designer",
+        "question": "Choose equal-size 80-example batches. balanced: 32 walk + 8 per task + 16 recovery; recovery_first: 24 walk + 8 per task + 24 recovery. All six domains always receive gradients. Recovery samples are balanced across tasks.",
+        "selected": "balanced",
+        "distribution": {
+          "balanced": 0.562176525592804,
+          "recovery_first": 0.4378235340118408
+        },
+        "input_record_ids": [
+          "mochi-desk-a2abaabf-r7"
+        ],
+        "context_sha256": "e7fcb9441c0ad711b6261a06bfe750c40d905b98adcd7cb1bbca8f250ad0f555",
+        "at": "2026-11-18T20:14:09.296650+00:00"
+      }
+    ],
+    "eligibility": {
+      "writers": 4,
+      "readers": 4,
+      "cross_agent_reads": 8,
+      "isolation_passed": true
+    },
+    "calls": [
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-18T19:39:42.948384+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-18T19:39:43.009857+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-18T19:39:43.035283+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-18T19:39:43.057297+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "audiences",
+        "status": 201,
+        "at": "2026-11-18T19:39:43.084526+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "audiences",
+        "status": 201,
+        "at": "2026-11-18T19:39:43.108073+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-18T19:39:48.746286+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:39:48.821893+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:39:50.842050+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:39:52.899837+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:39:54.918973+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:39:56.957495+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:39:58.976453+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-18T19:39:59.377533+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-18T19:39:59.577355+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:39:59.595859+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:40:01.633883+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:40:03.656905+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:40:05.676819+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-18T19:40:05.964327+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-18T19:40:08.483092+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:40:08.502442+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:40:10.521449+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:40:12.540224+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:40:14.563961+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:40:16.625802+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-18T19:40:16.979958+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-18T19:40:36.770658+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:40:36.792651+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:40:38.857356+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:40:40.876721+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:40:42.951373+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:40:45.001064+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:40:47.021794+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:40:49.100265+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:40:51.119368+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:40:53.185310+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:40:55.204593+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:40:57.270239+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:40:59.319826+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:41:01.356866+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:41:03.376239+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-18T19:41:03.689093+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-18T19:41:03.751548+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:41:03.769991+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:41:05.798703+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:41:07.819334+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:41:09.895377+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:41:11.915457+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:41:13.985677+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:41:16.054878+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:41:18.196828+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:41:20.215658+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:41:22.234270+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:41:24.285703+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:41:26.315016+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:41:28.378319+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:41:30.397205+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-18T19:41:30.763836+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-18T19:41:30.926930+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:41:30.958597+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:41:32.995118+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T19:41:35.053241+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-18T19:41:35.301197+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-18T20:11:08.710348+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:11:08.799164+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:11:10.868803+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:11:12.894476+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:11:14.918810+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:11:16.940819+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:11:19.055638+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:11:21.103400+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:11:23.138523+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:11:25.182584+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:11:27.205120+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:11:29.247911+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:11:31.333427+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:11:33.373213+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:11:35.409378+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:11:37.446302+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:11:39.526922+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:11:41.568886+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:11:43.589325+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:11:45.645335+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:11:47.666389+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:11:49.686027+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:11:51.706496+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:11:53.725148+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:11:55.794876+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:11:57.816176+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:11:59.851048+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:12:01.878848+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:12:03.898230+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:12:05.942899+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:12:07.982910+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:12:10.088604+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:12:12.127889+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:12:14.154207+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:12:16.185218+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:12:18.221838+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:12:20.267264+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:12:22.290099+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:12:24.320093+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:12:26.341618+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:12:28.362379+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:12:30.382768+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:12:32.434889+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:12:34.456461+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:12:36.482995+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:12:38.518684+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:12:40.556047+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:12:42.588663+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:12:44.609349+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:12:46.632009+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:12:48.680070+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:12:50.714253+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:12:52.778259+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:12:54.801577+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:12:56.828463+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:12:58.848544+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:13:00.867415+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:13:02.909341+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:13:04.959294+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:13:06.979428+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:13:08.999792+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:13:11.045171+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:13:13.090950+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:13:15.131573+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:13:17.155149+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:13:19.226932+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:13:21.312263+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:13:23.345593+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:13:25.364135+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:13:27.384195+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:13:29.402517+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:13:31.423062+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:13:33.477550+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:13:35.508688+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:13:37.528721+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:13:39.569907+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:13:41.607920+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:13:43.642996+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:13:45.662666+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:13:47.730105+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:13:49.758262+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:13:51.800512+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:13:53.830101+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:13:55.884777+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-18T20:13:56.486167+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-18T20:13:58.242938+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:13:58.260783+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:14:00.299412+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:14:02.365687+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:14:04.390528+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:14:06.414889+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-18T20:14:06.812014+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-18T20:14:09.453965+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:14:09.514472+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:14:11.553186+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:14:13.590214+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:14:15.628983+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T20:14:17.654666+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-18T20:14:17.986663+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-18T21:12:22.801426+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:12:22.866561+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:12:24.938536+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:12:26.985162+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:12:29.047902+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:12:31.084067+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:12:33.156899+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:12:35.197390+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:12:37.218710+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:12:39.305328+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:12:41.327729+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:12:43.377303+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:12:45.397448+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:12:47.418431+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:12:49.482669+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:12:51.504318+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:12:53.567214+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:12:55.665202+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:12:57.686533+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:12:59.732464+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:13:01.766938+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:13:03.792934+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:13:05.873974+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:13:07.912346+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:13:09.931438+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:13:11.958030+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-18T21:13:12.299781+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-18T21:13:12.425678+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:13:12.441656+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:13:14.478787+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:13:16.501191+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:13:18.545460+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:13:20.565606+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:13:22.640214+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:13:24.662498+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:13:26.836069+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:13:28.888658+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:13:30.945594+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:13:32.965640+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:13:35.015521+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:13:37.037096+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:13:39.059503+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:13:41.095206+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:13:43.118634+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:13:45.144268+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:13:47.165497+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:13:49.184253+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:13:51.230991+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-18T21:13:53.259909+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-18T21:13:53.571917+00:00"
+      }
+    ]
+  },
+  "workflow_url": "https://github.com/howdymary/mochi-demo/actions/runs/44382265039"
+}

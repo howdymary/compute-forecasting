@@ -40,7 +40,13 @@ The additive workflow is `.github/workflows/mochi-control-v8.yml`. Configuration
 
 On calibration seed 19001, fixed controls completed all four tasks, all four arrival checks and all four recoveries, without falling. This establishes a working vertical slice before training. It does not establish learned improvement. Isolated laptop calibration seeds 19000 and 19001 also closed the lid through contact.
 
-Results from new training and held-out evaluation will be reported separately after the run completes. Improvement is not assumed in advance.
+## Completed source study · November 18, 2026
+
+Run 44382265039 completed successfully: 64 additional Tinker optimizer updates, 384 completed domain-gradient calls and 5,120 consumed examples including repetitions. The eight training seeds supplied 1,055 unique labeled observations. Development selected update 8; updates 16, 32 and 64 did not improve full-sequence completion. All five checkpoints are retained.
+
+On the four previously withheld 25000-series scenarios, the selected weights completed 4/4 continuous sequences, reached 16/16 stations and passed 16/16 arm recoveries, with zero falls and zero recovery fixture-contact steps. The parent weights reached 0/16 stations through the new V8 interface. The conventional controller also completed 4/4 sequences. Mean simulated completion time was 75.79 seconds for the selected model and 90.35 seconds for the conventional controller; inference waiting time is excluded.
+
+These are four fixed-layout simulation cases from one training run, not a general robotics benchmark. The 95% Wilson interval for 4/4 completion is approximately 51–100%. The original V7 stack remains a separate reference. Numerical outcomes are in [the source evidence](../evidence/control-v8/results.json), and the later laptop-clearance study is reported separately.
 
 ## Isolated control checks
 
