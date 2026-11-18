@@ -16,3 +16,6 @@ if __name__=='__main__':
   for relative,digest in m['files'].items():fetch(client,f"https://raw.githubusercontent.com/{m['repository']}/{m['revision']}/{m['path']}/{relative}",source/relative,digest)
   source=root/'assets/realism/sand3d';m=json.loads((source/'downloads.json').read_text())
   for r in m['records']:fetch(client,f"https://huggingface.co/datasets/{m['dataset']}/resolve/{m['revision']}/{r['usda_path']}",source/(r['entry']+'.usda'),r['usda_sha256'])
+
+  source=root/'assets/robot/locomotion';m=json.loads((source/'source.json').read_text())
+  for item in m['files']:fetch(client,f"https://raw.githubusercontent.com/{m['repository']}/{m['revision']}/{item['path']}",source/item['path'],item['sha256'])

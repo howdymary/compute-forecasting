@@ -1,0 +1,14 @@
+{
+  "study": "mochi-curriculum-v6",
+  "task_order": ["alarm", "drawer", "laptop", "globe"],
+  "train_seeds": [12000,12001,12002,12003,12004,12005,12006,12007,12008,12009,12010,12011],
+  "development_seeds": [13000,13001],
+  "held_out_seeds": [14000,14001,14002,14003],
+  "training": {"base_model":"Qwen/Qwen3.5-4B","rank":16,"seed":8712,"updates":64,"checkpoints":[0,8,16,32,64],"learning_rate":0.0002,"walking_batch":16,"task_batch":4},
+  "validity": {"maximum_tilt_degrees":30,"minimum_pelvis_height_m":0.105,"maximum_hand_force_n":0.8,"dwell_seconds":0.35,"task_horizon_seconds":10,"walking_leg_horizon_seconds":24,"maximum_rollouts":3000,"maximum_modal_workers":8},
+  "success": {"alarm":"At least 85% button travel, then below 20%, hand contact and release dwell","drawer":"Below 2 mm open and 10 mm/s for the dwell","laptop":"Below 5 degrees and 0.15 rad/s, at least 4 degrees of contact-driven progress, release dwell","globe":"Within 3 degrees of target and 0.07 rad/s for the release dwell"},
+  "selection":"Highest full-sequence development completions; then task completions, stations reached, fewer falls, shorter episode. Earliest checkpoint wins exact ties.",
+  "scope":"Command-level locomotion and task-profile post-training. Native Unitree gait, classical leg servos and arm IK are fixed. State observations, simulation only.",
+  "uncertainty":"Report raw paired scenario outcomes and Wilson intervals; four fresh test seeds are a pilot, not evidence of broad robotics generalization.",
+  "labels":"Walking imitates a fixed waypoint policy. Task labels are chosen only from actual MuJoCo training trials. No hidden mass, friction, seed, teacher labels or evaluation outcomes enter the model observation."
+}

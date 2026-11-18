@@ -14,7 +14,7 @@ def fmt(v):return ' '.join(f'{float(x):.12g}' for x in np.atleast_1d(v))
 def quat_matrix(q):
     r=np.zeros(9);mujoco.mju_quat2Mat(r,np.asarray(q));return r.reshape(3,3)
 
-def build():
+def build(moving_legs=False):
     original=mujoco.MjModel.from_xml_path(str(SOURCE/'g1_with_hands.xml'));d=mujoco.MjData(original);mujoco.mj_resetDataKeyframe(original,d,0);mujoco.mj_forward(original,d)
     points=[]
     for i in range(original.ngeom):
@@ -28,7 +28,8 @@ def build():
     for default in root.findall('.//default'):
         for p in list(default.findall('position')):default.remove(p)
     ET.SubElement(root.find('default'),'geom',solref='.004 1',solimp='.95 .99 .001')
-    kept=set(sum(ARMS.values(),[]));offsets={}
+    legs=[side+'_'+part+'_joint' for side in ['left','right'] for part in ['hip_pitch','hip_roll','hip_yaw','knee','ankle_pitch','ankle_roll']] if moving_legs else []
+    kept=set(sum(ARMS.values(),[])+legs);offsets={}
     for body in root.findall('.//worldbody//body'):
         name=body.get('name');bid=mujoco.mj_name2id(original,mujoco.mjtObj.mjOBJ_BODY,name);pid=int(original.body_parentid[bid])
         rp=d.xmat[pid].reshape(3,3);position=rp.T@(d.xpos[bid]-d.xpos[pid]);rotation=rp.T@d.xmat[bid].reshape(3,3);q=np.zeros(4);mujoco.mju_mat2Quat(q,rotation.reshape(-1))
@@ -41,6 +42,8 @@ def build():
             jid=mujoco.mj_name2id(original,mujoco.mjtObj.mjOBJ_JOINT,jname);offset=float(d.qpos[original.jnt_qposadr[jid]]);offsets[jname]=offset
             assert np.linalg.norm(original.jnt_pos[jid])<1e-8
             joint.set('range',fmt(original.jnt_range[jid]-offset));joint.set('damping','.001');joint.set('armature','.00004');joint.set('frictionloss','.00001')
+            if jname in legs:
+                joint.set('damping',str(.001*scale**4.5));joint.set('armature',str(.01*scale**5));joint.set('frictionloss',str(.1*scale**4));joint.attrib.pop('actuatorfrcrange',None)
         for inertial in body.findall('inertial'):
             inertial.set('pos',fmt(values(inertial.get('pos','0 0 0'))*scale));inertial.set('mass',fmt(float(inertial.get('mass'))*scale**3))
             for attr in ['diaginertia','fullinertia']:
@@ -62,9 +65,10 @@ def build():
     for side in ['left','right']:
         for name in ARMS[side]:
             joint=root.find(f'.//joint[@name="{name}"]');ET.SubElement(actuator,'position',name=name,joint=name,kp='8',kv='.05',ctrlrange=joint.get('range'),forcerange='-.12 .12')
+    for name in legs:ET.SubElement(actuator,'motor',name=name,joint=name,ctrlrange=fmt(np.array([-139,139])*scale**4))
     for i,geom in enumerate(root.findall('./worldbody//geom')):
         if not geom.get('name'):geom.set('name','g1-geom-'+str(i))
-    metadata={'source':json.loads((SOURCE/'source.json').read_text()),'scale':scale,'height_m':HEIGHT,'pelvis_height_m':float(values(pelvis.get('pos'))[2]),'source_minimum_z':minimum,'scope':'Uniformly scaled native G1 meshes and arm kinematics; supported pelvis, fixed stand legs/waist/fingers; additional rubber push pads; tuned miniature actuators, not manufacturer hardware validation.','arm_joints':ARMS,'home_joint_offsets':offsets,'push_pad_local_positions':pads,'push_pad_radius_m':PAD_RADIUS}
+    metadata={'source':json.loads((SOURCE/'source.json').read_text()),'scale':scale,'height_m':HEIGHT,'pelvis_height_m':float(values(pelvis.get('pos'))[2]),'source_minimum_z':minimum,'scope':('Uniformly scaled native G1 meshes, restored twelve leg joints and native arms; fixed waist/fingers; caller supplies base constraint or free joint; miniature actuator calibration, not manufacturer hardware validation.' if moving_legs else 'Uniformly scaled native G1 meshes and arm kinematics; supported pelvis, fixed stand legs/waist/fingers; additional rubber push pads; tuned miniature actuators, not manufacturer hardware validation.'),'arm_joints':ARMS,'home_joint_offsets':offsets,'push_pad_local_positions':pads,'push_pad_radius_m':PAD_RADIUS}
     return ET.tostring(root,encoding='unicode'),metadata
 
 TEMPLATE,METADATA=build()
