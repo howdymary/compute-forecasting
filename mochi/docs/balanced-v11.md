@@ -1,3 +1,10 @@
+> **Reference invalidated by the independent walking-contact audit.** The
+> legacy task counter passed, but the robot contacted the clock with its wrist,
+> knee and hip. The pending training run was cancelled before gradients. The
+> terrain-only check missed task-fixture contacts during walking. See
+> `evidence/balance-v11/reference-audit.json`. The prior observations below are
+> preserved as history; they do not establish a collision-free reference.
+
 # Balanced desk continuation (V11)
 
 This is a new, bounded engineering and training study. The V8 controller,
@@ -119,3 +126,31 @@ gate timed out. Holding the native policy at a measured support phase allowed
 settling, but leaving it active during manipulation caused drift. The selected
 engineering method settles with phase-frozen feedback, then captures a static
 stance. Dynamic task outcomes, not render-space adjustments, verify the result.
+
+
+## Decision and memory interfaces
+
+The trained model chooses one walking strategy per task leg, one contact
+profile per task and one active-arm recovery per task. Walking strategies
+change climb, descent and flat-ground command speeds. A fixed route planner
+and the frozen feedback controllers execute those choices. This is categorical
+controller selection, not neural torque-policy learning or vision-based control.
+A complete sequence requires twelve model decisions; inference pauses physics.
+
+The numerical data retains all failed counterfactual branches. Branches are
+independent copies of a real state, including MuJoCo warm starts and the fixed
+gait's action/filter/phase state. A regression test requires the next physical
+steps to agree exactly. Those branches generate labels; they are never spliced
+into the continuous displayed episode.
+
+past.dev recall must return the expected source ID before an agent can use the
+associated canonical numerical payload. Failed provenance checks stop the run.
+The canonical payload is retained locally to avoid treating a memory summary as
+an exact numerical record. This design is not a demonstrated memory advantage.
+
+Early local development hashes were captured at completion, and some failed
+probes overlapped source edits. They are retained as development evidence, not
+immutable checkpoint comparisons. The successful reference was reproduced after
+refactoring, and cloud training/evaluation pins a Git commit and nineteen file
+hashes. The aggregate progress field covers the final segment; use verified
+station arrivals to assess the complete route.

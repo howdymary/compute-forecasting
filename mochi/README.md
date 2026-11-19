@@ -105,4 +105,4 @@ Dependencies include MuJoCo, NumPy, SciPy, PyTorch, Three.js, Blender, FastAPI a
 
 ## Furnished-desk continuation (V11)
 
-[Balance experiments](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/balanced.html) compare the original transfers with complete continuous engineering references. Three runs pass the four-task sequence on one engineering scenario. The new Tinker campaign resumes the selected V8 decision weights and checks fresh scenarios; its results remain separate from the engineering gains. [Methods, bounds and provenance](docs/balanced-v11.md).
+[Balance experiments](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/balanced.html) compare the original transfers with complete continuous engineering references. The legacy task counter passed three runs, but a broader walking-contact audit invalidated that reference. The new campaign was stopped before gradients; the approach and verifier are being corrected. [Methods, bounds and provenance](docs/balanced-v11.md).

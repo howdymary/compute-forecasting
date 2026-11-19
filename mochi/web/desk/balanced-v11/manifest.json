@@ -1,8 +1,8 @@
 {
   "study": "mochi-balanced-v11",
   "optimizer_updates_completed": 0,
-  "training_gate_open": true,
-  "scope": "Engineering revisions; no trained-weight improvement claimed.",
+  "training_gate_open": false,
+  "scope": "Engineering revisions; walking clock contacts invalidate the legacy full-task reference. Zero new optimizer updates.",
   "scene": {
     "version": "richdesk-v9",
     "units": "metres",
@@ -909,10 +909,10 @@
     },
     {
       "id": "frozen-interface-reference-0",
-      "label": "Latest engineering attempt",
+      "label": "Rejected reference: clock contacts",
       "file": "frozen-interface-reference-0.json",
       "duration": 139.28945022698255,
-      "failure": null,
+      "failure": "Rejected: unintended clock support while walking",
       "fall": false,
       "invalid_contact": false,
       "verified_ascent": true,
@@ -923,7 +923,7 @@
         "laptop": true,
         "globe": true
       },
-      "full_sequence_success": true,
+      "full_sequence_success": false,
       "metrics": {
         "samples": 13107,
         "lateral_rms_m": 0.008627583430764382,
@@ -1292,7 +1292,9 @@
         "src/mochi/balanced/snapshot.py": "8c937e0c20ae9ad37b41291b1cb8b3a78e9b10e1967fcfe47010b7acc104ac08",
         "src/mochi/balanced/dynamics.py": "9c82ef18b1896f936c3aff43b7353d537beb1d7b32927f3964789f11b64ea300"
       },
-      "optimizer_updates_completed": 0
+      "optimizer_updates_completed": 0,
+      "legacy_complete_sequence_success": true,
+      "audit": "reference-audit.json"
     }
   ],
   "default_attempt": "frozen-interface-reference-0"

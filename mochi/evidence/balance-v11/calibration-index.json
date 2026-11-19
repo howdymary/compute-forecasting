@@ -1,6 +1,6 @@
 {
   "study": "mochi-balanced-v11",
-  "local_rollouts": 61,
+  "local_rollouts": 64,
   "attempts": {
     "baseline-sway-0": {
       "status": "completed",
@@ -1187,6 +1187,63 @@
         "laptop": true,
         "globe": true
       }
+    },
+    "independent-contact-audit-0": {
+      "status": "completed",
+      "parameters": {
+        "scope": "Additional contact observations only; no changed controls, state or physics"
+      },
+      "at_unix": 1795057936.5629718,
+      "complete": true,
+      "unintended_contact_pairs": 8
+    },
+    "collision-clearance-stop-0": {
+      "status": "completed",
+      "parameters": {
+        "id": "collision-clearance-stop-0",
+        "until": "all",
+        "speed": 0.055,
+        "alarm_x": -0.365,
+        "alarm_y": 0.015,
+        "capture_margin": 0.001,
+        "forward_descent": true,
+        "descent_speed": 0.03,
+        "native_stand": true,
+        "drawer_profile": "B",
+        "fixed_selector": false
+      },
+      "at_unix": 1795058150.98961,
+      "complete_sequence_success": false,
+      "failure": "fall",
+      "requested_end": "all",
+      "wall_seconds": 11.25360362417996,
+      "duration_s": 17.433355139244416,
+      "tasks": {
+        "alarm": true
+      }
+    },
+    "strict-clock-clearance-0": {
+      "status": "completed",
+      "parameters": {
+        "id": "strict-clock-clearance-0",
+        "until": "all",
+        "speed": 0.055,
+        "alarm_x": -0.365,
+        "alarm_y": 0.015,
+        "capture_margin": 0.001,
+        "forward_descent": true,
+        "descent_speed": 0.03,
+        "native_stand": true,
+        "drawer_profile": "B",
+        "fixed_selector": false
+      },
+      "at_unix": 1795058300.319369,
+      "complete_sequence_success": false,
+      "failure": "invalid_terrain_contact",
+      "requested_end": "all",
+      "wall_seconds": 0.9013449167832732,
+      "duration_s": 1.8695528089405757,
+      "tasks": {}
     }
   }
 }

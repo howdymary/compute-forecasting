@@ -1,0 +1,32 @@
+name: Mochi reference audit correction
+on:
+  push:
+    branches: [mochi-desk-v3]
+    paths: ['mochi/configs/balanced-v11-audit.json']
+permissions:
+  contents: read
+jobs:
+  close-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - run: python -m pip install modal==1.6.4
+      - name: Publish the audit verdict without changing trained weights
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: |
+          python - <<'PYCODE'
+          import json,modal
+          correction=json.load(open('mochi/configs/balanced-v11-audit.json'))
+          store=modal.Dict.from_name('mochi-balanced-v11-progress')
+          report=store.get('latest',{})
+          report.update(status='invalid_reference',phase=correction['verdict'],training_gate_open=False,
+              audit=json.load(open('mochi/evidence/balance-v11/reference-audit.json')))
+          report['budget_usage_or_reserved']=modal.Dict.from_name('mochi-balanced-v11-budget').get('usage',{})
+          store.put('latest',report)
+          print('Reference gate closed; actual recorded optimizer count:',report.get('optimizer_updates_completed',0))
+          PYCODE

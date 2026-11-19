@@ -30,6 +30,23 @@ class SequenceWorld(BalancedWorld):
         if kwargs.get('standing',False) and isinstance(self.walker,HubWalker) and self.walker.mode!='walk':
             kwargs['standing']=False
         super().step(*args, **kwargs)
+        # Walking may use desk/book foot contact, never a clock/cabinet/body
+        # brace. Task fixtures are not part of the terrain-only parent check.
+        if self.phase=='walk':
+            allowed={self.id('geom','desk')}|self.book_geoms
+            for i,c in enumerate(self.d.contact):
+                a,b=int(c.geom1),int(c.geom2)
+                ra=int(self.m.geom_bodyid[a]) in self.robot_bodies;rb=int(self.m.geom_bodyid[b]) in self.robot_bodies
+                if ra==rb:continue
+                robot,fixture=(a,b) if ra else (b,a)
+                body=mujoco.mj_id2name(self.m,mujoco.mjtObj.mjOBJ_BODY,int(self.m.geom_bodyid[robot])) or ''
+                if fixture in allowed and body in ['left_ankle_roll_link','right_ankle_roll_link']:continue
+                force=np.zeros(6);mujoco.mj_contactForce(self.m,self.d,i,force)
+                if force[0]>.05:
+                    self.invalid_contact=True
+                    self.contact_failures.append({'t':float(self.d.time),'body':body,
+                        'fixture':mujoco.mj_id2name(self.m,mujoco.mjtObj.mjOBJ_GEOM,fixture),'force_n':float(force[0]),'phase':'walk'})
+                    break
         if self.stopped:
             self.stop_contacts=[]
             for i,c in enumerate(self.d.contact):
@@ -66,6 +83,9 @@ def navigate(w, goal, *, timeout=35., stop=True, speed=.055, book=False,
         w.walker = HubWalker(w)
     else:
         w.walker.resume()
+    if book or w.terrain_height(*w.d.qpos[:2])>.001:
+        w.walker.control_arms=False
+        for arm in w.arm.values():w.d.ctrl[arm['acts']]=arm['rest']
     origin = w.d.qpos[:2].copy()
     delta = np.array(goal[:2])-origin
     w.path_heading = math.atan2(delta[1], delta[0]) if np.linalg.norm(delta)>.001 else goal[2]

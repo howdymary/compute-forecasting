@@ -1,6 +1,6 @@
 {
   "study": "mochi-balanced-v11",
-  "phase": "local-reference-passed-remote-preflight-required",
+  "phase": "reference-invalidated-by-walking-fixture-audit",
   "scene": "configs/richdesk-v9.json",
   "prior_evidence": "evidence/richdesk-v10/local-calibration-index.json",
   "bounds": {
@@ -46,7 +46,7 @@
       39005
     ]
   },
-  "training_gate_open": true,
+  "training_gate_open": false,
   "gate": "Safe uninterrupted ascent, four tasks, recoveries and descent before Tinker gradients; smoothness may improve after the reference passes.",
   "safety": {
     "maximum_tilt_degrees": 30,

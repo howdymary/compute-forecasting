@@ -31,6 +31,6 @@ for(const entry of manifest.attempts.slice(1)){
  assert.match(nodes.get('#scope').textContent,/Controller revisions differ/);
  assert.equal(entry.optimizer_updates_completed,0);
 }
-assert.equal(manifest.optimizer_updates_completed,0);assert.equal(manifest.training_gate_open,true);
+assert.equal(manifest.optimizer_updates_completed,0);assert.equal(manifest.training_gate_open,false);
 assert.equal(nodes.get('#candidate').children.length,manifest.attempts.length-1);
 console.log('Passed: synchronized full recordings, identical initial frames, evidence links, failure endings, original/trained distinction and camera opt-in. WebGL rendering is not tested.');

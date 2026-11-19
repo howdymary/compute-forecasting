@@ -1,3 +1,34 @@
+> **V11 correction:** the independent walking-contact audit invalidated the
+> engineering reference. Run 44447254287 was cancelled while collecting physical
+> labels, before optimizer updates. The following in-progress snapshot is
+> retained as history. Current status is `/api/balance-training`.
+
+<!-- MOCHI_BALANCED_V11_INTEGRATIONS_START -->
+# V11 furnished-desk execution snapshot
+
+The [V11 campaign](https://github.com/howdymary/mochi-demo/actions/runs/44447254287)
+is running from frozen commit `b76149ad7470cbd4e02452fba5ee21c06b72270a`.
+Three local engineering runs and one remote reference complete all four tasks.
+At this snapshot, four Modal workers are preparing physical training branches;
+zero new optimizer updates have been verified. Live status is exposed through
+`/api/balance-training`; the static replay still labels engineering revisions.
+
+| Service | Confirmed V11 path | Evidence so far |
+|---|---|---|
+| Modal | Existing Actions credentials; separate balanced-v11 apps and volume | Two completed research probes plus one full remote reference; training branches in progress |
+| Tinker | Existing Actions key; canonical selected V8 optimizer state located | Two research inference decisions; resumed six-domain post-training is queued behind physical labels |
+| Exa | Existing backend Actions secret | One completed probe search and one training-allocation search |
+| past.dev | Explicit Mochi identities and fixed audiences | Five verified cross-role handoffs in the completed probe; training-run handoffs are recorded separately |
+| Blender | Local 5.1.2 | Actual supported alarm reach rendered; optional full-body framing keeps the head and feet visible |
+
+The new native ONNX gait is an externally pretrained, pinned Apache-2.0 model.
+Its weights remain fixed. The new training interface controls walking-strategy,
+contact-profile and arm-recovery selections through Qwen LoRA weights. The
+controller, scene, verifier and model asset are frozen before checkpoint tests.
+No new local credentials, billing changes or checkpoint deletion are involved.
+
+<!-- MOCHI_BALANCED_V11_INTEGRATIONS_END -->
+
 <!-- MOCHI_CONTROL_INTEGRATIONS_START -->
 # Current capability inventory · V8 source study
 

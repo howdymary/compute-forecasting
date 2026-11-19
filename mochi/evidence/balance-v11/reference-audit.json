@@ -1,0 +1,59 @@
+{
+  "study": "mochi-balanced-v11",
+  "verdict": "legacy-task-completion-does-not-pass-walking-contact-validity",
+  "supersedes_reference_gate": true,
+  "optimizer_updates_completed": 0,
+  "source_experiment": "independent-contact-audit-0",
+  "artifact_sha256": "95eec52fdfa7bd7601a8833ee53c1d17b009e37a9bc4b1530705b081dbd74132",
+  "contacts": {
+    "left_hand_index_0_link / clock-case": {
+      "count": 13,
+      "peak_n": 2.0917533426878054,
+      "first_t": 3.400673233578044,
+      "last_t": 3.410482867905673
+    },
+    "left_wrist_yaw_link / clock-case": {
+      "count": 13,
+      "peak_n": 1.475064104009443,
+      "first_t": 3.4023081726326487,
+      "last_t": 3.412117806960278
+    },
+    "left_knee_link / clock-case": {
+      "count": 21,
+      "peak_n": 5.195903301072747,
+      "first_t": 3.4333720146701414,
+      "last_t": 3.44972140521619
+    },
+    "left_hip_yaw_link / clock-case": {
+      "count": 24,
+      "peak_n": 4.447110798085072,
+      "first_t": 3.4350069537247463,
+      "last_t": 3.4538087528527024
+    },
+    "left_ankle_roll_link / clock-case": {
+      "count": 9,
+      "peak_n": 0.5813631863183405,
+      "first_t": 3.4423641794704682,
+      "last_t": 3.4489039356888878
+    },
+    "right_hip_yaw_link / clock-case": {
+      "count": 64,
+      "peak_n": 3.5931291739908255,
+      "first_t": 3.596048450603327,
+      "last_t": 3.6704381775878487
+    },
+    "right_hand_index_1_link / clock-case": {
+      "count": 111,
+      "peak_n": 0.3933263060490041,
+      "first_t": 11.94813461104803,
+      "last_t": 12.524450627795936
+    },
+    "right_wrist_yaw_link / clock-case": {
+      "count": 39,
+      "peak_n": 0.4238309862931422,
+      "first_t": 12.700206576165865,
+      "last_t": 13.482524913793874
+    }
+  },
+  "scope": "Observed contact forces, not inferred from a rendered pose. Clock contacts were missed by the terrain-only check."
+}

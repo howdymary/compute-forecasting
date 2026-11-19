@@ -21,7 +21,7 @@ def main():
             ('reference-native-stop-0','Supported stop; rejected task drift')]
     if a.latest:chosen.append((a.latest,'Latest engineering attempt'))
     manifest={'study':'mochi-balanced-v11','optimizer_updates_completed':0,
-              'training_gate_open':True,'scope':'Engineering revisions; no trained-weight improvement claimed.',
+              'training_gate_open':False,'scope':'Engineering revisions; walking clock contacts invalidate the legacy full-task reference. Zero new optimizer updates.',
               'scene':json.loads((ROOT/'configs/richdesk-v9.json').read_text()),'attempts':[]}
     for ident,label in chosen:
         path=ROOT/'artifacts/balance-v11'/f'{ident}.json';raw=path.read_bytes();row=json.loads(raw)
@@ -42,6 +42,11 @@ def main():
                'metrics':e['balance_metrics'],'arrivals':arrivals,'source_artifact_sha256':hashlib.sha256(raw).hexdigest(),
                'source_hashes':r.get('sources',{}),'optimizer_updates_completed':0}
         manifest['attempts'].append(entry)
+    for entry in manifest['attempts']:
+        if entry['id']=='frozen-interface-reference-0':
+            entry['legacy_complete_sequence_success']=entry['full_sequence_success']
+            entry.update(label='Rejected reference: clock contacts',full_sequence_success=False,
+                         failure='Rejected: unintended clock support while walking',audit='reference-audit.json')
     manifest['default_attempt']=a.latest or chosen[-2][0]
     (OUT/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
     ledger=json.loads((ROOT/'artifacts/balance-v11/ledger.json').read_text())
