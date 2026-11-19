@@ -97,3 +97,11 @@ The preceding cloud diagnostic completed both matched traversals. Both the longe
 Cancelled training launch attempts retained their uncompleted resource reservations. They contributed no optimizer updates. Later physical receipts are persisted individually and separated from those reservations. New evaluation models run independently on identical frozen images and paired initial scenarios, rather than serializing three full episodes under one function deadline.
 
 The complete engineering replay is published at `/terrain.html`; its files were verified against deployed bytes. Headless Chrome rendered the actual WebGL scene and the resulting screenshot was inspected. The default V8 page and rejected V11 page remain available.
+
+## Preserved-data post-training continuation
+
+Run 44472186998 completed its remote reference and all four teacher sequences: 149 completed physical rollouts including counterfactual branches. It produced 48 decision labels. Sixteen walking labels include W0 and W2; the sixteen recovery labels select safe direct withdrawal. No new optimizer updates were completed or reserved when that run was stopped. Its artifacts and conservative resource reservations remain preserved.
+
+Run 44482272455 reuses those exact data and restores the canonical parent with optimizer state. Its frozen budget allows 32 new updates, with checkpoints at 0, 1, 8 and 32. It trains all six domains before performing physical development evaluation. Each model receives the same 1500-second function deadline and token allowance; the scene, controller, scenario partition and success verifier are unchanged. This ordering avoids blocking gradients behind slow replay evaluations. The larger inference allowance is precautionary, not evidence of a confirmed earlier token-limit failure.
+
+The public status endpoint now shows the active continuation's budget separately from original campaign reservations. Training progress and measured checkpoint evaluations, rather than this launch description, establish what has completed.

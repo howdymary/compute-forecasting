@@ -57,8 +57,8 @@ def web():
  def terrain_training():
   try:
    report=modal.Dict.from_name('mochi-terrain-v12-progress').get('latest',{})
-   usage=modal.Dict.from_name('mochi-terrain-v12-budget').get('usage',report.get('budget_usage_or_reserved',{}))
-   keys=['study','run_id','created_at','status','phase','optimizer_updates_completed','campaign_modal_rollouts_completed','remote_reference_passed','checkpoints','selected_checkpoint','held_out','isolated']
+   usage=report.get('budget_usage_or_reserved',{})
+   keys=['study','run_id','created_at','status','phase','optimizer_updates_completed','campaign_modal_rollouts_completed','remote_reference_passed','checkpoints','selected_checkpoint','held_out','isolated','budget_sources','recovery','first_optimizer_behavioral_probe']
    return {**{k:report.get(k) for k in keys},'budget_usage_or_reserved':usage,
            'memory':report.get('services',{}).get('eligibility',{}),'engineering_complete_references':2}
   except Exception:return {'study':'mochi-terrain-v12','status':'unavailable','optimizer_updates_completed':0}

@@ -8,7 +8,7 @@ for row in report.get('physics_receipts',[])[:1]:
     print(json.dumps({'first_physical_receipt':{k:receipt.get(k) for k in ['physical_rollouts','duration_seconds','architecture']},
         'numerical_threads':[p.get('num_threads') for p in receipt.get('threadpools',[])]}),flush=True)
 result=subprocess.run([sys.executable,'-m','modal','app','list','--json'],capture_output=True,text=True,check=True)
-apps=[r for r in json.loads(result.stdout) if r.get('description')=='mochi-terrain-v12-learning']
+apps=[r for r in json.loads(result.stdout) if r.get('description') in ['mochi-terrain-v12-learning','mochi-terrain-v12-weight-evaluation']]
 active=[r for r in apps if r.get('state') not in ['stopped','stopping...']]
 if not active:
  print(json.dumps({'active_terrain_app':False}));raise SystemExit(0)
