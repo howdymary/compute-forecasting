@@ -1,6 +1,6 @@
 {
   "study": "mochi-balanced-v11",
-  "phase": "physical-reference-calibration",
+  "phase": "local-reference-passed-remote-preflight-required",
   "scene": "configs/richdesk-v9.json",
   "prior_evidence": "evidence/richdesk-v10/local-calibration-index.json",
   "bounds": {
@@ -15,16 +15,59 @@
     "past_writes": 20,
     "past_recalls": 40
   },
-  "checkpoints": [0, 4, 8, 16, 32],
+  "checkpoints": [
+    0,
+    4,
+    8,
+    16,
+    32
+  ],
   "seed_partitions": {
-    "engineering": [31000],
-    "training": [37000, 37001, 37002, 37003],
-    "development": [38000, 38001, 38002],
-    "held_out": [39000, 39001, 39002, 39003, 39004, 39005]
+    "engineering": [
+      31000
+    ],
+    "training": [
+      37000,
+      37001,
+      37002,
+      37003
+    ],
+    "development": [
+      38000,
+      38001,
+      38002
+    ],
+    "held_out": [
+      39000,
+      39001,
+      39002,
+      39003,
+      39004,
+      39005
+    ]
   },
-  "training_gate_open": false,
+  "training_gate_open": true,
   "gate": "Safe uninterrupted ascent, four tasks, recoveries and descent before Tinker gradients; smoothness may improve after the reference passes.",
-  "safety": {"maximum_tilt_degrees": 30, "minimum_pelvis_clearance_m": 0.08, "maximum_applied_base_force_n": 0, "loaded_foot_force_n": 0.05, "book_top_dwell_s": 0.4},
-  "smoothness": {"status": "calibrate-then-freeze", "metrics": ["path-relative lateral RMS and excursion", "torso roll RMS and peak", "stance slip", "toe scuff", "touchdown speed", "joint acceleration", "control change", "progress", "elapsed time"]},
+  "safety": {
+    "maximum_tilt_degrees": 30,
+    "minimum_pelvis_clearance_m": 0.08,
+    "maximum_applied_base_force_n": 0,
+    "loaded_foot_force_n": 0.05,
+    "book_top_dwell_s": 0.4
+  },
+  "smoothness": {
+    "status": "calibrate-then-freeze",
+    "metrics": [
+      "path-relative lateral RMS and excursion",
+      "torso roll RMS and peak",
+      "stance slip",
+      "toe scuff",
+      "touchdown speed",
+      "joint acceleration",
+      "control change",
+      "progress",
+      "elapsed time"
+    ]
+  },
   "scope": "New bounded continuation. Earlier controller/verifier revisions and V8 trained weights are preserved. No native gait-network weight training is claimed."
 }

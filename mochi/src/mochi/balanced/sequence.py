@@ -10,6 +10,7 @@ import math
 import time
 
 import numpy as np
+import mujoco
 
 from ..curriculum.world import ROOT, PROFILES, wrap
 from ..control_v8.manipulation import PRESSES
@@ -26,8 +27,21 @@ class PhysicalStop(RuntimeError):
 
 class SequenceWorld(BalancedWorld):
     def step(self, *args, **kwargs):
+        if kwargs.get('standing',False) and isinstance(self.walker,HubWalker) and self.walker.mode!='walk':
+            kwargs['standing']=False
         super().step(*args, **kwargs)
         if self.stopped:
+            self.stop_contacts=[]
+            for i,c in enumerate(self.d.contact):
+                a,b=int(c.geom1),int(c.geom2)
+                ra=int(self.m.geom_bodyid[a]) in self.robot_bodies
+                rb=int(self.m.geom_bodyid[b]) in self.robot_bodies
+                if ra==rb:continue
+                f=np.zeros(6);mujoco.mj_contactForce(self.m,self.d,i,f)
+                if f[0]>.01:
+                    self.stop_contacts.append({'geom_names':[mujoco.mj_id2name(self.m,mujoco.mjtObj.mjOBJ_GEOM,g) for g in [a,b]],
+                                               'body_names':[mujoco.mj_id2name(self.m,mujoco.mjtObj.mjOBJ_BODY,int(self.m.geom_bodyid[g])) for g in [a,b]],
+                                               'normal':c.frame[:3].tolist(),'force_n':float(f[0])})
             raise PhysicalStop('fall' if self.fall else 'invalid_terrain_contact')
 
 
@@ -50,6 +64,8 @@ def navigate(w, goal, *, timeout=35., stop=True, speed=.055, book=False,
     # introduces a controller discontinuity despite continuous physics.
     if not isinstance(w.walker,HubWalker):
         w.walker = HubWalker(w)
+    else:
+        w.walker.resume()
     origin = w.d.qpos[:2].copy()
     delta = np.array(goal[:2])-origin
     w.path_heading = math.atan2(delta[1], delta[0]) if np.linalg.norm(delta)>.001 else goal[2]
@@ -63,21 +79,42 @@ def navigate(w, goal, *, timeout=35., stop=True, speed=.055, book=False,
             break
         approach_ok = abs(w.d.qpos[1]-goal[1])<.018 if book else distance<position_tolerance
         from .balance import support
-        balance=support(w) if capture_margin is not None else None
-        support_ok=capture_margin is None or (balance['capture_margin_m'] is not None and balance['capture_margin_m']>=capture_margin)
-        if not book:
-            support_ok = support_ok and all(w.foot_touching(s) for s in ['left','right']) and all(v>.2 for v in w.loads().values())
+        considering_stop=stop and not holding and approach_ok and heading<math.radians(9)
+        balance=support(w) if capture_margin is not None and considering_stop else None
+        support_ok=capture_margin is None or (balance is not None and balance['capture_margin_m'] is not None and balance['capture_margin_m']>=capture_margin)
+        if not book and considering_stop:
+            _,foot_speeds=w.foot_state()
+            support_ok = (support_ok and all(w.foot_touching(s) for s in ['left','right'])
+                          and all(v>.2 for v in w.loads().values()))
+            if label.endswith('-station') and not getattr(w,'use_native_stand',False):
+                support_ok=(support_ok and balance is not None
+                            and np.linalg.norm(balance['com_velocity_m_s'][:2])<.03
+                            and np.max(abs(w.d.qvel[w.walker.vids]))<5.)
         if (stop and not holding and approach_ok and heading < math.radians(9) and support_ok
                 and np.linalg.norm(average_velocity(w)) < .015
                 and np.linalg.norm(w.d.qvel[:2]) < .08
                 and all(v>.05 for v in w.loads().values())):
-            w.walker = HoldWalker(w)
+            if getattr(w,'use_native_stand',False) and not book and w.terrain_height(*w.d.qpos[:2])<.001:
+                w.walker.hold()
+            else:
+                w.walker = HoldWalker(w,neutral=not book and w.terrain_height(*w.d.qpos[:2])<.001)
             holding = True
+            w.events.append({'phase':'supported-capture','t':float(w.d.time),'station':label,
+                             'balance':balance,'loads_n':w.loads(),
+                             'leg_speed_max_rad_s':float(np.max(abs(w.d.qvel[w.walker.vids])))})
         if holding:
             w.step()
             good = book_top(w)['instant_valid'] if book else (all(v>.05 for v in w.loads().values()) and heading < math.radians(9))
             stable = stable+w.m.opt.timestep if good else 0.
             if stable >= .4:
+                if isinstance(w.walker,HubWalker) and w.walker.mode!='walk':
+                    # Let the feedback policy settle before capturing a static
+                    # stance; freezing a moving joint pose was unstable.
+                    w.events.append({'phase':'native-settle-finished','t':float(w.d.time),'station':label,
+                                     'leg_speed_max_rad_s':float(np.max(abs(w.d.qvel[w.walker.vids])))})
+                    w.walker=HoldWalker(w)
+                    stable=0.
+                    continue
                 break
         else:
             yaw = w.yaw()
@@ -103,38 +140,29 @@ def navigate(w, goal, *, timeout=35., stop=True, speed=.055, book=False,
     return result
 
 
-def run(seed=31000, record=True, until='all', speed=.055, alarm_x=-.375,alarm_y=.035,capture_margin=None,forward_descent=False,descent_speed=None):
+def run(seed=31000, record=True, until='all', speed=.055, alarm_x=-.375,alarm_y=.035,capture_margin=None,forward_descent=False,descent_speed=None,native_stand=False,drawer_profile='A',choose=None):
     w = SequenceWorld(seed,record)
+    w.use_native_stand=native_stand
+    w.decision_interface_enabled=choose is not None
     arrivals = []
     failure = None
     started = time.perf_counter()
     try:
         while w.d.time<.4:
             w.step(standing=True)
-        arrivals.append(navigate(w,(alarm_x,alarm_y,math.pi/2),book=True,speed=speed,label='alarm-book-top',capture_margin=capture_margin))
-        if until=='ascent':
-            return result(w,arrivals,None,started,until)
-        for task,code in [('alarm','B'),('drawer','A'),('laptop','P0'),('globe','A')]:
-            if task=='drawer':
-                if forward_descent:
-                    arrivals.append(navigate(w,(*w.d.qpos[:2],-math.pi/2),capture_margin=.001,
-                                             label='book-turn-for-forward-descent'))
-                heading=-math.pi/2 if forward_descent else math.pi/2
-                descend_x=float(w.d.qpos[0])
-                arrivals.append(navigate(w,(descend_x,-.18,heading),stop=True,speed=descent_speed or speed,
-                                         capture_margin=.001,position_tolerance=.018,label='descend-supported-stop'))
-                if forward_descent:
-                    arrivals.append(navigate(w,(*w.d.qpos[:2],math.pi/2),capture_margin=.001,label='desk-turn-to-corridor'))
-                for point in [(-.19,-.18,math.pi/2),(-.19,-.03,math.pi/2)]:
-                    arrivals.append(navigate(w,point,stop=False,speed=speed,label='drawer-corridor'))
-                arrivals.append(navigate(w,(-.13,.02,math.pi/2),speed=speed,position_tolerance=.012,label='drawer-station'))
-            elif task=='laptop':
-                for point in [(.08,.02,math.pi/2),(.08,-.055,math.pi/2),(.30,-.055,math.pi/2),(.30,.02,math.pi/2)]:
-                    arrivals.append(navigate(w,point,stop=False,speed=speed,label='laptop-corridor'))
-                arrivals.append(navigate(w,(.30,.16,math.pi/2),speed=speed,position_tolerance=.012,label='laptop-station'))
-            elif task=='globe':
-                arrivals.append(navigate(w,(.30,.02,math.pi/2),stop=False,speed=speed,label='leave-laptop'))
-                arrivals.append(navigate(w,(.35,-.145,0.),speed=speed,position_tolerance=.012,label='globe-station'))
+        from .legs import execute_leg,execute_selected_leg,WALKS
+        for task,code in [('alarm','B'),('drawer',drawer_profile),('laptop','P0'),('globe','A')]:
+            if choose is None:
+                arrivals.extend(execute_leg(w,task,speed=speed,alarm_x=alarm_x,alarm_y=alarm_y,
+                                capture_margin=capture_margin,forward_descent=forward_descent,
+                                descent_speed=descent_speed))
+            else:
+                walk_code=choose(w,'walk',task,'W1' if task=='drawer' else 'W0',list(WALKS))
+                arrivals.extend(execute_selected_leg(w,task,walk_code))
+            if until=='ascent' and task=='alarm':
+                return result(w,arrivals,None,started,until)
+            if choose is not None:
+                code=choose(w,task,task,code,[p.code for p in (PRESSES[:3] if task=='laptop' else PROFILES[:3])])
             profile = next(p for p in (PRESSES if task=='laptop' else PROFILES) if p.code==code)
             if task=='alarm':
                 from .tasks import press_alarm
@@ -144,7 +172,9 @@ def run(seed=31000, record=True, until='all', speed=.055, alarm_x=-.375,alarm_y=
             print(json.dumps({'task':task_result}),flush=True)
             if not task_result['success']:
                 raise PhysicalStop('task_failed:'+task)
-            recovery = recover(w,task,RECOVERIES[1 if task=='alarm' else 0])
+            recovery_code='R1' if task=='alarm' else 'R0'
+            if choose is not None:recovery_code=choose(w,'recovery',task,recovery_code,['R0','R1','R3'])
+            recovery = recover(w,task,next(r for r in RECOVERIES if r.code==recovery_code))
             print(json.dumps({'recovery':recovery}),flush=True)
             if not recovery['success']:
                 raise PhysicalStop('recovery_failed:'+task)
@@ -159,8 +189,10 @@ def run(seed=31000, record=True, until='all', speed=.055, alarm_x=-.375,alarm_y=
 
 def result(w,arrivals,failure,started,until):
     episode = w.episode()
-    return {'study':'mochi-balanced-v11','seed':w.s['seed'],'scope':'Engineering reference; zero new Tinker optimizer updates',
-            'complete_sequence_success':bool(until=='all' and failure is None and len(w.results)==4),
+    episode['stop_contacts']=getattr(w,'stop_contacts',[])
+    from .verification import complete
+    return {'study':'mochi-balanced-v11','seed':w.s['seed'],'scope':'Decision interface enabled' if getattr(w,'decision_interface_enabled',False) else 'Engineering reference; zero new Tinker optimizer updates',
+            'complete_sequence_success':bool(until=='all' and complete(episode,arrivals,failure)),
             'requested_end':until,'failure':failure,'arrivals':arrivals,'episode':episode,
             'controller':w.walker.description(),'wall_seconds':time.perf_counter()-started,
             'sources':{str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in (ROOT/'src/mochi/balanced').glob('*.py')}}
@@ -176,10 +208,14 @@ def main():
     p.add_argument('--capture-margin',type=float)
     p.add_argument('--forward-descent',action='store_true')
     p.add_argument('--descent-speed',type=float)
+    p.add_argument('--native-stand',action='store_true')
+    p.add_argument('--drawer-profile',choices=[p.code for p in PROFILES],default='A')
+    p.add_argument('--fixed-selector',action='store_true')
     args=p.parse_args()
     reserve(args.id,vars(args))
     try:
-        row=run(until=args.until,speed=args.speed,alarm_x=args.alarm_x,alarm_y=args.alarm_y,capture_margin=args.capture_margin,forward_descent=args.forward_descent,descent_speed=args.descent_speed)
+        from .policy import fixed
+        row=run(until=args.until,speed=args.speed,alarm_x=args.alarm_x,alarm_y=args.alarm_y,capture_margin=args.capture_margin,forward_descent=args.forward_descent,descent_speed=args.descent_speed,native_stand=args.native_stand,drawer_profile=args.drawer_profile,choose=fixed if args.fixed_selector else None)
         (OUT/(args.id+'.json')).write_text(json.dumps(row,separators=(',',':')))
         summary={k:row[k] for k in ['complete_sequence_success','failure','requested_end','wall_seconds']}
         summary.update(duration_s=row['episode']['duration'],tasks={k:v['success'] for k,v in row['episode']['results'].items()})

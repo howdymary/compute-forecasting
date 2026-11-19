@@ -31,19 +31,30 @@ class HubWalker:
         self.home=np.array(self.home);self.action=np.zeros(29,dtype=np.float32);self.target=self.default-self.home
         self.velocity_integral=np.zeros(2);self.yaw_integral=0.;self.last=-1.;self.origin=float(self.d.time);self.calls=0;self.filtered_command=np.zeros(3)
         self.feedback=.7
+        self.mode='walk';self.control_arms=True;self.stand_phase=None;self.stage='native-walk'
+
+    def hold(self):
+        self.stand_phase=(float(self.d.time)-self.origin)/self.time_scale%.6
+        self.mode='phase-frozen-balance';self.control_arms=False;self.stage='native-supported-stop'
+        for arm in self.w.arm.values():self.d.ctrl[arm['acts']]=self.d.qpos[arm['qs']]
+
+    def resume(self):
+        if self.mode!='walk':
+            self.origin=float(self.d.time)-self.stand_phase*self.time_scale
+        self.mode='walk';self.control_arms=True;self.stage='native-walk'
 
     def command(self,velocity):
         m,d=self.m,self.d;interval=.02*self.time_scale
         if d.time-self.last>=interval-1e-9:
             self.last=float(d.time);q=d.qpos[3:7];w,x,y,z=q
             gravity=np.array([2*(-z*x+w*y),-2*(z*y+w*x),1-2*(w*w+z*z)])
-            desired=np.array(velocity,dtype=float)
+            desired=np.array(velocity if self.mode=='walk' else (0,0,0),dtype=float)
             actual=d.xmat[1].reshape(3,3).T@d.qvel[:3]
             desired[:2]=np.clip(desired[:2]+self.feedback*(desired[:2]-actual[:2]),-.12,.12)
             self.filtered_command+=np.clip(desired-self.filtered_command,-np.array([.6,.6,4])*interval,np.array([.6,.6,4])*interval)
             positions=np.array([d.qpos[k] if k is not None else 0. for k in self.qmap])+self.home
             speeds=np.array([d.qvel[k] if k is not None else 0. for k in self.vmap])
-            phase=((float(d.time)-self.origin)/self.time_scale%.6)/.6
+            phase=(((float(d.time)-self.origin)/self.time_scale%.6) if self.mode=='walk' else self.stand_phase)/.6
             obs=np.r_[d.qvel[3:6]*self.time_scale,gravity,
                 self.filtered_command*np.array([1/self.time_scale,1/self.time_scale,self.time_scale]),
                 math.sin(2*math.pi*phase),math.cos(2*math.pi*phase),positions-self.default,speeds*self.time_scale,self.action].astype(np.float32)
@@ -51,6 +62,7 @@ class HubWalker:
         legs=set(self.aids)
         for i,a in enumerate(self.amap):
             if a is None or a<0:continue
+            if not self.control_arms and a not in legs:continue
             qid,vid=self.qmap[i],self.vmap[i]
             tau=self.kp[i]*(self.target[i]-d.qpos[qid])-self.kd[i]*d.qvel[vid]
             if a in legs or m.actuator_biastype[a]==mujoco.mjtBias.mjBIAS_NONE:d.ctrl[a]=tau
@@ -63,22 +75,28 @@ class HubWalker:
     def description(self):
         return {'controller':self.label,'inference_calls':self.calls,'model_source':json.loads((ROOT/'assets/robot/g1-v11-policy/source.json').read_text()),
             'missing_fixed_joints':[n for n,k in zip(self.names,self.qmap) if k is None],
-            'native_weights_trained':False,'tinker_optimizer_updates':0}
+            'native_weights_trained':False,'tinker_optimizer_updates':0,'mode':self.mode}
 
 
 class HoldWalker:
     """Capture a supported stance and stabilize it using joint torques."""
     label='captured-supported-stance'
-    def __init__(self,world):
+    def __init__(self,world,neutral=False):
         self.w=world;self.m=world.m;self.d=world.d;old=world.walker
         for name in ['qids','vids','aids','offsets','scale','time_scale']:setattr(self,name,getattr(old,name))
-        self.target=self.d.qpos[self.qids].copy();self.action=np.zeros(12);self.last=-1.;self.velocity_integral=np.zeros(2);self.yaw_integral=0.;self.stage='hold'
+        self.target=self.d.qpos[self.qids].copy();self.initial_target=self.target.copy();self.neutral=neutral;self.origin=float(self.d.time)
+        from ..curriculum.locomotion import DEFAULT
+        self.final_target=DEFAULT-self.offsets if neutral else self.target.copy()
+        self.action=np.zeros(12);self.last=-1.;self.velocity_integral=np.zeros(2);self.yaw_integral=0.;self.stage='hold'
         self.standing_target=self.target.copy()
         self.previous_description=old.description()
         for arm in world.arm.values():self.d.ctrl[arm['acts']]=self.d.qpos[arm['qs']]
 
     def command(self,velocity):
         d=self.d;m=self.m;kp=np.array([100,100,100,150,40,40]*2)*SCALE**4*6;kd=np.array([2,2,2,4,2,2]*2)*SCALE**4.5*6
+        u=float(np.clip((d.time-self.origin)/.35,0,1));u=u**3*(10+u*(-15+6*u))
+        self.target=self.initial_target+(self.final_target-self.initial_target)*u
+        self.standing_target=self.target.copy()
         tau=kp*(self.target-d.qpos[self.qids])-kd*d.qvel[self.vids]+d.qfrc_bias[self.vids]
         R=d.xmat[1].reshape(3,3);feet=[d.xpos[self.w.id('body',s+'_ankle_roll_link')] for s in ['left','right']]
         center=np.mean(feet,axis=0)+R@np.array([.0058,0,0]);error=R.T@(d.subtree_com[1]-center);mass=m.body_subtreemass[1]
@@ -88,4 +106,5 @@ class HoldWalker:
         limits=m.actuator_forcerange[self.aids];d.ctrl[self.aids]=np.clip(tau,limits[:,0],limits[:,1])
         for q,v,a in getattr(self.w,'waist',[]):d.ctrl[a]=-100*SCALE**4*d.qpos[q]-6*SCALE**4.5*d.qvel[v]+d.qfrc_bias[v]
 
-    def description(self):return {'controller':self.label,'walking_controller':self.previous_description,'native_weights_trained':False}
+    def description(self):return {'controller':self.label,'stance_reference':'neutral-blend' if self.neutral else 'captured',
+                                  'walking_controller':self.previous_description,'native_weights_trained':False}

@@ -72,11 +72,14 @@ class BalancedWorld(DeskWorld):
         R=self.d.xmat[1].reshape(3,3);roll=math.atan2(R[2,1],R[2,2]);normal=np.array([-math.sin(self.path_heading),math.cos(self.path_heading)])
         delta=self.d.qpos[:2]-(self.path_origin if self.path_origin is not None else self.d.qpos[:2])
         legs=self.walker.vids;effort=float(np.sum(abs(self.d.actuator_force[self.walker.aids]*self.d.qvel[legs])))
-        self.measurements.append({'t':float(self.d.time),'phase':getattr(self.walker,'stage','native'),
+        from .balance import support
+        self.measurements.append({'t':float(self.d.time),'phase':self.phase,'gait_phase':getattr(self.walker,'stage','native'),
           'root':self.d.qpos[:3].tolist(),'lateral_m':float(delta@normal),'roll_rad':roll,
           'roll_velocity_rad_s':float(self.d.qvel[3]),'loads_n':self.loads(),'q':self.d.qpos[self.walker.qids].tolist(),
           'qd':self.d.qvel[legs].tolist(),'tau':self.d.actuator_force[self.walker.aids].tolist(),'effort_w':effort,
-          'com':self.d.subtree_com[1].tolist(),'com_target':getattr(self.walker,'com_target',self.d.subtree_com[1]).tolist()})
+          'com':self.d.subtree_com[1].tolist(),'com_target':getattr(self.walker,'com_target',None).tolist() if getattr(self.walker,'com_target',None) is not None else None,
+          'path_origin':self.path_origin.tolist() if self.path_origin is not None else None,
+          'path_heading':self.path_heading,'support':support(self)})
 
     def episode(self):
         rows=self.measurements;lat=np.array([r['lateral_m'] for r in rows]);roll=np.array([r['roll_rad'] for r in rows])

@@ -42,3 +42,17 @@ def test_capture_check_rejects_velocity_that_carries_com_outside_real_contacts()
     moving=support(w)
     assert moving['capture_margin_m']<0
     assert np.allclose(static['support_polygon_xy'],moving['support_polygon_xy'])
+
+
+def test_detached_training_branch_preserves_the_next_physical_steps():
+    from mochi.balanced.sequence import SequenceWorld
+    from mochi.balanced.snapshot import branch
+    from mochi.balanced.onnx_walk import HubWalker,HoldWalker
+    w=SequenceWorld(31000,False)
+    for _ in range(10):w.step(standing=True)
+    for controller in ['native','hold']:
+        w.walker=HubWalker(w) if controller=='native' else HoldWalker(w)
+        clone=branch(w)
+        for _ in range(3):w.step();clone.step()
+        np.testing.assert_array_equal(w.d.qpos,clone.d.qpos)
+        np.testing.assert_array_equal(w.d.qvel,clone.d.qvel)

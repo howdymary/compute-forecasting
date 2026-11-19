@@ -1,0 +1,90 @@
+{
+  "study": "mochi-balanced-v11",
+  "phase": "frozen-physical-controller-training",
+  "parent_checkpoint_sha256": "0188b0e78f749d276c613fa0d8adc8253fa90719b430be18e6f6bfb56673498f",
+  "parent_optimizer_updates": 104,
+  "prior_modal_rollouts": 2,
+  "bounds": {
+    "local_rollouts": 64,
+    "modal_rollouts": 256,
+    "modal_concurrency": 4,
+    "modal_cpu_hours": 8,
+    "optimizer_updates": 32,
+    "training_token_presentations": 2000000,
+    "inference_tokens": 200000,
+    "exa_searches": 8,
+    "past_writes": 20,
+    "past_recalls": 40
+  },
+  "training_seeds": [
+    37000,
+    37001,
+    37002,
+    37003
+  ],
+  "development_seeds": [
+    38000,
+    38001,
+    38002
+  ],
+  "held_out_seeds": [
+    39000,
+    39001,
+    39002,
+    39003,
+    39004,
+    39005
+  ],
+  "training": {
+    "updates": 32,
+    "checkpoints": [
+      0,
+      4,
+      8,
+      16,
+      32
+    ],
+    "learning_rate": 0.0001,
+    "seed": 81129,
+    "base_model": "Qwen/Qwen3.5-4B",
+    "domains": [
+      "walk",
+      "alarm",
+      "drawer",
+      "laptop",
+      "globe",
+      "recovery"
+    ]
+  },
+  "frozen_sha256": {
+    "src/mochi/balanced/world.py": "01a3dc78df8b974ba3dc3e3f7337b593bf31495f629614955275d8611df79e24",
+    "src/mochi/balanced/sequence.py": "955c9853755563bd54f8f86817dd9820ee2fc72c58de880b9c07bccd611ed4b2",
+    "src/mochi/balanced/onnx_walk.py": "8261825fee923e4ab70a14bf7e0d061787bc20e4f61d767d5719fc5f18b1d141",
+    "src/mochi/balanced/balance.py": "9fb38bad73a9e02a7ee406cdcb0eb1a1515b025db9fecd7fe934af44bfc429cb",
+    "src/mochi/balanced/recovery.py": "538c48a36c824aeb3033ba9458d81ec49159223f59593f9583b597a9ed9b6019",
+    "src/mochi/balanced/tasks.py": "60b29d38be802d1a29cc98035129a9e97b01efedb3c97cd30ff91fc5a6f72cfa",
+    "src/mochi/balanced/legs.py": "31b595c0d7741aa305e4fa79d34e3c802f25a1095c939baf69a37365c7759867",
+    "src/mochi/balanced/verification.py": "2a61d18ef3c81ec42e38cb12684419de4a6400b2331a1ce06bf464bb88149838",
+    "src/mochi/balanced/policy.py": "577e67f2c50961f497990f5f368600724d2425e7c9c9b808a8638d2dd8278476",
+    "src/mochi/balanced/snapshot.py": "dfeb104db4ba6a457de3e2c990bd366477ce471f5fe0dfe9ea32ac79c8126a68",
+    "src/mochi/richdesk/world.py": "1d633d277d24fea52895ce903ef1567d111ea99be3d9ad915f8f5bd053dcbb4e",
+    "src/mochi/richdesk/verify.py": "7d4bcf28c685ad887bb0f59eefc7d4d41c6f906fc3ee483a7f8458ecc30de460",
+    "src/mochi/curriculum/world.py": "1cb415d6d66e367e3d2c28146ab6067c1da671461c5ec34728d4487cb13152f6",
+    "src/mochi/curriculum/locomotion.py": "a46937561ccfcce13296ac4d5f2c7422f18e44818941249520d338ac429f4391",
+    "src/mochi/desk/g1_model.py": "7b3d54c7b95e02d5f93515bd01a67115a010ae23a830b3ea16475a2d20be114c",
+    "src/mochi/control_v8/manipulation.py": "08f6ff5b95ff6fa8f2f59c34ef14171be19f346e1a018b82a4f1dbfe3b2b17ca",
+    "src/mochi/control_v8/verification.py": "4e78da28198bb373c515fcab604d4a756dde886f8bf4fe1aa84a7e437d347b1c",
+    "configs/richdesk-v9.json": "b63f0e98c0e58329956e1559191ad616dc1fdcb3ab132e8b5d56986faa975fdd",
+    "assets/robot/g1-v11-policy/exported/policy.onnx": "2ee446c8d7fb718d9479db0f82fe5659d382158d347fdacd5ffc35831e1d642c"
+  },
+  "smoothness": {
+    "roll_rms_degrees_max": 2,
+    "roll_peak_degrees_max": 12,
+    "path_lateral_rms_m_max": 0.015,
+    "path_lateral_peak_to_peak_m_max": 0.05,
+    "sequence_time_seconds_max": 240,
+    "loaded_contact_travel_estimate_m_max": 1.25,
+    "qualification": "Calibration thresholds from the engineering reference, frozen before training. Contact travel is a sampled velocity proxy, not a no-slip certificate. Walking acceleration and task recovery are reported separately."
+  },
+  "scope": "Tinker resumes Qwen LoRA decision weights for walking strategies, task profiles and arm recovery. Native gait ONNX weights and all low-level physics/controller code are fixed. A competent fixed heuristic is an explicit baseline. No low-level neural gait training claimed."
+}
