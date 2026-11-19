@@ -1,0 +1,44 @@
+{
+  "study": "mochi-terrain-v12",
+  "phase": "terrain-controller-diagnostics",
+  "training_gate_open": false,
+  "bounds": {
+    "local_rollouts": 96,
+    "modal_rollouts": 512,
+    "modal_concurrency": 4,
+    "modal_cpu_hours": 8,
+    "optimizer_updates": 64,
+    "training_token_presentations": 2000000,
+    "inference_tokens": 200000,
+    "exa_searches": 8,
+    "past_writes": 20,
+    "past_recalls": 40
+  },
+  "seed_partitions": {
+    "engineering": [
+      41000,
+      41001,
+      41002
+    ],
+    "training": [
+      42000,
+      42001,
+      42002,
+      42003
+    ],
+    "development": [
+      43000,
+      43001,
+      43002
+    ],
+    "held_out": [
+      44000,
+      44001,
+      44002,
+      44003,
+      44004,
+      44005
+    ]
+  },
+  "safety": "No root/object state edits after construction; no hidden supports; walking contact only feet on desk/books; actual hand-target contact during tasks. Preserve V8/V11."
+}

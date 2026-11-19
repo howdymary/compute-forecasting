@@ -1,0 +1,955 @@
+{
+  "study": "mochi-terrain-v12",
+  "local_rollouts": 39,
+  "attempts": {
+    "native-flat-phase-0": {
+      "status": "completed",
+      "parameters": {
+        "id": "native-flat-phase-0",
+        "kind": "native",
+        "horizon": 2.2,
+        "speed": 0.025,
+        "parameters": "{}"
+      },
+      "at_unix": 1795063437.964612,
+      "failure": null,
+      "duration": 2.2006279674980633,
+      "wall_seconds": 1.2588265826925635,
+      "metrics": {
+        "samples": 208,
+        "lateral_rms_m": 0.006945034660231869,
+        "lateral_peak_to_peak_m": 0.01643139308697872,
+        "roll_rms_deg": 0.4977380013263351,
+        "roll_peak_deg": 2.057489583872656,
+        "sampled_joint_acceleration_rms_rad_s2": 115.76008267848043,
+        "sampled_torque_change_rms_nm": 0.002947823896696122,
+        "progress_m": 0.028203335458343,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      }
+    },
+    "terrain-clearance-rawobs-0": {
+      "status": "completed",
+      "parameters": {
+        "id": "terrain-clearance-rawobs-0",
+        "kind": "terrain",
+        "horizon": 14.0,
+        "speed": 0.035,
+        "parameters": "{\"compensation\":0}"
+      },
+      "at_unix": 1795063520.710019,
+      "failure": null,
+      "duration": 14.000800594103339,
+      "wall_seconds": 9.328650458715856,
+      "metrics": {
+        "samples": 1318,
+        "lateral_rms_m": 0.004314708867744503,
+        "lateral_peak_to_peak_m": 0.022366019141780883,
+        "roll_rms_deg": 1.0837074099647994,
+        "roll_peak_deg": 3.1041480256781013,
+        "sampled_joint_acceleration_rms_rad_s2": 267.4859994708327,
+        "sampled_torque_change_rms_nm": 0.004644969279825655,
+        "progress_m": 0.05352960231789819,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      }
+    },
+    "terrain-clearance-compensated-0": {
+      "status": "completed",
+      "parameters": {
+        "id": "terrain-clearance-compensated-0",
+        "kind": "terrain",
+        "horizon": 14.0,
+        "speed": 0.035,
+        "parameters": "{}"
+      },
+      "at_unix": 1795063520.710507,
+      "failure": "invalid_fixture_contact",
+      "duration": 7.063754185418609,
+      "wall_seconds": 4.837538417428732,
+      "metrics": {
+        "samples": 665,
+        "lateral_rms_m": 0.006346162794879184,
+        "lateral_peak_to_peak_m": 0.025449750822957258,
+        "roll_rms_deg": 0.6418456611697463,
+        "roll_peak_deg": 2.832486502462534,
+        "sampled_joint_acceleration_rms_rad_s2": 208.84667011332033,
+        "sampled_torque_change_rms_nm": 0.004082658600340378,
+        "progress_m": 0.07240685352588583,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      }
+    },
+    "planned-swing-compensated-0": {
+      "status": "completed",
+      "parameters": {
+        "id": "planned-swing-compensated-0",
+        "kind": "planned",
+        "horizon": 12.0,
+        "speed": 0.035,
+        "parameters": "{}"
+      },
+      "at_unix": 1795063618.223637,
+      "failure": "fall",
+      "duration": 0.8583430036674778,
+      "wall_seconds": 0.5517917918041348,
+      "metrics": {
+        "samples": 81,
+        "lateral_rms_m": 0.027868767126952056,
+        "lateral_peak_to_peak_m": 0.08845863078783706,
+        "roll_rms_deg": 7.586110153497478,
+        "roll_peak_deg": 28.69366801686399,
+        "sampled_joint_acceleration_rms_rad_s2": 247.2704516345916,
+        "sampled_torque_change_rms_nm": 0.005913628254885806,
+        "progress_m": 0.0031266071749816494,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      }
+    },
+    "planned-swing-rawobs-0": {
+      "status": "completed",
+      "parameters": {
+        "id": "planned-swing-rawobs-0",
+        "kind": "planned",
+        "horizon": 12.0,
+        "speed": 0.035,
+        "parameters": "{\"compensation\":0}"
+      },
+      "at_unix": 1795063618.223883,
+      "failure": "invalid_fixture_contact",
+      "duration": 1.0757898979299074,
+      "wall_seconds": 0.6954644164070487,
+      "metrics": {
+        "samples": 102,
+        "lateral_rms_m": 0.03607151265257104,
+        "lateral_peak_to_peak_m": 0.06739286512254977,
+        "roll_rms_deg": 1.790029896408195,
+        "roll_peak_deg": 5.00227107136213,
+        "sampled_joint_acceleration_rms_rad_s2": 300.2940048527932,
+        "sampled_torque_change_rms_nm": 0.006119564367007159,
+        "progress_m": -0.05732135287340714,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      }
+    },
+    "planned-swing-residual-half-0": {
+      "status": "failed",
+      "parameters": {
+        "id": "planned-swing-residual-half-0",
+        "kind": "planned",
+        "horizon": 18.0,
+        "speed": 0.035,
+        "parameters": "{\"tracking_gain\":0.5,\"compensation\":0,\"lift\":0.012}"
+      },
+      "at_unix": 1795063690.642522,
+      "error": "TypeError"
+    },
+    "planned-swing-residual-full-0": {
+      "status": "failed",
+      "parameters": {
+        "id": "planned-swing-residual-full-0",
+        "kind": "planned",
+        "horizon": 18.0,
+        "speed": 0.035,
+        "parameters": "{\"tracking_gain\":1,\"compensation\":0,\"lift\":0.012}"
+      },
+      "at_unix": 1795063690.6428878,
+      "error": "TypeError"
+    },
+    "planned-swing-residual-half-1": {
+      "status": "completed",
+      "parameters": {
+        "id": "planned-swing-residual-half-1",
+        "kind": "planned",
+        "horizon": 18.0,
+        "speed": 0.035,
+        "parameters": "{\"tracking_gain\":0.5,\"compensation\":0,\"lift\":0.012}"
+      },
+      "at_unix": 1795063734.82108,
+      "failure": null,
+      "duration": 18.000678991192,
+      "wall_seconds": 13.18765200022608,
+      "metrics": {
+        "samples": 1694,
+        "lateral_rms_m": 0.003858005653039243,
+        "lateral_peak_to_peak_m": 0.02117798081493,
+        "roll_rms_deg": 0.9183846789083522,
+        "roll_peak_deg": 2.6985150546500645,
+        "sampled_joint_acceleration_rms_rad_s2": 206.95343370801294,
+        "sampled_torque_change_rms_nm": 0.003965611744181372,
+        "progress_m": 0.04771921013238031,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      }
+    },
+    "planned-swing-residual-full-1": {
+      "status": "completed",
+      "parameters": {
+        "id": "planned-swing-residual-full-1",
+        "kind": "planned",
+        "horizon": 18.0,
+        "speed": 0.035,
+        "parameters": "{\"tracking_gain\":1,\"compensation\":0,\"lift\":0.012}"
+      },
+      "at_unix": 1795063734.821428,
+      "failure": null,
+      "duration": 18.000678991192,
+      "wall_seconds": 13.188377749174833,
+      "metrics": {
+        "samples": 1694,
+        "lateral_rms_m": 0.006769799483256497,
+        "lateral_peak_to_peak_m": 0.027202354623817485,
+        "roll_rms_deg": 0.6717527203838253,
+        "roll_peak_deg": 2.2801284670489146,
+        "sampled_joint_acceleration_rms_rad_s2": 221.49928395174754,
+        "sampled_torque_change_rms_nm": 0.004194130313883138,
+        "progress_m": 0.045321737307705,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      }
+    },
+    "planned-swing-virtual-feedback-half-0": {
+      "status": "completed",
+      "parameters": {
+        "id": "planned-swing-virtual-feedback-half-0",
+        "kind": "planned",
+        "horizon": 15.0,
+        "speed": 0.035,
+        "parameters": "{\"tracking_gain\":0.5,\"compensation\":1,\"lift\":0.012,\"level_gain\":0}"
+      },
+      "at_unix": 1795063797.0141902,
+      "failure": null,
+      "duration": 15.000565825993679,
+      "wall_seconds": 11.131369332782924,
+      "metrics": {
+        "samples": 1412,
+        "lateral_rms_m": 0.0045353663358107385,
+        "lateral_peak_to_peak_m": 0.023443225391752757,
+        "roll_rms_deg": 0.7185218904072042,
+        "roll_peak_deg": 2.4631475549497863,
+        "sampled_joint_acceleration_rms_rad_s2": 200.96379843600312,
+        "sampled_torque_change_rms_nm": 0.004040128823092137,
+        "progress_m": 0.039558779327464016,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      }
+    },
+    "planned-swing-virtual-feedback-full-0": {
+      "status": "completed",
+      "parameters": {
+        "id": "planned-swing-virtual-feedback-full-0",
+        "kind": "planned",
+        "horizon": 15.0,
+        "speed": 0.035,
+        "parameters": "{\"tracking_gain\":1,\"compensation\":1,\"lift\":0.012,\"level_gain\":0}"
+      },
+      "at_unix": 1795063797.014648,
+      "failure": null,
+      "duration": 15.000565825993679,
+      "wall_seconds": 11.118122666142881,
+      "metrics": {
+        "samples": 1412,
+        "lateral_rms_m": 0.0070543344433245305,
+        "lateral_peak_to_peak_m": 0.03617012075176318,
+        "roll_rms_deg": 0.7044652073759402,
+        "roll_peak_deg": 2.936221238476239,
+        "sampled_joint_acceleration_rms_rad_s2": 213.54693702096628,
+        "sampled_torque_change_rms_nm": 0.004517804615715575,
+        "progress_m": 0.045683276337755985,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      }
+    },
+    "clearance-command055-0": {
+      "status": "completed",
+      "parameters": {
+        "id": "clearance-command055-0",
+        "kind": "terrain",
+        "horizon": 16.0,
+        "speed": 0.055,
+        "parameters": "{\"lift\":0.008,\"compensation\":0.5}"
+      },
+      "at_unix": 1795063854.299438,
+      "failure": "invalid_fixture_contact",
+      "duration": 5.697762605296975,
+      "wall_seconds": 4.059843041934073,
+      "metrics": {
+        "samples": 537,
+        "lateral_rms_m": 0.009995706736631029,
+        "lateral_peak_to_peak_m": 0.03561673060700493,
+        "roll_rms_deg": 0.9781982485018669,
+        "roll_peak_deg": 5.4498466434751265,
+        "sampled_joint_acceleration_rms_rad_s2": 199.75410318425983,
+        "sampled_torque_change_rms_nm": 0.004229396491810783,
+        "progress_m": 0.07043220289278868,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      }
+    },
+    "planned-command065-0": {
+      "status": "completed",
+      "parameters": {
+        "id": "planned-command065-0",
+        "kind": "planned",
+        "horizon": 16.0,
+        "speed": 0.065,
+        "parameters": "{\"lift\":0.010,\"compensation\":0.5,\"tracking_gain\":0.3}"
+      },
+      "at_unix": 1795063854.299839,
+      "failure": null,
+      "duration": 16.00033105788402,
+      "wall_seconds": 12.500680833123624,
+      "metrics": {
+        "samples": 1506,
+        "lateral_rms_m": 0.01836632672527539,
+        "lateral_peak_to_peak_m": 0.04232756304529728,
+        "roll_rms_deg": 1.025140650156792,
+        "roll_peak_deg": 4.774396253057053,
+        "sampled_joint_acceleration_rms_rad_s2": 243.43229253916914,
+        "sampled_torque_change_rms_nm": 0.0049699262821172934,
+        "progress_m": 0.05744921618416707,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      }
+    },
+    "clearance-command080-0": {
+      "status": "completed",
+      "parameters": {
+        "id": "clearance-command080-0",
+        "kind": "terrain",
+        "horizon": 16.0,
+        "speed": 0.08,
+        "parameters": "{\"lift\":0.008,\"compensation\":1}"
+      },
+      "at_unix": 1795063854.300192,
+      "failure": "invalid_fixture_contact",
+      "duration": 1.9014341205053709,
+      "wall_seconds": 1.4270444167777896,
+      "metrics": {
+        "samples": 179,
+        "lateral_rms_m": 0.00671336474050749,
+        "lateral_peak_to_peak_m": 0.017134996353812496,
+        "roll_rms_deg": 0.688721387210859,
+        "roll_peak_deg": 3.4174722028003064,
+        "sampled_joint_acceleration_rms_rad_s2": 176.4329128176435,
+        "sampled_torque_change_rms_nm": 0.003470132674663302,
+        "progress_m": 0.0766845678078093,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      }
+    },
+    "clearance-command065-0": {
+      "status": "completed",
+      "parameters": {
+        "id": "clearance-command065-0",
+        "kind": "terrain",
+        "horizon": 16.0,
+        "speed": 0.065,
+        "parameters": "{\"lift\":0.008,\"compensation\":1}"
+      },
+      "at_unix": 1795063854.300572,
+      "failure": "invalid_fixture_contact",
+      "duration": 2.877492736104483,
+      "wall_seconds": 2.1466221660375595,
+      "metrics": {
+        "samples": 271,
+        "lateral_rms_m": 0.021059622007131833,
+        "lateral_peak_to_peak_m": 0.10133532164746893,
+        "roll_rms_deg": 2.8988019291049967,
+        "roll_peak_deg": 10.534350215277923,
+        "sampled_joint_acceleration_rms_rad_s2": 298.6831975291722,
+        "sampled_torque_change_rms_nm": 0.006036888778693214,
+        "progress_m": -0.1566683775247508,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      }
+    },
+    "quasi-supported-servo6-0": {
+      "status": "completed",
+      "parameters": {
+        "id": "quasi-supported-servo6-0",
+        "kind": "quasi",
+        "horizon": 16.0,
+        "speed": 0.025,
+        "parameters": "{}"
+      },
+      "at_unix": 1795063937.5742788,
+      "failure": "fall",
+      "duration": 1.7624643008639562,
+      "wall_seconds": 1.5364328334107995,
+      "metrics": {
+        "samples": 166,
+        "lateral_rms_m": 0.023331167872063876,
+        "lateral_peak_to_peak_m": 0.08101649068657812,
+        "roll_rms_deg": 5.8625099427941345,
+        "roll_peak_deg": 28.269318510002932,
+        "sampled_joint_acceleration_rms_rad_s2": 816.4411153248134,
+        "sampled_torque_change_rms_nm": 0.028499970335505005,
+        "progress_m": 0.002509954220572907,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      }
+    },
+    "quasi-supported-servo3-0": {
+      "status": "completed",
+      "parameters": {
+        "id": "quasi-supported-servo3-0",
+        "kind": "quasi",
+        "horizon": 16.0,
+        "speed": 0.025,
+        "parameters": "{\"gain\":3}"
+      },
+      "at_unix": 1795063937.5747561,
+      "failure": "invalid_fixture_contact",
+      "duration": 1.5940655782396538,
+      "wall_seconds": 1.3797862082719803,
+      "metrics": {
+        "samples": 150,
+        "lateral_rms_m": 0.022532258638025153,
+        "lateral_peak_to_peak_m": 0.07946244712156425,
+        "roll_rms_deg": 4.538303586129392,
+        "roll_peak_deg": 22.42005170358297,
+        "sampled_joint_acceleration_rms_rad_s2": 25.457442391366794,
+        "sampled_torque_change_rms_nm": 0.0013677375571198814,
+        "progress_m": 0.003625978632830878,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      }
+    },
+    "contact-reachable-crouch12-0": {
+      "status": "completed",
+      "parameters": {
+        "id": "contact-reachable-crouch12-0",
+        "kind": "contact",
+        "horizon": 90.0,
+        "speed": 0.025,
+        "parameters": "{}"
+      },
+      "at_unix": 1795064123.076415,
+      "failure": "fall",
+      "duration": 34.05496303788481,
+      "wall_seconds": 30.556462583132088,
+      "metrics": {
+        "samples": 3205,
+        "lateral_rms_m": 0.020923869519967917,
+        "lateral_peak_to_peak_m": 0.06363113322204522,
+        "roll_rms_deg": 1.189377618044851,
+        "roll_peak_deg": 24.630588936220555,
+        "sampled_joint_acceleration_rms_rad_s2": 127.79269679537877,
+        "sampled_torque_change_rms_nm": 0.004554685072208617,
+        "progress_m": 0.1820028367775494,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      }
+    },
+    "contact-reachable-crouch18-0": {
+      "status": "completed",
+      "parameters": {
+        "id": "contact-reachable-crouch18-0",
+        "kind": "contact",
+        "horizon": 90.0,
+        "speed": 0.025,
+        "parameters": "{\"crouch\":0.018}"
+      },
+      "at_unix": 1795064123.07693,
+      "failure": "fall",
+      "duration": 33.70835595830726,
+      "wall_seconds": 30.34472637437284,
+      "metrics": {
+        "samples": 3172,
+        "lateral_rms_m": 0.02078457729939975,
+        "lateral_peak_to_peak_m": 0.05564327691524424,
+        "roll_rms_deg": 0.32562814971981185,
+        "roll_peak_deg": 8.128938973000228,
+        "sampled_joint_acceleration_rms_rad_s2": 179.67880021280757,
+        "sampled_torque_change_rms_nm": 0.00423012479056626,
+        "progress_m": 0.14756088488269953,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      }
+    },
+    "contact-fullsole-joint-0": {
+      "status": "completed",
+      "parameters": {
+        "id": "contact-fullsole-joint-0",
+        "kind": "contact",
+        "horizon": 120.0,
+        "speed": 0.025,
+        "parameters": "{\"cartesian_swing\":false}"
+      },
+      "at_unix": 1795064263.6734478,
+      "failure": null,
+      "duration": 120.00043926068086,
+      "wall_seconds": 104.43187091685832,
+      "metrics": {
+        "samples": 11292,
+        "lateral_rms_m": 0.0248555963849229,
+        "lateral_peak_to_peak_m": 0.025053491569461628,
+        "roll_rms_deg": 0.4807481178923928,
+        "roll_peak_deg": 0.4902982059035988,
+        "sampled_joint_acceleration_rms_rad_s2": 1.9947132579988207,
+        "sampled_torque_change_rms_nm": 0.0001244213946671673,
+        "progress_m": -0.001874754088264012,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      }
+    },
+    "contact-fullsole-cartesian-0": {
+      "status": "completed",
+      "parameters": {
+        "id": "contact-fullsole-cartesian-0",
+        "kind": "contact",
+        "horizon": 120.0,
+        "speed": 0.025,
+        "parameters": "{}"
+      },
+      "at_unix": 1795064263.6740322,
+      "failure": "fall",
+      "duration": 4.602353438712302,
+      "wall_seconds": 4.647747665643692,
+      "metrics": {
+        "samples": 434,
+        "lateral_rms_m": 0.022427592345700825,
+        "lateral_peak_to_peak_m": 0.07450113500333422,
+        "roll_rms_deg": 4.0146752636935235,
+        "roll_peak_deg": 30.099711084325403,
+        "sampled_joint_acceleration_rms_rad_s2": 10.271304162358607,
+        "sampled_torque_change_rms_nm": 0.0007019865768400885,
+        "progress_m": -0.003591052399140949,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      }
+    },
+    "contact-level-stance040-0": {
+      "status": "completed",
+      "parameters": {
+        "id": "contact-level-stance040-0",
+        "kind": "contact",
+        "horizon": 180.0,
+        "speed": 0.025,
+        "parameters": "{\"width\":0.04}"
+      },
+      "at_unix": 1795064422.811787,
+      "failure": "fall",
+      "duration": 6.219308163715648,
+      "wall_seconds": 6.25924270786345,
+      "metrics": {
+        "samples": 586,
+        "lateral_rms_m": 0.023895945380192123,
+        "lateral_peak_to_peak_m": 0.07371241743787377,
+        "roll_rms_deg": 3.540135501636144,
+        "roll_peak_deg": 29.713671620541316,
+        "sampled_joint_acceleration_rms_rad_s2": 8.772974150116172,
+        "sampled_torque_change_rms_nm": 0.0005783418818719711,
+        "progress_m": -0.003491278110049535,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      }
+    },
+    "contact-level-stance028-0": {
+      "status": "completed",
+      "parameters": {
+        "id": "contact-level-stance028-0",
+        "kind": "contact",
+        "horizon": 180.0,
+        "speed": 0.025,
+        "parameters": "{}"
+      },
+      "at_unix": 1795064422.812356,
+      "failure": "fall",
+      "duration": 8.872814249337925,
+      "wall_seconds": 8.817019957117736,
+      "metrics": {
+        "samples": 835,
+        "lateral_rms_m": 0.01949526541578046,
+        "lateral_peak_to_peak_m": 0.09011419961906242,
+        "roll_rms_deg": 2.728941033774726,
+        "roll_peak_deg": 28.16113481053943,
+        "sampled_joint_acceleration_rms_rad_s2": 7.385993478977921,
+        "sampled_torque_change_rms_nm": 0.0005457659714432944,
+        "progress_m": 0.015323223864779242,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      }
+    },
+    "contact-preload-narrow-0": {
+      "status": "completed",
+      "parameters": {
+        "id": "contact-preload-narrow-0",
+        "kind": "contact",
+        "horizon": 180.0,
+        "speed": 0.025,
+        "parameters": "{}"
+      },
+      "at_unix": 1795064534.455641,
+      "failure": "fall",
+      "duration": 55.83480365388652,
+      "wall_seconds": 52.867805916815996,
+      "metrics": {
+        "samples": 5254,
+        "lateral_rms_m": 0.015209755738015506,
+        "lateral_peak_to_peak_m": 0.04384102401765744,
+        "roll_rms_deg": 1.1361294041898342,
+        "roll_peak_deg": 16.46292204845165,
+        "sampled_joint_acceleration_rms_rad_s2": 3.449370174981802,
+        "sampled_torque_change_rms_nm": 0.0006699390261742347,
+        "progress_m": 0.26889965069867,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      }
+    },
+    "contact-preload-wide-0": {
+      "status": "completed",
+      "parameters": {
+        "id": "contact-preload-wide-0",
+        "kind": "contact",
+        "horizon": 180.0,
+        "speed": 0.025,
+        "parameters": "{\"width\":0.04}"
+      },
+      "at_unix": 1795064534.456654,
+      "failure": "fall",
+      "duration": 34.05741544646673,
+      "wall_seconds": 32.75444549974054,
+      "metrics": {
+        "samples": 3205,
+        "lateral_rms_m": 0.020749531119096706,
+        "lateral_peak_to_peak_m": 0.050784758692203724,
+        "roll_rms_deg": 1.1038585121181865,
+        "roll_peak_deg": 23.633541343905467,
+        "sampled_joint_acceleration_rms_rad_s2": 51.01688821193516,
+        "sampled_torque_change_rms_nm": 0.0021365691704348707,
+        "progress_m": 0.11624551432271062,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      }
+    },
+    "contact-rise-arc028-0": {
+      "status": "completed",
+      "parameters": {
+        "id": "contact-rise-arc028-0",
+        "kind": "contact",
+        "horizon": 220.0,
+        "speed": 0.025,
+        "parameters": "{}"
+      },
+      "at_unix": 1795064803.560769,
+      "failure": "fall",
+      "duration": 48.979504197902195,
+      "wall_seconds": 58.01184279099107,
+      "metrics": {
+        "samples": 4609,
+        "lateral_rms_m": 0.01607550535250152,
+        "lateral_peak_to_peak_m": 0.09320564304077801,
+        "roll_rms_deg": 1.1547441304010877,
+        "roll_peak_deg": 28.187043165748925,
+        "sampled_joint_acceleration_rms_rad_s2": 3.414833857220816,
+        "sampled_torque_change_rms_nm": 0.00036327566325997226,
+        "progress_m": 0.1760709744247912,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      }
+    },
+    "contact-rise-arc024-0": {
+      "status": "completed",
+      "parameters": {
+        "id": "contact-rise-arc024-0",
+        "kind": "contact",
+        "horizon": 220.0,
+        "speed": 0.025,
+        "parameters": "{\"width\":0.024}"
+      },
+      "at_unix": 1795064803.561624,
+      "failure": "fall",
+      "duration": 63.51411239339483,
+      "wall_seconds": 74.23227566573769,
+      "metrics": {
+        "samples": 5977,
+        "lateral_rms_m": 0.01428639900871003,
+        "lateral_peak_to_peak_m": 0.10569435961707464,
+        "roll_rms_deg": 0.9514369391123183,
+        "roll_peak_deg": 28.487685241141747,
+        "sampled_joint_acceleration_rms_rad_s2": 38.38944428996081,
+        "sampled_torque_change_rms_nm": 0.0016119675630840633,
+        "progress_m": 0.2488584514715676,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      }
+    },
+    "contact-coupled-goal020-0": {
+      "status": "completed",
+      "parameters": {
+        "id": "contact-coupled-goal020-0",
+        "kind": "contact",
+        "horizon": 220.0,
+        "speed": 0.025,
+        "parameters": "{\"width\":0.024,\"book_goal\":0.02}"
+      },
+      "at_unix": 1795065023.856405,
+      "failure": "fall",
+      "duration": 51.93302160005714,
+      "wall_seconds": 59.697260458022356,
+      "metrics": {
+        "samples": 4887,
+        "lateral_rms_m": 0.014044681996732762,
+        "lateral_peak_to_peak_m": 0.041401021042727915,
+        "roll_rms_deg": 0.5607931966160143,
+        "roll_peak_deg": 12.19371394712126,
+        "sampled_joint_acceleration_rms_rad_s2": 99.02497374872006,
+        "sampled_torque_change_rms_nm": 0.002514361473315337,
+        "progress_m": 0.1621051447533216,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      }
+    },
+    "contact-coupled-goal015-0": {
+      "status": "completed",
+      "parameters": {
+        "id": "contact-coupled-goal015-0",
+        "kind": "contact",
+        "horizon": 220.0,
+        "speed": 0.025,
+        "parameters": "{\"width\":0.024,\"book_goal\":0.015}"
+      },
+      "at_unix": 1795065023.857049,
+      "failure": "fall",
+      "duration": 52.57882252662852,
+      "wall_seconds": 60.47392200026661,
+      "metrics": {
+        "samples": 4948,
+        "lateral_rms_m": 0.014352470857584197,
+        "lateral_peak_to_peak_m": 0.0840384875972711,
+        "roll_rms_deg": 1.1470151970979685,
+        "roll_peak_deg": 28.810360961971632,
+        "sampled_joint_acceleration_rms_rad_s2": 3.351476324320792,
+        "sampled_torque_change_rms_nm": 0.00038553207932398494,
+        "progress_m": 0.16924872635605134,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      }
+    },
+    "qp-point-support-0": {
+      "status": "completed",
+      "parameters": {
+        "id": "qp-point-support-0",
+        "kind": "qp",
+        "horizon": 15.0,
+        "speed": 0.025,
+        "parameters": "{\"width\":0.024}"
+      },
+      "at_unix": 1795065346.737477,
+      "failure": "fall",
+      "duration": 1.9504822921435172,
+      "wall_seconds": 2.3063932079821825,
+      "metrics": {
+        "samples": 184,
+        "lateral_rms_m": 0.014532850688900562,
+        "lateral_peak_to_peak_m": 0.05234979740270096,
+        "roll_rms_deg": 4.149834447617433,
+        "roll_peak_deg": 20.27542412054049,
+        "sampled_joint_acceleration_rms_rad_s2": 47.70649261969768,
+        "sampled_torque_change_rms_nm": 0.003320767449510374,
+        "progress_m": -0.015494766161556397,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      }
+    },
+    "qp-independent-contact-0": {
+      "status": "completed",
+      "parameters": {
+        "id": "qp-independent-contact-0",
+        "kind": "qp",
+        "horizon": 18.0,
+        "speed": 0.025,
+        "parameters": "{\"width\":0.024}"
+      },
+      "at_unix": 1795065441.790324,
+      "failure": null,
+      "duration": 18.000678991192,
+      "wall_seconds": 20.591233542189002,
+      "metrics": {
+        "samples": 1694,
+        "lateral_rms_m": 0.01577310924512328,
+        "lateral_peak_to_peak_m": 0.02414139630715917,
+        "roll_rms_deg": 0.23667715108106388,
+        "roll_peak_deg": 0.6744064336957949,
+        "sampled_joint_acceleration_rms_rad_s2": 5.271798536395311,
+        "sampled_torque_change_rms_nm": 0.0012991806372367517,
+        "progress_m": 0.005411541028181199,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      }
+    },
+    "qp-sole-orientation-0": {
+      "status": "completed",
+      "parameters": {
+        "id": "qp-sole-orientation-0",
+        "kind": "qp",
+        "horizon": 30.0,
+        "speed": 0.025,
+        "parameters": "{\"width\":0.024}"
+      },
+      "at_unix": 1795065497.3502898,
+      "failure": null,
+      "duration": 30.000314182457984,
+      "wall_seconds": 32.02958812471479,
+      "metrics": {
+        "samples": 2823,
+        "lateral_rms_m": 0.011701422636028625,
+        "lateral_peak_to_peak_m": 0.024141220818003517,
+        "roll_rms_deg": 0.18194544549306127,
+        "roll_peak_deg": 0.6937927593513856,
+        "sampled_joint_acceleration_rms_rad_s2": 4.05652243220775,
+        "sampled_torque_change_rms_nm": 0.0010334989455099888,
+        "progress_m": 0.005271275029194333,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      }
+    },
+    "qp-seated-support-0": {
+      "status": "completed",
+      "parameters": {
+        "id": "qp-seated-support-0",
+        "kind": "qp",
+        "horizon": 35.0,
+        "speed": 0.025,
+        "parameters": "{\"width\":0.024}"
+      },
+      "at_unix": 1795065636.261968,
+      "failure": null,
+      "duration": 35.00077528097733,
+      "wall_seconds": 41.57408879138529,
+      "metrics": {
+        "samples": 3294,
+        "lateral_rms_m": 0.012493208077615878,
+        "lateral_peak_to_peak_m": 0.04000253812657262,
+        "roll_rms_deg": 0.22849863174429266,
+        "roll_peak_deg": 0.6997993438414316,
+        "sampled_joint_acceleration_rms_rad_s2": 5.851578464271524,
+        "sampled_torque_change_rms_nm": 0.0016805539958580087,
+        "progress_m": 0.013301323266763393,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      }
+    },
+    "contact-seated-support-0": {
+      "status": "completed",
+      "parameters": {
+        "id": "contact-seated-support-0",
+        "kind": "contact",
+        "horizon": 200.0,
+        "speed": 0.025,
+        "parameters": "{\"width\":0.024}"
+      },
+      "at_unix": 1795065636.2628238,
+      "failure": "fall",
+      "duration": 56.49204915384018,
+      "wall_seconds": 56.20905629172921,
+      "metrics": {
+        "samples": 5316,
+        "lateral_rms_m": 0.013972194861286175,
+        "lateral_peak_to_peak_m": 0.09047313750432164,
+        "roll_rms_deg": 1.0826616329092924,
+        "roll_peak_deg": 28.231900846736945,
+        "sampled_joint_acceleration_rms_rad_s2": 3.234766463934853,
+        "sampled_torque_change_rms_nm": 0.0002746302970228,
+        "progress_m": 0.22404332501556595,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      }
+    },
+    "qp-foot-priority20-0": {
+      "status": "completed",
+      "parameters": {
+        "id": "qp-foot-priority20-0",
+        "kind": "qp",
+        "horizon": 85.0,
+        "speed": 0.025,
+        "parameters": "{\"width\":0.024}"
+      },
+      "at_unix": 1795065754.937545,
+      "failure": null,
+      "duration": 85.00048144909384,
+      "wall_seconds": 95.78273487463593,
+      "metrics": {
+        "samples": 7999,
+        "lateral_rms_m": 0.009234639013899147,
+        "lateral_peak_to_peak_m": 0.04009961019555919,
+        "roll_rms_deg": 0.17864122028192228,
+        "roll_peak_deg": 0.7954559528428673,
+        "sampled_joint_acceleration_rms_rad_s2": 3.55573376988403,
+        "sampled_torque_change_rms_nm": 0.0011931149557134525,
+        "progress_m": 0.014282127518016052,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      }
+    },
+    "qp-stationary-contacts-0": {
+      "status": "completed",
+      "parameters": {
+        "id": "qp-stationary-contacts-0",
+        "kind": "qp",
+        "horizon": 45.0,
+        "speed": 0.025,
+        "parameters": "{\"width\":0.024}"
+      },
+      "at_unix": 1795065847.498352,
+      "failure": null,
+      "duration": 45.00006253897879,
+      "wall_seconds": 50.13264141604304,
+      "metrics": {
+        "samples": 4235,
+        "lateral_rms_m": 0.01161672918406235,
+        "lateral_peak_to_peak_m": 0.040042400703840686,
+        "roll_rms_deg": 0.22167335086205636,
+        "roll_peak_deg": 0.7321855579343199,
+        "sampled_joint_acceleration_rms_rad_s2": 5.7352313080336454,
+        "sampled_torque_change_rms_nm": 0.0015824156610400855,
+        "progress_m": 0.013259174946889996,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      }
+    },
+    "contact-ankle-feedback05-0": {
+      "status": "completed",
+      "parameters": {
+        "id": "contact-ankle-feedback05-0",
+        "kind": "contact",
+        "horizon": 210.0,
+        "speed": 0.025,
+        "parameters": "{\"width\":0.024,\"balance_feedback\":0.5}"
+      },
+      "at_unix": 1795066002.0099819,
+      "failure": "fall",
+      "duration": 74.99955925203777,
+      "wall_seconds": 80.48467716667801,
+      "metrics": {
+        "samples": 7058,
+        "lateral_rms_m": 0.01332725646082434,
+        "lateral_peak_to_peak_m": 0.040367631376991855,
+        "roll_rms_deg": 0.32638035832145085,
+        "roll_peak_deg": 16.755081912398488,
+        "sampled_joint_acceleration_rms_rad_s2": 43.27117371192726,
+        "sampled_torque_change_rms_nm": 0.001473610036661065,
+        "progress_m": 0.22398204437339583,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      }
+    },
+    "contact-ankle-feedback10-0": {
+      "status": "completed",
+      "parameters": {
+        "id": "contact-ankle-feedback10-0",
+        "kind": "contact",
+        "horizon": 210.0,
+        "speed": 0.025,
+        "parameters": "{\"width\":0.024,\"balance_feedback\":1}"
+      },
+      "at_unix": 1795066002.01112,
+      "failure": "fall",
+      "duration": 75.24398264070213,
+      "wall_seconds": 80.64986754115671,
+      "metrics": {
+        "samples": 7081,
+        "lateral_rms_m": 0.013279852606045158,
+        "lateral_peak_to_peak_m": 0.041822432159400194,
+        "roll_rms_deg": 0.4082495351439077,
+        "roll_peak_deg": 21.755632138319374,
+        "sampled_joint_acceleration_rms_rad_s2": 41.63759620723202,
+        "sampled_torque_change_rms_nm": 0.0015158542527385253,
+        "progress_m": 0.2234622951407822,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      }
+    },
+    "contact-ankle-feedback20-0": {
+      "status": "completed",
+      "parameters": {
+        "id": "contact-ankle-feedback20-0",
+        "kind": "contact",
+        "horizon": 210.0,
+        "speed": 0.025,
+        "parameters": "{\"width\":0.024,\"balance_feedback\":2}"
+      },
+      "at_unix": 1795066002.012015,
+      "failure": "fall",
+      "duration": 56.70622616999423,
+      "wall_seconds": 60.48459970857948,
+      "metrics": {
+        "samples": 5336,
+        "lateral_rms_m": 0.01382358416571071,
+        "lateral_peak_to_peak_m": 0.09013598526106588,
+        "roll_rms_deg": 1.0344011129241837,
+        "roll_peak_deg": 27.96316900263447,
+        "sampled_joint_acceleration_rms_rad_s2": 3.2266982312678665,
+        "sampled_torque_change_rms_nm": 0.0003165940472927465,
+        "progress_m": 0.2242881004413186,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      }
+    }
+  }
+}
