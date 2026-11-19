@@ -11,7 +11,7 @@ concurrency:
 jobs:
   train:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 150
     env:
       PYTHONPATH: ${{ github.workspace }}/mochi/src
       MOCHI_ROOT: ${{ github.workspace }}/mochi

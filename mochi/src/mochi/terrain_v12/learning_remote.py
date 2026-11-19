@@ -6,7 +6,7 @@ import modal
 from ..curriculum.remote import ROOT,base_image,with_assets
 
 app=modal.App('mochi-terrain-v12-learning')
-image=(with_assets(base_image.pip_install('onnxruntime==1.32.0','httpx==0.28.1','tinker==0.39.0','tinker-cookbook==0.6.1','transformers==5.23.0','osqp==1.1.1'))
+image=(with_assets(base_image.env({'OPENBLAS_NUM_THREADS':'1','OMP_NUM_THREADS':'1','MKL_NUM_THREADS':'1','NUMEXPR_NUM_THREADS':'1'}).pip_install('onnxruntime==1.32.0','httpx==0.28.1','tinker==0.39.0','tinker-cookbook==0.6.1','transformers==5.23.0','osqp==1.1.1','threadpoolctl==3.6.0'))
        .add_local_dir(ROOT/'configs',remote_path='/app/configs')
        .add_local_dir(ROOT/'assets/robot/g1-v11-policy',remote_path='/app/assets/robot/g1-v11-policy'))
 secret=modal.Secret.from_dict({k:os.environ[k] for k in ['TINKER_API_KEY'] if k in os.environ})
@@ -37,9 +37,11 @@ def compact(row):
 
 def receipt(start,count):
     return {'provider':'Modal','physical_rollouts':count,'cpu':1,'memory_mib':3072,
-            'duration_seconds':time.perf_counter()-start,'architecture':platform.machine()}
+            'duration_seconds':time.perf_counter()-start,'architecture':platform.machine(),
+            'threadpools':__import__('threadpoolctl').threadpool_info(),
+            'duration_scope':'Function execution including imports; not an invoice or cold-start billing receipt'}
 
-@app.function(image=image,cpu=1,memory=3072,max_containers=4,timeout=1200,volumes={'/artifacts':volume})
+@app.function(image=image,cpu=1,memory=3072,max_containers=4,timeout=3600,volumes={'/artifacts':volume})
 def collect_teacher(seed,run_id,preflight=False):
     started=time.perf_counter()
     import numpy as np

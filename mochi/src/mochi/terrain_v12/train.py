@@ -5,7 +5,7 @@ from collections import Counter,defaultdict
 import modal
 import numpy as np
 from ..curriculum.world import ROOT,TASKS
-from ..desk.services import DeskServices
+from .services import TerrainServices
 from ..integrations import now,digest
 from ..maintenance.checkpoints_by_date import inventory
 from .learning_remote import app,collect_teacher,evaluate,sampler_payload
@@ -52,7 +52,7 @@ async def main():
         raise RuntimeError('Physical reference gate is closed; no training is authorized by this protocol')
     for path,expected in cfg['frozen_sha256'].items():
         if hashlib.sha256((ROOT/path).read_bytes()).hexdigest()!=expected:raise RuntimeError('Frozen source mismatch: '+path)
-    services=DeskServices();services.run_id=run_id
+    services=TerrainServices();services.run_id=run_id
     services.actors={r:run_id+'-'+r for r in ['researcher','designer','experimenter','critic']}
     services.audience=run_id+'-shared';services.private=run_id+'-critic'
     report={'study':cfg['study'],'run_id':run_id,'source_sha':os.getenv('GITHUB_SHA'),'created_at':now(),
@@ -76,20 +76,31 @@ async def main():
     async def read(role,rid,allowed=True):
         await change('past_recalls',1);return await services.read(role,rid,allowed)
     async def physics_batch(function,args,rollout_cap,timeout,inference_cap=0):
-        count=len(args);await change('modal_rollouts',count*rollout_cap)
-        await change('modal_cpu_hours',count*timeout/3600)
-        if inference_cap:await change('inference_tokens',count*inference_cap)
         answers=[]
-        async for row in function.starmap.aio(args,order_outputs=True):
-            answers.append(row)
-            report['physics_receipts'].append({'phase':report['phase'],'receipt':row['receipt'],'seed':row.get('seed')})
-            report['campaign_modal_rollouts_completed']+=row['receipt']['physical_rollouts']
-            await publish()
-        actual_rollouts=sum(r['receipt']['physical_rollouts'] for r in answers)
-        await change('modal_rollouts',actual_rollouts-count*rollout_cap)
-        await change('modal_cpu_hours',sum(r['receipt']['duration_seconds'] for r in answers)/3600-count*timeout/3600)
-        if inference_cap:await change('inference_tokens',sum(r['receipt'].get('inference_input_plus_max_output_tokens',0) for r in answers)-count*inference_cap)
+        for begin in range(0,len(args),cfg['bounds']['modal_concurrency']):
+            chunk=args[begin:begin+cfg['bounds']['modal_concurrency']];count=len(chunk)
+            await change('modal_rollouts',count*rollout_cap)
+            await change('modal_cpu_hours',count*timeout/3600)
+            if inference_cap:await change('inference_tokens',count*inference_cap)
+            completed=[]
+            async for row in function.starmap.aio(chunk,order_outputs=True):
+                completed.append(row);answers.append(row)
+                report['physics_receipts'].append({'phase':report['phase'],'receipt':row['receipt'],'seed':row.get('seed')})
+                report['campaign_modal_rollouts_completed']+=row['receipt']['physical_rollouts']
+                await publish()
+            await change('modal_rollouts',sum(r['receipt']['physical_rollouts'] for r in completed)-count*rollout_cap)
+            await change('modal_cpu_hours',sum(r['receipt']['duration_seconds'] for r in completed)/3600-count*timeout/3600)
+            if inference_cap:await change('inference_tokens',sum(r['receipt'].get('inference_input_plus_max_output_tokens',0) for r in completed)-count*inference_cap)
         return answers
+    async def paired(seeds,models,group,active=None):
+        raw=await physics_batch(evaluate,[(seed,[(label,payload)],run_id,group,active) for seed in seeds for label,payload in models],1,900,5000)
+        bundles=[]
+        for seed in seeds:
+            selected=[r for r in raw if r['seed']==seed]
+            bundles.append({'seed':seed,'results':{label:r['results'][label] for r in selected for label in r['results']},
+                'receipt':{'provider':'Modal','physical_rollouts':len(selected),'paired_on_one_worker':False,
+                    'duration_seconds':sum(r['receipt']['duration_seconds'] for r in selected),'component_receipts':[r['receipt'] for r in selected]}})
+        return bundles
     start=time.perf_counter();paths={};snapshots={};rng=np.random.default_rng(cfg['training']['seed'])
     try:
         records=await inventory(tinker.RestClient());parents=[c for c in records if digest(c.tinker_path)==cfg['parent_checkpoint_sha256']]
@@ -99,7 +110,7 @@ async def main():
         await services.setup()
         async with app.run():
             await publish()
-            preflight=(await physics_batch(collect_teacher,[(41001,run_id,True)],1,1200))[0]
+            preflight=(await physics_batch(collect_teacher,[(41001,run_id,True)],1,3600))[0]
             save('remote-preflight',preflight)
             if not preflight['valid']:raise RuntimeError('Remote continuous reference failed; gradients remain gated')
             report['remote_reference_passed']=True
@@ -116,7 +127,7 @@ async def main():
             proposal=await read('experimenter',pid)
             counts={'walk':16 if proposal['allocation']=='balanced' else 8,**{t:4 for t in TASKS},'recovery':8 if proposal['allocation']=='balanced' else 16}
             report['domain_batch_counts']=counts;report['phase']='Physical training branches on Modal';await publish()
-            teachers=await physics_batch(collect_teacher,[(seed,run_id,False) for seed in cfg['training_seeds']],37,1200)
+            teachers=await physics_batch(collect_teacher,[(seed,run_id,False) for seed in cfg['training_seeds']],37,3600)
             for row in teachers:save('teacher-'+str(row['seed']),row)
             data=defaultdict(list)
             for row in teachers:
@@ -130,11 +141,6 @@ async def main():
             report['walking_label_diversity']=len(report['data_audit']['walk']['labels'])
             report['walking_adaptation_qualification']='A single preferred action is permitted but must be reported as a learned fixed preference, not evidence of adaptive control.'
             assert report['valid_teacher_sequences']>=1,'No safe training-sequence reference'
-            eid=await write('experimenter',{'kind':'observation','data_audit':report['data_audit'],'valid_teacher_sequences':report['valid_teacher_sequences']})
-            evidence=await read('critic',eid)
-            vid=await write('critic',{'kind':'qualified-conclusion','evidence':evidence,'decision':'Proceed with bounded SFT; branch outcomes and failures are retained. Held-out scenarios remain unopened.'})
-            await read('researcher',vid)
-            canary=await write('critic',{'kind':'private-test','text':'MOCHI_PRIVATE_CANARY'},True);await read('designer',canary,False)
             trainer=await services.service.create_training_client_from_state_with_optimizer(parent)
             datums={d:decision_choice_datums(services.renderer,[(decision(o),a) for o,a in data[d]]) for d in domains}
             paths['0']={'optimizer':parent};best=None;probe_obs=[data[d][0][0] for d in domains]
@@ -181,23 +187,36 @@ async def main():
                     p['domain']:max(abs(v-initial[p['domain']][a]) for a,v in p['distribution'].items())
                     for p in c['probe_distributions']}} for c in report['checkpoints']]
             save('selection-freeze',report)
+            try:
+                eid=await write('experimenter',{'kind':'observation','data_audit':report['data_audit'],'valid_teacher_sequences':report['valid_teacher_sequences']})
+                evidence=await read('critic',eid)
+                vid=await write('critic',{'kind':'qualified-conclusion','evidence':evidence,'decision':'Physical dataset meets the frozen checks. Review checkpoint results with those limitations; held-out scenarios remain unopened.'})
+                await read('researcher',vid)
+                canary=await write('critic',{'kind':'private-test','text':'MOCHI_PRIVATE_CANARY'},True);await read('designer',canary,False)
+            except TimeoutError as exc:
+                report['memory_review_pending']={'stage':'dataset review','error_type':type(exc).__name__,'pending':services.report().get('pending_ingestions',[])}
+                await publish()
             selected=best[1]['update'];report['held_out_opened']=True;report['phase']='Unopened held-out sequence evaluation';await publish()
             models=[('parent',sampler_payload(snapshots[0])),('selected',sampler_payload(snapshots[selected])),('fixed',None)]
-            bundles=await physics_batch(evaluate,[(s,models,run_id,'held-out',None) for s in cfg['held_out_seeds']],3,900,10000)
+            bundles=await paired(cfg['held_out_seeds'],models,'held-out')
             results={label:[b['results'][label] for b in bundles] for label,_ in models}
             for label,rows in results.items():save('held-out-'+label,rows)
             report['held_out']={label:summary(rows,cfg) for label,rows in results.items()};report['modal_receipts']=[b['receipt'] for b in bundles]
             report['phase']='Walking, manipulation and recovery isolation';await publish()
             report['isolated']={}
             for name,active in [('walking',['walk']),('manipulation',list(TASKS)),('recovery',['recovery'])]:
-                batch=await physics_batch(evaluate,[(s,models,run_id,'isolation-'+name,active) for s in cfg['held_out_seeds'][:2]],3,900,4000)
+                batch=await paired(cfg['held_out_seeds'][:2],models,'isolation-'+name,active)
                 save('isolated-'+name,batch);report['isolated'][name]={label:summary([b['results'][label] for b in batch],cfg) for label,_ in models}
-            eid=await write('experimenter',{'kind':'observation','held_out':report['held_out'],'isolated':report['isolated'],
-                    'optimizer_updates_completed':report['optimizer_updates_completed'],'selected_update':selected})
-            checked=await read('critic',eid)
-            vid=await write('critic',{'kind':'qualified-conclusion','evidence_sha256':digest(checked),
-                'conclusion':'Report measured parent, trained and fixed outcomes separately. The low-level gait weights were not trained. Small simulated pilot; no causal search or memory ablation.'})
-            await read('researcher',vid)
+            try:
+                eid=await write('experimenter',{'kind':'observation','held_out':report['held_out'],'isolated':report['isolated'],
+                        'optimizer_updates_completed':report['optimizer_updates_completed'],'selected_update':selected})
+                checked=await read('critic',eid)
+                vid=await write('critic',{'kind':'qualified-conclusion','evidence_sha256':digest(checked),
+                    'conclusion':'Report measured parent, trained and fixed outcomes separately. The low-level gait weights were not trained. Small simulated pilot; no causal search or memory ablation.'})
+                await read('researcher',vid)
+            except TimeoutError as exc:
+                report['final_memory_review_pending']={'error_type':type(exc).__name__,'pending':services.report().get('pending_ingestions',[])}
+                await publish()
         report.update(status='completed',phase='Frozen evaluation complete',completed_at=now(),duration_seconds=time.perf_counter()-start)
         save('report',report);await publish()
     except Exception as exc:

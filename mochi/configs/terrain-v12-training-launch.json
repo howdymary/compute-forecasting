@@ -1,8 +1,9 @@
 {
   "study": "mochi-terrain-v12",
-  "revision": 2,
+  "revision": 3,
   "purpose": "Actual resumed LoRA gradients for walking, task control and arm recovery after two valid uninterrupted four-task references",
   "max_optimizer_updates": 64,
   "required_remote_reference": true,
-  "receipt_policy": "Persist each completed physical receipt immediately; report conservative reservations separately."
+  "receipt_policy": "Persist each completed physical receipt immediately; report conservative reservations separately.",
+  "execution_repair": "Bound BLAS threads; separate matched model calls; journal delayed memory ingestion; preserve completed physical and optimizer evidence."
 }
