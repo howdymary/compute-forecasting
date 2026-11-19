@@ -1,0 +1,41 @@
+{
+  "status": "incomplete-physical-reference",
+  "new_tinker_optimizer_updates": 0,
+  "completed_receipted_modal_rollouts": 7,
+  "cancelled_batch_rollout_upper_reservation": 148,
+  "scope": "Seven completed receipts include the invalidated legacy preflight. The cancelled teacher batch has no completed batch receipt; its 148-slot reservation remains conservative, not a claim of 148 completed rollouts.",
+  "records": {
+    "initial_probe": "services.json",
+    "reference_audit": "reference-audit.json",
+    "audit_correction": "audit-memory.json",
+    "strict_tests": "clearance-results.json",
+    "cancelled_training": "cancellation.json",
+    "motion_diagnosis": "dynamics-diagnosis.json"
+  },
+  "study": "mochi-balanced-v11",
+  "training_gate_open": false,
+  "local_attempts_reserved": 64,
+  "local_attempt_limit": 64,
+  "strict_correction_trials": 4,
+  "strict_verified_ascents": 0,
+  "development_scenarios_opened": false,
+  "held_out_scenarios_opened": false,
+  "training_seeds_opened": [
+    37000,
+    37001,
+    37002,
+    37003
+  ],
+  "budget_usage_or_reserved": {
+    "modal_rollouts": 155,
+    "modal_cpu_hours": 1.456581086256389,
+    "optimizer_updates": 0,
+    "training_token_presentations": 0,
+    "inference_tokens": 8000,
+    "exa_searches": 2,
+    "past_writes": 11,
+    "past_recalls": 11
+  },
+  "unmet_criterion": "Repeated unassisted book ascent/descent and valid continuous four-task reference; trained-checkpoint improvement on new scenarios remains untested.",
+  "next_experiment": "Validate a terrain-aware low-level controller on the fixed books, measuring sole/riser contact, COM speed, loaded support and fixture clearance before selector training."
+}

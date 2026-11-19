@@ -5,6 +5,9 @@ import {performance} from 'node:perf_hooks';
 
 const base='mochi/web/desk/',manifest=JSON.parse(fs.readFileSync(base+'balanced-v11/manifest.json'));
 const nodes=new Map(),stages=[];
+// Linux and macOS can serialize the same zero quaternion component as 0/-0.
+// Normalize only that representation; every other initial value stays exact.
+function physicalZero(v){if(typeof v==='number')return Object.is(v,-0)?0:v;if(Array.isArray(v))return v.map(physicalZero);if(v&&typeof v==='object')return Object.fromEntries(Object.entries(v).map(([k,x])=>[k,physicalZero(x)]));return v}
 class El{
  constructor(){this.children=[];this.value='';this.style={}}
  append(...items){this.children.push(...items)}
@@ -24,7 +27,7 @@ assert.equal(stages.length,2);assert(stages.every(s=>s.options.fullBody));
 for(const entry of manifest.attempts.slice(1)){
  await nodes.get('#candidate').onchange({target:{value:entry.id}});await settle();
  const [a,b]=stages.map(s=>s.episode);
- assert.deepEqual(a.trajectory.frames[0],b.trajectory.frames[0]);
+ assert.deepEqual(physicalZero(a.trajectory.frames[0]),physicalZero(b.trajectory.frames[0]));
  assert.equal(a.maximum_applied_base_force,0);assert.equal(b.maximum_applied_base_force,0);
  nodes.get('#scrub').oninput({target:{value:nodes.get('#scrub').max}});context.tick(performance.now()+100);
  assert.equal(stages[0].last,a.duration);assert.equal(stages[1].last,b.duration);
@@ -32,5 +35,10 @@ for(const entry of manifest.attempts.slice(1)){
  assert.equal(entry.optimizer_updates_completed,0);
 }
 assert.equal(manifest.optimizer_updates_completed,0);assert.equal(manifest.training_gate_open,false);
+const rejected=manifest.attempts.find(e=>e.id==='frozen-interface-reference-0');
+assert.equal(rejected.full_sequence_success,false);assert.equal(rejected.fixture_audit_status,'rejected');
+assert(Object.keys(rejected.audit_contacts).length>0);
+const strict=manifest.attempts.filter(e=>e.id.startsWith('modal-clearance-'));
+assert.equal(strict.length,4);assert(strict.every(e=>!e.full_sequence_success&&!e.verified_ascent));
 assert.equal(nodes.get('#candidate').children.length,manifest.attempts.length-1);
 console.log('Passed: synchronized full recordings, identical initial frames, evidence links, failure endings, original/trained distinction and camera opt-in. WebGL rendering is not tested.');

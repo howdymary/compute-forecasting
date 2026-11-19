@@ -4,8 +4,9 @@ The furnished-desk route study is in development:
 [desk and planned route](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/richdesk.html)
 · [methods and current limitations](docs/richdesk-v10.md).
 The printer, books and stationery share their placements across simulation and
-rendering. The new book-climbing controller remains unreliable, so its training
-gate is closed. The completed V8 training results below describe the earlier
+rendering. A contact audit rejected the apparent book-climbing reference; four stricter
+correction tests failed. The new study completed zero optimizer updates and
+its training gate remains closed. The completed V8 training results below describe the earlier
 flat-desk study and have not been attributed to this new environment.
 
 <!-- MOCHI_CURRICULUM_START -->
@@ -105,4 +106,18 @@ Dependencies include MuJoCo, NumPy, SciPy, PyTorch, Three.js, Blender, FastAPI a
 
 ## Furnished-desk continuation (V11)
 
-[Balance experiments](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/balanced.html) compare the original transfers with complete continuous engineering references. The legacy task counter passed three runs, but a broader walking-contact audit invalidated that reference. The new campaign was stopped before gradients; the approach and verifier are being corrected. [Methods, bounds and provenance](docs/balanced-v11.md).
+[Balance experiments](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/balanced.html)
+retain complete attempts, failed endings and contact faults. The legacy task
+counter passed three runs, but the robot hit the clock during walking. An
+independent audit invalidated that reference and the pending Tinker campaign
+was cancelled before gradients. Four subsequent strict Modal tests all failed.
+
+The local 64-attempt calibration cap is reached. The remote ledger holds 155
+used-or-reserved rollout slots, including a conservative 148-slot reservation
+for the cancelled batch; seven completed receipts are available. No V11
+trained checkpoint or fresh held-out improvement is claimed. The current
+need is a terrain-capable controller that can climb without fixture support.
+
+[Results and exact receipts](docs/balanced-v11-results.md) ·
+[Methods and inspection commands](docs/balanced-v11.md) ·
+[Contact audit](evidence/balance-v11/reference-audit.json).

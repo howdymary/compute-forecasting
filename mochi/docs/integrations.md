@@ -1,31 +1,30 @@
-> **V11 correction:** the independent walking-contact audit invalidated the
-> engineering reference. Run 44447254287 was cancelled while collecting physical
-> labels, before optimizer updates. The following in-progress snapshot is
-> retained as history. Current status is `/api/balance-training`.
-
 <!-- MOCHI_BALANCED_V11_INTEGRATIONS_START -->
-# V11 furnished-desk execution snapshot
+# V11 furnished-desk continuation · incomplete
 
-The [V11 campaign](https://github.com/howdymary/mochi-demo/actions/runs/44447254287)
-is running from frozen commit `b76149ad7470cbd4e02452fba5ee21c06b72270a`.
-Three local engineering runs and one remote reference complete all four tasks.
-At this snapshot, four Modal workers are preparing physical training branches;
-zero new optimizer updates have been verified. Live status is exposed through
-`/api/balance-training`; the static replay still labels engineering revisions.
+The apparent physical reference was invalidated by clock contacts. The
+pending [campaign](https://github.com/howdymary/mochi-demo/actions/runs/44447254287)
+was cancelled during label generation, before optimizer updates. Four strict
+correction trials subsequently failed. The training gate remains closed.
+[Full results and accounting](balanced-v11-results.md).
 
-| Service | Confirmed V11 path | Evidence so far |
+| Service | Verified path | Completed V11 use |
 |---|---|---|
-| Modal | Existing Actions credentials; separate balanced-v11 apps and volume | Two completed research probes plus one full remote reference; training branches in progress |
-| Tinker | Existing Actions key; canonical selected V8 optimizer state located | Two research inference decisions; resumed six-domain post-training is queued behind physical labels |
-| Exa | Existing backend Actions secret | One completed probe search and one training-allocation search |
-| past.dev | Explicit Mochi identities and fixed audiences | Five verified cross-role handoffs in the completed probe; training-run handoffs are recorded separately |
-| Blender | Local 5.1.2 | Actual supported alarm reach rendered; optional full-body framing keeps the head and feet visible |
+| Modal | Existing Actions credentials; separate Mochi apps and storage | Seven receipt-backed rollouts; 148 slots retained as an upper reservation for the cancelled batch, not completed-rollout claims |
+| Tinker | Existing Actions key; retained V8 selected state located | Two research inference decisions; zero new optimizer updates or checkpoints |
+| Exa | Existing backend Actions secret | Two searches in the research/training preparation loop |
+| past.dev | Explicit Mochi identities and fixed audiences | Corrected run: four writers/readers, five source-verified cross-role handoffs, private-audience isolation passed |
+| Blender | Local 5.1.2 | Actual development trajectory rendered with opt-in full-body framing |
 
-The new native ONNX gait is an externally pretrained, pinned Apache-2.0 model.
-Its weights remain fixed. The new training interface controls walking-strategy,
-contact-profile and arm-recovery selections through Qwen LoRA weights. The
-controller, scene, verifier and model asset are frozen before checkpoint tests.
-No new local credentials, billing changes or checkpoint deletion are involved.
+The critic's rejection supersedes the earlier memory conclusion. The
+researcher actually recalled that rejection before the strict tests. The
+separate initial probe's memory receipts remain separate from these counts.
+Calls prove service use, not billed credits or a causal performance gain.
+
+The native ONNX gait is externally pretrained for flat-ground tracking and
+remains fixed. Prepared Tinker code trains categorical walking, task and
+recovery decisions, not gait-network weights. It has not run optimizer
+updates in this environment. V8 results below belong to an earlier study.
+No new credentials, billing changes or checkpoint deletion were involved.
 
 <!-- MOCHI_BALANCED_V11_INTEGRATIONS_END -->
 

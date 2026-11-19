@@ -16,10 +16,13 @@ def main():
     p=argparse.ArgumentParser();p.add_argument('--latest');a=p.parse_args()
     OUT.mkdir(parents=True,exist_ok=True);EVIDENCE.mkdir(parents=True,exist_ok=True)
     chosen=[('baseline-sway-0','Original support transfers'),
-            ('hub-brake-hold-1','First verified book-top support'),
-            ('reference-stop-diagnostic-0','Alarm, descent and drawer approach'),
+            ('hub-brake-hold-1','Book-top pose; fixture clearance unaudited'),
+            ('reference-stop-diagnostic-0','Alarm and descent; fixture clearance unaudited'),
             ('reference-native-stop-0','Supported stop; rejected task drift')]
     if a.latest:chosen.append((a.latest,'Latest engineering attempt'))
+    for i in range(4):
+        ident='modal-clearance-'+str(i)
+        if (ROOT/'artifacts/balance-v11'/f'{ident}.json').exists():chosen.append((ident,'Strict clearance trial '+str(i+1)))
     manifest={'study':'mochi-balanced-v11','optimizer_updates_completed':0,
               'training_gate_open':False,'scope':'Engineering revisions; walking clock contacts invalidate the legacy full-task reference. Zero new optimizer updates.',
               'scene':json.loads((ROOT/'configs/richdesk-v9.json').read_text()),'attempts':[]}
@@ -40,13 +43,19 @@ def main():
                'task_results':{t:v['success'] for t,v in e['results'].items()},
                'full_sequence_success':r.get('complete_sequence_success',False),
                'metrics':e['balance_metrics'],'arrivals':arrivals,'source_artifact_sha256':hashlib.sha256(raw).hexdigest(),
-               'source_hashes':r.get('sources',{}),'optimizer_updates_completed':0}
+               'source_hashes':r.get('sources',{}),'contact_failures':e.get('contact_failures',[]),'optimizer_updates_completed':0}
+        entry['fixture_audit_status']='enforced-at-runtime' if ident.startswith('modal-clearance-') else 'not-established'
+        if entry['contact_failures']:
+            entry['failure']='Rejected: '+str(entry['contact_failures'][0]['fixture'])+' contact'
         manifest['attempts'].append(entry)
     for entry in manifest['attempts']:
         if entry['id']=='frozen-interface-reference-0':
             entry['legacy_complete_sequence_success']=entry['full_sequence_success']
+            entry['legacy_verified_ascent']=entry['verified_ascent']
             entry.update(label='Rejected reference: clock contacts',full_sequence_success=False,
+                         verified_ascent=False,fixture_audit_status='rejected',
                          failure='Rejected: unintended clock support while walking',audit='reference-audit.json')
+            entry['audit_contacts']=json.loads((EVIDENCE/'reference-audit.json').read_text())['contacts']
     manifest['default_attempt']=a.latest or chosen[-2][0]
     (OUT/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
     ledger=json.loads((ROOT/'artifacts/balance-v11/ledger.json').read_text())

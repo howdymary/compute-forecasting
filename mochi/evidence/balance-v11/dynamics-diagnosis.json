@@ -1,0 +1,49 @@
+{
+  "study": "mochi-balanced-v11",
+  "mode": "recorded-measurement analysis",
+  "new_rollouts": 0,
+  "optimizer_updates": 0,
+  "cases": [
+    {
+      "id": "frozen-interface-reference-0",
+      "source_sha256": "ec3361807345f078992626a2658aea3dda99edd42d63ab9cfb248d3fdadea27a",
+      "nominal_route_speed_m_s": 0.055,
+      "peak_recorded_path_forward_com_speed_m_s": 0.5922826896394203,
+      "peak_time_s": 3.1676944182968487,
+      "clock_contact_or_end_s": 3.400673233578044,
+      "samples_without_loaded_foot_support": 5,
+      "first_sample_without_loaded_foot_support_s": 3.263338352991234,
+      "recorded_duration_s": 139.28945022698255,
+      "failure": null,
+      "scope": "Samples after initial 0.4-second settling through first clock contact or episode end, capped at five seconds; nominal route speed differs from the feedback-filtered command. Samples are not continuous support-duration measurements."
+    },
+    {
+      "id": "modal-clearance-0",
+      "source_sha256": "bc2307c72ee4c48001efc544f2996f55a6449ebf79ba0f20eb2c2bb250db46df",
+      "nominal_route_speed_m_s": 0.045,
+      "peak_recorded_path_forward_com_speed_m_s": 0.5429867969650778,
+      "peak_time_s": 3.98598141512659,
+      "clock_contact_or_end_s": 4.1944361445886065,
+      "samples_without_loaded_foot_support": 7,
+      "first_sample_without_loaded_foot_support_s": 3.996608518981522,
+      "recorded_duration_s": 4.1944361445886065,
+      "failure": "invalid_terrain_contact",
+      "scope": "Samples after initial 0.4-second settling through first clock contact or episode end, capped at five seconds; nominal route speed differs from the feedback-filtered command. Samples are not continuous support-duration measurements."
+    },
+    {
+      "id": "modal-clearance-2",
+      "source_sha256": "688e4e61d87db7244b38e6c1210e87716558553e9bb4df5f35e11d0e45bebfa5",
+      "nominal_route_speed_m_s": 0.05,
+      "peak_recorded_path_forward_com_speed_m_s": 0.5303038680765686,
+      "peak_time_s": 4.559845023292598,
+      "clock_contact_or_end_s": 4.5606624928199,
+      "samples_without_loaded_foot_support": 5,
+      "first_sample_without_loaded_foot_support_s": 4.464201088598265,
+      "recorded_duration_s": 4.5606624928199,
+      "failure": "fall",
+      "scope": "Samples after initial 0.4-second settling through first clock contact or episode end, capped at five seconds; nominal route speed differs from the feedback-filtered command. Samples are not continuous support-duration measurements."
+    }
+  ],
+  "interpretation": "Forward COM speed rises sharply at the book approach before clock contact. Lower nominal speed and removing velocity feedback did not establish a valid climb. This identifies a control failure, not its complete causal mechanism.",
+  "next_gate": "A terrain-capable actuator controller must demonstrate repeated unassisted ascent, descent, supported station stops and fixture-safe recovery before controller-selector training."
+}

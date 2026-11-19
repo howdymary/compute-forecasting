@@ -1,0 +1,751 @@
+{
+  "audit_memory": {
+    "audit_sha256": "16f45a576610d541acf6cd01ae83c968b835975e18e5cff0d93e381a433b69fd",
+    "evidence_record": "mochi-audit-f1708bd0-r3",
+    "verdict_record": "mochi-audit-f1708bd0-r4",
+    "next_experiment": "strict-lower-speed-and-gait-continuity-four-probe",
+    "source_verified_cross_role_handoffs": 2
+  },
+  "services": {
+    "actors": {
+      "researcher": "mochi-b11-44447254287-researcher",
+      "designer": "mochi-b11-44447254287-designer",
+      "experimenter": "mochi-b11-44447254287-experimenter",
+      "critic": "mochi-b11-44447254287-critic"
+    },
+    "audiences": {
+      "shared": "mochi-b11-44447254287-shared",
+      "critic_private": "mochi-b11-44447254287-critic"
+    },
+    "records": [
+      {
+        "id": "mochi-b11-44447254287-r0",
+        "role": "experimenter",
+        "author": "mochi-b11-44447254287-experimenter",
+        "audience": "mochi-b11-44447254287-shared",
+        "at": "2026-11-19T02:59:26.570393+00:00",
+        "sha256": "c3a03de08710abf0c300c03f4a01b94a5f4f7023bd09f99995dac199d7726409",
+        "ingestion_id": "de22efd2-60dd-4b34-9d0f-08a9b9777fd7",
+        "write_to_ready_seconds": 11.179787582000017,
+        "payload": {
+          "record_id": "mochi-b11-44447254287-r0",
+          "author": "mochi-b11-44447254287-experimenter",
+          "occurred_at": "2026-11-19T02:59:26.570393+00:00",
+          "content": {
+            "kind": "observation",
+            "study": "mochi-balanced-v11",
+            "remote_complete_reference": true,
+            "failure_history": "Moving-pose capture caused falls or drift; settled phase-freeze then static hold established a reference. Profile A drawer stalled above its braking threshold.",
+            "held_out_opened": false
+          }
+        }
+      },
+      {
+        "id": "mochi-b11-44447254287-r1",
+        "role": "researcher",
+        "author": "mochi-b11-44447254287-researcher",
+        "audience": "mochi-b11-44447254287-shared",
+        "at": "2026-11-19T02:59:39.549593+00:00",
+        "sha256": "e9cc962f2a6c5abfcee5364b608c7a4985da3fbbf3d1c66ca531185094119d3d",
+        "ingestion_id": "07bfbc81-fecc-4bfe-88e4-7d235189ba15",
+        "write_to_ready_seconds": 4.412988042000052,
+        "payload": {
+          "record_id": "mochi-b11-44447254287-r1",
+          "author": "mochi-b11-44447254287-researcher",
+          "occurred_at": "2026-11-19T02:59:39.549593+00:00",
+          "content": {
+            "kind": "hypothesis",
+            "observation_record": "mochi-b11-44447254287-r0",
+            "sources": {
+              "query": "humanoid manipulation standing balance policy transition arm retraction contact force learning controller selection",
+              "request_id": "b7a6121767d67520600cbf60ba34bd7b",
+              "cost_dollars": {
+                "total": 0.007,
+                "search": {
+                  "neural": 0.007
+                }
+              },
+              "sources": [
+                {
+                  "url": "https://arxiv.org/html/2501.02116",
+                  "title": "Humanoid Locomotion and Manipulation: Current Progress and Challenges in Control, Planning, and Learning",
+                  "excerpt": "manipulation task. Given the underactuated nature of humanoid robots and the addition of manipulation interaction dynamics, maintaining balance and manipulating objects ... interactions. This",
+                  "retrieved_at": "2026-11-19T02:59:39.463885+00:00"
+                },
+                {
+                  "url": "https://arxiv.org/abs/2611.17142",
+                  "title": "FORGE: Force-Aware Multi-Granularity Control for Efficient Humanoid Loco-Manipulation",
+                  "excerpt": "One policy accepts four individually or jointly active command groups: base velocity $\\mathbf{v}_{\\mathrm{cmd}}$ (Navigation), planar left/right footholds $\\mathbf{p}_{\\mathrm{feet}}\\in\\mathbb{R}^{2\\times 2}$ (Stance), bilateral wrist poses $\\mathbf{T}_{\\mathrm{wrist}}\\in\\mathrm{SE}(3)^{2}$",
+                  "retrieved_at": "2026-11-19T02:59:39.463913+00:00"
+                },
+                {
+                  "url": "https://arxiv.org/html/2603.08961v1",
+                  "title": "FAME: Force-Adaptive RL for Expanding the Manipulation Envelope of a Full-Scale Humanoid",
+                  "excerpt": "Maintaining balance under external hand forces is critical for humanoid bimanual manipulation, where interaction forces propagate through the kinematic chain and constrain the feasible",
+                  "retrieved_at": "2026-11-19T02:59:39.464026+00:00"
+                }
+              ],
+              "response_sha256": "2166c3468d035d4464e1925d391535642bb97c2021708fe9d9359557393ff705",
+              "at": "2026-11-19T02:59:39.464112+00:00"
+            },
+            "mechanism": "Train decisions about walking speed/terrain strategies and force/retraction profiles on physical branches. This does not train the native gait network."
+          }
+        }
+      },
+      {
+        "id": "mochi-b11-44447254287-r2",
+        "role": "designer",
+        "author": "mochi-b11-44447254287-designer",
+        "audience": "mochi-b11-44447254287-shared",
+        "at": "2026-11-19T02:59:47.267916+00:00",
+        "sha256": "c05a99beacbadf3e57d0069351b181b18460a8485230308dee04ecfbcb9d3b35",
+        "ingestion_id": "669acf24-29ba-485b-9391-9d9fa56d20bb",
+        "write_to_ready_seconds": 6.515173704000063,
+        "payload": {
+          "record_id": "mochi-b11-44447254287-r2",
+          "author": "mochi-b11-44447254287-designer",
+          "occurred_at": "2026-11-19T02:59:47.267916+00:00",
+          "content": {
+            "kind": "proposal",
+            "source_record": "mochi-b11-44447254287-r1",
+            "allocation": "balanced",
+            "frozen_controller": true
+          }
+        }
+      },
+      {
+        "id": "mochi-audit-f1708bd0-r3",
+        "role": "experimenter",
+        "author": "mochi-b11-44447254287-experimenter",
+        "audience": "mochi-b11-44447254287-shared",
+        "at": "2026-11-19T03:29:55.850343+00:00",
+        "sha256": "bcb9b7845baf36ec7a8c48c8feb28a271ca2424da8fc52b0504229b130701cbb",
+        "ingestion_id": "9e67caab-0b24-4ce6-9d48-fc02c417eaf1",
+        "write_to_ready_seconds": 31.084535668,
+        "payload": {
+          "record_id": "mochi-audit-f1708bd0-r3",
+          "author": "mochi-b11-44447254287-experimenter",
+          "occurred_at": "2026-11-19T03:29:55.850343+00:00",
+          "content": {
+            "kind": "observation",
+            "audit_sha256": "16f45a576610d541acf6cd01ae83c968b835975e18e5cff0d93e381a433b69fd",
+            "audit": {
+              "study": "mochi-balanced-v11",
+              "verdict": "legacy-task-completion-does-not-pass-walking-contact-validity",
+              "supersedes_reference_gate": true,
+              "optimizer_updates_completed": 0,
+              "source_experiment": "independent-contact-audit-0",
+              "artifact_sha256": "95eec52fdfa7bd7601a8833ee53c1d17b009e37a9bc4b1530705b081dbd74132",
+              "contacts": {
+                "left_hand_index_0_link / clock-case": {
+                  "count": 13,
+                  "peak_n": 2.0917533426878054,
+                  "first_t": 3.400673233578044,
+                  "last_t": 3.410482867905673
+                },
+                "left_wrist_yaw_link / clock-case": {
+                  "count": 13,
+                  "peak_n": 1.475064104009443,
+                  "first_t": 3.4023081726326487,
+                  "last_t": 3.412117806960278
+                },
+                "left_knee_link / clock-case": {
+                  "count": 21,
+                  "peak_n": 5.195903301072747,
+                  "first_t": 3.4333720146701414,
+                  "last_t": 3.44972140521619
+                },
+                "left_hip_yaw_link / clock-case": {
+                  "count": 24,
+                  "peak_n": 4.447110798085072,
+                  "first_t": 3.4350069537247463,
+                  "last_t": 3.4538087528527024
+                },
+                "left_ankle_roll_link / clock-case": {
+                  "count": 9,
+                  "peak_n": 0.5813631863183405,
+                  "first_t": 3.4423641794704682,
+                  "last_t": 3.4489039356888878
+                },
+                "right_hip_yaw_link / clock-case": {
+                  "count": 64,
+                  "peak_n": 3.5931291739908255,
+                  "first_t": 3.596048450603327,
+                  "last_t": 3.6704381775878487
+                },
+                "right_hand_index_1_link / clock-case": {
+                  "count": 111,
+                  "peak_n": 0.3933263060490041,
+                  "first_t": 11.94813461104803,
+                  "last_t": 12.524450627795936
+                },
+                "right_wrist_yaw_link / clock-case": {
+                  "count": 39,
+                  "peak_n": 0.4238309862931422,
+                  "first_t": 12.700206576165865,
+                  "last_t": 13.482524913793874
+                }
+              },
+              "scope": "Observed contact forces, not inferred from a rendered pose. Clock contacts were missed by the terrain-only check."
+            },
+            "supersedes": [
+              "mochi-b11-44447254287-r0",
+              "mochi-b11-44447254287-r1",
+              "mochi-b11-44447254287-r2"
+            ],
+            "optimizer_updates_completed": 0
+          }
+        }
+      },
+      {
+        "id": "mochi-audit-f1708bd0-r4",
+        "role": "critic",
+        "author": "mochi-b11-44447254287-critic",
+        "audience": "mochi-b11-44447254287-shared",
+        "at": "2026-11-19T03:30:27.343256+00:00",
+        "sha256": "b6bb25b418fbd4ae1fa7b5c378962dd07f18b70f0ebfc5260e43ca7d6c82fd60",
+        "ingestion_id": "1cec0e54-ef6c-4753-b045-809ccbd98827",
+        "write_to_ready_seconds": 6.488956570999989,
+        "payload": {
+          "record_id": "mochi-audit-f1708bd0-r4",
+          "author": "mochi-b11-44447254287-critic",
+          "occurred_at": "2026-11-19T03:30:27.343256+00:00",
+          "content": {
+            "kind": "qualified-conclusion",
+            "evidence_record": "mochi-audit-f1708bd0-r3",
+            "audit_sha256": "16f45a576610d541acf6cd01ae83c968b835975e18e5cff0d93e381a433b69fd",
+            "verdict": "Reject the clock-assisted reference. Training gate remains closed.",
+            "supersedes": [
+              "mochi-b11-44447254287-r0",
+              "mochi-b11-44447254287-r1",
+              "mochi-b11-44447254287-r2"
+            ],
+            "next_experiment": "strict-lower-speed-and-gait-continuity-four-probe"
+          }
+        }
+      }
+    ],
+    "reads": [
+      {
+        "reader": "mochi-b11-44447254287-researcher",
+        "reader_role": "researcher",
+        "author": "mochi-b11-44447254287-experimenter",
+        "record_id": "mochi-b11-44447254287-r0",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "c3a03de08710abf0c300c03f4a01b94a5f4f7023bd09f99995dac199d7726409",
+        "at": "2026-11-19T02:59:38.286046+00:00"
+      },
+      {
+        "reader": "mochi-b11-44447254287-designer",
+        "reader_role": "designer",
+        "author": "mochi-b11-44447254287-researcher",
+        "record_id": "mochi-b11-44447254287-r1",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "e9cc962f2a6c5abfcee5364b608c7a4985da3fbbf3d1c66ca531185094119d3d",
+        "at": "2026-11-19T02:59:44.448052+00:00"
+      },
+      {
+        "reader": "mochi-b11-44447254287-experimenter",
+        "reader_role": "experimenter",
+        "author": "mochi-b11-44447254287-designer",
+        "record_id": "mochi-b11-44447254287-r2",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "c05a99beacbadf3e57d0069351b181b18460a8485230308dee04ecfbcb9d3b35",
+        "at": "2026-11-19T02:59:54.261422+00:00"
+      },
+      {
+        "reader": "mochi-b11-44447254287-critic",
+        "reader_role": "critic",
+        "author": "mochi-b11-44447254287-experimenter",
+        "record_id": "mochi-audit-f1708bd0-r3",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "bcb9b7845baf36ec7a8c48c8feb28a271ca2424da8fc52b0504229b130701cbb",
+        "at": "2026-11-19T03:30:27.343239+00:00"
+      },
+      {
+        "reader": "mochi-b11-44447254287-researcher",
+        "reader_role": "researcher",
+        "author": "mochi-b11-44447254287-critic",
+        "record_id": "mochi-audit-f1708bd0-r4",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "b6bb25b418fbd4ae1fa7b5c378962dd07f18b70f0ebfc5260e43ca7d6c82fd60",
+        "at": "2026-11-19T03:30:34.263544+00:00"
+      },
+      {
+        "reader": "mochi-b11-44447254287-designer",
+        "reader_role": "designer",
+        "author": "mochi-b11-44447254287-critic",
+        "record_id": "mochi-audit-f1708bd0-r5",
+        "source_id_verified": false,
+        "expected_access": false,
+        "cross_agent_use": false,
+        "sha256": null,
+        "at": "2026-11-19T03:30:40.866279+00:00"
+      }
+    ],
+    "decisions": [
+      {
+        "role": "designer",
+        "question": "Choose balanced or recovery_first supervision. Both train every domain each update. balanced=16 walking,4 per task,8 recovery. recovery_first=8 walking,4 per task,16 recovery.",
+        "selected": "balanced",
+        "distribution": {
+          "balanced": 0.562176525592804,
+          "recovery_first": 0.4378235340118408
+        },
+        "input_record_ids": [
+          "mochi-b11-44447254287-r0",
+          "mochi-b11-44447254287-r1"
+        ],
+        "context_sha256": "e917e67be74548240ea36a01b300c2fb38bdfa617d961c1a5e6c8f83fa2f5586",
+        "at": "2026-11-19T02:59:47.172442+00:00"
+      }
+    ],
+    "calls": [
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-19T02:53:02.944619+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-19T02:53:03.083543+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-19T02:53:03.162380+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-19T02:53:03.243931+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "audiences",
+        "status": 201,
+        "at": "2026-11-19T02:53:03.356185+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "audiences",
+        "status": 201,
+        "at": "2026-11-19T02:53:03.440956+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-19T02:59:27.189920+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:59:27.286386+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:59:29.386439+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:59:31.465713+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:59:33.543127+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:59:35.621601+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:59:37.750117+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-19T02:59:38.285977+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-19T02:59:39.684886+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:59:39.758989+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:59:41.882944+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:59:43.962508+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-19T02:59:44.447998+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-19T02:59:47.390236+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:59:47.466889+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:59:49.578572+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:59:51.656674+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:59:53.783034+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-19T02:59:54.261373+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-19T03:29:56.369089+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T03:29:56.427213+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T03:29:58.476803+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T03:30:00.513912+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T03:30:02.541128+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T03:30:04.609918+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T03:30:06.630825+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T03:30:08.652995+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T03:30:10.673456+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T03:30:12.700798+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T03:30:14.720843+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T03:30:16.745381+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T03:30:18.792470+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T03:30:20.819705+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T03:30:22.840764+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T03:30:24.865869+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T03:30:26.934755+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-19T03:30:27.343033+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-19T03:30:27.707868+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T03:30:27.750097+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T03:30:29.774381+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T03:30:31.804629+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T03:30:33.832141+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-19T03:30:34.263484+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-19T03:30:34.496175+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T03:30:34.560271+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T03:30:36.594487+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T03:30:38.629203+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T03:30:40.652493+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-19T03:30:40.866227+00:00"
+      }
+    ],
+    "sources": [
+      {
+        "query": "humanoid manipulation standing balance policy transition arm retraction contact force learning controller selection",
+        "request_id": "b7a6121767d67520600cbf60ba34bd7b",
+        "cost_dollars": {
+          "total": 0.007,
+          "search": {
+            "neural": 0.007
+          }
+        },
+        "sources": [
+          {
+            "url": "https://arxiv.org/html/2501.02116",
+            "title": "Humanoid Locomotion and Manipulation: Current Progress and Challenges in Control, Planning, and Learning",
+            "excerpt": "manipulation task. Given the underactuated nature of humanoid robots and the addition of manipulation interaction dynamics, maintaining balance and manipulating objects ... interactions. This",
+            "retrieved_at": "2026-11-19T02:59:39.463885+00:00"
+          },
+          {
+            "url": "https://arxiv.org/abs/2611.17142",
+            "title": "FORGE: Force-Aware Multi-Granularity Control for Efficient Humanoid Loco-Manipulation",
+            "excerpt": "One policy accepts four individually or jointly active command groups: base velocity $\\mathbf{v}_{\\mathrm{cmd}}$ (Navigation), planar left/right footholds $\\mathbf{p}_{\\mathrm{feet}}\\in\\mathbb{R}^{2\\times 2}$ (Stance), bilateral wrist poses $\\mathbf{T}_{\\mathrm{wrist}}\\in\\mathrm{SE}(3)^{2}$",
+            "retrieved_at": "2026-11-19T02:59:39.463913+00:00"
+          },
+          {
+            "url": "https://arxiv.org/html/2603.08961v1",
+            "title": "FAME: Force-Adaptive RL for Expanding the Manipulation Envelope of a Full-Scale Humanoid",
+            "excerpt": "Maintaining balance under external hand forces is critical for humanoid bimanual manipulation, where interaction forces propagate through the kinematic chain and constrain the feasible",
+            "retrieved_at": "2026-11-19T02:59:39.464026+00:00"
+          }
+        ],
+        "response_sha256": "2166c3468d035d4464e1925d391535642bb97c2021708fe9d9359557393ff705",
+        "at": "2026-11-19T02:59:39.464112+00:00"
+      }
+    ],
+    "eligibility": {
+      "writers": 4,
+      "readers": 4,
+      "cross_agent_reads": 5,
+      "isolation_passed": true
+    }
+  },
+  "budget_usage_or_reserved": {
+    "modal_rollouts": 151,
+    "modal_cpu_hours": 1.4470195706355555,
+    "optimizer_updates": 0,
+    "training_token_presentations": 0,
+    "inference_tokens": 8000,
+    "exa_searches": 2,
+    "past_writes": 11,
+    "past_recalls": 11
+  }
+}

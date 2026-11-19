@@ -4,7 +4,7 @@ from types import SimpleNamespace
 import mujoco
 import numpy as np
 
-from mochi.balanced.balance import support,walking_contact_violation
+from mochi.balanced.balance import support,walking_contact_violation,fixture_contact_violation
 from mochi.balanced.recovery import fixture_contact
 
 
@@ -54,6 +54,16 @@ def test_walking_cannot_use_a_task_fixture_as_support():
     assert clock and clock['fixture']=='clock-case'
 
 
+def test_only_active_hand_target_contact_is_permitted_during_manipulation():
+    w=contact_world(hand=True);w.phase='push';w.task='alarm';w.approach_side='right'
+    w.object_geoms={'alarm':0};w.hand_geoms={'right':{2},'left':set()}
+    assert fixture_contact_violation(w) is None
+    w.approach_side='left'
+    assert fixture_contact_violation(w)['body']=='right_hand'
+    w.approach_side='right';w.phase='walk'
+    assert fixture_contact_violation(w)['body']=='right_hand'
+
+
 def test_detached_training_branch_preserves_the_next_physical_steps():
     from mochi.balanced.sequence import SequenceWorld
     from mochi.balanced.snapshot import branch
@@ -66,3 +76,7 @@ def test_detached_training_branch_preserves_the_next_physical_steps():
         for _ in range(3):w.step();clone.step()
         np.testing.assert_array_equal(w.d.qpos,clone.d.qpos)
         np.testing.assert_array_equal(w.d.qvel,clone.d.qvel)
+    w.warm_resume=True;w.walker=HubWalker(w);clone=branch(w)
+    for _ in range(3):w.step();clone.step()
+    np.testing.assert_array_equal(w.d.qpos,clone.d.qpos)
+    np.testing.assert_array_equal(w.d.qvel,clone.d.qvel)

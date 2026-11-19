@@ -1,0 +1,114 @@
+{
+  "study": "mochi-balanced-v11-clearance",
+  "source_sha": "33aa0f1ff29f8143588b34bb87b01d7ead21d696",
+  "training_gate_open": false,
+  "optimizer_updates_completed": 0,
+  "planned_rollouts": 4,
+  "results": [
+    {
+      "parameters": {
+        "speed": 0.045,
+        "warm_resume": false
+      },
+      "complete": false,
+      "failure": "invalid_terrain_contact",
+      "duration_s": 4.1944361445886065,
+      "ascent_passed": false,
+      "contact_failures": [
+        {
+          "t": 4.1944361445886065,
+          "body": "left_hip_yaw_link",
+          "fixture": "clock-case",
+          "force_n": 6.909605302587789,
+          "phase": "walk"
+        }
+      ],
+      "receipt": {
+        "provider": "Modal",
+        "cpu": 1,
+        "physical_rollouts": 1,
+        "duration_seconds": 7.181228253
+      }
+    },
+    {
+      "parameters": {
+        "speed": 0.05,
+        "warm_resume": false
+      },
+      "complete": false,
+      "failure": "invalid_terrain_contact",
+      "duration_s": 3.6769779338062683,
+      "ascent_passed": false,
+      "contact_failures": [
+        {
+          "t": 3.6769779338062683,
+          "body": "torso_link",
+          "fixture": "clock-case",
+          "force_n": 32.62402586378106,
+          "phase": "walk"
+        }
+      ],
+      "receipt": {
+        "provider": "Modal",
+        "cpu": 1,
+        "physical_rollouts": 1,
+        "duration_seconds": 10.275858128
+      }
+    },
+    {
+      "parameters": {
+        "speed": 0.05,
+        "warm_resume": false,
+        "native_feedback": 0.0
+      },
+      "complete": false,
+      "failure": "fall",
+      "duration_s": 4.5606624928199,
+      "ascent_passed": false,
+      "contact_failures": [],
+      "receipt": {
+        "provider": "Modal",
+        "cpu": 1,
+        "physical_rollouts": 1,
+        "duration_seconds": 7.268287074
+      }
+    },
+    {
+      "parameters": {
+        "speed": 0.055,
+        "warm_resume": false,
+        "native_feedback": 0.0
+      },
+      "complete": false,
+      "failure": "invalid_terrain_contact",
+      "duration_s": 3.5510876266016926,
+      "ascent_passed": false,
+      "contact_failures": [
+        {
+          "t": 3.5510876266016926,
+          "body": "left_knee_link",
+          "fixture": "clock-case",
+          "force_n": 7.960132744464423,
+          "phase": "walk"
+        }
+      ],
+      "receipt": {
+        "provider": "Modal",
+        "cpu": 1,
+        "physical_rollouts": 1,
+        "duration_seconds": 9.696082780000001
+      }
+    }
+  ],
+  "status": "completed",
+  "budget_usage_or_reserved": {
+    "modal_rollouts": 155,
+    "modal_cpu_hours": 1.456581086256389,
+    "optimizer_updates": 0,
+    "training_token_presentations": 0,
+    "inference_tokens": 8000,
+    "exa_searches": 2,
+    "past_writes": 11,
+    "past_recalls": 11
+  }
+}

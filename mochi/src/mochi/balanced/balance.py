@@ -5,7 +5,7 @@ import numpy as np
 from scipy.spatial import ConvexHull, QhullError
 
 
-def walking_contact_violation(w):
+def fixture_contact_violation(w,walking_only=False):
     allowed={w.id('geom','desk')}|w.book_geoms
     for i,c in enumerate(w.d.contact):
         a,b=int(c.geom1),int(c.geom2)
@@ -14,11 +14,19 @@ def walking_contact_violation(w):
         robot,fixture=(a,b) if ra else (b,a)
         body=mujoco.mj_id2name(w.m,mujoco.mjtObj.mjOBJ_BODY,int(w.m.geom_bodyid[robot])) or ''
         if fixture in allowed and body in ['left_ankle_roll_link','right_ankle_roll_link']:continue
+        task=getattr(w,'task',None);phase=getattr(w,'phase','walk')
+        if not walking_only and phase in ['approach','push','hold','release'] and task:
+            target=getattr(w,'object_geoms',{}).get(task)
+            active=getattr(w,'hand_geoms',{}).get(getattr(w,'approach_side','right'),set())
+            if fixture==target and robot in active:continue
         force=np.zeros(6);mujoco.mj_contactForce(w.m,w.d,i,force)
         if force[0]>.05:
             return {'t':float(w.d.time),'body':body,
-                    'fixture':mujoco.mj_id2name(w.m,mujoco.mjtObj.mjOBJ_GEOM,fixture),'force_n':float(force[0]),'phase':'walk'}
+                    'fixture':mujoco.mj_id2name(w.m,mujoco.mjtObj.mjOBJ_GEOM,fixture),'force_n':float(force[0]),'phase':phase}
     return None
+
+def walking_contact_violation(w):
+    return fixture_contact_violation(w,walking_only=True)
 
 
 def support(w):

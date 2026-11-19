@@ -32,11 +32,10 @@ class SequenceWorld(BalancedWorld):
         super().step(*args, **kwargs)
         # Walking may use desk/book foot contact, never a clock/cabinet/body
         # brace. Task fixtures are not part of the terrain-only parent check.
-        if self.phase=='walk':
-            from .balance import walking_contact_violation
-            violation=walking_contact_violation(self)
-            if violation:
-                self.invalid_contact=True;self.contact_failures.append(violation)
+        from .balance import fixture_contact_violation
+        violation=fixture_contact_violation(self)
+        if violation:
+            self.invalid_contact=True;self.contact_failures.append(violation)
         if self.stopped:
             self.stop_contacts=[]
             for i,c in enumerate(self.d.contact):
@@ -49,7 +48,7 @@ class SequenceWorld(BalancedWorld):
                     self.stop_contacts.append({'geom_names':[mujoco.mj_id2name(self.m,mujoco.mjtObj.mjOBJ_GEOM,g) for g in [a,b]],
                                                'body_names':[mujoco.mj_id2name(self.m,mujoco.mjtObj.mjOBJ_BODY,int(self.m.geom_bodyid[g])) for g in [a,b]],
                                                'normal':c.frame[:3].tolist(),'force_n':float(f[0])})
-            raise PhysicalStop('fall' if self.fall else 'invalid_terrain_contact')
+            raise PhysicalStop('fall' if self.fall else 'invalid_fixture_contact')
 
 
 def average_velocity(w, seconds=.10):

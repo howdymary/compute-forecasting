@@ -1,7 +1,7 @@
 import {createCurriculumStage} from './curriculum-stage.js';
 const $=q=>document.querySelector(q);
 let manifest,left,right,base,attempt,episodes={},time=0,playing=true,last=performance.now(),loading=false;
-async function refreshTraining(){try{const r=await fetch('api/balance-training');if(!r.ok)return;const p=await r.json();if(p.phase)$('#training-progress').textContent=`Live pipeline: ${p.phase} · ${p.optimizer_updates_completed||0} new optimizer updates. The visible recordings are engineering references.`}catch{}}
+async function refreshTraining(){try{const r=await fetch('api/balance-training');if(!r.ok)return;const p=await r.json();if(p.phase)$('#training-progress').textContent=`Live pipeline: ${p.phase} · ${p.optimizer_updates_completed||0} new optimizer updates. The visible recordings are engineering attempts.`}catch{}}
 const fetchJSON=async p=>{const r=await fetch(p);if(!r.ok)throw Error('Missing recording: '+p);return r.json()};
 async function load(entry){
  if(loading)return;loading=true;playing=false;
@@ -18,13 +18,15 @@ async function load(entry){
    b.textContent=(e.label||e.task||e.phase)+' · '+e.t.toFixed(1)+' s';
    b.onclick=()=>{time=e.t;playing=false};$('#milestones').append(b);
   }
+  if(entry.audit_contacts){const b=document.createElement('button');b.className='milestone';b.textContent='Inspect clock contact · 3.40 s';b.onclick=()=>{time=3.40;playing=false};$('#milestones').append(b)}
   playing=true;
  }finally{loading=false}
 }
 function readings(id,entry,episode,t,f){
  const row=episode.balance_measurements.findLast(r=>r.t<=t)||episode.balance_measurements[0];
  const ended=t>=episode.duration;
- $(id+'-state').textContent=ended?(entry.failure|| (entry.full_sequence_success?'Complete':'Recording ended')):(f?.task||f?.phase||'walk');
+ const fault=Object.entries(entry.audit_contacts||{}).find(([,x])=>t>=x.first_t&&t<=x.last_t);
+ $(id+'-state').textContent=fault?`Clock contact · interval peak ${fault[1].peak_n.toFixed(2)} N`:ended?(entry.failure|| (entry.full_sequence_success?'Complete':'Recording ended')):(f?.task||f?.phase||'walk');
  $(id+'-metrics').textContent=row?`Roll ${(row.roll_rad*180/Math.PI).toFixed(1)}° · L ${(row.loads_n.left).toFixed(2)} N / R ${(row.loads_n.right).toFixed(2)} N · ${Math.min(t,episode.duration).toFixed(1)} s`:'No measurement';
 }
 function tick(now){

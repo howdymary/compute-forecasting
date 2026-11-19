@@ -43,6 +43,7 @@ def web():
  def balance_training():
   try:
    report=modal.Dict.from_name('mochi-balanced-v11-progress').get('latest',{})
-   return {k:report.get(k) for k in ['study','status','phase','optimizer_updates_completed','checkpoints','selected_checkpoint','held_out','isolated','budget_usage_or_reserved']}
+   usage=modal.Dict.from_name('mochi-balanced-v11-budget').get('usage',report.get('budget_usage_or_reserved',{}))
+   return {**{k:report.get(k) for k in ['study','status','phase','optimizer_updates_completed','checkpoints','selected_checkpoint','held_out','isolated']},'budget_usage_or_reserved':usage,'recorded_execution_summary':json.loads(Path('/web/balanced-v11/execution-index.json').read_text())}
   except Exception:return {'study':'mochi-balanced-v11','status':'unavailable','phase':'See the recorded execution evidence','optimizer_updates_completed':0}
  api.mount('/',StaticFiles(directory='/web',html=True));return api

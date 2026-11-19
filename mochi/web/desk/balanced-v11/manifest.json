@@ -450,11 +450,13 @@
         "src/mochi/balanced/probe.py": "7f829f00bb2d0e93330aae731b23f0f3e6ed4f6279cc82d05d965f4b933961fc",
         "src/mochi/balanced/inverse.py": "187f0ae0cab1252518acd64f3ef310a8627c958700e71709827b3f2a3ea994e1"
       },
-      "optimizer_updates_completed": 0
+      "contact_failures": [],
+      "optimizer_updates_completed": 0,
+      "fixture_audit_status": "not-established"
     },
     {
       "id": "hub-brake-hold-1",
-      "label": "First verified book-top support",
+      "label": "Book-top pose; fixture clearance unaudited",
       "file": "hub-brake-hold-1.json",
       "duration": 4.59744862154849,
       "failure": null,
@@ -490,11 +492,13 @@
         "src/mochi/balanced/inverse.py": "37781a0e2ad49bc28c6c439b73a7a4f0fcf9f1c83541148b1500121551704bb0",
         "src/mochi/balanced/dynamics.py": "9c82ef18b1896f936c3aff43b7353d537beb1d7b32927f3964789f11b64ea300"
       },
-      "optimizer_updates_completed": 0
+      "contact_failures": [],
+      "optimizer_updates_completed": 0,
+      "fixture_audit_status": "not-established"
     },
     {
       "id": "reference-stop-diagnostic-0",
-      "label": "Alarm, descent and drawer approach",
+      "label": "Alarm and descent; fixture clearance unaudited",
       "file": "reference-stop-diagnostic-0.json",
       "duration": 51.494857933421365,
       "failure": "fall",
@@ -686,7 +690,9 @@
         "src/mochi/balanced/balance.py": "9fb38bad73a9e02a7ee406cdcb0eb1a1515b025db9fecd7fe934af44bfc429cb",
         "src/mochi/balanced/dynamics.py": "9c82ef18b1896f936c3aff43b7353d537beb1d7b32927f3964789f11b64ea300"
       },
-      "optimizer_updates_completed": 0
+      "contact_failures": [],
+      "optimizer_updates_completed": 0,
+      "fixture_audit_status": "not-established"
     },
     {
       "id": "reference-native-stop-0",
@@ -905,7 +911,9 @@
         "src/mochi/balanced/balance.py": "9fb38bad73a9e02a7ee406cdcb0eb1a1515b025db9fecd7fe934af44bfc429cb",
         "src/mochi/balanced/dynamics.py": "9c82ef18b1896f936c3aff43b7353d537beb1d7b32927f3964789f11b64ea300"
       },
-      "optimizer_updates_completed": 0
+      "contact_failures": [],
+      "optimizer_updates_completed": 0,
+      "fixture_audit_status": "not-established"
     },
     {
       "id": "frozen-interface-reference-0",
@@ -915,7 +923,7 @@
       "failure": "Rejected: unintended clock support while walking",
       "fall": false,
       "invalid_contact": false,
-      "verified_ascent": true,
+      "verified_ascent": false,
       "verified_descent": true,
       "task_results": {
         "alarm": true,
@@ -1292,9 +1300,310 @@
         "src/mochi/balanced/snapshot.py": "8c937e0c20ae9ad37b41291b1cb8b3a78e9b10e1967fcfe47010b7acc104ac08",
         "src/mochi/balanced/dynamics.py": "9c82ef18b1896f936c3aff43b7353d537beb1d7b32927f3964789f11b64ea300"
       },
+      "contact_failures": [],
       "optimizer_updates_completed": 0,
+      "fixture_audit_status": "rejected",
       "legacy_complete_sequence_success": true,
-      "audit": "reference-audit.json"
+      "legacy_verified_ascent": true,
+      "audit": "reference-audit.json",
+      "audit_contacts": {
+        "left_hand_index_0_link / clock-case": {
+          "count": 13,
+          "peak_n": 2.0917533426878054,
+          "first_t": 3.400673233578044,
+          "last_t": 3.410482867905673
+        },
+        "left_wrist_yaw_link / clock-case": {
+          "count": 13,
+          "peak_n": 1.475064104009443,
+          "first_t": 3.4023081726326487,
+          "last_t": 3.412117806960278
+        },
+        "left_knee_link / clock-case": {
+          "count": 21,
+          "peak_n": 5.195903301072747,
+          "first_t": 3.4333720146701414,
+          "last_t": 3.44972140521619
+        },
+        "left_hip_yaw_link / clock-case": {
+          "count": 24,
+          "peak_n": 4.447110798085072,
+          "first_t": 3.4350069537247463,
+          "last_t": 3.4538087528527024
+        },
+        "left_ankle_roll_link / clock-case": {
+          "count": 9,
+          "peak_n": 0.5813631863183405,
+          "first_t": 3.4423641794704682,
+          "last_t": 3.4489039356888878
+        },
+        "right_hip_yaw_link / clock-case": {
+          "count": 64,
+          "peak_n": 3.5931291739908255,
+          "first_t": 3.596048450603327,
+          "last_t": 3.6704381775878487
+        },
+        "right_hand_index_1_link / clock-case": {
+          "count": 111,
+          "peak_n": 0.3933263060490041,
+          "first_t": 11.94813461104803,
+          "last_t": 12.524450627795936
+        },
+        "right_wrist_yaw_link / clock-case": {
+          "count": 39,
+          "peak_n": 0.4238309862931422,
+          "first_t": 12.700206576165865,
+          "last_t": 13.482524913793874
+        }
+      }
+    },
+    {
+      "id": "modal-clearance-0",
+      "label": "Strict clearance trial 1",
+      "file": "modal-clearance-0.json",
+      "duration": 4.1944361445886065,
+      "failure": "Rejected: clock-case contact",
+      "fall": false,
+      "invalid_contact": true,
+      "verified_ascent": false,
+      "verified_descent": false,
+      "task_results": {},
+      "full_sequence_success": false,
+      "metrics": {
+        "samples": 395,
+        "lateral_rms_m": 0.007650178757669785,
+        "lateral_peak_to_peak_m": 0.03853661269698003,
+        "roll_rms_deg": 1.4510331883216194,
+        "roll_peak_deg": 8.590394279943768,
+        "sampled_joint_acceleration_rms_rad_s2": 195.3141516549049,
+        "sampled_torque_change_rms_nm": 0.004264921129972322,
+        "progress_m": 0.27841379698985674,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      },
+      "arrivals": [],
+      "source_artifact_sha256": "bc2307c72ee4c48001efc544f2996f55a6449ebf79ba0f20eb2c2bb250db46df",
+      "source_hashes": {
+        "src/mochi/balanced/snapshot.py": "4755741a4f4396bb3efa25f645a8be6a9e7974dbf44b7c4a2e8c45abe4ae7efb",
+        "src/mochi/balanced/audit_memory.py": "e7012beb0101f57d2cee0b27800f40456d75db2c531eb33fd666e7bc696cdc05",
+        "src/mochi/balanced/onnx_walk.py": "b2f99ebb76e7773260c80a708db0fd4e1b66465f503ba558d1ccd803b3baf471",
+        "src/mochi/balanced/world.py": "01a3dc78df8b974ba3dc3e3f7337b593bf31495f629614955275d8611df79e24",
+        "src/mochi/balanced/legs.py": "31b595c0d7741aa305e4fa79d34e3c802f25a1095c939baf69a37365c7759867",
+        "src/mochi/balanced/reachable.py": "434f92da8d628bd025becbabfeed7e72be10670113d4e7ecbc9ee54527ae8baf",
+        "src/mochi/balanced/verification.py": "2a61d18ef3c81ec42e38cb12684419de4a6400b2331a1ce06bf464bb88149838",
+        "src/mochi/balanced/policy.py": "577e67f2c50961f497990f5f368600724d2425e7c9c9b808a8638d2dd8278476",
+        "src/mochi/balanced/probe.py": "cccb09a71e39de01564a7ff4a43b018b43d84936a27c9dd19f65820222cd414e",
+        "src/mochi/balanced/dynamics.py": "9c82ef18b1896f936c3aff43b7353d537beb1d7b32927f3964789f11b64ea300",
+        "src/mochi/balanced/__init__.py": "b77d055260e932c22d4b4447094ad9ecee34ee3ac00898735e25918098c5bfd0",
+        "src/mochi/balanced/learning_remote.py": "95b4f06910844e76c33c3c74fe71ba055d40082a73010deab94b44f80b5633e8",
+        "src/mochi/balanced/inverse.py": "37781a0e2ad49bc28c6c439b73a7a4f0fcf9f1c83541148b1500121551704bb0",
+        "src/mochi/balanced/budget.py": "fa09e46cd6c87272039148ca33076265a3b1e55977de1a7bafe670043593a83d",
+        "src/mochi/balanced/sequence.py": "22a422674a5d533cd016d391a21df5d28edbdf5d888aabaa9fdcdac07764019e",
+        "src/mochi/balanced/clearance.py": "077d7293c3e4ee0d3fdc840566fa8704e252abc8305a0677b7d9fb3c70fe016d",
+        "src/mochi/balanced/landing.py": "3f422f6eceec651de4e2ff0808c74882316ef544ab8784f086cbac5a35dbba1a",
+        "src/mochi/balanced/preview.py": "25afb9aefc0663c06ffe836421f51ea37c0a757e11a84b2f6712afa706d2565d",
+        "src/mochi/balanced/balance.py": "c5f321dc40ef59dda53a82d0bf6c70d3fc57a4c31ca6b2019ac9e2fa914623ac",
+        "src/mochi/balanced/train.py": "7e54c4e870486279e301275f6d3dba179b803e6874570d86dca410eb1a6412a8",
+        "src/mochi/balanced/research.py": "e0a18a1f2189b705f791b61aa840b6acc79ec663d58c27c321c2e2fdb4ffe920",
+        "src/mochi/balanced/model.py": "0877eec2860ea02a866ee1d5675cdf758c9da4cb43000d92d1daf029f05b72d5",
+        "src/mochi/balanced/recovery.py": "538c48a36c824aeb3033ba9458d81ec49159223f59593f9583b597a9ed9b6019",
+        "src/mochi/balanced/remote.py": "65692fbef8f9a01e56ff69a6a42180e598d73e32fa6c054fccbefbf95dfd53b2",
+        "src/mochi/balanced/tasks.py": "60b29d38be802d1a29cc98035129a9e97b01efedb3c97cd30ff91fc5a6f72cfa"
+      },
+      "contact_failures": [
+        {
+          "t": 4.1944361445886065,
+          "body": "left_hip_yaw_link",
+          "fixture": "clock-case",
+          "force_n": 6.909605302587789,
+          "phase": "walk"
+        }
+      ],
+      "optimizer_updates_completed": 0,
+      "fixture_audit_status": "enforced-at-runtime"
+    },
+    {
+      "id": "modal-clearance-1",
+      "label": "Strict clearance trial 2",
+      "file": "modal-clearance-1.json",
+      "duration": 3.6769779338062683,
+      "failure": "Rejected: clock-case contact",
+      "fall": false,
+      "invalid_contact": true,
+      "verified_ascent": false,
+      "verified_descent": false,
+      "task_results": {},
+      "full_sequence_success": false,
+      "metrics": {
+        "samples": 346,
+        "lateral_rms_m": 0.00816793260775793,
+        "lateral_peak_to_peak_m": 0.038250356625444876,
+        "roll_rms_deg": 1.0831549914510532,
+        "roll_peak_deg": 6.596788369320959,
+        "sampled_joint_acceleration_rms_rad_s2": 232.63712338307792,
+        "sampled_torque_change_rms_nm": 0.004555650212351358,
+        "progress_m": 0.29166098825061926,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      },
+      "arrivals": [],
+      "source_artifact_sha256": "3c5a825a0512167cbf01bec23d1b96cc44ccf5dd8fafcce334badd21609b28fe",
+      "source_hashes": {
+        "src/mochi/balanced/world.py": "01a3dc78df8b974ba3dc3e3f7337b593bf31495f629614955275d8611df79e24",
+        "src/mochi/balanced/probe.py": "cccb09a71e39de01564a7ff4a43b018b43d84936a27c9dd19f65820222cd414e",
+        "src/mochi/balanced/budget.py": "fa09e46cd6c87272039148ca33076265a3b1e55977de1a7bafe670043593a83d",
+        "src/mochi/balanced/dynamics.py": "9c82ef18b1896f936c3aff43b7353d537beb1d7b32927f3964789f11b64ea300",
+        "src/mochi/balanced/research.py": "e0a18a1f2189b705f791b61aa840b6acc79ec663d58c27c321c2e2fdb4ffe920",
+        "src/mochi/balanced/recovery.py": "538c48a36c824aeb3033ba9458d81ec49159223f59593f9583b597a9ed9b6019",
+        "src/mochi/balanced/onnx_walk.py": "b2f99ebb76e7773260c80a708db0fd4e1b66465f503ba558d1ccd803b3baf471",
+        "src/mochi/balanced/sequence.py": "22a422674a5d533cd016d391a21df5d28edbdf5d888aabaa9fdcdac07764019e",
+        "src/mochi/balanced/reachable.py": "434f92da8d628bd025becbabfeed7e72be10670113d4e7ecbc9ee54527ae8baf",
+        "src/mochi/balanced/verification.py": "2a61d18ef3c81ec42e38cb12684419de4a6400b2331a1ce06bf464bb88149838",
+        "src/mochi/balanced/snapshot.py": "4755741a4f4396bb3efa25f645a8be6a9e7974dbf44b7c4a2e8c45abe4ae7efb",
+        "src/mochi/balanced/policy.py": "577e67f2c50961f497990f5f368600724d2425e7c9c9b808a8638d2dd8278476",
+        "src/mochi/balanced/landing.py": "3f422f6eceec651de4e2ff0808c74882316ef544ab8784f086cbac5a35dbba1a",
+        "src/mochi/balanced/remote.py": "65692fbef8f9a01e56ff69a6a42180e598d73e32fa6c054fccbefbf95dfd53b2",
+        "src/mochi/balanced/tasks.py": "60b29d38be802d1a29cc98035129a9e97b01efedb3c97cd30ff91fc5a6f72cfa",
+        "src/mochi/balanced/legs.py": "31b595c0d7741aa305e4fa79d34e3c802f25a1095c939baf69a37365c7759867",
+        "src/mochi/balanced/audit_memory.py": "e7012beb0101f57d2cee0b27800f40456d75db2c531eb33fd666e7bc696cdc05",
+        "src/mochi/balanced/clearance.py": "077d7293c3e4ee0d3fdc840566fa8704e252abc8305a0677b7d9fb3c70fe016d",
+        "src/mochi/balanced/balance.py": "c5f321dc40ef59dda53a82d0bf6c70d3fc57a4c31ca6b2019ac9e2fa914623ac",
+        "src/mochi/balanced/__init__.py": "b77d055260e932c22d4b4447094ad9ecee34ee3ac00898735e25918098c5bfd0",
+        "src/mochi/balanced/model.py": "0877eec2860ea02a866ee1d5675cdf758c9da4cb43000d92d1daf029f05b72d5",
+        "src/mochi/balanced/learning_remote.py": "95b4f06910844e76c33c3c74fe71ba055d40082a73010deab94b44f80b5633e8",
+        "src/mochi/balanced/preview.py": "25afb9aefc0663c06ffe836421f51ea37c0a757e11a84b2f6712afa706d2565d",
+        "src/mochi/balanced/train.py": "7e54c4e870486279e301275f6d3dba179b803e6874570d86dca410eb1a6412a8",
+        "src/mochi/balanced/inverse.py": "37781a0e2ad49bc28c6c439b73a7a4f0fcf9f1c83541148b1500121551704bb0"
+      },
+      "contact_failures": [
+        {
+          "t": 3.6769779338062683,
+          "body": "torso_link",
+          "fixture": "clock-case",
+          "force_n": 32.62402586378106,
+          "phase": "walk"
+        }
+      ],
+      "optimizer_updates_completed": 0,
+      "fixture_audit_status": "enforced-at-runtime"
+    },
+    {
+      "id": "modal-clearance-2",
+      "label": "Strict clearance trial 3",
+      "file": "modal-clearance-2.json",
+      "duration": 4.5606624928199,
+      "failure": "fall",
+      "fall": true,
+      "invalid_contact": false,
+      "verified_ascent": false,
+      "verified_descent": false,
+      "task_results": {},
+      "full_sequence_success": false,
+      "metrics": {
+        "samples": 430,
+        "lateral_rms_m": 0.00916454901148159,
+        "lateral_peak_to_peak_m": 0.03435826829998803,
+        "roll_rms_deg": 0.8359598159877626,
+        "roll_peak_deg": 4.261044791780435,
+        "sampled_joint_acceleration_rms_rad_s2": 242.2380046388178,
+        "sampled_torque_change_rms_nm": 0.004228490198732859,
+        "progress_m": 0.1769456814063523,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      },
+      "arrivals": [],
+      "source_artifact_sha256": "688e4e61d87db7244b38e6c1210e87716558553e9bb4df5f35e11d0e45bebfa5",
+      "source_hashes": {
+        "src/mochi/balanced/snapshot.py": "4755741a4f4396bb3efa25f645a8be6a9e7974dbf44b7c4a2e8c45abe4ae7efb",
+        "src/mochi/balanced/audit_memory.py": "e7012beb0101f57d2cee0b27800f40456d75db2c531eb33fd666e7bc696cdc05",
+        "src/mochi/balanced/onnx_walk.py": "b2f99ebb76e7773260c80a708db0fd4e1b66465f503ba558d1ccd803b3baf471",
+        "src/mochi/balanced/world.py": "01a3dc78df8b974ba3dc3e3f7337b593bf31495f629614955275d8611df79e24",
+        "src/mochi/balanced/legs.py": "31b595c0d7741aa305e4fa79d34e3c802f25a1095c939baf69a37365c7759867",
+        "src/mochi/balanced/reachable.py": "434f92da8d628bd025becbabfeed7e72be10670113d4e7ecbc9ee54527ae8baf",
+        "src/mochi/balanced/verification.py": "2a61d18ef3c81ec42e38cb12684419de4a6400b2331a1ce06bf464bb88149838",
+        "src/mochi/balanced/policy.py": "577e67f2c50961f497990f5f368600724d2425e7c9c9b808a8638d2dd8278476",
+        "src/mochi/balanced/probe.py": "cccb09a71e39de01564a7ff4a43b018b43d84936a27c9dd19f65820222cd414e",
+        "src/mochi/balanced/dynamics.py": "9c82ef18b1896f936c3aff43b7353d537beb1d7b32927f3964789f11b64ea300",
+        "src/mochi/balanced/__init__.py": "b77d055260e932c22d4b4447094ad9ecee34ee3ac00898735e25918098c5bfd0",
+        "src/mochi/balanced/learning_remote.py": "95b4f06910844e76c33c3c74fe71ba055d40082a73010deab94b44f80b5633e8",
+        "src/mochi/balanced/inverse.py": "37781a0e2ad49bc28c6c439b73a7a4f0fcf9f1c83541148b1500121551704bb0",
+        "src/mochi/balanced/budget.py": "fa09e46cd6c87272039148ca33076265a3b1e55977de1a7bafe670043593a83d",
+        "src/mochi/balanced/sequence.py": "22a422674a5d533cd016d391a21df5d28edbdf5d888aabaa9fdcdac07764019e",
+        "src/mochi/balanced/clearance.py": "077d7293c3e4ee0d3fdc840566fa8704e252abc8305a0677b7d9fb3c70fe016d",
+        "src/mochi/balanced/landing.py": "3f422f6eceec651de4e2ff0808c74882316ef544ab8784f086cbac5a35dbba1a",
+        "src/mochi/balanced/preview.py": "25afb9aefc0663c06ffe836421f51ea37c0a757e11a84b2f6712afa706d2565d",
+        "src/mochi/balanced/balance.py": "c5f321dc40ef59dda53a82d0bf6c70d3fc57a4c31ca6b2019ac9e2fa914623ac",
+        "src/mochi/balanced/train.py": "7e54c4e870486279e301275f6d3dba179b803e6874570d86dca410eb1a6412a8",
+        "src/mochi/balanced/research.py": "e0a18a1f2189b705f791b61aa840b6acc79ec663d58c27c321c2e2fdb4ffe920",
+        "src/mochi/balanced/model.py": "0877eec2860ea02a866ee1d5675cdf758c9da4cb43000d92d1daf029f05b72d5",
+        "src/mochi/balanced/recovery.py": "538c48a36c824aeb3033ba9458d81ec49159223f59593f9583b597a9ed9b6019",
+        "src/mochi/balanced/remote.py": "65692fbef8f9a01e56ff69a6a42180e598d73e32fa6c054fccbefbf95dfd53b2",
+        "src/mochi/balanced/tasks.py": "60b29d38be802d1a29cc98035129a9e97b01efedb3c97cd30ff91fc5a6f72cfa"
+      },
+      "contact_failures": [],
+      "optimizer_updates_completed": 0,
+      "fixture_audit_status": "enforced-at-runtime"
+    },
+    {
+      "id": "modal-clearance-3",
+      "label": "Strict clearance trial 4",
+      "file": "modal-clearance-3.json",
+      "duration": 3.5510876266016926,
+      "failure": "Rejected: clock-case contact",
+      "fall": false,
+      "invalid_contact": true,
+      "verified_ascent": false,
+      "verified_descent": false,
+      "task_results": {},
+      "full_sequence_success": false,
+      "metrics": {
+        "samples": 335,
+        "lateral_rms_m": 0.00849458243100749,
+        "lateral_peak_to_peak_m": 0.026835759916274043,
+        "roll_rms_deg": 1.6801464267169306,
+        "roll_peak_deg": 10.080920906355148,
+        "sampled_joint_acceleration_rms_rad_s2": 235.1983478620073,
+        "sampled_torque_change_rms_nm": 0.004809146783991732,
+        "progress_m": 0.2622244981433008,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      },
+      "arrivals": [],
+      "source_artifact_sha256": "7a5fd80c0a9d7a058e1a8d2e4b98d05b8c3ef8b7a140fc81f349826b19f8088d",
+      "source_hashes": {
+        "src/mochi/balanced/world.py": "01a3dc78df8b974ba3dc3e3f7337b593bf31495f629614955275d8611df79e24",
+        "src/mochi/balanced/probe.py": "cccb09a71e39de01564a7ff4a43b018b43d84936a27c9dd19f65820222cd414e",
+        "src/mochi/balanced/budget.py": "fa09e46cd6c87272039148ca33076265a3b1e55977de1a7bafe670043593a83d",
+        "src/mochi/balanced/dynamics.py": "9c82ef18b1896f936c3aff43b7353d537beb1d7b32927f3964789f11b64ea300",
+        "src/mochi/balanced/research.py": "e0a18a1f2189b705f791b61aa840b6acc79ec663d58c27c321c2e2fdb4ffe920",
+        "src/mochi/balanced/recovery.py": "538c48a36c824aeb3033ba9458d81ec49159223f59593f9583b597a9ed9b6019",
+        "src/mochi/balanced/onnx_walk.py": "b2f99ebb76e7773260c80a708db0fd4e1b66465f503ba558d1ccd803b3baf471",
+        "src/mochi/balanced/sequence.py": "22a422674a5d533cd016d391a21df5d28edbdf5d888aabaa9fdcdac07764019e",
+        "src/mochi/balanced/reachable.py": "434f92da8d628bd025becbabfeed7e72be10670113d4e7ecbc9ee54527ae8baf",
+        "src/mochi/balanced/verification.py": "2a61d18ef3c81ec42e38cb12684419de4a6400b2331a1ce06bf464bb88149838",
+        "src/mochi/balanced/snapshot.py": "4755741a4f4396bb3efa25f645a8be6a9e7974dbf44b7c4a2e8c45abe4ae7efb",
+        "src/mochi/balanced/policy.py": "577e67f2c50961f497990f5f368600724d2425e7c9c9b808a8638d2dd8278476",
+        "src/mochi/balanced/landing.py": "3f422f6eceec651de4e2ff0808c74882316ef544ab8784f086cbac5a35dbba1a",
+        "src/mochi/balanced/remote.py": "65692fbef8f9a01e56ff69a6a42180e598d73e32fa6c054fccbefbf95dfd53b2",
+        "src/mochi/balanced/tasks.py": "60b29d38be802d1a29cc98035129a9e97b01efedb3c97cd30ff91fc5a6f72cfa",
+        "src/mochi/balanced/legs.py": "31b595c0d7741aa305e4fa79d34e3c802f25a1095c939baf69a37365c7759867",
+        "src/mochi/balanced/audit_memory.py": "e7012beb0101f57d2cee0b27800f40456d75db2c531eb33fd666e7bc696cdc05",
+        "src/mochi/balanced/clearance.py": "077d7293c3e4ee0d3fdc840566fa8704e252abc8305a0677b7d9fb3c70fe016d",
+        "src/mochi/balanced/balance.py": "c5f321dc40ef59dda53a82d0bf6c70d3fc57a4c31ca6b2019ac9e2fa914623ac",
+        "src/mochi/balanced/__init__.py": "b77d055260e932c22d4b4447094ad9ecee34ee3ac00898735e25918098c5bfd0",
+        "src/mochi/balanced/model.py": "0877eec2860ea02a866ee1d5675cdf758c9da4cb43000d92d1daf029f05b72d5",
+        "src/mochi/balanced/learning_remote.py": "95b4f06910844e76c33c3c74fe71ba055d40082a73010deab94b44f80b5633e8",
+        "src/mochi/balanced/preview.py": "25afb9aefc0663c06ffe836421f51ea37c0a757e11a84b2f6712afa706d2565d",
+        "src/mochi/balanced/train.py": "7e54c4e870486279e301275f6d3dba179b803e6874570d86dca410eb1a6412a8",
+        "src/mochi/balanced/inverse.py": "37781a0e2ad49bc28c6c439b73a7a4f0fcf9f1c83541148b1500121551704bb0"
+      },
+      "contact_failures": [
+        {
+          "t": 3.5510876266016926,
+          "body": "left_knee_link",
+          "fixture": "clock-case",
+          "force_n": 7.960132744464423,
+          "phase": "walk"
+        }
+      ],
+      "optimizer_updates_completed": 0,
+      "fixture_audit_status": "enforced-at-runtime"
     }
   ],
   "default_attempt": "frozen-interface-reference-0"
