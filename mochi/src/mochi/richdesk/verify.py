@@ -10,6 +10,7 @@ def book_top(w):
     for i,c in enumerate(w.d.contact):
         a,b=int(c.geom1),int(c.geom2)
         if geom not in [a,b]:continue
+        if abs(float(c.frame[2]))<.7:continue
         other=b if a==geom else a;name=mujoco.mj_id2name(w.m,mujoco.mjtObj.mjOBJ_BODY,int(w.m.geom_bodyid[other])) or ''
         for side in loads:
             if name==side+'_ankle_roll_link':

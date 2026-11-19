@@ -10,7 +10,7 @@ async function load(attempt){
   $('#record').href='richdesk/'+attempt.file;$('#scope').textContent=attempt.scope||manifest.scope;
   document.querySelectorAll('[data-attempt]').forEach(b=>b.classList.toggle('active',b.dataset.attempt===attempt.id));
   const m=episode.locomotion_metrics||{};$('#metrics').replaceChildren();
-  for(const [label,value]of [['Book-top support',attempt.verified?'Passed':attempt.status||'Not established'],['Torso sway RMS',m.torso_tilt_rms_deg?.toFixed(2)+'°'],['Loaded-foot travel',(m.slip_m*100).toFixed(1)+' cm'],['Non-foot terrain contacts',m.nonfoot_terrain_contacts??'—'],['Applied base force',episode.maximum_applied_base_force?.toFixed(5)+' N']]){let r=document.createElement('div');r.className='metric';const s=document.createElement('span'),v=document.createElement('b');s.textContent=label;v.textContent=value;r.append(s,v);$('#metrics').append(r)}
+  for(const [label,value]of [['Book-top support',attempt.verified?'Passed':attempt.status||'Not established'],['Torso sway RMS',m.torso_tilt_rms_deg?.toFixed(2)+'°'],['Contact-travel estimate',(m.slip_m*100).toFixed(1)+' cm'],['Non-foot terrain contacts',m.nonfoot_terrain_contacts??'—'],['Applied base force',episode.maximum_applied_base_force?.toFixed(5)+' N']]){let r=document.createElement('div');r.className='metric';const s=document.createElement('span'),v=document.createElement('b');s.textContent=label;v.textContent=value;r.append(s,v);$('#metrics').append(r)}
   $('#loading').style.display='none';$('#play').textContent='Ⅱ';
  }catch(e){$('#loading').textContent=e.message;console.error(e)}finally{loading=false}
 }
@@ -27,6 +27,7 @@ function tick(now){
 }
 async function init(){
  const r=await fetch('richdesk/manifest.json',{cache:'no-store'});if(!r.ok)throw Error('Scene recordings are not published yet');manifest=await r.json();stage=createCurriculumStage($('#stage'),{scene:manifest.scene});stage.setTerrainReference(manifest.route);
+ const chosen=manifest.route.candidates.find(c=>c.id===manifest.route.selected_candidate);$('#route-summary').textContent=chosen?`${chosen.distance_m.toFixed(2)} m, ${(chosen.turning_rad*180/Math.PI).toFixed(0)}° of planned turning. Zero flagged rest-pose collision samples. Footstep execution and balance still require physical validation.`:'No geometrically valid candidate selected.';
  for(const a of manifest.attempts){let b=document.createElement('button');b.dataset.attempt=a.id;b.textContent=a.label;b.onclick=()=>load(a);$('#attempts').append(b)}
  $('#wide').onclick=()=>stage.view(true);$('#follow').onclick=()=>stage.view(false);$('#feet').onclick=()=>stage.inspect('feet');
  let routeVisible=true;$('#route').onclick=()=>{routeVisible=!routeVisible;stage.showTerrainReference(routeVisible);$('#route').textContent=routeVisible?'Hide plan':'Show plan'};

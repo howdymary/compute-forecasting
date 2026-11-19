@@ -97,6 +97,8 @@ def main():
       'short-direct':common+[laptop,globe],
       'front-corridor':common+[[.08,.02,0],[.08,-.055,math.pi/2],[.30,-.055,0],[.30,.02,math.pi/2],laptop,[.30,.02,math.pi/2,False,math.pi/2],[.35,-.145,0],globe],
       'wide-corridor':common+[[.08,.02,0],[.08,-.085,math.pi/2],[.325,-.085,0],[.325,.10,math.pi/2],laptop,[.30,.02,math.pi/2,False,math.pi/2],[.325,-.085,math.pi/2],globe]}
+    candidates['holonomic-front']=[[p[0],p[1],p[2],bool(p[3]) if len(p)>3 else False,math.pi/2]
+                                    for p in candidates['front-corridor']]
     evaluated=[]
     for name,points in candidates.items():
         measured=space.inspect(points);evaluated.append({'id':name,'points':points,**measured,
@@ -130,7 +132,7 @@ def plot(r):
         lo,hi=np.array(p['lo']),np.array(p['hi']);name=p['name'] or ''
         color='#7f9b9b' if 'book-step' in name else '#606d72'
         ax.add_patch(Rectangle(lo[:2],*(hi-lo)[:2],fc=color,ec='#f4f1e9',alpha=.65,lw=.6))
-    colors=['#ba7368','#246e79','#9a8a52']
+    colors=['#ba7368','#67979b','#9a8a52','#12545c']
     for c,color in zip(r['candidates'],colors):
         xy=np.array([p[:2] for p in c['points']]);ax.plot(*xy.T,'o-',ms=3,c=color,lw=2,label=f"{c['id']}: {c['distance_m']:.2f} m; {c['collision_samples']} flagged samples")
     for name,p in r['stations'].items():

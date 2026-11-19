@@ -857,7 +857,7 @@
         0.0
       ]
     },
-    "selected_candidate": "front-corridor",
+    "selected_candidate": "holonomic-front",
     "candidates": [
       {
         "id": "short-direct",
@@ -1441,6 +1441,117 @@
         "collision_samples": 0,
         "estimated_motion_cost": 134.64810999624046,
         "time_caveat": "Command-speed estimate plus declared 12-second terrain overhead, excludes tasks and recovery; not measured."
+      },
+      {
+        "id": "holonomic-front",
+        "points": [
+          [
+            -0.375,
+            -0.225,
+            1.5707963267948966,
+            false,
+            1.5707963267948966
+          ],
+          [
+            -0.375,
+            0.025,
+            1.5707963267948966,
+            true,
+            1.5707963267948966
+          ],
+          [
+            -0.375,
+            -0.18,
+            1.5707963267948966,
+            false,
+            1.5707963267948966
+          ],
+          [
+            -0.19,
+            -0.18,
+            0,
+            false,
+            1.5707963267948966
+          ],
+          [
+            -0.19,
+            -0.03,
+            1.5707963267948966,
+            false,
+            1.5707963267948966
+          ],
+          [
+            -0.13,
+            0.02,
+            1.5707963267948966,
+            true,
+            1.5707963267948966
+          ],
+          [
+            0.08,
+            0.02,
+            0,
+            false,
+            1.5707963267948966
+          ],
+          [
+            0.08,
+            -0.055,
+            1.5707963267948966,
+            false,
+            1.5707963267948966
+          ],
+          [
+            0.3,
+            -0.055,
+            0,
+            false,
+            1.5707963267948966
+          ],
+          [
+            0.3,
+            0.02,
+            1.5707963267948966,
+            false,
+            1.5707963267948966
+          ],
+          [
+            0.3,
+            0.16,
+            1.5707963267948966,
+            true,
+            1.5707963267948966
+          ],
+          [
+            0.3,
+            0.02,
+            1.5707963267948966,
+            false,
+            1.5707963267948966
+          ],
+          [
+            0.35,
+            -0.145,
+            0,
+            false,
+            1.5707963267948966
+          ],
+          [
+            0.35,
+            -0.145,
+            0.0,
+            true,
+            1.5707963267948966
+          ]
+        ],
+        "sampled_collision_free": true,
+        "distance_m": 1.9005118932547331,
+        "turning_rad": 1.5707963267948966,
+        "nominal_walking_seconds": 79.51113423417797,
+        "collisions": [],
+        "collision_samples": 0,
+        "estimated_motion_cost": 91.51113423417797,
+        "time_caveat": "Command-speed estimate plus declared 12-second terrain overhead, excludes tasks and recovery; not measured."
       }
     ],
     "footsteps": {
@@ -1757,7 +1868,7 @@
         }
       ]
     },
-    "geometry_queries": 939,
+    "geometry_queries": 1138,
     "clearance_m": 0.002,
     "global_optimality_claim": false,
     "scope": "Detached rest-pose collision sampling. Swing envelopes, dynamic balance, approach and recovery must still pass real physics.",

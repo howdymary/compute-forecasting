@@ -16,11 +16,14 @@ triangles. All lengths use metres.
 `route-plan.json` retains all candidates, rejected collision samples, station
 headings, terrain foot placements and geometry-check scope.
 
-The direct route crosses the open drawer and laptop. The revised front
-corridor avoids the sticky notes, uses the front of the laptop, and backs away
-before turning so that the robot does not sweep into the printer. A wider
-corridor is retained as a comparison. The selection minimizes the stated
-nominal motion estimate among these candidates; no global optimum is claimed.
+The direct route crosses the open drawer and laptop. Four candidates were
+compared. The chosen 1.901 m front corridor preserves the robot's heading while
+using backward and lateral movement, requiring only 90 degrees of planned
+turning before facing the globe. It avoids the sticky notes and backs away
+from the laptop without sweeping into the printer. The wider feasible route
+is 1.991 m. Selection minimizes the declared command-speed/turning estimate
+among these candidates; it is not a proof of global optimality or measured
+execution speed. Stair timing remains uncalibrated.
 
 Geometry uses detached MuJoCo copies with robot shells enabled and 2 mm
 clearance. Rest-pose sweeps do not validate balance or a complete swing
@@ -109,6 +112,29 @@ native baseline and the candidate fell. Neither reached the upper book.
 The critic recalled the measured results and qualified the original hypothesis.
 This run completed **zero optimizer updates** and opened no held-out scenario.
 It does not show learned improvement, a completed climb or a service ablation.
+
+[A second run](https://github.com/howdymary/mochi-demo/actions/runs/44433473951)
+tested the revised engineering implementation: the native controller failed
+the validity checks, while the candidate stayed valid for the 12-second probe
+and completed one foot placement. Neither reached the top book. Its
+[receipts](../evidence/richdesk-v10/feasibility-services-v2.json) remain separate
+because the controller and validity revision differ from the first run.
+Together the service runs account for two Exa searches, ten source-verified
+memory handoffs, two Tinker decision-inference calls and four Modal rollouts.
+They account for zero optimizer updates.
+
+Local calibration also tried separate lift/travel/lower phases, slower support
+transfer, conservative pad landing checks, knee-reach guards, solver scaling,
+stance-posture weights, higher control rates and terrain residuals around the
+native network. Some attempts traversed the first tread or remained upright
+while stalled. None established the required complete ascent/descent and
+continuous reference sequence. The failed high-rate servo and measured-CoP
+variants are retained as optional development settings, not promoted methods.
+
+`richdesk.preflight` fails closed without physical reference evidence and an
+open configured gate. Train/development/held-out scenario partitions have not
+been used. Consequently there is no new V10 training campaign or learned
+checkpoint comparison to report.
 
 [Exact service and outcome receipts](../evidence/richdesk-v10/feasibility-services.json).
 The public [route drawing](../web/desk/richdesk/route-plan.png) and development

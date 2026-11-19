@@ -25,6 +25,16 @@ class WholeBodyWalker(FootstepController):
         self.last_qp_solution = None
         self.last_qp_stance = None
         self.solver_failures = []
+        self.servo_state = None
+
+    def apply_torque(self):
+        tau=self.held_torque.copy()
+        if self.servo_state is not None:
+            t,q,v,a=self.servo_state;dt=min(.008,float(self.d.time)-t)
+            predicted=q+v*dt+.5*a*dt*dt;speed=v+a*dt
+            tau+=self.p.servo_kp*(predicted-self.d.qpos[self.qids])+self.p.servo_kd*(speed-self.d.qvel[self.vids])
+        bounds=self.m.actuator_forcerange[self.aids]
+        self.d.ctrl[self.aids]=np.clip(tau,bounds[:,0],bounds[:,1])
 
     def jacobians(self):
         Jcom = np.zeros((3, self.m.nv))
@@ -43,10 +53,10 @@ class WholeBodyWalker(FootstepController):
         # base inverse dynamics. The parent never writes physical qpos.
         super().command(velocity)
         d, m = self.d, self.m
-        if d.time-self.inverse_last < .004:
-            d.ctrl[self.aids] = self.held_torque
+        if d.time-self.inverse_last < self.p.inverse_interval:
+            self.apply_torque()
             return
-        dt = max(float(d.time)-self.inverse_last, .004)
+        dt = max(float(d.time)-self.inverse_last, self.p.inverse_interval)
         self.inverse_last = float(d.time)
         Jcom, Jr, feet = self.jacobians()
         current = [Jcom, Jr, *feet]
@@ -112,9 +122,24 @@ class WholeBodyWalker(FootstepController):
             # tangential and COP constraints with the intended foot heading.
             T=np.zeros((6,total));T[:3,start:start+3]=self.rotation.T;T[3:,start+3:start+6]=self.rotation.T
             bounded(T[2],0.,3.)
-            for axis,extent in [(0,.55),(1,.55),(3,.005),(4,.014),(5,.008)]:
+            for axis,extent in [(0,.55),(1,.55),(5,.008)]:
                 bounded(T[axis]-extent*T[2],-np.inf,0.)
                 bounded(-T[axis]-extent*T[2],-np.inf,0.)
+            points=[]
+            for ci,c in enumerate(d.contact):
+                geom_a,geom_b=int(c.geom1),int(c.geom2)
+                other=geom_b if geom_a in self.w.support_geoms else geom_a if geom_b in self.w.support_geoms else -1
+                if other<0 or int(m.geom_bodyid[other])!=self.feet[i] or abs(float(c.frame[2]))<.7:continue
+                force=np.zeros(6);mujoco.mj_contactForce(m,d,ci,force)
+                if force[0]>.0005:points.append((self.rotation.T@(c.pos-self.foot(i)))[:2])
+            if points:
+                points=np.array(points);xmin,ymin=points.min(0)-.0003;xmax,ymax=points.max(0)+.0003
+            else:xmin,xmax,ymin,ymax=-.0003,.0003,-.0003,.0003
+            if not self.p.measured_cop_bounds:xmin,xmax,ymin,ymax=-.014,.014,-.005,.005
+            # CoP must stay within the currently contacting foot pads. A toe
+            # touch cannot supply a full-sole ankle moment during landing.
+            bounded(-T[4]-xmax*T[2],-np.inf,0.);bounded(T[4]+xmin*T[2],-np.inf,0.)
+            bounded(T[3]-ymax*T[2],-np.inf,0.);bounded(-T[3]+ymin*T[2],-np.inf,0.)
         limits = m.actuator_forcerange[self.aids]
         for i,row in enumerate(torque_map):bounded(row,limits[i,0]-bias[self.vids[i]],limits[i,1]-bias[self.vids[i]])
         for i in range(12):
@@ -139,12 +164,13 @@ class WholeBodyWalker(FootstepController):
         if result.info.status_val not in [1,2]:
             self.failed_reason='inverse_dynamics_'+result.info.status
             self.solver_failures.append({'t':float(d.time),'status':result.info.status})
-            d.ctrl[self.aids]=self.held_torque
+            self.apply_torque()
             return
         x=result.x*units;self.last_qp_solution=x.copy();self.last_qp_stance=list(stance)
         tau=torque_map@x+bias[self.vids]
         self.held_torque = np.clip(tau, limits[:, 0], limits[:, 1])
-        d.ctrl[self.aids] = self.held_torque
+        self.servo_state=(float(d.time),d.qpos[self.qids].copy(),d.qvel[self.vids].copy(),x[6:18].copy())
+        self.apply_torque()
         if len(self.inverse_stats)==0 or d.time-self.inverse_stats[-1]['t']>.1:
             self.inverse_stats.append({'t':float(d.time),'phase':self.stage,'equality_error':float(np.max(np.abs(E@x-b))),
                 'torque_clipped':bool(np.any(abs(tau-self.held_torque)>1e-5)),

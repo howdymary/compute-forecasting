@@ -35,6 +35,10 @@ class StepParameters:
     stance_posture_weight:float=.2
     body_orientation_weight:float=8.
     foot_orientation_weight:float=6.
+    servo_kp:float=0.
+    servo_kd:float=0.
+    inverse_interval:float=.004
+    measured_cop_bounds:bool=False
 
 
 def ease(t):
@@ -143,7 +147,8 @@ class FootstepController:
                 elif self.swing_stage=='travel':
                     a=ease(segment_age/p.swing_seconds)
                     feet[self.swing]=(1-a)*self.swing_start+a*self.swing_goal;feet[self.swing][2]=clearance
-                    if segment_age>p.swing_seconds and np.linalg.norm(self.foot(self.swing)[:2]-self.swing_goal[:2])<.004:
+                    if (segment_age>p.swing_seconds and np.linalg.norm(self.foot(self.swing)[:2]-self.swing_goal[:2])<.008
+                        and self.w.landing_fits(['left','right'][self.swing],self.swing_goal[2]+.00015)):
                         self.swing_stage='lower';self.swing_segment_t=float(d.time)
                 else:
                     feet[self.swing]=self.swing_goal.copy();a=ease(segment_age/.4)

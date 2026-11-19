@@ -116,6 +116,17 @@ class DeskWorld(ControlWorld):
             if c.dist<.0004 and force[0]>.0005 and abs(sole[2]-c.pos[2])<.0012:return True
         return False
 
+    def landing_fits(self,side,height):
+        """Check each actual load-bearing foot pad's projected landing area."""
+        body=self.id('body',side+'_ankle_roll_link');pads=0
+        for g in range(self.m.ngeom):
+            if int(self.m.geom_bodyid[g])!=body or self.m.geom_type[g]!=mujoco.mjtGeom.mjGEOM_SPHERE:continue
+            pads+=1;radius=float(self.m.geom_size[g,0])+.0005;x,y=self.d.geom_xpos[g,:2]
+            for dx in [-radius,radius]:
+                for dy in [-radius,radius]:
+                    if abs(self.terrain_height(x+dx,y+dy)-height)>.0005:return False
+        return pads>=4
+
     def capture(self):
         super().capture()
         if self.record and self.frames:
