@@ -1,6 +1,6 @@
 # Terrain V12: physical book traversal and control-policy post-training
 
-[Continuous engineering demo](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/terrain.html) · [Live numerical training status](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/api/terrain-training) · [Active training execution](https://github.com/howdymary/mochi-demo/actions/runs/44472186998)
+[Continuous engineering demo](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/terrain.html) · [Live numerical training status](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/api/terrain-training) · [Training receipts](https://github.com/howdymary/mochi-demo/actions/runs/44482272455) · [Active checkpoint evaluation](https://github.com/howdymary/mochi-demo/actions/runs/44484708941)
 
 The strict controller completed the uninterrupted alarm-clock, drawer, laptop-close and globe sequence on local engineering seeds 41000 and 41001, in 249.81 and 251.46 simulated seconds. The same four-task reference subsequently passed on Modal before training-data collection. All four tasks and arm recoveries passed, without falls, forbidden fixture contacts, applied base forces or resets.
 
@@ -20,7 +20,9 @@ The cloud diagnostic compared original longer and revised shorter backward place
 
 ## Exactly what Tinker learns
 
-One Qwen3.5-4B LoRA policy is resumed from the retained V8 optimizer state. The bounded campaign has up to 64 new optimizer updates, with starting and 1/8/16/32/64-update checkpoints. Supervised targets come from actual counterfactual MuJoCo branches, including failures.
+One Qwen3.5-4B LoRA policy resumed from the retained V8 optimizer state and completed **32 new optimizer updates**, with durable starting and 1/8/32-update checkpoints. Those updates made 192 domain-specific forward/backward calls and presented 383,343 input tokens. Supervised targets came from 149 completed physical rollouts, including counterfactual branches and four valid continuous teacher sequences. Training fit and changed choice probabilities do not establish improved physical performance.
+
+The initial 64-update launch completed data collection but no gradients. Its data were preserved for the 32-update continuation. That continuation saved every checkpoint before a missing evaluator import stopped its first development test. The import-only repair and evaluation continuation are recorded explicitly; the training is not repeated.
 
 | Domain | Trainable decision | Fixed execution |
 |---|---|---|
@@ -64,7 +66,7 @@ The parent, intermediate checkpoints, development-selected checkpoint and a comp
 
 The later partitions include small initial-position/yaw perturbations and terrain-friction variation. Their task properties also vary. These are small simulated changes, not broad terrain or hardware generalization.
 
-The protocol measures complete and per-task success, falls, forbidden contacts, time, route distance, torso motion, loaded-contact travel, arm travel and recovery time. Smoothness thresholds are frozen in `configs/terrain-v12-training.json` before gradients. Contact travel and the capture-point test are diagnostic approximations, not formal stability or no-slip certificates.
+The protocol measures complete and per-task success, falls, forbidden contacts, time, route distance, torso motion, loaded-contact travel, arm travel and recovery time. Smoothness thresholds are frozen in `configs/terrain-v12-resume-training.json` before gradients. Contact travel and the capture-point test are diagnostic approximations, not formal stability or no-slip certificates.
 
 The numerical library thread count is bounded. Matched models run on separate Modal workers using the same frozen image and deterministic physical scenario; their results are paired by seed. Function-duration receipts are not provider invoices. Completed physical rollouts are recorded separately from conservative resource reservations for interrupted calls.
 
@@ -92,4 +94,4 @@ python3 -m http.server 4028 --directory mochi/web/desk
 
 Remote training uses the existing GitHub Actions secret references. Local provider credentials were unavailable. Keys stay on the backend. The public viewer receives measured trajectories and allowlisted numerical status, not sampler credentials or canonical training-state paths.
 
-Read the [work log](terrain-v12-worklog.md), [frozen protocol](../configs/terrain-v12-training.json), [training implementation](../src/mochi/terrain_v12/train.py) and [physical execution](../src/mochi/terrain_v12/sequence.py). Eighteen targeted checks passed before the campaign; the published 3D page was also rendered and visually inspected in headless Chrome.
+Read the [work log](terrain-v12-worklog.md), [frozen continuation protocol](../configs/terrain-v12-resume-training.json), [training implementation](../src/mochi/terrain_v12/resume_training.py), [evaluation continuation](../src/mochi/terrain_v12/finalize.py) and [physical execution](../src/mochi/terrain_v12/sequence.py). Eighteen targeted checks passed before the campaign; the published 3D page was also rendered and visually inspected in headless Chrome.
