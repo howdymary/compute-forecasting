@@ -8,7 +8,7 @@ cfg=json.loads((ROOT/'configs/terrain-v12-development-preview.json').read_text()
 report=modal.Dict.from_name('mochi-terrain-v12-progress').get('latest')
 assert report['run_id'].endswith(str(cfg['training_run']))
 assert str(report['recovery']['evaluation_run'])==str(cfg['evaluation_run'])
-assert not report['held_out_opened'],'Use the completed-evaluation exporter after final testing starts'
+assert report.get('held_out') is None,'Use the completed-evaluation exporter when final results exist'
 checkpoints=[c for c in report['checkpoints'] if c['development']]
 assert len(checkpoints)>=2 and checkpoints[0]['update']==0
 volume=modal.Volume.from_name('mochi-terrain-v12-artifacts')

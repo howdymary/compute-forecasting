@@ -123,3 +123,9 @@ The development preview deployment (run 44491880665, source d0b3ae8) passed its 
 The eight-update checkpoint also completed 3/3 development sequences within the frozen smoothness limits: mean 250.24 simulated seconds and torso-roll RMS 0.274 degrees. The one-update checkpoint averaged 255.02 s and 0.263 degrees. The eight-update version is faster but has slightly greater measured torso roll; neither is claimed to dominate on every measure. The 32-update evaluation and final testing remain pending.
 
 After this evaluation ends, the requested next step is to assess walking, task contact and recovery, write an evidence-grounded next-training prompt and execute it. The next campaign must use a new identity and fresh final-test scenarios.
+
+## Development selection frozen
+
+All trained checkpoints (1, 8 and 32 new updates) completed 3/3 development sequences within the frozen smoothness limits. The parent completed 2/3. The predeclared ranking selected update 1, whose mean torso-roll RMS was 0.263 degrees, compared with 0.274 at update 8 and 0.266 at update 32. The selected lineage has 105 cumulative optimizer updates; the campaign itself completed 32 new updates.
+
+The selected checkpoint was frozen before six held-out scenarios were opened. Final results and domain interventions remain pending. The development viewer can show the frozen choice during this evaluation, with final testing explicitly labelled pending.

@@ -32,6 +32,6 @@ for(const scenario of m.scenarios){
  }
 }
 assert.equal(nodes.get('#scenario').children.length,m.scenarios.length);
-assert(m.optimizer_updates_completed>0);if(m.held_out)assert.equal(m.held_out.parent.n,m.held_out.selected.n);else{assert.equal(m.evaluation_status,'development_preview');assert.equal(m.selection_finalized,false);assert.match(nodes.get('#test-table').children[0].textContent,/pending/)}
+assert(m.optimizer_updates_completed>0);if(m.held_out)assert.equal(m.held_out.parent.n,m.held_out.selected.n);else{assert.equal(m.evaluation_status,'development_preview');assert.equal(m.selection_finalized,Boolean(JSON.parse(fs.readFileSync(base+'terrain-training/report.json')).selected_checkpoint));assert.match(nodes.get('#test-table').children[0].textContent,/pending/)}
 for(const file of Object.keys(m.recordings))assert(gunzipSync(fs.readFileSync(base+'terrain-training/'+file)).length>0);
 console.log('Passed: actual checkpoint IDs, every available recorded version and scenario, gzip loading, synchronized full episodes, identical initial states and preserved failures. WebGL rendering is not tested.');

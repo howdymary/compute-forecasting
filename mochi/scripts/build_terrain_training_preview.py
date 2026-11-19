@@ -16,7 +16,7 @@ def main():
     p=argparse.ArgumentParser();p.add_argument('--source',required=True);p.add_argument('--development-preview',action='store_true');a=p.parse_args()
     source=Path(a.source);report=json.loads((source/'report.json').read_text())
     if a.development_preview:
-        assert not report['held_out_opened'],'Use completed evaluation results after final testing'
+        assert report.get('held_out') is None,'Use completed evaluation results when final test results exist'
         if (OUT/'manifest.json').exists():
             assert json.loads((OUT/'manifest.json').read_text()).get('evaluation_status')!='completed','Do not replace completed evidence with a preview'
     else:assert report['status']=='completed' and report['held_out_opened'],'Do not publish an unfinished test as a completed campaign'
@@ -25,7 +25,7 @@ def main():
     assert 0 in cps and len(cps)>=2
     def rank(c):
         x=c['development'];return (x['complete_successes'],-x['falls'],-x['invalid_contacts'],sum(x['task_successes'].values()),x['smooth_complete_successes'],x['recovery_successes'],-x['mean_roll_rms_deg'],-(x['successful_recovery_mean_joint_travel_rad'] or 0),-x['mean_duration_s'])
-    selected=max(cps.values(),key=rank)['update'] if a.development_preview else report['selected_checkpoint']['update']
+    selected=report['selected_checkpoint']['update'] if report.get('selected_checkpoint') else max(cps.values(),key=rank)['update']
     files={}
     def recording(row,update,kind):
         seed=row['seed'];name=f'{kind}-{seed}-{update}.json.gz'
@@ -66,7 +66,7 @@ def main():
             'scope':'Only paired cases where both checkpoints complete; do not interpret early failed attempts as faster completions.'}
         for before,after in zip(parents,trained):
             assert before['seed']==after['seed']
-            bf=recording(before,0,'held-out');af=recording(after,selected,'held-out')
+            bf=recording(before,0,'held-out-parent');af=recording(after,selected,'held-out-selected')
             scenarios.append({'id':'held-out-'+str(before['seed']),'label':f'Final unseen scenario · {before["seed"]}',
                               'partition':'held_out','parent_file':bf,'versions':[{'update':selected,'file':af}]})
     manifest={'study':report['study'],'optimizer_updates_completed':report['optimizer_updates_completed'],
@@ -74,7 +74,7 @@ def main():
               'scenarios':scenarios,'recordings':files,'checkpoints':[cps[k] for k in sorted(cps)],'held_out':report.get('held_out'),
               'isolated':report.get('isolated'),
               'evaluation_status':'development_preview' if a.development_preview else 'completed',
-              'selection_finalized':not a.development_preview,'default_scenario':'development-'+str(report['protocol']['development_seeds'][0]),
+              'selection_finalized':bool(report.get('selected_checkpoint')),'default_scenario':'development-'+str(report['protocol']['development_seeds'][0]),
               'workflow_run':report['run_id'],'source_sha':report['source_sha'],
               'services':report['services']['eligibility'],
               'campaign_modal_rollouts_completed':report.get('campaign_modal_rollouts_completed'),
