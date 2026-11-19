@@ -8,8 +8,8 @@ from ..curriculum.world import ROOT,TASKS
 from .services import TerrainServices
 from ..integrations import now,digest
 from ..maintenance.checkpoints_by_date import inventory
-from .learning_remote import app,evaluate as base_evaluate,sampler_payload
-evaluate=base_evaluate.with_options(timeout=1500)
+from .learning_remote import sampler_payload
+from .evaluation_remote import app,evaluate
 from .policy import decision
 
 OUT=ROOT/'artifacts/terrain-v12-training'
@@ -116,7 +116,7 @@ async def main():
             if inference_cap:await change('inference_tokens',sum(r['receipt'].get('inference_input_plus_max_output_tokens',0) for r in completed)-count*inference_cap)
         return answers
     async def paired(seeds,models,group,active=None):
-        raw=await physics_batch(evaluate,[(seed,[(label,payload)],run_id,group,active) for seed in seeds for label,payload in models],1,1500,5000)
+        raw=await physics_batch(evaluate,[(seed,[(label,payload)],run_id,group,active) for seed in seeds for label,payload in models],1,1500,24000)
         bundles=[]
         for seed in seeds:
             selected=[r for r in raw if r['seed']==seed]
@@ -179,7 +179,7 @@ async def main():
                 if (update+1)%4==0:await publish()
             for cp in report['checkpoints']:
                 update=cp['update'];report['phase']='Development checkpoint '+str(update);await publish()
-                bundles=await physics_batch(evaluate,[(seed,[('policy',sampler_payload(snapshots[update]))],run_id,'dev-'+str(update),None) for seed in cfg['development_seeds']],1,1500,5000)
+                bundles=await physics_batch(evaluate,[(seed,[('policy',sampler_payload(snapshots[update]))],run_id,'dev-'+str(update),None) for seed in cfg['development_seeds']],1,1500,24000)
                 rows=[b['results']['policy'] for b in bundles];save('checkpoint-'+str(update),rows)
                 score=summary(rows,cfg);cp['development']=score
                 if best is None or rank(score)>best[0]:best=(rank(score),cp)

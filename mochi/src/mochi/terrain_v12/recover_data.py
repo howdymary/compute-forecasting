@@ -8,15 +8,18 @@ from modal.exception import NotFoundError
 async def main():
     source=Path(os.environ['MOCHI_RECOVERY_SOURCE']);p=source/'progress.json';original=json.loads(p.read_text())
     assert original['optimizer_updates_completed']==0 and original['budget_usage_or_reserved'].get('optimizer_updates',0)==0
-    if (source/'training-observations.json').exists():
+    if (source/'training-observations.json').exists() and original.get('valid_teacher_sequences') and original.get('data_audit'):
         print('Preserved training dataset is already available; no simulation or model calls.');return
     volume=modal.Volume.from_name('mochi-terrain-v12-artifacts');teachers=[];missing=[];evidence=[]
     for seed in original['protocol']['training_seeds']:
         path=f'{original["run_id"]}/teacher-{seed}.json.gz'
+        local=source/f'teacher-{seed}.json'
         try:
-            chunks=[]
-            async for part in volume.read_file.aio(path):chunks.append(part)
-            raw=gzip.decompress(b''.join(chunks));row=json.loads(raw)
+            if local.exists():raw=local.read_bytes();row=json.loads(raw)
+            else:
+                chunks=[]
+                async for part in volume.read_file.aio(path):chunks.append(part)
+                raw=gzip.decompress(b''.join(chunks));row=json.loads(raw)
         except (FileNotFoundError,NotFoundError):missing.append(seed);continue
         assert row['seed']==seed and not row['preflight']
         teachers.append(row);evidence.append({'seed':seed,'path':path,'uncompressed_sha256':hashlib.sha256(raw).hexdigest(),'receipt':row['receipt'],'valid':row['valid']})

@@ -9,7 +9,8 @@ import modal
 from modal.exception import NotFoundError
 from ..curriculum.world import ROOT
 from ..integrations import now,digest
-from .learning_remote import app,evaluate,sampler_payload,volume,compact
+from .learning_remote import sampler_payload,volume,compact
+from .evaluation_remote import app,evaluate
 from .train import summary,rank
 
 OUT=ROOT/'artifacts/terrain-v12-training'
@@ -63,6 +64,7 @@ async def main():
             async for part in volume.read_file.aio(path):chunks.append(part)
             raw=gzip.decompress(b''.join(chunks));row=json.loads(raw)
         except (FileNotFoundError,NotFoundError):return None
+        if row.get('failure')=='inference_token_limit':return None
         row['archive']={'volume':'mochi-terrain-v12-artifacts','path':path,'uncompressed_sha256':hashlib.sha256(raw).hexdigest()}
         return compact(row)
     async def batch(seeds,models,group,domains=None):
@@ -77,11 +79,11 @@ async def main():
                 try:seed,label,payload=queue.get_nowait()
                 except asyncio.QueueEmpty:return
                 await change('modal_rollouts',1);await change('modal_cpu_hours',cfg['evaluation_timeout_s']/3600)
-                await change('inference_tokens',5000 if payload else 0)
+                await change('inference_tokens',24000 if payload else 0)
                 bundle=await function.remote.aio(seed,[(label,payload)],run_id,group,domains)
                 receipt=bundle['receipt'];results[(seed,label)]=bundle['results'][label]
                 await change('modal_cpu_hours',(receipt['duration_seconds']-cfg['evaluation_timeout_s'])/3600)
-                if payload:await change('inference_tokens',receipt['inference_input_plus_max_output_tokens']-5000)
+                if payload:await change('inference_tokens',receipt['inference_input_plus_max_output_tokens']-24000)
                 report.setdefault('physics_receipts',[]).append({'phase':group,'seed':seed,'model':label,'receipt':receipt})
                 report['campaign_modal_rollouts_completed']+=receipt['physical_rollouts']
                 save(f'recovered-{group}-{seed}-{label}',results[(seed,label)]);await publish();queue.task_done()
