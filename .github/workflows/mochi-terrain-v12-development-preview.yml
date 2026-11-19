@@ -1,0 +1,26 @@
+name: Mochi completed development recordings
+on:
+  push:
+    branches: [mochi-desk-v3]
+    paths: ['mochi/configs/terrain-v12-development-preview.json']
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - run: python -m pip install modal==1.6.4
+      - name: Read completed physical recordings without new execution
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: python mochi/scripts/export_terrain_development.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mochi-terrain-development-preview-${{ github.run_id }}
+          path: mochi/artifacts/terrain-development-preview/
+          retention-days: 30
