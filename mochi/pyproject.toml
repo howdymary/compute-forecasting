@@ -11,7 +11,7 @@ dependencies = ["mujoco==3.3.7", "numpy==2.3.4", "scipy==1.16.3", "httpx==0.28.1
 [project.optional-dependencies]
 dev = ["pytest==8.4.2"]
 plots = ["matplotlib==3.10.7"]
-robotics = ["osqp==1.1.1"]
+robotics = ["osqp==1.1.1", "onnxruntime==1.32.0"]
 remote = ["modal==1.6.4", "tinker==0.39.0", "tinker-cookbook==0.6.1", "transformers==5.23.0"]
 
 [project.scripts]
