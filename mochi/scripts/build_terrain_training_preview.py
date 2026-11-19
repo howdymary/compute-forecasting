@@ -1,5 +1,6 @@
 """Export actual completed checkpoints and paired tests, excluding private paths."""
 import argparse,gzip,json
+from statistics import mean
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -22,14 +23,15 @@ def main():
         if name in files:return name
         e=row['episode'];keep=['scenario','scene','events','results','fall','invalid_contact','duration',
             'maximum_applied_base_force','balance_metrics','foot_slip_estimate_m','final_object_states',
-            'final_object_speeds','trajectory','recoveries','decisions']
+            'final_object_speeds','trajectory','recoveries','decisions','executed_root_distance_m']
         clip={k:e[k] for k in keep if k in e}
         clip['balance_measurements']=[{k:v for k,v in m.items() if k in ['t','phase','gait_phase','roll_rad','loads_n','lateral_m']} for m in e['balance_measurements']]
         (OUT/name).write_bytes(gzip.compress(json.dumps(rounded(clip),separators=(',',':')).encode(),compresslevel=9))
         files[name]={'checkpoint_update':update,'checkpoint_id':cps[update]['checkpoint_id'],
                      'cumulative_updates':cps[update]['cumulative_updates'],'seed':seed,
                      'complete':row['complete_sequence_success'],'failure':row['failure'],'archive':row.get('archive'),
-                     'task_outcomes':{t:r['success'] for t,r in e['results'].items()},'duration':e['duration']}
+                     'task_outcomes':{t:r['success'] for t,r in e['results'].items()},'duration':e['duration'],
+                     'executed_root_distance_m':e.get('executed_root_distance_m')}
         return name
     scenarios=[]
     devseed=report['protocol']['development_seeds'][0]
@@ -40,6 +42,17 @@ def main():
     scenarios.append({'id':'development-'+str(devseed),'label':f'Checkpoint selection scenario · {devseed}',
                       'partition':'development','versions':versions,'parent_file':versions[0]['file']})
     parents=json.loads((source/'held-out-parent.json').read_text());trained=json.loads((source/'held-out-selected.json').read_text())
+    for label in ['parent','selected','fixed']:
+        rows=json.loads((source/('held-out-'+label+'.json')).read_text())
+        complete=[r['episode'] for r in rows if r['complete_sequence_success']]
+        distances=[e['executed_root_distance_m'] for e in complete if e.get('executed_root_distance_m') is not None]
+        report['held_out'][label]['successful_completion_time_mean_s']=mean(e['duration'] for e in complete) if complete else None
+        report['held_out'][label]['successful_executed_distance_mean_m']=mean(distances) if distances else None
+    paired=[{'seed':a['seed'],'time_change_s':b['episode']['duration']-a['episode']['duration'],
+             'distance_change_m':b['episode']['executed_root_distance_m']-a['episode']['executed_root_distance_m']}
+            for a,b in zip(parents,trained) if a['complete_sequence_success'] and b['complete_sequence_success']]
+    report['paired_successful_completion_differences']={'n':len(paired),'cases':paired,
+        'scope':'Only paired cases where both checkpoints complete; do not interpret early failed attempts as faster completions.'}
     for before,after in zip(parents,trained):
         assert before['seed']==after['seed']
         bf=recording(before,0,'held-out');af=recording(after,selected,'held-out')

@@ -29,7 +29,7 @@ async def main():
         assert hashlib.sha256((ROOT/path).read_bytes()).hexdigest()==sha,'Controller changed: '+path
     paths=json.loads((source/'checkpoint-paths.json').read_text())
     updates=original['optimizer_updates_completed'];assert updates>0,'No durable trained state; resume from the saved data instead'
-    assert max(map(int,paths))==updates,'Uncheckpointed updates exist; do not silently repeat them'
+    assert max(map(int,paths))<=updates,'Checkpoint update exceeds recorded optimizer evidence'
     assert len(original['training_log'])==updates and all(x['optimizer_completed'] and x['forward_backward_completed'] for x in original['training_log'])
     assert digest(paths['0']['optimizer'])==protocol['parent_checkpoint_sha256']
     for p in source.glob('*.json'):
@@ -39,7 +39,8 @@ async def main():
         'source_training_run':cfg['source_run'],'evaluation_run':os.environ['GITHUB_RUN_ID'],
         'evaluation_source_sha':os.environ.get('GITHUB_SHA'),'extra_optimizer_updates':0,
         'original_error_type':original.get('error_type'),'deadline_seconds':cfg['evaluation_timeout_s'],
-        'physics_unchanged':True,'reuse_policy':'Reuse completed physical outcomes, including failures. Fill missing outputs only.'})
+        'physics_unchanged':True,'unavailable_completed_updates_after_last_durable':updates-max(map(int,paths)),
+        'evaluated_checkpoint_updates':sorted(map(int,paths)),'reuse_policy':'Reuse completed physical outcomes, including failures. Fill missing outputs only.'})
     report.pop('error',None);report.pop('error_type',None)
     extra=modal.Dict.from_name('mochi-terrain-v12-final-budget',create_if_missing=True)
     usage=await extra.get.aio('usage') or {'modal_rollouts':0,'modal_cpu_hours':0.,'inference_tokens':0}
