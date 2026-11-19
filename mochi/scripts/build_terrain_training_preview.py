@@ -34,13 +34,14 @@ def main():
                      'executed_root_distance_m':e.get('executed_root_distance_m')}
         return name
     scenarios=[]
-    devseed=report['protocol']['development_seeds'][0]
-    versions=[]
-    for update in sorted(cps):
-        rows=json.loads((source/f'checkpoint-{update}.json').read_text());row=next(r for r in rows if r['seed']==devseed)
-        versions.append({'update':update,'file':recording(row,update,'development')})
-    scenarios.append({'id':'development-'+str(devseed),'label':f'Checkpoint selection scenario · {devseed}',
-                      'partition':'development','versions':versions,'parent_file':versions[0]['file']})
+    development_rows={update:json.loads((source/f'checkpoint-{update}.json').read_text()) for update in cps}
+    for devseed in report['protocol']['development_seeds']:
+        versions=[]
+        for update in sorted(cps):
+            row=next(r for r in development_rows[update] if r['seed']==devseed)
+            versions.append({'update':update,'file':recording(row,update,'development')})
+        scenarios.append({'id':'development-'+str(devseed),'label':f'Checkpoint selection scenario · {devseed}',
+                          'partition':'development','versions':versions,'parent_file':versions[0]['file']})
     parents=json.loads((source/'held-out-parent.json').read_text());trained=json.loads((source/'held-out-selected.json').read_text())
     for label in ['parent','selected','fixed']:
         rows=json.loads((source/('held-out-'+label+'.json')).read_text())

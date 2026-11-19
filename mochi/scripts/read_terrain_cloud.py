@@ -16,7 +16,9 @@ if run:
   raw=b''.join(volume.read_file(path));row=json.loads(gzip.decompress(raw));episode=row['episode']
   print(json.dumps({'completed_evaluation':{'phase':record['phase'],'seed':row['seed'],
    'complete':row['complete_sequence_success'],'failure':row['failure'],'duration':episode['duration'],
-   'tasks':{k:v['success'] for k,v in episode['results'].items()},'balance':episode['balance_metrics']}}),flush=True)
+   'tasks':{k:v['success'] for k,v in episode['results'].items()},'balance':episode['balance_metrics'],
+   'forbidden_contacts':episode.get('contact_failures',[]),
+   'chosen_controls':[{'domain':d['observation']['domain'],'station':d['observation'].get('station',d['observation'].get('task')),'action':d['action']} for d in row.get('model_decisions',[])]}}),flush=True)
 result=subprocess.run([sys.executable,'-m','modal','app','list','--json'],capture_output=True,text=True,check=True)
 apps=[r for r in json.loads(result.stdout) if r.get('description') in ['mochi-terrain-v12-learning','mochi-terrain-v12-weight-evaluation']]
 active=[r for r in apps if r.get('state') not in ['stopped','stopping...']]
