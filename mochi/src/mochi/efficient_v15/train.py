@@ -35,6 +35,12 @@ def save(name, value):
     temporary.replace(target)
 
 
+def summarize_and_save(name,rows,cfg):
+    stats=summary(rows,cfg)
+    save(name,rows)
+    return stats
+
+
 async def main():
     import tinker
     from tinker_cookbook.recipes.decisions import decision_choice_datums, sample_decision
@@ -260,8 +266,7 @@ async def main():
             baseline=await batch(evaluate,[(seed,'policy',sampler_payload(snapshots[0]),run_id,'dev-0')
                 for seed in cfg['development_seeds']],1800,1,24000)
             development[0]=[b['row'] for b in baseline]
-            save('checkpoint-0',development[0])
-            report['parent_baseline']=summary(development[0],cfg)
+            report['parent_baseline']=summarize_and_save('checkpoint-0',development[0],cfg)
             base=report['parent_baseline']
             report['numerical_development_targets']={
                 'steps_max':.8*base['successful_mean_steps'] if base['successful_mean_steps'] else None,
@@ -381,8 +386,7 @@ async def main():
                 update = cp['update']
                 rows = [b['row'] for b in bundles if b['group'] == 'dev-' + str(update)]
                 development[update] = rows
-                save('checkpoint-' + str(update), rows)
-                cp['development'] = summary(rows, cfg)
+                cp['development'] = summarize_and_save('checkpoint-' + str(update),rows,cfg)
                 await publish()
             selected = max(report['checkpoints'], key=lambda cp: checkpoint_rank(cp['development'], development[cp['update']]))
             report['selected_checkpoint'] = selected
@@ -397,9 +401,7 @@ async def main():
                 label == 'fixed') for seed in cfg['held_out_seeds']
                 for label, payload, static in models], 1800, 1, 24000)
             held = {label: [b['row'] for b in bundles if b['label'] == label] for label, _, _ in models}
-            for label, rows in held.items():
-                save('held-out-' + label, rows)
-            report['held_out'] = {label: summary(rows, cfg) for label, rows in held.items()}
+            report['held_out'] = {label:summarize_and_save('held-out-'+label,rows,cfg) for label,rows in held.items()}
             report['paired_held_out'] = paired(held['parent'],held['selected'])
             pp=report['paired_held_out']
             report['improvement_goal_met']=bool(report['held_out']['selected']['qualified_complete_successes']==len(cfg['held_out_seeds']) and pp['n']>=2 and pp['mean_step_reduction_fraction']>=.20 and pp['mean_time_reduction_fraction']>=0 and report['held_out']['selected']['falls']<=report['held_out']['parent']['falls'] and report['held_out']['selected']['invalid_contacts']<=report['held_out']['parent']['invalid_contacts'])

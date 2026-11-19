@@ -33,7 +33,7 @@ function tick(now){
    const e=episodes[i],f=stages[i].frame(Math.min(time,e.duration)),m=e.balance_measurements.findLast(x=>x.t<=time)||e.balance_measurements[0];
    const meta=manifest.recordings[i?version.file:scenario.parent_file];
    const stepCount=e.step_events.filter(v=>v.detected_t<=Math.min(time,e.duration)).length;
-   const phase=time>=e.duration?(meta.complete?'All tasks verified':outcomeLabel(meta.failure||'Incomplete')):(f?.task||f?.phase||'walking');
+   const phase=time>=e.duration?(meta.complete?(meta.qualified_complete?'All tasks verified':'Tasks verified; quality limits exceeded'):outcomeLabel(meta.failure||'Incomplete')):(f?.task||f?.phase||'walking');
    $('#'+(i?'right':'left')+'-metrics').textContent=`${phase} · ${stepCount} steps · roll ${(m.roll_rad*180/Math.PI).toFixed(1)}° · ${Math.min(time,e.duration).toFixed(1)} s`;
   }
   $('#time').textContent=time.toFixed(1)+' / '+(+$('#scrub').max).toFixed(1)+' s';$('#scrub').value=time;

@@ -19,7 +19,8 @@ def export_clip(row,run_id,name,volume):
     e=row['episode']
     keys=['scenario','scene','events','results','fall','invalid_contact','duration','maximum_applied_base_force',
           'balance_metrics','foot_slip_estimate_m','final_object_states','final_object_speeds',
-          'trajectory','recoveries','steps','step_events','step_thresholds','efficiency_validity']
+          'trajectory','recoveries','steps','step_events','step_thresholds','efficiency_validity',
+          'native_smoothness','unsupported_seconds','longest_unsupported_seconds']
     clip={k:e[k] for k in keys if k in e}
     clip['balance_measurements']=[{k:v for k,v in m.items() if k in ['t','phase','gait_phase','roll_rad','loads_n']}
                                   for m in e['balance_measurements']]

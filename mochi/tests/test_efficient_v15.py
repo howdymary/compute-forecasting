@@ -70,3 +70,32 @@ def test_counterfactual_restores_counter_and_next_physical_step_exactly():
     assert np.array_equal(a.d.qpos,b.d.qpos)
     assert np.array_equal(a.d.qvel,b.d.qvel)
     assert a.step_counter.summary()==b.step_counter.summary()
+
+
+def test_saved_results_retain_quality_classification(tmp_path,monkeypatch):
+    import json
+    import mochi.efficient_v15.train as training
+    monkeypatch.setattr(training,'OUT',tmp_path)
+    cfg={'smoothness':{'roll_rms_degrees_max':2,'roll_peak_degrees_max':12,
+        'path_lateral_rms_m_max':.015,'path_lateral_peak_to_peak_m_max':.06,'sequence_time_seconds_max':275,
+        'loaded_contact_travel_estimate_m_max':1.25,'native_acceleration_rms_max':161.4,'native_torque_change_rms_max':.00371}}
+    row={'seed':1,'complete_sequence_success':True,'direction_metrics':{'forward_facing_fraction':.95},
+        'episode':{'efficiency_validity':True,'fall':False,'invalid_contact':False,'duration':200,
+            'steps':{'attempts':500},'recoveries':[],
+            'results':{t:{'success':True} for t in ['alarm','drawer','laptop','globe']},
+            'foot_slip_estimate_m':{'left':.1,'right':.1},
+            'native_smoothness':{'sampled_acceleration_rms_rad_s2':140,'sampled_torque_change_rms_nm':.0032},
+            'balance_metrics':{'roll_rms_deg':.3,'roll_peak_deg':3,'lateral_rms_m':.01,'lateral_peak_to_peak_m':.04}}}
+    stats=training.summarize_and_save('held-out-selected',[row],cfg)
+    assert stats['qualified_complete_successes']==1
+    assert json.loads((tmp_path/'held-out-selected.json').read_text())[0]['qualified_complete'] is True
+
+
+def test_paired_efficiency_excludes_failed_early_episodes_and_reports_uncertainty():
+    from mochi.efficient_v15.objective import paired
+    before=[{'seed':i,'qualified_complete':True,'episode':{'steps':{'attempts':800},'duration':260}} for i in range(3)]
+    after=[{'seed':i,'qualified_complete':i!=2,'episode':{'steps':{'attempts':400+i*100},'duration':220}} for i in range(3)]
+    result=paired(before,after)
+    assert result['n']==2
+    assert result['mean_step_reduction_fraction']==pytest.approx(.4375)
+    assert result['mean_step_reduction_bootstrap_95']==pytest.approx([.375,.5])

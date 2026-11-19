@@ -86,11 +86,17 @@ def summary(rows,cfg):
 def paired(before,after):
     by_seed={r['seed']:r for r in before}
     pairs=[(by_seed[r['seed']],r) for r in after if by_seed[r['seed']]['qualified_complete'] and r['qualified_complete']]
-    result={'n':len(pairs),'scenario_step_reductions':[],'mean_step_reduction_fraction':None,'mean_time_reduction_fraction':None}
+    result={'n':len(pairs),'scenario_step_reductions':[],'mean_step_reduction_fraction':None,'mean_time_reduction_fraction':None,
+        'mean_step_reduction_bootstrap_95':None,'mean_time_reduction_bootstrap_95':None,
+        'uncertainty_scope':'Deterministic paired resampling of this small fixed-layout cohort; not a guarantee for other layouts or hardware.'}
     if pairs:
         steps=[1-b['episode']['steps']['attempts']/a['episode']['steps']['attempts'] for a,b in pairs]
         times=[1-b['episode']['duration']/a['episode']['duration'] for a,b in pairs]
         result.update(mean_step_reduction_fraction=sum(steps)/len(steps),mean_time_reduction_fraction=sum(times)/len(times),
             scenario_step_reductions=[{'seed':a['seed'],'before':a['episode']['steps']['attempts'],
                 'after':b['episode']['steps']['attempts'],'reduction_fraction':delta} for (a,b),delta in zip(pairs,steps)])
+        if len(pairs)>=2:
+            indices=np.random.default_rng(151120).integers(len(pairs),size=(20000,len(pairs)))
+            result['mean_step_reduction_bootstrap_95']=np.quantile(np.asarray(steps)[indices].mean(axis=1),[.025,.975]).tolist()
+            result['mean_time_reduction_bootstrap_95']=np.quantile(np.asarray(times)[indices].mean(axis=1),[.025,.975]).tolist()
     return result

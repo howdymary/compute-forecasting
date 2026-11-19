@@ -52,6 +52,7 @@ def main():
             'failure':row['failure'],'archive':row['archive'],'sha256':descriptor['sha256'],
             'uncompressed_sha256':descriptor['uncompressed_sha256'],
             'steps':e['steps'],'duration':e['duration'],'direction_metrics':row['direction_metrics'],
+            'native_smoothness':e['native_smoothness'],
             'task_outcomes':{t:r['success'] for t,r in e['results'].items()}}
         return name
 

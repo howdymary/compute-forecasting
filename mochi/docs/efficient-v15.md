@@ -36,6 +36,8 @@ Perform 16 new Tinker optimizer updates, with actual forward/backward calls for 
 
 Select using development outcomes, with qualified completion and safety first, then step count and physical time. Open final scenarios only after saving the selection. Compare parent, selected, competent fixed W0 and training-only static station preferences. Separate shared-state walking, task-plus-withdrawal and recovery probes identify which behavior changed. Keep unchanged choices, regressions and negative results visible.
 
+Paired step and time changes include deterministic 20,000-resample descriptive intervals when at least two matched successful cases exist. These describe the small fixed-layout cohort; they do not establish performance across other layouts or hardware. Classify quality before persisting rows so every exported result retains its actual qualification.
+
 ## Sponsor integrations
 
 past.dev stores observed failures, sourced hypotheses, the chosen training allocation, results and qualified conclusions. Source-verified cross-role recalls must affect the workflow. Shared and private audiences use actual access controls; a synthetic private canary checks denied access. Ingestion identifiers are journaled, and dependent reads wait for completion. Counts distinguish unique writing and reading identities from numbers of records.
