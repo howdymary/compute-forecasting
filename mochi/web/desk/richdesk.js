@@ -20,7 +20,7 @@ function tick(now){
   if(playing)time=Math.min(episode.duration,time+dt*+$('#speed').value);
   const f=stage.frame(time);$('#time').textContent=time.toFixed(1)+' / '+episode.duration.toFixed(1)+' s';$('#scrub').value=time;
   $('#phase').textContent=f?.task?f.task.toUpperCase():f?.support_phase?.toUpperCase()||'DESK WALK';
-  $('#outcome').textContent=time>=episode.duration-.03?(episode.fall?'Stopped: robot fell':active.verified?'Book-top support verified':active.status||'Recorded attempt ended'):(f?.support_phase==='swing'?'Lift, clear, place':f?.support_phase==='shift'?'Transfer weight':f?.support_phase==='land'?'Confirm foot contact':'Move across the desk');
+  $('#outcome').textContent=time>=episode.duration-.03?(episode.fall?'Stopped at validity limit':active.verified?'Book-top support verified':active.status||'Recorded attempt ended'):(f?.support_phase==='swing'?'Lift, clear, place':f?.support_phase==='shift'?'Transfer weight':f?.support_phase==='land'?'Confirm foot contact':'Move across the desk');
   $('#detail').textContent=f?'Body tilt '+f.base_tilt_degrees.toFixed(1)+'° · physical time':'Recorded simulation';
  }
  requestAnimationFrame(tick);
