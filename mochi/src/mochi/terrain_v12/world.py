@@ -1,11 +1,29 @@
 """Strict full-sole support check, in addition to the V11 fixture audit."""
-import math
+import copy,math
 import mujoco,numpy as np
 from scipy.spatial import ConvexHull,QhullError
 from ..balanced.sequence import SequenceWorld
 
 
 class TerrainWorld(SequenceWorld):
+    def __init__(self,seed=41000,record=False,scene=None):
+        from ..richdesk.world import scene_spec
+        scene=copy.deepcopy(scene or scene_spec())
+        if 'terrain_conditions' not in scene:
+            rng=np.random.default_rng(seed+11203)
+            conditions={'initial_xy_offset_m':[0.,0.],'initial_yaw_offset_rad':0.,'terrain_friction_multiplier':1.}
+            if seed>=42000:
+                conditions={'initial_xy_offset_m':rng.uniform(-.002,.002,2).tolist(),
+                    'initial_yaw_offset_rad':float(rng.uniform(-.015,.015)),
+                    'terrain_friction_multiplier':float(rng.uniform(.95,1.05))}
+                scene['initial_pose'][:2]=(np.array(scene['initial_pose'][:2])+conditions['initial_xy_offset_m']).tolist()
+                scene['initial_pose'][2]+=conditions['initial_yaw_offset_rad']
+            scene['terrain_conditions']=conditions
+        super().__init__(seed,record,scene=scene)
+        for g in {self.id('geom','desk')}|self.book_geoms:
+            self.m.geom_friction[g,0]*=scene['terrain_conditions']['terrain_friction_multiplier']
+        self.terrain_conditions=scene['terrain_conditions']
+
     def sole_patch(self,side):
         body=self.id('body',side+'_ankle_roll_link');R=self.d.xmat[body].reshape(3,3);points=[];load=0.
         for i,c in enumerate(self.d.contact):

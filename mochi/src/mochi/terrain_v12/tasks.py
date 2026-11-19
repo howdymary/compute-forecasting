@@ -33,7 +33,7 @@ def press_alarm(w, profile, horizon=12.):
     w.task='alarm';w.approach_side='right';w.phase='approach';w.profile=profile
     w.t0=float(w.d.time);w.hand_contacts=0;w.bad_contacts=0;w.max_force=0.
     arm=w.arm['right'];next_ik=-1.;next_control=-1.;qtarget=w.d.qpos[arm['qs']].copy()
-    phase_start=w.t0;stable=0.;desired=None;approach_stage=0
+    phase_start=w.t0;stable=0.;desired=None;approach_stage=0;seek=0.;last_seek=float(w.d.time)
     clearance=np.array([-.335,.065,.205])
     while w.d.time-w.t0<horizon:
         contact,force,bad=w.contacts('alarm');w.hand_contacts+=int(contact);w.bad_contacts+=int(bad);w.max_force=max(w.max_force,force)
@@ -50,6 +50,10 @@ def press_alarm(w, profile, horizon=12.):
             w.phase='release';next_ik=-1.
         desired,normal=w.hand_target('alarm',w.phase)
         if w.phase=='approach' and approach_stage==0:desired=clearance
+        if w.phase=='push' and not w.activated and contact and force<profile.force:
+            seek=min(.0015,seek+.0003*(float(w.d.time)-last_seek))
+        last_seek=float(w.d.time)
+        if w.phase=='push':desired=desired-normal*seek
         if force>profile.force and w.phase in ['push','hold']:
             desired=w.d.site_xpos[arm['tip']]+normal*min(.001,(force-profile.force)*.003)
         if w.d.time>=next_ik:

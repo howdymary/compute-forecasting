@@ -26,7 +26,7 @@ def descent_landings(w,width=.024,short=True):
 
 class ContactWalker(PlannedContactInverseWalker):
     label='reachable-support-pose-with-converged-contact-inverse-control'
-    def __init__(self,w,crouch=.012,pose_search=True,newton_iterations=16,servo_kp=300.,servo_kd=35.,cartesian_swing=False,landings=None,width=.028,adaptive_swing=True,book_goal=None,arm_model=True,balance_feedback=0.,descent_lift=.004,bounded_backward=True,lower_during_descent=False,descent_height_fraction=None,support_roll=0.):
+    def __init__(self,w,crouch=.012,pose_search=True,newton_iterations=16,servo_kp=300.,servo_kd=35.,cartesian_swing=False,landings=None,width=.028,adaptive_swing=True,book_goal=None,arm_model=True,balance_feedback=0.,descent_lift=.004,bounded_backward=True,lower_during_descent=False,descent_height_fraction=None,support_roll=0.,shift_seconds=1.8,swing_scale=1.):
         self.pose_search=pose_search;self.newton_iterations=newton_iterations;self.servo_kp=servo_kp;self.servo_kd=servo_kd;self.pose_log=[];self.cartesian_swing=cartesian_swing
         self.swing_data=mujoco.MjData(w.m);self.width=width;self.last_command_time=float(w.d.time);self.support_wait_started=None
         self.adaptive_swing=adaptive_swing;self.active_lift_step=None;self.arc_start=None;self.rise_start=None
@@ -35,7 +35,8 @@ class ContactWalker(PlannedContactInverseWalker):
         self.backward=False;self.ik_log=[];self.bounded_backward=bounded_backward;self.lower_during_descent=lower_during_descent
         self.descent_height_fraction=float(lower_during_descent) if descent_height_fraction is None else descent_height_fraction
         self.support_roll=support_roll;self.roll_start=0.;self.roll_goal=0.
-        p=StepParameters(crouch=crouch,shift_seconds=1.8,swing_seconds=.65,lift=.010,
+        self.swing_scale=swing_scale
+        p=StepParameters(crouch=crouch,shift_seconds=shift_seconds,swing_seconds=.65*swing_scale,lift=.010,
             com_tracking=0,torso_gain=0,angular_damping=0,support_forward=.002)
         super().__init__(w,landings or stair_landings(w,width,book_goal),p)
 
@@ -92,7 +93,7 @@ class ContactWalker(PlannedContactInverseWalker):
         if self.active_lift_step!=self.steps:
             self.active_lift_step=self.steps;self.arc_start=float(self.d.time);self.rise_start=float(self.d.time)
         t=float(self.d.time);references=[p.copy() for p in feet];i=self.swing
-        u=float(np.clip((t-self.arc_start)/(1.4 if self.backward else 1.),0,1));start=self.swing_start;goal=self.swing_goal
+        u=float(np.clip((t-self.arc_start)/((1.4 if self.backward else 1.)*self.swing_scale),0,1));start=self.swing_start;goal=self.swing_goal
         travel=ease((u-.15)/.55) if self.backward else ease(u)
         references[i]=(1-travel)*start+travel*goal
         peak=max(start[2],goal[2])+self.p.lift

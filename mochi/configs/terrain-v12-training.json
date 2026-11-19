@@ -1,0 +1,101 @@
+{
+  "study": "mochi-terrain-v12",
+  "phase": "frozen-controller-post-training",
+  "parent_checkpoint_sha256": "0188b0e78f749d276c613fa0d8adc8253fa90719b430be18e6f6bfb56673498f",
+  "parent_optimizer_updates": 104,
+  "prior_modal_rollouts": 0,
+  "bounds": {
+    "local_rollouts": 96,
+    "modal_rollouts": 512,
+    "modal_concurrency": 4,
+    "modal_cpu_hours": 8,
+    "optimizer_updates": 64,
+    "training_token_presentations": 2000000,
+    "inference_tokens": 200000,
+    "exa_searches": 8,
+    "past_writes": 20,
+    "past_recalls": 40
+  },
+  "training_seeds": [
+    42000,
+    42001,
+    42002,
+    42003
+  ],
+  "development_seeds": [
+    43000,
+    43001,
+    43002
+  ],
+  "held_out_seeds": [
+    44000,
+    44001,
+    44002,
+    44003,
+    44004,
+    44005
+  ],
+  "training": {
+    "updates": 64,
+    "checkpoints": [
+      0,
+      1,
+      8,
+      16,
+      32,
+      64
+    ],
+    "learning_rate": 0.0001,
+    "seed": 81219,
+    "base_model": "Qwen/Qwen3.5-4B",
+    "domains": [
+      "walk",
+      "alarm",
+      "drawer",
+      "laptop",
+      "globe",
+      "recovery"
+    ]
+  },
+  "frozen_sha256": {
+    "src/mochi/balanced/world.py": "01a3dc78df8b974ba3dc3e3f7337b593bf31495f629614955275d8611df79e24",
+    "src/mochi/balanced/sequence.py": "f910a578681aeacfdf335ab869c54e7de6ad55934ef9e0caf2cf2cd199de9add",
+    "src/mochi/balanced/onnx_walk.py": "b2f99ebb76e7773260c80a708db0fd4e1b66465f503ba558d1ccd803b3baf471",
+    "src/mochi/balanced/balance.py": "b2f92658e023a688d87a2804e233a59ece3e09196ac282041a29bf362455a03b",
+    "src/mochi/balanced/recovery.py": "538c48a36c824aeb3033ba9458d81ec49159223f59593f9583b597a9ed9b6019",
+    "src/mochi/balanced/tasks.py": "60b29d38be802d1a29cc98035129a9e97b01efedb3c97cd30ff91fc5a6f72cfa",
+    "src/mochi/balanced/legs.py": "31b595c0d7741aa305e4fa79d34e3c802f25a1095c939baf69a37365c7759867",
+    "src/mochi/balanced/verification.py": "2a61d18ef3c81ec42e38cb12684419de4a6400b2331a1ce06bf464bb88149838",
+    "src/mochi/balanced/policy.py": "577e67f2c50961f497990f5f368600724d2425e7c9c9b808a8638d2dd8278476",
+    "src/mochi/balanced/snapshot.py": "4755741a4f4396bb3efa25f645a8be6a9e7974dbf44b7c4a2e8c45abe4ae7efb",
+    "src/mochi/richdesk/world.py": "1d633d277d24fea52895ce903ef1567d111ea99be3d9ad915f8f5bd053dcbb4e",
+    "src/mochi/richdesk/verify.py": "7d4bcf28c685ad887bb0f59eefc7d4d41c6f906fc3ee483a7f8458ecc30de460",
+    "src/mochi/curriculum/world.py": "1cb415d6d66e367e3d2c28146ab6067c1da671461c5ec34728d4487cb13152f6",
+    "src/mochi/curriculum/locomotion.py": "a46937561ccfcce13296ac4d5f2c7422f18e44818941249520d338ac429f4391",
+    "src/mochi/desk/g1_model.py": "7b3d54c7b95e02d5f93515bd01a67115a010ae23a830b3ea16475a2d20be114c",
+    "src/mochi/control_v8/manipulation.py": "08f6ff5b95ff6fa8f2f59c34ef14171be19f346e1a018b82a4f1dbfe3b2b17ca",
+    "src/mochi/control_v8/verification.py": "4e78da28198bb373c515fcab604d4a756dde886f8bf4fe1aa84a7e437d347b1c",
+    "configs/richdesk-v9.json": "b63f0e98c0e58329956e1559191ad616dc1fdcb3ab132e8b5d56986faa975fdd",
+    "assets/robot/g1-v11-policy/exported/policy.onnx": "2ee446c8d7fb718d9479db0f82fe5659d382158d347fdacd5ffc35831e1d642c",
+    "src/mochi/terrain_v12/world.py": "0bfe381c78bd98c569bd31b261694967b6bd9cca5f1c79a26b9613f0f5b37793",
+    "src/mochi/terrain_v12/contact.py": "72c2509dd6ce4c00f86817dc4aaae407df6ae2f8be6e223698132c47f340e0cf",
+    "src/mochi/terrain_v12/sequence.py": "aeed30bb3f038e7c59b03b6e153dfd19e4b82d3ab40ca48663c5790c81efcbea",
+    "src/mochi/terrain_v12/tasks.py": "3f14c3954233a3e4f317e37b50cbb56e40428c337bf12e6722505e7544d13e16",
+    "src/mochi/terrain_v12/policy.py": "1ff3e8c3c21795ecd08297e4ce14b17eaa2bb4fcac74d8176e26d1eaa4c1bc4a",
+    "src/mochi/terrain_v12/snapshot.py": "adec7b1803ae5b3060e94587cb448d972b8dc6a157c55a9831525aa5c40afa1b",
+    "src/mochi/terrain_v12/development.py": "b3011cd1db7c6b1d0102a31328183035ace49a6eb5d3d9902c0471b71988e32a",
+    "src/mochi/terrain_v12/legs.py": "d4c76201a5595955007ee1abe03e0f13808d01a6e74beb7ffa29b475cdc2bde4",
+    "src/mochi/terrain_v12/learning_remote.py": "3c128f871769c2fa48965c222099e31d92dcae65adfdbb0e5798911f5d50fc1f",
+    "configs/terrain-v12.json": "cd1455e6b29dd0782d08545168c2b5e672be0bda68dd1fe7fed9ec6f3801b668"
+  },
+  "smoothness": {
+    "roll_rms_degrees_max": 2,
+    "roll_peak_degrees_max": 12,
+    "path_lateral_rms_m_max": 0.015,
+    "path_lateral_peak_to_peak_m_max": 0.06,
+    "sequence_time_seconds_max": 275,
+    "loaded_contact_travel_estimate_m_max": 1.25,
+    "qualification": "Frozen before training. 249.81 s is the first successful engineering reference; the 275 s pilot threshold allows 10% overhead. Report all walking, task and recovery measurements separately; contact travel is a sampled proxy. Lateral peak-to-peak limit is 60 mm, frozen against the 53.56 mm engineering reference before model training."
+  },
+  "scope": "Tinker resumes Qwen3.5-4B LoRA decision weights for terrain-aware walking strategy (stance width, support transfer timing, swing duration and flat speed), task profiles and arm recovery. MuJoCo contact/IK controllers, route, scene and native flat-ground ONNX gait weights are fixed. Compare parent, trained checkpoints and competent fixed heuristic on identical new scenarios. No low-level neural gait training claimed."
+}

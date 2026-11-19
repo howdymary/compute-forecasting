@@ -11,14 +11,18 @@ from .sequence import book_leg
 from .budget import reserve,finish,OUT
 from ..balanced.sequence import PhysicalStop
 from ..balanced.onnx_walk import HubWalker,HoldWalker
-from ..balanced.snapshot import MODEL_FIELDS
+from ..balanced.snapshot import MODEL_FIELDS as BASE_MODEL_FIELDS
+MODEL_FIELDS=BASE_MODEL_FIELDS+['geom_friction']
 
 HOLD_FIELDS=['target','initial_target','neutral','origin','final_target','standing_target','previous_description','native_state']
 
-def state(w):
+def state(w,include_history=True):
     assert isinstance(w.walker,HoldWalker)
     skip={'m','d','viz','walker'}
-    return {'world':{k:copy.deepcopy(v) for k,v in w.__dict__.items() if k not in skip},
+    if not include_history:skip|={'frames','events','control_telemetry','measurements','terrain_controller_history'}
+    values={k:copy.deepcopy(v) for k,v in w.__dict__.items() if k not in skip}
+    if not include_history:values.update(frames=[],events=[],control_telemetry=[],measurements=copy.deepcopy(w.measurements[-30:]),terrain_controller_history=[])
+    return {'world':values,
             'data':copy.copy(w.d),'model':{k:getattr(w.m,k).copy() for k in MODEL_FIELDS},
             'walker':{k:copy.deepcopy(getattr(w.walker,k)) for k in HOLD_FIELDS}}
 

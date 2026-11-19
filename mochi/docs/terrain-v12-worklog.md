@@ -79,3 +79,11 @@ Mochi changes with the alternate-index publisher; preserve the active unborn
 `metagame` checkout and remote default `compute-observatory`.
 
 The clock approach is being repaired separately: the original hand path contacted the case; the collision-aware two-stage path avoided that contact but did not yet depress the switch. A closer station is being tested through actual footsteps. Training remains gated.
+
+## Physical reference gate passed
+
+Two uninterrupted local engineering episodes passed all four tasks and recoveries without a fall, forbidden contact or applied base force: seed 41000 in 249.81 s; seed 41001 in 251.46 s. The second uses the final learning interface and bounded contact seek. Initial-state and terrain-friction variations are defined for the training/development/held-out partitions; those held-out scenarios remain unopened.
+
+The V12 controller is now frozen for a bounded 64-update Tinker campaign. A remote complete reference must pass again before gradients. Actual post-training has not started at this edit. The first optimizer step will be checked using fresh checkpoint decision distributions before continuing. All six domains receive real forward/backward calls. The native ONNX gait weights and deterministic contact controller remain fixed.
+
+Eighteen targeted physics, detached-state, contact and archive checks pass. The new TerrainWorld branch test verifies exact next-step positions/velocities and identical friction against the source, rather than merely comparing two re-created clones.

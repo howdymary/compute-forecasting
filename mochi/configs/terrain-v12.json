@@ -1,7 +1,7 @@
 {
   "study": "mochi-terrain-v12",
-  "phase": "terrain-controller-diagnostics",
-  "training_gate_open": false,
+  "phase": "frozen-controller-post-training",
+  "training_gate_open": true,
   "bounds": {
     "local_rollouts": 96,
     "modal_rollouts": 512,
@@ -40,5 +40,22 @@
       44005
     ]
   },
-  "safety": "No root/object state edits after construction; no hidden supports; walking contact only feet on desk/books; actual hand-target contact during tasks. Preserve V8/V11."
+  "safety": "No root/object state edits after construction; no hidden supports; walking contact only feet on desk/books; actual hand-target contact during tasks. Preserve V8/V11.",
+  "engineering_evidence": {
+    "full_reference_ids": [
+      "continuous-four-task-reference-0",
+      "continuous-four-task-reference-2"
+    ],
+    "seeds": [
+      41000,
+      41001
+    ],
+    "durations_s": [
+      249.80560803200146,
+      251.4601663552679
+    ],
+    "forbidden_contacts": 0,
+    "applied_base_force": 0,
+    "note": "Controller engineering, not trained improvements. Second reference includes the final control interface and contact-seek safeguard."
+  }
 }

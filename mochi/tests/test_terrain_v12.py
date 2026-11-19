@@ -30,3 +30,18 @@ def test_light_toe_edge_does_not_become_a_full_sole_certificate():
     assert patch['load_n']>0 and patch['contact_points']==2
     assert patch['area_m2']==0
     assert patch['capture_margin_m'] is None
+def test_terrain_training_branch_preserves_next_physical_steps():
+    from mochi.terrain_v12.world import TerrainWorld
+    from mochi.terrain_v12.snapshot import branch
+    from mochi.balanced.onnx_walk import HubWalker,HoldWalker
+    import numpy as np
+    w=TerrainWorld(42000,False)
+    for _ in range(10):w.step(standing=True)
+    w.walker=HubWalker(w);w.walker=HoldWalker(w)
+    clone=branch(w)
+    assert clone.terrain_conditions==w.terrain_conditions
+    assert np.array_equal(clone.m.geom_friction,w.m.geom_friction)
+    for _ in range(5):
+        w.step();clone.step()
+        assert np.array_equal(w.d.qpos,clone.d.qpos)
+        assert np.array_equal(w.d.qvel,clone.d.qvel)

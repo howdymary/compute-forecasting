@@ -7,7 +7,7 @@ import argparse,hashlib,json,math,time
 from pathlib import Path
 import numpy as np
 from ..balanced.sequence import PhysicalStop,navigate
-from ..balanced.onnx_walk import HoldWalker
+from ..balanced.onnx_walk import HubWalker,HoldWalker
 from .tasks import press_alarm
 from ..balanced.recovery import RECOVERIES,recover
 from ..balanced.legs import execute_leg
@@ -18,6 +18,7 @@ from ..richdesk.verify import book_top
 from .world import TerrainWorld
 from .contact import ContactWalker,descent_landings
 from .budget import reserve,finish,OUT
+from .legs import execute_selected_leg
 
 
 def book_leg(w,direction,parameters,timeout=160.,landings=None,label=None):
@@ -25,9 +26,11 @@ def book_leg(w,direction,parameters,timeout=160.,landings=None,label=None):
     if direction<0 and landings is None:
         width=parameters.get('width',.024)
         landings=descent_landings(w,width)
-    w.walker=ContactWalker(w,landings=landings,**parameters);started=float(w.d.time)
+    w.walker=ContactWalker(w,landings=landings,**parameters);started=float(w.d.time);next_report=started+10.
     while w.d.time-started<timeout:
         w.step((direction*.025,0,0))
+        if w.record and w.d.time>=next_report:
+            print(json.dumps({'traversal':label or direction,'t':round(w.d.time,2),'step':w.walker.steps,'phase':w.walker.stage}),flush=True);next_report+=10.
         if w.walker.completed:break
     else:raise PhysicalStop('book-controller-timeout:'+str(label or direction))
     history={'label':label or ('ascent' if direction>0 else 'descent'),'t':float(w.d.time),'controller':w.walker.description()}
@@ -71,19 +74,15 @@ def run(seed=41000,record=True,parameters=None,choose=None,until='all'):
     started=time.perf_counter();arrivals=[];failure=None
     try:
         while w.d.time<.4:w.step(standing=True)
+        w.walker=HubWalker(w);w.walker=HoldWalker(w)
         for task in TASKS:
             # Callback receives observed state only; it never edits the scene
             # or the verifier. The reference currently uses one fixed profile.
-            if task=='alarm':arrivals.append(book_leg(w,1,parameters))
-            elif task=='drawer':
-                arrivals.append(book_leg(w,-1,parameters));arrivals.append(prepare_flat_walking(w,parameters))
-                for point in [(-.19,-.18,math.pi/2),(-.19,-.03,math.pi/2)]:
-                    arrivals.append(navigate(w,point,stop=False,speed=.055,label='drawer-corridor'))
-                arrivals.append(navigate(w,(-.13,.02,math.pi/2),speed=.055,position_tolerance=.012,label='drawer-station'))
-            else:arrivals.extend(execute_leg(w,task,speed=.055))
+            walk=choose(w,'walk',task,'W0',['W0','W1','W2']) if choose else 'W0'
+            arrivals.extend(execute_selected_leg(w,task,walk,parameters))
             if until=='ascent' and task=='alarm':break
-            choices=[p.code for p in (PRESSES[:3] if task=='laptop' else PROFILES[:3])]
-            code=choose(w,task,task,{'alarm':'B','drawer':'B','laptop':'P0','globe':'A'}[task],choices) if choose else {'alarm':'B','drawer':'B','laptop':'P0','globe':'A'}[task]
+            choices=[p.code for p in (PRESSES[:3] if task=='laptop' else [PROFILES[i] for i in [1,2,5]] if task=='alarm' else PROFILES[:3])]
+            code=choose(w,task,task,{'alarm':'F','drawer':'B','laptop':'P0','globe':'A'}[task],choices) if choose else {'alarm':'F','drawer':'B','laptop':'P0','globe':'A'}[task]
             p=next(p for p in (PRESSES if task=='laptop' else PROFILES) if p.code==code)
             result=press_alarm(w,p) if task=='alarm' else w.do_task(task,p)
             print(json.dumps({'task':result}),flush=True)
@@ -102,9 +101,10 @@ def run(seed=41000,record=True,parameters=None,choose=None,until='all'):
         and episode['maximum_applied_base_force']==0 and len(episode.get('recoveries',[]))==4
         and all(r['success'] for r in episode['recoveries']) and supported
         and any(r['label']=='book-ascent' for r in arrivals) and any(r['label']=='book-descent' for r in arrivals))
-    return {'study':'mochi-terrain-v12','seed':seed,'scope':'Controller engineering reference; zero new Tinker optimizer updates',
+    scope='Controller engineering reference; zero new Tinker optimizer updates' if choose is None else 'Physical categorical-policy rollout; checkpoint and training receipts are recorded by the caller'
+    return {'study':'mochi-terrain-v12','seed':seed,'scope':scope,
         'complete_sequence_success':complete,'requested_end':until,'failure':failure,'parameters':parameters,
-        'arrivals':arrivals,'episode':episode,'wall_seconds':time.perf_counter()-started}
+        'arrivals':arrivals,'terrain_conditions':w.terrain_conditions,'episode':episode,'wall_seconds':time.perf_counter()-started}
 
 
 def main():
