@@ -10,6 +10,13 @@ image=image.add_local_file(WEB/'curriculum.html',remote_path='/web/index.html',c
 image=image.add_local_dir(WEB/'planning',remote_path='/web/planning',copy=True)
 image=image.add_local_dir(WEB/'richdesk',remote_path='/web/richdesk',copy=True)
 image=image.add_local_dir(WEB/'balanced-v11',remote_path='/web/balanced-v11',copy=True)
+image=(image.add_local_file(WEB/'terrain.html',remote_path='/web/terrain.html',copy=True)
+       .add_local_file(WEB/'terrain.js',remote_path='/web/terrain.js',copy=True)
+       .add_local_dir(WEB/'terrain-engineering',remote_path='/web/terrain-engineering',copy=True))
+if (WEB/'terrain-training/manifest.json').exists():
+ image=(image.add_local_file(WEB/'terrain-trained.html',remote_path='/web/terrain-trained.html',copy=True)
+        .add_local_file(WEB/'terrain-trained.js',remote_path='/web/terrain-trained.js',copy=True)
+        .add_local_dir(WEB/'terrain-training',remote_path='/web/terrain-training',copy=True))
 app=modal.App('mochi-curriculum-demo')
 @app.function(image=image,serialized=True,cpu=.25,memory=512,max_containers=2,scaledown_window=120)
 @modal.asgi_app()
@@ -46,4 +53,13 @@ def web():
    usage=modal.Dict.from_name('mochi-balanced-v11-budget').get('usage',report.get('budget_usage_or_reserved',{}))
    return {**{k:report.get(k) for k in ['study','status','phase','optimizer_updates_completed','checkpoints','selected_checkpoint','held_out','isolated']},'budget_usage_or_reserved':usage,'recorded_execution_summary':json.loads(Path('/web/balanced-v11/execution-index.json').read_text())}
   except Exception:return {'study':'mochi-balanced-v11','status':'unavailable','phase':'See the recorded execution evidence','optimizer_updates_completed':0}
+ @api.get('/api/terrain-training')
+ def terrain_training():
+  try:
+   report=modal.Dict.from_name('mochi-terrain-v12-progress').get('latest',{})
+   usage=modal.Dict.from_name('mochi-terrain-v12-budget').get('usage',report.get('budget_usage_or_reserved',{}))
+   keys=['study','status','phase','optimizer_updates_completed','remote_reference_passed','checkpoints','selected_checkpoint','held_out','isolated']
+   return {**{k:report.get(k) for k in keys},'budget_usage_or_reserved':usage,
+           'memory':report.get('services',{}).get('eligibility',{}),'engineering_complete_references':2}
+  except Exception:return {'study':'mochi-terrain-v12','status':'unavailable','optimizer_updates_completed':0}
  api.mount('/',StaticFiles(directory='/web',html=True));return api

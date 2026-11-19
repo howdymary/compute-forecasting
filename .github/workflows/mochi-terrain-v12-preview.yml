@@ -1,0 +1,50 @@
+name: Mochi terrain reference and progress
+on:
+  push:
+    branches: [mochi-desk-v3]
+    paths: ['mochi/configs/terrain-v12-preview-launch.json']
+permissions:
+  contents: read
+concurrency:
+  group: mochi-curriculum-demo
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - run: python -m pip install modal==1.6.4
+      - name: Check recorded data and replay controls
+        run: |
+          node mochi/scripts/check_replay_ui.mjs
+          node mochi/scripts/check_terrain_ui.mjs
+          if [ -f mochi/web/desk/curriculum/manifest-v7.json ]; then node mochi/scripts/check_replay_ui.mjs --archive-v7; fi
+          if [ -f mochi/web/desk/curriculum/manifest-v8.json ]; then node mochi/scripts/check_replay_ui.mjs --archive-v8; fi
+          node mochi/scripts/check_planning_ui.mjs
+          if [ -f mochi/web/desk/richdesk/manifest.json ]; then node mochi/scripts/check_richdesk_ui.mjs; fi
+          if [ -f mochi/web/desk/balanced-v11/manifest.json ]; then node mochi/scripts/check_balanced_ui.mjs; fi
+      - name: Publish recorded checkpoint viewer
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: python -m modal deploy --strategy recreate mochi/scripts/deploy_curriculum.py
+      - name: Verify the actual published release
+        run: |
+          python - <<'PYCODE'
+          import json,os,time,urllib.request
+          base='https://howdymary--mochi-curriculum-demo-web.us-east.modal.run'
+          for attempt in range(6):
+              try:
+                  health=json.load(urllib.request.urlopen(base+'/api/health',timeout=20))
+                  assert health['release']==os.environ['GITHUB_SHA'], 'Previous release is still serving'
+                  status=json.load(urllib.request.urlopen(base+'/api/training',timeout=20))
+                  assert status.get('status') not in [None,'unavailable'], 'Numerical status is unavailable'
+                  print('Verified release',health['release'],'training',status.get('status'))
+                  break
+              except Exception:
+                  if attempt==5:raise
+                  time.sleep(5)
+          PYCODE
