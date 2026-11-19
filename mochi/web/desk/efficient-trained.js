@@ -1,5 +1,5 @@
 import {createCurriculumStage} from './curriculum-stage.js';
-import {stepCountAt,taskStatesAt,comparisonEvidence,taskNames} from './efficient-evidence.mjs';
+import {stepCountAt,taskStatesAt,comparisonEvidence,taskNames,activityAt} from './efficient-evidence.mjs';
 const $=q=>document.querySelector(q),folder='efficient-v15/';
 let manifest,stages,scenario,version,episodes,playing=true,time=0,last=performance.now(),loading=false,requestId=0;
 const cache=new Map();
@@ -37,7 +37,7 @@ function tick(now){
    const stepCount=stepCountAt(e,time);
    const side=i?'right':'left';$('#'+side+'-steps').textContent=String(stepCount);$('#'+side+'-elapsed').textContent=Math.min(time,e.duration).toFixed(1);
    for(const state of taskStatesAt(e,Math.min(time,e.duration))){const node=$('#'+side+'-task-'+state.task);node.className='task-state '+state.status;node.textContent=taskNames[state.task]+(state.status==='passed'?' ✓':state.status==='failed'?' ×':state.status==='active'?' …':'')}
-   const phase=time>=e.duration?(meta.complete?(meta.qualified_complete?'All tasks verified':'Tasks verified; quality limits exceeded'):outcomeLabel(meta.failure||'Incomplete')):(f?.task||f?.phase||'walking');
+   const phase=time>=e.duration?(meta.complete?(meta.qualified_complete?'All tasks verified':'Tasks verified; quality limits exceeded'):outcomeLabel(meta.failure||'Incomplete')):activityAt(e,time).label;
    $('#'+(i?'right':'left')+'-metrics').textContent=`${phase} · ${stepCount} steps · roll ${(m.roll_rad*180/Math.PI).toFixed(1)}° · ${Math.min(time,e.duration).toFixed(1)} s`;
   }
   $('#time').textContent=time.toFixed(1)+' / '+(+$('#scrub').max).toFixed(1)+' s';$('#scrub').value=time;

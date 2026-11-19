@@ -1,4 +1,4 @@
-import {stepCountAt,taskStatesAt,comparisonEvidence,taskNames} from '../web/desk/efficient-evidence.mjs';
+import {stepCountAt,taskStatesAt,comparisonEvidence,taskNames,activityAt} from '../web/desk/efficient-evidence.mjs';
 import fs from 'node:fs';
 import vm from 'node:vm';
 import assert from 'node:assert/strict';
@@ -10,7 +10,7 @@ const nodes=new Map(),stages=[];
 class El{constructor(){this.children=[];this.value='';this.style={}}append(...x){this.children.push(...x)}}
 for(const [,id]of fs.readFileSync(base+page+'.html','utf8').matchAll(/\bid="([^"]+)"/g))nodes.set('#'+id,new El());
 nodes.get('#speed').value='1';
-const context=vm.createContext({stepCountAt,taskStatesAt,comparisonEvidence,taskNames,console,performance,Response,Blob,DecompressionStream,TextDecoder,Uint8Array,URLSearchParams,location:{search:''},
+const context=vm.createContext({stepCountAt,taskStatesAt,comparisonEvidence,taskNames,activityAt,console,performance,Response,Blob,DecompressionStream,TextDecoder,Uint8Array,URLSearchParams,location:{search:''},
  requestAnimationFrame(fn){context.tick=fn;context.renderScheduled=true},document:{querySelector(q){assert(nodes.has(q),q);return nodes.get(q)},createElement(){return new El()}},
  fetch:async path=>fs.existsSync(base+path)?new Response(fs.readFileSync(base+path)):new Response('',{status:404}),
  createCurriculumStage(el,options){let stage={options,ready:Promise.resolve(),setEpisode(e){this.episode=e},view(){},inspect(){},frame(t){this.time=t;return this.episode.trajectory.frames.findLast(f=>f.t<=t)||this.episode.trajectory.frames[0]}};stages.push(stage);return stage}
