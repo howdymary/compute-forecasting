@@ -1,0 +1,19 @@
+{
+  "source_run": 44482272455,
+  "evaluation_timeout_s": 1500,
+  "bounds": {
+    "modal_rollouts": 64,
+    "modal_cpu_hours": 12,
+    "inference_tokens": 500000,
+    "modal_concurrency": 4,
+    "past_writes": 4,
+    "past_recalls": 6
+  },
+  "infrastructure_repairs": {
+    "src/mochi/terrain_v12/evaluation_remote.py": {
+      "source_sha256": "e86edab714dc4c34ad8151892b178736a3afd9725cb73b743e34b1651ba67e1e",
+      "repaired_sha256": "1cba216fd2f2f37e9659500bb4dea3abece1d1a9be9be5dd804c7216e24690ab",
+      "change": "Import json used to cache observations. No observation, physics, choice, verifier or weight changes."
+    }
+  }
+}

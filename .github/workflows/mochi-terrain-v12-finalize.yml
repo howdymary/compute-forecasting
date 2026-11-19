@@ -34,6 +34,7 @@ jobs:
       - name: Evaluate saved weights with zero new optimizer updates
         env:
           TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+          PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
           MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
         run: python -u -m mochi.terrain_v12.finalize

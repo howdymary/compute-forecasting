@@ -1,5 +1,5 @@
 """Same frozen evaluator with larger execution/token allowances."""
-import asyncio,pickle,time
+import asyncio,json,pickle,time
 import modal
 from .learning_remote import image,secret,volume,archive,compact,receipt
 app=modal.App('mochi-terrain-v12-weight-evaluation')

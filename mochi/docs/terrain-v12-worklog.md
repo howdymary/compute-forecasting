@@ -105,3 +105,9 @@ Run 44472186998 completed its remote reference and all four teacher sequences: 1
 Run 44482272455 reuses those exact data and restores the canonical parent with optimizer state. Its frozen budget allows 32 new updates, with checkpoints at 0, 1, 8 and 32. It trains all six domains before performing physical development evaluation. Each model receives the same 1500-second function deadline and token allowance; the scene, controller, scenario partition and success verifier are unchanged. This ordering avoids blocking gradients behind slow replay evaluations. The larger inference allowance is precautionary, not evidence of a confirmed earlier token-limit failure.
 
 The public status endpoint now shows the active continuation's budget separately from original campaign reservations. Training progress and measured checkpoint evaluations, rather than this launch description, establish what has completed.
+
+## Real training completed; evaluator import repaired
+
+Run 44482272455 completed 32 optimizer updates with six forward/backward domains per update and 383,343 training-token presentations. Durable states exist at updates 0, 1, 8 and 32. The first-step distribution probe changed every domain. Held-out scenarios remained unopened.
+
+The first remote development evaluation stopped before producing an outcome because `evaluation_remote.py` omitted its `json` import. The import is now repaired and checked with undefined-name linting. The evaluation-only continuation allows precisely that source-hash change, verifies every other frozen file, and contains no optimizer, state-save or deletion calls. It also corrects bookkeeping for checkpoints that existed before their development measurements. Prior uncompleted compute reservations remain archived.

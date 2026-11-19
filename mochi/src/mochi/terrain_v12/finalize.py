@@ -12,6 +12,8 @@ from ..integrations import now,digest
 from .learning_remote import sampler_payload,volume,compact
 from .evaluation_remote import app,evaluate
 from .train import summary,rank
+from .services import TerrainServices
+from .resume_training import merged_services
 
 OUT=ROOT/'artifacts/terrain-v12-training'
 
@@ -27,7 +29,11 @@ async def main():
     assert original['remote_reference_passed'],'Missing physical reference'
     protocol=original['protocol']
     for path,sha in protocol['frozen_sha256'].items():
-        assert hashlib.sha256((ROOT/path).read_bytes()).hexdigest()==sha,'Controller changed: '+path
+        actual=hashlib.sha256((ROOT/path).read_bytes()).hexdigest()
+        if path in cfg.get('infrastructure_repairs',{}):
+            repair=cfg['infrastructure_repairs'][path]
+            assert sha==repair['source_sha256'] and actual==repair['repaired_sha256'],'Undeclared evaluator repair'
+        else:assert actual==sha,'Controller changed: '+path
     paths=json.loads((source/'checkpoint-paths.json').read_text())
     updates=original['optimizer_updates_completed'];assert updates>0,'No durable trained state; resume from the saved data instead'
     assert max(map(int,paths))<=updates,'Checkpoint update exceeds recorded optimizer evidence'
@@ -40,11 +46,11 @@ async def main():
         'source_training_run':cfg['source_run'],'evaluation_run':os.environ['GITHUB_RUN_ID'],
         'evaluation_source_sha':os.environ.get('GITHUB_SHA'),'extra_optimizer_updates':0,
         'original_error_type':original.get('error_type'),'deadline_seconds':cfg['evaluation_timeout_s'],
-        'physics_unchanged':True,'unavailable_completed_updates_after_last_durable':updates-max(map(int,paths)),
+        'physics_unchanged':True,'infrastructure_repairs':cfg.get('infrastructure_repairs',{}),'unavailable_completed_updates_after_last_durable':updates-max(map(int,paths)),
         'evaluated_checkpoint_updates':sorted(map(int,paths)),'reuse_policy':'Reuse completed physical outcomes, including failures. Fill missing outputs only.'})
     report.pop('error',None);report.pop('error_type',None)
     extra=modal.Dict.from_name('mochi-terrain-v12-final-budget',create_if_missing=True)
-    usage=await extra.get.aio('usage') or {'modal_rollouts':0,'modal_cpu_hours':0.,'inference_tokens':0}
+    usage=await extra.get.aio('usage') or {'modal_rollouts':0,'modal_cpu_hours':0.,'inference_tokens':0,'past_writes':0,'past_recalls':0}
     lock=asyncio.Lock();status=modal.Dict.from_name('mochi-terrain-v12-progress',create_if_missing=True)
     async def change(kind,n):
         async with lock:
@@ -53,6 +59,7 @@ async def main():
             usage[kind]=value;await extra.put.aio('usage',dict(usage))
     async def publish():
         report['recovery']['usage_or_reserved']=dict(usage)
+        report['recovery']['previous_budget_sources']=original.get('budget_sources',{})
         save('progress',report);await status.put.aio('latest',json.loads(json.dumps(report)))
     # This changes a deadline, not the function body, image, controller or weights.
     function=evaluate.with_options(timeout=cfg['evaluation_timeout_s'])
@@ -108,6 +115,9 @@ async def main():
                     checkpoints[update]={'update':update,'cumulative_updates':protocol['parent_optimizer_updates']+update,
                         'checkpoint_id':digest(paths[str(update)]['optimizer']),'development':summary(rows,protocol),
                         'probe_distributions':[]}
+                checkpoints[update]['development']=summary(rows,protocol)
+                report['checkpoints']=[checkpoints[k] for k in sorted(checkpoints)]
+                await publish()
             report['checkpoints']=[checkpoints[k] for k in sorted(checkpoints)]
             if original['held_out_opened']:
                 report['selected_checkpoint']=original['selected_checkpoint']
@@ -120,13 +130,40 @@ async def main():
             rows=await batch(protocol['held_out_seeds'],models,'held-out')
             for label,values in rows.items():save('held-out-'+label,values)
             report['held_out']={label:summary(values,protocol) for label,values in rows.items()}
-            report['isolated']=report.get('isolated',{})
+            report['isolated']=report.get('isolated') or {}
             for name,active in [('walking',['walk']),('manipulation',['alarm','drawer','laptop','globe']),('recovery',['recovery'])]:
                 report['phase']='Finish full-route domain intervention: '+name;await publish()
-                values=await batch(protocol['held_out_seeds'][:2],models,'isolation-'+name,active)
+                values=await batch(protocol['held_out_seeds'][:protocol.get('isolation_seed_count',2)],models,'isolation-'+name,active)
                 save('isolated-'+name,values)
                 report['isolated'][name]={label:summary(group,protocol) for label,group in values.items()}
             report['recovery']['domain_intervention_limit']='Only the named decision domain uses learned weights; other domains use the fixed policy. These full-route interventions are not exact shared-pose manipulation or disabled-manipulation walking tests.'
+            report['phase']='Record checkpoint results and verify cross-role recall';await publish()
+            memory=TerrainServices();memory.run_id=run_id
+            memory.actors={role:run_id+'-'+role for role in ['researcher','designer','experimenter','critic']}
+            memory.audience=run_id+'-shared';memory.private=run_id+'-critic'
+            try:
+                for role,actor in memory.actors.items():
+                    await memory.request('PUT','/identities/'+actor,{'traits':{'project':'mochi-terrain-v12','role':role}})
+                for slug,actors in [(memory.audience,list(memory.actors.values())),(memory.private,[memory.actors['critic']])]:
+                    assert len(slug)<=40
+                    await memory.request('PUT','/audiences/'+slug,{'kind':'fixed','name':'Mochi checkpoint evaluation','identities':actors})
+                await change('past_writes',1)
+                eid=await memory.write('experimenter',{'kind':'observation','experiment_id':run_id,
+                    'training_run':old_run,'optimizer_updates_completed':updates,'selected_update':selected,
+                    'held_out':report['held_out'],'domain_interventions':report['isolated']})
+                await change('past_recalls',1);evidence=await memory.read('critic',eid)
+                await change('past_writes',1)
+                vid=await memory.write('critic',{'kind':'qualified-conclusion','experiment_id':run_id,
+                    'evidence_record':eid,'evidence_sha256':digest(evidence),
+                    'conclusion':'Report measured parent, selected and fixed-controller results, including failures. Native gait weights stayed fixed. Small simulated evaluation; no search or memory causal ablation.'})
+                await change('past_recalls',1);await memory.read('researcher',vid)
+                await change('past_writes',1);cid=await memory.write('critic',{'kind':'private-test','text':'MOCHI_PRIVATE_CANARY'},True)
+                await change('past_recalls',1);await memory.read('designer',cid,False)
+            except TimeoutError as exc:
+                report['final_memory_review_pending']={'error_type':type(exc).__name__,'pending':memory.report().get('pending_ingestions',[])}
+            finally:
+                report['services']=merged_services(original['services'],memory.report())
+                await memory.http.aclose();await publish()
         report.update(status='completed',phase='Frozen checkpoint evaluation complete',completed_at=now())
         report['recovery']['duration_seconds']=time.perf_counter()-started
         save('report',report);await publish();save('report',report)
