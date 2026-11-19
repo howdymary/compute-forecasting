@@ -1,9 +1,10 @@
 {
-  "revision": 4,
+  "revision": 5,
   "training_run": 44482272455,
-  "evaluation_run": 44484708941,
-  "scope": "Read every completed parent/selected final-test pair. Reuse immutable development recordings. No new inference, simulation, optimization or remote writes. Full final cohort remains pending.",
-  "include_development": false,
-  "include_completed_test_pairs": true,
-  "reuse_development_source_run": 44496546488
+  "evaluation_run": 44514013316,
+  "scope": "Completed-only assessment and public checkpoint export. Read immutable results across both evaluation jobs; no new simulation, inference, gradients or memory writes.",
+  "include_development": true,
+  "include_completed_test_pairs": false,
+  "reuse_development_source_run": 44496546488,
+  "mode": "completed"
 }

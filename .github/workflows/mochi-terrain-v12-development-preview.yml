@@ -8,18 +8,41 @@ permissions:
 jobs:
   inspect:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: {python-version: '3.11'}
       - run: python -m pip install modal==1.6.4
       - name: Read completed physical recordings without new execution
+        id: collect
         env:
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
           MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
         run: python mochi/scripts/export_terrain_development.py
+      - name: Assess and export completed checkpoint comparisons
+        if: steps.collect.outputs.mode == 'completed'
+        run: |
+          python mochi/scripts/assess_terrain_training.py --source mochi/artifacts/terrain-development-preview
+          python mochi/scripts/build_terrain_training_preview.py --source mochi/artifacts/terrain-development-preview
+          node mochi/scripts/check_terrain_training_ui.mjs
+      - name: Publish the completed comparison alongside preserved demos
+        if: steps.collect.outputs.mode == 'completed'
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: python -m modal deploy --strategy recreate mochi/scripts/deploy_curriculum.py
       - uses: actions/upload-artifact@v4
+        if: steps.collect.outputs.mode == 'completed'
+        with:
+          name: mochi-terrain-completed-viewer-${{ github.run_id }}
+          path: |
+            mochi/web/desk/terrain-training/
+            mochi/docs/terrain-v12-assessment.md
+            mochi/docs/terrain-v12-assessment.json
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        if: steps.collect.outputs.mode != 'completed'
         with:
           name: mochi-terrain-development-preview-${{ github.run_id }}
           path: mochi/artifacts/terrain-development-preview/
