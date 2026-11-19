@@ -70,11 +70,17 @@ base=asset('sand-laptop-base.glb','Laptop base');base.location=(.14,.17,.007);ba
 for row in range(4):
  for col in range(12):part(base,'Keyboard key',(.015,.012,.0015),(-.104+col*.0188,.044-row*.017,.0077),black,.0005)
 lid=empty('Laptop screen',(.14,.249,.0185));shell=asset('sand-laptop-lid.glb','Lid visual shell');shell.parent=lid;shell.location=(0,0,-.004286);shell.scale=(.25/.29,1,.15/.175)
+screen_glass=material('Laptop dark display',(.005,.012,.018),.15,.23)
+part(lid,'Display surface',(.227,.0004,.126),(0,-.0042,.077),screen_glass,.0004)
 globe=asset('sand-earth.glb','Globe');stand=asset('sand-globe-base.glb','Globe base');stand.location=(.47,.22,0)
 bpy.ops.mesh.primitive_uv_sphere_add(segments=16,ring_count=8,radius=.0035);marker=bpy.context.object;marker.parent=globe;marker.location=(-.0583,0,0);marker.data.materials.append(coral)
 part(stand,'Fixed zero index',(.015,.001,.0003),(-.027,0,.0128),coral,.00005);rod(stand,'Index arrow left',(-.035,0,.0128),(-.030,-.002,.0128),.00035,coral);rod(stand,'Index arrow right',(-.035,0,.0128),(-.030,.002,.0128),.00035,coral)
 old=set(bpy.data.objects);bpy.ops.import_scene.gltf(filepath=str(assets/'g1-mini.glb'));robot={o.name:o for o in bpy.data.objects if o not in old and o.type=='EMPTY'};bindings={**robot,'alarm-clock':clock,'alarm-button':cap,'drawer-cabinet':cabinet,'drawer':drawer,'laptop-base':base,'laptop-screen':lid,'globe':globe,'globe-base':stand}
 part(robot['torso_link'],'Display-only face panel',(.002,.020,.019),(.012,0,.063),material('Black visor glass',(.004,.009,.012),.2,.15),.0015)
+if r.get('scene',{}).get('version')=='richdesk-v9':
+ sys.path.insert(0,str(root/'scripts'))
+ from richdesk_blender import add_desk_props
+ bindings.update(add_desk_props(r['scene'],asset,box,material,empty,cylinder,lettering,root))
 for name,pos,energy,size in [('Window',(-.4,-.3,1),75,.7),('Fill',(.5,.3,.7),20,.6)]:
  d=bpy.data.lights.new(name,'AREA');d.energy=energy;d.shape='DISK';d.size=size;o=bpy.data.objects.new(name,d);bpy.context.collection.objects.link(o);o.location=pos;o.rotation_euler=(Vector((0,.1,.1))-o.location).to_track_quat('-Z','Y').to_euler()
 room=material('Room plaster',(.32,.35,.33),0,.95);box('Room floor',(5,5,.02),(0,0,-.76),room);box('Wall',(3,.05,2),(0,1.1,.24),room)
@@ -84,12 +90,23 @@ if args.route:
  route=json.loads(Path(args.route).read_text());planned=material('Reference teal',(.035,.32,.33),0,.7);executed=material('Measured rust',(.65,.17,.075),0,.7)
  def overlay_line(name,points,mat):
   curve=bpy.data.curves.new(name,'CURVE');curve.dimensions='3D';curve.bevel_depth=.0008;curve.bevel_resolution=2;spline=curve.splines.new('POLY');spline.points.add(len(points)-1)
-  for p,xy in zip(spline.points,points):p.co=(xy[0],xy[1],.0017,1)
+  for p,xy in zip(spline.points,points):p.co=(xy[0],xy[1],xy[2] if len(xy)>2 else .0017,1)
   obj=bpy.data.objects.new(name,curve);bpy.context.collection.objects.link(obj);obj.data.materials.append(mat)
- for leg in route['legs']:
-  for s in leg['segments']:overlay_line('Planned reference (annotation)',[s['from'],s['to']],planned)
-  x,y,h=leg['goal'];overlay_line('Task-facing direction (annotation)',[[x,y],[x+.027*math.cos(h),y+.027*math.sin(h)]],planned)
-  circle=[[x+.011*math.cos(a),y+.011*math.sin(a)] for a in [i*2*math.pi/48 for i in range(49)]];overlay_line('Stopping zone (annotation)',circle,planned)
+ if 'candidates' in route:
+  def height(x,y):return max([0.]+[p['pos'][2]+p['size'][2] for p in route['scene']['props'] if p.get('climb') and abs(x-p['pos'][0])<=p['size'][0]/2 and abs(y-p['pos'][1])<=p['size'][1]/2])
+  candidate=next(c for c in route['candidates'] if c['id']==route['selected_candidate']);points=[]
+  for a,b in zip(candidate['points'],candidate['points'][1:]):
+   count=max(2,math.ceil(math.dist(a[:2],b[:2])/.004))
+   for i in range(count+1):
+    u=i/count;x=(1-u)*a[0]+u*b[0];y=(1-u)*a[1]+u*b[1];points.append([x,y,height(x,y)+.0025])
+  overlay_line('Planned elevated route; not robot motion',points,planned)
+  for foot in route['footsteps']['ascent']:
+   x,y,z=foot['position'];overlay_line('Proposed foot landing; not an executed contact',[[x+dx,y+dy,z+.0027] for dx,dy in [(-.007,-.018),(.007,-.018),(.007,.018),(-.007,.018),(-.007,-.018)]],planned)
+ else:
+  for leg in route['legs']:
+   for s in leg['segments']:overlay_line('Planned reference (annotation)',[s['from'],s['to']],planned)
+   x,y,h=leg['goal'];overlay_line('Task-facing direction (annotation)',[[x,y],[x+.027*math.cos(h),y+.027*math.sin(h)]],planned)
+   circle=[[x+.011*math.cos(a),y+.011*math.sin(a)] for a in [i*2*math.pi/48 for i in range(49)]];overlay_line('Stopping zone (annotation)',circle,planned)
  points=[f['positions'][1] for f in frames if f['phase']=='walk' and f['t']<=args.time]
  if len(points)>1:overlay_line('Recorded pelvis path (annotation)',points,executed)
 selected=frames if args.animate else [min(frames,key=lambda f:abs(f['t']-args.time))]

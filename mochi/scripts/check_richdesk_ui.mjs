@@ -1,0 +1,14 @@
+import fs from 'node:fs';import vm from 'node:vm';import assert from 'node:assert/strict';import {performance} from 'node:perf_hooks';
+const base='mochi/web/desk/',manifest=JSON.parse(fs.readFileSync(base+'richdesk/manifest.json'));
+const nodes=new Map(),created=[];let stage;
+class El{constructor(tag='div'){this.tagName=tag;this.children=[];this.style={};this.dataset={};this.value='';this.classList={toggle(){}};created.push(this)}append(...items){this.children.push(...items)}replaceChildren(...items){this.children=items}}
+for(const [,tag,id]of fs.readFileSync(base+'richdesk.html','utf8').matchAll(/<([a-z]+)[^>]*\bid="([^"]+)"[^>]*>/g))nodes.set('#'+id,new El(tag));nodes.get('#speed').value='1';
+const context=vm.createContext({console,performance,requestAnimationFrame(fn){context.tick=fn},document:{querySelector(q){assert(nodes.has(q),q);return nodes.get(q)},querySelectorAll(){return created.filter(e=>e.dataset.attempt)},createElement(tag){return new El(tag)}},fetch:async path=>({ok:fs.existsSync(base+path),json:async()=>JSON.parse(fs.readFileSync(base+path))}),createCurriculumStage(el,options){stage={ready:Promise.resolve(),scene:options.scene,setTerrainReference(r){this.plan=r},showTerrainReference(v){this.visible=v},setEpisode(e){this.episode=e},view(){},inspect(){},frame(t){return this.episode.trajectory.frames.findLast(f=>f.t<=t)||this.episode.trajectory.frames[0]}};return stage}});
+vm.runInContext(fs.readFileSync(base+'richdesk.js','utf8').replace(/^import[^\n]+\n/,''),context);
+const settle=async()=>{for(let i=0;i<100;i++){await new Promise(r=>setImmediate(r));if(stage?.episode&&!vm.runInContext('loading',context))return}throw Error('Load did not complete')};await settle();
+assert.equal(stage.scene.version,'richdesk-v9');assert.equal(stage.plan.selected_candidate,'front-corridor');assert.equal(nodes.get('#attempts').children.length,manifest.attempts.length);
+let first;
+for(const button of nodes.get('#attempts').children){await button.onclick();await settle();const e=stage.episode;assert.equal(e.scenario.seed,31000);assert.equal(e.maximum_applied_base_force,0);assert.equal(nodes.get('#metrics').children.length,5);assert.match(nodes.get('#scope').textContent,/Not Tinker/);assert(!manifest.attempts.find(a=>a.id===button.dataset.attempt).verified);if(!first)first=e.trajectory.frames[0];else assert.deepEqual(e.trajectory.frames[0],first);context.tick(performance.now()+100)}
+nodes.get('#route').onclick();assert.equal(stage.visible,false);nodes.get('#route').onclick();assert.equal(stage.visible,true);
+assert.equal(manifest.optimizer_updates_completed,0);assert(manifest.route.candidates.some(c=>!c.sampled_collision_free));
+console.log('Passed: matched physical initial frames, actual attempts, closed training gate, route toggle and numerical controls. Browser rendering checked separately.');

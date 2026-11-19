@@ -84,6 +84,7 @@ class DeskWorld(ControlWorld):
         for i,c in enumerate(self.d.contact):
             g1,g2=int(c.geom1),int(c.geom2)
             if not self.support_geoms.intersection([g1,g2]):continue
+            if abs(float(c.frame[2]))<.7:continue
             other=g2 if g1 in self.support_geoms else g1
             b=int(self.m.geom_bodyid[other]);name=mujoco.mj_id2name(self.m,mujoco.mjtObj.mjOBJ_BODY,b) or ''
             for side in contacts:
@@ -103,12 +104,16 @@ class DeskWorld(ControlWorld):
     def foot_touching(self, side):
         """Touchdown contact; separate from the 0.05 N loaded-foot metric."""
         body=self.id('body',side+'_ankle_roll_link')
+        R=self.d.xmat[body].reshape(3,3)
+        if R[2,2]<math.cos(math.radians(3.)):return False
+        sole=self.d.xpos[body]+R@np.array([.005,0,-.00585])
         for i,c in enumerate(self.d.contact):
             a,b=int(c.geom1),int(c.geom2)
             other=b if a in self.support_geoms else a if b in self.support_geoms else -1
             if other<0 or int(self.m.geom_bodyid[other])!=body:continue
+            if abs(float(c.frame[2]))<.7:continue
             force=np.zeros(6);mujoco.mj_contactForce(self.m,self.d,i,force)
-            if c.dist<.0004 and force[0]>.0005:return True
+            if c.dist<.0004 and force[0]>.0005 and abs(sole[2]-c.pos[2])<.0012:return True
         return False
 
     def capture(self):
@@ -118,7 +123,25 @@ class DeskWorld(ControlWorld):
             self.frames[-1]['swing_foot']=(['left','right'][self.walker.swing] if hasattr(self.walker,'swing') else None)
 
     def step(self,*a,**kw):
+        previous_fall=self.fall
         super().step(*a,**kw)
+        # The archived flat-desk cutoff called a deliberate deep crouch a
+        # fall. This new terrain study uses declared pelvis clearance plus
+        # tilt and real non-foot ground contact; all V10 comparisons must use
+        # this same verifier. It never edits state or prevents a collision.
+        tilt=math.acos(float(np.clip(self.d.xmat[1,8],-1,1)))
+        low=float(self.d.qpos[2])-self.terrain_height(*self.d.qpos[:2])<.080
+        ground_contact=False
+        for i,c in enumerate(self.d.contact):
+            a,b=int(c.geom1),int(c.geom2)
+            if not self.support_geoms.intersection([a,b]):continue
+            other=b if a in self.support_geoms else a;body=int(self.m.geom_bodyid[other])
+            name=mujoco.mj_id2name(self.m,mujoco.mjtObj.mjOBJ_BODY,body) or ''
+            if body not in self.robot_bodies or name.endswith('ankle_roll_link'):continue
+            force=np.zeros(6);mujoco.mj_contactForce(self.m,self.d,i,force)
+            if force[0]>.05 and abs(float(c.frame[2]))>.7:ground_contact=True
+        self.fall=bool(previous_fall or tilt>math.radians(30) or low or ground_contact
+                       or abs(self.d.qpos[0])>.59 or abs(self.d.qpos[1])>.39)
         if self.d.time < self.next_metric:return
         dt=float(self.d.time)-self.previous_metric_time;self.previous_metric_time=float(self.d.time)
         self.next_metric=float(self.d.time)+.01
@@ -136,7 +159,9 @@ class DeskWorld(ControlWorld):
 
     def episode(self):
         m=self.metrics;n=max(1,m['samples'])
-        return {**super().episode(),'scene':self.scene,'locomotion_metrics':{
+        return {**super().episode(),'scene':self.scene,
+            'validity_revision':'terrain-v2: 80 mm pelvis clearance, 30 degree tilt, non-foot loaded terrain contact, desk boundaries',
+            'locomotion_metrics':{
             **m,'torso_tilt_rms_deg':math.degrees(math.sqrt(m['tilt_squared']/n)),
             'yaw_acceleration_rms_rad_s2':math.sqrt(m['yaw_accel_squared']/n),
             'controller':getattr(self.walker,'label','pinned-native-gait'),

@@ -1,5 +1,13 @@
 # MOCHI — Walking, Contact and Recovery Policy Learning
 
+The furnished-desk route study is in development:
+[desk and planned route](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/richdesk.html)
+· [methods and current limitations](docs/richdesk-v10.md).
+The printer, books and stationery share their placements across simulation and
+rendering. The new book-climbing controller remains unreliable, so its training
+gate is closed. The completed V8 training results below describe the earlier
+flat-desk study and have not been attributed to this new environment.
+
 <!-- MOCHI_CURRICULUM_START -->
 ## Current: Learning walking, task and arm-recovery decisions
 

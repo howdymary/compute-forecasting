@@ -32,6 +32,9 @@ class StepParameters:
     stance_gain:float=.5
     attitude_gain:float=.06
     support_forward:float=.004
+    stance_posture_weight:float=.2
+    body_orientation_weight:float=8.
+    foot_orientation_weight:float=6.
 
 
 def ease(t):
@@ -71,7 +74,9 @@ class FootstepController:
         stance=1-self.swing;center=np.mean(self.anchors,axis=0)*(1-self.p.shift_fraction)+self.anchors[stance]*self.p.shift_fraction
         center[:2]+=self.rotation[:2,:2]@np.array([self.p.support_forward,0.])
         self.root_goal=center-self.rotation@self.com_offset
-        self.root_goal[2]=self.base_clearance+self.anchors[stance][2]
+        # Do not raise the pelvis onto the higher tread while the trailing
+        # foot is still planted below it. That can overextend the trailing leg.
+        self.root_goal[2]=self.base_clearance+min(p[2] for p in self.anchors)
         # Account for the leg mass moving during crouch, rather than treating
         # the center of mass as a fixed offset from the pelvis.
         for _ in range(3):
@@ -116,22 +121,36 @@ class FootstepController:
                 u=ease(age/p.shift_seconds);root=(1-u)*self.root_start+u*self.root_goal;yaw=(1-u)*self.yaw_start+u*self.yaw_goal
                 self.com_target=(1-u)*self.com_start+u*self.com_goal
                 actual=self.d.subtree_com[1][:2]+self.d.qvel[:2]*math.sqrt(max(.05,float(self.d.subtree_com[1,2]))/9.81)
-                inside=(np.max(np.abs((actual-self.com_goal[:2])))<p.com_margin
+                support_local=self.rotation[:2,:2].T@(actual-self.anchors[stance][:2])
+                inside=(abs(support_local[0])<.011 and abs(support_local[1])<.0038
                         and np.linalg.norm(self.d.qvel[3:5])<.25
                         and np.linalg.norm(self.com_velocity[:2])<.008)
                 if age>p.shift_seconds and inside:
                     self.stage='swing';self.stage_t=float(d.time)
+                    self.swing_stage='lift';self.swing_segment_t=float(d.time)
                     self.phase_log.append({'t':float(d.time),'phase':'swing','swing':['left','right'][self.swing]})
                 elif age>2.5:self.failed_reason='support_transfer_not_stable'
             elif self.stage=='swing':
                 self.com_target=self.com_goal.copy()
-                u=float(np.clip(age/p.swing_seconds,0,1));a=ease(u);root=self.root_goal.copy()
-                feet[self.swing]=(1-a)*self.swing_start+a*self.swing_goal
+                root=self.root_goal.copy()
                 clearance=max(self.swing_start[2],self.swing_goal[2])+p.lift
-                feet[self.swing][2]=(1-a)*self.swing_start[2]+a*self.swing_goal[2]+(clearance-max(self.swing_start[2],self.swing_goal[2]))*math.sin(math.pi*u)**2
-                if u>=1:
-                    self.stage='land';self.stage_t=float(d.time)
-                    self.phase_log.append({'t':float(d.time),'phase':'land','swing':['left','right'][self.swing]})
+                segment_age=float(d.time)-self.swing_segment_t
+                if self.swing_stage=='lift':
+                    feet[self.swing]=self.swing_start.copy();a=ease(segment_age/.35)
+                    feet[self.swing][2]=(1-a)*self.swing_start[2]+a*clearance
+                    if segment_age>.35 and self.foot(self.swing)[2]>clearance-.003:
+                        self.swing_stage='travel';self.swing_segment_t=float(d.time)
+                elif self.swing_stage=='travel':
+                    a=ease(segment_age/p.swing_seconds)
+                    feet[self.swing]=(1-a)*self.swing_start+a*self.swing_goal;feet[self.swing][2]=clearance
+                    if segment_age>p.swing_seconds and np.linalg.norm(self.foot(self.swing)[:2]-self.swing_goal[:2])<.004:
+                        self.swing_stage='lower';self.swing_segment_t=float(d.time)
+                else:
+                    feet[self.swing]=self.swing_goal.copy();a=ease(segment_age/.4)
+                    feet[self.swing][2]=(1-a)*clearance+a*self.swing_goal[2]
+                    if segment_age>.4:
+                        self.stage='land';self.stage_t=float(d.time)
+                        self.phase_log.append({'t':float(d.time),'phase':'land','swing':['left','right'][self.swing]})
             else:
                 self.com_target=self.com_goal.copy()
                 root=self.root_goal.copy();feet[self.swing]=self.swing_goal.copy()

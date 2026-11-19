@@ -1,3 +1,4 @@
+import {addRichDesk} from './richdesk-stage.js';
 import {vintageClock} from './vintage-clock.js';
 import * as THREE from 'three';
 import {loadG1} from './g1-stage.js';
@@ -5,7 +6,7 @@ import {photographicRenderer} from './realism.js';
 import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
-export function createCurriculumStage(element){
+export function createCurriculumStage(element,options={}){
  const scene=new THREE.Scene();scene.background=new THREE.Color('#c8c3b8');
  const renderer=new THREE.WebGLRenderer({antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,1.3));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.toneMapping=THREE.ACESFilmicToneMapping;element.append(renderer.domElement);
  const camera=new THREE.PerspectiveCamera(34,1,.001,8);camera.up.set(0,0,1);camera.position.set(-.08,-.40,.32);
@@ -27,7 +28,7 @@ export function createCurriculumStage(element){
  const felt=box([1.198,.798,.0007],[0,0,-.0001],'felt',scene,.0001);felt.visible=false;
  const bindings={},pending=[],loader=new GLTFLoader();
  const group=(name,pos)=>{let g=new THREE.Group();g.position.set(...pos);scene.add(g);bindings[name]=g;return g};
- function asset(file,parent,scale=[1,1,1],offset=[0,0,0]){pending.push(loader.loadAsync('assets/'+file).then(({scene:model})=>{const axes=new THREE.Group();axes.rotation.x=Math.PI/2;axes.scale.set(scale[0],scale[2],scale[1]);axes.add(model);parent.add(axes);axes.position.set(...offset);model.traverse(o=>{if(o.isMesh)o.castShadow=o.receiveShadow=true})}));}
+ function asset(file,parent,scale=[1,1,1],offset=[0,0,0],onload=null){pending.push(loader.loadAsync('assets/'+file).then(({scene:model})=>{const axes=new THREE.Group();axes.rotation.x=Math.PI/2;axes.scale.set(scale[0],scale[2],scale[1]);axes.add(model);parent.add(axes);axes.position.set(...offset);model.traverse(o=>{if(o.isMesh)o.castShadow=o.receiveShadow=true});onload?.(model)}));}
  // Object shells use the same metre-scale pivots and envelopes as MuJoCo.
  const clock=group('alarm-clock',[-.36,.11,.06]);const cap=group('alarm-button',[-.335,.100,.124]);
  const alarmLEDMaterial=vintageClock({clock,cap,mesh,box,ball,cyl,bar,asset});
@@ -40,9 +41,20 @@ export function createCurriculumStage(element){
  // Rotating surface mark and fixed base index match the verifier zero bearing.
  mesh(new THREE.CircleGeometry(.0036,32),new THREE.MeshStandardMaterial({color:'#bf6947',side:THREE.DoubleSide}),globe,[-.0583,0,0]).rotation.y=-Math.PI/2;bar([-.020,0,.0128],[-.034,0,.0128],.0005,'accent',base);let arrow=mesh(new THREE.ConeGeometry(.0018,.005,16),'accent',base,[-.033,0,.0128]);arrow.rotation.z=Math.PI/2;
 
+ if(options.scene)addRichDesk({spec:options.scene,group,asset,box,cyl,bar,text,scene,mesh});
  const photography=photographicRenderer({renderer,scene,camera,materials,joints:{},mesh,box,cyl,bar,text});
  const ready=Promise.all([photography.ready,...pending,loadG1(scene).then(robot=>{Object.assign(bindings,robot);box([.002,.020,.019],[.012,0,.063],new THREE.MeshPhysicalMaterial({color:'#020609',roughness:.36,metalness:.03,clearcoat:.35,envMapIntensity:.25}),robot['torso_link'],.0015)})]);
  const reference=new THREE.Group();scene.add(reference);let route=null,executed=null,executionTimes=[],targetDot=null,errorLine=null;
+ const terrainReference=new THREE.Group();scene.add(terrainReference);
+ function setTerrainReference(plan){
+  for(const child of [...terrainReference.children]){terrainReference.remove(child);child.geometry?.dispose();child.material?.dispose()}
+  if(!plan)return;
+  const selected=plan.candidates.find(c=>c.id===plan.selected_candidate);if(!selected)return;
+  const height=(x,y)=>Math.max(0,...plan.scene.props.filter(p=>p.climb&&Math.abs(x-p.pos[0])<=p.size[0]/2&&Math.abs(y-p.pos[1])<=p.size[1]/2).map(p=>p.pos[2]+p.size[2]));
+  const points=[];for(let i=1;i<selected.points.length;i++){const a=selected.points[i-1],b=selected.points[i],n=Math.max(2,Math.ceil(Math.hypot(b[0]-a[0],b[1]-a[1])/.004));for(let j=0;j<=n;j++){const u=j/n,x=a[0]*(1-u)+b[0]*u,y=a[1]*(1-u)+b[1]*u;points.push(new THREE.Vector3(x,y,height(x,y)+.0025))}}
+  const geometry=new THREE.BufferGeometry().setFromPoints(points);terrainReference.add(new THREE.Line(geometry,new THREE.LineBasicMaterial({color:'#4eacb0',transparent:true,opacity:.9})));
+  for(const foot of plan.footsteps.ascent){const [x,y,z]=foot.position;const g=new THREE.BufferGeometry().setFromPoints([[-.007,-.018],[.007,-.018],[.007,.018],[-.007,.018],[-.007,-.018]].map(([dx,dy])=>new THREE.Vector3(x+dx,y+dy,z+.003)));terrainReference.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:foot.side==='left'?'#d5ae72':'#d1e7df'})))}
+ }
  function pathLine(points,color){const g=new THREE.BufferGeometry().setFromPoints(points.map(p=>new THREE.Vector3(p[0],p[1],.0018)));const line=new THREE.Line(g,new THREE.LineBasicMaterial({color,depthTest:false,transparent:true,opacity:.85}));line.renderOrder=5;reference.add(line);return line}
  function setReference(data){route=data;for(const child of [...reference.children]){reference.remove(child);child.geometry?.dispose();child.material?.dispose()}executed=null;targetDot=null;errorLine=null;executionTimes=[];if(!data)return;
   for(const leg of data.legs){for(const segment of leg.segments)pathLine([segment.from,segment.to],'#43898a');const p=leg.goal,arrow=new THREE.ArrowHelper(new THREE.Vector3(Math.cos(p[2]),Math.sin(p[2]),0),new THREE.Vector3(p[0],p[1],.0022),.035,'#43898a',.009,.005);reference.add(arrow)}
@@ -57,5 +69,5 @@ export function createCurriculumStage(element){
   if(follow){const pelvis=a.positions[1];const q=a.quaternions[1],yaw=Math.atan2(2*(q[0]*q[3]+q[1]*q[2]),1-2*(q[2]*q[2]+q[3]*q[3]));let target=new THREE.Vector3(pelvis[0]+.015,pelvis[1]+.025,.112),position=target.clone().add(new THREE.Vector3(.28,-.39,.24));if(cameraTask==='alarm'){target.set((pelvis[0]-.36)/2,(pelvis[1]+.11)/2,.107);position.copy(target).add(new THREE.Vector3(.24,-.38,.23))}if(cameraTask==='drawer'){target.set((pelvis[0]-.10)/2,(pelvis[1]+.12)/2,.105);position.copy(target).add(new THREE.Vector3(.24,-.38,.23))}if(cameraTask==='laptop'){target.set((pelvis[0]+.23)/2,(pelvis[1]+.20)/2,.105);position.copy(target).add(new THREE.Vector3(.26,-.32,.27))}if(cameraTask==='globe'){target.set((pelvis[0]+.47)/2,(pelvis[1]+.22)/2,.115);position.copy(target).add(new THREE.Vector3(-.31,-.39,.28))}if(inspection){target.set(pelvis[0],pelvis[1],inspection==='feet'?.032:.112);position.copy(target).add(inspection==='feet'?new THREE.Vector3(.10,-.27,.055):new THREE.Vector3(0,-.52,.035))}let jump=lastTime<0||Math.abs(time-lastTime)>.5;camera.position.lerp(position,jump?1:.09);orbit.target.lerp(target,jump?1:.09)}lastTime=time;orbit.update();photography.render();return a;
  }
  function resize(){let{width,height}=element.getBoundingClientRect();if(!width||!height)return;camera.aspect=width/height;camera.updateProjectionMatrix();renderer.setSize(width,height,false);photography.resize(width,height);frame(Math.max(0,lastTime))}new ResizeObserver(resize).observe(element);
- return{ready,frame,setEpisode(data){episode=data;lastTime=-1;cameraTask=null;if(route)setReference(route);resize();frame(0)},setReference,showReference(visible){reference.visible=visible},topDown(){inspection=null;follow=false;camera.position.set(0,-.001,1.65);orbit.target.set(0,0,0);orbit.update()},view(wide){inspection=null;follow=!wide;if(wide){camera.position.set(1.05,-1.35,.95);orbit.target.set(0,.1,.08);orbit.update()}},inspect(kind){inspection=kind;follow=true;lastTime=-1},dispose(){renderer.dispose()}};
+ return{ready,frame,setEpisode(data){episode=data;lastTime=-1;cameraTask=null;if(route)setReference(route);resize();frame(0)},setReference,setTerrainReference,showTerrainReference(visible){terrainReference.visible=visible},showReference(visible){reference.visible=visible},topDown(){inspection=null;follow=false;camera.position.set(0,-.001,1.65);orbit.target.set(0,0,0);orbit.update()},view(wide){inspection=null;follow=!wide;if(wide){camera.position.set(1.05,-1.35,.95);orbit.target.set(0,.1,.08);orbit.update()}},inspect(kind){inspection=kind;follow=true;lastTime=-1},dispose(){renderer.dispose()}};
 }

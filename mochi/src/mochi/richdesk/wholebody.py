@@ -22,6 +22,9 @@ class WholeBodyWalker(FootstepController):
         self.previous_jac = None
         self.inverse_last = -1.
         self.inverse_stats = []
+        self.last_qp_solution = None
+        self.last_qp_stance = None
+        self.solver_failures = []
 
     def jacobians(self):
         Jcom = np.zeros((3, self.m.nv))
@@ -80,20 +83,21 @@ class WholeBodyWalker(FootstepController):
             weight = np.broadcast_to(weight, (len(target),))
             A = np.zeros((len(target), total)); A[:, :n] = J[:, vs]*weight[:, None]
             rows.append(A); targets.append(np.asarray(target)*weight)
-        for J,value in contact_tasks:task(J,value,np.array([70,70,90,2,2,2]))
+        f=self.p.foot_orientation_weight
+        for J,value in contact_tasks:task(J,value,np.array([70,70,90,f,f,f]))
         com_velocity = Jcom@d.qvel
         task(Jcom, 120*(self.com_target-d.subtree_com[1])-22*com_velocity-derivatives[0]@d.qvel, 35.)
-        task(Jr, 180*orient-26*(Jr@d.qvel)-derivatives[1]@d.qvel, 2.)
-        if False and single:
+        task(Jr, 180*orient-26*(Jr@d.qvel)-derivatives[1]@d.qvel, self.p.body_orientation_weight)
+        if single:
             # IK scratch contains the planned swing reference, not physics.
             i = self.swing; footR = d.xmat[self.feet[i]].reshape(3, 3)
             refR = self.scratch.xmat[self.feet[i]].reshape(3, 3)
             point = self.scratch.xpos[self.feet[i]]+refR@self.local
             rot = .5*sum((np.cross(footR[:, j], refR[:, j]) for j in range(3)), np.zeros(3))
-            task(feet[i], np.r_[600*(point-self.foot(i)), 160*rot]-32*(feet[i]@d.qvel)-derivatives[2+i]@d.qvel,
-                 np.array([20, 20, 25, 1, 1, 1]))
+            task(feet[i], np.r_[180*(point-self.foot(i)), 100*rot]-24*(feet[i]@d.qvel)-derivatives[2+i]@d.qvel,
+                 np.array([10,10,15,.5,.5,.5]))
         posture = np.zeros((12, m.nv)); posture[:, self.vids] = np.eye(12)
-        posture_weights=np.full(12,.025)
+        posture_weights=np.full(12,self.p.stance_posture_weight)
         if single:posture_weights[self.swing*6:(self.swing+1)*6]=.8
         task(posture, 220*(self.target-d.qpos[self.qids])-30*d.qvel[self.vids], posture_weights)
         A = np.vstack(rows+[np.eye(total)*.0005]); target = np.r_[*targets, np.zeros(total)]
@@ -121,14 +125,24 @@ class WholeBodyWalker(FootstepController):
             upper_acc=min(400.,2*(hi-.01-position-speed*horizon)/horizon**2)
             if lower_acc<=upper_acc:bounded(row,lower_acc,upper_acc)
         G=np.vstack([E,*inequalities]);lo=np.r_[b,lower];hi=np.r_[b,upper]
-        solver=osqp.OSQP();solver.setup(P=sparse.csc_matrix(A.T@A),q=-A.T@target,
-            A=sparse.csc_matrix(G),l=lo,u=hi,verbose=False,eps_abs=2e-5,eps_rel=2e-5,max_iter=10000,polishing=True)
+        # Normalize metre/radian accelerations and N/Nm contact wrenches.
+        # Without this, small-biped rotational inertia makes landing QPs
+        # needlessly ill-conditioned.
+        units=np.r_[np.ones(3),np.full(15,40.),np.tile([1.,1.,1.,.03,.03,.03],len(stance))]
+        As=A*units[None,:];Gs=G*units[None,:]
+        row_scale=1/np.maximum(np.linalg.norm(Gs,axis=1),.001)
+        solver=osqp.OSQP();solver.setup(P=sparse.csc_matrix(As.T@As),q=-As.T@target,
+            A=sparse.csc_matrix(Gs*row_scale[:,None]),l=lo*row_scale,u=hi*row_scale,
+            verbose=False,eps_abs=2e-5,eps_rel=2e-5,max_iter=10000,polishing=True)
+        if self.last_qp_stance==stance and self.last_qp_solution is not None:solver.warm_start(x=self.last_qp_solution/units)
         result=solver.solve(raise_error=False)
         if result.info.status_val not in [1,2]:
             self.failed_reason='inverse_dynamics_'+result.info.status
+            self.solver_failures.append({'t':float(d.time),'status':result.info.status})
             d.ctrl[self.aids]=self.held_torque
             return
-        x=result.x;tau=torque_map@x+bias[self.vids]
+        x=result.x*units;self.last_qp_solution=x.copy();self.last_qp_stance=list(stance)
+        tau=torque_map@x+bias[self.vids]
         self.held_torque = np.clip(tau, limits[:, 0], limits[:, 1])
         d.ctrl[self.aids] = self.held_torque
         if len(self.inverse_stats)==0 or d.time-self.inverse_stats[-1]['t']>.1:
@@ -137,4 +151,4 @@ class WholeBodyWalker(FootstepController):
                 'wrenches':[x[n+6*k:n+6*k+6].tolist() for k in range(len(stance))]})
 
     def description(self):
-        return {**super().description(), 'inverse_dynamics': self.inverse_stats}
+        return {**super().description(), 'inverse_dynamics': self.inverse_stats,'solver_failures':self.solver_failures}

@@ -23,6 +23,7 @@ jobs:
           if [ -f mochi/web/desk/curriculum/manifest-v7.json ]; then node mochi/scripts/check_replay_ui.mjs --archive-v7; fi
           if [ -f mochi/web/desk/curriculum/manifest-v8.json ]; then node mochi/scripts/check_replay_ui.mjs --archive-v8; fi
           node mochi/scripts/check_planning_ui.mjs
+          if [ -f mochi/web/desk/richdesk/manifest.json ]; then node mochi/scripts/check_richdesk_ui.mjs; fi
       - name: Normalize completed numerical progress
         env:
           PYTHONPATH: ${{ github.workspace }}/mochi/src

@@ -1,0 +1,810 @@
+{
+  "study": "mochi-richdesk-v10",
+  "phase": "pretraining-feasibility",
+  "created_at": "2026-11-19T00:50:54.923671+00:00",
+  "workflow_run": "44432056165",
+  "source_sha": "86e82dc62b4a16af4f547be7f2e4e453c8a40b06",
+  "optimizer_updates_completed": 0,
+  "scope": "Engineering failure-directed probes, not a model-training gain.",
+  "bounds": {
+    "modal_rollouts": 3,
+    "exa_searches": 1,
+    "past_writes": 5,
+    "past_recalls": 5,
+    "tinker_optimizer_updates": 0
+  },
+  "status": "completed",
+  "proposal": {
+    "kind": "proposal",
+    "study": "mochi-richdesk-v10",
+    "source_record": "mochi-r10-bc0d6c78-r1",
+    "selected": "slow_swing",
+    "parameters": {
+      "shift_seconds": 1.6,
+      "stride": 0.022,
+      "crouch": 0.012,
+      "swing_seconds": 0.9
+    }
+  },
+  "results": {
+    "kind": "observation",
+    "study": "mochi-richdesk-v10",
+    "proposal_record": "mochi-r10-bc0d6c78-r2",
+    "baseline": {
+      "fall": true,
+      "seconds": 8.953743732540822,
+      "steps": null,
+      "book_top": {
+        "instant_valid": false,
+        "top_book_load_n": {
+          "left": 0.0,
+          "right": 0.0
+        },
+        "feet_inside_top_book": false,
+        "tilt_deg": 30.100115270364896,
+        "scope": "Needs 0.4-second continuous dwell before success."
+      },
+      "metrics": {
+        "samples": 843,
+        "tilt_squared": 6.263937092945637,
+        "slip_m": 0.18028364661908783,
+        "loaded_seconds": 11.434763747902766,
+        "nonfoot_terrain_contacts": 41,
+        "maximum_height_m": 0.013730733917522275,
+        "yaw_accel_squared": 649522.3830419338,
+        "torso_tilt_rms_deg": 4.938926224158662,
+        "yaw_acceleration_rms_rad_s2": 27.757686955204395,
+        "controller": "pinned-native-gait",
+        "scope": "Measured physical contact velocities and torso motion; no render-space foot locking."
+      },
+      "receipt": {
+        "provider": "Modal",
+        "cpu": 1,
+        "memory_mib": 2048,
+        "physical_rollouts": 1,
+        "wall_seconds": 5.793371255000001,
+        "training_updates": 0
+      }
+    },
+    "candidate": {
+      "fall": true,
+      "seconds": 7.185557144986606,
+      "steps": 2,
+      "book_top": {
+        "instant_valid": false,
+        "top_book_load_n": {
+          "left": 0.0,
+          "right": 0.0
+        },
+        "feet_inside_top_book": false,
+        "tilt_deg": 30.019185717251553,
+        "scope": "Needs 0.4-second continuous dwell before success."
+      },
+      "metrics": {
+        "samples": 677,
+        "tilt_squared": 0.7223746422352915,
+        "slip_m": 0.08250104312886633,
+        "loaded_seconds": 11.487899267178307,
+        "nonfoot_terrain_contacts": 0,
+        "maximum_height_m": 0.0,
+        "yaw_accel_squared": 1407663.5830480014,
+        "torso_tilt_rms_deg": 1.871584950097649,
+        "yaw_acceleration_rms_rad_s2": 45.59897740191599,
+        "controller": "experimental-contact-constrained-inverse-dynamics",
+        "scope": "Measured physical contact velocities and torso motion; no render-space foot locking."
+      },
+      "receipt": {
+        "provider": "Modal",
+        "cpu": 1,
+        "memory_mib": 2048,
+        "physical_rollouts": 1,
+        "wall_seconds": 12.8923943,
+        "training_updates": 0
+      }
+    }
+  },
+  "verdict": {
+    "kind": "qualified-conclusion",
+    "study": "mochi-richdesk-v10",
+    "evidence_record": "mochi-r10-bc0d6c78-r3",
+    "book_ascent_established": false,
+    "training_gate": "closed",
+    "conclusion": "A short engineering probe cannot certify the complete book ascent, descent or four-task sequence. Do not start training or label this a learned improvement.",
+    "evidence_sha256": "1cec7d0fd70b87dcb30474a9da83771b4f069093a97ead899bef9b86d617539f",
+    "supersedes_hypothesis": "mochi-r10-bc0d6c78-r1"
+  },
+  "physical_rollouts": 2,
+  "services": {
+    "actors": {
+      "researcher": "mochi-r10-bc0d6c78-researcher",
+      "designer": "mochi-r10-bc0d6c78-designer",
+      "experimenter": "mochi-r10-bc0d6c78-experimenter",
+      "critic": "mochi-r10-bc0d6c78-critic"
+    },
+    "audiences": {
+      "shared": "mochi-r10-bc0d6c78-shared",
+      "critic_private": "mochi-r10-bc0d6c78-critic"
+    },
+    "records": [
+      {
+        "id": "mochi-r10-bc0d6c78-r0",
+        "role": "experimenter",
+        "author": "mochi-r10-bc0d6c78-experimenter",
+        "audience": "mochi-r10-bc0d6c78-shared",
+        "at": "2026-11-19T00:50:59.012350+00:00",
+        "sha256": "3c9c059f63a601d10b85f25f12c5ff24fd97970e56bc848ee425c99ab33fd7cc",
+        "ingestion_id": "eeee0ad8-ad98-4aab-b452-b9ca887d5700",
+        "write_to_ready_seconds": 6.22119848799997,
+        "payload": {
+          "record_id": "mochi-r10-bc0d6c78-r0",
+          "author": "mochi-r10-bc0d6c78-experimenter",
+          "occurred_at": "2026-11-19T00:50:59.012350+00:00",
+          "content": {
+            "kind": "observation",
+            "study": "mochi-richdesk-v10",
+            "scene_sha256": "1859da3d9ff8c63c19d02aa1aafb2f2fd07fc4662a498e482669964617c699b9",
+            "measured_failure": "Native controller stalls or falls near book risers. A contact-constrained prototype establishes support and takes steps, but touchdown or the following weight transfer remains unreliable.",
+            "training_gate": "closed",
+            "held_out_opened": false
+          }
+        }
+      },
+      {
+        "id": "mochi-r10-bc0d6c78-r1",
+        "role": "researcher",
+        "author": "mochi-r10-bc0d6c78-researcher",
+        "audience": "mochi-r10-bc0d6c78-shared",
+        "at": "2026-11-19T00:51:07.603306+00:00",
+        "sha256": "0a15af6ac1aa0bf564535ae65472a2af3203665e6ce00c5cb4bbbb8d8df3a0ac",
+        "ingestion_id": "6ce51fb0-9991-4fa3-aacc-6d7f13abafab",
+        "write_to_ready_seconds": 4.130467926999984,
+        "payload": {
+          "record_id": "mochi-r10-bc0d6c78-r1",
+          "author": "mochi-r10-bc0d6c78-researcher",
+          "occurred_at": "2026-11-19T00:51:07.603306+00:00",
+          "content": {
+            "kind": "hypothesis",
+            "study": "mochi-richdesk-v10",
+            "observation_record": "mochi-r10-bc0d6c78-r0",
+            "sources": {
+              "query": "humanoid robot stair climbing inverse dynamics support transfer touchdown contact foot trajectory center of pressure",
+              "request_id": "fb47574eead75cbdcc765fbb6cd30894",
+              "cost_dollars": {
+                "total": 0.007,
+                "search": {
+                  "neural": 0.007
+                }
+              },
+              "sources": [
+                {
+                  "url": "https://scaron.info/papers/journal/zhang-ijhr-2016.pdf",
+                  "title": "Supervoxel Plane Segmentation and Multi-Contact Motion Generation for Humanoid Stair Climbing",
+                  "excerpt": "6.1. Motion generation In our setup, the humanoid robot HRP-4 starts with both feet parallel in front of the staircase. The whole stair-climbing motion",
+                  "retrieved_at": "2026-11-19T00:51:07.603175+00:00"
+                },
+                {
+                  "url": "https://ieeexplore.ieee.org/document/9478184",
+                  "title": "Multi-Contact Locomotion Planning With Bilateral Contact Forces Considering Kinematics and Statics During Contact Transition | IEEE Journals & Magazine | IEEE Xplore",
+                  "excerpt": "feasible region by this assumption, which we define as bSCFR. This assumption enables us to project ... on the centroidal statics, where appropriate bilateral",
+                  "retrieved_at": "2026-11-19T00:51:07.603196+00:00"
+                },
+                {
+                  "url": "https://arxiv.org/html/1809.07073v7",
+                  "title": "Stair Climbing Stabilization of the HRP-4 Humanoid Robot using Whole ...",
+                  "excerpt": "### II-C Contact Wrench Distribution While stabilizers based on CoM admittance control [9, 11, 12, 23] take the net wrench as only input, those",
+                  "retrieved_at": "2026-11-19T00:51:07.603222+00:00"
+                }
+              ],
+              "response_sha256": "e7c2f723304d0177a1ca0c3c36cfac21d85e847e52f57b9cd1d043d728be84d5",
+              "at": "2026-11-19T00:51:07.603293+00:00"
+            },
+            "mechanism": "Longer support transfer and bounded swing motion may reduce contact transitions that destabilize a small biped. This is a hypothesis, not a measured improvement."
+          }
+        }
+      },
+      {
+        "id": "mochi-r10-bc0d6c78-r2",
+        "role": "designer",
+        "author": "mochi-r10-bc0d6c78-designer",
+        "audience": "mochi-r10-bc0d6c78-shared",
+        "at": "2026-11-19T00:51:14.687965+00:00",
+        "sha256": "0650e6b3a17f056627be8e70d83ba4071945682c4db23cce0a9c8068198a0925",
+        "ingestion_id": "51dd2054-93c2-42ce-a4ed-3bdd3114fd2e",
+        "write_to_ready_seconds": 12.324248296999997,
+        "payload": {
+          "record_id": "mochi-r10-bc0d6c78-r2",
+          "author": "mochi-r10-bc0d6c78-designer",
+          "occurred_at": "2026-11-19T00:51:14.687965+00:00",
+          "content": {
+            "kind": "proposal",
+            "study": "mochi-richdesk-v10",
+            "source_record": "mochi-r10-bc0d6c78-r1",
+            "selected": "slow_swing",
+            "parameters": {
+              "shift_seconds": 1.6,
+              "stride": 0.022,
+              "crouch": 0.012,
+              "swing_seconds": 0.9
+            }
+          }
+        }
+      },
+      {
+        "id": "mochi-r10-bc0d6c78-r3",
+        "role": "experimenter",
+        "author": "mochi-r10-bc0d6c78-experimenter",
+        "audience": "mochi-r10-bc0d6c78-shared",
+        "at": "2026-11-19T00:51:59.296817+00:00",
+        "sha256": "1dbd80cba053f3e441a5e4ecc525f34ee5b7a8b9120290e14d4467476668be0d",
+        "ingestion_id": "dc3cc3de-9e32-48d2-b494-88daa9cad2a9",
+        "write_to_ready_seconds": 26.467130596999993,
+        "payload": {
+          "record_id": "mochi-r10-bc0d6c78-r3",
+          "author": "mochi-r10-bc0d6c78-experimenter",
+          "occurred_at": "2026-11-19T00:51:59.296817+00:00",
+          "content": {
+            "kind": "observation",
+            "study": "mochi-richdesk-v10",
+            "proposal_record": "mochi-r10-bc0d6c78-r2",
+            "baseline": {
+              "fall": true,
+              "seconds": 8.953743732540822,
+              "steps": null,
+              "book_top": {
+                "instant_valid": false,
+                "top_book_load_n": {
+                  "left": 0.0,
+                  "right": 0.0
+                },
+                "feet_inside_top_book": false,
+                "tilt_deg": 30.100115270364896,
+                "scope": "Needs 0.4-second continuous dwell before success."
+              },
+              "metrics": {
+                "samples": 843,
+                "tilt_squared": 6.263937092945637,
+                "slip_m": 0.18028364661908783,
+                "loaded_seconds": 11.434763747902766,
+                "nonfoot_terrain_contacts": 41,
+                "maximum_height_m": 0.013730733917522275,
+                "yaw_accel_squared": 649522.3830419338,
+                "torso_tilt_rms_deg": 4.938926224158662,
+                "yaw_acceleration_rms_rad_s2": 27.757686955204395,
+                "controller": "pinned-native-gait",
+                "scope": "Measured physical contact velocities and torso motion; no render-space foot locking."
+              },
+              "receipt": {
+                "provider": "Modal",
+                "cpu": 1,
+                "memory_mib": 2048,
+                "physical_rollouts": 1,
+                "wall_seconds": 5.793371255000001,
+                "training_updates": 0
+              }
+            },
+            "candidate": {
+              "fall": true,
+              "seconds": 7.185557144986606,
+              "steps": 2,
+              "book_top": {
+                "instant_valid": false,
+                "top_book_load_n": {
+                  "left": 0.0,
+                  "right": 0.0
+                },
+                "feet_inside_top_book": false,
+                "tilt_deg": 30.019185717251553,
+                "scope": "Needs 0.4-second continuous dwell before success."
+              },
+              "metrics": {
+                "samples": 677,
+                "tilt_squared": 0.7223746422352915,
+                "slip_m": 0.08250104312886633,
+                "loaded_seconds": 11.487899267178307,
+                "nonfoot_terrain_contacts": 0,
+                "maximum_height_m": 0.0,
+                "yaw_accel_squared": 1407663.5830480014,
+                "torso_tilt_rms_deg": 1.871584950097649,
+                "yaw_acceleration_rms_rad_s2": 45.59897740191599,
+                "controller": "experimental-contact-constrained-inverse-dynamics",
+                "scope": "Measured physical contact velocities and torso motion; no render-space foot locking."
+              },
+              "receipt": {
+                "provider": "Modal",
+                "cpu": 1,
+                "memory_mib": 2048,
+                "physical_rollouts": 1,
+                "wall_seconds": 12.8923943,
+                "training_updates": 0
+              }
+            }
+          }
+        }
+      },
+      {
+        "id": "mochi-r10-bc0d6c78-r4",
+        "role": "critic",
+        "author": "mochi-r10-bc0d6c78-critic",
+        "audience": "mochi-r10-bc0d6c78-shared",
+        "at": "2026-11-19T00:52:26.031849+00:00",
+        "sha256": "800eab442a418e243e3889392867539da01f640b0248f36424c9d5559ec10763",
+        "ingestion_id": "6e24f74d-758a-4fdc-89d2-b549cc6fd554",
+        "write_to_ready_seconds": 8.211767097000006,
+        "payload": {
+          "record_id": "mochi-r10-bc0d6c78-r4",
+          "author": "mochi-r10-bc0d6c78-critic",
+          "occurred_at": "2026-11-19T00:52:26.031849+00:00",
+          "content": {
+            "kind": "qualified-conclusion",
+            "study": "mochi-richdesk-v10",
+            "evidence_record": "mochi-r10-bc0d6c78-r3",
+            "book_ascent_established": false,
+            "training_gate": "closed",
+            "conclusion": "A short engineering probe cannot certify the complete book ascent, descent or four-task sequence. Do not start training or label this a learned improvement.",
+            "evidence_sha256": "1cec7d0fd70b87dcb30474a9da83771b4f069093a97ead899bef9b86d617539f",
+            "supersedes_hypothesis": "mochi-r10-bc0d6c78-r1"
+          }
+        }
+      }
+    ],
+    "reads": [
+      {
+        "reader": "mochi-r10-bc0d6c78-researcher",
+        "reader_role": "researcher",
+        "author": "mochi-r10-bc0d6c78-experimenter",
+        "record_id": "mochi-r10-bc0d6c78-r0",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "3c9c059f63a601d10b85f25f12c5ff24fd97970e56bc848ee425c99ab33fd7cc",
+        "at": "2026-11-19T00:51:05.712887+00:00"
+      },
+      {
+        "reader": "mochi-r10-bc0d6c78-designer",
+        "reader_role": "designer",
+        "author": "mochi-r10-bc0d6c78-researcher",
+        "record_id": "mochi-r10-bc0d6c78-r1",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "0a15af6ac1aa0bf564535ae65472a2af3203665e6ce00c5cb4bbbb8d8df3a0ac",
+        "at": "2026-11-19T00:51:12.196563+00:00"
+      },
+      {
+        "reader": "mochi-r10-bc0d6c78-experimenter",
+        "reader_role": "experimenter",
+        "author": "mochi-r10-bc0d6c78-designer",
+        "record_id": "mochi-r10-bc0d6c78-r2",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "0650e6b3a17f056627be8e70d83ba4071945682c4db23cce0a9c8068198a0925",
+        "at": "2026-11-19T00:51:27.319792+00:00"
+      },
+      {
+        "reader": "mochi-r10-bc0d6c78-critic",
+        "reader_role": "critic",
+        "author": "mochi-r10-bc0d6c78-experimenter",
+        "record_id": "mochi-r10-bc0d6c78-r3",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "1dbd80cba053f3e441a5e4ecc525f34ee5b7a8b9120290e14d4467476668be0d",
+        "at": "2026-11-19T00:52:26.031767+00:00"
+      },
+      {
+        "reader": "mochi-r10-bc0d6c78-researcher",
+        "reader_role": "researcher",
+        "author": "mochi-r10-bc0d6c78-critic",
+        "record_id": "mochi-r10-bc0d6c78-r4",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "800eab442a418e243e3889392867539da01f640b0248f36424c9d5559ec10763",
+        "at": "2026-11-19T00:52:34.525128+00:00"
+      }
+    ],
+    "decisions": [
+      {
+        "role": "designer",
+        "question": "Choose one bounded controller experiment using the failure and retrieved mechanism. Neither candidate is trained. Both will be compared with the native controller on one engineering seed.",
+        "selected": "slow_swing",
+        "distribution": {
+          "slow_transfer": 0.2689414322376251,
+          "slow_swing": 0.7310585975646973
+        },
+        "input_record_ids": [
+          "mochi-r10-bc0d6c78-r0",
+          "mochi-r10-bc0d6c78-r1"
+        ],
+        "context_sha256": "9cbff2b3cfc8400d0986ef83e89a3f800e14f3dcd6666b97b83221cf19ad984b",
+        "at": "2026-11-19T00:51:14.687944+00:00"
+      }
+    ],
+    "calls": [
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-19T00:50:55.247022+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-19T00:50:55.298464+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-19T00:50:55.318414+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-19T00:50:55.336505+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "audiences",
+        "status": 201,
+        "at": "2026-11-19T00:50:55.382048+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "audiences",
+        "status": 201,
+        "at": "2026-11-19T00:50:55.408564+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-19T00:50:59.144504+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T00:50:59.158627+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T00:51:01.174572+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T00:51:03.189556+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T00:51:05.233460+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-19T00:51:05.712822+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-19T00:51:07.666164+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T00:51:07.677505+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T00:51:09.693566+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T00:51:11.733675+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-19T00:51:12.196488+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-19T00:51:14.758716+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T00:51:14.773884+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T00:51:16.789369+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T00:51:18.861373+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T00:51:20.876542+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T00:51:22.899349+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T00:51:24.915098+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T00:51:27.012142+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-19T00:51:27.319717+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-19T00:51:59.402423+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T00:51:59.450769+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T00:52:01.465913+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T00:52:03.482283+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T00:52:05.496899+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T00:52:07.512543+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T00:52:09.532278+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T00:52:11.573499+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T00:52:13.588096+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T00:52:15.643264+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T00:52:17.658709+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T00:52:19.695301+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T00:52:21.710402+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T00:52:23.724881+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T00:52:25.763841+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-19T00:52:26.031587+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-19T00:52:26.083505+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T00:52:26.103763+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T00:52:28.131894+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T00:52:30.178000+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T00:52:32.225946+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T00:52:34.243517+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-19T00:52:34.525058+00:00"
+      }
+    ],
+    "sources": [
+      {
+        "query": "humanoid robot stair climbing inverse dynamics support transfer touchdown contact foot trajectory center of pressure",
+        "request_id": "fb47574eead75cbdcc765fbb6cd30894",
+        "cost_dollars": {
+          "total": 0.007,
+          "search": {
+            "neural": 0.007
+          }
+        },
+        "sources": [
+          {
+            "url": "https://scaron.info/papers/journal/zhang-ijhr-2016.pdf",
+            "title": "Supervoxel Plane Segmentation and Multi-Contact Motion Generation for Humanoid Stair Climbing",
+            "excerpt": "6.1. Motion generation In our setup, the humanoid robot HRP-4 starts with both feet parallel in front of the staircase. The whole stair-climbing motion",
+            "retrieved_at": "2026-11-19T00:51:07.603175+00:00"
+          },
+          {
+            "url": "https://ieeexplore.ieee.org/document/9478184",
+            "title": "Multi-Contact Locomotion Planning With Bilateral Contact Forces Considering Kinematics and Statics During Contact Transition | IEEE Journals & Magazine | IEEE Xplore",
+            "excerpt": "feasible region by this assumption, which we define as bSCFR. This assumption enables us to project ... on the centroidal statics, where appropriate bilateral",
+            "retrieved_at": "2026-11-19T00:51:07.603196+00:00"
+          },
+          {
+            "url": "https://arxiv.org/html/1809.07073v7",
+            "title": "Stair Climbing Stabilization of the HRP-4 Humanoid Robot using Whole ...",
+            "excerpt": "### II-C Contact Wrench Distribution While stabilizers based on CoM admittance control [9, 11, 12, 23] take the net wrench as only input, those",
+            "retrieved_at": "2026-11-19T00:51:07.603222+00:00"
+          }
+        ],
+        "response_sha256": "e7c2f723304d0177a1ca0c3c36cfac21d85e847e52f57b9cd1d043d728be84d5",
+        "at": "2026-11-19T00:51:07.603293+00:00"
+      }
+    ],
+    "eligibility": {
+      "writers": 4,
+      "readers": 4,
+      "cross_agent_reads": 5,
+      "isolation_passed": false
+    }
+  }
+}

@@ -35,6 +35,13 @@ surface. The drawn route is never assigned to the physical robot root.
 ground forces, friction and centre-of-pressure bounds, joint-acceleration
 guards and actual actuator torque limits. MuJoCo determines contact and motion.
 
+Early attempts used the archived 105 mm absolute pelvis cutoff. The later
+terrain-v2 verifier allows intentional crouching down to 80 mm of pelvis
+clearance, while retaining the 30 degree tilt limit, desk bounds and invalid
+non-foot loaded terrain contact checks. Results under these verifier versions
+must not be pooled. No trained-checkpoint comparison has been run under either
+version of the new terrain study.
+
 Touchdown detection and loaded-foot measurement are distinct: a lightly
 touching foot may establish a contact before it carries 0.05 N. Final book-top
 success requires both feet to carry the declared load, remain inside the
@@ -86,3 +93,23 @@ Official API references checked November 18, 2026:
 [OSQP Python interface](https://osqp.org/docs/interfaces/python.html).
 
 These references support API use, not a measured robotics improvement.
+
+## Completed sponsor-connected feasibility probe
+
+[Run 44432056165](https://github.com/howdymary/mochi-demo/actions/runs/44432056165)
+completed using the original published V10 engineering revision. It executed
+one failure-driven Exa search, five verified cross-role past.dev recalls,
+one Tinker decision-inference call and two physical Modal rollouts. Four
+identities wrote and read memory. Private critic access was configured; a new
+isolation canary was not run in this small probe.
+
+The designer recalled a sourced hypothesis and selected `slow_swing`. The
+experimenter used that recalled proposal as actual Modal parameters. Both the
+native baseline and the candidate fell. Neither reached the upper book.
+The critic recalled the measured results and qualified the original hypothesis.
+This run completed **zero optimizer updates** and opened no held-out scenario.
+It does not show learned improvement, a completed climb or a service ablation.
+
+[Exact service and outcome receipts](../evidence/richdesk-v10/feasibility-services.json).
+The public [route drawing](../web/desk/richdesk/route-plan.png) and development
+viewer supplement, rather than replace, the numerical records.

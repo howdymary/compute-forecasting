@@ -1,0 +1,2218 @@
+{
+  "study": "mochi-richdesk-v10",
+  "scene": {
+    "version": "richdesk-v9",
+    "units": "metres",
+    "desk": [
+      1.2,
+      0.8
+    ],
+    "initial_pose": [
+      -0.375,
+      -0.225,
+      1.5707963267948966
+    ],
+    "clock_offset": [
+      0,
+      0,
+      0.024
+    ],
+    "globe_offset": [
+      0,
+      -0.37,
+      0
+    ],
+    "book_height": 0.008,
+    "book_collision_scope": "Fixed, nonsliding book terrain; visual meshes and collision envelopes share the same placements. No root motion is authored.",
+    "props": [
+      {
+        "name": "book-step-1",
+        "asset": "book",
+        "pos": [
+          -0.36,
+          0.02,
+          0
+        ],
+        "size": [
+          0.23,
+          0.3,
+          0.008
+        ],
+        "yaw": 0,
+        "color": "#334d56",
+        "shape": "box",
+        "climb": true,
+        "title": "FIELD NOTES"
+      },
+      {
+        "name": "book-step-2",
+        "asset": "book",
+        "pos": [
+          -0.36,
+          0.045,
+          0.008
+        ],
+        "size": [
+          0.22,
+          0.23,
+          0.008
+        ],
+        "yaw": 0,
+        "color": "#8f5248",
+        "shape": "box",
+        "climb": true,
+        "title": "ROBOT MOTION"
+      },
+      {
+        "name": "book-step-3",
+        "asset": "book",
+        "pos": [
+          -0.36,
+          0.07,
+          0.016
+        ],
+        "size": [
+          0.2,
+          0.18,
+          0.008
+        ],
+        "yaw": 0,
+        "color": "#777c55",
+        "shape": "box",
+        "climb": true,
+        "title": "PRACTICAL MECHANICS"
+      },
+      {
+        "name": "printer",
+        "asset": "printer",
+        "pos": [
+          0.435,
+          0.29,
+          0
+        ],
+        "size": [
+          0.28,
+          0.18,
+          0.17
+        ],
+        "yaw": 0,
+        "shape": "box"
+      },
+      {
+        "name": "coffee-mug",
+        "asset": "mug",
+        "pos": [
+          -0.06,
+          -0.13,
+          0
+        ],
+        "size": [
+          0.105,
+          0.085,
+          0.095
+        ],
+        "yaw": -0.3,
+        "shape": "cylinder"
+      },
+      {
+        "name": "spiral-notebook",
+        "asset": "notebook",
+        "pos": [
+          0.055,
+          -0.265,
+          0
+        ],
+        "size": [
+          0.2,
+          0.145,
+          0.007
+        ],
+        "yaw": -0.12,
+        "shape": "box"
+      },
+      {
+        "name": "pencil-1",
+        "asset": "pencil",
+        "pos": [
+          -0.214,
+          -0.239,
+          0
+        ],
+        "size": [
+          0.17,
+          0.007,
+          0.007
+        ],
+        "yaw": 0.22,
+        "shape": "capsule"
+      },
+      {
+        "name": "pencil-2",
+        "asset": "pencil",
+        "pos": [
+          0.1,
+          -0.235,
+          0.007
+        ],
+        "size": [
+          0.16,
+          0.0065,
+          0.0065
+        ],
+        "yaw": -0.46,
+        "shape": "capsule"
+      },
+      {
+        "name": "pencil-3",
+        "asset": "pencil",
+        "pos": [
+          -0.267,
+          0.293,
+          0
+        ],
+        "size": [
+          0.15,
+          0.007,
+          0.007
+        ],
+        "yaw": 0.33,
+        "shape": "capsule"
+      },
+      {
+        "name": "pen-1",
+        "asset": "pen",
+        "pos": [
+          -0.115,
+          -0.265,
+          0
+        ],
+        "size": [
+          0.145,
+          0.009,
+          0.009
+        ],
+        "yaw": -0.62,
+        "shape": "capsule"
+      },
+      {
+        "name": "pen-2",
+        "asset": "pen",
+        "pos": [
+          0.245,
+          -0.276,
+          0
+        ],
+        "size": [
+          0.14,
+          0.009,
+          0.009
+        ],
+        "yaw": 0.15,
+        "shape": "capsule"
+      },
+      {
+        "name": "stapler",
+        "asset": "stapler",
+        "pos": [
+          0.213,
+          0.327,
+          0
+        ],
+        "size": [
+          0.11,
+          0.035,
+          0.04
+        ],
+        "yaw": 0.12,
+        "shape": "box"
+      },
+      {
+        "name": "reading-glasses",
+        "asset": "glasses",
+        "pos": [
+          0.235,
+          -0.325,
+          0
+        ],
+        "size": [
+          0.14,
+          0.044,
+          0.016
+        ],
+        "yaw": -0.1,
+        "shape": "box"
+      },
+      {
+        "name": "reference-book",
+        "asset": "book",
+        "pos": [
+          -0.43,
+          0.285,
+          0
+        ],
+        "size": [
+          0.19,
+          0.14,
+          0.015
+        ],
+        "yaw": -0.08,
+        "color": "#545755",
+        "shape": "box",
+        "title": "WORKSHOP HANDBOOK"
+      },
+      {
+        "name": "loose-page-1",
+        "asset": "paper",
+        "pos": [
+          0.355,
+          -0.315,
+          0
+        ],
+        "size": [
+          0.15,
+          0.105,
+          0.0002
+        ],
+        "yaw": 0.12,
+        "shape": "box"
+      },
+      {
+        "name": "loose-page-2",
+        "asset": "paper",
+        "pos": [
+          0.365,
+          -0.298,
+          0.0002
+        ],
+        "size": [
+          0.15,
+          0.105,
+          0.0002
+        ],
+        "yaw": 0.07,
+        "shape": "box"
+      },
+      {
+        "name": "sticky-notes",
+        "asset": "sticky",
+        "pos": [
+          0.236,
+          0.015,
+          0
+        ],
+        "size": [
+          0.044,
+          0.044,
+          0.0024
+        ],
+        "yaw": 0.08,
+        "shape": "box"
+      },
+      {
+        "name": "printer-output-tray",
+        "asset": "tray",
+        "pos": [
+          0.435,
+          0.185,
+          0.048
+        ],
+        "size": [
+          0.19,
+          0.065,
+          0.005
+        ],
+        "yaw": 0,
+        "shape": "box"
+      },
+      {
+        "name": "printer-printout",
+        "asset": "paper",
+        "pos": [
+          0.435,
+          0.181,
+          0.054
+        ],
+        "size": [
+          0.17,
+          0.085,
+          0.0002
+        ],
+        "yaw": 0.03,
+        "shape": "box"
+      }
+    ],
+    "route": [
+      {
+        "name": "climb-to-alarm",
+        "goal": [
+          -0.375,
+          0.025,
+          1.5707963267948966
+        ],
+        "surface_height": 0.024
+      },
+      {
+        "name": "descend-books",
+        "goal": [
+          -0.375,
+          -0.19,
+          1.5707963267948966
+        ],
+        "surface_height": 0
+      },
+      {
+        "name": "clear-books",
+        "goal": [
+          -0.19,
+          -0.17,
+          0
+        ],
+        "surface_height": 0
+      },
+      {
+        "name": "drawer",
+        "goal": [
+          -0.13,
+          0.02,
+          1.5707963267948966
+        ],
+        "surface_height": 0
+      },
+      {
+        "name": "laptop-corridor",
+        "goal": [
+          0.3,
+          0.02,
+          0
+        ],
+        "surface_height": 0
+      },
+      {
+        "name": "laptop",
+        "goal": [
+          0.3,
+          0.16,
+          1.5707963267948966
+        ],
+        "surface_height": 0
+      },
+      {
+        "name": "globe-corridor",
+        "goal": [
+          0.35,
+          0.02,
+          1.5707963267948966
+        ],
+        "surface_height": 0
+      },
+      {
+        "name": "globe",
+        "goal": [
+          0.35,
+          -0.145,
+          0
+        ],
+        "surface_height": 0
+      }
+    ]
+  },
+  "route": {
+    "study": "mochi-richdesk-v10",
+    "status": "geometric-plan-only",
+    "scene": {
+      "version": "richdesk-v9",
+      "units": "metres",
+      "desk": [
+        1.2,
+        0.8
+      ],
+      "initial_pose": [
+        -0.375,
+        -0.225,
+        1.5707963267948966
+      ],
+      "clock_offset": [
+        0,
+        0,
+        0.024
+      ],
+      "globe_offset": [
+        0,
+        -0.37,
+        0
+      ],
+      "book_height": 0.008,
+      "book_collision_scope": "Fixed, nonsliding book terrain; visual meshes and collision envelopes share the same placements. No root motion is authored.",
+      "props": [
+        {
+          "name": "book-step-1",
+          "asset": "book",
+          "pos": [
+            -0.36,
+            0.02,
+            0
+          ],
+          "size": [
+            0.23,
+            0.3,
+            0.008
+          ],
+          "yaw": 0,
+          "color": "#334d56",
+          "shape": "box",
+          "climb": true,
+          "title": "FIELD NOTES"
+        },
+        {
+          "name": "book-step-2",
+          "asset": "book",
+          "pos": [
+            -0.36,
+            0.045,
+            0.008
+          ],
+          "size": [
+            0.22,
+            0.23,
+            0.008
+          ],
+          "yaw": 0,
+          "color": "#8f5248",
+          "shape": "box",
+          "climb": true,
+          "title": "ROBOT MOTION"
+        },
+        {
+          "name": "book-step-3",
+          "asset": "book",
+          "pos": [
+            -0.36,
+            0.07,
+            0.016
+          ],
+          "size": [
+            0.2,
+            0.18,
+            0.008
+          ],
+          "yaw": 0,
+          "color": "#777c55",
+          "shape": "box",
+          "climb": true,
+          "title": "PRACTICAL MECHANICS"
+        },
+        {
+          "name": "printer",
+          "asset": "printer",
+          "pos": [
+            0.435,
+            0.29,
+            0
+          ],
+          "size": [
+            0.28,
+            0.18,
+            0.17
+          ],
+          "yaw": 0,
+          "shape": "box"
+        },
+        {
+          "name": "coffee-mug",
+          "asset": "mug",
+          "pos": [
+            -0.06,
+            -0.13,
+            0
+          ],
+          "size": [
+            0.105,
+            0.085,
+            0.095
+          ],
+          "yaw": -0.3,
+          "shape": "cylinder"
+        },
+        {
+          "name": "spiral-notebook",
+          "asset": "notebook",
+          "pos": [
+            0.055,
+            -0.265,
+            0
+          ],
+          "size": [
+            0.2,
+            0.145,
+            0.007
+          ],
+          "yaw": -0.12,
+          "shape": "box"
+        },
+        {
+          "name": "pencil-1",
+          "asset": "pencil",
+          "pos": [
+            -0.214,
+            -0.239,
+            0
+          ],
+          "size": [
+            0.17,
+            0.007,
+            0.007
+          ],
+          "yaw": 0.22,
+          "shape": "capsule"
+        },
+        {
+          "name": "pencil-2",
+          "asset": "pencil",
+          "pos": [
+            0.1,
+            -0.235,
+            0.007
+          ],
+          "size": [
+            0.16,
+            0.0065,
+            0.0065
+          ],
+          "yaw": -0.46,
+          "shape": "capsule"
+        },
+        {
+          "name": "pencil-3",
+          "asset": "pencil",
+          "pos": [
+            -0.267,
+            0.293,
+            0
+          ],
+          "size": [
+            0.15,
+            0.007,
+            0.007
+          ],
+          "yaw": 0.33,
+          "shape": "capsule"
+        },
+        {
+          "name": "pen-1",
+          "asset": "pen",
+          "pos": [
+            -0.115,
+            -0.265,
+            0
+          ],
+          "size": [
+            0.145,
+            0.009,
+            0.009
+          ],
+          "yaw": -0.62,
+          "shape": "capsule"
+        },
+        {
+          "name": "pen-2",
+          "asset": "pen",
+          "pos": [
+            0.245,
+            -0.276,
+            0
+          ],
+          "size": [
+            0.14,
+            0.009,
+            0.009
+          ],
+          "yaw": 0.15,
+          "shape": "capsule"
+        },
+        {
+          "name": "stapler",
+          "asset": "stapler",
+          "pos": [
+            0.213,
+            0.327,
+            0
+          ],
+          "size": [
+            0.11,
+            0.035,
+            0.04
+          ],
+          "yaw": 0.12,
+          "shape": "box"
+        },
+        {
+          "name": "reading-glasses",
+          "asset": "glasses",
+          "pos": [
+            0.235,
+            -0.325,
+            0
+          ],
+          "size": [
+            0.14,
+            0.044,
+            0.016
+          ],
+          "yaw": -0.1,
+          "shape": "box"
+        },
+        {
+          "name": "reference-book",
+          "asset": "book",
+          "pos": [
+            -0.43,
+            0.285,
+            0
+          ],
+          "size": [
+            0.19,
+            0.14,
+            0.015
+          ],
+          "yaw": -0.08,
+          "color": "#545755",
+          "shape": "box",
+          "title": "WORKSHOP HANDBOOK"
+        },
+        {
+          "name": "loose-page-1",
+          "asset": "paper",
+          "pos": [
+            0.355,
+            -0.315,
+            0
+          ],
+          "size": [
+            0.15,
+            0.105,
+            0.0002
+          ],
+          "yaw": 0.12,
+          "shape": "box"
+        },
+        {
+          "name": "loose-page-2",
+          "asset": "paper",
+          "pos": [
+            0.365,
+            -0.298,
+            0.0002
+          ],
+          "size": [
+            0.15,
+            0.105,
+            0.0002
+          ],
+          "yaw": 0.07,
+          "shape": "box"
+        },
+        {
+          "name": "sticky-notes",
+          "asset": "sticky",
+          "pos": [
+            0.236,
+            0.015,
+            0
+          ],
+          "size": [
+            0.044,
+            0.044,
+            0.0024
+          ],
+          "yaw": 0.08,
+          "shape": "box"
+        },
+        {
+          "name": "printer-output-tray",
+          "asset": "tray",
+          "pos": [
+            0.435,
+            0.185,
+            0.048
+          ],
+          "size": [
+            0.19,
+            0.065,
+            0.005
+          ],
+          "yaw": 0,
+          "shape": "box"
+        },
+        {
+          "name": "printer-printout",
+          "asset": "paper",
+          "pos": [
+            0.435,
+            0.181,
+            0.054
+          ],
+          "size": [
+            0.17,
+            0.085,
+            0.0002
+          ],
+          "yaw": 0.03,
+          "shape": "box"
+        }
+      ],
+      "route": [
+        {
+          "name": "climb-to-alarm",
+          "goal": [
+            -0.375,
+            0.025,
+            1.5707963267948966
+          ],
+          "surface_height": 0.024
+        },
+        {
+          "name": "descend-books",
+          "goal": [
+            -0.375,
+            -0.19,
+            1.5707963267948966
+          ],
+          "surface_height": 0
+        },
+        {
+          "name": "clear-books",
+          "goal": [
+            -0.19,
+            -0.17,
+            0
+          ],
+          "surface_height": 0
+        },
+        {
+          "name": "drawer",
+          "goal": [
+            -0.13,
+            0.02,
+            1.5707963267948966
+          ],
+          "surface_height": 0
+        },
+        {
+          "name": "laptop-corridor",
+          "goal": [
+            0.3,
+            0.02,
+            0
+          ],
+          "surface_height": 0
+        },
+        {
+          "name": "laptop",
+          "goal": [
+            0.3,
+            0.16,
+            1.5707963267948966
+          ],
+          "surface_height": 0
+        },
+        {
+          "name": "globe-corridor",
+          "goal": [
+            0.35,
+            0.02,
+            1.5707963267948966
+          ],
+          "surface_height": 0
+        },
+        {
+          "name": "globe",
+          "goal": [
+            0.35,
+            -0.145,
+            0
+          ],
+          "surface_height": 0
+        }
+      ]
+    },
+    "stations": {
+      "alarm": [
+        -0.375,
+        0.025,
+        1.5707963267948966
+      ],
+      "drawer": [
+        -0.13,
+        0.02,
+        1.5707963267948966
+      ],
+      "laptop": [
+        0.3,
+        0.16,
+        1.5707963267948966
+      ],
+      "globe": [
+        0.35,
+        -0.145,
+        0.0
+      ]
+    },
+    "selected_candidate": "front-corridor",
+    "candidates": [
+      {
+        "id": "short-direct",
+        "points": [
+          [
+            -0.375,
+            -0.225,
+            1.5707963267948966
+          ],
+          [
+            -0.375,
+            0.025,
+            1.5707963267948966,
+            true
+          ],
+          [
+            -0.375,
+            -0.18,
+            1.5707963267948966
+          ],
+          [
+            -0.19,
+            -0.18,
+            0
+          ],
+          [
+            -0.19,
+            -0.03,
+            1.5707963267948966
+          ],
+          [
+            -0.13,
+            0.02,
+            1.5707963267948966,
+            true
+          ],
+          [
+            0.3,
+            0.16,
+            1.5707963267948966,
+            true
+          ],
+          [
+            0.35,
+            -0.145,
+            0.0,
+            true
+          ]
+        ],
+        "sampled_collision_free": false,
+        "distance_m": 1.6293904481533787,
+        "turning_rad": 14.934789501133428,
+        "nominal_walking_seconds": 98.36403903976499,
+        "collisions": [
+          {
+            "at": [
+              -0.12054945054945054,
+              0.023076923076923078
+            ],
+            "kind": "translation",
+            "free": false,
+            "collisions": [
+              "drawer-contact"
+            ]
+          },
+          {
+            "at": [
+              -0.11582417582417584,
+              0.024615384615384615
+            ],
+            "kind": "translation",
+            "free": false,
+            "collisions": [
+              "drawer-contact"
+            ]
+          },
+          {
+            "at": [
+              -0.11109890109890111,
+              0.026153846153846156
+            ],
+            "kind": "translation",
+            "free": false,
+            "collisions": [
+              "drawer-contact",
+              "drawer-tray"
+            ]
+          },
+          {
+            "at": [
+              -0.10637362637362638,
+              0.027692307692307697
+            ],
+            "kind": "translation",
+            "free": false,
+            "collisions": [
+              "drawer-contact",
+              "drawer-tray"
+            ]
+          },
+          {
+            "at": [
+              -0.10164835164835165,
+              0.02923076923076923
+            ],
+            "kind": "translation",
+            "free": false,
+            "collisions": [
+              "drawer-contact",
+              "drawer-tray"
+            ]
+          },
+          {
+            "at": [
+              -0.09692307692307693,
+              0.03076923076923077
+            ],
+            "kind": "translation",
+            "free": false,
+            "collisions": [
+              "drawer-contact",
+              "drawer-tray"
+            ]
+          },
+          {
+            "at": [
+              -0.0921978021978022,
+              0.03230769230769231
+            ],
+            "kind": "translation",
+            "free": false,
+            "collisions": [
+              "drawer-contact",
+              "drawer-tray"
+            ]
+          },
+          {
+            "at": [
+              -0.08747252747252747,
+              0.033846153846153845
+            ],
+            "kind": "translation",
+            "free": false,
+            "collisions": [
+              "drawer-contact",
+              "drawer-tray"
+            ]
+          },
+          {
+            "at": [
+              -0.08274725274725275,
+              0.03538461538461539
+            ],
+            "kind": "translation",
+            "free": false,
+            "collisions": [
+              "drawer-contact",
+              "drawer-tray"
+            ]
+          },
+          {
+            "at": [
+              -0.07802197802197802,
+              0.036923076923076927
+            ],
+            "kind": "translation",
+            "free": false,
+            "collisions": [
+              "drawer-contact",
+              "drawer-tray"
+            ]
+          },
+          {
+            "at": [
+              -0.0732967032967033,
+              0.038461538461538464
+            ],
+            "kind": "translation",
+            "free": false,
+            "collisions": [
+              "drawer-contact",
+              "drawer-tray"
+            ]
+          },
+          {
+            "at": [
+              -0.06857142857142856,
+              0.04000000000000001
+            ],
+            "kind": "translation",
+            "free": false,
+            "collisions": [
+              "drawer-contact",
+              "drawer-tray"
+            ]
+          },
+          {
+            "at": [
+              -0.06384615384615384,
+              0.04153846153846154
+            ],
+            "kind": "translation",
+            "free": false,
+            "collisions": [
+              "drawer-contact",
+              "drawer-tray"
+            ]
+          },
+          {
+            "at": [
+              -0.05912087912087911,
+              0.04307692307692308
+            ],
+            "kind": "translation",
+            "free": false,
+            "collisions": [
+              "drawer-contact",
+              "drawer-tray"
+            ]
+          },
+          {
+            "at": [
+              -0.05439560439560439,
+              0.04461538461538462
+            ],
+            "kind": "translation",
+            "free": false,
+            "collisions": [
+              "drawer-contact",
+              "drawer-tray"
+            ]
+          },
+          {
+            "at": [
+              -0.04967032967032967,
+              0.046153846153846156
+            ],
+            "kind": "translation",
+            "free": false,
+            "collisions": [
+              "drawer-contact",
+              "drawer-tray"
+            ]
+          },
+          {
+            "at": [
+              -0.04494505494505494,
+              0.0476923076923077
+            ],
+            "kind": "translation",
+            "free": false,
+            "collisions": [
+              "drawer-contact",
+              "drawer-tray"
+            ]
+          },
+          {
+            "at": [
+              -0.04021978021978022,
+              0.04923076923076923
+            ],
+            "kind": "translation",
+            "free": false,
+            "collisions": [
+              "drawer-contact",
+              "drawer-tray"
+            ]
+          },
+          {
+            "at": [
+              -0.0354945054945055,
+              0.050769230769230775
+            ],
+            "kind": "translation",
+            "free": false,
+            "collisions": [
+              "drawer-contact",
+              "drawer-tray"
+            ]
+          },
+          {
+            "at": [
+              0.007032967032967033,
+              0.06461538461538462
+            ],
+            "kind": "translation",
+            "free": false,
+            "collisions": [
+              "laptop-base-contact"
+            ]
+          },
+          {
+            "at": [
+              0.011758241758241778,
+              0.06615384615384616
+            ],
+            "kind": "translation",
+            "free": false,
+            "collisions": [
+              "laptop-base-contact"
+            ]
+          },
+          {
+            "at": [
+              0.01648351648351648,
+              0.06769230769230769
+            ],
+            "kind": "translation",
+            "free": false,
+            "collisions": [
+              "laptop-base-contact"
+            ]
+          },
+          {
+            "at": [
+              0.02120879120879121,
+              0.06923076923076923
+            ],
+            "kind": "translation",
+            "free": false,
+            "collisions": [
+              "laptop-base-contact"
+            ]
+          },
+          {
+            "at": [
+              0.025934065934065956,
+              0.07076923076923078
+            ],
+            "kind": "translation",
+            "free": false,
+            "collisions": [
+              "laptop-base-contact"
+            ]
+          },
+          {
+            "at": [
+              0.03065934065934066,
+              0.07230769230769231
+            ],
+            "kind": "translation",
+            "free": false,
+            "collisions": [
+              "laptop-base-contact"
+            ]
+          },
+          {
+            "at": [
+              0.03538461538461539,
+              0.07384615384615385
+            ],
+            "kind": "translation",
+            "free": false,
+            "collisions": [
+              "laptop-base-contact"
+            ]
+          },
+          {
+            "at": [
+              0.04010989010989012,
+              0.0753846153846154
+            ],
+            "kind": "translation",
+            "free": false,
+            "collisions": [
+              "laptop-base-contact"
+            ]
+          },
+          {
+            "at": [
+              0.04483516483516485,
+              0.07692307692307693
+            ],
+            "kind": "translation",
+            "free": false,
+            "collisions": [
+              "laptop-base-contact"
+            ]
+          },
+          {
+            "at": [
+              0.04956043956043957,
+              0.07846153846153847
+            ],
+            "kind": "translation",
+            "free": false,
+            "collisions": [
+              "laptop-base-contact"
+            ]
+          },
+          {
+            "at": [
+              0.0542857142857143,
+              0.08
+            ],
+            "kind": "translation",
+            "free": false,
+            "collisions": [
+              "laptop-base-contact"
+            ]
+          }
+        ],
+        "collision_samples": 89,
+        "estimated_motion_cost": 110.36403903976499,
+        "time_caveat": "Command-speed estimate plus declared 12-second terrain overhead, excludes tasks and recovery; not measured."
+      },
+      {
+        "id": "front-corridor",
+        "points": [
+          [
+            -0.375,
+            -0.225,
+            1.5707963267948966
+          ],
+          [
+            -0.375,
+            0.025,
+            1.5707963267948966,
+            true
+          ],
+          [
+            -0.375,
+            -0.18,
+            1.5707963267948966
+          ],
+          [
+            -0.19,
+            -0.18,
+            0
+          ],
+          [
+            -0.19,
+            -0.03,
+            1.5707963267948966
+          ],
+          [
+            -0.13,
+            0.02,
+            1.5707963267948966,
+            true
+          ],
+          [
+            0.08,
+            0.02,
+            0
+          ],
+          [
+            0.08,
+            -0.055,
+            1.5707963267948966
+          ],
+          [
+            0.3,
+            -0.055,
+            0
+          ],
+          [
+            0.3,
+            0.02,
+            1.5707963267948966
+          ],
+          [
+            0.3,
+            0.16,
+            1.5707963267948966,
+            true
+          ],
+          [
+            0.3,
+            0.02,
+            1.5707963267948966,
+            false,
+            1.5707963267948966
+          ],
+          [
+            0.35,
+            -0.145,
+            0
+          ],
+          [
+            0.35,
+            -0.145,
+            0.0,
+            true
+          ]
+        ],
+        "sampled_collision_free": true,
+        "distance_m": 1.9005118932547331,
+        "turning_rad": 18.442406565717874,
+        "nominal_walking_seconds": 117.0036014317846,
+        "collisions": [],
+        "collision_samples": 0,
+        "estimated_motion_cost": 129.0036014317846,
+        "time_caveat": "Command-speed estimate plus declared 12-second terrain overhead, excludes tasks and recovery; not measured."
+      },
+      {
+        "id": "wide-corridor",
+        "points": [
+          [
+            -0.375,
+            -0.225,
+            1.5707963267948966
+          ],
+          [
+            -0.375,
+            0.025,
+            1.5707963267948966,
+            true
+          ],
+          [
+            -0.375,
+            -0.18,
+            1.5707963267948966
+          ],
+          [
+            -0.19,
+            -0.18,
+            0
+          ],
+          [
+            -0.19,
+            -0.03,
+            1.5707963267948966
+          ],
+          [
+            -0.13,
+            0.02,
+            1.5707963267948966,
+            true
+          ],
+          [
+            0.08,
+            0.02,
+            0
+          ],
+          [
+            0.08,
+            -0.085,
+            1.5707963267948966
+          ],
+          [
+            0.325,
+            -0.085,
+            0
+          ],
+          [
+            0.325,
+            0.1,
+            1.5707963267948966
+          ],
+          [
+            0.3,
+            0.16,
+            1.5707963267948966,
+            true
+          ],
+          [
+            0.3,
+            0.02,
+            1.5707963267948966,
+            false,
+            1.5707963267948966
+          ],
+          [
+            0.325,
+            -0.085,
+            1.5707963267948966
+          ],
+          [
+            0.35,
+            -0.145,
+            0.0,
+            true
+          ]
+        ],
+        "sampled_collision_free": true,
+        "distance_m": 1.991037662483681,
+        "turning_rad": 19.352971573601963,
+        "nominal_walking_seconds": 122.64810999624048,
+        "collisions": [],
+        "collision_samples": 0,
+        "estimated_motion_cost": 134.64810999624046,
+        "time_caveat": "Command-speed estimate plus declared 12-second terrain overhead, excludes tasks and recovery; not measured."
+      }
+    ],
+    "footsteps": {
+      "ascent": [
+        {
+          "side": "left",
+          "position": [
+            -0.395,
+            -0.19,
+            0.0
+          ],
+          "flat_support": true,
+          "orientation_rad": 1.5707963267948966,
+          "status": "planned-not-executed"
+        },
+        {
+          "side": "right",
+          "position": [
+            -0.355,
+            -0.19,
+            0.0
+          ],
+          "flat_support": true,
+          "orientation_rad": 1.5707963267948966,
+          "status": "planned-not-executed"
+        },
+        {
+          "side": "left",
+          "position": [
+            -0.395,
+            -0.155,
+            0.0
+          ],
+          "flat_support": true,
+          "orientation_rad": 1.5707963267948966,
+          "status": "planned-not-executed"
+        },
+        {
+          "side": "right",
+          "position": [
+            -0.355,
+            -0.155,
+            0.0
+          ],
+          "flat_support": true,
+          "orientation_rad": 1.5707963267948966,
+          "status": "planned-not-executed"
+        },
+        {
+          "side": "left",
+          "position": [
+            -0.395,
+            -0.108,
+            0.008
+          ],
+          "flat_support": true,
+          "orientation_rad": 1.5707963267948966,
+          "status": "planned-not-executed"
+        },
+        {
+          "side": "right",
+          "position": [
+            -0.355,
+            -0.108,
+            0.008
+          ],
+          "flat_support": true,
+          "orientation_rad": 1.5707963267948966,
+          "status": "planned-not-executed"
+        },
+        {
+          "side": "left",
+          "position": [
+            -0.395,
+            -0.09,
+            0.008
+          ],
+          "flat_support": true,
+          "orientation_rad": 1.5707963267948966,
+          "status": "planned-not-executed"
+        },
+        {
+          "side": "right",
+          "position": [
+            -0.355,
+            -0.09,
+            0.008
+          ],
+          "flat_support": true,
+          "orientation_rad": 1.5707963267948966,
+          "status": "planned-not-executed"
+        },
+        {
+          "side": "left",
+          "position": [
+            -0.395,
+            -0.048,
+            0.016
+          ],
+          "flat_support": true,
+          "orientation_rad": 1.5707963267948966,
+          "status": "planned-not-executed"
+        },
+        {
+          "side": "right",
+          "position": [
+            -0.355,
+            -0.048,
+            0.016
+          ],
+          "flat_support": true,
+          "orientation_rad": 1.5707963267948966,
+          "status": "planned-not-executed"
+        },
+        {
+          "side": "left",
+          "position": [
+            -0.395,
+            0.0,
+            0.024
+          ],
+          "flat_support": true,
+          "orientation_rad": 1.5707963267948966,
+          "status": "planned-not-executed"
+        },
+        {
+          "side": "right",
+          "position": [
+            -0.355,
+            0.0,
+            0.024
+          ],
+          "flat_support": true,
+          "orientation_rad": 1.5707963267948966,
+          "status": "planned-not-executed"
+        },
+        {
+          "side": "left",
+          "position": [
+            -0.395,
+            0.025,
+            0.024
+          ],
+          "flat_support": true,
+          "orientation_rad": 1.5707963267948966,
+          "status": "planned-not-executed"
+        },
+        {
+          "side": "right",
+          "position": [
+            -0.355,
+            0.025,
+            0.024
+          ],
+          "flat_support": true,
+          "orientation_rad": 1.5707963267948966,
+          "status": "planned-not-executed"
+        }
+      ],
+      "descent": [
+        {
+          "side": "left",
+          "position": [
+            -0.395,
+            0.025,
+            0.024
+          ],
+          "flat_support": true,
+          "orientation_rad": 1.5707963267948966,
+          "status": "planned-not-executed"
+        },
+        {
+          "side": "right",
+          "position": [
+            -0.355,
+            0.025,
+            0.024
+          ],
+          "flat_support": true,
+          "orientation_rad": 1.5707963267948966,
+          "status": "planned-not-executed"
+        },
+        {
+          "side": "left",
+          "position": [
+            -0.395,
+            0.0,
+            0.024
+          ],
+          "flat_support": true,
+          "orientation_rad": 1.5707963267948966,
+          "status": "planned-not-executed"
+        },
+        {
+          "side": "right",
+          "position": [
+            -0.355,
+            0.0,
+            0.024
+          ],
+          "flat_support": true,
+          "orientation_rad": 1.5707963267948966,
+          "status": "planned-not-executed"
+        },
+        {
+          "side": "left",
+          "position": [
+            -0.395,
+            -0.048,
+            0.016
+          ],
+          "flat_support": true,
+          "orientation_rad": 1.5707963267948966,
+          "status": "planned-not-executed"
+        },
+        {
+          "side": "right",
+          "position": [
+            -0.355,
+            -0.048,
+            0.016
+          ],
+          "flat_support": true,
+          "orientation_rad": 1.5707963267948966,
+          "status": "planned-not-executed"
+        },
+        {
+          "side": "left",
+          "position": [
+            -0.395,
+            -0.09,
+            0.008
+          ],
+          "flat_support": true,
+          "orientation_rad": 1.5707963267948966,
+          "status": "planned-not-executed"
+        },
+        {
+          "side": "right",
+          "position": [
+            -0.355,
+            -0.09,
+            0.008
+          ],
+          "flat_support": true,
+          "orientation_rad": 1.5707963267948966,
+          "status": "planned-not-executed"
+        },
+        {
+          "side": "left",
+          "position": [
+            -0.395,
+            -0.108,
+            0.008
+          ],
+          "flat_support": true,
+          "orientation_rad": 1.5707963267948966,
+          "status": "planned-not-executed"
+        },
+        {
+          "side": "right",
+          "position": [
+            -0.355,
+            -0.108,
+            0.008
+          ],
+          "flat_support": true,
+          "orientation_rad": 1.5707963267948966,
+          "status": "planned-not-executed"
+        },
+        {
+          "side": "left",
+          "position": [
+            -0.395,
+            -0.155,
+            0.0
+          ],
+          "flat_support": true,
+          "orientation_rad": 1.5707963267948966,
+          "status": "planned-not-executed"
+        },
+        {
+          "side": "right",
+          "position": [
+            -0.355,
+            -0.155,
+            0.0
+          ],
+          "flat_support": true,
+          "orientation_rad": 1.5707963267948966,
+          "status": "planned-not-executed"
+        },
+        {
+          "side": "left",
+          "position": [
+            -0.395,
+            -0.19,
+            0.0
+          ],
+          "flat_support": true,
+          "orientation_rad": 1.5707963267948966,
+          "status": "planned-not-executed"
+        },
+        {
+          "side": "right",
+          "position": [
+            -0.355,
+            -0.19,
+            0.0
+          ],
+          "flat_support": true,
+          "orientation_rad": 1.5707963267948966,
+          "status": "planned-not-executed"
+        }
+      ]
+    },
+    "geometry_queries": 939,
+    "clearance_m": 0.002,
+    "global_optimality_claim": false,
+    "scope": "Detached rest-pose collision sampling. Swing envelopes, dynamic balance, approach and recovery must still pass real physics.",
+    "training_gate": "No Tinker campaign before complete physical route feasibility.",
+    "obstacles": [
+      {
+        "name": "clock-case",
+        "lo": [
+          -0.39749999999999996,
+          0.08499999999999999,
+          0.024
+        ],
+        "hi": [
+          -0.3225,
+          0.135,
+          0.14
+        ]
+      },
+      {
+        "name": "alarm-contact",
+        "lo": [
+          -0.3475,
+          0.09100000000000001,
+          0.14600000000000002
+        ],
+        "hi": [
+          -0.32249999999999995,
+          0.109,
+          0.15000000000000002
+        ]
+      },
+      {
+        "name": "cabinet-left",
+        "lo": [
+          -0.154,
+          0.105,
+          0.0
+        ],
+        "hi": [
+          -0.15,
+          0.195,
+          0.145
+        ]
+      },
+      {
+        "name": "cabinet-right",
+        "lo": [
+          -0.05000000000000001,
+          0.105,
+          0.0
+        ],
+        "hi": [
+          -0.046000000000000006,
+          0.195,
+          0.145
+        ]
+      },
+      {
+        "name": "cabinet-top",
+        "lo": [
+          -0.154,
+          0.105,
+          0.145
+        ],
+        "hi": [
+          -0.046000000000000006,
+          0.195,
+          0.149
+        ]
+      },
+      {
+        "name": "cabinet-back",
+        "lo": [
+          -0.154,
+          0.194,
+          0.0
+        ],
+        "hi": [
+          -0.046000000000000006,
+          0.198,
+          0.145
+        ]
+      },
+      {
+        "name": "cabinet-bottom",
+        "lo": [
+          -0.154,
+          0.105,
+          0.0
+        ],
+        "hi": [
+          -0.046000000000000006,
+          0.195,
+          0.004
+        ]
+      },
+      {
+        "name": "drawer-contact",
+        "lo": [
+          -0.14750000000000002,
+          0.06901676530032819,
+          0.0985
+        ],
+        "hi": [
+          -0.052500000000000005,
+          0.07401676530032819,
+          0.1415
+        ]
+      },
+      {
+        "name": "drawer-tray",
+        "lo": [
+          -0.14550000000000002,
+          0.07201676530032819,
+          0.09799999999999999
+        ],
+        "hi": [
+          -0.05450000000000001,
+          0.1370167653003282,
+          0.09999999999999999
+        ]
+      },
+      {
+        "name": "laptop-base-contact",
+        "lo": [
+          0.015000000000000013,
+          0.085,
+          0.0
+        ],
+        "hi": [
+          0.265,
+          0.255,
+          0.014
+        ]
+      },
+      {
+        "name": "laptop-contact",
+        "lo": [
+          0.015000000000000013,
+          0.19898560716379793,
+          0.017410607492273855
+        ],
+        "hi": [
+          0.265,
+          0.25232614250508156,
+          0.16213835701122095
+        ]
+      },
+      {
+        "name": null,
+        "lo": [
+          0.431,
+          -0.189,
+          0.0
+        ],
+        "hi": [
+          0.509,
+          -0.11099999999999999,
+          0.012
+        ]
+      },
+      {
+        "name": null,
+        "lo": [
+          0.46599999999999997,
+          -0.154,
+          0.011
+        ],
+        "hi": [
+          0.474,
+          -0.146,
+          0.065
+        ]
+      },
+      {
+        "name": "globe-contact",
+        "lo": [
+          0.39543502842149936,
+          -0.2245649715785006,
+          0.065
+        ],
+        "hi": [
+          0.5445649715785006,
+          -0.07543502842149938,
+          0.181
+        ]
+      },
+      {
+        "name": "book-step-1-contact",
+        "lo": [
+          -0.475,
+          -0.13,
+          0.0
+        ],
+        "hi": [
+          -0.245,
+          0.16999999999999998,
+          0.008
+        ]
+      },
+      {
+        "name": "book-step-2-contact",
+        "lo": [
+          -0.47,
+          -0.07,
+          0.008
+        ],
+        "hi": [
+          -0.25,
+          0.16,
+          0.016
+        ]
+      },
+      {
+        "name": "book-step-3-contact",
+        "lo": [
+          -0.45999999999999996,
+          -0.01999999999999999,
+          0.016
+        ],
+        "hi": [
+          -0.26,
+          0.16,
+          0.024
+        ]
+      },
+      {
+        "name": "printer-contact",
+        "lo": [
+          0.295,
+          0.19999999999999998,
+          0.0
+        ],
+        "hi": [
+          0.575,
+          0.38,
+          0.17
+        ]
+      },
+      {
+        "name": "coffee-mug-contact",
+        "lo": [
+          -0.12566997652884254,
+          -0.19566997652884255,
+          0.0
+        ],
+        "hi": [
+          0.00566997652884256,
+          -0.06433002347115745,
+          0.09500000000000004
+        ]
+      },
+      {
+        "name": "spiral-notebook-contact",
+        "lo": [
+          -0.05295999861382942,
+          -0.34894984682829144,
+          0.0
+        ],
+        "hi": [
+          0.16295999861382943,
+          -0.1810501531717086,
+          0.007000000000000002
+        ]
+      },
+      {
+        "name": "pencil-1-contact",
+        "lo": [
+          -0.2977150868738908,
+          -0.26096515903449696,
+          -1.2576745200831851e-17
+        ],
+        "hi": [
+          -0.13028491312610918,
+          -0.21703484096550302,
+          0.007000000000000015
+        ]
+      },
+      {
+        "name": "pencil-2-contact",
+        "lo": [
+          0.026872968850313664,
+          -0.2734280191741858,
+          0.0069999999999999845
+        ],
+        "hi": [
+          0.17312703114968636,
+          -0.1965719808258142,
+          0.013500000000000015
+        ]
+      },
+      {
+        "name": "pencil-3-contact",
+        "lo": [
+          -0.3390873263640286,
+          0.2653856246680938,
+          -1.0408340855860843e-17
+        ],
+        "hi": [
+          -0.19491267363597145,
+          0.3206143753319062,
+          0.00700000000000001
+        ]
+      },
+      {
+        "name": "pen-1-contact",
+        "lo": [
+          -0.17662084633049083,
+          -0.3107875021938785,
+          -1.474514954580286e-17
+        ],
+        "hi": [
+          -0.05337915366950919,
+          -0.21921249780612148,
+          0.009000000000000015
+        ]
+      },
+      {
+        "name": "pen-2-contact",
+        "lo": [
+          0.17511355294834552,
+          -0.2909101391238605,
+          -1.3010426069826053e-17
+        ],
+        "hi": [
+          0.31488644705165447,
+          -0.26108986087613956,
+          0.009000000000000015
+        ]
+      },
+      {
+        "name": "stapler-contact",
+        "lo": [
+          0.15630056140048196,
+          0.30304167747167016,
+          0.0
+        ],
+        "hi": [
+          0.26969943859951806,
+          0.35095832252832987,
+          0.04000000000000001
+        ]
+      },
+      {
+        "name": "reading-glasses-contact",
+        "lo": [
+          0.16315337326430737,
+          -0.35387843080139725,
+          0.0
+        ],
+        "hi": [
+          0.30684662673569263,
+          -0.2961215691986028,
+          0.015999999999999997
+        ]
+      },
+      {
+        "name": "reference-book-contact",
+        "lo": [
+          -0.5302901906765866,
+          0.20763198463175145,
+          0.0
+        ],
+        "hi": [
+          -0.3297098093234134,
+          0.3623680153682485,
+          0.015
+        ]
+      },
+      {
+        "name": "loose-page-1-contact",
+        "lo": [
+          0.2742544614282945,
+          -0.3761008689289925,
+          0.0
+        ],
+        "hi": [
+          0.43574553857170545,
+          -0.2538991310710075,
+          0.00020000000000000006
+        ]
+      },
+      {
+        "name": "loose-page-2-contact",
+        "lo": [
+          0.2865116754957854,
+          -0.3556171410636094,
+          0.00020000000000000004
+        ],
+        "hi": [
+          0.4434883245042146,
+          -0.24038285893639055,
+          0.0004
+        ]
+      },
+      {
+        "name": "sticky-notes-contact",
+        "lo": [
+          0.21231223919402198,
+          -0.008687760805978013,
+          0.0
+        ],
+        "hi": [
+          0.259687760805978,
+          0.03868776080597801,
+          0.0024
+        ]
+      },
+      {
+        "name": "printer-output-tray-contact",
+        "lo": [
+          0.33999999999999997,
+          0.1525,
+          0.048
+        ],
+        "hi": [
+          0.53,
+          0.2175,
+          0.053000000000000005
+        ]
+      },
+      {
+        "name": "printer-printout-contact",
+        "lo": [
+          0.34876343837273177,
+          0.1359695060484597,
+          0.054
+        ],
+        "hi": [
+          0.5212365616272682,
+          0.2260304939515403,
+          0.054200000000000005
+        ]
+      }
+    ]
+  },
+  "attempts": [
+    {
+      "id": "development-native",
+      "label": "Frozen native controller",
+      "file": "development-native.json",
+      "verified": false,
+      "status": "Climb not established",
+      "scope": "Archived early engineering attempts on seed 31000, before terrain-v2 verifier changes. Not Tinker checkpoints or held-out results. No completed climb."
+    },
+    {
+      "id": "wholebody-qp-shift-1.6",
+      "label": "Contact controller \u00b7 development attempt",
+      "file": "wholebody-qp-shift-1.6.json",
+      "verified": false,
+      "status": "Climb not established",
+      "scope": "Archived early engineering attempts on seed 31000, before terrain-v2 verifier changes. Not Tinker checkpoints or held-out results. No completed climb."
+    }
+  ],
+  "default_attempt": "development-native",
+  "scope": "Planned route overlay with recorded physical attempts; training gate closed.",
+  "optimizer_updates_completed": 0
+}
