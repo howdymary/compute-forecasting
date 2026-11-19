@@ -48,7 +48,7 @@ def main():
     manifest={'study':report['study'],'optimizer_updates_completed':report['optimizer_updates_completed'],
               'selected_update':selected,'scope':report['scope'],'scene':json.loads((ROOT/'configs/richdesk-v9.json').read_text()),
               'scenarios':scenarios,'recordings':files,'checkpoints':report['checkpoints'],'held_out':report['held_out'],
-              'isolated':report['isolated'],'default_scenario':'held-out-'+str(report['protocol']['held_out_seeds'][0]),
+              'isolated':report['isolated'],'default_scenario':'development-'+str(report['protocol']['development_seeds'][0]),
               'workflow_run':report['run_id'],'source_sha':report['source_sha'],
               'services':report['services']['eligibility'],
               'campaign_modal_rollouts_completed':report.get('campaign_modal_rollouts_completed'),

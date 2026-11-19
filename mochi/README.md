@@ -1,16 +1,13 @@
 # MOCHI — Walking, Contact and Recovery Policy Learning
 
-The furnished-desk route study is in development:
-[desk and planned route](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/richdesk.html)
-· [methods and current limitations](docs/richdesk-v10.md).
-The printer, books and stationery share their placements across simulation and
-rendering. A contact audit rejected the apparent book-climbing reference; four stricter
-correction tests failed. The new study completed zero optimizer updates and
-its training gate remains closed. The completed V8 training results below describe the earlier
-flat-desk study and have not been attributed to this new environment.
+The furnished-desk controller now completes the continuous **clock → drawer → laptop close → globe** sequence, including book ascent and descent, without hitting the clock. Two local engineering references and the subsequent remote reference passed the strict checks.
+
+[Watch the repaired route](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/terrain.html) · [V12 methods](docs/terrain-v12.md) · [Live training status](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/api/terrain-training)
+
+Those passes establish physical feasibility. The separate Tinker campaign collects real simulation comparisons before updating walking, task-control and recovery decisions. New trained-checkpoint gains are reported only after matched evaluation. The native gait network remains fixed. Earlier V8 training and rejected V11 evidence below are preserved.
 
 <!-- MOCHI_CURRICULUM_START -->
-## Current: Learning walking, task and arm-recovery decisions
+## Archived V8: learning walking, task and arm-recovery decisions
 
 [Interactive before/after demo](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/) · [V8 methods](docs/control-v8-study.md) · [Numerical evidence](evidence/control-v8/results.json) · [Training execution](https://github.com/howdymary/mochi-demo/actions/runs/44382265039) · [Archived V7 viewer](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/?study=v7)
 
