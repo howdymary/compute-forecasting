@@ -1,5 +1,5 @@
 """Export actual completed checkpoints and paired tests, excluding private paths."""
-import argparse,gzip,json
+import argparse,gzip,hashlib,json
 from statistics import mean
 from pathlib import Path
 
@@ -11,6 +11,16 @@ def rounded(x):
     if isinstance(x,list):return [rounded(v) for v in x]
     if isinstance(x,dict):return {k:rounded(v) for k,v in x.items()}
     return x
+
+def public_report(value):
+    if isinstance(value,list):return [public_report(x) for x in value]
+    if isinstance(value,dict):
+        result={k:public_report(v) for k,v in value.items() if k!='excerpt'}
+        if 'excerpt' in value:
+            result['excerpt_sha256']=hashlib.sha256(str(value['excerpt']).encode()).hexdigest()
+            result['excerpt_storage']='Backend artifact; URL and provenance retained in this public report'
+        return result
+    return value
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('--source',required=True);p.add_argument('--development-preview',action='store_true');a=p.parse_args()
@@ -83,7 +93,9 @@ def main():
               'display_note':'Complete measured 25 Hz body trajectories with six-decimal display quantization. No physical instability is filtered. Full numerical originals are archived on Modal.'}
     (OUT/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
     # Only the explicitly public report is copied. Never export checkpoint-paths.json.
-    (OUT/'report.json').write_text(json.dumps(report,indent=2)+'\n')
+    published=public_report(report)
+    published['publication_note']='Web excerpts stay in the backend artifacts. The public report preserves URLs, titles, excerpt hashes and numerical evidence.'
+    (OUT/'report.json').write_text(json.dumps(published,indent=2)+'\n')
     print(json.dumps({'scenarios':len(scenarios),'recordings':len(files),'new_updates':report['optimizer_updates_completed'],
                       'selected_update':selected,'evaluation_status':manifest['evaluation_status'],'compressed_mb':sum(p.stat().st_size for p in OUT.glob('*.gz'))/1e6}))
 
