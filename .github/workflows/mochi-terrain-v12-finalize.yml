@@ -1,0 +1,45 @@
+name: Mochi durable checkpoint evaluation
+on:
+  push:
+    branches: [mochi-desk-v3]
+    paths: ['mochi/configs/terrain-v12-finalize-launch.json']
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: mochi-terrain-v12-resource-budget
+  cancel-in-progress: false
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 210
+    env:
+      PYTHONPATH: ${{ github.workspace }}/mochi/src
+      MOCHI_ROOT: ${{ github.workspace }}/mochi
+      MOCHI_RECOVERY_SOURCE: ${{ github.workspace }}/mochi/.cache/terrain-recovery-source
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - name: Read source artifacts without changing the source run
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          SOURCE_RUN=$(python -c 'import json; print(json.load(open("mochi/configs/terrain-v12-finalize.json"))["source_run"])')
+          gh run download "$SOURCE_RUN" --name "mochi-terrain-v12-training-$SOURCE_RUN" --dir "$MOCHI_RECOVERY_SOURCE"
+      - run: |
+          python -m pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install './mochi[remote,robotics,dev]' pyyaml==6.0.2
+          python mochi/scripts/fetch_visual_models.py
+      - name: Evaluate saved weights with zero new optimizer updates
+        env:
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: python -u -m mochi.terrain_v12.finalize
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mochi-terrain-v12-finalization-${{ github.run_id }}
+          path: mochi/artifacts/terrain-v12-training/
+          retention-days: 30
