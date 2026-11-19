@@ -5,7 +5,7 @@ from ..balanced.sequence import SequenceWorld,PhysicalStop
 from ..balanced.onnx_walk import HubWalker
 from .budget import reserve,finish,OUT
 
-def run(horizon=3.,speed=.025,kind='native',parameters=None,seed=41000):
+def run(horizon=3.,speed=.025,kind='native',parameters=None,seed=41000,short_descent=False):
     from pathlib import Path
     sources={str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in Path(__file__).parent.glob('*.py')}
     snapshots=OUT/'source-snapshots';snapshots.mkdir(parents=True,exist_ok=True)
@@ -39,9 +39,9 @@ def run(horizon=3.,speed=.025,kind='native',parameters=None,seed=41000):
                 if dwell>=.4:
                     if traversal=='ascent':
                         book_ascent=True;traversal='descent'
-                        from .contact import ContactWalker
+                        from .contact import ContactWalker,descent_landings
                         width=(parameters or {}).get('width',.028)
-                        landings=[{'side':s,'position':[x,y,w.terrain_height(x,y)-.00015]} for y in [.002,-.046,-.092,-.107,-.152,-.16,-.185] for s,x in [('left',-.375-width/2),('right',-.375+width/2)]]
+                        landings=descent_landings(w,width,short_descent)
                         w.walker=(QpWalker if kind=='qp' else ContactWalker)(w,landings=landings,**(parameters or {}))
                     else:book_descent=True;break
             command_speed=-speed if traversal=='descent' else speed
@@ -61,7 +61,7 @@ def run(horizon=3.,speed=.025,kind='native',parameters=None,seed=41000):
                     'sole_patches':{s:w.sole_patch(s) for s in ['left','right']}})
                 next_sample=float(w.d.time)+.01
     except PhysicalStop as e:failed=str(e)
-    return {'study':'mochi-terrain-v12','parameters':{'kind':kind,'horizon':horizon,'speed':speed,**(parameters or {})},'failure':failed,'book_ascent_verified':book_ascent,'book_descent_verified':book_descent,
+    return {'study':'mochi-terrain-v12','parameters':{'kind':kind,'horizon':horizon,'speed':speed,'short_descent':short_descent,**(parameters or {})},'failure':failed,'book_ascent_verified':book_ascent,'book_descent_verified':book_descent,
         'wall_seconds':time.perf_counter()-start,'trace':trace,'episode':w.episode(),'controller':w.walker.description(),'source_sha256_at_start':sources}
 
 def main():

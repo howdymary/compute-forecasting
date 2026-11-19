@@ -9,22 +9,32 @@ from ..richdesk.stepping import StepParameters
 
 def stair_landings(w,width=.028,book_goal=None):
     rows=[]
-    ys=[-.208,-.185,-.16,-.152,-.107,-.092,-.046]+([.002,.025] if book_goal is None else [book_goal])
+    ys=[-.208,-.185,-.16,-.152,-.107,-.092,-.046,.002,.025]+([] if book_goal is None else [book_goal])
     for y in ys:
         for side,x in [('left',-.375-width/2),('right',-.375+width/2)]:
             rows.append({'side':side,'position':[x,y,w.terrain_height(x,y)-.00015]})
     return rows
 
 
+def descent_landings(w,width=.024,short=True):
+    # Backward reach is more restricted than forward reach. Approach each
+    # edge before descending, with the entire sole clear of the riser.
+    ys=[.002,-.041,-.052,-.091,-.112,-.151,-.18] if short else [.002,-.046,-.092,-.107,-.152,-.16,-.185]
+    return [{'side':s,'position':[x,y,w.terrain_height(x,y)-.00015]} for y in ys
+            for s,x in [('left',-.375-width/2),('right',-.375+width/2)]]
+
+
 class ContactWalker(PlannedContactInverseWalker):
     label='reachable-support-pose-with-converged-contact-inverse-control'
-    def __init__(self,w,crouch=.012,pose_search=True,newton_iterations=16,servo_kp=300.,servo_kd=35.,cartesian_swing=False,landings=None,width=.028,adaptive_swing=True,book_goal=None,arm_model=True,balance_feedback=0.,descent_lift=.004,bounded_backward=True,lower_during_descent=False):
+    def __init__(self,w,crouch=.012,pose_search=True,newton_iterations=16,servo_kp=300.,servo_kd=35.,cartesian_swing=False,landings=None,width=.028,adaptive_swing=True,book_goal=None,arm_model=True,balance_feedback=0.,descent_lift=.004,bounded_backward=True,lower_during_descent=False,descent_height_fraction=None,support_roll=0.):
         self.pose_search=pose_search;self.newton_iterations=newton_iterations;self.servo_kp=servo_kp;self.servo_kd=servo_kd;self.pose_log=[];self.cartesian_swing=cartesian_swing
         self.swing_data=mujoco.MjData(w.m);self.width=width;self.last_command_time=float(w.d.time);self.support_wait_started=None
         self.adaptive_swing=adaptive_swing;self.active_lift_step=None;self.arc_start=None;self.rise_start=None
         self.arm_model=arm_model;self.completed=False;self.center_dwell=0.;self.balance_feedback=balance_feedback
         self.ascent_lift=.010;self.descent_lift=descent_lift
         self.backward=False;self.ik_log=[];self.bounded_backward=bounded_backward;self.lower_during_descent=lower_during_descent
+        self.descent_height_fraction=float(lower_during_descent) if descent_height_fraction is None else descent_height_fraction
+        self.support_roll=support_roll;self.roll_start=0.;self.roll_goal=0.
         p=StepParameters(crouch=crouch,shift_seconds=1.8,swing_seconds=.65,lift=.010,
             com_tracking=0,torso_gain=0,angular_damping=0,support_forward=.002)
         super().__init__(w,landings or stair_landings(w,width,book_goal),p)
@@ -39,6 +49,8 @@ class ContactWalker(PlannedContactInverseWalker):
 
     def start_shift(self,velocity):
         self.backward=velocity[0]<0
+        R=self.d.xmat[1].reshape(3,3);self.roll_start=math.atan2(R[2,1],R[2,2])
+        self.roll_goal=(self.support_roll*(1 if 1-self.swing==1 else -1)) if self.backward and self.steps<len(self.landings) else 0.
         self.p=replace(self.p,support_forward=-.002 if velocity[0]<0 else .002,lift=self.descent_lift if velocity[0]<0 else self.ascent_lift)
         # A toe contact leaves the sole centre above the surface. Preserve
         # measured horizontal placement, but seat the *reference* on the
@@ -58,7 +70,7 @@ class ContactWalker(PlannedContactInverseWalker):
         lo=np.r_[self.root_goal[:2]-.05,min(p[2] for p in self.anchors)+.09,bounds[:,0]+.003]
         hi=np.r_[self.root_goal[:2]+.05,min(p[2] for p in self.anchors)+.14,bounds[:,1]-.003]
         def residual(x):
-            s.qpos[:]=self.d.qpos;s.qpos[:3]=x[:3];s.qpos[3:7]=[math.cos(self.yaw_goal/2),0,0,math.sin(self.yaw_goal/2)];s.qpos[self.qids]=x[3:]
+            s.qpos[:]=self.d.qpos;s.qpos[:3]=x[:3];s.qpos[3:7]=self.body_quaternion(self.yaw_goal,self.roll_goal);s.qpos[self.qids]=x[3:]
             mujoco.mj_forward(m,s);errors=[]
             for i,b in enumerate(self.feet):
                 R=s.xmat[b].reshape(3,3);point=s.xpos[b]+R@self.local
@@ -80,10 +92,14 @@ class ContactWalker(PlannedContactInverseWalker):
         if self.active_lift_step!=self.steps:
             self.active_lift_step=self.steps;self.arc_start=float(self.d.time);self.rise_start=float(self.d.time)
         t=float(self.d.time);references=[p.copy() for p in feet];i=self.swing
-        u=float(np.clip((t-self.arc_start)/1.,0,1));start=self.swing_start;goal=self.swing_goal
-        references[i]=(1-ease(u))*start+ease(u)*goal
+        u=float(np.clip((t-self.arc_start)/(1.4 if self.backward else 1.),0,1));start=self.swing_start;goal=self.swing_goal
+        travel=ease((u-.15)/.55) if self.backward else ease(u)
+        references[i]=(1-travel)*start+travel*goal
         peak=max(start[2],goal[2])+self.p.lift
-        if u<.45:references[i][2]=(1-ease(u/.45))*start[2]+ease(u/.45)*peak
+        if self.backward:
+            if u<.2:references[i][2]=(1-ease(u/.2))*start[2]+ease(u/.2)*peak
+            else:references[i][2]=(1-ease((u-.72)/.28))*peak+ease((u-.72)/.28)*goal[2]
+        elif u<.45:references[i][2]=(1-ease(u/.45))*start[2]+ease(u/.45)*peak
         else:references[i][2]=(1-ease((u-.55)/.45))*peak+ease((u-.55)/.45)*goal[2]
         # Keep the lower support reachable until it is actually unloaded;
         # then extend the stance leg instead of trapping the swing leg in a
@@ -91,7 +107,7 @@ class ContactWalker(PlannedContactInverseWalker):
         if self.w.loads()[['left','right'][i]]>.05 and t-self.rise_start<.2:
             self.rise_start=t
         corrected=np.asarray(root).copy();stance_height=self.anchors[1-i][2]
-        target_height=self.base_clearance+(min(stance_height,goal[2]) if self.lower_during_descent else stance_height)
+        target_height=self.base_clearance+stance_height+self.descent_height_fraction*min(0.,goal[2]-stance_height)
         corrected[2]+=ease((t-self.rise_start)/.5)*(target_height-root[2])
         self.com_target=self.com_goal.copy();self.com_target[2]+=corrected[2]-root[2]
         for _ in range(3):
@@ -106,11 +122,22 @@ class ContactWalker(PlannedContactInverseWalker):
                 b[offset+j]=[max(b[offset+j,0],lo),min(b[offset+j,1],hi)]
         return b
 
+    @staticmethod
+    def body_quaternion(yaw,roll):
+        c,s=math.cos(yaw/2),math.sin(yaw/2);a,b=math.cos(roll/2),math.sin(roll/2)
+        return [c*a,c*b,s*b,s*a]
+
+    def reference_roll(self):
+        from ..richdesk.stepping import ease
+        if self.stage=='shift':return self.roll_start+(self.roll_goal-self.roll_start)*ease((self.d.time-self.stage_t)/self.p.shift_seconds)
+        if self.stage=='center':return self.roll_start*(1-ease((self.d.time-self.stage_t)/1.2))
+        return self.roll_goal
+
     def leg_solution(self,root,feet,yaw):
         if not self.backward or not self.bounded_backward:return super().solve(root,feet,yaw)
         from ..richdesk.stepping import ease
         s=self.scratch;m=self.m;s.qpos[:]=self.d.qpos;s.qpos[:3]=root
-        s.qpos[3:7]=[math.cos(yaw/2),0,0,math.sin(yaw/2)];s.qpos[self.qids]=self.joint_target
+        s.qpos[3:7]=self.body_quaternion(yaw,self.reference_roll());s.qpos[self.qids]=self.joint_target
         c,sn=math.cos(yaw),math.sin(yaw);desired=np.array([[c,-sn,0],[sn,c,0],[0,0,1.]])
         bounds=self.walking_bounds();errors=[]
         for i,body in enumerate(self.feet):
@@ -204,7 +231,7 @@ class ContactWalker(PlannedContactInverseWalker):
             J=np.zeros((3,m.nv));mujoco.mj_jacSubtreeCom(m,d,J,1);v=R.T@(J@d.qvel)
             pitch=math.asin(float(np.clip(-R[2,0],-1,1)));roll=math.atan2(R[2,1],R[2,2])
             correction=np.array([800*error[0]+80*v[0]+40*pitch+8*d.qvel[4],
-                                  -800*error[1]-80*v[1]+40*roll+8*d.qvel[3]])*self.balance_feedback
+                                  -800*error[1]-80*v[1]+40*(roll-self.reference_roll())+8*d.qvel[3]])*self.balance_feedback
             correction=np.clip(correction,-3.,3.)
             loads=self.w.loads();total=max(sum(loads.values()),.001)
             for i,side in enumerate(['left','right']):

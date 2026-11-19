@@ -12,7 +12,7 @@ New continuation: 96 local diagnostic rollout slots, 512 Modal rollout slots,
 200K inference tokens, 8 Exa searches and 20/40 logical past.dev writes/recalls.
 Hard local reservations live in `artifacts/terrain-v12/ledger.json`. V11's old
 counters are separate and have not been reset. V12 has zero completed optimizer
-updates. The first remote research run completed an Exa search, a Tinker inference decision and initial source-verified memory handoffs, then failed on a missing cloud osqp dependency before returning a physics receipt. Its budget reservations are retained. The image is corrected and a bounded-IK diagnostic retry is launching.
+updates. The first remote research run completed an Exa search, a Tinker inference decision and initial source-verified memory handoffs, then failed on a missing cloud osqp dependency before returning a physics receipt. Its budget reservations are retained. A second attempt failed in its zero-rollout runtime check because it resolved the source mount against the wrong root. The dependency and mount checks are now corrected; both failures retain their reservations.
 
 ## Controller development
 
@@ -26,7 +26,7 @@ The old joint-acceleration inverse solver completed flat steps, but lost balance
 when transferring onto a higher book. Reducing stance width from 40 to 28/24 mm
 improved detached support-pose feasibility and progressed farther physically.
 This is a tested geometric/control change, not cosmetic narrowing or training.
-Several subsequent runs completed verified ascent and standing dwell without clock contact on the same engineering seed. Descent still fails; no complete traversal or full four-task reference has passed.
+Several subsequent runs completed verified ascent and standing dwell without clock contact on the same engineering seed. A staged backward swing now keeps the foot high until it clears the riser. Two isolated descent branches from an actual supported ascent completed on the engineering seed (24 mm and 20 mm stance widths). Neither branch is a full four-task reference or a trained improvement.
 
 Other tested changes: wait for actual loaded support before liftoff; distinguish
 light touchdown from full-sole support; seat reference soles on the terrain
@@ -43,19 +43,19 @@ COM, torso orientation, swing feet and posture. Redundant contact Jacobian rows
 are removed with pivoted QR. Contact forces are predictions, never externally
 applied forces. The most recent change keeps loaded material points stationary
 while leaving flat-foot alignment to a separate objective; hard desired flat-foot
-point transforms were preventing toe-edge rotation. That diagnostic is running.
+point transforms were preventing toe-edge rotation. That diagnostic remained stalled and is not the selected controller.
 
 Earlier QP variants stayed upright with torso roll below one degree but stalled
 while seating the next sole. Stalled low-motion runs are not successful walking.
 Ankle feedback gains 0.5 and 1.0 completed ascent and standing dwell. A bounded
 backward IK solver prevented an observed hip-reference flip and passed the first
-downward transition, but the following drop still failed. These are repeated
+downward transition, but the following drop initially failed. The later staged-swing and short-placement branches passed descent. These are repeated
 engineering trials on one geometry seed, not a fresh-scenario result. No new held-out scenario is
 open and no checkpoint comparison has begun.
 
 ## Files and execution
 
-Main modules: `world.py`, `contact.py`, `qp.py`, `probe.py`, `budget.py`.
+Main modules: `world.py`, `contact.py`, `probe.py`, `sequence.py`, `tasks.py`, `development.py`, `budget.py`. `qp.py` retains the unpromoted whole-body experiment.
 `walker.py` and `quasi.py` retain rejected development alternatives.
 `probe.py` records complete attempts and automatically tries backward descent
 only after measured book-top support and dwell. It never resets between ascent
@@ -77,3 +77,5 @@ No sub-agents, checkpoint deletions, billing changes, forecasting mutations or
 branch checkout/reset are authorized by this continuation. Publish only scoped
 Mochi changes with the alternate-index publisher; preserve the active unborn
 `metagame` checkout and remote default `compute-observatory`.
+
+The clock approach is being repaired separately: the original hand path contacted the case; the collision-aware two-stage path avoided that contact but did not yet depress the switch. A closer station is being tested through actual footsteps. Training remains gated.

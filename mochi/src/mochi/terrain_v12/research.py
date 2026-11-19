@@ -47,19 +47,19 @@ async def main():
             'failure':'Legacy backward IK drove the hip reference toward 2.77 rad after an ankle-limit conflict. Bounded backward IK and flight-pitch relaxation passed the first drop, then lost balance on the next. These are engineering tests, not trained checkpoint results.',
             'kinematic_reference':'artifacts/terrain-v12/kinematic-support-comparison.json','training_gate':'closed'})
         observed=await read('researcher',rid);await add('exa_searches',1)
-        sources=await s.search('humanoid backward stair descent ankle joint limits inverse kinematics posture regularization swing foot pitch toe clearance')
+        sources=await s.search('humanoid backward stair descent short footstep reachability ankle joint limits support transfer')
         hid=await write('researcher',{'kind':'hypothesis','observation_record':rid,'sources':sources,
-            'mechanism':'Keep normal stance-leg height during single support; lower during supported transfer. Use a bounded posture-continuous backward IK search and allow sagittal foot pitch in flight, returning to a level landing.'})
+            'mechanism':'Shorten the backward reach by approaching each riser before descending; preserve whole-sole clearance. Both candidates use bounded posture-continuous backward IK and lower the pelvis during the downward swing.'})
         idea=await read('designer',hid);await add('inference_tokens',4000)
         options={'lower_clearance':.004,'more_clearance':.006}
-        choice=await s.decide('designer','Choose extra descent swing clearance for a matched backward-IK diagnostic. 4 mm reduces knee flexion; 6 mm adds riser clearance. Both remain subject to the same physical verifier. Compare bounded posture-continuous IK with the legacy IK search. No weights are updated.',{'failure':observed,'research':idea,'choices':options},list(options),[rid,hid])
+        choice=await s.decide('designer','Choose extra descent swing clearance for a matched backward-IK diagnostic. 4 mm reduces knee flexion; 6 mm adds riser clearance. Both remain subject to the same physical verifier. Compare shorter edge-approach placements with the original longer backward placements. No weights are updated.',{'failure':observed,'research':idea,'choices':options},list(options),[rid,hid])
         pid=await write('designer',{'kind':'proposal','source_record':hid,'descent_lift_m':options[choice],
-            'width_m':.024,'matched_difference':'bounded backward IK with flight-pitch allowance','tinker_operation':'research inference, zero optimizer updates'})
+            'width_m':.024,'matched_difference':'shorter backward footstep placements near book edges','tinker_operation':'research inference, zero optimizer updates'})
         proposal=await read('experimenter',pid);report['proposal']=proposal;report['phase']='Matched book traversal on Modal';await publish()
         await add('modal_rollouts',2);await add('modal_cpu_hours',1800/3600)
-        parameters={'width':proposal['width_m'],'descent_lift':proposal['descent_lift_m'],'balance_feedback':.5}
+        parameters={'width':proposal['width_m'],'descent_lift':proposal['descent_lift_m'],'balance_feedback':.5,'descent_height_fraction':1.}
         async with app.run():
-            async for row in traversal.starmap.aio([(41000,{**parameters,'bounded_backward':False},'legacy-backward-ik'),(41000,{**parameters,'bounded_backward':True},'bounded-backward-ik')],order_outputs=False):
+            async for row in traversal.starmap.aio([(41000,parameters,'long-backward-placements',False),(41000,parameters,'short-backward-placements',True)],order_outputs=False):
                 save(row['variant'],row)
                 report['results'].append({'variant':row['variant'],'failure':row['failure'],'ascent':row['book_ascent_verified'],
                     'descent':row['book_descent_verified'],'duration_s':row['episode']['duration'],
