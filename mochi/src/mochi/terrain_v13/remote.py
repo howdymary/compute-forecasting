@@ -92,6 +92,8 @@ def collect(seed, payload, run_id):
             initial = hashlib.sha256(np.r_[w.d.qpos, w.d.qvel, w.d.ctrl, w.d.time].tobytes()).hexdigest()
             outcomes = []
             for action in choices:
+                print(json.dumps({'physical_branch_started': {'seed': seed, 'domain': domain,
+                    'station': task, 'action': action, 'simulation_time': float(w.d.time)}}), flush=True)
                 count += 1
                 if count > 37:
                     raise RuntimeError('Physical branch cap')
@@ -113,6 +115,9 @@ def collect(seed, payload, run_id):
                     'metrics': metrics(clone.measurements[index:]), 'result': result,
                     'coupled_recovery': withdrawal, 'fall': clone.fall,
                     'invalid_contact': clone.invalid_contact, 'initial_state_sha256': initial})
+                print(json.dumps({'physical_branch_finished': {'seed': seed, 'domain': domain,
+                    'station': task, 'action': action, 'success': bool(success),
+                    'duration_s': float(clone.d.time) - start, 'failure': failure}}), flush=True)
             valid = [r for r in outcomes if r['success'] and not r['fall'] and not r['invalid_contact']]
             trials.append({'domain': domain, 'task': task, 'observation': observed,
                            'student_preference': preferred, 'outcomes': outcomes})
