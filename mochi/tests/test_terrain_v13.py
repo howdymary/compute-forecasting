@@ -40,6 +40,12 @@ def test_task_label_charges_for_withdrawal_instead_of_only_press_force():
     assert branch_rank('laptop', clean) < branch_rank('laptop', slow)
 
 
+def test_recovery_cost_can_reject_a_faster_but_needlessly_long_arm_path():
+    short = {'duration_s': 2., 'result': {'arm_joint_travel_rad': 2.}}
+    excessive = {'duration_s': 1.9, 'result': {'arm_joint_travel_rad': 8.}}
+    assert branch_rank('recovery', short) < branch_rank('recovery', excessive)
+
+
 def test_static_control_uses_only_station_votes_with_deterministic_ties():
     teachers = [{'examples': [{'domain': 'walk', 'task': 'alarm', 'action': a}
                               for a in ['W2', 'W0', 'W2']]}]

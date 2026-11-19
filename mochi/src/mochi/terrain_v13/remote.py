@@ -181,7 +181,7 @@ def evaluate(seed, label, payload, run_id, group, static=None, capture_states=Fa
             row['supported_states'] = {'path': str(path.relative_to('/artifacts')),
                                        'keys': list(snapshots), 'sha256': hashlib.sha256(path.read_bytes()).hexdigest()}
         row['archive'] = archive(row, run_id, f'{group}-{seed}-{label}')
-        return {'seed': seed, 'label': label, 'row': compact(row), 'receipt': {**receipt(started, 1),
+        return {'seed': seed, 'label': label, 'group': group, 'row': compact(row), 'receipt': {**receipt(started, 1),
                 'inference_input_plus_max_output_tokens': selector.used if selector else 0}}
 
     return asyncio.run(body())

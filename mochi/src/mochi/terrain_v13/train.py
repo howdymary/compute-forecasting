@@ -47,6 +47,7 @@ async def main():
     assert previous['status'] == 'completed' and previous['held_out_opened'], 'Finish the previous run first'
     assert previous['recovery']['evaluation_run'] == str(cfg['source_run'])
     assert hashlib.sha256(assessment_path.read_bytes()).hexdigest() == cfg['assessment_sha256']
+    assert hashlib.sha256((ROOT / cfg['implementation_prompt']).read_bytes()).hexdigest() == cfg['prompt_sha256']
     assert assessment['selected_checkpoint']['checkpoint_id'] == cfg['parent_checkpoint_sha256']
     assert previous['selected_checkpoint']['checkpoint_id'] == cfg['parent_checkpoint_sha256']
     assert not (set(cfg['training_seeds']) & set(cfg['development_seeds'])
@@ -79,6 +80,7 @@ async def main():
         'optimizer_updates_completed': 0, 'training_log': [], 'checkpoints': [],
         'held_out_opened': False, 'physics_receipts': [], 'campaign_modal_rollouts_completed': 0,
         'parent_assessment': {'sha256': cfg['assessment_sha256'], 'source_run': cfg['source_run']}}
+    report['implementation_prompt'] = {'path': cfg['implementation_prompt'], 'sha256': cfg['prompt_sha256']}
 
     async def change(kind, amount):
         async with lock:
@@ -128,11 +130,16 @@ async def main():
                 answers[index] = row
                 report['campaign_modal_rollouts_completed'] += receipt['physical_rollouts']
                 report['physics_receipts'].append({'phase': report['phase'], 'seed': row['seed'],
-                    'label': row.get('label'), 'task': row.get('task'), 'receipt': receipt})
+                    'label': row.get('label'), 'group': row.get('group'), 'task': row.get('task'), 'receipt': receipt})
                 if function is collect:
                     save('teacher-' + str(row['seed']), row)
                 elif function is evaluate:
-                    save('recording-' + str(row['seed']) + '-' + row['label'], row['row'])
+                    saved = row['row']
+                    save('recording-' + str(args[4]) + '-' + str(row['seed']) + '-' + row['label'], {
+                        'seed': row['seed'], 'label': row['label'], 'group': args[4],
+                        'archive': saved['archive'], 'failure': saved['failure'],
+                        'complete_sequence_success': saved['complete_sequence_success'],
+                        'storage': 'Full immutable trajectory in Modal; grouped completed results follow locally.'})
                 else:
                     save('components-' + str(row['seed']) + '-' + row['task'], row)
                 await publish()
@@ -154,21 +161,24 @@ async def main():
         await publish()
 
         # A real cross-run recall of the previous critic's shared verdict.
-        verdicts = [r for r in previous['services']['records'] if r['role'] == 'critic'
-                    and r['payload']['content'].get('kind') == 'qualified-conclusion']
-        assert verdicts, 'Completed evaluation has no recallable critic conclusion'
-        verdict = verdicts[-1]
-        original_reads = [r for r in previous['services']['reads'] if r['record_id'] == verdict['id']
-                          and r['reader_role'] == 'researcher' and r['source_id_verified']]
-        assert original_reads, 'Source verdict must have been ready and recalled'
+        ready = {r['id']: r for r in previous['services']['records']}
+        prior_reads = [r for r in previous['services']['reads']
+                       if r['source_id_verified'] and r['cross_agent_use'] and r['record_id'] in ready]
+        assert prior_reads, 'No source-verified memory finding available'
+        preferred = [r for r in prior_reads if ready[r['record_id']]['role'] == 'critic'
+                     and r['reader_role'] == 'researcher']
+        original_read = (preferred or prior_reads)[-1]
+        verdict = ready[original_read['record_id']]
         old_memory = ContinuationServices()
         old_memory.records[verdict['id']] = verdict
-        old_memory.actors['researcher'] = original_reads[-1]['reader']
+        old_memory.actors[original_read['reader_role']] = original_read['reader']
         try:
             await change('past_recalls', 1)
-            old_verdict = await old_memory.read('researcher', verdict['id'])
+            old_verdict = await old_memory.read(original_read['reader_role'], verdict['id'])
             report['cross_run_memory'] = {'record_id': verdict['id'], 'reads': old_memory.reads,
-                                          'calls': old_memory.calls, 'content_sha256': digest(old_verdict)}
+                'source_kind': verdict['payload']['content'].get('kind'),
+                'final_critic_verdict_available': bool(preferred),
+                'calls': old_memory.calls, 'content_sha256': digest(old_verdict)}
         finally:
             await old_memory.http.aclose()
         eid = await write('experimenter', {'kind': 'observation', 'experiment_id': run_id,
@@ -182,10 +192,19 @@ async def main():
             problems.append('humanoid stair ascent descent support transfer stability')
         if any(v['forbidden_contacts'] for v in observation['failures'].values()):
             problems.append('whole body collision avoidance laptop lid manipulation release arm withdrawal')
-        query = 'robot motion policy research ' + ' '.join(problems or ['efficient balanced stepping and arm recovery'])
+        await change('inference_tokens', 4000)
+        direction = await services.decide('researcher',
+            'Choose the most useful research emphasis for the recorded failures. This selects the actual Exa query, not a controller implementation.',
+            {'observed_problems': problems, 'historical_failures': {k: v['failures'] for k, v in observation['failures'].items()}},
+            ['stair_support', 'whole_body_release', 'coupled_efficiency'], [eid])
+        focus = {'stair_support': 'contact aware support transfer and stair stability',
+                 'whole_body_release': 'collision aware whole body manipulation and safe withdrawal',
+                 'coupled_efficiency': 'joint task completion and arm recovery trajectory optimization'}[direction]
+        query = 'robot motion policy research ' + focus + ' ' + ' '.join(problems)
         sources = await services.search(query)
         hid = await write('researcher', {'kind': 'hypothesis', 'experiment_id': run_id,
             'observation_record': eid, 'sources': sources,
+            'research_direction': direction,
             'mechanism': 'A successful press may leave an unsafe withdrawal state. Evaluate task and arm withdrawal together; use guarded student visitation to cover states the student actually reaches.',
             'prediction': 'Fresh physical labels can reduce unsafe task choices and excessive recovery cost without changing the native gait network.',
             'supersedes': verdict['id'], 'qualification': 'Testable proposal, not an established performance gain.'})
@@ -278,13 +297,14 @@ async def main():
                     'forward_backward_completed': True, 'optimizer_completed': True, 'at': now()})
                 await publish()
 
+            report['phase'] = 'Fresh development tests for every saved comparison checkpoint'
+            await publish()
+            bundles = await batch(evaluate, [(seed, 'policy', sampler_payload(snapshots[cp['update']]),
+                run_id, 'dev-' + str(cp['update'])) for cp in report['checkpoints']
+                for seed in cfg['development_seeds']], 1500, 1, 24000)
             for cp in report['checkpoints']:
                 update = cp['update']
-                report['phase'] = 'Fresh development checkpoint ' + str(update)
-                await publish()
-                bundles = await batch(evaluate, [(seed, 'policy', sampler_payload(snapshots[update]), run_id, 'dev-' + str(update))
-                    for seed in cfg['development_seeds']], 1500, 1, 24000)
-                rows = [b['row'] for b in bundles]
+                rows = [b['row'] for b in bundles if b['group'] == 'dev-' + str(update)]
                 development[update] = rows
                 save('checkpoint-' + str(update), rows)
                 cp['development'] = summary(rows, cfg)
@@ -316,19 +336,30 @@ async def main():
             report['component_results'] = await batch(components, [(reference_row['seed'], task,
                 [('parent', sampler_payload(snapshots[0])), ('selected', sampler_payload(snapshots[selected['update']]))],
                 run_id, reference) for task in TASKS], 3000, 6, 24000)
-            rid = await write('experimenter', {'kind': 'observation', 'experiment_id': run_id,
-                'optimizer_updates_completed': report['optimizer_updates_completed'],
-                'selected_checkpoint': selected, 'held_out': report['held_out'],
-                'components': [{'task': x['task'], 'results': x['results']} for x in report['component_results']],
-                'supersedes': eid})
-            measured = await read('critic', rid)
-            vid = await write('critic', {'kind': 'qualified-conclusion', 'experiment_id': run_id,
-                'evidence_record': rid, 'evidence_sha256': digest(measured),
-                'conclusion': 'Report full completion, successful-only paired costs and exact-state component effects separately. Training or changed probabilities alone do not establish improved physical control. Native gait weights stayed fixed.',
-                'supersedes': hid})
-            await read('researcher', vid)
-            canary = await write('critic', {'kind': 'private-test', 'text': 'MOCHI_PRIVATE_CANARY'}, True)
-            await read('designer', canary, False)
+            try:
+                rid = await write('experimenter', {'kind': 'observation', 'experiment_id': run_id,
+                    'optimizer_updates_completed': report['optimizer_updates_completed'],
+                    'selected_checkpoint': selected, 'held_out': report['held_out'],
+                    'components': [{'task': x['task'], 'results': x['results']} for x in report['component_results']],
+                    'supersedes': eid})
+                measured = await read('critic', rid)
+                await change('inference_tokens', 4000)
+                critic_label = await services.decide('critic',
+                    'Classify the bounded simulation evidence. Compare parent and selected success first. Additional optimizer steps or altered probabilities are not evidence of better control. A static preference matching the model limits claims of adaptation. Keep small cohorts qualified.',
+                    {'final_test_metrics': measured['held_out'], 'selected_update': selected['update'],
+                     'scope': 'Native gait fixed; full-route tests and separate exact-state component branches.'},
+                    ['bounded_simulated_gain', 'no_demonstrated_gain', 'regression_or_uncertain'], [rid])
+                vid = await write('critic', {'kind': 'qualified-conclusion', 'experiment_id': run_id,
+                    'evidence_record': rid, 'evidence_sha256': digest(measured),
+                    'model_interpretation': critic_label, 'interpretation_is_advisory': True,
+                    'conclusion': 'Report full completion, successful-only paired costs and exact-state component effects separately. Training or changed probabilities alone do not establish improved physical control. Native gait weights stayed fixed.',
+                    'supersedes': hid})
+                await read('researcher', vid)
+                canary = await write('critic', {'kind': 'private-test', 'text': 'MOCHI_PRIVATE_CANARY'}, True)
+                await read('designer', canary, False)
+            except TimeoutError as exc:
+                report['final_memory_review_pending'] = {'error_type': type(exc).__name__,
+                    'pending': services.report().get('pending_ingestions', [])}
         report.update(status='completed', phase='Frozen V13 evaluation complete', completed_at=now(),
                       duration_seconds=time.perf_counter() - started)
         await publish()

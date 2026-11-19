@@ -7,7 +7,8 @@ def branch_rank(domain, row):
         return (round(row['metrics']['roll_rms_deg'] / .5),
                 round(row['metrics']['lateral_rms_m'] / .002), row['duration_s'])
     if domain == 'recovery':
-        return (round(row['result']['arm_joint_travel_rad'] / .1), row['duration_s'])
+        return (row['duration_s'] + .25 * row['result']['arm_joint_travel_rad'],
+                row['result']['arm_joint_travel_rad'])
     # Task candidates include a measured R0 withdrawal, rather than scoring
     # the press alone and ignoring the state in which it leaves the arm.
     return (row['duration_s'] + .25 * row['coupled_recovery']['arm_joint_travel_rad'],
