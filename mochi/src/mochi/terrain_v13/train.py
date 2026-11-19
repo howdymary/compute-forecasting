@@ -101,11 +101,25 @@ async def main():
 
     async def write(role, content, private=False):
         await change('past_writes', 1)
-        return await services.write(role, content, private)
+        phase = report['phase']
+        report['phase'] = 'past.dev write: ' + role + ' ' + content.get('kind', 'finding')
+        await publish()
+        try:
+            return await services.write(role, content, private)
+        finally:
+            report['phase'] = phase
+            await publish()
 
     async def read(role, rid, allowed=True):
         await change('past_recalls', 1)
-        return await services.read(role, rid, allowed)
+        phase = report['phase']
+        report['phase'] = 'past.dev recall: ' + role + (' source verification' if allowed else ' private-audience denial test')
+        await publish()
+        try:
+            return await services.read(role, rid, allowed)
+        finally:
+            report['phase'] = phase
+            await publish()
 
     async def batch(function, arguments, timeout, rollout_cap, token_cap):
         queue = asyncio.Queue()
