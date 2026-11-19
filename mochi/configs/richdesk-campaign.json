@@ -1,0 +1,51 @@
+{
+  "study": "mochi-richdesk-v10",
+  "revision": 1,
+  "phase": "engineering-feasibility",
+  "scene": "configs/richdesk-v9.json",
+  "task_order": ["alarm", "drawer", "laptop", "globe"],
+  "seed_partitions": {
+    "engineering": [31000],
+    "training": [34000, 34001, 34002, 34003, 34004, 34005],
+    "development": [35000, 35001, 35002],
+    "held_out": [36000, 36001, 36002, 36003, 36004, 36005]
+  },
+  "training_gate": {
+    "requires_all": ["geometry-route-valid", "physical-ascent-and-descent", "four-task-reference-sequence", "reward-diversity-audit", "frozen-source-hashes"],
+    "open": false,
+    "reason": "Reliable touchdown, support transfer and book traversal not yet established."
+  },
+  "bounds": {
+    "maximum_local_engineering_rollouts": 48,
+    "maximum_modal_rollouts": 256,
+    "maximum_modal_concurrency": 4,
+    "maximum_modal_cpu_hours": 8,
+    "maximum_optimizer_updates": 32,
+    "checkpoints": [0, 4, 8, 16, 32],
+    "maximum_training_token_presentations": 2000000,
+    "maximum_inference_tokens": 200000,
+    "maximum_exa_searches": 8,
+    "maximum_past_writes": 20,
+    "maximum_past_recalls": 40,
+    "billing_changes_allowed": false,
+    "checkpoint_deletion_allowed": false
+  },
+  "success": {
+    "book_top_loaded_foot_force_n": 0.05,
+    "book_top_dwell_seconds": 0.4,
+    "book_top_maximum_tilt_degrees": 5,
+    "arrival_position_tolerance_m": 0.018,
+    "arrival_heading_tolerance_degrees": 9,
+    "maximum_applied_base_force_n": 0,
+    "full_sequence_requires": "All ordered tasks and recoveries valid, ascent/descent verified, no falls or invalid fixture contacts."
+  },
+  "learning_interface": {
+    "architecture": "Shared Qwen3.5-4B LoRA decision model, domain-conditioned observations; validated actuator controller remains fixed.",
+    "walk": ["bounded next-foot placement", "step length", "clearance", "turn increment", "braking", "support timing", "stop or recovery"],
+    "task": ["station alignment", "approach", "contact profile", "release", "verification"],
+    "recovery": ["collision-free withdrawal", "safe fold", "stop after stable recovery"],
+    "native_gait_network_training": false,
+    "training_method": "Simulation-supervised decision learning first. No RL without non-flat reachable rewards."
+  },
+  "budget_note": "These are enforced-workload ceilings for the planned campaign, not actual spending or a provider dollar quotation. Training remains gated."
+}
