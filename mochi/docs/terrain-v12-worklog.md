@@ -12,7 +12,7 @@ New continuation: 96 local diagnostic rollout slots, 512 Modal rollout slots,
 200K inference tokens, 8 Exa searches and 20/40 logical past.dev writes/recalls.
 Hard local reservations live in `artifacts/terrain-v12/ledger.json`. V11's old
 counters are separate and have not been reset. V12 has zero completed optimizer
-updates. Its remote research workflow is prepared but has not been launched.
+updates. The first remote research run completed an Exa search, a Tinker inference decision and initial source-verified memory handoffs, then failed on a missing cloud osqp dependency before returning a physics receipt. Its budget reservations are retained. The image is corrected and a bounded-IK diagnostic retry is launching.
 
 ## Controller development
 
@@ -26,7 +26,7 @@ The old joint-acceleration inverse solver completed flat steps, but lost balance
 when transferring onto a higher book. Reducing stance width from 40 to 28/24 mm
 improved detached support-pose feasibility and progressed farther physically.
 This is a tested geometric/control change, not cosmetic narrowing or training.
-It still has not completed verified ascent/descent.
+Several subsequent runs completed verified ascent and standing dwell without clock contact on the same engineering seed. Descent still fails; no complete traversal or full four-task reference has passed.
 
 Other tested changes: wait for actual loaded support before liftoff; distinguish
 light touchdown from full-sole support; seat reference soles on the terrain
@@ -47,8 +47,10 @@ point transforms were preventing toe-edge rotation. That diagnostic is running.
 
 Earlier QP variants stayed upright with torso roll below one degree but stalled
 while seating the next sole. Stalled low-motion runs are not successful walking.
-The best joint-inverse attempt reached 17 of 18 planned steps, then fell before
-centering; this is not a verified book-top arrival. No new held-out scenario is
+Ankle feedback gains 0.5 and 1.0 completed ascent and standing dwell. A bounded
+backward IK solver prevented an observed hip-reference flip and passed the first
+downward transition, but the following drop still failed. These are repeated
+engineering trials on one geometry seed, not a fresh-scenario result. No new held-out scenario is
 open and no checkpoint comparison has begun.
 
 ## Files and execution

@@ -8,7 +8,7 @@ import modal
 from ..curriculum.world import ROOT
 from ..desk.services import DeskServices
 from ..integrations import digest,now
-from .remote import app,traversal
+from .remote import app,traversal,runtime_check
 
 OUT=ROOT/'artifacts/terrain-v12-research'
 
@@ -38,25 +38,28 @@ async def main():
     async def read(role,rid,allowed=True):
         await add('past_recalls',1);return await s.read(role,rid,allowed)
     try:
+        await add('modal_cpu_hours',15/3600)
+        async with app.run():report['runtime_check']=await runtime_check.remote.aio()
+        await add('modal_cpu_hours',(report['runtime_check']['duration_seconds']*.25-15)/3600)
         await s.setup()
-        rid=await write('experimenter',{'kind':'observation','experiment_ids':['contact-preload-wide-0','contact-preload-narrow-0'],
-            'wide_stance_steps':9,'narrow_stance_steps':15,'complete_ascent':False,
-            'failure':'Loss of support during a mixed-height transfer or trailing-foot swing. Fixed low pelvis height, changing swing-leg mass and arm dynamics are hypotheses, not established causes.',
+        rid=await write('experimenter',{'kind':'observation','experiment_ids':['contact-descent-height10-0','contact-bounded-descent6-0'],
+            'ascent_verified':True,'complete_descent':False,'engineering_seed':41000,
+            'failure':'Legacy backward IK drove the hip reference toward 2.77 rad after an ankle-limit conflict. Bounded backward IK and flight-pitch relaxation passed the first drop, then lost balance on the next. These are engineering tests, not trained checkpoint results.',
             'kinematic_reference':'artifacts/terrain-v12/kinematic-support-comparison.json','training_gate':'closed'})
         observed=await read('researcher',rid);await add('exa_searches',1)
-        sources=await s.search('humanoid stair ascent trailing leg swing pelvis height contact inverse dynamics center of mass arm coupling full sole landing')
+        sources=await s.search('humanoid backward stair descent ankle joint limits inverse kinematics posture regularization swing foot pitch toe clearance')
         hid=await write('researcher',{'kind':'hypothesis','observation_record':rid,'sources':sources,
-            'mechanism':'Retain low pelvis height while the lower foot is planted, then extend the stance leg after unloading; account for swing-leg COM and prescribed arm servo efforts in inverse dynamics.'})
+            'mechanism':'Keep normal stance-leg height during single support; lower during supported transfer. Use a bounded posture-continuous backward IK search and allow sagittal foot pitch in flight, returning to a level landing.'})
         idea=await read('designer',hid);await add('inference_tokens',4000)
-        options={'closer_station':.015,'longer_approach':.020}
-        choice=await s.decide('designer','Choose the final book-top foot-centre y coordinate for a matched arm-dynamics diagnostic. .015 m shortens the step; .020 m improves later alarm reach. Both remain subject to the same physical verifier. The test compares coupled arm dynamics with the earlier fixed-arm-acceleration approximation. No weights are updated.',{'failure':observed,'research':idea,'choices':options},list(options),[rid,hid])
-        pid=await write('designer',{'kind':'proposal','source_record':hid,'book_goal_m':options[choice],
-            'width_m':.024,'matched_difference':'arm acceleration model','tinker_operation':'research inference, zero optimizer updates'})
+        options={'lower_clearance':.004,'more_clearance':.006}
+        choice=await s.decide('designer','Choose extra descent swing clearance for a matched backward-IK diagnostic. 4 mm reduces knee flexion; 6 mm adds riser clearance. Both remain subject to the same physical verifier. Compare bounded posture-continuous IK with the legacy IK search. No weights are updated.',{'failure':observed,'research':idea,'choices':options},list(options),[rid,hid])
+        pid=await write('designer',{'kind':'proposal','source_record':hid,'descent_lift_m':options[choice],
+            'width_m':.024,'matched_difference':'bounded backward IK with flight-pitch allowance','tinker_operation':'research inference, zero optimizer updates'})
         proposal=await read('experimenter',pid);report['proposal']=proposal;report['phase']='Matched book traversal on Modal';await publish()
         await add('modal_rollouts',2);await add('modal_cpu_hours',1800/3600)
-        parameters={'width':proposal['width_m'],'book_goal':proposal['book_goal_m']}
+        parameters={'width':proposal['width_m'],'descent_lift':proposal['descent_lift_m'],'balance_feedback':.5}
         async with app.run():
-            async for row in traversal.starmap.aio([(41000,{**parameters,'arm_model':False},'prior-arm-approximation'),(41000,{**parameters,'arm_model':True},'coupled-arm-dynamics')],order_outputs=False):
+            async for row in traversal.starmap.aio([(41000,{**parameters,'bounded_backward':False},'legacy-backward-ik'),(41000,{**parameters,'bounded_backward':True},'bounded-backward-ik')],order_outputs=False):
                 save(row['variant'],row)
                 report['results'].append({'variant':row['variant'],'failure':row['failure'],'ascent':row['book_ascent_verified'],
                     'descent':row['book_descent_verified'],'duration_s':row['episode']['duration'],

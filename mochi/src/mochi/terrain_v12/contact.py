@@ -1,5 +1,6 @@
 """Reachable support poses and converged floating-base contact inverse control."""
 import math
+from dataclasses import replace
 import mujoco,numpy as np
 from scipy.optimize import least_squares
 from ..balanced.inverse import PlannedContactInverseWalker
@@ -17,11 +18,13 @@ def stair_landings(w,width=.028,book_goal=None):
 
 class ContactWalker(PlannedContactInverseWalker):
     label='reachable-support-pose-with-converged-contact-inverse-control'
-    def __init__(self,w,crouch=.012,pose_search=True,newton_iterations=16,servo_kp=300.,servo_kd=35.,cartesian_swing=False,landings=None,width=.028,adaptive_swing=True,book_goal=None,arm_model=True,balance_feedback=0.):
+    def __init__(self,w,crouch=.012,pose_search=True,newton_iterations=16,servo_kp=300.,servo_kd=35.,cartesian_swing=False,landings=None,width=.028,adaptive_swing=True,book_goal=None,arm_model=True,balance_feedback=0.,descent_lift=.004,bounded_backward=True,lower_during_descent=False):
         self.pose_search=pose_search;self.newton_iterations=newton_iterations;self.servo_kp=servo_kp;self.servo_kd=servo_kd;self.pose_log=[];self.cartesian_swing=cartesian_swing
         self.swing_data=mujoco.MjData(w.m);self.width=width;self.last_command_time=float(w.d.time);self.support_wait_started=None
         self.adaptive_swing=adaptive_swing;self.active_lift_step=None;self.arc_start=None;self.rise_start=None
         self.arm_model=arm_model;self.completed=False;self.center_dwell=0.;self.balance_feedback=balance_feedback
+        self.ascent_lift=.010;self.descent_lift=descent_lift
+        self.backward=False;self.ik_log=[];self.bounded_backward=bounded_backward;self.lower_during_descent=lower_during_descent
         p=StepParameters(crouch=crouch,shift_seconds=1.8,swing_seconds=.65,lift=.010,
             com_tracking=0,torso_gain=0,angular_damping=0,support_forward=.002)
         super().__init__(w,landings or stair_landings(w,width,book_goal),p)
@@ -35,6 +38,8 @@ class ContactWalker(PlannedContactInverseWalker):
         self.swing=0;self.start_shift(velocity)
 
     def start_shift(self,velocity):
+        self.backward=velocity[0]<0
+        self.p=replace(self.p,support_forward=-.002 if velocity[0]<0 else .002,lift=self.descent_lift if velocity[0]<0 else self.ascent_lift)
         # A toe contact leaves the sole centre above the surface. Preserve
         # measured horizontal placement, but seat the *reference* on the
         # known tread plane before planning load transfer.
@@ -49,8 +54,9 @@ class ContactWalker(PlannedContactInverseWalker):
             target=np.mean(self.anchors,axis=0)[:2]+self.rotation[:2,0]*.002
             self.stage='center';self.center_dwell=0.
         desiredR=self.rotation.copy();z0=self.root_goal[2]
-        lo=np.r_[self.root_goal[:2]-.05,min(p[2] for p in self.anchors)+.09,self.limits[:,0]+.003]
-        hi=np.r_[self.root_goal[:2]+.05,min(p[2] for p in self.anchors)+.14,self.limits[:,1]-.003]
+        bounds=self.walking_bounds() if self.backward and self.bounded_backward else self.limits
+        lo=np.r_[self.root_goal[:2]-.05,min(p[2] for p in self.anchors)+.09,bounds[:,0]+.003]
+        hi=np.r_[self.root_goal[:2]+.05,min(p[2] for p in self.anchors)+.14,bounds[:,1]-.003]
         def residual(x):
             s.qpos[:]=self.d.qpos;s.qpos[:3]=x[:3];s.qpos[3:7]=[math.cos(self.yaw_goal/2),0,0,math.sin(self.yaw_goal/2)];s.qpos[self.qids]=x[3:]
             mujoco.mj_forward(m,s);errors=[]
@@ -69,7 +75,7 @@ class ContactWalker(PlannedContactInverseWalker):
 
     def solve(self,root,feet,yaw):
         if not self.adaptive_swing or self.stage not in ['swing','land']:
-            return super().solve(root,feet,yaw)
+            return self.leg_solution(root,feet,yaw)
         from ..richdesk.stepping import ease
         if self.active_lift_step!=self.steps:
             self.active_lift_step=self.steps;self.arc_start=float(self.d.time);self.rise_start=float(self.d.time)
@@ -85,12 +91,55 @@ class ContactWalker(PlannedContactInverseWalker):
         if self.w.loads()[['left','right'][i]]>.05 and t-self.rise_start<.2:
             self.rise_start=t
         corrected=np.asarray(root).copy();stance_height=self.anchors[1-i][2]
-        target_height=self.base_clearance+stance_height
+        target_height=self.base_clearance+(min(stance_height,goal[2]) if self.lower_during_descent else stance_height)
         corrected[2]+=ease((t-self.rise_start)/.5)*(target_height-root[2])
         self.com_target=self.com_goal.copy();self.com_target[2]+=corrected[2]-root[2]
         for _ in range(3):
-            result=super().solve(corrected,references,yaw);mujoco.mj_forward(self.m,self.scratch)
+            result=self.leg_solution(corrected,references,yaw);mujoco.mj_forward(self.m,self.scratch)
             corrected[:2]+=np.clip(self.com_target[:2]-self.scratch.subtree_com[1,:2],-.003,.003)
+        return result
+
+    def walking_bounds(self):
+        b=self.limits.copy()
+        for offset in [0,6]:
+            for j,lo,hi in [(0,-1.1,.7),(1,-.45,.45),(2,-.6,.6),(3,.08,1.85)]:
+                b[offset+j]=[max(b[offset+j,0],lo),min(b[offset+j,1],hi)]
+        return b
+
+    def leg_solution(self,root,feet,yaw):
+        if not self.backward or not self.bounded_backward:return super().solve(root,feet,yaw)
+        from ..richdesk.stepping import ease
+        s=self.scratch;m=self.m;s.qpos[:]=self.d.qpos;s.qpos[:3]=root
+        s.qpos[3:7]=[math.cos(yaw/2),0,0,math.sin(yaw/2)];s.qpos[self.qids]=self.joint_target
+        c,sn=math.cos(yaw),math.sin(yaw);desired=np.array([[c,-sn,0],[sn,c,0],[0,0,1.]])
+        bounds=self.walking_bounds();errors=[]
+        for i,body in enumerate(self.feet):
+            ids=np.arange(i*6,(i+1)*6);qs=self.qids[ids];vs=self.vids[ids];previous=self.joint_target[ids].copy()
+            lo=np.maximum(bounds[ids,0]+.002,previous-.08);hi=np.minimum(bounds[ids,1]-.002,previous+.08)
+            pitch_weight=.03
+            if self.stage=='swing' and i==self.swing:
+                u=float(np.clip((self.d.time-(self.arc_start or self.d.time))/1.,0,1))
+                pitch_weight=.003+.027*ease((u-.7)/.3)
+            weights=np.array([.03,pitch_weight,.03]);s.qpos[qs]=np.clip(previous,lo,hi)
+            def residual():
+                mujoco.mj_forward(m,s);R=s.xmat[body].reshape(3,3);point=s.xpos[body]+R@self.local
+                rot=desired.T@(.5*sum((np.cross(R[:,j],desired[:,j]) for j in range(3)),np.zeros(3)))
+                return np.r_[feet[i]-point,rot*weights,(previous-s.qpos[qs])*.0003]
+            for _ in range(10):
+                error=residual();old=s.qpos[qs].copy();cost=float(error@error)
+                J=np.zeros((3,m.nv));Jr=np.zeros_like(J);mujoco.mj_jac(m,s,J,Jr,s.xpos[body]+s.xmat[body].reshape(3,3)@self.local,body)
+                A=np.vstack([J[:,vs],(desired.T@Jr[:,vs])*weights[:,None],np.eye(6)*.0003])
+                step=np.linalg.solve(A.T@A+np.eye(6)*1e-9,A.T@error)
+                accepted=False
+                for fraction in [1.,.5,.25,.125]:
+                    s.qpos[qs]=np.clip(old+step*fraction,lo,hi);candidate=residual()
+                    if candidate@candidate<=cost:accepted=True;break
+                if not accepted:s.qpos[qs]=old;break
+                if np.linalg.norm(s.qpos[qs]-old)<1e-6:break
+            error=residual();errors.append(float(np.linalg.norm(error[:3])))
+        result=s.qpos[self.qids].copy()
+        if not self.ik_log or self.d.time-self.ik_log[-1]['t']>.04:
+            self.ik_log.append({'t':float(self.d.time),'phase':self.stage,'foot_position_error_m':errors,'maximum_reference_change_rad':float(np.max(abs(result-self.joint_target)))})
         return result
 
     def command(self,velocity):
@@ -197,4 +246,4 @@ class ContactWalker(PlannedContactInverseWalker):
                 'arm_effort_residual':float(np.max(abs(s.qfrc_inverse[arms]-arm_effort))),
                 'torque_clipped':bool(np.any(abs(desired-self.torque)>1e-6)),'iterations':iteration+1})
 
-    def description(self):return {**super().description(),'support_poses':self.pose_log,'stance_width_m':self.width,'adaptive_swing':self.adaptive_swing,'balance_feedback':self.balance_feedback,'native_weights_trained':False}
+    def description(self):return {**super().description(),'support_poses':self.pose_log,'stance_width_m':self.width,'adaptive_swing':self.adaptive_swing,'balance_feedback':self.balance_feedback,'ik_trace':self.ik_log,'native_weights_trained':False}
