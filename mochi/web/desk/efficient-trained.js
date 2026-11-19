@@ -1,4 +1,5 @@
 import {createCurriculumStage} from './curriculum-stage.js';
+import {stepCountAt,taskStatesAt,comparisonEvidence,taskNames} from './efficient-evidence.mjs';
 const $=q=>document.querySelector(q),folder='efficient-v15/';
 let manifest,stages,scenario,version,episodes,playing=true,time=0,last=performance.now(),loading=false,requestId=0;
 const cache=new Map();
@@ -17,6 +18,7 @@ async function load(){
   $('#right-title').textContent=`${version.update} NEW OPTIMIZER UPDATE${version.update===1?'':'S'}`;
   $('#checkpoint-label').textContent=`Update ${version.update} · ${after.cumulative_updates} cumulative`;
   $('#scope').textContent=(scenario.partition.startsWith('held_out')?'Final test scenario. The checkpoint was frozen before this test. '+(scenario.partition==='held_out_pending'?'The full cohort is still in progress. ':''):'Development scenario used for checkpoint selection. ')+manifest.display_note;
+  const comparison=comparisonEvidence(before,after);$('#pair-result').className='pair-result '+comparison.status;$('#pair-headline').textContent=comparison.headline;$('#pair-detail').textContent=comparison.detail;
   setPlayback(true);
   for(const key of cache.keys()){if(cache.size<=4)break;if(key!==scenario.parent_file&&key!==version.file)cache.delete(key)}
  }finally{if(id===requestId)loading=false}
@@ -32,7 +34,9 @@ function tick(now){
   for(let i=0;i<2;i++){
    const e=episodes[i],f=stages[i].frame(Math.min(time,e.duration)),m=e.balance_measurements.findLast(x=>x.t<=time)||e.balance_measurements[0];
    const meta=manifest.recordings[i?version.file:scenario.parent_file];
-   const stepCount=e.step_events.filter(v=>v.detected_t<=Math.min(time,e.duration)).length;
+   const stepCount=stepCountAt(e,time);
+   const side=i?'right':'left';$('#'+side+'-steps').textContent=String(stepCount);$('#'+side+'-elapsed').textContent=Math.min(time,e.duration).toFixed(1);
+   for(const state of taskStatesAt(e,Math.min(time,e.duration))){const node=$('#'+side+'-task-'+state.task);node.className='task-state '+state.status;node.textContent=taskNames[state.task]+(state.status==='passed'?' ✓':state.status==='failed'?' ×':state.status==='active'?' …':'')}
    const phase=time>=e.duration?(meta.complete?(meta.qualified_complete?'All tasks verified':'Tasks verified; quality limits exceeded'):outcomeLabel(meta.failure||'Incomplete')):(f?.task||f?.phase||'walking');
    $('#'+(i?'right':'left')+'-metrics').textContent=`${phase} · ${stepCount} steps · roll ${(m.roll_rad*180/Math.PI).toFixed(1)}° · ${Math.min(time,e.duration).toFixed(1)} s`;
   }

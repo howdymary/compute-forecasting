@@ -1,3 +1,4 @@
+import {stepCountAt,taskStatesAt,comparisonEvidence,taskNames} from '../web/desk/efficient-evidence.mjs';
 import fs from 'node:fs';
 import vm from 'node:vm';
 import assert from 'node:assert/strict';
@@ -9,12 +10,12 @@ const nodes=new Map(),stages=[];
 class El{constructor(){this.children=[];this.value='';this.style={}}append(...x){this.children.push(...x)}}
 for(const [,id]of fs.readFileSync(base+page+'.html','utf8').matchAll(/\bid="([^"]+)"/g))nodes.set('#'+id,new El());
 nodes.get('#speed').value='1';
-const context=vm.createContext({console,performance,Response,Blob,DecompressionStream,TextDecoder,Uint8Array,URLSearchParams,location:{search:''},
+const context=vm.createContext({stepCountAt,taskStatesAt,comparisonEvidence,taskNames,console,performance,Response,Blob,DecompressionStream,TextDecoder,Uint8Array,URLSearchParams,location:{search:''},
  requestAnimationFrame(fn){context.tick=fn;context.renderScheduled=true},document:{querySelector(q){assert(nodes.has(q),q);return nodes.get(q)},createElement(){return new El()}},
  fetch:async path=>fs.existsSync(base+path)?new Response(fs.readFileSync(base+path)):new Response('',{status:404}),
  createCurriculumStage(el,options){let stage={options,ready:Promise.resolve(),setEpisode(e){this.episode=e},view(){},inspect(){},frame(t){this.time=t;return this.episode.trajectory.frames.findLast(f=>f.t<=t)||this.episode.trajectory.frames[0]}};stages.push(stage);return stage}
 });
-vm.runInContext(fs.readFileSync(base+page+'.js','utf8').replace(/^import[^\n]+\n/,''),context);
+vm.runInContext(fs.readFileSync(base+page+'.js','utf8').replace(/^import[^\n]+\n/gm,''),context);
 async function settle(){for(let i=0;i<1000;i++){await new Promise(r=>setTimeout(r,10));if(context.renderScheduled&&!vm.runInContext('loading',context))return}throw Error('Checkpoint viewer did not load')}
 await settle();
 assert.equal(stages.length,2);
@@ -30,6 +31,9 @@ for(const scenario of m.scenarios){
   assert.equal(nodes.get('#right-id').textContent,meta.checkpoint_id.slice(0,12));
   nodes.get('#scrub').oninput({target:{value:nodes.get('#scrub').max}});context.tick(performance.now()+100);
   assert.equal(stages[0].time,a.duration);assert.equal(stages[1].time,b.duration);
+  assert.equal(+nodes.get('#left-steps').textContent,a.steps.attempts);assert.equal(+nodes.get('#right-steps').textContent,b.steps.attempts);
+  assert.equal(+nodes.get('#right-elapsed').textContent,+b.duration.toFixed(1));
+  for(const state of taskStatesAt(b,b.duration))assert.equal(nodes.get('#right-task-'+state.task).className,'task-state '+state.status);
  }
 }
 assert.equal(nodes.get('#scenario').children.length,m.scenarios.length);
