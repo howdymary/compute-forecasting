@@ -1,9 +1,9 @@
 {
-  "revision": 2,
-  "scope": "Actually post-train walking, four contact tasks and recovery with the integrated turning fix; target fewer safe physical steps. Preserve active V13 and wait for the shared resource gate.",
+  "revision": 3,
+  "scope": "Post-train turning-integrated walking and task decisions with fewer safe steps. Preserve the V13 evaluation; start after all16 predecessor optimizer updates complete, using only a completed qualified parent.",
   "predecessor_run": 44600829444,
   "optimizer_update_limit": 16,
   "physical_rollout_limit": 224,
   "cpu_hour_limit": 18,
-  "revision_reason": "Persist quality classification before publication and include paired descriptive uncertainty."
+  "revision_reason": "Permit independent evaluation overlap after predecessor gradients finish; new campaign keeps four-worker and18 CPU-hour limits."
 }

@@ -10,14 +10,24 @@ from ..integrations import digest
 from ..maintenance.checkpoints_by_date import inventory
 
 
+def ready_for_new_training(job,report,allow_evaluation_overlap):
+    if job['status']=='completed':
+        return True
+    authorized=report.get('protocol',{}).get('training',{}).get('updates') if report else None
+    return bool(allow_evaluation_overlap and authorized==16 and report.get('optimizer_updates_completed')==authorized)
+
+
 async def load_parent(cfg):
     import tinker
     status_path=ROOT/'.cache/v15-predecessor-status.json'
     status=json.loads(status_path.read_text())
     trains=[j for j in status['jobs'] if j['name']=='train']
-    assert len(trains)==1 and trains[0]['status']=='completed', 'The previous physical training job is still active'
+    assert len(trains)==1
     previous=await modal.Dict.from_name('mochi-terrain-v13-progress').get.aio('mochi-t13-'+str(cfg['predecessor_run']))
+    assert ready_for_new_training(trains[0],previous,cfg['execution']['allow_evaluation_overlap']), 'The predecessor still has authorized optimizer work remaining'
     reasons=[]
+    if trains[0]['status']!='completed':
+        reasons.append('All16 predecessor optimizer updates completed; its physical evaluation continues independently. Restore only an already completed qualified parent.')
     if previous and previous.get('status')=='completed' and previous.get('held_out_opened'):
         held=previous.get('held_out',{})
         selected=held.get('selected',{})

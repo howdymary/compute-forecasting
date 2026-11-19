@@ -20,7 +20,7 @@ Native-walking acceleration RMS was 134.48 rad/s² for W0 and 138.94 for W4/G0. 
 
 ## Parent and partitions
 
-The previous training job remains unchanged. The new workflow shares its resource concurrency group and waits for it to finish. Use its selected checkpoint only if the run completed final evaluation and passes the declared qualification. Otherwise restore the completed V12 selection, update 1 in that campaign and 105 cumulative updates. Resolve its canonical optimizer state by the recorded hash through Tinker's inventory. Never promote the newest checkpoint merely because it is newer.
+The previous job remains unchanged. The new workflow may start once all sixteen of its authorized optimizer updates have completed, while its physical evaluation continues. Each campaign keeps its own four-worker and CPU-hour ceiling; the combined number of active simulation calls may reach eight. Use the V13 selected checkpoint only if the run has completed final evaluation and passes the declared qualification. Otherwise restore the completed V12 selection, update 1 in that campaign and 105 cumulative updates. Resolve its canonical optimizer state by the recorded hash through Tinker's inventory. Never promote the newest checkpoint merely because it is newer.
 
 Use four new training seeds 91000–91003, three development seeds 92000–92002 and four unopened final seeds 93000–93003. The known seed-41001 engineering example is used only for the remote preflight. It is not fresh benchmark data.
 

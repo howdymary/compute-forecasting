@@ -41,6 +41,11 @@ def summarize_and_save(name,rows,cfg):
     return stats
 
 
+def probe_summary(row):
+    return {**{k:row.get(k) for k in ['seed','complete_sequence_success','failure','archive','public_recording','model_decisions','direction_metrics']},
+            'steps':row['episode']['steps'],'duration_s':row['episode']['duration']}
+
+
 async def main():
     import tinker
     from tinker_cookbook.recipes.decisions import decision_choice_datums, sample_decision
@@ -354,8 +359,8 @@ async def main():
                         await publish()
                         early_evaluations=await batch(evaluate,[(cfg['development_seeds'][0],'policy',
                             sampler_payload(snapshots[1]),run_id,'dev-1')],1800,1,24000)
-                        report['first_optimizer_physical_probe']={'parent':development[0][0],
-                            'updated':early_evaluations[0]['row'],'scope':'Predeclared development scenario, retained in final development comparison.'}
+                        report['first_optimizer_physical_probe']={'parent':probe_summary(development[0][0]),
+                            'updated':probe_summary(early_evaluations[0]['row']),'scope':'Predeclared development scenario, retained in final development comparison. Exact trajectories and counters are in the hash-verified archives.'}
                         report['phase']='Join remaining frozen-parent data after first optimizer probe'
                         await publish()
                         teachers=await teacher_task

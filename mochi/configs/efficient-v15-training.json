@@ -2,7 +2,7 @@
   "study": "mochi-efficient-v15",
   "predecessor_run": 44600829444,
   "implementation_prompt": "docs/efficient-v15.md",
-  "prompt_sha256": "11d59e1e69a6730b05bf6c4246993fe6b46541d3b10a2c27dae66d41601c487b",
+  "prompt_sha256": "b39f1b181630e098cf2f2387ecbbc1c7f0c2fa7c52bb7a2475b3557b67576763",
   "fallback_report_sha256": "795030f742437f818952ee66e011bcbac8f34c210490161ed5140cded15fd518",
   "engineering_evidence_sha256": "e1ab8d5c5f0a897fe4f7e90a4157d32bad57346b7785b4d4f349051d959b3dc7",
   "preflight_seed": 41001,
@@ -193,7 +193,7 @@
     "src/mochi/efficient_v15/__init__.py": "3de5c828b86b832fdbb5cca7020df822bdc67df23c7f81554d744dbd815094f3",
     "src/mochi/efficient_v15/navigation.py": "70d5412cbf2b7016123e4a546f863edb63722c599196e0940f70932830782c6d",
     "src/mochi/efficient_v15/objective.py": "8cd0aef74f475fe6af0be9d4d9fbbe2150b09d004bb4696ce3edd6e0e919f395",
-    "src/mochi/efficient_v15/parent.py": "c45f4563c2a6f69975d69e597fcfe2878d1b72956b802f0831297800bcbea452",
+    "src/mochi/efficient_v15/parent.py": "6c4fd113623b640d1a7950aaa5c5a86a623cd8a2df3a9a2f38a8f44bdbddd514",
     "src/mochi/efficient_v15/policy.py": "2f7b692dc61068f54c7ba0f551bfe0e98c8bdfdc48fef2e623e7753d031667f1",
     "src/mochi/efficient_v15/probe.py": "0b921494e14f9cc33fb4e1e2602a4ab1363ccd4fb1c4ff3140cf4a63eeb374e3",
     "src/mochi/efficient_v15/public.py": "298e80fcf4e80cb34392017f1edbdb45c454be8f420bebff490329073b089764",
@@ -201,9 +201,9 @@
     "src/mochi/efficient_v15/sequence.py": "685fb2f11367295998a2ca1dc348816bb674b0d849f2dd8f42077a3d8df0bddd",
     "src/mochi/efficient_v15/services.py": "71b749488561558aa64f56ad7b99a3c15c7754a2114f3a775375d802d97e07bb",
     "src/mochi/efficient_v15/steps.py": "ca49699f658b0ab8c88e5ed8872dba66fc99065757008f7fbdded8f3f6e935e8",
-    "src/mochi/efficient_v15/train.py": "7edf06b089278662008c7fb5d88223d5ad737407c7c486dbed12ffe1d5facae3",
+    "src/mochi/efficient_v15/train.py": "e922b470984c03d16dab0b6053f07b0ca9f0a1fea42fd2642cec213b308ca16a",
     "src/mochi/efficient_v15/world.py": "6c37edda7864f8d466482101acafb594f4e085dcb9174d68b3ac28fac9bedcde",
-    "docs/efficient-v15.md": "11d59e1e69a6730b05bf6c4246993fe6b46541d3b10a2c27dae66d41601c487b",
+    "docs/efficient-v15.md": "b39f1b181630e098cf2f2387ecbbc1c7f0c2fa7c52bb7a2475b3557b67576763",
     "evidence/efficient-v15/engineering.json": "e1ab8d5c5f0a897fe4f7e90a4157d32bad57346b7785b4d4f349051d959b3dc7"
   },
   "smoothness": {
@@ -241,7 +241,9 @@
     "main_step_minutes": 335,
     "cpu_per_worker": 1,
     "max_workers": 4,
-    "numerical_threads": 1
+    "numerical_threads": 1,
+    "allow_evaluation_overlap": true,
+    "overlap_scope": "Only after all16 predecessor optimizer updates finish. Both campaigns keep independent four-worker and CPU-hour ceilings; combined active simulation calls may reach8."
   },
   "scope": "Tinker post-trains shared Qwen3.5-4B LoRA decision weights for directional walking strategies, four contact tasks and arm recovery. Both parent and every checkpoint use the same new navigator and bounded action library. Native ONNX gait weights, MuJoCo physics, scene, route, verifiers and step detector stay fixed. Engineering gains are separate from measured weight-training gains."
 }

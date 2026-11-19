@@ -49,7 +49,8 @@ def main():
             'first_update_after':'At least two valid complete collectors, all six domains and substantial walking/task corrections; remaining pinned-parent collectors may still run.',
             'global_worker_limit':4,'incremental_branch_archives':True},
         'execution':{'teacher_timeout_s':5400,'evaluation_timeout_s':1800,'component_timeout_s':3600,
-            'job_minutes':360,'main_step_minutes':335,'cpu_per_worker':1,'max_workers':4,'numerical_threads':1},
+            'job_minutes':360,'main_step_minutes':335,'cpu_per_worker':1,'max_workers':4,'numerical_threads':1,
+            'allow_evaluation_overlap':True,'overlap_scope':'Only after all16 predecessor optimizer updates finish. Both campaigns keep independent four-worker and CPU-hour ceilings; combined active simulation calls may reach8.'},
         'scope':'Tinker post-trains shared Qwen3.5-4B LoRA decision weights for directional walking strategies, four contact tasks and arm recovery. Both parent and every checkpoint use the same new navigator and bounded action library. Native ONNX gait weights, MuJoCo physics, scene, route, verifiers and step detector stay fixed. Engineering gains are separate from measured weight-training gains.'}
     target=ROOT/'configs/efficient-v15-training.json'
     target.write_text(json.dumps(cfg,indent=2)+'\n')

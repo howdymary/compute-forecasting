@@ -99,3 +99,13 @@ def test_paired_efficiency_excludes_failed_early_episodes_and_reports_uncertaint
     assert result['n']==2
     assert result['mean_step_reduction_fraction']==pytest.approx(.4375)
     assert result['mean_step_reduction_bootstrap_95']==pytest.approx([.375,.5])
+
+
+def test_predecessor_optimizer_work_finishes_before_overlap():
+    from mochi.efficient_v15.parent import ready_for_new_training
+    job={'status':'in_progress'}
+    report={'protocol':{'training':{'updates':16}},'optimizer_updates_completed':15}
+    assert not ready_for_new_training(job,report,True)
+    report['optimizer_updates_completed']=16
+    assert ready_for_new_training(job,report,True)
+    assert not ready_for_new_training(job,report,False)

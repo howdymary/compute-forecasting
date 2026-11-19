@@ -6,9 +6,9 @@ on:
 permissions:
   contents: read
   actions: read
-# Deliberately share the existing training resource gate. Never cancel V13.
+# Separate study; the backend checks V13 has finished its optimizer work.
 concurrency:
-  group: mochi-terrain-v13-resource-budget
+  group: mochi-efficient-v15-resource-budget
   cancel-in-progress: false
 jobs:
   train:
@@ -21,7 +21,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: {python-version: '3.11'}
-      - name: Record terminal predecessor status
+      - name: Record predecessor status without changing its run
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
