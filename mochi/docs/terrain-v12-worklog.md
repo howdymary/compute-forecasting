@@ -117,3 +117,9 @@ The first remote development evaluation stopped before producing an outcome beca
 The parent completed 2/3 development sequences with 2/3 within frozen smoothness limits. The one-update checkpoint completed 3/3 with 3/3 within limits. All six traversals passed the clock, book ascent/descent and drawer. The parent failure on seed 43002 was a left-hip contact with the laptop lid during release (0.487 N), not a clock collision. These are development results; the other checkpoints and final test remain pending.
 
 A read-only collector exports the completed immutable archives without simulations or model calls. The development preview contains all three scenarios, both complete trajectories, actual checkpoint IDs and explicit pending-final-test labels. It is not a frozen final checkpoint selection.
+
+The development preview deployment (run 44491880665, source d0b3ae8) passed its actual-release checks. HTML, JavaScript, manifest and a compressed recording matched deployed bytes. Headless Chrome rendered the paired 3D scenes for scenario 43002 at physical time 234.4 s, showing the retained laptop failure and the trained model continuing toward the globe. The image was inspected; final testing remains pending.
+
+The eight-update checkpoint also completed 3/3 development sequences within the frozen smoothness limits: mean 250.24 simulated seconds and torso-roll RMS 0.274 degrees. The one-update checkpoint averaged 255.02 s and 0.263 degrees. The eight-update version is faster but has slightly greater measured torso roll; neither is claimed to dominate on every measure. The 32-update evaluation and final testing remain pending.
+
+After this evaluation ends, the requested next step is to assess walking, task contact and recovery, write an evidence-grounded next-training prompt and execute it. The next campaign must use a new identity and fresh final-test scenarios.

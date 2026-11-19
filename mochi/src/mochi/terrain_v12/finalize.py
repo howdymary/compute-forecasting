@@ -41,9 +41,11 @@ async def main():
     assert digest(paths['0']['optimizer'])==protocol['parent_checkpoint_sha256']
     for p in source.glob('*.json'):
         OUT.mkdir(parents=True,exist_ok=True);shutil.copy2(p,OUT/p.name)
+    previous_recovery=original.get('recovery',{})
+    prior_evaluations=list(dict.fromkeys(previous_recovery.get('previous_evaluation_runs',[])+([str(previous_recovery['evaluation_run'])] if previous_recovery.get('evaluation_run') else [])+list(map(str,cfg.get('reuse_evaluation_runs',[])))))
     report=copy.deepcopy(original);old_run=original['run_id'];run_id='mochi-t12-final-'+os.environ['GITHUB_RUN_ID']
     report.update(status='running',phase='Restore durable checkpoints for evaluation',recovery={
-        'source_training_run':cfg['source_run'],'evaluation_run':os.environ['GITHUB_RUN_ID'],
+        'source_training_run':previous_recovery.get('source_training_run',cfg['source_run']),'source_artifact_run':cfg['source_run'],'evaluation_run':os.environ['GITHUB_RUN_ID'],'previous_evaluation_runs':prior_evaluations,
         'evaluation_source_sha':os.environ.get('GITHUB_SHA'),'extra_optimizer_updates':0,
         'original_error_type':original.get('error_type'),'deadline_seconds':cfg['evaluation_timeout_s'],
         'physics_unchanged':True,'infrastructure_repairs':cfg.get('infrastructure_repairs',{}),'unavailable_completed_updates_after_last_durable':updates-max(map(int,paths)),
@@ -65,15 +67,23 @@ async def main():
     function=evaluate.with_options(timeout=cfg['evaluation_timeout_s'])
     clients=[];snapshots={};started=time.perf_counter();new_results={}
     async def cached(group,seed,label):
-        path=f'{old_run}/{group}-{seed}-{label}.json.gz'
-        try:
-            chunks=[]
-            async for part in volume.read_file.aio(path):chunks.append(part)
-            raw=gzip.decompress(b''.join(chunks));row=json.loads(raw)
-        except (FileNotFoundError,NotFoundError):return None
-        if row.get('failure')=='inference_token_limit':return None
-        row['archive']={'volume':'mochi-terrain-v12-artifacts','path':path,'uncompressed_sha256':hashlib.sha256(raw).hexdigest()}
-        return compact(row)
+        local=source/f'recovered-{group}-{seed}-{label}.json'
+        if local.exists():
+            row=json.loads(local.read_text());assert row['seed']==seed
+            if row.get('failure')!='inference_token_limit':return row
+        prefixes=['mochi-t12-final-'+value for value in reversed(prior_evaluations)]+[old_run]
+        for prefix in prefixes:
+            path=f'{prefix}/{group}-{seed}-{label}.json.gz'
+            try:
+                chunks=[]
+                async for part in volume.read_file.aio(path):chunks.append(part)
+                raw=gzip.decompress(b''.join(chunks));row=json.loads(raw)
+            except (FileNotFoundError,NotFoundError):continue
+            assert row['seed']==seed
+            if row.get('failure')=='inference_token_limit':continue
+            row['archive']={'volume':'mochi-terrain-v12-artifacts','path':path,'uncompressed_sha256':hashlib.sha256(raw).hexdigest()}
+            return compact(row)
+        return None
     async def batch(seeds,models,group,domains=None):
         results={};queue=asyncio.Queue()
         for seed in seeds:

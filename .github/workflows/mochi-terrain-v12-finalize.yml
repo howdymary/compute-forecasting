@@ -12,7 +12,7 @@ concurrency:
 jobs:
   evaluate:
     runs-on: ubuntu-latest
-    timeout-minutes: 210
+    timeout-minutes: 300
     env:
       PYTHONPATH: ${{ github.workspace }}/mochi/src
       MOCHI_ROOT: ${{ github.workspace }}/mochi
@@ -26,12 +26,14 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           SOURCE_RUN=$(python -c 'import json; print(json.load(open("mochi/configs/terrain-v12-finalize.json"))["source_run"])')
-          gh run download "$SOURCE_RUN" --name "mochi-terrain-v12-training-$SOURCE_RUN" --dir "$MOCHI_RECOVERY_SOURCE"
+          SOURCE_ARTIFACT=$(python -c 'import json; c=json.load(open("mochi/configs/terrain-v12-finalize.json")); print(c.get("source_artifact_name", "mochi-terrain-v12-training-"+str(c["source_run"])))')
+          gh run download "$SOURCE_RUN" --name "$SOURCE_ARTIFACT" --dir "$MOCHI_RECOVERY_SOURCE"
       - run: |
           python -m pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu
           python -m pip install './mochi[remote,robotics,dev]' pyyaml==6.0.2
           python mochi/scripts/fetch_visual_models.py
       - name: Evaluate saved weights with zero new optimizer updates
+        timeout-minutes: 280
         env:
           TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
           PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
