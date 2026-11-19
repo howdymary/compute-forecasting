@@ -41,12 +41,13 @@ def receipt(start,count):
 
 @app.function(image=image,cpu=1,memory=3072,max_containers=4,timeout=1200,volumes={'/artifacts':volume})
 def collect_teacher(seed,run_id,preflight=False):
+    started=time.perf_counter()
     import numpy as np
     from .sequence import run,PhysicalStop
     from .snapshot import branch
     from .policy import fixed,observation,execute
     from ..balanced.verification import metrics
-    count=1;examples=[];trials=[];started=time.perf_counter()
+    count=1;examples=[];trials=[]
     def choose(w,domain,task,default,choices):
         nonlocal count
         if preflight:return fixed(w,domain,task,default,choices)
@@ -88,13 +89,14 @@ def collect_teacher(seed,run_id,preflight=False):
 
 @app.function(image=image,secrets=[secret],cpu=1,memory=3072,max_containers=4,timeout=900,volumes={'/artifacts':volume})
 def evaluate(seed,models,run_id,group,domains=None):
+    started=time.perf_counter()
     async def body():
         from tinker.lib.public_interfaces.sampling_client import _unpickle_sampling_client
         from tinker_cookbook import model_info,renderers
         from tinker_cookbook.recipes.decisions import DecisionRenderer,sample_decision
         from .sequence import run,PhysicalStop
         from .policy import fixed,observation,decision
-        started=time.perf_counter();results={};inference_tokens=0
+        results={};inference_tokens=0
         for label,payload in models:
             sampler=_unpickle_sampling_client(pickle.loads(payload)) if payload else None
             renderer=DecisionRenderer(renderers.get_renderer(model_info.get_recommended_renderer_name('Qwen/Qwen3.5-4B'),sampler.get_tokenizer())) if sampler else None

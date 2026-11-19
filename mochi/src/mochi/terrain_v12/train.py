@@ -57,7 +57,8 @@ async def main():
     services.audience=run_id+'-shared';services.private=run_id+'-critic'
     report={'study':cfg['study'],'run_id':run_id,'source_sha':os.getenv('GITHUB_SHA'),'created_at':now(),
             'status':'running','phase':'Remote feasibility preflight','protocol':cfg,'scope':cfg['scope'],
-            'optimizer_updates_completed':0,'training_log':[],'checkpoints':[],'held_out_opened':False}
+            'optimizer_updates_completed':0,'training_log':[],'checkpoints':[],'held_out_opened':False,
+            'physics_receipts':[],'campaign_modal_rollouts_completed':0}
     budget_store=modal.Dict.from_name('mochi-terrain-v12-budget',create_if_missing=True)
     usage=await budget_store.get.aio('usage')
     if usage is None:
@@ -81,6 +82,9 @@ async def main():
         answers=[]
         async for row in function.starmap.aio(args,order_outputs=True):
             answers.append(row)
+            report['physics_receipts'].append({'phase':report['phase'],'receipt':row['receipt'],'seed':row.get('seed')})
+            report['campaign_modal_rollouts_completed']+=row['receipt']['physical_rollouts']
+            await publish()
         actual_rollouts=sum(r['receipt']['physical_rollouts'] for r in answers)
         await change('modal_rollouts',actual_rollouts-count*rollout_cap)
         await change('modal_cpu_hours',sum(r['receipt']['duration_seconds'] for r in answers)/3600-count*timeout/3600)
