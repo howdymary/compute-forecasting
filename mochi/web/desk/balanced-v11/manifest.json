@@ -1,0 +1,1299 @@
+{
+  "study": "mochi-balanced-v11",
+  "optimizer_updates_completed": 0,
+  "training_gate_open": true,
+  "scope": "Engineering revisions; no trained-weight improvement claimed.",
+  "scene": {
+    "version": "richdesk-v9",
+    "units": "metres",
+    "desk": [
+      1.2,
+      0.8
+    ],
+    "initial_pose": [
+      -0.375,
+      -0.225,
+      1.5707963267948966
+    ],
+    "clock_offset": [
+      0,
+      0,
+      0.024
+    ],
+    "globe_offset": [
+      0,
+      -0.37,
+      0
+    ],
+    "book_height": 0.008,
+    "book_collision_scope": "Fixed, nonsliding book terrain; visual meshes and collision envelopes share the same placements. No root motion is authored.",
+    "props": [
+      {
+        "name": "book-step-1",
+        "asset": "book",
+        "pos": [
+          -0.36,
+          0.02,
+          0
+        ],
+        "size": [
+          0.23,
+          0.3,
+          0.008
+        ],
+        "yaw": 0,
+        "color": "#334d56",
+        "shape": "box",
+        "climb": true,
+        "title": "FIELD NOTES"
+      },
+      {
+        "name": "book-step-2",
+        "asset": "book",
+        "pos": [
+          -0.36,
+          0.045,
+          0.008
+        ],
+        "size": [
+          0.22,
+          0.23,
+          0.008
+        ],
+        "yaw": 0,
+        "color": "#8f5248",
+        "shape": "box",
+        "climb": true,
+        "title": "ROBOT MOTION"
+      },
+      {
+        "name": "book-step-3",
+        "asset": "book",
+        "pos": [
+          -0.36,
+          0.07,
+          0.016
+        ],
+        "size": [
+          0.2,
+          0.18,
+          0.008
+        ],
+        "yaw": 0,
+        "color": "#777c55",
+        "shape": "box",
+        "climb": true,
+        "title": "PRACTICAL MECHANICS"
+      },
+      {
+        "name": "printer",
+        "asset": "printer",
+        "pos": [
+          0.435,
+          0.29,
+          0
+        ],
+        "size": [
+          0.28,
+          0.18,
+          0.17
+        ],
+        "yaw": 0,
+        "shape": "box"
+      },
+      {
+        "name": "coffee-mug",
+        "asset": "mug",
+        "pos": [
+          -0.06,
+          -0.13,
+          0
+        ],
+        "size": [
+          0.105,
+          0.085,
+          0.095
+        ],
+        "yaw": -0.3,
+        "shape": "cylinder"
+      },
+      {
+        "name": "spiral-notebook",
+        "asset": "notebook",
+        "pos": [
+          0.055,
+          -0.265,
+          0
+        ],
+        "size": [
+          0.2,
+          0.145,
+          0.007
+        ],
+        "yaw": -0.12,
+        "shape": "box"
+      },
+      {
+        "name": "pencil-1",
+        "asset": "pencil",
+        "pos": [
+          -0.214,
+          -0.239,
+          0
+        ],
+        "size": [
+          0.17,
+          0.007,
+          0.007
+        ],
+        "yaw": 0.22,
+        "shape": "capsule"
+      },
+      {
+        "name": "pencil-2",
+        "asset": "pencil",
+        "pos": [
+          0.1,
+          -0.235,
+          0.007
+        ],
+        "size": [
+          0.16,
+          0.0065,
+          0.0065
+        ],
+        "yaw": -0.46,
+        "shape": "capsule"
+      },
+      {
+        "name": "pencil-3",
+        "asset": "pencil",
+        "pos": [
+          -0.267,
+          0.293,
+          0
+        ],
+        "size": [
+          0.15,
+          0.007,
+          0.007
+        ],
+        "yaw": 0.33,
+        "shape": "capsule"
+      },
+      {
+        "name": "pen-1",
+        "asset": "pen",
+        "pos": [
+          -0.115,
+          -0.265,
+          0
+        ],
+        "size": [
+          0.145,
+          0.009,
+          0.009
+        ],
+        "yaw": -0.62,
+        "shape": "capsule"
+      },
+      {
+        "name": "pen-2",
+        "asset": "pen",
+        "pos": [
+          0.245,
+          -0.276,
+          0
+        ],
+        "size": [
+          0.14,
+          0.009,
+          0.009
+        ],
+        "yaw": 0.15,
+        "shape": "capsule"
+      },
+      {
+        "name": "stapler",
+        "asset": "stapler",
+        "pos": [
+          0.213,
+          0.327,
+          0
+        ],
+        "size": [
+          0.11,
+          0.035,
+          0.04
+        ],
+        "yaw": 0.12,
+        "shape": "box"
+      },
+      {
+        "name": "reading-glasses",
+        "asset": "glasses",
+        "pos": [
+          0.235,
+          -0.325,
+          0
+        ],
+        "size": [
+          0.14,
+          0.044,
+          0.016
+        ],
+        "yaw": -0.1,
+        "shape": "box"
+      },
+      {
+        "name": "reference-book",
+        "asset": "book",
+        "pos": [
+          -0.43,
+          0.285,
+          0
+        ],
+        "size": [
+          0.19,
+          0.14,
+          0.015
+        ],
+        "yaw": -0.08,
+        "color": "#545755",
+        "shape": "box",
+        "title": "WORKSHOP HANDBOOK"
+      },
+      {
+        "name": "loose-page-1",
+        "asset": "paper",
+        "pos": [
+          0.355,
+          -0.315,
+          0
+        ],
+        "size": [
+          0.15,
+          0.105,
+          0.0002
+        ],
+        "yaw": 0.12,
+        "shape": "box"
+      },
+      {
+        "name": "loose-page-2",
+        "asset": "paper",
+        "pos": [
+          0.365,
+          -0.298,
+          0.0002
+        ],
+        "size": [
+          0.15,
+          0.105,
+          0.0002
+        ],
+        "yaw": 0.07,
+        "shape": "box"
+      },
+      {
+        "name": "sticky-notes",
+        "asset": "sticky",
+        "pos": [
+          0.236,
+          0.015,
+          0
+        ],
+        "size": [
+          0.044,
+          0.044,
+          0.0024
+        ],
+        "yaw": 0.08,
+        "shape": "box"
+      },
+      {
+        "name": "printer-output-tray",
+        "asset": "tray",
+        "pos": [
+          0.435,
+          0.185,
+          0.048
+        ],
+        "size": [
+          0.19,
+          0.065,
+          0.005
+        ],
+        "yaw": 0,
+        "shape": "box"
+      },
+      {
+        "name": "printer-printout",
+        "asset": "paper",
+        "pos": [
+          0.435,
+          0.181,
+          0.054
+        ],
+        "size": [
+          0.17,
+          0.085,
+          0.0002
+        ],
+        "yaw": 0.03,
+        "shape": "box"
+      }
+    ],
+    "route": [
+      {
+        "name": "climb-to-alarm",
+        "goal": [
+          -0.375,
+          0.025,
+          1.5707963267948966
+        ],
+        "surface_height": 0.024
+      },
+      {
+        "name": "descend-books",
+        "goal": [
+          -0.375,
+          -0.19,
+          1.5707963267948966
+        ],
+        "surface_height": 0
+      },
+      {
+        "name": "clear-books",
+        "goal": [
+          -0.19,
+          -0.17,
+          0
+        ],
+        "surface_height": 0
+      },
+      {
+        "name": "drawer",
+        "goal": [
+          -0.13,
+          0.02,
+          1.5707963267948966
+        ],
+        "surface_height": 0
+      },
+      {
+        "name": "laptop-corridor",
+        "goal": [
+          0.3,
+          0.02,
+          0
+        ],
+        "surface_height": 0
+      },
+      {
+        "name": "laptop",
+        "goal": [
+          0.3,
+          0.16,
+          1.5707963267948966
+        ],
+        "surface_height": 0
+      },
+      {
+        "name": "globe-corridor",
+        "goal": [
+          0.35,
+          0.02,
+          1.5707963267948966
+        ],
+        "surface_height": 0
+      },
+      {
+        "name": "globe",
+        "goal": [
+          0.35,
+          -0.145,
+          0
+        ],
+        "surface_height": 0
+      }
+    ]
+  },
+  "attempts": [
+    {
+      "id": "baseline-sway-0",
+      "label": "Original support transfers",
+      "file": "baseline-sway-0.json",
+      "duration": 15.000565825993679,
+      "failure": null,
+      "fall": false,
+      "invalid_contact": false,
+      "verified_ascent": false,
+      "verified_descent": false,
+      "task_results": {},
+      "full_sequence_success": false,
+      "metrics": {
+        "samples": 1412,
+        "lateral_rms_m": 0.02196408997286662,
+        "lateral_peak_to_peak_m": 0.04844923184008504,
+        "roll_rms_deg": 0.3196470784816746,
+        "roll_peak_deg": 0.7432663647811064,
+        "progress_m": 0.017181082027482503,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      },
+      "arrivals": [],
+      "source_artifact_sha256": "7dd7bbd4cb027a71b0db9b25805e453078409ec2152bda20a8c9c50e4dbe4217",
+      "source_hashes": {
+        "src/mochi/balanced/world.py": "45509c0cf92d8168f734ba7ac57cbe169393d007736f14a2b4cfb1b36d7d1607",
+        "src/mochi/balanced/budget.py": "fa09e46cd6c87272039148ca33076265a3b1e55977de1a7bafe670043593a83d",
+        "src/mochi/balanced/__init__.py": "b77d055260e932c22d4b4447094ad9ecee34ee3ac00898735e25918098c5bfd0",
+        "src/mochi/balanced/probe.py": "7f829f00bb2d0e93330aae731b23f0f3e6ed4f6279cc82d05d965f4b933961fc",
+        "src/mochi/balanced/inverse.py": "187f0ae0cab1252518acd64f3ef310a8627c958700e71709827b3f2a3ea994e1"
+      },
+      "optimizer_updates_completed": 0
+    },
+    {
+      "id": "hub-brake-hold-1",
+      "label": "First verified book-top support",
+      "file": "hub-brake-hold-1.json",
+      "duration": 4.59744862154849,
+      "failure": null,
+      "fall": false,
+      "invalid_contact": false,
+      "verified_ascent": true,
+      "verified_descent": false,
+      "task_results": {},
+      "full_sequence_success": false,
+      "metrics": {
+        "samples": 433,
+        "lateral_rms_m": 0.010282196416151657,
+        "lateral_peak_to_peak_m": 0.03771769573203344,
+        "roll_rms_deg": 1.7829242854156557,
+        "roll_peak_deg": 9.703987243189205,
+        "sampled_joint_acceleration_rms_rad_s2": 228.56294434163289,
+        "sampled_torque_change_rms_nm": 0.004635009605023002,
+        "progress_m": 0.24153992948284525,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      },
+      "arrivals": [],
+      "source_artifact_sha256": "936daac733a055e7366f4400e8750b641932647935ecf9203866618f2b168f19",
+      "source_hashes": {
+        "src/mochi/balanced/preview.py": "25afb9aefc0663c06ffe836421f51ea37c0a757e11a84b2f6712afa706d2565d",
+        "src/mochi/balanced/world.py": "e8bc1040a8746b92d471f08675047cfe618e5abb58ef56f2b90ed473cdd80643",
+        "src/mochi/balanced/landing.py": "3f422f6eceec651de4e2ff0808c74882316ef544ab8784f086cbac5a35dbba1a",
+        "src/mochi/balanced/budget.py": "fa09e46cd6c87272039148ca33076265a3b1e55977de1a7bafe670043593a83d",
+        "src/mochi/balanced/__init__.py": "b77d055260e932c22d4b4447094ad9ecee34ee3ac00898735e25918098c5bfd0",
+        "src/mochi/balanced/model.py": "0877eec2860ea02a866ee1d5675cdf758c9da4cb43000d92d1daf029f05b72d5",
+        "src/mochi/balanced/reachable.py": "434f92da8d628bd025becbabfeed7e72be10670113d4e7ecbc9ee54527ae8baf",
+        "src/mochi/balanced/probe.py": "cccb09a71e39de01564a7ff4a43b018b43d84936a27c9dd19f65820222cd414e",
+        "src/mochi/balanced/onnx_walk.py": "b69150f11db4df2ec5c3ae8420f1ff1ca4bc43d7e2b32c3221b6216374153225",
+        "src/mochi/balanced/inverse.py": "37781a0e2ad49bc28c6c439b73a7a4f0fcf9f1c83541148b1500121551704bb0",
+        "src/mochi/balanced/dynamics.py": "9c82ef18b1896f936c3aff43b7353d537beb1d7b32927f3964789f11b64ea300"
+      },
+      "optimizer_updates_completed": 0
+    },
+    {
+      "id": "reference-stop-diagnostic-0",
+      "label": "Alarm, descent and drawer approach",
+      "file": "reference-stop-diagnostic-0.json",
+      "duration": 51.494857933421365,
+      "failure": "fall",
+      "fall": true,
+      "invalid_contact": false,
+      "verified_ascent": true,
+      "verified_descent": true,
+      "task_results": {
+        "alarm": true
+      },
+      "full_sequence_success": false,
+      "metrics": {
+        "samples": 4846,
+        "lateral_rms_m": 0.009147142930321546,
+        "lateral_peak_to_peak_m": 0.04068720983960231,
+        "roll_rms_deg": 0.7401102054375454,
+        "roll_peak_deg": 10.27440380453715,
+        "sampled_joint_acceleration_rms_rad_s2": 214.20135313230256,
+        "sampled_torque_change_rms_nm": 0.0067877230677439275,
+        "progress_m": 0.08249908966109072,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      },
+      "arrivals": [
+        {
+          "label": "alarm-book-top",
+          "goal": [
+            -0.365,
+            0.045,
+            1.5707963267948966
+          ],
+          "success": true,
+          "duration_s": 4.197706022697624,
+          "position_error_mm": 22.060856227546616,
+          "heading_error_degrees": 6.823460354496737,
+          "root": [
+            -0.34298145799617735,
+            0.046365717949790705,
+            0.15507076937566464
+          ],
+          "loads_n": {
+            "left": 0.8059326343743507,
+            "right": 0.7670812739150661
+          },
+          "dwell_s": 0.4005600683781674,
+          "book_top": {
+            "instant_valid": true,
+            "top_book_load_n": {
+              "left": 0.8059326343743507,
+              "right": 0.7670812739150661
+            },
+            "feet_inside_top_book": true,
+            "tilt_deg": 1.2961397300439033,
+            "scope": "Needs 0.4-second continuous dwell before success."
+          }
+        },
+        {
+          "label": "book-turn-for-forward-descent",
+          "goal": [
+            -0.3434246240100949,
+            0.04631313942133322,
+            -1.5707963267948966
+          ],
+          "success": true,
+          "duration_s": 6.282253317315831,
+          "position_error_mm": 2.6964611857784297,
+          "heading_error_degrees": 6.712313204284204,
+          "root": [
+            -0.34080407085779524,
+            0.046948437857016814,
+            0.15515017348919818
+          ],
+          "loads_n": {
+            "left": 0.7465708622520838,
+            "right": 0.8259401891338685
+          },
+          "dwell_s": 0.4005600683781674,
+          "book_top": null
+        },
+        {
+          "label": "descend-supported-stop",
+          "goal": [
+            -0.34080407085779524,
+            -0.18,
+            -1.5707963267948966
+          ],
+          "success": true,
+          "duration_s": 6.4081436245203385,
+          "position_error_mm": 13.821037226831974,
+          "heading_error_degrees": 0.012275384300684568,
+          "root": [
+            -0.33551466566094074,
+            -0.19276883952005677,
+            0.13115968905410605
+          ],
+          "loads_n": {
+            "left": 0.7817109731993508,
+            "right": 0.7912604620733787
+          },
+          "dwell_s": 0.4005600683781674,
+          "book_top": null
+        },
+        {
+          "label": "desk-turn-to-corridor",
+          "goal": [
+            -0.33551466566094074,
+            -0.19276883952005677,
+            1.5707963267948966
+          ],
+          "success": true,
+          "duration_s": 6.4073261549930365,
+          "position_error_mm": 4.899317067695746,
+          "heading_error_degrees": 7.260438425543568,
+          "root": [
+            -0.34041003437923734,
+            -0.19296549363706922,
+            0.13117657026899118
+          ],
+          "loads_n": {
+            "left": 0.7859715609968598,
+            "right": 0.7870910861965061
+          },
+          "dwell_s": 0.4005600683781674,
+          "book_top": null
+        },
+        {
+          "label": "drawer-corridor",
+          "goal": [
+            -0.19,
+            -0.18,
+            1.5707963267948966
+          ],
+          "success": true,
+          "duration_s": 9.207159286031313,
+          "position_error_mm": 17.991437383059683,
+          "heading_error_degrees": 0.3641441064817415,
+          "root": [
+            -0.20656873664334305,
+            -0.18701204571805538,
+            0.13114233832016184
+          ],
+          "loads_n": {
+            "left": 0.05569552521782701,
+            "right": 1.621893954527178
+          },
+          "dwell_s": 0.0,
+          "book_top": null
+        },
+        {
+          "label": "drawer-corridor",
+          "goal": [
+            -0.19,
+            -0.03,
+            1.5707963267948966
+          ],
+          "success": true,
+          "duration_s": 5.870248675581138,
+          "position_error_mm": 17.994491730267473,
+          "heading_error_degrees": 0.07891026837076195,
+          "root": [
+            -0.19571281712196345,
+            -0.04706357093816138,
+            0.13118299082187102
+          ],
+          "loads_n": {
+            "left": 1.158954097357438,
+            "right": 0.36853612241879696
+          },
+          "dwell_s": 0.0,
+          "book_top": null
+        }
+      ],
+      "source_artifact_sha256": "c5cd8f30f70c6d8c88ddac96394a023eba633d79e3965a888541afcd51115e40",
+      "source_hashes": {
+        "src/mochi/balanced/preview.py": "25afb9aefc0663c06ffe836421f51ea37c0a757e11a84b2f6712afa706d2565d",
+        "src/mochi/balanced/world.py": "e8bc1040a8746b92d471f08675047cfe618e5abb58ef56f2b90ed473cdd80643",
+        "src/mochi/balanced/tasks.py": "60b29d38be802d1a29cc98035129a9e97b01efedb3c97cd30ff91fc5a6f72cfa",
+        "src/mochi/balanced/recovery.py": "538c48a36c824aeb3033ba9458d81ec49159223f59593f9583b597a9ed9b6019",
+        "src/mochi/balanced/research.py": "e0a18a1f2189b705f791b61aa840b6acc79ec663d58c27c321c2e2fdb4ffe920",
+        "src/mochi/balanced/landing.py": "3f422f6eceec651de4e2ff0808c74882316ef544ab8784f086cbac5a35dbba1a",
+        "src/mochi/balanced/remote.py": "65692fbef8f9a01e56ff69a6a42180e598d73e32fa6c054fccbefbf95dfd53b2",
+        "src/mochi/balanced/budget.py": "fa09e46cd6c87272039148ca33076265a3b1e55977de1a7bafe670043593a83d",
+        "src/mochi/balanced/sequence.py": "3f1bd428abc462a277d979a54c6a7bcc01b43e7a6e10ff5da990a437d6bcb7b5",
+        "src/mochi/balanced/__init__.py": "b77d055260e932c22d4b4447094ad9ecee34ee3ac00898735e25918098c5bfd0",
+        "src/mochi/balanced/model.py": "0877eec2860ea02a866ee1d5675cdf758c9da4cb43000d92d1daf029f05b72d5",
+        "src/mochi/balanced/reachable.py": "434f92da8d628bd025becbabfeed7e72be10670113d4e7ecbc9ee54527ae8baf",
+        "src/mochi/balanced/probe.py": "cccb09a71e39de01564a7ff4a43b018b43d84936a27c9dd19f65820222cd414e",
+        "src/mochi/balanced/onnx_walk.py": "c2da552d7f08bd3b9d933c00232da79b81ef85db255a355998c18cee4cda9680",
+        "src/mochi/balanced/inverse.py": "37781a0e2ad49bc28c6c439b73a7a4f0fcf9f1c83541148b1500121551704bb0",
+        "src/mochi/balanced/balance.py": "9fb38bad73a9e02a7ee406cdcb0eb1a1515b025db9fecd7fe934af44bfc429cb",
+        "src/mochi/balanced/dynamics.py": "9c82ef18b1896f936c3aff43b7353d537beb1d7b32927f3964789f11b64ea300"
+      },
+      "optimizer_updates_completed": 0
+    },
+    {
+      "id": "reference-native-stop-0",
+      "label": "Supported stop; rejected task drift",
+      "file": "reference-native-stop-0.json",
+      "duration": 55.88385182552485,
+      "failure": "fall",
+      "fall": true,
+      "invalid_contact": false,
+      "verified_ascent": true,
+      "verified_descent": true,
+      "task_results": {
+        "alarm": true
+      },
+      "full_sequence_success": false,
+      "metrics": {
+        "samples": 5259,
+        "lateral_rms_m": 0.010748222644130362,
+        "lateral_peak_to_peak_m": 0.06411268373354448,
+        "roll_rms_deg": 1.0220931777788864,
+        "roll_peak_deg": 10.27440380453715,
+        "sampled_joint_acceleration_rms_rad_s2": 134.2587663380975,
+        "sampled_torque_change_rms_nm": 0.0030224874825545934,
+        "progress_m": 0.1352947916731817,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      },
+      "arrivals": [
+        {
+          "label": "alarm-book-top",
+          "goal": [
+            -0.365,
+            0.045,
+            1.5707963267948966
+          ],
+          "success": true,
+          "duration_s": 4.197706022697624,
+          "position_error_mm": 22.060856227546616,
+          "heading_error_degrees": 6.823460354496737,
+          "root": [
+            -0.34298145799617735,
+            0.046365717949790705,
+            0.15507076937566464
+          ],
+          "loads_n": {
+            "left": 0.8059326343743507,
+            "right": 0.7670812739150661
+          },
+          "dwell_s": 0.4005600683781674,
+          "book_top": {
+            "instant_valid": true,
+            "top_book_load_n": {
+              "left": 0.8059326343743507,
+              "right": 0.7670812739150661
+            },
+            "feet_inside_top_book": true,
+            "tilt_deg": 1.2961397300439033,
+            "scope": "Needs 0.4-second continuous dwell before success."
+          }
+        },
+        {
+          "label": "book-turn-for-forward-descent",
+          "goal": [
+            -0.3434246240100949,
+            0.04631313942133322,
+            -1.5707963267948966
+          ],
+          "success": true,
+          "duration_s": 6.282253317315831,
+          "position_error_mm": 2.6964611857784297,
+          "heading_error_degrees": 6.712313204284204,
+          "root": [
+            -0.34080407085779524,
+            0.046948437857016814,
+            0.15515017348919818
+          ],
+          "loads_n": {
+            "left": 0.7465708622520838,
+            "right": 0.8259401891338685
+          },
+          "dwell_s": 0.4005600683781674,
+          "book_top": null
+        },
+        {
+          "label": "descend-supported-stop",
+          "goal": [
+            -0.34080407085779524,
+            -0.18,
+            -1.5707963267948966
+          ],
+          "success": true,
+          "duration_s": 6.625590518782669,
+          "position_error_mm": 16.49920668048135,
+          "heading_error_degrees": 6.713626098341607,
+          "root": [
+            -0.33151080514551456,
+            -0.19363301263427085,
+            0.13114661677848877
+          ],
+          "loads_n": {
+            "left": 0.6561343189988156,
+            "right": 0.9213707450185034
+          },
+          "dwell_s": 0.4005600683781674,
+          "book_top": null
+        },
+        {
+          "label": "desk-turn-to-corridor",
+          "goal": [
+            -0.33151080514551456,
+            -0.19363301263427085,
+            1.5707963267948966
+          ],
+          "success": true,
+          "duration_s": 6.159632888220532,
+          "position_error_mm": 9.81599195461812,
+          "heading_error_degrees": 8.010717003907931,
+          "root": [
+            -0.33378244868072426,
+            -0.2031825327113254,
+            0.13136738248458874
+          ],
+          "loads_n": {
+            "left": 0.8287898276176073,
+            "right": 0.7449916867096553
+          },
+          "dwell_s": 0.4005600683781674,
+          "book_top": null
+        },
+        {
+          "label": "drawer-corridor",
+          "goal": [
+            -0.19,
+            -0.18,
+            1.5707963267948966
+          ],
+          "success": true,
+          "duration_s": 8.4730716505108,
+          "position_error_mm": 17.96925584676924,
+          "heading_error_degrees": 0.30150045324116287,
+          "root": [
+            -0.20545184497309243,
+            -0.1891724938056217,
+            0.1311119626097935
+          ],
+          "loads_n": {
+            "left": 0.029113136197844766,
+            "right": 1.6416808433109953
+          },
+          "dwell_s": 0.0,
+          "book_top": null
+        },
+        {
+          "label": "drawer-corridor",
+          "goal": [
+            -0.19,
+            -0.03,
+            1.5707963267948966
+          ],
+          "success": true,
+          "duration_s": 6.133473863373524,
+          "position_error_mm": 17.981506236679508,
+          "heading_error_degrees": 0.16383787529846658,
+          "root": [
+            -0.19518333397067636,
+            -0.047218234970175556,
+            0.13111862558841478
+          ],
+          "loads_n": {
+            "left": 0.0,
+            "right": 1.555268060467415
+          },
+          "dwell_s": 0.0,
+          "book_top": null
+        },
+        {
+          "label": "drawer-station",
+          "goal": [
+            -0.13,
+            0.02,
+            1.5707963267948966
+          ],
+          "success": true,
+          "duration_s": 9.043665380581274,
+          "position_error_mm": 9.33465188847882,
+          "heading_error_degrees": 3.4141264761184975,
+          "root": [
+            -0.1362498475791405,
+            0.013066376768485832,
+            0.1312952074382958
+          ],
+          "loads_n": {
+            "left": 0.8068761452538907,
+            "right": 0.7564567216445475
+          },
+          "dwell_s": 0.4005600683781674,
+          "book_top": null
+        }
+      ],
+      "source_artifact_sha256": "e2a0fdd160b4271b682bd13a6bbaede1d4b180120fc6dfe9fe73cc59fe106c39",
+      "source_hashes": {
+        "src/mochi/balanced/preview.py": "25afb9aefc0663c06ffe836421f51ea37c0a757e11a84b2f6712afa706d2565d",
+        "src/mochi/balanced/world.py": "01a3dc78df8b974ba3dc3e3f7337b593bf31495f629614955275d8611df79e24",
+        "src/mochi/balanced/tasks.py": "60b29d38be802d1a29cc98035129a9e97b01efedb3c97cd30ff91fc5a6f72cfa",
+        "src/mochi/balanced/recovery.py": "538c48a36c824aeb3033ba9458d81ec49159223f59593f9583b597a9ed9b6019",
+        "src/mochi/balanced/research.py": "e0a18a1f2189b705f791b61aa840b6acc79ec663d58c27c321c2e2fdb4ffe920",
+        "src/mochi/balanced/landing.py": "3f422f6eceec651de4e2ff0808c74882316ef544ab8784f086cbac5a35dbba1a",
+        "src/mochi/balanced/remote.py": "65692fbef8f9a01e56ff69a6a42180e598d73e32fa6c054fccbefbf95dfd53b2",
+        "src/mochi/balanced/budget.py": "fa09e46cd6c87272039148ca33076265a3b1e55977de1a7bafe670043593a83d",
+        "src/mochi/balanced/sequence.py": "943c9b73b1a0970d84fc7c98c9bb4c0e500a10a8f889d013d0ab66d925c73f46",
+        "src/mochi/balanced/__init__.py": "b77d055260e932c22d4b4447094ad9ecee34ee3ac00898735e25918098c5bfd0",
+        "src/mochi/balanced/model.py": "0877eec2860ea02a866ee1d5675cdf758c9da4cb43000d92d1daf029f05b72d5",
+        "src/mochi/balanced/reachable.py": "434f92da8d628bd025becbabfeed7e72be10670113d4e7ecbc9ee54527ae8baf",
+        "src/mochi/balanced/probe.py": "cccb09a71e39de01564a7ff4a43b018b43d84936a27c9dd19f65820222cd414e",
+        "src/mochi/balanced/onnx_walk.py": "8261825fee923e4ab70a14bf7e0d061787bc20e4f61d767d5719fc5f18b1d141",
+        "src/mochi/balanced/inverse.py": "37781a0e2ad49bc28c6c439b73a7a4f0fcf9f1c83541148b1500121551704bb0",
+        "src/mochi/balanced/balance.py": "9fb38bad73a9e02a7ee406cdcb0eb1a1515b025db9fecd7fe934af44bfc429cb",
+        "src/mochi/balanced/dynamics.py": "9c82ef18b1896f936c3aff43b7353d537beb1d7b32927f3964789f11b64ea300"
+      },
+      "optimizer_updates_completed": 0
+    },
+    {
+      "id": "frozen-interface-reference-0",
+      "label": "Latest engineering attempt",
+      "file": "frozen-interface-reference-0.json",
+      "duration": 139.28945022698255,
+      "failure": null,
+      "fall": false,
+      "invalid_contact": false,
+      "verified_ascent": true,
+      "verified_descent": true,
+      "task_results": {
+        "alarm": true,
+        "drawer": true,
+        "laptop": true,
+        "globe": true
+      },
+      "full_sequence_success": true,
+      "metrics": {
+        "samples": 13107,
+        "lateral_rms_m": 0.008627583430764382,
+        "lateral_peak_to_peak_m": 0.04319605440977235,
+        "roll_rms_deg": 0.5192733811075474,
+        "roll_peak_deg": 10.27440380453715,
+        "sampled_joint_acceleration_rms_rad_s2": 118.73189925747107,
+        "sampled_torque_change_rms_nm": 0.002708579027812054,
+        "progress_m": 0.17780705501692692,
+        "scope": "Straight approach in the declared path frame; report progress, duration, falls and invalid contacts alongside sway."
+      },
+      "arrivals": [
+        {
+          "label": "alarm-book-top",
+          "goal": [
+            -0.365,
+            0.045,
+            1.5707963267948966
+          ],
+          "success": true,
+          "duration_s": 4.197706022697624,
+          "position_error_mm": 22.060856227546616,
+          "heading_error_degrees": 6.823460354496737,
+          "root": [
+            -0.34298145799617735,
+            0.046365717949790705,
+            0.15507076937566464
+          ],
+          "loads_n": {
+            "left": 0.8059326343743507,
+            "right": 0.7670812739150661
+          },
+          "dwell_s": 0.4005600683781674,
+          "book_top": {
+            "instant_valid": true,
+            "top_book_load_n": {
+              "left": 0.8059326343743507,
+              "right": 0.7670812739150661
+            },
+            "feet_inside_top_book": true,
+            "tilt_deg": 1.2961397300439033,
+            "scope": "Needs 0.4-second continuous dwell before success."
+          }
+        },
+        {
+          "label": "book-turn-for-forward-descent",
+          "goal": [
+            -0.3434246240100949,
+            0.04631313942133322,
+            -1.5707963267948966
+          ],
+          "success": true,
+          "duration_s": 6.282253317315831,
+          "position_error_mm": 2.6964611857784297,
+          "heading_error_degrees": 6.712313204284204,
+          "root": [
+            -0.34080407085779524,
+            0.046948437857016814,
+            0.15515017348919818
+          ],
+          "loads_n": {
+            "left": 0.7465708622520838,
+            "right": 0.8259401891338685
+          },
+          "dwell_s": 0.4005600683781674,
+          "book_top": null
+        },
+        {
+          "label": "descend-supported-stop",
+          "goal": [
+            -0.34080407085779524,
+            -0.18,
+            -1.5707963267948966
+          ],
+          "success": true,
+          "duration_s": 7.026150587160647,
+          "position_error_mm": 17.041453153711373,
+          "heading_error_degrees": 7.105503425105708,
+          "root": [
+            -0.33171349719773635,
+            -0.19441431913484583,
+            0.13107403104556167
+          ],
+          "loads_n": {
+            "left": 0.7297134777203085,
+            "right": 0.8435091838184372
+          },
+          "dwell_s": 0.4005600683781674,
+          "book_top": null
+        },
+        {
+          "label": "desk-turn-to-corridor",
+          "goal": [
+            -0.33171349719773635,
+            -0.19441431913484583,
+            1.5707963267948966
+          ],
+          "success": true,
+          "duration_s": 6.752298295514478,
+          "position_error_mm": 9.378661653713062,
+          "heading_error_degrees": 1.8097696240912557,
+          "root": [
+            -0.331931372801438,
+            -0.20379044971393545,
+            0.13109841780571047
+          ],
+          "loads_n": {
+            "left": 0.7173507586180184,
+            "right": 0.8558777765519577
+          },
+          "dwell_s": 0.4005600683781674,
+          "book_top": null
+        },
+        {
+          "label": "drawer-corridor",
+          "goal": [
+            -0.19,
+            -0.18,
+            1.5707963267948966
+          ],
+          "success": true,
+          "duration_s": 8.47797646767895,
+          "position_error_mm": 17.979539662256414,
+          "heading_error_degrees": 0.3590128259229433,
+          "root": [
+            -0.2064549355874875,
+            -0.1872456153139874,
+            0.1311537721575475
+          ],
+          "loads_n": {
+            "left": 0.0,
+            "right": 1.6505895802724535
+          },
+          "dwell_s": 0.0,
+          "book_top": null
+        },
+        {
+          "label": "drawer-corridor",
+          "goal": [
+            -0.19,
+            -0.03,
+            1.5707963267948966
+          ],
+          "success": true,
+          "duration_s": 5.864526388889999,
+          "position_error_mm": 17.977667448228825,
+          "heading_error_degrees": 0.08777924018057,
+          "root": [
+            -0.19566531675781768,
+            -0.04706167380161444,
+            0.13116879186016178
+          ],
+          "loads_n": {
+            "left": 1.164672618714909,
+            "right": 0.3714521691900122
+          },
+          "dwell_s": 0.0,
+          "book_top": null
+        },
+        {
+          "label": "drawer-station",
+          "goal": [
+            -0.13,
+            0.02,
+            1.5707963267948966
+          ],
+          "success": true,
+          "duration_s": 7.364582971495679,
+          "position_error_mm": 9.313483957446126,
+          "heading_error_degrees": 5.644562741097716,
+          "root": [
+            -0.13665894716413263,
+            0.013488517366152588,
+            0.13109549380447383
+          ],
+          "loads_n": {
+            "left": 0.7121779697504913,
+            "right": 0.8610610056225908
+          },
+          "dwell_s": 0.4005600683781674,
+          "book_top": null
+        },
+        {
+          "label": "laptop-corridor",
+          "goal": [
+            0.08,
+            0.02,
+            1.5707963267948966
+          ],
+          "success": true,
+          "duration_s": 13.861830774520165,
+          "position_error_mm": 17.988460596709224,
+          "heading_error_degrees": 0.3698715032230374,
+          "root": [
+            0.06345522864395121,
+            0.012939174593899951,
+            0.1311299733543443
+          ],
+          "loads_n": {
+            "left": 0.12209845993870307,
+            "right": 1.613060678212897
+          },
+          "dwell_s": 0.0,
+          "book_top": null
+        },
+        {
+          "label": "laptop-corridor",
+          "goal": [
+            0.08,
+            -0.055,
+            1.5707963267948966
+          ],
+          "success": true,
+          "duration_s": 2.1646593083050902,
+          "position_error_mm": 17.991436780077425,
+          "heading_error_degrees": 0.15630146159567676,
+          "root": [
+            0.07369620779010895,
+            -0.03814906527263132,
+            0.13138388775166285
+          ],
+          "loads_n": {
+            "left": 1.5044022527157026,
+            "right": 0.0
+          },
+          "dwell_s": 0.0,
+          "book_top": null
+        },
+        {
+          "label": "laptop-corridor",
+          "goal": [
+            0.3,
+            -0.055,
+            1.5707963267948966
+          ],
+          "success": true,
+          "duration_s": 14.514988926837304,
+          "position_error_mm": 17.987186601454937,
+          "heading_error_degrees": 0.36417290985016965,
+          "root": [
+            0.2834324587366373,
+            -0.06200396018851727,
+            0.13113897351123563
+          ],
+          "loads_n": {
+            "left": 0.1825094506846916,
+            "right": 1.5995965732457762
+          },
+          "dwell_s": 0.0,
+          "book_top": null
+        },
+        {
+          "label": "laptop-corridor",
+          "goal": [
+            0.3,
+            0.02,
+            1.5707963267948966
+          ],
+          "success": true,
+          "duration_s": 4.152745198712182,
+          "position_error_mm": 17.99718089161166,
+          "heading_error_degrees": 0.06424877338410845,
+          "root": [
+            0.29368707515354053,
+            0.0031463505457023705,
+            0.13122421407025028
+          ],
+          "loads_n": {
+            "left": 1.1328716368083307,
+            "right": 0.33463176411190254
+          },
+          "dwell_s": 0.0,
+          "book_top": null
+        },
+        {
+          "label": "laptop-station",
+          "goal": [
+            0.3,
+            0.16,
+            1.5707963267948966
+          ],
+          "success": true,
+          "duration_s": 9.019141294762107,
+          "position_error_mm": 11.08464190579414,
+          "heading_error_degrees": 0.49697792364412263,
+          "root": [
+            0.2925529442177107,
+            0.15178960132787941,
+            0.1313511922721074
+          ],
+          "loads_n": {
+            "left": 0.7736796614681409,
+            "right": 0.7995834623085357
+          },
+          "dwell_s": 0.4005600683781674,
+          "book_top": null
+        },
+        {
+          "label": "leave-laptop",
+          "goal": [
+            0.3,
+            0.02,
+            1.5707963267948966
+          ],
+          "success": true,
+          "duration_s": 4.088165106055044,
+          "position_error_mm": 17.992860243051698,
+          "heading_error_degrees": 0.334000068808089,
+          "root": [
+            0.2961641726149911,
+            0.037579233430340656,
+            0.13128030509402128
+          ],
+          "loads_n": {
+            "left": 0.0,
+            "right": 1.5511871208100083
+          },
+          "dwell_s": 0.0,
+          "book_top": null
+        },
+        {
+          "label": "globe-station",
+          "goal": [
+            0.35,
+            -0.145,
+            0.0
+          ],
+          "success": true,
+          "duration_s": 12.158224279615396,
+          "position_error_mm": 12.413441636853854,
+          "heading_error_degrees": 0.6783207494250227,
+          "root": [
+            0.34426567012027437,
+            -0.13399041353628288,
+            0.13134452424758414
+          ],
+          "loads_n": {
+            "left": 0.7713439970052259,
+            "right": 0.8019229348869757
+          },
+          "dwell_s": 0.4005600683781674,
+          "book_top": null
+        }
+      ],
+      "source_artifact_sha256": "ec3361807345f078992626a2658aea3dda99edd42d63ab9cfb248d3fdadea27a",
+      "source_hashes": {
+        "src/mochi/balanced/preview.py": "25afb9aefc0663c06ffe836421f51ea37c0a757e11a84b2f6712afa706d2565d",
+        "src/mochi/balanced/world.py": "01a3dc78df8b974ba3dc3e3f7337b593bf31495f629614955275d8611df79e24",
+        "src/mochi/balanced/verification.py": "2a61d18ef3c81ec42e38cb12684419de4a6400b2331a1ce06bf464bb88149838",
+        "src/mochi/balanced/tasks.py": "60b29d38be802d1a29cc98035129a9e97b01efedb3c97cd30ff91fc5a6f72cfa",
+        "src/mochi/balanced/recovery.py": "538c48a36c824aeb3033ba9458d81ec49159223f59593f9583b597a9ed9b6019",
+        "src/mochi/balanced/research.py": "e0a18a1f2189b705f791b61aa840b6acc79ec663d58c27c321c2e2fdb4ffe920",
+        "src/mochi/balanced/landing.py": "3f422f6eceec651de4e2ff0808c74882316ef544ab8784f086cbac5a35dbba1a",
+        "src/mochi/balanced/remote.py": "65692fbef8f9a01e56ff69a6a42180e598d73e32fa6c054fccbefbf95dfd53b2",
+        "src/mochi/balanced/budget.py": "fa09e46cd6c87272039148ca33076265a3b1e55977de1a7bafe670043593a83d",
+        "src/mochi/balanced/sequence.py": "955c9853755563bd54f8f86817dd9820ee2fc72c58de880b9c07bccd611ed4b2",
+        "src/mochi/balanced/policy.py": "577e67f2c50961f497990f5f368600724d2425e7c9c9b808a8638d2dd8278476",
+        "src/mochi/balanced/__init__.py": "b77d055260e932c22d4b4447094ad9ecee34ee3ac00898735e25918098c5bfd0",
+        "src/mochi/balanced/model.py": "0877eec2860ea02a866ee1d5675cdf758c9da4cb43000d92d1daf029f05b72d5",
+        "src/mochi/balanced/reachable.py": "434f92da8d628bd025becbabfeed7e72be10670113d4e7ecbc9ee54527ae8baf",
+        "src/mochi/balanced/probe.py": "cccb09a71e39de01564a7ff4a43b018b43d84936a27c9dd19f65820222cd414e",
+        "src/mochi/balanced/onnx_walk.py": "8261825fee923e4ab70a14bf7e0d061787bc20e4f61d767d5719fc5f18b1d141",
+        "src/mochi/balanced/inverse.py": "37781a0e2ad49bc28c6c439b73a7a4f0fcf9f1c83541148b1500121551704bb0",
+        "src/mochi/balanced/legs.py": "31b595c0d7741aa305e4fa79d34e3c802f25a1095c939baf69a37365c7759867",
+        "src/mochi/balanced/balance.py": "9fb38bad73a9e02a7ee406cdcb0eb1a1515b025db9fecd7fe934af44bfc429cb",
+        "src/mochi/balanced/snapshot.py": "8c937e0c20ae9ad37b41291b1cb8b3a78e9b10e1967fcfe47010b7acc104ac08",
+        "src/mochi/balanced/dynamics.py": "9c82ef18b1896f936c3aff43b7353d537beb1d7b32927f3964789f11b64ea300"
+      },
+      "optimizer_updates_completed": 0
+    }
+  ],
+  "default_attempt": "frozen-interface-reference-0"
+}

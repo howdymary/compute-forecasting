@@ -1,10 +1,10 @@
 # Balanced desk continuation (V11)
 
 This is a new, bounded engineering and training study. The V8 controller,
-checkpoints, evaluation, and default live demo remain preserved. New-world
-training is gated on a safe continuous reference. Zero V11 optimizer updates
-have been completed. The training, development, and held-out seed partitions
-in `configs/balance-v11.json` remain unopened during engineering calibration.
+checkpoints, evaluation, and default live demo remain preserved. Three continuous local engineering references pass the independent verifier.
+A remote reference is required before any V11 optimizer updates. The bounded
+training campaign is launched; completed updates remain to be verified. The training, development, and held-out seed partitions
+in `configs/balance-v11.json` were unopened during engineering calibration.
 
 ## Implementation
 
@@ -28,8 +28,10 @@ File hashes and attribution are in `assets/robot/g1-v11-policy/source.json`.
 The YAML source files are retained as data; Python-tagged YAML is never loaded.
 The ONNX file checksum is verified before inference.
 
-**These gait weights are fixed. Tinker has not updated them.** A later Tinker
-campaign will update the decision model only after the reference gate passes.
+**These gait weights are fixed.** The new Tinker campaign resumes the V8-selected
+Qwen decision model at cumulative update 104, then trains walking-strategy,
+manipulation-profile and recovery selections. This changes high-level decision
+weights, not the native gait network.
 
 The capture-point check uses actual loaded contact points, COM position, and
 COM velocity. It is a linear inverted-pendulum approximation, not a complete
@@ -98,8 +100,22 @@ decision. Unused training budget is not consumed while feasibility is closed.
 
 ## Current limits
 
-Calibration has demonstrated top-book support, alarm activation/release, arm
-recovery, a book-top turn, and a forward descent in a continuous engineering
-episode. Repeated complete four-task success is not established. Original
-failed experiments and verifier revisions are preserved. Smoothness thresholds
-and checkpoint selection are not frozen until calibration is complete.
+Three complete runs on engineering seed 31000 pass ascent, alarm, descent,
+drawer, laptop, globe and four recoveries. Two use different drawer profiles;
+the third reproduces the frozen selector interface. This is not a generalization
+result. The complete reference takes 136–139 simulated seconds. Final object
+positions, speeds, zero base force and supported finish are independently
+verified in `evidence/balance-v11/reference-gate.json`.
+
+The frozen training protocol is `configs/balanced-v11-training.json`. It records
+19 controller/model hashes and calibration-based smoothness thresholds before
+training. The new workflow first repeats the complete reference on Modal.
+Only then does it open training scenarios, run physical counterfactuals, resume
+LoRA optimizer state, and save updates 0/4/8/16/32. Checkpoint selection uses only
+development results; final held-out scenarios stay closed until selection.
+
+Original failed experiments remain available. A stricter joint-speed capture
+gate timed out. Holding the native policy at a measured support phase allowed
+settling, but leaving it active during manipulation caused drift. The selected
+engineering method settles with phase-frozen feedback, then captures a static
+stance. Dynamic task outcomes, not render-space adjustments, verify the result.

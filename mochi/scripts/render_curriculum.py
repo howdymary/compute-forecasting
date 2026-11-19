@@ -3,7 +3,7 @@ import bpy,json,math,sys,argparse
 from pathlib import Path
 from mathutils import Vector
 root=Path(__file__).resolve().parents[1];assets=root/'web/desk/assets'
-p=argparse.ArgumentParser();p.add_argument('--input',required=True);p.add_argument('--out',required=True);p.add_argument('--time',type=float,default=9);p.add_argument('--animate',action='store_true');p.add_argument('--samples',type=int,default=48);p.add_argument('--camera',choices=['follow','side','feet','wide','topdown'],default='follow');p.add_argument('--route');args=p.parse_args(sys.argv[sys.argv.index('--')+1:])
+p=argparse.ArgumentParser();p.add_argument('--input',required=True);p.add_argument('--out',required=True);p.add_argument('--time',type=float,default=9);p.add_argument('--animate',action='store_true');p.add_argument('--samples',type=int,default=48);p.add_argument('--camera',choices=['follow','side','feet','wide','topdown','fullbody'],default='follow');p.add_argument('--route');args=p.parse_args(sys.argv[sys.argv.index('--')+1:])
 out=Path(args.out);out.mkdir(parents=True,exist_ok=True);r=json.loads(Path(args.input).read_text());frames=r['trajectory']['frames'];bpy.ops.wm.read_factory_settings(use_empty=True);scene=bpy.context.scene;scene.render.engine='CYCLES';scene.cycles.samples=args.samples;scene.cycles.use_denoising=True
 try:
  prefs=bpy.context.preferences.addons['cycles'].preferences;prefs.compute_device_type='METAL';prefs.get_devices()
@@ -127,6 +127,7 @@ for f in selected:
   target=Vector((pos[0],pos[1],.032 if args.camera=='feet' else .112));camera.location=target+Vector((.10,-.27,.055) if args.camera=='feet' else (0,-.52,.035))
  elif args.camera=='wide':target=Vector((0,.1,.08));camera.location=Vector((1.05,-1.35,.95))
  elif args.camera=='topdown':target=Vector((0,0,0));camera.location=Vector((0,-.0001,1.75));camera.data.type='ORTHO';camera.data.ortho_scale=1.35
+ if args.camera=='fullbody':target=Vector((pos[0]+.015,pos[1]+.025,.117+max(-.02,pos[2]-.132360364)));camera.location=target+Vector((.33,-.52,.30))
  camera.rotation_euler=(target-camera.location).to_track_quat('-Z','Y').to_euler()
  if args.animate:camera.keyframe_insert('location',frame=frame);camera.keyframe_insert('rotation_euler',frame=frame)
 scene.frame_end=round(r['duration']*25)+1;scene.render.image_settings.file_format='PNG';scene.render.filepath=str(out/'measured-trajectory.png');bpy.ops.wm.save_as_mainfile(filepath=str(out/'measured-trajectory.blend'))

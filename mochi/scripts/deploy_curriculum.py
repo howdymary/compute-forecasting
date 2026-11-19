@@ -4,11 +4,12 @@ import os
 import modal
 WEB=Path(__file__).resolve().parents[1]/'web/desk'
 image=modal.Image.debian_slim(python_version='3.11').pip_install('fastapi==0.121.1').env({'MOCHI_RELEASE':os.environ.get('GITHUB_SHA','local')})
-for name in ['curriculum.html','curriculum.css','curriculum.js','curriculum-stage.js','vintage-clock.js','g1-stage.js','realism.js','planning.html','planning.css','planning.js','richdesk-stage.js','richdesk.html','richdesk.css','richdesk.js']:
+for name in ['curriculum.html','curriculum.css','curriculum.js','curriculum-stage.js','vintage-clock.js','g1-stage.js','realism.js','planning.html','planning.css','planning.js','richdesk-stage.js','richdesk.html','richdesk.css','richdesk.js','balanced.html','balanced.css','balanced.js']:
  image=image.add_local_file(WEB/name,remote_path='/web/'+name,copy=True)
 image=image.add_local_file(WEB/'curriculum.html',remote_path='/web/index.html',copy=True).add_local_dir(WEB/'curriculum',remote_path='/web/curriculum',copy=True).add_local_dir(WEB/'assets',remote_path='/web/assets',copy=True)
 image=image.add_local_dir(WEB/'planning',remote_path='/web/planning',copy=True)
 image=image.add_local_dir(WEB/'richdesk',remote_path='/web/richdesk',copy=True)
+image=image.add_local_dir(WEB/'balanced-v11',remote_path='/web/balanced-v11',copy=True)
 app=modal.App('mochi-curriculum-demo')
 @app.function(image=image,serialized=True,cpu=.25,memory=512,max_containers=2,scaledown_window=120)
 @modal.asgi_app()
@@ -38,4 +39,10 @@ def web():
    study=json.loads(Path('/web/curriculum/manifest.json').read_text()).get('study');store='mochi-control-clearance-progress' if study=='mochi-control-v8-clearance' else 'mochi-control-v8-progress' if study=='mochi-control-v8' else 'mochi-curriculum-v7-progress';report=modal.Dict.from_name(store).get('latest',{})
    return {'study':report.get('study'),'status':report.get('status'),'phase':report.get('phase'),'new_optimizer_updates':report.get('new_optimizer_updates'),'training_study':report.get('training_study'),'optimizer_updates_completed':report.get('optimizer_updates_completed',0),'checkpoints':[{'update':c['update'],'development':c['continuous_development']} for c in report.get('checkpoints',[])],'memory':report.get('services',{}).get('eligibility',{}),'held_out':report.get('held_out')}
   except Exception:return {'status':'unavailable','phase':'See the training execution receipt'}
+ @api.get('/api/balance-training')
+ def balance_training():
+  try:
+   report=modal.Dict.from_name('mochi-balanced-v11-progress').get('latest',{})
+   return {k:report.get(k) for k in ['study','status','phase','optimizer_updates_completed','checkpoints','selected_checkpoint','held_out','isolated','budget_usage_or_reserved']}
+  except Exception:return {'study':'mochi-balanced-v11','status':'unavailable','phase':'See the recorded execution evidence','optimizer_updates_completed':0}
  api.mount('/',StaticFiles(directory='/web',html=True));return api

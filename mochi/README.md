@@ -102,3 +102,7 @@ This is a fixed-layout, state-observation simulation study. Waist and fingers ar
 The original supported puck slice is in [the initial archive](docs/archive/initial-puck-slice.md). The preceding navigation/planning README is [preserved separately](docs/archive/planning-v1-readme.md). Later walking, task and recovery training is not all claimed as work built during the original hackathon.
 
 Dependencies include MuJoCo, NumPy, SciPy, PyTorch, Three.js, Blender, FastAPI and the provider SDKs. Robot hashes and licenses are recorded in [G1 provenance](assets/robot/g1/source.json) and [locomotion provenance](assets/robot/locomotion/source.json). [Scene attribution](web/desk/assets/sand3d-attribution.json) records visual assets. Forecasting code, deployments and archived results remain separate.
+
+## Furnished-desk continuation (V11)
+
+[Balance experiments](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/balanced.html) compare the original transfers with complete continuous engineering references. Three runs pass the four-task sequence on one engineering scenario. The new Tinker campaign resumes the selected V8 decision weights and checks fresh scenarios; its results remain separate from the engineering gains. [Methods, bounds and provenance](docs/balanced-v11.md).

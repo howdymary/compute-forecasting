@@ -1,0 +1,1120 @@
+{
+  "study": "mochi-balanced-v11",
+  "phase": "physical-reference-research",
+  "created_at": "2026-11-19T02:25:39.983652+00:00",
+  "workflow_run": "44443991496",
+  "source_sha": "7679dc413f22f3b4488e784d1c97646236a13a6c",
+  "optimizer_updates_completed": 0,
+  "held_out_opened": false,
+  "bounds": {
+    "modal_rollouts": 2,
+    "cpu_hours": 0.1,
+    "exa_searches": 1,
+    "past_writes": 5,
+    "past_recalls": 5,
+    "tinker_decisions": 1,
+    "optimizer_updates": 0
+  },
+  "status": "completed",
+  "physical_rollouts": 2,
+  "proposal": {
+    "kind": "proposal",
+    "hypothesis_record": "mochi-b11-816b460b-r1",
+    "capture_margin_m": 0.002,
+    "forward_descent": true,
+    "tinker_operation": "inference only"
+  },
+  "results": [
+    {
+      "failure": "invalid_terrain_contact",
+      "complete_sequence_success": false,
+      "duration_s": 11.859030432572112,
+      "tasks": {
+        "alarm": true
+      },
+      "arrivals": [
+        {
+          "label": "alarm-book-top",
+          "goal": [
+            -0.365,
+            0.045,
+            1.5707963267948966
+          ],
+          "success": true,
+          "duration_s": 4.197706022697624,
+          "position_error_mm": 22.06008809458074,
+          "heading_error_degrees": 6.823182650133361,
+          "root": [
+            -0.342982195191799,
+            0.04636519528589306,
+            0.15507077100573705
+          ],
+          "loads_n": {
+            "left": 0.8059358557018567,
+            "right": 0.7670780880883324
+          },
+          "dwell_s": 0.4005600683781674,
+          "book_top": {
+            "instant_valid": true,
+            "top_book_load_n": {
+              "left": 0.8059358557018567,
+              "right": 0.7670780880883324
+            },
+            "feet_inside_top_book": true,
+            "tilt_deg": 1.2961369775247882,
+            "scope": "Needs 0.4-second continuous dwell before success."
+          }
+        }
+      ],
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 2048,
+        "duration_seconds": 29.543576786000003,
+        "optimizer_updates": 0,
+        "seed_partition": "engineering",
+        "held_out_opened": false
+      }
+    },
+    {
+      "failure": "fall",
+      "complete_sequence_success": false,
+      "duration_s": 50.61280831345868,
+      "tasks": {
+        "alarm": true
+      },
+      "arrivals": [
+        {
+          "label": "alarm-book-top",
+          "goal": [
+            -0.365,
+            0.045,
+            1.5707963267948966
+          ],
+          "success": true,
+          "duration_s": 4.197706022697624,
+          "position_error_mm": 22.06008809458074,
+          "heading_error_degrees": 6.823182650133361,
+          "root": [
+            -0.342982195191799,
+            0.04636519528589306,
+            0.15507077100573705
+          ],
+          "loads_n": {
+            "left": 0.8059358557018567,
+            "right": 0.7670780880883324
+          },
+          "dwell_s": 0.4005600683781674,
+          "book_top": {
+            "instant_valid": true,
+            "top_book_load_n": {
+              "left": 0.8059358557018567,
+              "right": 0.7670780880883324
+            },
+            "feet_inside_top_book": true,
+            "tilt_deg": 1.2961369775247882,
+            "scope": "Needs 0.4-second continuous dwell before success."
+          }
+        },
+        {
+          "label": "book-turn-for-forward-descent",
+          "goal": [
+            -0.343427262742413,
+            0.04633133932271674,
+            -1.5707963267948966
+          ],
+          "success": true,
+          "duration_s": 6.282253317315831,
+          "position_error_mm": 2.7024436812434134,
+          "heading_error_degrees": 6.659463771389119,
+          "root": [
+            -0.34080773765752204,
+            0.046995636078632025,
+            0.1551501303259894
+          ],
+          "loads_n": {
+            "left": 0.7465276358201773,
+            "right": 0.825983337141291
+          },
+          "dwell_s": 0.4005600683781674,
+          "book_top": null
+        },
+        {
+          "label": "descend-supported-stop",
+          "goal": [
+            -0.34080773765752204,
+            -0.18,
+            -1.5707963267948966
+          ],
+          "success": true,
+          "duration_s": 6.16290276632974,
+          "position_error_mm": 9.208401024138727,
+          "heading_error_degrees": 0.09687907133718918,
+          "root": [
+            -0.33416321457257453,
+            -0.1863753401787637,
+            0.1311579328990489
+          ],
+          "loads_n": {
+            "left": 0.7878615893636306,
+            "right": 0.7851854399574552
+          },
+          "dwell_s": 0.4005600683781674,
+          "book_top": null
+        },
+        {
+          "label": "desk-turn-to-corridor",
+          "goal": [
+            -0.33416321457257453,
+            -0.1863753401787637,
+            1.5707963267948966
+          ],
+          "success": true,
+          "duration_s": 6.52749417550643,
+          "position_error_mm": 5.792073517832884,
+          "heading_error_degrees": 5.897082882646038,
+          "root": [
+            -0.3399388470853859,
+            -0.1868114419019168,
+            0.1311507955640177
+          ],
+          "loads_n": {
+            "left": 0.7474141288526077,
+            "right": 0.8250842383392325
+          },
+          "dwell_s": 0.4005600683781674,
+          "book_top": null
+        },
+        {
+          "label": "drawer-corridor",
+          "goal": [
+            -0.19,
+            -0.18,
+            1.5707963267948966
+          ],
+          "success": true,
+          "duration_s": 8.733844429719738,
+          "position_error_mm": 17.998155715564987,
+          "heading_error_degrees": 0.3211901912110326,
+          "root": [
+            -0.20652199588513637,
+            -0.18713843548218106,
+            0.13117628003084802
+          ],
+          "loads_n": {
+            "left": 0.0,
+            "right": 1.6227176906352498
+          },
+          "dwell_s": 0.0,
+          "book_top": null
+        },
+        {
+          "label": "drawer-corridor",
+          "goal": [
+            -0.19,
+            -0.03,
+            1.5707963267948966
+          ],
+          "success": true,
+          "duration_s": 5.853081815507721,
+          "position_error_mm": 17.99307849481159,
+          "heading_error_degrees": 0.07939466501830146,
+          "root": [
+            -0.19573505275386482,
+            -0.0470546194220463,
+            0.13118302604764712
+          ],
+          "loads_n": {
+            "left": 1.158954237808024,
+            "right": 0.368533107794766
+          },
+          "dwell_s": 0.0,
+          "book_top": null
+        }
+      ],
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 2048,
+        "duration_seconds": 122.37519493699999,
+        "optimizer_updates": 0,
+        "seed_partition": "engineering",
+        "held_out_opened": false
+      }
+    }
+  ],
+  "services": {
+    "actors": {
+      "researcher": "mochi-b11-816b460b-researcher",
+      "designer": "mochi-b11-816b460b-designer",
+      "experimenter": "mochi-b11-816b460b-experimenter",
+      "critic": "mochi-b11-816b460b-critic"
+    },
+    "audiences": {
+      "shared": "mochi-b11-816b460b-shared",
+      "critic_private": "mochi-b11-816b460b-critic"
+    },
+    "records": [
+      {
+        "id": "mochi-b11-816b460b-r0",
+        "role": "experimenter",
+        "author": "mochi-b11-816b460b-experimenter",
+        "audience": "mochi-b11-816b460b-shared",
+        "at": "2026-11-19T02:25:46.500710+00:00",
+        "sha256": "960c3a688db2b5e7ff2e300ad96a41d3fd58ce28d55fbccc801fecfba69241c4",
+        "ingestion_id": "90103f7d-ce2f-4a6a-9188-a1a9a26f650d",
+        "write_to_ready_seconds": 10.30671486700001,
+        "payload": {
+          "record_id": "mochi-b11-816b460b-r0",
+          "author": "mochi-b11-816b460b-experimenter",
+          "occurred_at": "2026-11-19T02:25:46.500710+00:00",
+          "content": {
+            "kind": "observation",
+            "study": "mochi-balanced-v11",
+            "experiment_id": "reference-capture-1",
+            "ascent_and_alarm_passed": true,
+            "failure": "Backward descent produced 1.816 N of unintended contact between the left ankle pitch link and the top book at 12.158 simulated seconds.",
+            "training_gate": "closed",
+            "scope": "One engineering seed; no repeatability or training benefit established."
+          }
+        }
+      },
+      {
+        "id": "mochi-b11-816b460b-r1",
+        "role": "researcher",
+        "author": "mochi-b11-816b460b-researcher",
+        "audience": "mochi-b11-816b460b-shared",
+        "at": "2026-11-19T02:25:58.266116+00:00",
+        "sha256": "73f8e30736ef4fe4cc07665d42241d648f361eacb8d6c81ba26923bcdff9e0f3",
+        "ingestion_id": "bb96b123-aedd-49bf-a007-723927cafa5e",
+        "write_to_ready_seconds": 4.17701169999998,
+        "payload": {
+          "record_id": "mochi-b11-816b460b-r1",
+          "author": "mochi-b11-816b460b-researcher",
+          "occurred_at": "2026-11-19T02:25:58.266116+00:00",
+          "content": {
+            "kind": "hypothesis",
+            "observation_record": "mochi-b11-816b460b-r0",
+            "sources": {
+              "query": "humanoid stair descent backward forward walking capture point support polygon touchdown transition pretrained locomotion policy",
+              "request_id": "221fb39d15c48ad98bad117815d1b117",
+              "cost_dollars": {
+                "total": 0.007,
+                "search": {
+                  "neural": 0.007
+                }
+              },
+              "sources": [
+                {
+                  "url": "https://www.roboticsproceedings.org/rss21/p068.pdf",
+                  "title": "BeamDojo: Learning Agile Humanoid Locomotion on Sparse Footholds",
+                  "excerpt": "risky terrains with sparse footholds poses a significant challenge for humanoid robots, requiring precise foot placements ... stable locomotion. Existing learning-based approaches often struggle",
+                  "retrieved_at": "2026-11-19T02:25:58.265967+00:00"
+                },
+                {
+                  "url": "https://arxiv.org/abs/2611.08097",
+                  "title": "STEP: Spatiotemporal Training with Explicit Prediction for Perceptive Humanoid Locomotion",
+                  "excerpt": "We present Spatiotemporal Training with Explicit Prediction (STEP), a one-stage framework that jointly supervises cross-modal relationships and action-dependent state evolution within a shared control",
+                  "retrieved_at": "2026-11-19T02:25:58.266020+00:00"
+                },
+                {
+                  "url": "https://www.alphaxiv.org/abs/2605.09944",
+                  "title": "Explicit Stair Geometry Conditioning for Robust Humanoid Locomotion",
+                  "excerpt": "Teacher: In simulation, the robot is first trained using \"ground truth\" ... information. This \"teacher\" knows exactly how high and deep the stairs are",
+                  "retrieved_at": "2026-11-19T02:25:58.266027+00:00"
+                }
+              ],
+              "response_sha256": "298d423ba71dc13fe1f084ec614e9931eee6ee860b988fed0a6146bd879a68de",
+              "at": "2026-11-19T02:25:58.266105+00:00"
+            },
+            "mechanism": "Forward-facing descent may clear the riser differently from backward stepping. Capturing a supported stop with a measured capture-point margin may reduce unstable support transitions.",
+            "qualification": "A simplified capture point is a screening heuristic, not a full stability certificate."
+          }
+        }
+      },
+      {
+        "id": "mochi-b11-816b460b-r2",
+        "role": "designer",
+        "author": "mochi-b11-816b460b-designer",
+        "audience": "mochi-b11-816b460b-shared",
+        "at": "2026-11-19T02:26:05.553389+00:00",
+        "sha256": "699201ed0abdee162c9885a435235d80f3894641279b0f155b11c9d86e776513",
+        "ingestion_id": "fd911a02-59b5-4762-8967-e6ed456627d0",
+        "write_to_ready_seconds": 4.434102123999992,
+        "payload": {
+          "record_id": "mochi-b11-816b460b-r2",
+          "author": "mochi-b11-816b460b-designer",
+          "occurred_at": "2026-11-19T02:26:05.553389+00:00",
+          "content": {
+            "kind": "proposal",
+            "hypothesis_record": "mochi-b11-816b460b-r1",
+            "capture_margin_m": 0.002,
+            "forward_descent": true,
+            "tinker_operation": "inference only"
+          }
+        }
+      },
+      {
+        "id": "mochi-b11-816b460b-r3",
+        "role": "experimenter",
+        "author": "mochi-b11-816b460b-experimenter",
+        "audience": "mochi-b11-816b460b-shared",
+        "at": "2026-11-19T02:28:41.000356+00:00",
+        "sha256": "58974a2eab08b24d09b8b87f44b93b54e9ba56808f25c6b826a3d34a0bc92bc5",
+        "ingestion_id": "54c0b65e-a55f-46e7-95cd-873d5af047df",
+        "write_to_ready_seconds": 40.947621434999974,
+        "payload": {
+          "record_id": "mochi-b11-816b460b-r3",
+          "author": "mochi-b11-816b460b-experimenter",
+          "occurred_at": "2026-11-19T02:28:41.000356+00:00",
+          "content": {
+            "kind": "observation",
+            "proposal_record": "mochi-b11-816b460b-r2",
+            "matched_results": [
+              {
+                "failure": "invalid_terrain_contact",
+                "complete_sequence_success": false,
+                "duration_s": 11.859030432572112,
+                "tasks": {
+                  "alarm": true
+                },
+                "arrivals": [
+                  {
+                    "label": "alarm-book-top",
+                    "goal": [
+                      -0.365,
+                      0.045,
+                      1.5707963267948966
+                    ],
+                    "success": true,
+                    "duration_s": 4.197706022697624,
+                    "position_error_mm": 22.06008809458074,
+                    "heading_error_degrees": 6.823182650133361,
+                    "root": [
+                      -0.342982195191799,
+                      0.04636519528589306,
+                      0.15507077100573705
+                    ],
+                    "loads_n": {
+                      "left": 0.8059358557018567,
+                      "right": 0.7670780880883324
+                    },
+                    "dwell_s": 0.4005600683781674,
+                    "book_top": {
+                      "instant_valid": true,
+                      "top_book_load_n": {
+                        "left": 0.8059358557018567,
+                        "right": 0.7670780880883324
+                      },
+                      "feet_inside_top_book": true,
+                      "tilt_deg": 1.2961369775247882,
+                      "scope": "Needs 0.4-second continuous dwell before success."
+                    }
+                  }
+                ],
+                "receipt": {
+                  "provider": "Modal",
+                  "physical_rollouts": 1,
+                  "cpu": 1,
+                  "memory_mib": 2048,
+                  "duration_seconds": 29.543576786000003,
+                  "optimizer_updates": 0,
+                  "seed_partition": "engineering",
+                  "held_out_opened": false
+                }
+              },
+              {
+                "failure": "fall",
+                "complete_sequence_success": false,
+                "duration_s": 50.61280831345868,
+                "tasks": {
+                  "alarm": true
+                },
+                "arrivals": [
+                  {
+                    "label": "alarm-book-top",
+                    "goal": [
+                      -0.365,
+                      0.045,
+                      1.5707963267948966
+                    ],
+                    "success": true,
+                    "duration_s": 4.197706022697624,
+                    "position_error_mm": 22.06008809458074,
+                    "heading_error_degrees": 6.823182650133361,
+                    "root": [
+                      -0.342982195191799,
+                      0.04636519528589306,
+                      0.15507077100573705
+                    ],
+                    "loads_n": {
+                      "left": 0.8059358557018567,
+                      "right": 0.7670780880883324
+                    },
+                    "dwell_s": 0.4005600683781674,
+                    "book_top": {
+                      "instant_valid": true,
+                      "top_book_load_n": {
+                        "left": 0.8059358557018567,
+                        "right": 0.7670780880883324
+                      },
+                      "feet_inside_top_book": true,
+                      "tilt_deg": 1.2961369775247882,
+                      "scope": "Needs 0.4-second continuous dwell before success."
+                    }
+                  },
+                  {
+                    "label": "book-turn-for-forward-descent",
+                    "goal": [
+                      -0.343427262742413,
+                      0.04633133932271674,
+                      -1.5707963267948966
+                    ],
+                    "success": true,
+                    "duration_s": 6.282253317315831,
+                    "position_error_mm": 2.7024436812434134,
+                    "heading_error_degrees": 6.659463771389119,
+                    "root": [
+                      -0.34080773765752204,
+                      0.046995636078632025,
+                      0.1551501303259894
+                    ],
+                    "loads_n": {
+                      "left": 0.7465276358201773,
+                      "right": 0.825983337141291
+                    },
+                    "dwell_s": 0.4005600683781674,
+                    "book_top": null
+                  },
+                  {
+                    "label": "descend-supported-stop",
+                    "goal": [
+                      -0.34080773765752204,
+                      -0.18,
+                      -1.5707963267948966
+                    ],
+                    "success": true,
+                    "duration_s": 6.16290276632974,
+                    "position_error_mm": 9.208401024138727,
+                    "heading_error_degrees": 0.09687907133718918,
+                    "root": [
+                      -0.33416321457257453,
+                      -0.1863753401787637,
+                      0.1311579328990489
+                    ],
+                    "loads_n": {
+                      "left": 0.7878615893636306,
+                      "right": 0.7851854399574552
+                    },
+                    "dwell_s": 0.4005600683781674,
+                    "book_top": null
+                  },
+                  {
+                    "label": "desk-turn-to-corridor",
+                    "goal": [
+                      -0.33416321457257453,
+                      -0.1863753401787637,
+                      1.5707963267948966
+                    ],
+                    "success": true,
+                    "duration_s": 6.52749417550643,
+                    "position_error_mm": 5.792073517832884,
+                    "heading_error_degrees": 5.897082882646038,
+                    "root": [
+                      -0.3399388470853859,
+                      -0.1868114419019168,
+                      0.1311507955640177
+                    ],
+                    "loads_n": {
+                      "left": 0.7474141288526077,
+                      "right": 0.8250842383392325
+                    },
+                    "dwell_s": 0.4005600683781674,
+                    "book_top": null
+                  },
+                  {
+                    "label": "drawer-corridor",
+                    "goal": [
+                      -0.19,
+                      -0.18,
+                      1.5707963267948966
+                    ],
+                    "success": true,
+                    "duration_s": 8.733844429719738,
+                    "position_error_mm": 17.998155715564987,
+                    "heading_error_degrees": 0.3211901912110326,
+                    "root": [
+                      -0.20652199588513637,
+                      -0.18713843548218106,
+                      0.13117628003084802
+                    ],
+                    "loads_n": {
+                      "left": 0.0,
+                      "right": 1.6227176906352498
+                    },
+                    "dwell_s": 0.0,
+                    "book_top": null
+                  },
+                  {
+                    "label": "drawer-corridor",
+                    "goal": [
+                      -0.19,
+                      -0.03,
+                      1.5707963267948966
+                    ],
+                    "success": true,
+                    "duration_s": 5.853081815507721,
+                    "position_error_mm": 17.99307849481159,
+                    "heading_error_degrees": 0.07939466501830146,
+                    "root": [
+                      -0.19573505275386482,
+                      -0.0470546194220463,
+                      0.13118302604764712
+                    ],
+                    "loads_n": {
+                      "left": 1.158954237808024,
+                      "right": 0.368533107794766
+                    },
+                    "dwell_s": 0.0,
+                    "book_top": null
+                  }
+                ],
+                "receipt": {
+                  "provider": "Modal",
+                  "physical_rollouts": 1,
+                  "cpu": 1,
+                  "memory_mib": 2048,
+                  "duration_seconds": 122.37519493699999,
+                  "optimizer_updates": 0,
+                  "seed_partition": "engineering",
+                  "held_out_opened": false
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "mochi-b11-816b460b-r4",
+        "role": "critic",
+        "author": "mochi-b11-816b460b-critic",
+        "audience": "mochi-b11-816b460b-shared",
+        "at": "2026-11-19T02:29:22.268960+00:00",
+        "sha256": "9fa3608d89281af60ff4bd9e57cef711bf997bfa7e03ec30d0c3a0b7f69a5fc0",
+        "ingestion_id": "28485542-fe2e-4066-bc6b-f5a93730e45a",
+        "write_to_ready_seconds": 8.188879945999986,
+        "payload": {
+          "record_id": "mochi-b11-816b460b-r4",
+          "author": "mochi-b11-816b460b-critic",
+          "occurred_at": "2026-11-19T02:29:22.268960+00:00",
+          "content": {
+            "kind": "qualified-conclusion",
+            "evidence_record": "mochi-b11-816b460b-r3",
+            "evidence_sha256": "f51ba9bd39f07e3dc2776fccdeab59d6bcf4df2293bcba4fe13bb0a7661408e6",
+            "repeatability_established": false,
+            "all_probe_sequences_passed": false,
+            "training_gate": "closed pending repeated safe reference",
+            "supersedes_hypothesis": "mochi-b11-816b460b-r1",
+            "optimizer_updates_completed": 0
+          }
+        }
+      }
+    ],
+    "reads": [
+      {
+        "reader": "mochi-b11-816b460b-researcher",
+        "reader_role": "researcher",
+        "author": "mochi-b11-816b460b-experimenter",
+        "record_id": "mochi-b11-816b460b-r0",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "960c3a688db2b5e7ff2e300ad96a41d3fd58ce28d55fbccc801fecfba69241c4",
+        "at": "2026-11-19T02:25:57.188549+00:00"
+      },
+      {
+        "reader": "mochi-b11-816b460b-designer",
+        "reader_role": "designer",
+        "author": "mochi-b11-816b460b-researcher",
+        "record_id": "mochi-b11-816b460b-r1",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "73f8e30736ef4fe4cc07665d42241d648f361eacb8d6c81ba26923bcdff9e0f3",
+        "at": "2026-11-19T02:26:02.945635+00:00"
+      },
+      {
+        "reader": "mochi-b11-816b460b-experimenter",
+        "reader_role": "experimenter",
+        "author": "mochi-b11-816b460b-designer",
+        "record_id": "mochi-b11-816b460b-r2",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "699201ed0abdee162c9885a435235d80f3894641279b0f155b11c9d86e776513",
+        "at": "2026-11-19T02:26:10.268123+00:00"
+      },
+      {
+        "reader": "mochi-b11-816b460b-critic",
+        "reader_role": "critic",
+        "author": "mochi-b11-816b460b-experimenter",
+        "record_id": "mochi-b11-816b460b-r3",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "58974a2eab08b24d09b8b87f44b93b54e9ba56808f25c6b826a3d34a0bc92bc5",
+        "at": "2026-11-19T02:29:22.268813+00:00"
+      },
+      {
+        "reader": "mochi-b11-816b460b-researcher",
+        "reader_role": "researcher",
+        "author": "mochi-b11-816b460b-critic",
+        "record_id": "mochi-b11-816b460b-r4",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "9fa3608d89281af60ff4bd9e57cef711bf997bfa7e03ec30d0c3a0b7f69a5fc0",
+        "at": "2026-11-19T02:29:30.730636+00:00"
+      }
+    ],
+    "decisions": [
+      {
+        "role": "designer",
+        "question": "Choose the measured capture-point margin for one forward-descent trial. Both margins are in metres and use actual contact forces and COM velocity. The matched reference uses backward descent. No Tinker weights are being updated.",
+        "selected": "conservative_margin",
+        "distribution": {
+          "standard_margin": 0.2689414322376251,
+          "conservative_margin": 0.7310585975646973
+        },
+        "input_record_ids": [
+          "mochi-b11-816b460b-r0",
+          "mochi-b11-816b460b-r1"
+        ],
+        "context_sha256": "5e9d1ca71825d35aa7db2b3165737d057786619ce151b785a9a38da2a2482618",
+        "at": "2026-11-19T02:26:05.553371+00:00"
+      }
+    ],
+    "calls": [
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-19T02:25:40.606784+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-19T02:25:40.669411+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-19T02:25:40.692183+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-19T02:25:40.722462+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "audiences",
+        "status": 201,
+        "at": "2026-11-19T02:25:40.773208+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "audiences",
+        "status": 201,
+        "at": "2026-11-19T02:25:40.801758+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-19T02:25:46.676931+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:25:46.699933+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:25:48.722095+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:25:50.744009+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:25:52.764136+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:25:54.786953+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:25:56.807366+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-19T02:25:57.188455+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-19T02:25:58.327852+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:25:58.351941+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:26:00.416589+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:26:02.443028+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-19T02:26:02.945587+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-19T02:26:05.898262+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:26:05.915515+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:26:07.963330+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:26:09.987419+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-19T02:26:10.268077+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-19T02:28:41.163096+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:28:41.220568+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:28:43.265088+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:28:45.291952+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:28:47.315543+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:28:49.362784+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:28:51.384259+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:28:53.403711+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:28:55.429621+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:28:57.448814+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:28:59.484007+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:29:01.541026+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:29:03.577543+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:29:05.597533+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:29:07.627069+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:29:09.647234+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:29:11.683784+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:29:13.782595+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:29:15.832591+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:29:17.886566+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:29:19.926369+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:29:21.947791+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-19T02:29:22.268510+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-19T02:29:22.335504+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:29:22.354433+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:29:24.374008+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:29:26.395099+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:29:28.436315+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T02:29:30.457775+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-19T02:29:30.730573+00:00"
+      }
+    ],
+    "sources": [
+      {
+        "query": "humanoid stair descent backward forward walking capture point support polygon touchdown transition pretrained locomotion policy",
+        "request_id": "221fb39d15c48ad98bad117815d1b117",
+        "cost_dollars": {
+          "total": 0.007,
+          "search": {
+            "neural": 0.007
+          }
+        },
+        "sources": [
+          {
+            "url": "https://www.roboticsproceedings.org/rss21/p068.pdf",
+            "title": "BeamDojo: Learning Agile Humanoid Locomotion on Sparse Footholds",
+            "excerpt": "risky terrains with sparse footholds poses a significant challenge for humanoid robots, requiring precise foot placements ... stable locomotion. Existing learning-based approaches often struggle",
+            "retrieved_at": "2026-11-19T02:25:58.265967+00:00"
+          },
+          {
+            "url": "https://arxiv.org/abs/2611.08097",
+            "title": "STEP: Spatiotemporal Training with Explicit Prediction for Perceptive Humanoid Locomotion",
+            "excerpt": "We present Spatiotemporal Training with Explicit Prediction (STEP), a one-stage framework that jointly supervises cross-modal relationships and action-dependent state evolution within a shared control",
+            "retrieved_at": "2026-11-19T02:25:58.266020+00:00"
+          },
+          {
+            "url": "https://www.alphaxiv.org/abs/2605.09944",
+            "title": "Explicit Stair Geometry Conditioning for Robust Humanoid Locomotion",
+            "excerpt": "Teacher: In simulation, the robot is first trained using \"ground truth\" ... information. This \"teacher\" knows exactly how high and deep the stairs are",
+            "retrieved_at": "2026-11-19T02:25:58.266027+00:00"
+          }
+        ],
+        "response_sha256": "298d423ba71dc13fe1f084ec614e9931eee6ee860b988fed0a6146bd879a68de",
+        "at": "2026-11-19T02:25:58.266105+00:00"
+      }
+    ],
+    "eligibility": {
+      "writers": 4,
+      "readers": 4,
+      "cross_agent_reads": 5,
+      "isolation_passed": false
+    }
+  }
+}
