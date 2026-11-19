@@ -23,7 +23,7 @@ def public_report(value):
     return value
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--source',required=True);p.add_argument('--development-preview',action='store_true');a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--source',required=True);p.add_argument('--development-preview',action='store_true');p.add_argument('--development-source');a=p.parse_args()
     source=Path(a.source);report=json.loads((source/'report.json').read_text())
     if a.development_preview:
         assert report.get('held_out') is None,'Use completed evaluation results when final test results exist'
@@ -53,7 +53,14 @@ def main():
                      'executed_root_distance_m':e.get('executed_root_distance_m')}
         return name
     scenarios=[]
-    development_rows={update:json.loads((source/f'checkpoint-{update}.json').read_text()) for update in cps}
+    development_source=Path(a.development_source) if a.development_source else source
+    if development_source!=source:
+        base=json.loads((development_source/'report.json').read_text())
+        assert base['protocol']['frozen_sha256']==report['protocol']['frozen_sha256']
+        assert base['protocol']['development_seeds']==report['protocol']['development_seeds']
+        prior={c['update']:c['checkpoint_id'] for c in base['checkpoints']}
+        assert all(prior[k]==c['checkpoint_id'] for k,c in cps.items()),'Mismatched development checkpoint data'
+    development_rows={update:json.loads((development_source/f'checkpoint-{update}.json').read_text()) for update in cps}
     for devseed in report['protocol']['development_seeds']:
         versions=[]
         for update in sorted(cps):
@@ -74,15 +81,24 @@ def main():
                 for a,b in zip(parents,trained) if a['complete_sequence_success'] and b['complete_sequence_success']]
         report['paired_successful_completion_differences']={'n':len(paired),'cases':paired,
             'scope':'Only paired cases where both checkpoints complete; do not interpret early failed attempts as faster completions.'}
-        for before,after in zip(parents,trained):
-            assert before['seed']==after['seed']
-            bf=recording(before,0,'held-out-parent');af=recording(after,selected,'held-out-selected')
-            scenarios.append({'id':'held-out-'+str(before['seed']),'label':f'Final unseen scenario · {before["seed"]}',
-                              'partition':'held_out','parent_file':bf,'versions':[{'update':selected,'file':af}]})
+    elif (source/'partial-held-out-parent.json').exists():
+        assert report['selected_checkpoint'] and report['held_out_opened']
+        parents=json.loads((source/'partial-held-out-parent.json').read_text())
+        trained=json.loads((source/'partial-held-out-selected.json').read_text())
+    else:parents=[];trained=[]
+    assert len(parents)==len(trained)
+    for before,after in zip(parents,trained):
+        assert before['seed']==after['seed'] and before['seed'] in report['protocol']['held_out_seeds']
+        bf=recording(before,0,'held-out-parent');af=recording(after,selected,'held-out-selected')
+        pending=' · cohort in progress' if a.development_preview else ''
+        scenarios.append({'id':'held-out-'+str(before['seed']),'label':f'Final test scenario · {before["seed"]}'+pending,
+                          'partition':'held_out_pending' if a.development_preview else 'held_out',
+                          'parent_file':bf,'versions':[{'update':selected,'file':af}]})
     manifest={'study':report['study'],'optimizer_updates_completed':report['optimizer_updates_completed'],
               'selected_update':selected,'scope':report['scope'],'scene':json.loads((ROOT/'configs/richdesk-v9.json').read_text()),
               'scenarios':scenarios,'recordings':files,'checkpoints':[cps[k] for k in sorted(cps)],'held_out':report.get('held_out'),
               'isolated':report.get('isolated'),
+              'test_pairs_available':len(parents),
               'evaluation_status':'development_preview' if a.development_preview else 'completed',
               'selection_finalized':bool(report.get('selected_checkpoint')),'default_scenario':'development-'+str(report['protocol']['development_seeds'][0]),
               'workflow_run':report['run_id'],'source_sha':report['source_sha'],

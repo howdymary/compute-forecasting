@@ -2545,9 +2545,239 @@
         "inference_input_plus_max_output_tokens": 3651,
         "paired_on_one_worker": true
       }
+    },
+    {
+      "phase": "held-out",
+      "seed": 44000,
+      "model": "parent",
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 284.70112022600006,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 313,
+        "paired_on_one_worker": true
+      }
+    },
+    {
+      "phase": "held-out",
+      "seed": 44000,
+      "model": "selected",
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 756.843816941,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "SkylakeX"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "SkylakeX"
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 3635,
+        "paired_on_one_worker": true
+      }
+    },
+    {
+      "phase": "held-out",
+      "seed": 44001,
+      "model": "parent",
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 992.514600964,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 3640,
+        "paired_on_one_worker": true
+      }
+    },
+    {
+      "phase": "held-out",
+      "seed": 44000,
+      "model": "fixed",
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 1153.194325052,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 0,
+        "paired_on_one_worker": true
+      }
+    },
+    {
+      "phase": "held-out",
+      "seed": 44001,
+      "model": "selected",
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 1080.1147362399997,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 3640,
+        "paired_on_one_worker": true
+      }
     }
   ],
-  "campaign_modal_rollouts_completed": 161,
+  "campaign_modal_rollouts_completed": 166,
   "recovery": {
     "source_training_run": 44482272455,
     "evaluation_run": "44484708941",
@@ -2572,9 +2802,9 @@
     ],
     "reuse_policy": "Reuse completed physical outcomes, including failures. Fill missing outputs only.",
     "usage_or_reserved": {
-      "modal_rollouts": 12,
-      "modal_cpu_hours": 3.499288562234444,
-      "inference_tokens": 42439,
+      "modal_rollouts": 20,
+      "modal_cpu_hours": 5.934668728740834,
+      "inference_tokens": 101667,
       "past_writes": 0,
       "past_recalls": 0
     },
@@ -3173,6 +3403,14 @@
         }
       }
     ]
+  },
+  "preview_snapshot": {
+    "complete_test_pairs": [
+      44000,
+      44001
+    ],
+    "development_source_run": 44496546488,
+    "scope": "Only completed paired test cases are exported. The final cohort summary is pending. No outcome-based filtering."
   },
   "publication_note": "Web excerpts stay in the backend artifacts. The public report preserves URLs, titles, excerpt hashes and numerical evidence."
 }

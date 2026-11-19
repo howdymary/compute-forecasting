@@ -129,3 +129,9 @@ After this evaluation ends, the requested next step is to assess walking, task c
 All trained checkpoints (1, 8 and 32 new updates) completed 3/3 development sequences within the frozen smoothness limits. The parent completed 2/3. The predeclared ranking selected update 1, whose mean torso-roll RMS was 0.263 degrees, compared with 0.274 at update 8 and 0.266 at update 32. The selected lineage has 105 cumulative optimizer updates; the campaign itself completed 32 new updates.
 
 The selected checkpoint was frozen before six held-out scenarios were opened. Final results and domain interventions remain pending. The development viewer can show the frozen choice during this evaluation, with final testing explicitly labelled pending.
+
+## First completed final-test pairs
+
+The read-only snapshot from run 44499954275 includes every completed parent/selected test pair at retrieval: seeds 44000 and 44001. The parent fell during book ascent on 44000 at 62.87 s; the frozen selected checkpoint completed all four tasks in 251.81 s without forbidden contacts. Both policies completed 44001 with identical measured trajectories and timing. These two cases are exposed individually, with the six-scenario cohort summary explicitly pending. They do not establish uniform improvement.
+
+Development recordings are reused from the immutable earlier export and checked against the same frozen source hashes and checkpoint identifiers. This export generates no new simulations, inference or optimizer updates.

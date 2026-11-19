@@ -491,6 +491,30 @@
         }
       ],
       "parent_file": "development-43002-0.json.gz"
+    },
+    {
+      "id": "held-out-44000",
+      "label": "Final test scenario \u00b7 44000 \u00b7 cohort in progress",
+      "partition": "held_out_pending",
+      "parent_file": "held-out-parent-44000-0.json.gz",
+      "versions": [
+        {
+          "update": 1,
+          "file": "held-out-selected-44000-1.json.gz"
+        }
+      ]
+    },
+    {
+      "id": "held-out-44001",
+      "label": "Final test scenario \u00b7 44001 \u00b7 cohort in progress",
+      "partition": "held_out_pending",
+      "parent_file": "held-out-parent-44001-0.json.gz",
+      "versions": [
+        {
+          "update": 1,
+          "file": "held-out-selected-44001-1.json.gz"
+        }
+      ]
     }
   ],
   "recordings": {
@@ -743,6 +767,85 @@
       },
       "duration": 253.61011121208148,
       "executed_root_distance_m": 5.151910296753104
+    },
+    "held-out-parent-44000-0.json.gz": {
+      "checkpoint_update": 0,
+      "checkpoint_id": "0188b0e78f749d276c613fa0d8adc8253fa90719b430be18e6f6bfb56673498f",
+      "cumulative_updates": 104,
+      "seed": 44000,
+      "complete": false,
+      "failure": "fall",
+      "archive": {
+        "volume": "mochi-terrain-v12-artifacts",
+        "path": "mochi-t12-final-44484708941/held-out-44000-parent.json.gz",
+        "uncompressed_sha256": "1f555b424364dccd36a6bcd99bceecbb70ce50c828b5f84296d4aea85ed9f227"
+      },
+      "task_outcomes": {},
+      "duration": 62.87321628398728,
+      "executed_root_distance_m": 0.8447220140618856
+    },
+    "held-out-selected-44000-1.json.gz": {
+      "checkpoint_update": 1,
+      "checkpoint_id": "3513e4b5d2f530d5eb1c5dd1b14d516d7d9d9724f1a28321d60aa4abccc86975",
+      "cumulative_updates": 105,
+      "seed": 44000,
+      "complete": true,
+      "failure": null,
+      "archive": {
+        "volume": "mochi-terrain-v12-artifacts",
+        "path": "mochi-t12-final-44484708941/held-out-44000-selected.json.gz",
+        "uncompressed_sha256": "ea9a56bda5cf550cd3965c3b98d9fbef0af8b94ec791abdbeb41cd2e4e72da45"
+      },
+      "task_outcomes": {
+        "alarm": true,
+        "drawer": true,
+        "laptop": true,
+        "globe": true
+      },
+      "duration": 251.81086078248197,
+      "executed_root_distance_m": 5.164703232111482
+    },
+    "held-out-parent-44001-0.json.gz": {
+      "checkpoint_update": 0,
+      "checkpoint_id": "0188b0e78f749d276c613fa0d8adc8253fa90719b430be18e6f6bfb56673498f",
+      "cumulative_updates": 104,
+      "seed": 44001,
+      "complete": true,
+      "failure": null,
+      "archive": {
+        "volume": "mochi-terrain-v12-artifacts",
+        "path": "mochi-t12-final-44484708941/held-out-44001-parent.json.gz",
+        "uncompressed_sha256": "a426f845a77d00c33d4a3677459c152bc6a97b90314c63a1d6294531785c931f"
+      },
+      "task_outcomes": {
+        "alarm": true,
+        "drawer": true,
+        "laptop": true,
+        "globe": true
+      },
+      "duration": 257.1562940215329,
+      "executed_root_distance_m": 5.149930953673997
+    },
+    "held-out-selected-44001-1.json.gz": {
+      "checkpoint_update": 1,
+      "checkpoint_id": "3513e4b5d2f530d5eb1c5dd1b14d516d7d9d9724f1a28321d60aa4abccc86975",
+      "cumulative_updates": 105,
+      "seed": 44001,
+      "complete": true,
+      "failure": null,
+      "archive": {
+        "volume": "mochi-terrain-v12-artifacts",
+        "path": "mochi-t12-final-44484708941/held-out-44001-selected.json.gz",
+        "uncompressed_sha256": "ead0e404fbb59748d55256c1dba6f69a342738dab295518c9351c8bd7609dc33"
+      },
+      "task_outcomes": {
+        "alarm": true,
+        "drawer": true,
+        "laptop": true,
+        "globe": true
+      },
+      "duration": 257.1562940215329,
+      "executed_root_distance_m": 5.149930953673997
     }
   },
   "checkpoints": [
@@ -1057,6 +1160,7 @@
   ],
   "held_out": null,
   "isolated": null,
+  "test_pairs_available": 2,
   "evaluation_status": "development_preview",
   "selection_finalized": true,
   "default_scenario": "development-43000",
@@ -1068,7 +1172,7 @@
     "cross_agent_reads": 3,
     "isolation_passed": false
   },
-  "campaign_modal_rollouts_completed": 161,
+  "campaign_modal_rollouts_completed": 166,
   "memory_review_pending": null,
   "final_memory_review_pending": null,
   "display_note": "Complete measured 25 Hz body trajectories with six-decimal display quantization. No physical instability is filtered. Full numerical originals are archived on Modal."

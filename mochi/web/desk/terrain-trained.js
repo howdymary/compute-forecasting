@@ -3,7 +3,7 @@ const $=q=>document.querySelector(q),folder='terrain-training/';
 let manifest,stages,scenario,version,episodes,playing=true,time=0,last=performance.now(),loading=false,requestId=0;
 const cache=new Map();
 function setPlayback(value){playing=value;$('#play').textContent=value?'Ⅱ':'▶'}
-function outcomeLabel(value){return ({invalid_fixture_contact:'Stopped: unintended contact',inference_token_limit:'Stopped: inference limit'})[value]||String(value).replaceAll('_',' ')}
+function outcomeLabel(value){return ({fall:'Stopped: fall',invalid_fixture_contact:'Stopped: unintended contact',inference_token_limit:'Stopped: inference limit'})[value]||String(value).replaceAll('_',' ')}
 async function json(path){const r=await fetch(path);if(!r.ok)throw Error('Missing completed recording');return r.json()}
 async function episode(file){if(!cache.has(file))cache.set(file,(async()=>{const r=await fetch(folder+file);if(!r.ok)throw Error('Missing measured trajectory');const bytes=new Uint8Array(await r.arrayBuffer());return bytes[0]===31&&bytes[1]===139?new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'))).json():JSON.parse(new TextDecoder().decode(bytes))})());return cache.get(file)}
 async function load(){
@@ -16,7 +16,7 @@ async function load(){
   $('#left-id').textContent=before.checkpoint_id.slice(0,12);$('#right-id').textContent=after.checkpoint_id.slice(0,12);
   $('#right-title').textContent=`${version.update} NEW OPTIMIZER UPDATE${version.update===1?'':'S'}`;
   $('#checkpoint-label').textContent=`Update ${version.update} · ${after.cumulative_updates} cumulative`;
-  $('#scope').textContent=(scenario.partition==='held_out'?'Final unseen scenario. Intermediate checkpoints were not selected using these results. ':'Development scenario used for checkpoint selection. ')+manifest.display_note;
+  $('#scope').textContent=(scenario.partition.startsWith('held_out')?'Final test scenario. The checkpoint was frozen before this test. '+(scenario.partition==='held_out_pending'?'The full cohort is still in progress. ':''):'Development scenario used for checkpoint selection. ')+manifest.display_note;
   setPlayback(true);
   for(const key of cache.keys()){if(cache.size<=4)break;if(key!==scenario.parent_file&&key!==version.file)cache.delete(key)}
  }finally{if(id===requestId)loading=false}
@@ -48,7 +48,7 @@ async function init(){
  $('#scenario').value=initialScenario;
  $('#campaign-summary').textContent=manifest.evaluation_status==='completed'?`${manifest.optimizer_updates_completed} new optimizer updates. Selected update: ${manifest.selected_update}. The same model selects walking settings, contact profiles and arm recovery.`:`DEVELOPMENT PREVIEW · ${manifest.optimizer_updates_completed} optimizer updates completed. ${manifest.selection_finalized?'Update '+manifest.selected_update+' selected on development data':'Showing update '+manifest.selected_update+'; checkpoint selection is pending'}. Final testing is pending.`;
  for(const c of manifest.checkpoints){const p=document.createElement('p');p.textContent=`Update ${c.update}: ${c.development.complete_successes}/${c.development.n} complete · ${c.development.smooth_complete_successes}/${c.development.n} within smoothness limits`;$('#checkpoint-table').append(p)}
- if(!manifest.held_out){const p=document.createElement('p');p.textContent='Final testing is pending. The recordings and counts above are development results.';$('#test-table').append(p)}
+ if(!manifest.held_out){const p=document.createElement('p');p.textContent=`Final testing is pending. ${manifest.test_pairs_available||0} matched test case${manifest.test_pairs_available===1?'':'s'} available to inspect; the full cohort summary is pending.`;$('#test-table').append(p)}
  else for(const name of ['parent','selected','fixed']){const s=manifest.held_out[name],p=document.createElement('p');p.textContent=`${name}: ${s.complete_successes}/${s.n} complete · ${s.smooth_complete_successes}/${s.n} within smoothness limits`;$('#test-table').append(p)}
  for(const [id,stage]of [['left',stages[0]],['right',stages[1]]]){$('#'+id+'-follow').onclick=()=>stage.view(false);$('#'+id+'-wide').onclick=()=>stage.view(true);$('#'+id+'-feet').onclick=()=>stage.inspect('feet')}
  $('#play').onclick=()=>{if(!playing&&time>=+$('#scrub').max)time=0;setPlayback(!playing)};$('#restart').onclick=()=>{time=0;setPlayback(true)};$('#scrub').oninput=e=>{time=+e.target.value;setPlayback(false)};
