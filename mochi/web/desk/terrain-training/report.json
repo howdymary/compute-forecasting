@@ -3,8 +3,8 @@
   "run_id": "mochi-t12-resume-44482272455",
   "source_sha": "001164697ee53c36bae332e5d56c8791d13f8288",
   "created_at": "2026-11-19T07:48:42.028392+00:00",
-  "status": "running",
-  "phase": "Complete paired held-out checkpoint tests",
+  "status": "completed",
+  "phase": "Frozen checkpoint evaluation complete",
   "protocol": {
     "study": "mochi-terrain-v12-preserved-data-post-training",
     "phase": "frozen-controller-post-training",
@@ -2775,15 +2775,1031 @@
         "inference_input_plus_max_output_tokens": 3640,
         "paired_on_one_worker": true
       }
+    },
+    {
+      "phase": "held-out",
+      "seed": 44001,
+      "model": "fixed",
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 729.2997847180001,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "SkylakeX"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "SkylakeX"
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 0,
+        "paired_on_one_worker": true
+      }
+    },
+    {
+      "phase": "held-out",
+      "seed": 44003,
+      "model": "parent",
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 197.09413042699998,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "SkylakeX"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "SkylakeX"
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 313,
+        "paired_on_one_worker": true
+      }
+    },
+    {
+      "phase": "held-out",
+      "seed": 44002,
+      "model": "parent",
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 966.24000846,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 3643,
+        "paired_on_one_worker": true
+      }
+    },
+    {
+      "phase": "held-out",
+      "seed": 44002,
+      "model": "selected",
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 1201.29778572,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 3643,
+        "paired_on_one_worker": true
+      }
+    },
+    {
+      "phase": "held-out",
+      "seed": 44002,
+      "model": "fixed",
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 1032.0747312800004,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 0,
+        "paired_on_one_worker": true
+      }
+    },
+    {
+      "phase": "held-out",
+      "seed": 44003,
+      "model": "selected",
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 814.2314589240002,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "SkylakeX"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "SkylakeX"
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 3642,
+        "paired_on_one_worker": true
+      }
+    },
+    {
+      "phase": "held-out",
+      "seed": 44003,
+      "model": "fixed",
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 846.6100066329998,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 0,
+        "paired_on_one_worker": true
+      }
+    },
+    {
+      "phase": "held-out",
+      "seed": 44004,
+      "model": "fixed",
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 728.2112205540002,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "SkylakeX"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "SkylakeX"
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 0,
+        "paired_on_one_worker": true
+      }
+    },
+    {
+      "phase": "held-out",
+      "seed": 44004,
+      "model": "selected",
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 1052.2711802590002,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 3643,
+        "paired_on_one_worker": true
+      }
+    },
+    {
+      "phase": "held-out",
+      "seed": 44004,
+      "model": "parent",
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 1237.9457309719996,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 3641,
+        "paired_on_one_worker": true
+      }
+    },
+    {
+      "phase": "held-out",
+      "seed": 44005,
+      "model": "parent",
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 906.8305624660002,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 2400,
+        "paired_on_one_worker": true
+      }
+    },
+    {
+      "phase": "held-out",
+      "seed": 44005,
+      "model": "selected",
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 756.4613694300001,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "SkylakeX"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "SkylakeX"
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 3640,
+        "paired_on_one_worker": true
+      }
+    },
+    {
+      "phase": "held-out",
+      "seed": 44005,
+      "model": "fixed",
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 1045.5213882539992,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 0,
+        "paired_on_one_worker": true
+      }
+    },
+    {
+      "phase": "isolation-walking",
+      "seed": 44000,
+      "model": "parent",
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 286.66056894899975,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 313,
+        "paired_on_one_worker": true
+      }
+    },
+    {
+      "phase": "isolation-walking",
+      "seed": 44000,
+      "model": "selected",
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 726.0150318740001,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "SkylakeX"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "SkylakeX"
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 1256,
+        "paired_on_one_worker": true
+      }
+    },
+    {
+      "phase": "isolation-walking",
+      "seed": 44000,
+      "model": "fixed",
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 909.313820284,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 0,
+        "paired_on_one_worker": true
+      }
+    },
+    {
+      "phase": "isolation-manipulation",
+      "seed": 44000,
+      "model": "fixed",
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 1071.937697304,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 0,
+        "paired_on_one_worker": true
+      }
+    },
+    {
+      "phase": "isolation-manipulation",
+      "seed": 44000,
+      "model": "selected",
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 1127.3502132800002,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 1075,
+        "paired_on_one_worker": true
+      }
+    },
+    {
+      "phase": "isolation-manipulation",
+      "seed": 44000,
+      "model": "parent",
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 1146.085263851,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 1075,
+        "paired_on_one_worker": true
+      }
+    },
+    {
+      "phase": "isolation-recovery",
+      "seed": 44000,
+      "model": "parent",
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 721.985563723,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "SkylakeX"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "SkylakeX"
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 1312,
+        "paired_on_one_worker": true
+      }
+    },
+    {
+      "phase": "isolation-recovery",
+      "seed": 44000,
+      "model": "fixed",
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 1023.3588417620001,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 0,
+        "paired_on_one_worker": true
+      }
+    },
+    {
+      "phase": "isolation-recovery",
+      "seed": 44000,
+      "model": "selected",
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 1090.603301988,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 1313,
+        "paired_on_one_worker": true
+      }
     }
   ],
-  "campaign_modal_rollouts_completed": 166,
+  "campaign_modal_rollouts_completed": 188,
   "recovery": {
     "source_training_run": 44482272455,
-    "evaluation_run": "44484708941",
-    "evaluation_source_sha": "a0a1cb78d042d71f6380f94af2733910a5a0ad18",
+    "source_artifact_run": 44484708941,
+    "evaluation_run": "44514013316",
+    "previous_evaluation_runs": [
+      "44484708941"
+    ],
+    "evaluation_source_sha": "70a58af841a644f9864bbaaf52c9262094ee1cb1",
     "extra_optimizer_updates": 0,
-    "original_error_type": "NameError",
+    "original_error_type": null,
     "deadline_seconds": 1500,
     "physics_unchanged": true,
     "infrastructure_repairs": {
@@ -2802,11 +3818,11 @@
     ],
     "reuse_policy": "Reuse completed physical outcomes, including failures. Fill missing outputs only.",
     "usage_or_reserved": {
-      "modal_rollouts": 20,
-      "modal_cpu_hours": 5.934668728740834,
-      "inference_tokens": 101667,
-      "past_writes": 0,
-      "past_recalls": 0
+      "modal_rollouts": 42,
+      "modal_cpu_hours": 11.383946412383052,
+      "inference_tokens": 132576,
+      "past_writes": 3,
+      "past_recalls": 3
     },
     "previous_budget_sources": {
       "original": {
@@ -2829,32 +3845,49 @@
         "past_writes": 0,
         "past_recalls": 0
       }
-    }
+    },
+    "selection_preserved_before_held_out": true,
+    "domain_intervention_limit": "Only the named decision domain uses learned weights; other domains use the fixed policy. These full-route interventions are not exact shared-pose manipulation or disabled-manipulation walking tests.",
+    "duration_seconds": 1413.087724067
   },
   "checkpoint_storage_count_before": 48,
   "services": {
     "actors": {
       "source": {
-        "researcher": "mochi-t12-44472186998-researcher",
-        "designer": "mochi-t12-44472186998-designer",
-        "experimenter": "mochi-t12-44472186998-experimenter",
-        "critic": "mochi-t12-44472186998-critic"
+        "source": {
+          "researcher": "mochi-t12-44472186998-researcher",
+          "designer": "mochi-t12-44472186998-designer",
+          "experimenter": "mochi-t12-44472186998-experimenter",
+          "critic": "mochi-t12-44472186998-critic"
+        },
+        "continuation": {
+          "researcher": "mochi-t12-resume-44482272455-researcher",
+          "designer": "mochi-t12-resume-44482272455-designer",
+          "experimenter": "mochi-t12-resume-44482272455-experimenter",
+          "critic": "mochi-t12-resume-44482272455-critic"
+        }
       },
       "continuation": {
-        "researcher": "mochi-t12-resume-44482272455-researcher",
-        "designer": "mochi-t12-resume-44482272455-designer",
-        "experimenter": "mochi-t12-resume-44482272455-experimenter",
-        "critic": "mochi-t12-resume-44482272455-critic"
+        "researcher": "mochi-t12-final-44514013316-researcher",
+        "designer": "mochi-t12-final-44514013316-designer",
+        "experimenter": "mochi-t12-final-44514013316-experimenter",
+        "critic": "mochi-t12-final-44514013316-critic"
       }
     },
     "audiences": {
       "source": {
-        "shared": "mochi-t12-44472186998-shared",
-        "critic_private": "mochi-t12-44472186998-critic"
+        "source": {
+          "shared": "mochi-t12-44472186998-shared",
+          "critic_private": "mochi-t12-44472186998-critic"
+        },
+        "continuation": {
+          "shared": "mochi-t12-resume-44482272455-shared",
+          "critic_private": "mochi-t12-resume-44482272455-critic"
+        }
       },
       "continuation": {
-        "shared": "mochi-t12-resume-44482272455-shared",
-        "critic_private": "mochi-t12-resume-44482272455-critic"
+        "shared": "mochi-t12-final-44514013316-shared",
+        "critic_private": "mochi-t12-final-44514013316-critic"
       }
     },
     "records": [
@@ -2958,6 +3991,326 @@
         },
         "status": "completed",
         "write_to_ready_seconds": 5.137777948000121
+      },
+      {
+        "id": "mochi-t12-final-44514013316-r0",
+        "role": "experimenter",
+        "author": "mochi-t12-final-44514013316-experimenter",
+        "audience": "mochi-t12-final-44514013316-shared",
+        "at": "2026-11-19T11:48:03.941233+00:00",
+        "sha256": "c9e73f95af8cf9a8c509fcd857fce76602397475f81e5be170c4cc042ebe02dd",
+        "ingestion_id": "825f7e15-96d3-4a09-ba5b-d01f91674854",
+        "payload": {
+          "record_id": "mochi-t12-final-44514013316-r0",
+          "author": "mochi-t12-final-44514013316-experimenter",
+          "occurred_at": "2026-11-19T11:48:03.941233+00:00",
+          "content": {
+            "kind": "observation",
+            "experiment_id": "mochi-t12-final-44514013316",
+            "training_run": "mochi-t12-resume-44482272455",
+            "optimizer_updates_completed": 32,
+            "selected_update": 1,
+            "held_out": {
+              "parent": {
+                "n": 6,
+                "complete_successes": 3,
+                "smooth_complete_successes": 3,
+                "wilson_95_complete_rate": [
+                  0.18761280689940868,
+                  0.8123871931005913
+                ],
+                "task_successes": {
+                  "alarm": 4,
+                  "drawer": 4,
+                  "laptop": 3,
+                  "globe": 3
+                },
+                "falls": 2,
+                "invalid_contacts": 0,
+                "mean_duration_s": 188.39756963065113,
+                "mean_roll_rms_deg": 0.5187222256237787,
+                "mean_contact_travel_m": 0.46225301118159123,
+                "recovery_successes": 14,
+                "successful_recovery_mean_joint_travel_rad": 5.664186552407371
+              },
+              "selected": {
+                "n": 6,
+                "complete_successes": 6,
+                "smooth_complete_successes": 6,
+                "wilson_95_complete_rate": [
+                  0.6096569663469354,
+                  0.9999999999999999
+                ],
+                "task_successes": {
+                  "alarm": 6,
+                  "drawer": 6,
+                  "laptop": 6,
+                  "globe": 6
+                },
+                "falls": 0,
+                "invalid_contacts": 0,
+                "mean_duration_s": 254.26095320073787,
+                "mean_roll_rms_deg": 0.26426412054379667,
+                "mean_contact_travel_m": 0.6411414539007827,
+                "recovery_successes": 24,
+                "successful_recovery_mean_joint_travel_rad": 5.561364539230639
+              },
+              "fixed": {
+                "n": 6,
+                "complete_successes": 5,
+                "smooth_complete_successes": 5,
+                "wilson_95_complete_rate": [
+                  0.43649056343635395,
+                  0.9699474141282697
+                ],
+                "task_successes": {
+                  "alarm": 6,
+                  "drawer": 6,
+                  "laptop": 5,
+                  "globe": 5
+                },
+                "falls": 0,
+                "invalid_contacts": 1,
+                "mean_duration_s": 247.71833583894795,
+                "mean_roll_rms_deg": 0.2627239735320344,
+                "mean_contact_travel_m": 0.5546689963686017,
+                "recovery_successes": 22,
+                "successful_recovery_mean_joint_travel_rad": 5.76509331972582
+              }
+            },
+            "domain_interventions": {
+              "walking": {
+                "parent": {
+                  "n": 1,
+                  "complete_successes": 0,
+                  "smooth_complete_successes": 0,
+                  "wilson_95_complete_rate": [
+                    0,
+                    0.7934567085261071
+                  ],
+                  "task_successes": {
+                    "alarm": 0,
+                    "drawer": 0,
+                    "laptop": 0,
+                    "globe": 0
+                  },
+                  "falls": 1,
+                  "invalid_contacts": 0,
+                  "mean_duration_s": 62.87321628398728,
+                  "mean_roll_rms_deg": 1.0370866389756275,
+                  "mean_contact_travel_m": 0.014640364453705132,
+                  "recovery_successes": 0,
+                  "successful_recovery_mean_joint_travel_rad": null
+                },
+                "selected": {
+                  "n": 1,
+                  "complete_successes": 1,
+                  "smooth_complete_successes": 1,
+                  "wilson_95_complete_rate": [
+                    0.20654329147389294,
+                    1
+                  ],
+                  "task_successes": {
+                    "alarm": 1,
+                    "drawer": 1,
+                    "laptop": 1,
+                    "globe": 1
+                  },
+                  "falls": 0,
+                  "invalid_contacts": 0,
+                  "mean_duration_s": 249.86610077702207,
+                  "mean_roll_rms_deg": 0.2634132638452517,
+                  "mean_contact_travel_m": 0.47902823630102753,
+                  "recovery_successes": 4,
+                  "successful_recovery_mean_joint_travel_rad": 5.752424922227432
+                },
+                "fixed": {
+                  "n": 1,
+                  "complete_successes": 1,
+                  "smooth_complete_successes": 1,
+                  "wilson_95_complete_rate": [
+                    0.20654329147389294,
+                    1
+                  ],
+                  "task_successes": {
+                    "alarm": 1,
+                    "drawer": 1,
+                    "laptop": 1,
+                    "globe": 1
+                  },
+                  "falls": 0,
+                  "invalid_contacts": 0,
+                  "mean_duration_s": 249.3249359499458,
+                  "mean_roll_rms_deg": 0.26339467843349873,
+                  "mean_contact_travel_m": 0.4910787728110988,
+                  "recovery_successes": 4,
+                  "successful_recovery_mean_joint_travel_rad": 5.742428797930439
+                }
+              },
+              "manipulation": {
+                "parent": {
+                  "n": 1,
+                  "complete_successes": 1,
+                  "smooth_complete_successes": 1,
+                  "wilson_95_complete_rate": [
+                    0.20654329147389294,
+                    1
+                  ],
+                  "task_successes": {
+                    "alarm": 1,
+                    "drawer": 1,
+                    "laptop": 1,
+                    "globe": 1
+                  },
+                  "falls": 0,
+                  "invalid_contacts": 0,
+                  "mean_duration_s": 251.18549659409322,
+                  "mean_roll_rms_deg": 0.26363380598569847,
+                  "mean_contact_travel_m": 0.5047309835896041,
+                  "recovery_successes": 4,
+                  "successful_recovery_mean_joint_travel_rad": 5.6313333121646
+                },
+                "selected": {
+                  "n": 1,
+                  "complete_successes": 1,
+                  "smooth_complete_successes": 1,
+                  "wilson_95_complete_rate": [
+                    0.20654329147389294,
+                    1
+                  ],
+                  "task_successes": {
+                    "alarm": 1,
+                    "drawer": 1,
+                    "laptop": 1,
+                    "globe": 1
+                  },
+                  "falls": 0,
+                  "invalid_contacts": 0,
+                  "mean_duration_s": 251.18549659409322,
+                  "mean_roll_rms_deg": 0.26363380598569847,
+                  "mean_contact_travel_m": 0.5047309835896041,
+                  "recovery_successes": 4,
+                  "successful_recovery_mean_joint_travel_rad": 5.6313333121646
+                },
+                "fixed": {
+                  "n": 1,
+                  "complete_successes": 1,
+                  "smooth_complete_successes": 1,
+                  "wilson_95_complete_rate": [
+                    0.20654329147389294,
+                    1
+                  ],
+                  "task_successes": {
+                    "alarm": 1,
+                    "drawer": 1,
+                    "laptop": 1,
+                    "globe": 1
+                  },
+                  "falls": 0,
+                  "invalid_contacts": 0,
+                  "mean_duration_s": 249.3249359499458,
+                  "mean_roll_rms_deg": 0.26339467843349873,
+                  "mean_contact_travel_m": 0.4910787728110988,
+                  "recovery_successes": 4,
+                  "successful_recovery_mean_joint_travel_rad": 5.742428797930439
+                }
+              },
+              "recovery": {
+                "parent": {
+                  "n": 1,
+                  "complete_successes": 1,
+                  "smooth_complete_successes": 1,
+                  "wilson_95_complete_rate": [
+                    0.20654329147389294,
+                    1
+                  ],
+                  "task_successes": {
+                    "alarm": 1,
+                    "drawer": 1,
+                    "laptop": 1,
+                    "globe": 1
+                  },
+                  "falls": 0,
+                  "invalid_contacts": 0,
+                  "mean_duration_s": 249.86119595985824,
+                  "mean_roll_rms_deg": 0.26355424125494986,
+                  "mean_contact_travel_m": 0.5014012400778225,
+                  "recovery_successes": 4,
+                  "successful_recovery_mean_joint_travel_rad": 5.710354730758983
+                },
+                "selected": {
+                  "n": 1,
+                  "complete_successes": 1,
+                  "smooth_complete_successes": 1,
+                  "wilson_95_complete_rate": [
+                    0.20654329147389294,
+                    1
+                  ],
+                  "task_successes": {
+                    "alarm": 1,
+                    "drawer": 1,
+                    "laptop": 1,
+                    "globe": 1
+                  },
+                  "falls": 0,
+                  "invalid_contacts": 0,
+                  "mean_duration_s": 250.06719828073923,
+                  "mean_roll_rms_deg": 0.26339595978588626,
+                  "mean_contact_travel_m": 0.5988429895540573,
+                  "recovery_successes": 4,
+                  "successful_recovery_mean_joint_travel_rad": 5.642556317958727
+                },
+                "fixed": {
+                  "n": 1,
+                  "complete_successes": 1,
+                  "smooth_complete_successes": 1,
+                  "wilson_95_complete_rate": [
+                    0.20654329147389294,
+                    1
+                  ],
+                  "task_successes": {
+                    "alarm": 1,
+                    "drawer": 1,
+                    "laptop": 1,
+                    "globe": 1
+                  },
+                  "falls": 0,
+                  "invalid_contacts": 0,
+                  "mean_duration_s": 249.3249359499458,
+                  "mean_roll_rms_deg": 0.26339467843349873,
+                  "mean_contact_travel_m": 0.4910787728110988,
+                  "recovery_successes": 4,
+                  "successful_recovery_mean_joint_travel_rad": 5.742428797930439
+                }
+              }
+            }
+          }
+        },
+        "status": "completed",
+        "write_to_ready_seconds": 16.37103993200003
+      },
+      {
+        "id": "mochi-t12-final-44514013316-r1",
+        "role": "critic",
+        "author": "mochi-t12-final-44514013316-critic",
+        "audience": "mochi-t12-final-44514013316-shared",
+        "at": "2026-11-19T11:48:20.948880+00:00",
+        "sha256": "94f26f623a2d6a2454b8fac742c52824584a187def6b74d828236de2da2a473b",
+        "ingestion_id": "5df0e414-ebfd-480a-84d0-cfed870cc895",
+        "payload": {
+          "record_id": "mochi-t12-final-44514013316-r1",
+          "author": "mochi-t12-final-44514013316-critic",
+          "occurred_at": "2026-11-19T11:48:20.948880+00:00",
+          "content": {
+            "kind": "qualified-conclusion",
+            "experiment_id": "mochi-t12-final-44514013316",
+            "evidence_record": "mochi-t12-final-44514013316-r0",
+            "evidence_sha256": "626a1bc549c8724d59f883431ee66f93e5c7543a26b85996a08675a546b88e69",
+            "conclusion": "Report measured parent, selected and fixed-controller results, including failures. Native gait weights stayed fixed. Small simulated evaluation; no search or memory causal ablation."
+          }
+        },
+        "status": "completed",
+        "write_to_ready_seconds": 10.826804133999985
       }
     ],
     "reads": [
@@ -2993,6 +4346,39 @@
         "cross_agent_use": true,
         "sha256": "5c6443016b21d0375c6fdec9f76f50cb3e5726ca31a48a65647f90668455a154",
         "at": "2026-11-19T06:43:35.503094+00:00"
+      },
+      {
+        "reader": "mochi-t12-final-44514013316-critic",
+        "reader_role": "critic",
+        "author": "mochi-t12-final-44514013316-experimenter",
+        "record_id": "mochi-t12-final-44514013316-r0",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "c9e73f95af8cf9a8c509fcd857fce76602397475f81e5be170c4cc042ebe02dd",
+        "at": "2026-11-19T11:48:20.847003+00:00"
+      },
+      {
+        "reader": "mochi-t12-final-44514013316-researcher",
+        "reader_role": "researcher",
+        "author": "mochi-t12-final-44514013316-critic",
+        "record_id": "mochi-t12-final-44514013316-r1",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "94f26f623a2d6a2454b8fac742c52824584a187def6b74d828236de2da2a473b",
+        "at": "2026-11-19T11:48:32.413336+00:00"
+      },
+      {
+        "reader": "mochi-t12-final-44514013316-designer",
+        "reader_role": "designer",
+        "author": "mochi-t12-final-44514013316-critic",
+        "record_id": "mochi-t12-final-44514013316-r2",
+        "source_id_verified": false,
+        "expected_access": false,
+        "cross_agent_use": false,
+        "sha256": null,
+        "at": "2026-11-19T11:48:38.563170+00:00"
       }
     ],
     "calls": [
@@ -3170,6 +4556,153 @@
         "kind": "audiences",
         "status": 201,
         "at": "2026-11-19T07:48:44.460361+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-19T11:48:03.231834+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-19T11:48:03.361258+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-19T11:48:03.449535+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-19T11:48:03.537530+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "audiences",
+        "status": 201,
+        "at": "2026-11-19T11:48:03.677899+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "audiences",
+        "status": 201,
+        "at": "2026-11-19T11:48:03.842153+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-19T11:48:04.284270+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T11:48:04.373061+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T11:48:09.696909+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T11:48:15.004730+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T11:48:20.312246+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-19T11:48:20.846903+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-19T11:48:21.081928+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T11:48:21.157068+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T11:48:26.456724+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T11:48:31.775663+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-19T11:48:32.413275+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-19T11:48:32.629559+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T11:48:32.707994+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T11:48:37.994905+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-19T11:48:38.563110+00:00"
       }
     ],
     "sources": [
@@ -3228,10 +4761,10 @@
     ],
     "pending_ingestions": [],
     "eligibility": {
-      "writers": 3,
-      "readers": 3,
-      "cross_agent_reads": 3,
-      "isolation_passed": false
+      "writers": 5,
+      "readers": 5,
+      "cross_agent_reads": 5,
+      "isolation_passed": true
     }
   },
   "remote_reference_passed": true,
@@ -3404,13 +4937,307 @@
       }
     ]
   },
-  "preview_snapshot": {
-    "complete_test_pairs": [
-      44000,
-      44001
+  "held_out": {
+    "parent": {
+      "n": 6,
+      "complete_successes": 3,
+      "smooth_complete_successes": 3,
+      "wilson_95_complete_rate": [
+        0.18761280689940868,
+        0.8123871931005913
+      ],
+      "task_successes": {
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 3,
+        "globe": 3
+      },
+      "falls": 2,
+      "invalid_contacts": 0,
+      "mean_duration_s": 188.39756963065113,
+      "mean_roll_rms_deg": 0.5187222256237787,
+      "mean_contact_travel_m": 0.46225301118159123,
+      "recovery_successes": 14,
+      "successful_recovery_mean_joint_travel_rad": 5.664186552407371,
+      "successful_completion_time_mean_s": 257.22250905324466,
+      "successful_executed_distance_mean_m": 5.189356021722226
+    },
+    "selected": {
+      "n": 6,
+      "complete_successes": 6,
+      "smooth_complete_successes": 6,
+      "wilson_95_complete_rate": [
+        0.6096569663469354,
+        0.9999999999999999
+      ],
+      "task_successes": {
+        "alarm": 6,
+        "drawer": 6,
+        "laptop": 6,
+        "globe": 6
+      },
+      "falls": 0,
+      "invalid_contacts": 0,
+      "mean_duration_s": 254.26095320073787,
+      "mean_roll_rms_deg": 0.26426412054379667,
+      "mean_contact_travel_m": 0.6411414539007827,
+      "recovery_successes": 24,
+      "successful_recovery_mean_joint_travel_rad": 5.561364539230639,
+      "successful_completion_time_mean_s": 254.2609532007379,
+      "successful_executed_distance_mean_m": 5.152740818710421
+    },
+    "fixed": {
+      "n": 6,
+      "complete_successes": 5,
+      "smooth_complete_successes": 5,
+      "wilson_95_complete_rate": [
+        0.43649056343635395,
+        0.9699474141282697
+      ],
+      "task_successes": {
+        "alarm": 6,
+        "drawer": 6,
+        "laptop": 5,
+        "globe": 5
+      },
+      "falls": 0,
+      "invalid_contacts": 1,
+      "mean_duration_s": 247.71833583894795,
+      "mean_roll_rms_deg": 0.2627239735320344,
+      "mean_contact_travel_m": 0.5546689963686017,
+      "recovery_successes": 22,
+      "successful_recovery_mean_joint_travel_rad": 5.76509331972582,
+      "successful_completion_time_mean_s": 252.46074905668988,
+      "successful_executed_distance_mean_m": 5.158752222562867
+    }
+  },
+  "isolated": {
+    "walking": {
+      "parent": {
+        "n": 1,
+        "complete_successes": 0,
+        "smooth_complete_successes": 0,
+        "wilson_95_complete_rate": [
+          0,
+          0.7934567085261071
+        ],
+        "task_successes": {
+          "alarm": 0,
+          "drawer": 0,
+          "laptop": 0,
+          "globe": 0
+        },
+        "falls": 1,
+        "invalid_contacts": 0,
+        "mean_duration_s": 62.87321628398728,
+        "mean_roll_rms_deg": 1.0370866389756275,
+        "mean_contact_travel_m": 0.014640364453705132,
+        "recovery_successes": 0,
+        "successful_recovery_mean_joint_travel_rad": null
+      },
+      "selected": {
+        "n": 1,
+        "complete_successes": 1,
+        "smooth_complete_successes": 1,
+        "wilson_95_complete_rate": [
+          0.20654329147389294,
+          1
+        ],
+        "task_successes": {
+          "alarm": 1,
+          "drawer": 1,
+          "laptop": 1,
+          "globe": 1
+        },
+        "falls": 0,
+        "invalid_contacts": 0,
+        "mean_duration_s": 249.86610077702207,
+        "mean_roll_rms_deg": 0.2634132638452517,
+        "mean_contact_travel_m": 0.47902823630102753,
+        "recovery_successes": 4,
+        "successful_recovery_mean_joint_travel_rad": 5.752424922227432
+      },
+      "fixed": {
+        "n": 1,
+        "complete_successes": 1,
+        "smooth_complete_successes": 1,
+        "wilson_95_complete_rate": [
+          0.20654329147389294,
+          1
+        ],
+        "task_successes": {
+          "alarm": 1,
+          "drawer": 1,
+          "laptop": 1,
+          "globe": 1
+        },
+        "falls": 0,
+        "invalid_contacts": 0,
+        "mean_duration_s": 249.3249359499458,
+        "mean_roll_rms_deg": 0.26339467843349873,
+        "mean_contact_travel_m": 0.4910787728110988,
+        "recovery_successes": 4,
+        "successful_recovery_mean_joint_travel_rad": 5.742428797930439
+      }
+    },
+    "manipulation": {
+      "parent": {
+        "n": 1,
+        "complete_successes": 1,
+        "smooth_complete_successes": 1,
+        "wilson_95_complete_rate": [
+          0.20654329147389294,
+          1
+        ],
+        "task_successes": {
+          "alarm": 1,
+          "drawer": 1,
+          "laptop": 1,
+          "globe": 1
+        },
+        "falls": 0,
+        "invalid_contacts": 0,
+        "mean_duration_s": 251.18549659409322,
+        "mean_roll_rms_deg": 0.26363380598569847,
+        "mean_contact_travel_m": 0.5047309835896041,
+        "recovery_successes": 4,
+        "successful_recovery_mean_joint_travel_rad": 5.6313333121646
+      },
+      "selected": {
+        "n": 1,
+        "complete_successes": 1,
+        "smooth_complete_successes": 1,
+        "wilson_95_complete_rate": [
+          0.20654329147389294,
+          1
+        ],
+        "task_successes": {
+          "alarm": 1,
+          "drawer": 1,
+          "laptop": 1,
+          "globe": 1
+        },
+        "falls": 0,
+        "invalid_contacts": 0,
+        "mean_duration_s": 251.18549659409322,
+        "mean_roll_rms_deg": 0.26363380598569847,
+        "mean_contact_travel_m": 0.5047309835896041,
+        "recovery_successes": 4,
+        "successful_recovery_mean_joint_travel_rad": 5.6313333121646
+      },
+      "fixed": {
+        "n": 1,
+        "complete_successes": 1,
+        "smooth_complete_successes": 1,
+        "wilson_95_complete_rate": [
+          0.20654329147389294,
+          1
+        ],
+        "task_successes": {
+          "alarm": 1,
+          "drawer": 1,
+          "laptop": 1,
+          "globe": 1
+        },
+        "falls": 0,
+        "invalid_contacts": 0,
+        "mean_duration_s": 249.3249359499458,
+        "mean_roll_rms_deg": 0.26339467843349873,
+        "mean_contact_travel_m": 0.4910787728110988,
+        "recovery_successes": 4,
+        "successful_recovery_mean_joint_travel_rad": 5.742428797930439
+      }
+    },
+    "recovery": {
+      "parent": {
+        "n": 1,
+        "complete_successes": 1,
+        "smooth_complete_successes": 1,
+        "wilson_95_complete_rate": [
+          0.20654329147389294,
+          1
+        ],
+        "task_successes": {
+          "alarm": 1,
+          "drawer": 1,
+          "laptop": 1,
+          "globe": 1
+        },
+        "falls": 0,
+        "invalid_contacts": 0,
+        "mean_duration_s": 249.86119595985824,
+        "mean_roll_rms_deg": 0.26355424125494986,
+        "mean_contact_travel_m": 0.5014012400778225,
+        "recovery_successes": 4,
+        "successful_recovery_mean_joint_travel_rad": 5.710354730758983
+      },
+      "selected": {
+        "n": 1,
+        "complete_successes": 1,
+        "smooth_complete_successes": 1,
+        "wilson_95_complete_rate": [
+          0.20654329147389294,
+          1
+        ],
+        "task_successes": {
+          "alarm": 1,
+          "drawer": 1,
+          "laptop": 1,
+          "globe": 1
+        },
+        "falls": 0,
+        "invalid_contacts": 0,
+        "mean_duration_s": 250.06719828073923,
+        "mean_roll_rms_deg": 0.26339595978588626,
+        "mean_contact_travel_m": 0.5988429895540573,
+        "recovery_successes": 4,
+        "successful_recovery_mean_joint_travel_rad": 5.642556317958727
+      },
+      "fixed": {
+        "n": 1,
+        "complete_successes": 1,
+        "smooth_complete_successes": 1,
+        "wilson_95_complete_rate": [
+          0.20654329147389294,
+          1
+        ],
+        "task_successes": {
+          "alarm": 1,
+          "drawer": 1,
+          "laptop": 1,
+          "globe": 1
+        },
+        "falls": 0,
+        "invalid_contacts": 0,
+        "mean_duration_s": 249.3249359499458,
+        "mean_roll_rms_deg": 0.26339467843349873,
+        "mean_contact_travel_m": 0.4910787728110988,
+        "recovery_successes": 4,
+        "successful_recovery_mean_joint_travel_rad": 5.742428797930439
+      }
+    }
+  },
+  "completed_at": "2026-11-19T11:48:38.980319+00:00",
+  "paired_successful_completion_differences": {
+    "n": 3,
+    "cases": [
+      {
+        "seed": 44001,
+        "time_change_s": 0.0,
+        "distance_change_m": 0.0
+      },
+      {
+        "seed": 44002,
+        "time_change_s": 0.0,
+        "distance_change_m": 0.0
+      },
+      {
+        "seed": 44004,
+        "time_change_s": -11.040743435788698,
+        "distance_change_m": -0.15501567678646833
+      }
     ],
-    "development_source_run": 44496546488,
-    "scope": "Only completed paired test cases are exported. The final cohort summary is pending. No outcome-based filtering."
+    "scope": "Only paired cases where both checkpoints complete; do not interpret early failed attempts as faster completions."
   },
   "publication_note": "Web excerpts stay in the backend artifacts. The public report preserves URLs, titles, excerpt hashes and numerical evidence."
 }

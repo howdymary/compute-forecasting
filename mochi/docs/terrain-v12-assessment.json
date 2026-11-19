@@ -1,0 +1,853 @@
+{
+  "study": "mochi-terrain-v12-preserved-data-post-training",
+  "training_run": "mochi-t12-resume-44482272455",
+  "source_sha": "001164697ee53c36bae332e5d56c8791d13f8288",
+  "evaluation_recovery": {
+    "source_training_run": 44482272455,
+    "source_artifact_run": 44484708941,
+    "evaluation_run": "44514013316",
+    "previous_evaluation_runs": [
+      "44484708941"
+    ],
+    "evaluation_source_sha": "70a58af841a644f9864bbaaf52c9262094ee1cb1",
+    "extra_optimizer_updates": 0,
+    "original_error_type": null,
+    "deadline_seconds": 1500,
+    "physics_unchanged": true,
+    "infrastructure_repairs": {
+      "src/mochi/terrain_v12/evaluation_remote.py": {
+        "source_sha256": "e86edab714dc4c34ad8151892b178736a3afd9725cb73b743e34b1651ba67e1e",
+        "repaired_sha256": "1cba216fd2f2f37e9659500bb4dea3abece1d1a9be9be5dd804c7216e24690ab",
+        "change": "Import json used to cache observations. No observation, physics, choice, verifier or weight changes."
+      }
+    },
+    "unavailable_completed_updates_after_last_durable": 0,
+    "evaluated_checkpoint_updates": [
+      0,
+      1,
+      8,
+      32
+    ],
+    "reuse_policy": "Reuse completed physical outcomes, including failures. Fill missing outputs only.",
+    "usage_or_reserved": {
+      "modal_rollouts": 42,
+      "modal_cpu_hours": 11.383946412383052,
+      "inference_tokens": 132576,
+      "past_writes": 3,
+      "past_recalls": 3
+    },
+    "previous_budget_sources": {
+      "original": {
+        "modal_rollouts": 154,
+        "modal_cpu_hours": 4.7625195054313885,
+        "optimizer_updates": 0,
+        "training_token_presentations": 0,
+        "inference_tokens": 13718,
+        "exa_searches": 3,
+        "past_writes": 10,
+        "past_recalls": 9
+      },
+      "continuation": {
+        "modal_rollouts": 3,
+        "modal_cpu_hours": 1.25,
+        "optimizer_updates": 32,
+        "training_token_presentations": 383343,
+        "inference_tokens": 78872,
+        "exa_searches": 0,
+        "past_writes": 0,
+        "past_recalls": 0
+      }
+    },
+    "selection_preserved_before_held_out": true,
+    "domain_intervention_limit": "Only the named decision domain uses learned weights; other domains use the fixed policy. These full-route interventions are not exact shared-pose manipulation or disabled-manipulation walking tests.",
+    "duration_seconds": 1413.087724067
+  },
+  "optimizer_updates_completed": 32,
+  "selected_checkpoint": {
+    "update": 1,
+    "cumulative_updates": 105,
+    "checkpoint_id": "3513e4b5d2f530d5eb1c5dd1b14d516d7d9d9724f1a28321d60aa4abccc86975",
+    "development": {
+      "n": 3,
+      "complete_successes": 3,
+      "smooth_complete_successes": 3,
+      "wilson_95_complete_rate": [
+        0.43849391955098227,
+        1
+      ],
+      "task_successes": {
+        "alarm": 3,
+        "drawer": 3,
+        "laptop": 3,
+        "globe": 3
+      },
+      "falls": 0,
+      "invalid_contacts": 0,
+      "mean_duration_s": 255.02351602479277,
+      "mean_roll_rms_deg": 0.26337377935928524,
+      "mean_contact_travel_m": 0.6039176667306654,
+      "recovery_successes": 12,
+      "successful_recovery_mean_joint_travel_rad": 5.457785968867269
+    },
+    "probe_distributions": [
+      {
+        "domain": "walk",
+        "distribution": {
+          "W0": 0.5061465501785278,
+          "W1": 0.394187331199646,
+          "W2": 0.09966614842414856
+        }
+      },
+      {
+        "domain": "alarm",
+        "distribution": {
+          "B": 0.15134677290916443,
+          "C": 0.528252124786377,
+          "F": 0.3204011023044586
+        }
+      },
+      {
+        "domain": "drawer",
+        "distribution": {
+          "A": 0.9829908609390259,
+          "B": 0.008504536934196949,
+          "C": 0.008504536934196949
+        }
+      },
+      {
+        "domain": "laptop",
+        "distribution": {
+          "P0": 0.9147506952285767,
+          "P1": 0.07508730888366699,
+          "P2": 0.010161962360143661
+        }
+      },
+      {
+        "domain": "globe",
+        "distribution": {
+          "A": 0.9828601479530334,
+          "B": 0.009635621681809425,
+          "C": 0.00750422989949584
+        }
+      },
+      {
+        "domain": "recovery",
+        "distribution": {
+          "R0": 0.9249910712242126,
+          "R1": 0.06700613349676132,
+          "R3": 0.008002741262316704
+        }
+      }
+    ]
+  },
+  "development": {
+    "0": {
+      "n": 3,
+      "verified_book_ascents": 3,
+      "verified_book_descents": 3,
+      "successful_completion_mean_s": 264.3418511665487,
+      "failures": {
+        "invalid_fixture_contact": 1
+      },
+      "forbidden_contacts": [
+        {
+          "body": "left_hip_roll_link",
+          "fixture": "laptop-contact",
+          "phase": "release",
+          "count": 1
+        }
+      ],
+      "chosen_controls": [
+        {
+          "domain": "alarm",
+          "action": "C",
+          "count": 3
+        },
+        {
+          "domain": "drawer",
+          "action": "A",
+          "count": 3
+        },
+        {
+          "domain": "globe",
+          "action": "A",
+          "count": 2
+        },
+        {
+          "domain": "laptop",
+          "action": "P0",
+          "count": 3
+        },
+        {
+          "domain": "recovery",
+          "action": "R0",
+          "count": 10
+        },
+        {
+          "domain": "walk",
+          "action": "W0",
+          "count": 8
+        },
+        {
+          "domain": "walk",
+          "action": "W1",
+          "count": 3
+        }
+      ]
+    },
+    "1": {
+      "n": 3,
+      "verified_book_ascents": 3,
+      "verified_book_descents": 3,
+      "successful_completion_mean_s": 255.02351602479277,
+      "failures": {},
+      "forbidden_contacts": [],
+      "chosen_controls": [
+        {
+          "domain": "alarm",
+          "action": "C",
+          "count": 3
+        },
+        {
+          "domain": "drawer",
+          "action": "A",
+          "count": 3
+        },
+        {
+          "domain": "globe",
+          "action": "A",
+          "count": 3
+        },
+        {
+          "domain": "laptop",
+          "action": "P0",
+          "count": 3
+        },
+        {
+          "domain": "recovery",
+          "action": "R0",
+          "count": 12
+        },
+        {
+          "domain": "walk",
+          "action": "W0",
+          "count": 12
+        }
+      ]
+    },
+    "8": {
+      "n": 3,
+      "verified_book_ascents": 3,
+      "verified_book_descents": 3,
+      "successful_completion_mean_s": 250.24486165800698,
+      "failures": {},
+      "forbidden_contacts": [],
+      "chosen_controls": [
+        {
+          "domain": "alarm",
+          "action": "B",
+          "count": 3
+        },
+        {
+          "domain": "drawer",
+          "action": "A",
+          "count": 3
+        },
+        {
+          "domain": "globe",
+          "action": "A",
+          "count": 3
+        },
+        {
+          "domain": "laptop",
+          "action": "P1",
+          "count": 3
+        },
+        {
+          "domain": "recovery",
+          "action": "R0",
+          "count": 12
+        },
+        {
+          "domain": "walk",
+          "action": "W2",
+          "count": 12
+        }
+      ]
+    },
+    "32": {
+      "n": 3,
+      "verified_book_ascents": 3,
+      "verified_book_descents": 3,
+      "successful_completion_mean_s": 254.24501254495544,
+      "failures": {},
+      "forbidden_contacts": [],
+      "chosen_controls": [
+        {
+          "domain": "alarm",
+          "action": "B",
+          "count": 3
+        },
+        {
+          "domain": "drawer",
+          "action": "A",
+          "count": 3
+        },
+        {
+          "domain": "globe",
+          "action": "A",
+          "count": 3
+        },
+        {
+          "domain": "laptop",
+          "action": "P0",
+          "count": 2
+        },
+        {
+          "domain": "laptop",
+          "action": "P1",
+          "count": 1
+        },
+        {
+          "domain": "recovery",
+          "action": "R0",
+          "count": 12
+        },
+        {
+          "domain": "walk",
+          "action": "W0",
+          "count": 6
+        },
+        {
+          "domain": "walk",
+          "action": "W2",
+          "count": 6
+        }
+      ]
+    }
+  },
+  "held_out": {
+    "parent": {
+      "n": 6,
+      "verified_book_ascents": 4,
+      "verified_book_descents": 4,
+      "successful_completion_mean_s": 257.22250905324466,
+      "failures": {
+        "fall": 2,
+        "task-failed:laptop": 1
+      },
+      "forbidden_contacts": [],
+      "chosen_controls": [
+        {
+          "domain": "alarm",
+          "action": "C",
+          "count": 4
+        },
+        {
+          "domain": "drawer",
+          "action": "A",
+          "count": 4
+        },
+        {
+          "domain": "globe",
+          "action": "A",
+          "count": 3
+        },
+        {
+          "domain": "laptop",
+          "action": "P0",
+          "count": 4
+        },
+        {
+          "domain": "recovery",
+          "action": "R0",
+          "count": 14
+        },
+        {
+          "domain": "walk",
+          "action": "W0",
+          "count": 14
+        },
+        {
+          "domain": "walk",
+          "action": "W1",
+          "count": 3
+        }
+      ]
+    },
+    "selected": {
+      "n": 6,
+      "verified_book_ascents": 6,
+      "verified_book_descents": 6,
+      "successful_completion_mean_s": 254.2609532007379,
+      "failures": {},
+      "forbidden_contacts": [],
+      "chosen_controls": [
+        {
+          "domain": "alarm",
+          "action": "C",
+          "count": 6
+        },
+        {
+          "domain": "drawer",
+          "action": "A",
+          "count": 6
+        },
+        {
+          "domain": "globe",
+          "action": "A",
+          "count": 6
+        },
+        {
+          "domain": "laptop",
+          "action": "P0",
+          "count": 6
+        },
+        {
+          "domain": "recovery",
+          "action": "R0",
+          "count": 24
+        },
+        {
+          "domain": "walk",
+          "action": "W0",
+          "count": 24
+        }
+      ]
+    },
+    "fixed": {
+      "n": 6,
+      "verified_book_ascents": 6,
+      "verified_book_descents": 6,
+      "successful_completion_mean_s": 252.46074905668988,
+      "failures": {
+        "invalid_fixture_contact": 1
+      },
+      "forbidden_contacts": [
+        {
+          "body": "left_hip_roll_link",
+          "fixture": "laptop-contact",
+          "phase": "release",
+          "count": 1
+        }
+      ],
+      "chosen_controls": []
+    }
+  },
+  "paired_successful_completions": [
+    {
+      "seed": 44001,
+      "initial_frame_max_abs_difference": 0.0,
+      "time_change_s": 0.0,
+      "distance_change_m": 0.0,
+      "roll_rms_change_deg": 0.0,
+      "contact_travel_proxy_change_m": 0.0,
+      "recovery_joint_travel_change_rad": 0.0
+    },
+    {
+      "seed": 44002,
+      "initial_frame_max_abs_difference": 0.0,
+      "time_change_s": 0.0,
+      "distance_change_m": 0.0,
+      "roll_rms_change_deg": 0.0,
+      "contact_travel_proxy_change_m": 0.0,
+      "recovery_joint_travel_change_rad": 0.0
+    },
+    {
+      "seed": 44004,
+      "initial_frame_max_abs_difference": 0.0,
+      "time_change_s": -11.040743435788698,
+      "distance_change_m": -0.15501567678646833,
+      "roll_rms_change_deg": -0.005371032076760207,
+      "contact_travel_proxy_change_m": -0.3103397941468813,
+      "recovery_joint_travel_change_rad": 0.13449755825449117
+    }
+  ],
+  "domain_interventions": {
+    "walking": {
+      "parent": {
+        "n": 1,
+        "complete_successes": 0,
+        "smooth_complete_successes": 0,
+        "wilson_95_complete_rate": [
+          0,
+          0.7934567085261071
+        ],
+        "task_successes": {
+          "alarm": 0,
+          "drawer": 0,
+          "laptop": 0,
+          "globe": 0
+        },
+        "falls": 1,
+        "invalid_contacts": 0,
+        "mean_duration_s": 62.87321628398728,
+        "mean_roll_rms_deg": 1.0370866389756275,
+        "mean_contact_travel_m": 0.014640364453705132,
+        "recovery_successes": 0,
+        "successful_recovery_mean_joint_travel_rad": null
+      },
+      "selected": {
+        "n": 1,
+        "complete_successes": 1,
+        "smooth_complete_successes": 1,
+        "wilson_95_complete_rate": [
+          0.20654329147389294,
+          1
+        ],
+        "task_successes": {
+          "alarm": 1,
+          "drawer": 1,
+          "laptop": 1,
+          "globe": 1
+        },
+        "falls": 0,
+        "invalid_contacts": 0,
+        "mean_duration_s": 249.86610077702207,
+        "mean_roll_rms_deg": 0.2634132638452517,
+        "mean_contact_travel_m": 0.47902823630102753,
+        "recovery_successes": 4,
+        "successful_recovery_mean_joint_travel_rad": 5.752424922227432
+      },
+      "fixed": {
+        "n": 1,
+        "complete_successes": 1,
+        "smooth_complete_successes": 1,
+        "wilson_95_complete_rate": [
+          0.20654329147389294,
+          1
+        ],
+        "task_successes": {
+          "alarm": 1,
+          "drawer": 1,
+          "laptop": 1,
+          "globe": 1
+        },
+        "falls": 0,
+        "invalid_contacts": 0,
+        "mean_duration_s": 249.3249359499458,
+        "mean_roll_rms_deg": 0.26339467843349873,
+        "mean_contact_travel_m": 0.4910787728110988,
+        "recovery_successes": 4,
+        "successful_recovery_mean_joint_travel_rad": 5.742428797930439
+      }
+    },
+    "manipulation": {
+      "parent": {
+        "n": 1,
+        "complete_successes": 1,
+        "smooth_complete_successes": 1,
+        "wilson_95_complete_rate": [
+          0.20654329147389294,
+          1
+        ],
+        "task_successes": {
+          "alarm": 1,
+          "drawer": 1,
+          "laptop": 1,
+          "globe": 1
+        },
+        "falls": 0,
+        "invalid_contacts": 0,
+        "mean_duration_s": 251.18549659409322,
+        "mean_roll_rms_deg": 0.26363380598569847,
+        "mean_contact_travel_m": 0.5047309835896041,
+        "recovery_successes": 4,
+        "successful_recovery_mean_joint_travel_rad": 5.6313333121646
+      },
+      "selected": {
+        "n": 1,
+        "complete_successes": 1,
+        "smooth_complete_successes": 1,
+        "wilson_95_complete_rate": [
+          0.20654329147389294,
+          1
+        ],
+        "task_successes": {
+          "alarm": 1,
+          "drawer": 1,
+          "laptop": 1,
+          "globe": 1
+        },
+        "falls": 0,
+        "invalid_contacts": 0,
+        "mean_duration_s": 251.18549659409322,
+        "mean_roll_rms_deg": 0.26363380598569847,
+        "mean_contact_travel_m": 0.5047309835896041,
+        "recovery_successes": 4,
+        "successful_recovery_mean_joint_travel_rad": 5.6313333121646
+      },
+      "fixed": {
+        "n": 1,
+        "complete_successes": 1,
+        "smooth_complete_successes": 1,
+        "wilson_95_complete_rate": [
+          0.20654329147389294,
+          1
+        ],
+        "task_successes": {
+          "alarm": 1,
+          "drawer": 1,
+          "laptop": 1,
+          "globe": 1
+        },
+        "falls": 0,
+        "invalid_contacts": 0,
+        "mean_duration_s": 249.3249359499458,
+        "mean_roll_rms_deg": 0.26339467843349873,
+        "mean_contact_travel_m": 0.4910787728110988,
+        "recovery_successes": 4,
+        "successful_recovery_mean_joint_travel_rad": 5.742428797930439
+      }
+    },
+    "recovery": {
+      "parent": {
+        "n": 1,
+        "complete_successes": 1,
+        "smooth_complete_successes": 1,
+        "wilson_95_complete_rate": [
+          0.20654329147389294,
+          1
+        ],
+        "task_successes": {
+          "alarm": 1,
+          "drawer": 1,
+          "laptop": 1,
+          "globe": 1
+        },
+        "falls": 0,
+        "invalid_contacts": 0,
+        "mean_duration_s": 249.86119595985824,
+        "mean_roll_rms_deg": 0.26355424125494986,
+        "mean_contact_travel_m": 0.5014012400778225,
+        "recovery_successes": 4,
+        "successful_recovery_mean_joint_travel_rad": 5.710354730758983
+      },
+      "selected": {
+        "n": 1,
+        "complete_successes": 1,
+        "smooth_complete_successes": 1,
+        "wilson_95_complete_rate": [
+          0.20654329147389294,
+          1
+        ],
+        "task_successes": {
+          "alarm": 1,
+          "drawer": 1,
+          "laptop": 1,
+          "globe": 1
+        },
+        "falls": 0,
+        "invalid_contacts": 0,
+        "mean_duration_s": 250.06719828073923,
+        "mean_roll_rms_deg": 0.26339595978588626,
+        "mean_contact_travel_m": 0.5988429895540573,
+        "recovery_successes": 4,
+        "successful_recovery_mean_joint_travel_rad": 5.642556317958727
+      },
+      "fixed": {
+        "n": 1,
+        "complete_successes": 1,
+        "smooth_complete_successes": 1,
+        "wilson_95_complete_rate": [
+          0.20654329147389294,
+          1
+        ],
+        "task_successes": {
+          "alarm": 1,
+          "drawer": 1,
+          "laptop": 1,
+          "globe": 1
+        },
+        "falls": 0,
+        "invalid_contacts": 0,
+        "mean_duration_s": 249.3249359499458,
+        "mean_roll_rms_deg": 0.26339467843349873,
+        "mean_contact_travel_m": 0.4910787728110988,
+        "recovery_successes": 4,
+        "successful_recovery_mean_joint_travel_rad": 5.742428797930439
+      }
+    }
+  },
+  "scope": "Tinker resumes Qwen3.5-4B LoRA decision weights for terrain-aware walking strategy (stance width, support transfer timing, swing duration and flat speed), task profiles and arm recovery. MuJoCo contact/IK controllers, route, scene and native flat-ground ONNX gait weights are fixed. Compare parent, trained checkpoints and competent fixed heuristic on identical new scenarios. No low-level neural gait training claimed. Continuation uses the preserved physical dataset and at most 32 new optimizer updates. The original run completed zero updates; its compute reservations remain separate.",
+  "initial_state_float_tolerance": 1e-12,
+  "limits": [
+    "Small simulated cohorts; keep development separate from final tests.",
+    "Paired timing and movement changes exclude cases where either run fails.",
+    "Domain interventions are whole routes, not exact matched-pose manipulation tests.",
+    "Tinker updates decision weights; native gait and physical controllers stay fixed."
+  ],
+  "domain_control_choices": {
+    "walking": {
+      "parent": [
+        {
+          "seed": 44000,
+          "actions": [
+            {
+              "domain": "walk",
+              "station": "alarm",
+              "action": "W1"
+            }
+          ]
+        }
+      ],
+      "selected": [
+        {
+          "seed": 44000,
+          "actions": [
+            {
+              "domain": "walk",
+              "station": "alarm",
+              "action": "W0"
+            },
+            {
+              "domain": "walk",
+              "station": "drawer",
+              "action": "W0"
+            },
+            {
+              "domain": "walk",
+              "station": "laptop",
+              "action": "W0"
+            },
+            {
+              "domain": "walk",
+              "station": "globe",
+              "action": "W0"
+            }
+          ]
+        }
+      ],
+      "fixed": [
+        {
+          "seed": 44000,
+          "actions": []
+        }
+      ]
+    },
+    "manipulation": {
+      "parent": [
+        {
+          "seed": 44000,
+          "actions": [
+            {
+              "domain": "alarm",
+              "station": null,
+              "action": "C"
+            },
+            {
+              "domain": "drawer",
+              "station": null,
+              "action": "A"
+            },
+            {
+              "domain": "laptop",
+              "station": null,
+              "action": "P0"
+            },
+            {
+              "domain": "globe",
+              "station": null,
+              "action": "A"
+            }
+          ]
+        }
+      ],
+      "selected": [
+        {
+          "seed": 44000,
+          "actions": [
+            {
+              "domain": "alarm",
+              "station": null,
+              "action": "C"
+            },
+            {
+              "domain": "drawer",
+              "station": null,
+              "action": "A"
+            },
+            {
+              "domain": "laptop",
+              "station": null,
+              "action": "P0"
+            },
+            {
+              "domain": "globe",
+              "station": null,
+              "action": "A"
+            }
+          ]
+        }
+      ],
+      "fixed": [
+        {
+          "seed": 44000,
+          "actions": []
+        }
+      ]
+    },
+    "recovery": {
+      "parent": [
+        {
+          "seed": 44000,
+          "actions": [
+            {
+              "domain": "recovery",
+              "station": "alarm",
+              "action": "R0"
+            },
+            {
+              "domain": "recovery",
+              "station": "drawer",
+              "action": "R0"
+            },
+            {
+              "domain": "recovery",
+              "station": "laptop",
+              "action": "R0"
+            },
+            {
+              "domain": "recovery",
+              "station": "globe",
+              "action": "R0"
+            }
+          ]
+        }
+      ],
+      "selected": [
+        {
+          "seed": 44000,
+          "actions": [
+            {
+              "domain": "recovery",
+              "station": "alarm",
+              "action": "R0"
+            },
+            {
+              "domain": "recovery",
+              "station": "drawer",
+              "action": "R0"
+            },
+            {
+              "domain": "recovery",
+              "station": "laptop",
+              "action": "R0"
+            },
+            {
+              "domain": "recovery",
+              "station": "globe",
+              "action": "R0"
+            }
+          ]
+        }
+      ],
+      "fixed": [
+        {
+          "seed": 44000,
+          "actions": []
+        }
+      ]
+    }
+  }
+}

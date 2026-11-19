@@ -494,8 +494,8 @@
     },
     {
       "id": "held-out-44000",
-      "label": "Final test scenario \u00b7 44000 \u00b7 cohort in progress",
-      "partition": "held_out_pending",
+      "label": "Final test scenario \u00b7 44000",
+      "partition": "held_out",
       "parent_file": "held-out-parent-44000-0.json.gz",
       "versions": [
         {
@@ -506,13 +506,61 @@
     },
     {
       "id": "held-out-44001",
-      "label": "Final test scenario \u00b7 44001 \u00b7 cohort in progress",
-      "partition": "held_out_pending",
+      "label": "Final test scenario \u00b7 44001",
+      "partition": "held_out",
       "parent_file": "held-out-parent-44001-0.json.gz",
       "versions": [
         {
           "update": 1,
           "file": "held-out-selected-44001-1.json.gz"
+        }
+      ]
+    },
+    {
+      "id": "held-out-44002",
+      "label": "Final test scenario \u00b7 44002",
+      "partition": "held_out",
+      "parent_file": "held-out-parent-44002-0.json.gz",
+      "versions": [
+        {
+          "update": 1,
+          "file": "held-out-selected-44002-1.json.gz"
+        }
+      ]
+    },
+    {
+      "id": "held-out-44003",
+      "label": "Final test scenario \u00b7 44003",
+      "partition": "held_out",
+      "parent_file": "held-out-parent-44003-0.json.gz",
+      "versions": [
+        {
+          "update": 1,
+          "file": "held-out-selected-44003-1.json.gz"
+        }
+      ]
+    },
+    {
+      "id": "held-out-44004",
+      "label": "Final test scenario \u00b7 44004",
+      "partition": "held_out",
+      "parent_file": "held-out-parent-44004-0.json.gz",
+      "versions": [
+        {
+          "update": 1,
+          "file": "held-out-selected-44004-1.json.gz"
+        }
+      ]
+    },
+    {
+      "id": "held-out-44005",
+      "label": "Final test scenario \u00b7 44005",
+      "partition": "held_out",
+      "parent_file": "held-out-parent-44005-0.json.gz",
+      "versions": [
+        {
+          "update": 1,
+          "file": "held-out-selected-44005-1.json.gz"
         }
       ]
     }
@@ -846,6 +894,168 @@
       },
       "duration": 257.1562940215329,
       "executed_root_distance_m": 5.149930953673997
+    },
+    "held-out-parent-44002-0.json.gz": {
+      "checkpoint_update": 0,
+      "checkpoint_id": "0188b0e78f749d276c613fa0d8adc8253fa90719b430be18e6f6bfb56673498f",
+      "cumulative_updates": 104,
+      "seed": 44002,
+      "complete": true,
+      "failure": null,
+      "archive": {
+        "volume": "mochi-terrain-v12-artifacts",
+        "path": "mochi-t12-final-44484708941/held-out-44002-parent.json.gz",
+        "uncompressed_sha256": "0254d9afe05c74acf03a508e40e931b7f2103033d6c81b58b34a758c0aae5421"
+      },
+      "task_outcomes": {
+        "alarm": true,
+        "drawer": true,
+        "laptop": true,
+        "globe": true
+      },
+      "duration": 253.03624760391298,
+      "executed_root_distance_m": 5.147849217888714
+    },
+    "held-out-selected-44002-1.json.gz": {
+      "checkpoint_update": 1,
+      "checkpoint_id": "3513e4b5d2f530d5eb1c5dd1b14d516d7d9d9724f1a28321d60aa4abccc86975",
+      "cumulative_updates": 105,
+      "seed": 44002,
+      "complete": true,
+      "failure": null,
+      "archive": {
+        "volume": "mochi-terrain-v12-artifacts",
+        "path": "mochi-t12-final-44484708941/held-out-44002-selected.json.gz",
+        "uncompressed_sha256": "afa058fa1badfa5b9c762452e150106c27cb927dcb889b5eb18c0c896cc43235"
+      },
+      "task_outcomes": {
+        "alarm": true,
+        "drawer": true,
+        "laptop": true,
+        "globe": true
+      },
+      "duration": 253.03624760391298,
+      "executed_root_distance_m": 5.147849217888714
+    },
+    "held-out-parent-44003-0.json.gz": {
+      "checkpoint_update": 0,
+      "checkpoint_id": "0188b0e78f749d276c613fa0d8adc8253fa90719b430be18e6f6bfb56673498f",
+      "cumulative_updates": 104,
+      "seed": 44003,
+      "complete": false,
+      "failure": "fall",
+      "archive": {
+        "volume": "mochi-terrain-v12-artifacts",
+        "path": "mochi-t12-final-44484708941/held-out-44003-parent.json.gz",
+        "uncompressed_sha256": "04916ca0928c7025cb600c8f6b8b0c5be8561ed7705febadb2acf4ec2d2e435e"
+      },
+      "task_outcomes": {},
+      "duration": 62.972130096791254,
+      "executed_root_distance_m": 0.8437521476955324
+    },
+    "held-out-selected-44003-1.json.gz": {
+      "checkpoint_update": 1,
+      "checkpoint_id": "3513e4b5d2f530d5eb1c5dd1b14d516d7d9d9724f1a28321d60aa4abccc86975",
+      "cumulative_updates": 105,
+      "seed": 44003,
+      "complete": true,
+      "failure": null,
+      "archive": {
+        "volume": "mochi-terrain-v12-artifacts",
+        "path": "mochi-t12-final-44484708941/held-out-44003-selected.json.gz",
+        "uncompressed_sha256": "edd15e2274081da1250aa088c58a8e5ff83123a0c3c732443d5aff524939d455"
+      },
+      "task_outcomes": {
+        "alarm": true,
+        "drawer": true,
+        "laptop": true,
+        "globe": true
+      },
+      "duration": 255.43552066655477,
+      "executed_root_distance_m": 5.186387655975346
+    },
+    "held-out-parent-44004-0.json.gz": {
+      "checkpoint_update": 0,
+      "checkpoint_id": "0188b0e78f749d276c613fa0d8adc8253fa90719b430be18e6f6bfb56673498f",
+      "cumulative_updates": 104,
+      "seed": 44004,
+      "complete": true,
+      "failure": null,
+      "archive": {
+        "volume": "mochi-terrain-v12-artifacts",
+        "path": "mochi-t12-final-44484708941/held-out-44004-parent.json.gz",
+        "uncompressed_sha256": "58f7a50b22ec7f0237859e337d2eeb7533c5e48c468e0e951fd35ffeeeb6bf97"
+      },
+      "task_outcomes": {
+        "alarm": true,
+        "drawer": true,
+        "laptop": true,
+        "globe": true
+      },
+      "duration": 261.4749855342881,
+      "executed_root_distance_m": 5.2702878936039665
+    },
+    "held-out-selected-44004-1.json.gz": {
+      "checkpoint_update": 1,
+      "checkpoint_id": "3513e4b5d2f530d5eb1c5dd1b14d516d7d9d9724f1a28321d60aa4abccc86975",
+      "cumulative_updates": 105,
+      "seed": 44004,
+      "complete": true,
+      "failure": null,
+      "archive": {
+        "volume": "mochi-terrain-v12-artifacts",
+        "path": "mochi-t12-final-44484708941/held-out-44004-selected.json.gz",
+        "uncompressed_sha256": "76d7d3d73194a396e914f1bbc4714fca24113a1f9d7e426d48c949c4c96038f0"
+      },
+      "task_outcomes": {
+        "alarm": true,
+        "drawer": true,
+        "laptop": true,
+        "globe": true
+      },
+      "duration": 250.43424209849942,
+      "executed_root_distance_m": 5.115272216817498
+    },
+    "held-out-parent-44005-0.json.gz": {
+      "checkpoint_update": 0,
+      "checkpoint_id": "0188b0e78f749d276c613fa0d8adc8253fa90719b430be18e6f6bfb56673498f",
+      "cumulative_updates": 104,
+      "seed": 44005,
+      "complete": false,
+      "failure": "task-failed:laptop",
+      "archive": {
+        "volume": "mochi-terrain-v12-artifacts",
+        "path": "mochi-t12-final-44484708941/held-out-44005-parent.json.gz",
+        "uncompressed_sha256": "5694edee3b8a1e45a76b051f7de844bc37dc16c6a6169eff58915f991dc3e862"
+      },
+      "task_outcomes": {
+        "alarm": true,
+        "drawer": true,
+        "laptop": false
+      },
+      "duration": 232.87254424339434,
+      "executed_root_distance_m": 4.478699738291194
+    },
+    "held-out-selected-44005-1.json.gz": {
+      "checkpoint_update": 1,
+      "checkpoint_id": "3513e4b5d2f530d5eb1c5dd1b14d516d7d9d9724f1a28321d60aa4abccc86975",
+      "cumulative_updates": 105,
+      "seed": 44005,
+      "complete": true,
+      "failure": null,
+      "archive": {
+        "volume": "mochi-terrain-v12-artifacts",
+        "path": "mochi-t12-final-44484708941/held-out-44005-selected.json.gz",
+        "uncompressed_sha256": "b516b27363273fa88b02bf3e0c824cdb9e54125d78b793c1c7954f53fb97486d"
+      },
+      "task_outcomes": {
+        "alarm": true,
+        "drawer": true,
+        "laptop": true,
+        "globe": true
+      },
+      "duration": 257.69255403144535,
+      "executed_root_distance_m": 5.152301635795486
     }
   },
   "checkpoints": [
@@ -1158,21 +1368,300 @@
       ]
     }
   ],
-  "held_out": null,
-  "isolated": null,
-  "test_pairs_available": 2,
-  "evaluation_status": "development_preview",
+  "held_out": {
+    "parent": {
+      "n": 6,
+      "complete_successes": 3,
+      "smooth_complete_successes": 3,
+      "wilson_95_complete_rate": [
+        0.18761280689940868,
+        0.8123871931005913
+      ],
+      "task_successes": {
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 3,
+        "globe": 3
+      },
+      "falls": 2,
+      "invalid_contacts": 0,
+      "mean_duration_s": 188.39756963065113,
+      "mean_roll_rms_deg": 0.5187222256237787,
+      "mean_contact_travel_m": 0.46225301118159123,
+      "recovery_successes": 14,
+      "successful_recovery_mean_joint_travel_rad": 5.664186552407371,
+      "successful_completion_time_mean_s": 257.22250905324466,
+      "successful_executed_distance_mean_m": 5.189356021722226
+    },
+    "selected": {
+      "n": 6,
+      "complete_successes": 6,
+      "smooth_complete_successes": 6,
+      "wilson_95_complete_rate": [
+        0.6096569663469354,
+        0.9999999999999999
+      ],
+      "task_successes": {
+        "alarm": 6,
+        "drawer": 6,
+        "laptop": 6,
+        "globe": 6
+      },
+      "falls": 0,
+      "invalid_contacts": 0,
+      "mean_duration_s": 254.26095320073787,
+      "mean_roll_rms_deg": 0.26426412054379667,
+      "mean_contact_travel_m": 0.6411414539007827,
+      "recovery_successes": 24,
+      "successful_recovery_mean_joint_travel_rad": 5.561364539230639,
+      "successful_completion_time_mean_s": 254.2609532007379,
+      "successful_executed_distance_mean_m": 5.152740818710421
+    },
+    "fixed": {
+      "n": 6,
+      "complete_successes": 5,
+      "smooth_complete_successes": 5,
+      "wilson_95_complete_rate": [
+        0.43649056343635395,
+        0.9699474141282697
+      ],
+      "task_successes": {
+        "alarm": 6,
+        "drawer": 6,
+        "laptop": 5,
+        "globe": 5
+      },
+      "falls": 0,
+      "invalid_contacts": 1,
+      "mean_duration_s": 247.71833583894795,
+      "mean_roll_rms_deg": 0.2627239735320344,
+      "mean_contact_travel_m": 0.5546689963686017,
+      "recovery_successes": 22,
+      "successful_recovery_mean_joint_travel_rad": 5.76509331972582,
+      "successful_completion_time_mean_s": 252.46074905668988,
+      "successful_executed_distance_mean_m": 5.158752222562867
+    }
+  },
+  "isolated": {
+    "walking": {
+      "parent": {
+        "n": 1,
+        "complete_successes": 0,
+        "smooth_complete_successes": 0,
+        "wilson_95_complete_rate": [
+          0,
+          0.7934567085261071
+        ],
+        "task_successes": {
+          "alarm": 0,
+          "drawer": 0,
+          "laptop": 0,
+          "globe": 0
+        },
+        "falls": 1,
+        "invalid_contacts": 0,
+        "mean_duration_s": 62.87321628398728,
+        "mean_roll_rms_deg": 1.0370866389756275,
+        "mean_contact_travel_m": 0.014640364453705132,
+        "recovery_successes": 0,
+        "successful_recovery_mean_joint_travel_rad": null
+      },
+      "selected": {
+        "n": 1,
+        "complete_successes": 1,
+        "smooth_complete_successes": 1,
+        "wilson_95_complete_rate": [
+          0.20654329147389294,
+          1
+        ],
+        "task_successes": {
+          "alarm": 1,
+          "drawer": 1,
+          "laptop": 1,
+          "globe": 1
+        },
+        "falls": 0,
+        "invalid_contacts": 0,
+        "mean_duration_s": 249.86610077702207,
+        "mean_roll_rms_deg": 0.2634132638452517,
+        "mean_contact_travel_m": 0.47902823630102753,
+        "recovery_successes": 4,
+        "successful_recovery_mean_joint_travel_rad": 5.752424922227432
+      },
+      "fixed": {
+        "n": 1,
+        "complete_successes": 1,
+        "smooth_complete_successes": 1,
+        "wilson_95_complete_rate": [
+          0.20654329147389294,
+          1
+        ],
+        "task_successes": {
+          "alarm": 1,
+          "drawer": 1,
+          "laptop": 1,
+          "globe": 1
+        },
+        "falls": 0,
+        "invalid_contacts": 0,
+        "mean_duration_s": 249.3249359499458,
+        "mean_roll_rms_deg": 0.26339467843349873,
+        "mean_contact_travel_m": 0.4910787728110988,
+        "recovery_successes": 4,
+        "successful_recovery_mean_joint_travel_rad": 5.742428797930439
+      }
+    },
+    "manipulation": {
+      "parent": {
+        "n": 1,
+        "complete_successes": 1,
+        "smooth_complete_successes": 1,
+        "wilson_95_complete_rate": [
+          0.20654329147389294,
+          1
+        ],
+        "task_successes": {
+          "alarm": 1,
+          "drawer": 1,
+          "laptop": 1,
+          "globe": 1
+        },
+        "falls": 0,
+        "invalid_contacts": 0,
+        "mean_duration_s": 251.18549659409322,
+        "mean_roll_rms_deg": 0.26363380598569847,
+        "mean_contact_travel_m": 0.5047309835896041,
+        "recovery_successes": 4,
+        "successful_recovery_mean_joint_travel_rad": 5.6313333121646
+      },
+      "selected": {
+        "n": 1,
+        "complete_successes": 1,
+        "smooth_complete_successes": 1,
+        "wilson_95_complete_rate": [
+          0.20654329147389294,
+          1
+        ],
+        "task_successes": {
+          "alarm": 1,
+          "drawer": 1,
+          "laptop": 1,
+          "globe": 1
+        },
+        "falls": 0,
+        "invalid_contacts": 0,
+        "mean_duration_s": 251.18549659409322,
+        "mean_roll_rms_deg": 0.26363380598569847,
+        "mean_contact_travel_m": 0.5047309835896041,
+        "recovery_successes": 4,
+        "successful_recovery_mean_joint_travel_rad": 5.6313333121646
+      },
+      "fixed": {
+        "n": 1,
+        "complete_successes": 1,
+        "smooth_complete_successes": 1,
+        "wilson_95_complete_rate": [
+          0.20654329147389294,
+          1
+        ],
+        "task_successes": {
+          "alarm": 1,
+          "drawer": 1,
+          "laptop": 1,
+          "globe": 1
+        },
+        "falls": 0,
+        "invalid_contacts": 0,
+        "mean_duration_s": 249.3249359499458,
+        "mean_roll_rms_deg": 0.26339467843349873,
+        "mean_contact_travel_m": 0.4910787728110988,
+        "recovery_successes": 4,
+        "successful_recovery_mean_joint_travel_rad": 5.742428797930439
+      }
+    },
+    "recovery": {
+      "parent": {
+        "n": 1,
+        "complete_successes": 1,
+        "smooth_complete_successes": 1,
+        "wilson_95_complete_rate": [
+          0.20654329147389294,
+          1
+        ],
+        "task_successes": {
+          "alarm": 1,
+          "drawer": 1,
+          "laptop": 1,
+          "globe": 1
+        },
+        "falls": 0,
+        "invalid_contacts": 0,
+        "mean_duration_s": 249.86119595985824,
+        "mean_roll_rms_deg": 0.26355424125494986,
+        "mean_contact_travel_m": 0.5014012400778225,
+        "recovery_successes": 4,
+        "successful_recovery_mean_joint_travel_rad": 5.710354730758983
+      },
+      "selected": {
+        "n": 1,
+        "complete_successes": 1,
+        "smooth_complete_successes": 1,
+        "wilson_95_complete_rate": [
+          0.20654329147389294,
+          1
+        ],
+        "task_successes": {
+          "alarm": 1,
+          "drawer": 1,
+          "laptop": 1,
+          "globe": 1
+        },
+        "falls": 0,
+        "invalid_contacts": 0,
+        "mean_duration_s": 250.06719828073923,
+        "mean_roll_rms_deg": 0.26339595978588626,
+        "mean_contact_travel_m": 0.5988429895540573,
+        "recovery_successes": 4,
+        "successful_recovery_mean_joint_travel_rad": 5.642556317958727
+      },
+      "fixed": {
+        "n": 1,
+        "complete_successes": 1,
+        "smooth_complete_successes": 1,
+        "wilson_95_complete_rate": [
+          0.20654329147389294,
+          1
+        ],
+        "task_successes": {
+          "alarm": 1,
+          "drawer": 1,
+          "laptop": 1,
+          "globe": 1
+        },
+        "falls": 0,
+        "invalid_contacts": 0,
+        "mean_duration_s": 249.3249359499458,
+        "mean_roll_rms_deg": 0.26339467843349873,
+        "mean_contact_travel_m": 0.4910787728110988,
+        "recovery_successes": 4,
+        "successful_recovery_mean_joint_travel_rad": 5.742428797930439
+      }
+    }
+  },
+  "component_results": null,
+  "test_pairs_available": 6,
+  "evaluation_status": "completed",
   "selection_finalized": true,
   "default_scenario": "development-43000",
   "workflow_run": "mochi-t12-resume-44482272455",
   "source_sha": "001164697ee53c36bae332e5d56c8791d13f8288",
   "services": {
-    "writers": 3,
-    "readers": 3,
-    "cross_agent_reads": 3,
-    "isolation_passed": false
+    "writers": 5,
+    "readers": 5,
+    "cross_agent_reads": 5,
+    "isolation_passed": true
   },
-  "campaign_modal_rollouts_completed": 166,
+  "campaign_modal_rollouts_completed": 188,
   "memory_review_pending": null,
   "final_memory_review_pending": null,
   "display_note": "Complete measured 25 Hz body trajectories with six-decimal display quantization. No physical instability is filtered. Full numerical originals are archived on Modal."
