@@ -1,7 +1,7 @@
 import {createCurriculumStage} from './curriculum-stage.js';
 const $=q=>document.querySelector(q),labels={alarm:'Alarm clock',drawer:'Drawer',laptop:'Laptop close',globe:'Globe'};
 let stage,episode,time=0,playing=true,last=performance.now(),taskNodes={};
-async function status(){try{const r=await fetch('api/terrain-training',{cache:'no-store'});if(!r.ok)throw Error();const p=await r.json();const run=p.run_id?.match(/(\d+)$/)?.[1];if(run)$('#training-link').href='https://github.com/howdymary/mochi-demo/actions/runs/'+run;$('#training-updates').textContent=`${p.optimizer_updates_completed||0} completed optimizer updates`;$('#training-phase').textContent=p.phase||'Queued behind the bounded research diagnostic. See the execution log.'}catch{$('#training-updates').textContent='See the execution log';$('#training-phase').textContent='Live numerical status is unavailable. The recording above is an engineering reference.'}}
+async function status(){try{const r=await fetch('api/terrain-training',{cache:'no-store'});if(!r.ok)throw Error();const p=await r.json();const run=p.recovery?.evaluation_run||p.run_id?.match(/(\d+)$/)?.[1];if(run)$('#training-link').href='https://github.com/howdymary/mochi-demo/actions/runs/'+run;$('#training-updates').textContent=`${p.optimizer_updates_completed||0} completed optimizer updates`;$('#training-phase').textContent=p.phase||'Queued behind the bounded research diagnostic. See the execution log.'}catch{$('#training-updates').textContent='See the execution log';$('#training-phase').textContent='Live numerical status is unavailable. The recording above is an engineering reference.'}}
 function tick(now){
  const dt=Math.min(.07,(now-last)/1000);last=now;
  if(episode){
