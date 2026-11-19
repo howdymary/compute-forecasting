@@ -1,0 +1,21 @@
+name: Mochi terrain read-only cloud status
+on:
+  push:
+    branches: [mochi-desk-v3]
+    paths: ['mochi/configs/terrain-v12-inspect.json']
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - run: python -m pip install modal==1.6.4
+      - name: Read active terrain app logs
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: python mochi/scripts/read_terrain_cloud.py
