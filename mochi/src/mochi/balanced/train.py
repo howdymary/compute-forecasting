@@ -48,6 +48,8 @@ async def main():
     import tinker
     from tinker_cookbook.recipes.decisions import decision_choice_datums,sample_decision
     cfg=json.loads((ROOT/'configs/balanced-v11-training.json').read_text());run_id='mochi-b11-'+os.environ['GITHUB_RUN_ID']
+    if not json.loads((ROOT/'configs/balance-v11.json').read_text())['training_gate_open']:
+        raise RuntimeError('Physical reference gate is closed; no training is authorized by this protocol')
     for path,expected in cfg['frozen_sha256'].items():
         if hashlib.sha256((ROOT/path).read_bytes()).hexdigest()!=expected:raise RuntimeError('Frozen source mismatch: '+path)
     services=DeskServices();services.run_id=run_id

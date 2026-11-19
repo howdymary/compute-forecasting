@@ -5,15 +5,20 @@ on:
     paths: ['mochi/configs/balanced-v11-audit.json']
 permissions:
   contents: read
+concurrency:
+  group: mochi-balanced-v11-resource-budget
+  cancel-in-progress: false
 jobs:
   close-gate:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 12
+    env:
+      PYTHONPATH: ${{ github.workspace }}/mochi/src
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: {python-version: '3.11'}
-      - run: python -m pip install modal==1.6.4
+      - run: python -m pip install modal==1.6.4 httpx==0.28.1
       - name: Publish the audit verdict without changing trained weights
         env:
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
@@ -30,3 +35,15 @@ jobs:
           store.put('latest',report)
           print('Reference gate closed; actual recorded optimizer count:',report.get('optimizer_updates_completed',0))
           PYCODE
+      - name: Correct the shared finding and recall it before the next experiment
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+          PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
+        run: python -u -m mochi.balanced.audit_memory
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mochi-balanced-v11-audit-memory-${{ github.run_id }}
+          path: mochi/artifacts/balance-v11-audit-memory/
+          retention-days: 30

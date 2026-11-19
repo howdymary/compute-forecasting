@@ -24,7 +24,7 @@ def branch(source):
     if isinstance(old,HoldWalker):
         w.walker=HubWalker(w)
         w.walker=HoldWalker(w)
-        fields=['target','initial_target','neutral','origin','final_target','standing_target','previous_description']
+        fields=['target','initial_target','neutral','origin','final_target','standing_target','previous_description','native_state']
     elif isinstance(old,HubWalker):
         w.walker=HubWalker(w)
         fields=['action','target','filtered_command','velocity_integral','yaw_integral','last','origin','calls','feedback','mode','control_arms','stand_phase','stage']

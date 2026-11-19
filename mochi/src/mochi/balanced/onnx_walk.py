@@ -30,8 +30,12 @@ class HubWalker:
             self.amap.append(world.id('actuator',name) if j>=0 else None);self.home.append(world.meta['home_joint_offsets'].get(name,0.))
         self.home=np.array(self.home);self.action=np.zeros(29,dtype=np.float32);self.target=self.default-self.home
         self.velocity_integral=np.zeros(2);self.yaw_integral=0.;self.last=-1.;self.origin=float(self.d.time);self.calls=0;self.filtered_command=np.zeros(3)
-        self.feedback=.7
+        self.feedback=getattr(world,'native_feedback',.7)
         self.mode='walk';self.control_arms=True;self.stand_phase=None;self.stage='native-walk'
+        saved=getattr(old,'native_state',None)
+        if getattr(world,'warm_resume',False) and saved is not None:
+            self.action=saved['action'].copy()
+            self.origin=float(self.d.time)-saved['phase']*self.time_scale
 
     def hold(self):
         self.stand_phase=(float(self.d.time)-self.origin)/self.time_scale%.6
@@ -90,6 +94,8 @@ class HoldWalker:
         self.action=np.zeros(12);self.last=-1.;self.velocity_integral=np.zeros(2);self.yaw_integral=0.;self.stage='hold'
         self.standing_target=self.target.copy()
         self.previous_description=old.description()
+        self.native_state=(dict(action=old.action.copy(),phase=old.stand_phase if old.mode!='walk' else (float(self.d.time)-old.origin)/self.time_scale%.6)
+                           if isinstance(old,HubWalker) else getattr(old,'native_state',None))
         for arm in world.arm.values():self.d.ctrl[arm['acts']]=self.d.qpos[arm['qs']]
 
     def command(self,velocity):

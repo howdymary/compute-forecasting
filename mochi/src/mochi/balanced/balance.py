@@ -5,6 +5,22 @@ import numpy as np
 from scipy.spatial import ConvexHull, QhullError
 
 
+def walking_contact_violation(w):
+    allowed={w.id('geom','desk')}|w.book_geoms
+    for i,c in enumerate(w.d.contact):
+        a,b=int(c.geom1),int(c.geom2)
+        ra=int(w.m.geom_bodyid[a]) in w.robot_bodies;rb=int(w.m.geom_bodyid[b]) in w.robot_bodies
+        if ra==rb:continue
+        robot,fixture=(a,b) if ra else (b,a)
+        body=mujoco.mj_id2name(w.m,mujoco.mjtObj.mjOBJ_BODY,int(w.m.geom_bodyid[robot])) or ''
+        if fixture in allowed and body in ['left_ankle_roll_link','right_ankle_roll_link']:continue
+        force=np.zeros(6);mujoco.mj_contactForce(w.m,w.d,i,force)
+        if force[0]>.05:
+            return {'t':float(w.d.time),'body':body,
+                    'fixture':mujoco.mj_id2name(w.m,mujoco.mjtObj.mjOBJ_GEOM,fixture),'force_n':float(force[0]),'phase':'walk'}
+    return None
+
+
 def support(w):
     points=[];weights=[];scuffs=[]
     for i,c in enumerate(w.d.contact):

@@ -33,20 +33,10 @@ class SequenceWorld(BalancedWorld):
         # Walking may use desk/book foot contact, never a clock/cabinet/body
         # brace. Task fixtures are not part of the terrain-only parent check.
         if self.phase=='walk':
-            allowed={self.id('geom','desk')}|self.book_geoms
-            for i,c in enumerate(self.d.contact):
-                a,b=int(c.geom1),int(c.geom2)
-                ra=int(self.m.geom_bodyid[a]) in self.robot_bodies;rb=int(self.m.geom_bodyid[b]) in self.robot_bodies
-                if ra==rb:continue
-                robot,fixture=(a,b) if ra else (b,a)
-                body=mujoco.mj_id2name(self.m,mujoco.mjtObj.mjOBJ_BODY,int(self.m.geom_bodyid[robot])) or ''
-                if fixture in allowed and body in ['left_ankle_roll_link','right_ankle_roll_link']:continue
-                force=np.zeros(6);mujoco.mj_contactForce(self.m,self.d,i,force)
-                if force[0]>.05:
-                    self.invalid_contact=True
-                    self.contact_failures.append({'t':float(self.d.time),'body':body,
-                        'fixture':mujoco.mj_id2name(self.m,mujoco.mjtObj.mjOBJ_GEOM,fixture),'force_n':float(force[0]),'phase':'walk'})
-                    break
+            from .balance import walking_contact_violation
+            violation=walking_contact_violation(self)
+            if violation:
+                self.invalid_contact=True;self.contact_failures.append(violation)
         if self.stopped:
             self.stop_contacts=[]
             for i,c in enumerate(self.d.contact):
@@ -83,7 +73,7 @@ def navigate(w, goal, *, timeout=35., stop=True, speed=.055, book=False,
         w.walker = HubWalker(w)
     else:
         w.walker.resume()
-    if book or w.terrain_height(*w.d.qpos[:2])>.001:
+    if not book and w.terrain_height(*w.d.qpos[:2])>.001:
         w.walker.control_arms=False
         for arm in w.arm.values():w.d.ctrl[arm['acts']]=arm['rest']
     origin = w.d.qpos[:2].copy()
@@ -160,9 +150,11 @@ def navigate(w, goal, *, timeout=35., stop=True, speed=.055, book=False,
     return result
 
 
-def run(seed=31000, record=True, until='all', speed=.055, alarm_x=-.375,alarm_y=.035,capture_margin=None,forward_descent=False,descent_speed=None,native_stand=False,drawer_profile='A',choose=None):
+def run(seed=31000, record=True, until='all', speed=.055, alarm_x=-.375,alarm_y=.035,capture_margin=None,forward_descent=False,descent_speed=None,native_stand=False,drawer_profile='A',choose=None,warm_resume=False,native_feedback=.7):
     w = SequenceWorld(seed,record)
     w.use_native_stand=native_stand
+    w.warm_resume=warm_resume
+    w.native_feedback=native_feedback
     w.decision_interface_enabled=choose is not None
     arrivals = []
     failure = None
