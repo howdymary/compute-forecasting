@@ -70,6 +70,10 @@ def main():
                   'Paired timing and movement changes exclude cases where either run fails.',
                   'Domain interventions are whole routes, not exact matched-pose manipulation tests.',
                   'Tinker updates decision weights; native gait and physical controllers stay fixed.']}
+    audit['domain_control_choices']={}
+    for name in (report.get('isolated') or {}):
+        values=json.loads((source/('isolated-'+name+'.json')).read_text())
+        audit['domain_control_choices'][name]={label:evidence(rows)['chosen_controls'] for label,rows in values.items()}
     data=ROOT/'artifacts/terrain-v12-assessment/final.json';data.parent.mkdir(parents=True,exist_ok=True)
     data.write_text(json.dumps(audit,indent=2)+'\n')
     lines=['# V12 completed-training assessment','',f"Tinker completed {report['optimizer_updates_completed']} new optimizer updates. Development selection chose update {report['selected_checkpoint']['update']}. Native gait weights stayed fixed.",'',
@@ -89,6 +93,13 @@ def main():
     for name,e in audit['held_out'].items():
         lines.append(f"- {name}: "+(', '.join(f'{k} × {n}' for k,n in e['failures'].items()) or 'none in this cohort')+'.')
         for c in e['forbidden_contacts']:lines.append(f"  Contact: {c['body']} with {c['fixture']} during {c['phase']} ({c['count']}).")
+    lines+=['','| Full-route decision-domain intervention | Parent complete | Selected complete | Same recorded profile choices |',
+            '|---|---:|---:|---|']
+    for name,values in (report.get('isolated') or {}).items():
+        a,b=values['parent'],values['selected'];choices=audit['domain_control_choices'][name]
+        same=choices['parent']==choices['selected']
+        lines.append(f"| {name} | {a['complete_successes']}/{a['n']} | {b['complete_successes']}/{b['n']} | {'Yes' if same else 'No'} |")
+        if same:lines.append(f"\nThe {name} check recorded the same profile choices for both models. It does not demonstrate a learned change in that domain.\n")
     lines+=['','The full-route domain interventions help identify which decision domain changes an outcome. They do not establish a matched-pose recovery or manipulation effect.','',*audit['limits'],'',f"[Training receipts](https://github.com/howdymary/mochi-demo/actions/runs/{report['run_id'].split('-')[-1]}) · [Evaluation receipts](https://github.com/howdymary/mochi-demo/actions/runs/{report.get('recovery',{}).get('evaluation_run','')})"]
     out=Path(a.out);out.parent.mkdir(parents=True,exist_ok=True);out.write_text('\n'.join(lines)+'\n')
     out.with_suffix('.json').write_text(json.dumps(audit,indent=2)+'\n')
