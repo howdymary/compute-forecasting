@@ -1,7 +1,7 @@
 import {createCurriculumStage} from './curriculum-stage.js';
 const $=q=>document.querySelector(q),labels={alarm:'Alarm clock',drawer:'Drawer',laptop:'Laptop close',globe:'Globe'};
 let stage,episode,time=0,playing=true,last=performance.now(),taskNodes={};
-async function status(){try{const r=await fetch('api/terrain-training',{cache:'no-store'});if(!r.ok)throw Error();const p=await r.json();$('#training-updates').textContent=`${p.optimizer_updates_completed||0} completed optimizer updates`;$('#training-phase').textContent=p.phase||'Queued behind the bounded research diagnostic. See the execution log.'}catch{$('#training-updates').textContent='See the execution log';$('#training-phase').textContent='Live numerical status is unavailable. The recording above is an engineering reference.'}}
+async function status(){try{const r=await fetch('api/terrain-training',{cache:'no-store'});if(!r.ok)throw Error();const p=await r.json();const run=p.run_id?.match(/(\d+)$/)?.[1];if(run)$('#training-link').href='https://github.com/howdymary/mochi-demo/actions/runs/'+run;$('#training-updates').textContent=`${p.optimizer_updates_completed||0} completed optimizer updates`;$('#training-phase').textContent=p.phase||'Queued behind the bounded research diagnostic. See the execution log.'}catch{$('#training-updates').textContent='See the execution log';$('#training-phase').textContent='Live numerical status is unavailable. The recording above is an engineering reference.'}}
 function tick(now){
  const dt=Math.min(.07,(now-last)/1000);last=now;
  if(episode){
@@ -22,7 +22,7 @@ async function init(){
  stage=createCurriculumStage($('#stage'),{scene:m.scene,fullBody:true});await stage.ready;stage.setEpisode(episode);
  $('#loading').style.display='none';$('#scrub').max=episode.duration;$('#scope').textContent=m.note;
  for(const task of Object.keys(labels)){const n=document.createElement('p');taskNodes[task]=n;$('#tasks').append(n)}
- for(const [label,value]of [['Complete sequence','4 / 4 tasks'],['Fall / forbidden contact','0 / 0'],['Torso roll RMS',episode.balance_metrics.roll_rms_deg.toFixed(2)+'°'],['Applied base force',episode.maximum_applied_base_force.toFixed(3)+' N']]){const n=document.createElement('p');n.textContent=label+': '+value;$('#metrics').append(n)}
+ for(const [label,value]of [['Final task result','4 / 4 tasks'],['Fall / forbidden contact','0 / 0'],['Torso roll RMS',episode.balance_metrics.roll_rms_deg.toFixed(2)+'°'],['Applied base force',episode.maximum_applied_base_force.toFixed(3)+' N']]){const n=document.createElement('p');n.textContent=label+': '+value;$('#metrics').append(n)}
  for(const [label,t]of [['Books',0],...Object.keys(labels).map(k=>[labels[k],Math.max(0,episode.trajectory.frames.find(f=>f.task===k).t-1)])]){const n=document.createElement('button');n.textContent=label;n.onclick=()=>{time=t;playing=true};$('#jumps').append(n)}
  $('#wide').onclick=()=>stage.view(true);$('#follow').onclick=()=>stage.view(false);$('#feet').onclick=()=>stage.inspect('feet');
  $('#play').onclick=()=>{playing=!playing;$('#play').textContent=playing?'Ⅱ':'▶'};$('#restart').onclick=()=>{time=0;playing=true};$('#scrub').oninput=e=>{time=+e.target.value;playing=false};
