@@ -32,6 +32,32 @@ Each optimizer step receives six domain-specific forward/backward calls. A fresh
 
 A complete episode has four walking-strategy decisions, four task-profile decisions and four recovery decisions. Model inference stays outside the high-frequency actuator loop. This is simulation-state-based command/profile learning, not vision training, motor-torque learning or updating the native gait network. A single preferred walking action, if learned, must be described as a fixed preference rather than evidence of useful adaptation.
 
+## Execution and evidence
+
+```mermaid
+flowchart LR
+    S[MuJoCo state] --> P[Saved Qwen decision weights]
+    P --> W[Walking settings]
+    P --> T[Task profile]
+    P --> A[Arm withdrawal]
+    W & T & A --> C[Fixed actuator controllers]
+    C --> S
+    F[Measured failures] --> E[Exa sources]
+    E --> M[past.dev sourced handoffs]
+    M --> B[Bounded supervision allocation]
+    S --> X[Matched physical branches on Modal]
+    X --> D[Validated action labels]
+    B --> L[Tinker forward/backward and optimizer]
+    D --> L
+    L --> P
+    P --> V[Frozen checkpoint evaluation]
+    V --> R[Recorded before/after viewer]
+```
+
+The walking and clock-controller repairs were engineered before this weight comparison. Search-informed supervision allocation is distinct from automatically rewriting the controller. The viewer replays measured trajectories; watching it does not generate new training, searches or memory recalls.
+
+Clock profiles change contact depth, force backoff and hold time. Their approach joint slew is fixed; the generic profile speed metadata is not a learned clock approach speed.
+
 ## Frozen comparison
 
 The parent, intermediate checkpoints, development-selected checkpoint and a competent fixed heuristic share the same scene, simulator, path, controller code and verifier. Training scenarios use seeds 42000–42003; development uses 43000–43002. Held-out seeds 44000–44005 remain reserved until checkpoint selection.

@@ -68,6 +68,7 @@ async def main():
     source=ROOT/'.cache/terrain-recovery-source'
     previous=json.loads((source/'progress.json').read_text())
     assert previous['optimizer_updates_completed']==0,'Do not repeat completed optimizer updates'
+    assert previous['budget_usage_or_reserved'].get('optimizer_updates',0)==0,'Unreconciled optimizer reservation; inspect before resuming from parent'
     assert not previous['held_out_opened'],'Do not retrain after opening the held-out set'
     assert previous['run_id'].endswith(str(cfg['source_run'])),'Wrong source artifact'
     assert previous['remote_reference_passed'] and previous['valid_teacher_sequences']>=1
@@ -80,7 +81,7 @@ async def main():
             'status':'running','phase':'Restore validated physical data and optimizer parent','protocol':cfg,'scope':cfg['scope'],
             'optimizer_updates_completed':0,'training_log':[],'checkpoints':[],'held_out_opened':False,
             'physics_receipts':copy.deepcopy(previous['physics_receipts']),'campaign_modal_rollouts_completed':previous['campaign_modal_rollouts_completed'],
-            'recovery':{'source_run':cfg['source_run'],'reused_training_data':True,'previous_optimizer_updates_completed':0,'development_schedule':'Train durable checkpoints before physical development evaluation; labels and optimizer schedule are fixed.'}}
+            'recovery':{'source_run':cfg['source_run'],'reused_training_data':True,'previous_optimizer_updates_completed':0,'data_recovery':previous.get('data_recovery'),'development_schedule':'Train durable checkpoints before physical development evaluation; labels and optimizer schedule are fixed.'}}
     budget_store=modal.Dict.from_name('mochi-terrain-v12-resume-budget',create_if_missing=True)
     usage=await budget_store.get.aio('usage')
     if usage is None:

@@ -38,7 +38,9 @@ jobs:
           PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
           MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
-        run: python -u -m mochi.terrain_v12.resume_training
+        run: |
+          python -u -m mochi.terrain_v12.recover_data
+          python -u -m mochi.terrain_v12.resume_training
       - uses: actions/upload-artifact@v4
         if: always()
         with:
