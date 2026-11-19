@@ -35,7 +35,7 @@ def main():
             'final_object_speeds','trajectory','recoveries','decisions','executed_root_distance_m']
         clip={k:e[k] for k in keep if k in e}
         clip['balance_measurements']=[{k:v for k,v in m.items() if k in ['t','phase','gait_phase','roll_rad','loads_n','lateral_m']} for m in e['balance_measurements']]
-        (OUT/name).write_bytes(gzip.compress(json.dumps(rounded(clip),separators=(',',':')).encode(),compresslevel=9))
+        (OUT/name).write_bytes(gzip.compress(json.dumps(rounded(clip),separators=(',',':')).encode(),compresslevel=9,mtime=0))
         files[name]={'checkpoint_update':update,'checkpoint_id':cps[update]['checkpoint_id'],
                      'cumulative_updates':cps[update]['cumulative_updates'],'seed':seed,
                      'complete':row['complete_sequence_success'],'failure':row['failure'],'archive':row.get('archive'),
