@@ -1,0 +1,2776 @@
+{
+  "study": "mochi-terrain-v12-preserved-data-post-training",
+  "run_id": "mochi-t12-resume-44482272455",
+  "source_sha": "001164697ee53c36bae332e5d56c8791d13f8288",
+  "created_at": "2026-11-19T07:48:42.028392+00:00",
+  "status": "running",
+  "phase": "Finish development checkpoint 8",
+  "protocol": {
+    "study": "mochi-terrain-v12-preserved-data-post-training",
+    "phase": "frozen-controller-post-training",
+    "parent_checkpoint_sha256": "0188b0e78f749d276c613fa0d8adc8253fa90719b430be18e6f6bfb56673498f",
+    "parent_optimizer_updates": 104,
+    "prior_modal_rollouts": 0,
+    "bounds": {
+      "local_rollouts": 96,
+      "modal_rollouts": 512,
+      "modal_concurrency": 4,
+      "modal_cpu_hours": 12,
+      "optimizer_updates": 32,
+      "training_token_presentations": 2000000,
+      "inference_tokens": 500000,
+      "exa_searches": 8,
+      "past_writes": 20,
+      "past_recalls": 40
+    },
+    "training_seeds": [
+      42000,
+      42001,
+      42002,
+      42003
+    ],
+    "development_seeds": [
+      43000,
+      43001,
+      43002
+    ],
+    "held_out_seeds": [
+      44000,
+      44001,
+      44002,
+      44003,
+      44004,
+      44005
+    ],
+    "training": {
+      "updates": 32,
+      "checkpoints": [
+        0,
+        1,
+        8,
+        32
+      ],
+      "learning_rate": 0.0001,
+      "seed": 81219,
+      "base_model": "Qwen/Qwen3.5-4B",
+      "domains": [
+        "walk",
+        "alarm",
+        "drawer",
+        "laptop",
+        "globe",
+        "recovery"
+      ]
+    },
+    "frozen_sha256": {
+      "src/mochi/balanced/world.py": "01a3dc78df8b974ba3dc3e3f7337b593bf31495f629614955275d8611df79e24",
+      "src/mochi/balanced/sequence.py": "f910a578681aeacfdf335ab869c54e7de6ad55934ef9e0caf2cf2cd199de9add",
+      "src/mochi/balanced/onnx_walk.py": "b2f99ebb76e7773260c80a708db0fd4e1b66465f503ba558d1ccd803b3baf471",
+      "src/mochi/balanced/balance.py": "b2f92658e023a688d87a2804e233a59ece3e09196ac282041a29bf362455a03b",
+      "src/mochi/balanced/recovery.py": "538c48a36c824aeb3033ba9458d81ec49159223f59593f9583b597a9ed9b6019",
+      "src/mochi/balanced/tasks.py": "60b29d38be802d1a29cc98035129a9e97b01efedb3c97cd30ff91fc5a6f72cfa",
+      "src/mochi/balanced/legs.py": "31b595c0d7741aa305e4fa79d34e3c802f25a1095c939baf69a37365c7759867",
+      "src/mochi/balanced/verification.py": "2a61d18ef3c81ec42e38cb12684419de4a6400b2331a1ce06bf464bb88149838",
+      "src/mochi/balanced/policy.py": "577e67f2c50961f497990f5f368600724d2425e7c9c9b808a8638d2dd8278476",
+      "src/mochi/balanced/snapshot.py": "4755741a4f4396bb3efa25f645a8be6a9e7974dbf44b7c4a2e8c45abe4ae7efb",
+      "src/mochi/richdesk/world.py": "1d633d277d24fea52895ce903ef1567d111ea99be3d9ad915f8f5bd053dcbb4e",
+      "src/mochi/richdesk/verify.py": "7d4bcf28c685ad887bb0f59eefc7d4d41c6f906fc3ee483a7f8458ecc30de460",
+      "src/mochi/curriculum/world.py": "1cb415d6d66e367e3d2c28146ab6067c1da671461c5ec34728d4487cb13152f6",
+      "src/mochi/curriculum/locomotion.py": "a46937561ccfcce13296ac4d5f2c7422f18e44818941249520d338ac429f4391",
+      "src/mochi/desk/g1_model.py": "7b3d54c7b95e02d5f93515bd01a67115a010ae23a830b3ea16475a2d20be114c",
+      "src/mochi/control_v8/manipulation.py": "08f6ff5b95ff6fa8f2f59c34ef14171be19f346e1a018b82a4f1dbfe3b2b17ca",
+      "src/mochi/control_v8/verification.py": "4e78da28198bb373c515fcab604d4a756dde886f8bf4fe1aa84a7e437d347b1c",
+      "configs/richdesk-v9.json": "b63f0e98c0e58329956e1559191ad616dc1fdcb3ab132e8b5d56986faa975fdd",
+      "assets/robot/g1-v11-policy/exported/policy.onnx": "2ee446c8d7fb718d9479db0f82fe5659d382158d347fdacd5ffc35831e1d642c",
+      "src/mochi/terrain_v12/world.py": "0bfe381c78bd98c569bd31b261694967b6bd9cca5f1c79a26b9613f0f5b37793",
+      "src/mochi/terrain_v12/contact.py": "72c2509dd6ce4c00f86817dc4aaae407df6ae2f8be6e223698132c47f340e0cf",
+      "src/mochi/terrain_v12/sequence.py": "aeed30bb3f038e7c59b03b6e153dfd19e4b82d3ab40ca48663c5790c81efcbea",
+      "src/mochi/terrain_v12/tasks.py": "3f14c3954233a3e4f317e37b50cbb56e40428c337bf12e6722505e7544d13e16",
+      "src/mochi/terrain_v12/policy.py": "1ff3e8c3c21795ecd08297e4ce14b17eaa2bb4fcac74d8176e26d1eaa4c1bc4a",
+      "src/mochi/terrain_v12/snapshot.py": "adec7b1803ae5b3060e94587cb448d972b8dc6a157c55a9831525aa5c40afa1b",
+      "src/mochi/terrain_v12/development.py": "b3011cd1db7c6b1d0102a31328183035ace49a6eb5d3d9902c0471b71988e32a",
+      "src/mochi/terrain_v12/legs.py": "d4c76201a5595955007ee1abe03e0f13808d01a6e74beb7ffa29b475cdc2bde4",
+      "src/mochi/terrain_v12/learning_remote.py": "551bc1da4e73fc6f68aaeb154d3baf6113c951524cd83e880b6aacac120cde83",
+      "configs/terrain-v12.json": "cd1455e6b29dd0782d08545168c2b5e672be0bda68dd1fe7fed9ec6f3801b668",
+      "src/mochi/terrain_v12/services.py": "9de770a67984198e154c5334a267aa231b86a1dda9cf29b575280ecad14d4696",
+      "src/mochi/terrain_v12/evaluation_remote.py": "e86edab714dc4c34ad8151892b178736a3afd9725cb73b743e34b1651ba67e1e"
+    },
+    "smoothness": {
+      "roll_rms_degrees_max": 2,
+      "roll_peak_degrees_max": 12,
+      "path_lateral_rms_m_max": 0.015,
+      "path_lateral_peak_to_peak_m_max": 0.06,
+      "sequence_time_seconds_max": 275,
+      "loaded_contact_travel_estimate_m_max": 1.25,
+      "qualification": "Frozen before training. 249.81 s is the first successful engineering reference; the 275 s pilot threshold allows 10% overhead. Report all walking, task and recovery measurements separately; contact travel is a sampled proxy. Lateral peak-to-peak limit is 60 mm, frozen against the 53.56 mm engineering reference before model training."
+    },
+    "scope": "Tinker resumes Qwen3.5-4B LoRA decision weights for terrain-aware walking strategy (stance width, support transfer timing, swing duration and flat speed), task profiles and arm recovery. MuJoCo contact/IK controllers, route, scene and native flat-ground ONNX gait weights are fixed. Compare parent, trained checkpoints and competent fixed heuristic on identical new scenarios. No low-level neural gait training claimed. Continuation uses the preserved physical dataset and at most 32 new optimizer updates. The original run completed zero updates; its compute reservations remain separate.",
+    "execution": {
+      "max_containers": 4,
+      "numerical_library_threads": 1,
+      "teacher_timeout_s": 3600,
+      "evaluation_timeout_s": 1500,
+      "matched_models": "Independent workers, identical frozen image and physical initial state",
+      "memory": "Required initial handoffs remain source-verified. Later delayed ingestions are journaled and reported as pending; no dependent recall before completion.",
+      "inference_cap_per_full_model": 24000,
+      "development_schedule": "Train saved checkpoints first; evaluate all versions afterward. No gradient decision depends on development feedback.",
+      "source_data": "Reuse all four completed physical teacher bundles from run 44472186998; zero simulation regeneration."
+    },
+    "source_run": 44472186998,
+    "isolation_seed_count": 1
+  },
+  "scope": "Tinker resumes Qwen3.5-4B LoRA decision weights for terrain-aware walking strategy (stance width, support transfer timing, swing duration and flat speed), task profiles and arm recovery. MuJoCo contact/IK controllers, route, scene and native flat-ground ONNX gait weights are fixed. Compare parent, trained checkpoints and competent fixed heuristic on identical new scenarios. No low-level neural gait training claimed. Continuation uses the preserved physical dataset and at most 32 new optimizer updates. The original run completed zero updates; its compute reservations remain separate.",
+  "optimizer_updates_completed": 32,
+  "training_log": [
+    {
+      "update": 1,
+      "domain_loss_metrics": {
+        "walk": {
+          "loss:sum": 20.516839496791363,
+          "clock_cycle:unique": 7518365.0
+        },
+        "alarm": {
+          "loss:sum": 12.95137882232666,
+          "clock_cycle:unique": 7518365.0
+        },
+        "drawer": {
+          "loss:sum": 0.054448073729872704,
+          "clock_cycle:unique": 7518365.0
+        },
+        "laptop": {
+          "loss:sum": 2.8332993388175964,
+          "clock_cycle:unique": 7518365.0
+        },
+        "globe": {
+          "loss:sum": 0.1425006352365017,
+          "clock_cycle:unique": 7518365.0
+        },
+        "recovery": {
+          "loss:sum": 4.503992438316345,
+          "clock_cycle:unique": 7518365.0
+        }
+      },
+      "domain_counts": {
+        "walk": 8,
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 4,
+        "globe": 4,
+        "recovery": 16
+      },
+      "tokens": 11966,
+      "batch_sha256": "0c8aa03482452a3e473f23835613e6bc861a21c470a8c98ae2d5ed54334eeda9",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-19T07:51:12.253920+00:00"
+    },
+    {
+      "update": 2,
+      "domain_loss_metrics": {
+        "walk": {
+          "loss:sum": 17.11675299704075,
+          "clock_cycle:unique": 7518371.0
+        },
+        "alarm": {
+          "loss:sum": 4.991668939590454,
+          "clock_cycle:unique": 7518371.0
+        },
+        "drawer": {
+          "loss:sum": 0.06359066441655159,
+          "clock_cycle:unique": 7518371.0
+        },
+        "laptop": {
+          "loss:sum": 2.8386073634028435,
+          "clock_cycle:unique": 7518371.0
+        },
+        "globe": {
+          "loss:sum": 0.10227910988032818,
+          "clock_cycle:unique": 7518371.0
+        },
+        "recovery": {
+          "loss:sum": 1.3692610375583172,
+          "clock_cycle:unique": 7518371.0
+        }
+      },
+      "domain_counts": {
+        "walk": 8,
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 4,
+        "globe": 4,
+        "recovery": 16
+      },
+      "tokens": 11986,
+      "batch_sha256": "0fc671a9668964f42293773b5c4fa79c8521c03a60d9f2b2530d81c26f8cbc0d",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-19T07:51:47.362183+00:00"
+    },
+    {
+      "update": 3,
+      "domain_loss_metrics": {
+        "walk": {
+          "loss:sum": 6.204395234584808,
+          "clock_cycle:unique": 7518372.0
+        },
+        "alarm": {
+          "loss:sum": 2.6785728335380554,
+          "clock_cycle:unique": 7518373.0
+        },
+        "drawer": {
+          "loss:sum": 0.05357321724295616,
+          "clock_cycle:unique": 7518373.0
+        },
+        "laptop": {
+          "loss:sum": 5.3658973798155785,
+          "clock_cycle:unique": 7518373.0
+        },
+        "globe": {
+          "loss:sum": 0.10335327498614788,
+          "clock_cycle:unique": 7518373.0
+        },
+        "recovery": {
+          "loss:sum": 0.6357049066573381,
+          "clock_cycle:unique": 7518373.0
+        }
+      },
+      "domain_counts": {
+        "walk": 8,
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 4,
+        "globe": 4,
+        "recovery": 16
+      },
+      "tokens": 12000,
+      "batch_sha256": "098d77acb26eb48fc7a1921cd596e682f744eb3927389538eac2ec0f23d875dd",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-19T07:51:55.646576+00:00"
+    },
+    {
+      "update": 4,
+      "domain_loss_metrics": {
+        "walk": {
+          "loss:sum": 11.980720341205597,
+          "clock_cycle:unique": 7518374.0
+        },
+        "alarm": {
+          "loss:sum": 2.5725673139095306,
+          "clock_cycle:unique": 7518375.0
+        },
+        "drawer": {
+          "loss:sum": 0.07106187473982573,
+          "clock_cycle:unique": 7518375.0
+        },
+        "laptop": {
+          "loss:sum": 4.7528059631586075,
+          "clock_cycle:unique": 7518375.0
+        },
+        "globe": {
+          "loss:sum": 0.09622269682586193,
+          "clock_cycle:unique": 7518375.0
+        },
+        "recovery": {
+          "loss:sum": 0.42164067178964615,
+          "clock_cycle:unique": 7518375.0
+        }
+      },
+      "domain_counts": {
+        "walk": 8,
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 4,
+        "globe": 4,
+        "recovery": 16
+      },
+      "tokens": 11994,
+      "batch_sha256": "b64256833d7b002754c509c250961143931a918f5f7ccf452223df22eb027987",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-19T07:52:03.757305+00:00"
+    },
+    {
+      "update": 5,
+      "domain_loss_metrics": {
+        "walk": {
+          "loss:sum": 5.789572834968567,
+          "clock_cycle:unique": 7518377.0
+        },
+        "alarm": {
+          "loss:sum": 0.44773484766483307,
+          "clock_cycle:unique": 7518377.0
+        },
+        "drawer": {
+          "loss:sum": 0.08729473315179348,
+          "clock_cycle:unique": 7518377.0
+        },
+        "laptop": {
+          "loss:sum": 5.067425906658173,
+          "clock_cycle:unique": 7518377.0
+        },
+        "globe": {
+          "loss:sum": 0.11918820068240166,
+          "clock_cycle:unique": 7518377.0
+        },
+        "recovery": {
+          "loss:sum": 0.4320035111159086,
+          "clock_cycle:unique": 7518377.0
+        }
+      },
+      "domain_counts": {
+        "walk": 8,
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 4,
+        "globe": 4,
+        "recovery": 16
+      },
+      "tokens": 12003,
+      "batch_sha256": "f760c604b73edcfba181de0156a300187d6bb973e7f769e5660a91f8124c444b",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-19T07:52:11.317796+00:00"
+    },
+    {
+      "update": 6,
+      "domain_loss_metrics": {
+        "walk": {
+          "loss:sum": 3.090117499232292,
+          "clock_cycle:unique": 7518385.0
+        },
+        "alarm": {
+          "loss:sum": 0.34014758467674255,
+          "clock_cycle:unique": 7518385.0
+        },
+        "drawer": {
+          "loss:sum": 0.09885546751320362,
+          "clock_cycle:unique": 7518385.0
+        },
+        "laptop": {
+          "loss:sum": 3.4176045060157776,
+          "clock_cycle:unique": 7518385.0
+        },
+        "globe": {
+          "loss:sum": 0.17069874331355095,
+          "clock_cycle:unique": 7518385.0
+        },
+        "recovery": {
+          "loss:sum": 0.4662302080541849,
+          "clock_cycle:unique": 7518385.0
+        }
+      },
+      "domain_counts": {
+        "walk": 8,
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 4,
+        "globe": 4,
+        "recovery": 16
+      },
+      "tokens": 11998,
+      "batch_sha256": "a3b3c7180ff0266a9e4a296f8897311feffba0ed4f1c00b616334d22f5a063ba",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-19T07:53:20.314275+00:00"
+    },
+    {
+      "update": 7,
+      "domain_loss_metrics": {
+        "walk": {
+          "loss:sum": 2.356138527393341,
+          "clock_cycle:unique": 7518386.0
+        },
+        "alarm": {
+          "loss:sum": 3.5002762153744698,
+          "clock_cycle:unique": 7518386.0
+        },
+        "drawer": {
+          "loss:sum": 0.1237295139580965,
+          "clock_cycle:unique": 7518386.0
+        },
+        "laptop": {
+          "loss:sum": 3.416690707206726,
+          "clock_cycle:unique": 7518386.0
+        },
+        "globe": {
+          "loss:sum": 0.19958658143877983,
+          "clock_cycle:unique": 7518386.0
+        },
+        "recovery": {
+          "loss:sum": 0.4654691480100155,
+          "clock_cycle:unique": 7518386.0
+        }
+      },
+      "domain_counts": {
+        "walk": 8,
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 4,
+        "globe": 4,
+        "recovery": 16
+      },
+      "tokens": 11964,
+      "batch_sha256": "e02525578b6a73f6910bbfb4e481e796a4af7f3a576927742a78e7f24a45737d",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-19T07:53:29.048961+00:00"
+    },
+    {
+      "update": 8,
+      "domain_loss_metrics": {
+        "walk": {
+          "loss:sum": 2.540613740682602,
+          "clock_cycle:unique": 7518387.0
+        },
+        "alarm": {
+          "loss:sum": 0.3891790509223938,
+          "clock_cycle:unique": 7518387.0
+        },
+        "drawer": {
+          "loss:sum": 0.13669602200388908,
+          "clock_cycle:unique": 7518387.0
+        },
+        "laptop": {
+          "loss:sum": 5.023021697998047,
+          "clock_cycle:unique": 7518387.0
+        },
+        "globe": {
+          "loss:sum": 0.24147161468863487,
+          "clock_cycle:unique": 7518387.0
+        },
+        "recovery": {
+          "loss:sum": 0.5435818117111921,
+          "clock_cycle:unique": 7518387.0
+        }
+      },
+      "domain_counts": {
+        "walk": 8,
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 4,
+        "globe": 4,
+        "recovery": 16
+      },
+      "tokens": 11965,
+      "batch_sha256": "33590fafae0c526faf5f5f2c766ea875fa24bbeec7f8603bc8f6ca381fc3dabe",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-19T07:53:37.916570+00:00"
+    },
+    {
+      "update": 9,
+      "domain_loss_metrics": {
+        "walk": {
+          "loss:sum": 7.99673030897975,
+          "clock_cycle:unique": 7518392.0
+        },
+        "alarm": {
+          "loss:sum": 0.3458400070667267,
+          "clock_cycle:unique": 7518393.0
+        },
+        "drawer": {
+          "loss:sum": 0.1750248298048973,
+          "clock_cycle:unique": 7518393.0
+        },
+        "laptop": {
+          "loss:sum": 4.342891275882721,
+          "clock_cycle:unique": 7518393.0
+        },
+        "globe": {
+          "loss:sum": 0.2461465671658516,
+          "clock_cycle:unique": 7518393.0
+        },
+        "recovery": {
+          "loss:sum": 0.4830787256360054,
+          "clock_cycle:unique": 7518393.0
+        }
+      },
+      "domain_counts": {
+        "walk": 8,
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 4,
+        "globe": 4,
+        "recovery": 16
+      },
+      "tokens": 11972,
+      "batch_sha256": "ae6ad544236793f6a3526537866572a6c9df40b46b62984e5977f1716e492cf5",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-19T07:54:37.039657+00:00"
+    },
+    {
+      "update": 10,
+      "domain_loss_metrics": {
+        "walk": {
+          "loss:sum": 0.609484102576971,
+          "clock_cycle:unique": 7518394.0
+        },
+        "alarm": {
+          "loss:sum": 3.6381294652819633,
+          "clock_cycle:unique": 7518395.0
+        },
+        "drawer": {
+          "loss:sum": 0.13468632847070694,
+          "clock_cycle:unique": 7518395.0
+        },
+        "laptop": {
+          "loss:sum": 3.264505982398987,
+          "clock_cycle:unique": 7518395.0
+        },
+        "globe": {
+          "loss:sum": 0.21757788956165314,
+          "clock_cycle:unique": 7518395.0
+        },
+        "recovery": {
+          "loss:sum": 0.4055281989276409,
+          "clock_cycle:unique": 7518395.0
+        }
+      },
+      "domain_counts": {
+        "walk": 8,
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 4,
+        "globe": 4,
+        "recovery": 16
+      },
+      "tokens": 11991,
+      "batch_sha256": "e70ae00933fd9fa6f77b0b7eea9eab773f07a9d38dcbfbf73284e2058269e637",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-19T07:54:45.402185+00:00"
+    },
+    {
+      "update": 11,
+      "domain_loss_metrics": {
+        "walk": {
+          "loss:sum": 5.893630169332027,
+          "clock_cycle:unique": 7518397.0
+        },
+        "alarm": {
+          "loss:sum": 0.3059941381216049,
+          "clock_cycle:unique": 7518397.0
+        },
+        "drawer": {
+          "loss:sum": 0.1059945560991764,
+          "clock_cycle:unique": 7518397.0
+        },
+        "laptop": {
+          "loss:sum": 3.287578582763672,
+          "clock_cycle:unique": 7518397.0
+        },
+        "globe": {
+          "loss:sum": 0.17799045518040657,
+          "clock_cycle:unique": 7518397.0
+        },
+        "recovery": {
+          "loss:sum": 0.31504090037196875,
+          "clock_cycle:unique": 7518397.0
+        }
+      },
+      "domain_counts": {
+        "walk": 8,
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 4,
+        "globe": 4,
+        "recovery": 16
+      },
+      "tokens": 11974,
+      "batch_sha256": "c6e39656082be603b87088b1efd197b2200641c96b1aa6b275fb0c3bc65c8368",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-19T07:54:53.081658+00:00"
+    },
+    {
+      "update": 12,
+      "domain_loss_metrics": {
+        "walk": {
+          "loss:sum": 5.795843355357647,
+          "clock_cycle:unique": 7518399.0
+        },
+        "alarm": {
+          "loss:sum": 3.1972712352871895,
+          "clock_cycle:unique": 7518399.0
+        },
+        "drawer": {
+          "loss:sum": 0.08450540993362665,
+          "clock_cycle:unique": 7518399.0
+        },
+        "laptop": {
+          "loss:sum": 2.4437788128852844,
+          "clock_cycle:unique": 7518399.0
+        },
+        "globe": {
+          "loss:sum": 0.14598283916711807,
+          "clock_cycle:unique": 7518399.0
+        },
+        "recovery": {
+          "loss:sum": 0.21975688729435205,
+          "clock_cycle:unique": 7518399.0
+        }
+      },
+      "domain_counts": {
+        "walk": 8,
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 4,
+        "globe": 4,
+        "recovery": 16
+      },
+      "tokens": 11956,
+      "batch_sha256": "2286755539b985744b22b5412d0f204b5ecda0ab8771649a213eddbccb4f9360",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-19T07:55:01.154603+00:00"
+    },
+    {
+      "update": 13,
+      "domain_loss_metrics": {
+        "walk": {
+          "loss:sum": 3.8945173174142838,
+          "clock_cycle:unique": 7518401.0
+        },
+        "alarm": {
+          "loss:sum": 0.2052496075630188,
+          "clock_cycle:unique": 7518401.0
+        },
+        "drawer": {
+          "loss:sum": 0.062486241571605206,
+          "clock_cycle:unique": 7518401.0
+        },
+        "laptop": {
+          "loss:sum": 2.7538846731185913,
+          "clock_cycle:unique": 7518401.0
+        },
+        "globe": {
+          "loss:sum": 0.11372079141438007,
+          "clock_cycle:unique": 7518401.0
+        },
+        "recovery": {
+          "loss:sum": 0.16985920816659927,
+          "clock_cycle:unique": 7518401.0
+        }
+      },
+      "domain_counts": {
+        "walk": 8,
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 4,
+        "globe": 4,
+        "recovery": 16
+      },
+      "tokens": 11995,
+      "batch_sha256": "995611568725b75636039c4c448dc5faa45c3997d63814e07ce96afe2a01d8c0",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-19T07:55:08.610607+00:00"
+    },
+    {
+      "update": 14,
+      "domain_loss_metrics": {
+        "walk": {
+          "loss:sum": 2.468585252761841,
+          "clock_cycle:unique": 7518424.0
+        },
+        "alarm": {
+          "loss:sum": 2.297891676425934,
+          "clock_cycle:unique": 7518424.0
+        },
+        "drawer": {
+          "loss:sum": 0.03956227283924818,
+          "clock_cycle:unique": 7518424.0
+        },
+        "laptop": {
+          "loss:sum": 2.6877779960632324,
+          "clock_cycle:unique": 7518424.0
+        },
+        "globe": {
+          "loss:sum": 0.08320314437150955,
+          "clock_cycle:unique": 7518424.0
+        },
+        "recovery": {
+          "loss:sum": 0.11743830842897296,
+          "clock_cycle:unique": 7518424.0
+        }
+      },
+      "domain_counts": {
+        "walk": 8,
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 4,
+        "globe": 4,
+        "recovery": 16
+      },
+      "tokens": 11981,
+      "batch_sha256": "6a1a3aa6018bd7f1d228da479dc95a05fa4e08fb5aaac170bbf52a1e99d5af1d",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-19T07:58:33.343711+00:00"
+    },
+    {
+      "update": 15,
+      "domain_loss_metrics": {
+        "walk": {
+          "loss:sum": 3.552342802286148,
+          "clock_cycle:unique": 7518426.0
+        },
+        "alarm": {
+          "loss:sum": 0.15311352163553238,
+          "clock_cycle:unique": 7518426.0
+        },
+        "drawer": {
+          "loss:sum": 0.03658927930518985,
+          "clock_cycle:unique": 7518426.0
+        },
+        "laptop": {
+          "loss:sum": 2.8899335265159607,
+          "clock_cycle:unique": 7518426.0
+        },
+        "globe": {
+          "loss:sum": 0.05651839170604944,
+          "clock_cycle:unique": 7518426.0
+        },
+        "recovery": {
+          "loss:sum": 0.07730058999732137,
+          "clock_cycle:unique": 7518426.0
+        }
+      },
+      "domain_counts": {
+        "walk": 8,
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 4,
+        "globe": 4,
+        "recovery": 16
+      },
+      "tokens": 11984,
+      "batch_sha256": "b38cdcb9124c2e6e37f74cf5df85a5e002727c59f1fba698360feb1bc20dbdbf",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-19T07:58:41.445099+00:00"
+    },
+    {
+      "update": 16,
+      "domain_loss_metrics": {
+        "walk": {
+          "loss:sum": 2.605016440153122,
+          "clock_cycle:unique": 7518428.0
+        },
+        "alarm": {
+          "loss:sum": 1.5626505017280579,
+          "clock_cycle:unique": 7518428.0
+        },
+        "drawer": {
+          "loss:sum": 0.019273459445685148,
+          "clock_cycle:unique": 7518428.0
+        },
+        "laptop": {
+          "loss:sum": 2.701197922229767,
+          "clock_cycle:unique": 7518428.0
+        },
+        "globe": {
+          "loss:sum": 0.04048997536301613,
+          "clock_cycle:unique": 7518428.0
+        },
+        "recovery": {
+          "loss:sum": 0.053781847236678004,
+          "clock_cycle:unique": 7518428.0
+        }
+      },
+      "domain_counts": {
+        "walk": 8,
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 4,
+        "globe": 4,
+        "recovery": 16
+      },
+      "tokens": 11979,
+      "batch_sha256": "7604d25e41872b5c50f8652d7ee72696aa41ff8992dadc9c77c50796da795fa0",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-19T07:58:59.787748+00:00"
+    },
+    {
+      "update": 17,
+      "domain_loss_metrics": {
+        "walk": {
+          "loss:sum": 3.1429602801799774,
+          "clock_cycle:unique": 7518429.0
+        },
+        "alarm": {
+          "loss:sum": 0.22044562548398972,
+          "clock_cycle:unique": 7518429.0
+        },
+        "drawer": {
+          "loss:sum": 0.01680919947102666,
+          "clock_cycle:unique": 7518429.0
+        },
+        "laptop": {
+          "loss:sum": 2.6293284595012665,
+          "clock_cycle:unique": 7518429.0
+        },
+        "globe": {
+          "loss:sum": 0.026025308296084404,
+          "clock_cycle:unique": 7518429.0
+        },
+        "recovery": {
+          "loss:sum": 0.03582073014695197,
+          "clock_cycle:unique": 7518429.0
+        }
+      },
+      "domain_counts": {
+        "walk": 8,
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 4,
+        "globe": 4,
+        "recovery": 16
+      },
+      "tokens": 11990,
+      "batch_sha256": "b9de422369e4c561ca05246fa7f22efac100dcf8ca7b1de9ae33990ae69c3b6c",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-19T07:59:13.725892+00:00"
+    },
+    {
+      "update": 18,
+      "domain_loss_metrics": {
+        "walk": {
+          "loss:sum": 1.5757032930850983,
+          "clock_cycle:unique": 7518431.0
+        },
+        "alarm": {
+          "loss:sum": 0.22178332414478064,
+          "clock_cycle:unique": 7518431.0
+        },
+        "drawer": {
+          "loss:sum": 0.011333545087836683,
+          "clock_cycle:unique": 7518431.0
+        },
+        "laptop": {
+          "loss:sum": 2.1444440484046936,
+          "clock_cycle:unique": 7518431.0
+        },
+        "globe": {
+          "loss:sum": 0.017934105824679136,
+          "clock_cycle:unique": 7518431.0
+        },
+        "recovery": {
+          "loss:sum": 0.024762193555943668,
+          "clock_cycle:unique": 7518431.0
+        }
+      },
+      "domain_counts": {
+        "walk": 8,
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 4,
+        "globe": 4,
+        "recovery": 16
+      },
+      "tokens": 11984,
+      "batch_sha256": "119d319031b99dfc57611b2a663c42351fbb3f29ec986bc056d7510efe2c4f8c",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-19T07:59:21.195402+00:00"
+    },
+    {
+      "update": 19,
+      "domain_loss_metrics": {
+        "walk": {
+          "loss:sum": 1.0303992182016373,
+          "clock_cycle:unique": 7518432.0
+        },
+        "alarm": {
+          "loss:sum": 1.643982782959938,
+          "clock_cycle:unique": 7518433.0
+        },
+        "drawer": {
+          "loss:sum": 0.007110628532245755,
+          "clock_cycle:unique": 7518433.0
+        },
+        "laptop": {
+          "loss:sum": 2.9274371564388275,
+          "clock_cycle:unique": 7518433.0
+        },
+        "globe": {
+          "loss:sum": 0.011721431976184249,
+          "clock_cycle:unique": 7518433.0
+        },
+        "recovery": {
+          "loss:sum": 0.01764940400607884,
+          "clock_cycle:unique": 7518433.0
+        }
+      },
+      "domain_counts": {
+        "walk": 8,
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 4,
+        "globe": 4,
+        "recovery": 16
+      },
+      "tokens": 11987,
+      "batch_sha256": "75f47bf679659969f36f7d122e17bba12c9c88f1a77b2d1f7e769630f3e7c2f4",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-19T07:59:29.711122+00:00"
+    },
+    {
+      "update": 20,
+      "domain_loss_metrics": {
+        "walk": {
+          "loss:sum": 0.9806417524814606,
+          "clock_cycle:unique": 7518438.0
+        },
+        "alarm": {
+          "loss:sum": 1.164225272834301,
+          "clock_cycle:unique": 7518438.0
+        },
+        "drawer": {
+          "loss:sum": 0.0029579135589301586,
+          "clock_cycle:unique": 7518438.0
+        },
+        "laptop": {
+          "loss:sum": 1.8859669864177704,
+          "clock_cycle:unique": 7518438.0
+        },
+        "globe": {
+          "loss:sum": 0.007130249054171145,
+          "clock_cycle:unique": 7518438.0
+        },
+        "recovery": {
+          "loss:sum": 0.011244394758250564,
+          "clock_cycle:unique": 7518438.0
+        }
+      },
+      "domain_counts": {
+        "walk": 8,
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 4,
+        "globe": 4,
+        "recovery": 16
+      },
+      "tokens": 11992,
+      "batch_sha256": "f352df507a30cc03f56bcd4fa9938b5d35bcc8423c31263a2f498876df07de4b",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-19T08:00:17.897664+00:00"
+    },
+    {
+      "update": 21,
+      "domain_loss_metrics": {
+        "walk": {
+          "loss:sum": 0.3697392959147692,
+          "clock_cycle:unique": 7518440.0
+        },
+        "alarm": {
+          "loss:sum": 0.1116190068423748,
+          "clock_cycle:unique": 7518440.0
+        },
+        "drawer": {
+          "loss:sum": 0.0022173054167069495,
+          "clock_cycle:unique": 7518440.0
+        },
+        "laptop": {
+          "loss:sum": 2.4005523920059204,
+          "clock_cycle:unique": 7518440.0
+        },
+        "globe": {
+          "loss:sum": 0.004804286174476147,
+          "clock_cycle:unique": 7518440.0
+        },
+        "recovery": {
+          "loss:sum": 0.008257323992438614,
+          "clock_cycle:unique": 7518440.0
+        }
+      },
+      "domain_counts": {
+        "walk": 8,
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 4,
+        "globe": 4,
+        "recovery": 16
+      },
+      "tokens": 11970,
+      "batch_sha256": "e27f246ce0565c668bd49bcc0f779575c7e8cce8e9eb9c09adfdff3750d8fda9",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-19T08:00:24.884079+00:00"
+    },
+    {
+      "update": 22,
+      "domain_loss_metrics": {
+        "walk": {
+          "loss:sum": 0.30944707058370113,
+          "clock_cycle:unique": 7518442.0
+        },
+        "alarm": {
+          "loss:sum": 0.0664258198812604,
+          "clock_cycle:unique": 7518442.0
+        },
+        "drawer": {
+          "loss:sum": 0.0021773630869574845,
+          "clock_cycle:unique": 7518442.0
+        },
+        "laptop": {
+          "loss:sum": 2.162451386451721,
+          "clock_cycle:unique": 7518442.0
+        },
+        "globe": {
+          "loss:sum": 0.0030720889917574823,
+          "clock_cycle:unique": 7518442.0
+        },
+        "recovery": {
+          "loss:sum": 0.00536833266960457,
+          "clock_cycle:unique": 7518442.0
+        }
+      },
+      "domain_counts": {
+        "walk": 8,
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 4,
+        "globe": 4,
+        "recovery": 16
+      },
+      "tokens": 11978,
+      "batch_sha256": "f82c9a4c50d2780afe7bd577dce59cc4e0d576395a5bd0450561cd9769601af6",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-19T08:00:32.327531+00:00"
+    },
+    {
+      "update": 23,
+      "domain_loss_metrics": {
+        "walk": {
+          "loss:sum": 0.12192179076373577,
+          "clock_cycle:unique": 7518444.0
+        },
+        "alarm": {
+          "loss:sum": 0.3210970610380173,
+          "clock_cycle:unique": 7518444.0
+        },
+        "drawer": {
+          "loss:sum": 0.0013464543590089306,
+          "clock_cycle:unique": 7518444.0
+        },
+        "laptop": {
+          "loss:sum": 2.478991150856018,
+          "clock_cycle:unique": 7518444.0
+        },
+        "globe": {
+          "loss:sum": 0.0019363877072464675,
+          "clock_cycle:unique": 7518444.0
+        },
+        "recovery": {
+          "loss:sum": 0.004007957308203913,
+          "clock_cycle:unique": 7518444.0
+        }
+      },
+      "domain_counts": {
+        "walk": 8,
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 4,
+        "globe": 4,
+        "recovery": 16
+      },
+      "tokens": 11990,
+      "batch_sha256": "1cb02645afcd3bb2bce257bac6b39fa7acc11ed7ff38d95bd727885d7bf3632e",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-19T08:00:52.909270+00:00"
+    },
+    {
+      "update": 24,
+      "domain_loss_metrics": {
+        "walk": {
+          "loss:sum": 4.202197920996696,
+          "clock_cycle:unique": 7518446.0
+        },
+        "alarm": {
+          "loss:sum": 0.14823976159095764,
+          "clock_cycle:unique": 7518446.0
+        },
+        "drawer": {
+          "loss:sum": 0.0007980707014212385,
+          "clock_cycle:unique": 7518446.0
+        },
+        "laptop": {
+          "loss:sum": 1.1306956857442856,
+          "clock_cycle:unique": 7518446.0
+        },
+        "globe": {
+          "loss:sum": 0.0012879133864771575,
+          "clock_cycle:unique": 7518446.0
+        },
+        "recovery": {
+          "loss:sum": 0.0026032523455796763,
+          "clock_cycle:unique": 7518446.0
+        }
+      },
+      "domain_counts": {
+        "walk": 8,
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 4,
+        "globe": 4,
+        "recovery": 16
+      },
+      "tokens": 11960,
+      "batch_sha256": "954065f40c3b6b62ce77c0637c32da01658ae6bd0ef937f18d84db86f9c17691",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-19T08:01:01.585858+00:00"
+    },
+    {
+      "update": 25,
+      "domain_loss_metrics": {
+        "walk": {
+          "loss:sum": 0.06893741083331406,
+          "clock_cycle:unique": 7518448.0
+        },
+        "alarm": {
+          "loss:sum": 0.04365902941208333,
+          "clock_cycle:unique": 7518448.0
+        },
+        "drawer": {
+          "loss:sum": 0.0005101000133436173,
+          "clock_cycle:unique": 7518448.0
+        },
+        "laptop": {
+          "loss:sum": 1.0520710498094559,
+          "clock_cycle:unique": 7518448.0
+        },
+        "globe": {
+          "loss:sum": 0.0008355418976861984,
+          "clock_cycle:unique": 7518448.0
+        },
+        "recovery": {
+          "loss:sum": 0.0019073102666880004,
+          "clock_cycle:unique": 7518448.0
+        }
+      },
+      "domain_counts": {
+        "walk": 8,
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 4,
+        "globe": 4,
+        "recovery": 16
+      },
+      "tokens": 11966,
+      "batch_sha256": "3bc88d07ecb181524bd17bed28ecc7ae9b446474f548b8327bd324c7b20b705c",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-19T08:01:11.379052+00:00"
+    },
+    {
+      "update": 26,
+      "domain_loss_metrics": {
+        "walk": {
+          "loss:sum": 0.02724363747984171,
+          "clock_cycle:unique": 7518450.0
+        },
+        "alarm": {
+          "loss:sum": 0.025238980539143085,
+          "clock_cycle:unique": 7518450.0
+        },
+        "drawer": {
+          "loss:sum": 0.0003680274385260418,
+          "clock_cycle:unique": 7518450.0
+        },
+        "laptop": {
+          "loss:sum": 0.6428314447402954,
+          "clock_cycle:unique": 7518450.0
+        },
+        "globe": {
+          "loss:sum": 0.0005464025307446718,
+          "clock_cycle:unique": 7518450.0
+        },
+        "recovery": {
+          "loss:sum": 0.0012114280762034468,
+          "clock_cycle:unique": 7518450.0
+        }
+      },
+      "domain_counts": {
+        "walk": 8,
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 4,
+        "globe": 4,
+        "recovery": 16
+      },
+      "tokens": 11970,
+      "batch_sha256": "ba222881d765dcddf65177a7595c5a4f269d8a3db185beff3c4d29728e17c272",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-19T08:01:18.615037+00:00"
+    },
+    {
+      "update": 27,
+      "domain_loss_metrics": {
+        "walk": {
+          "loss:sum": 0.03781735338270664,
+          "clock_cycle:unique": 7518452.0
+        },
+        "alarm": {
+          "loss:sum": 0.01542133855400607,
+          "clock_cycle:unique": 7518452.0
+        },
+        "drawer": {
+          "loss:sum": 0.0002273123463965021,
+          "clock_cycle:unique": 7518452.0
+        },
+        "laptop": {
+          "loss:sum": 0.23490259051322937,
+          "clock_cycle:unique": 7518452.0
+        },
+        "globe": {
+          "loss:sum": 0.00036864470166619867,
+          "clock_cycle:unique": 7518452.0
+        },
+        "recovery": {
+          "loss:sum": 0.0009795741170819383,
+          "clock_cycle:unique": 7518452.0
+        }
+      },
+      "domain_counts": {
+        "walk": 8,
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 4,
+        "globe": 4,
+        "recovery": 16
+      },
+      "tokens": 11968,
+      "batch_sha256": "2c01f43bd57028141a01275b82eb0ec28078081668fba86debaa68b93f8baa20",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-19T08:01:25.434925+00:00"
+    },
+    {
+      "update": 28,
+      "domain_loss_metrics": {
+        "walk": {
+          "loss:sum": 4.794505589932669,
+          "clock_cycle:unique": 7518454.0
+        },
+        "alarm": {
+          "loss:sum": 0.010222450131550431,
+          "clock_cycle:unique": 7518454.0
+        },
+        "drawer": {
+          "loss:sum": 0.00015297826394089498,
+          "clock_cycle:unique": 7518454.0
+        },
+        "laptop": {
+          "loss:sum": 0.18005713168531656,
+          "clock_cycle:unique": 7518454.0
+        },
+        "globe": {
+          "loss:sum": 0.00025486250160611235,
+          "clock_cycle:unique": 7518454.0
+        },
+        "recovery": {
+          "loss:sum": 0.0007025968188827392,
+          "clock_cycle:unique": 7518454.0
+        }
+      },
+      "domain_counts": {
+        "walk": 8,
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 4,
+        "globe": 4,
+        "recovery": 16
+      },
+      "tokens": 11996,
+      "batch_sha256": "7b86dcf1e848d07dbe8f27cd30fbc57e219e8d8b350b7e654ba26af247f2a0a4",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-19T08:01:32.384156+00:00"
+    },
+    {
+      "update": 29,
+      "domain_loss_metrics": {
+        "walk": {
+          "loss:sum": 4.177272879285738,
+          "clock_cycle:unique": 7518456.0
+        },
+        "alarm": {
+          "loss:sum": 0.006941674597328529,
+          "clock_cycle:unique": 7518456.0
+        },
+        "drawer": {
+          "loss:sum": 0.00014407582239073236,
+          "clock_cycle:unique": 7518456.0
+        },
+        "laptop": {
+          "loss:sum": 0.10699932824354619,
+          "clock_cycle:unique": 7518456.0
+        },
+        "globe": {
+          "loss:sum": 0.00019097216500085779,
+          "clock_cycle:unique": 7518456.0
+        },
+        "recovery": {
+          "loss:sum": 0.0005188417926547118,
+          "clock_cycle:unique": 7518456.0
+        }
+      },
+      "domain_counts": {
+        "walk": 8,
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 4,
+        "globe": 4,
+        "recovery": 16
+      },
+      "tokens": 11970,
+      "batch_sha256": "fd58b8676cbdca68b2f2ffbc84a30e0e0efc93c75a4d9658b36ee8c904ebcd93",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-19T08:01:39.845472+00:00"
+    },
+    {
+      "update": 30,
+      "domain_loss_metrics": {
+        "walk": {
+          "loss:sum": 2.691250788193429,
+          "clock_cycle:unique": 7518458.0
+        },
+        "alarm": {
+          "loss:sum": 0.006700011115754023,
+          "clock_cycle:unique": 7518458.0
+        },
+        "drawer": {
+          "loss:sum": 0.00010799905066960491,
+          "clock_cycle:unique": 7518458.0
+        },
+        "laptop": {
+          "loss:sum": 0.04921091324649751,
+          "clock_cycle:unique": 7518458.0
+        },
+        "globe": {
+          "loss:sum": 0.00016425499052274972,
+          "clock_cycle:unique": 7518458.0
+        },
+        "recovery": {
+          "loss:sum": 0.0004087012839590898,
+          "clock_cycle:unique": 7518458.0
+        }
+      },
+      "domain_counts": {
+        "walk": 8,
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 4,
+        "globe": 4,
+        "recovery": 16
+      },
+      "tokens": 11973,
+      "batch_sha256": "6dbd95e21ce603110ab9abb146bfba670259b82634b7aed9120e7c8d49336cf7",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-19T08:02:00.357858+00:00"
+    },
+    {
+      "update": 31,
+      "domain_loss_metrics": {
+        "walk": {
+          "loss:sum": 0.8978555519424845,
+          "clock_cycle:unique": 7518459.0
+        },
+        "alarm": {
+          "loss:sum": 0.014303255367849488,
+          "clock_cycle:unique": 7518459.0
+        },
+        "drawer": {
+          "loss:sum": 9.444080205867067e-05,
+          "clock_cycle:unique": 7518459.0
+        },
+        "laptop": {
+          "loss:sum": 0.0351265724748373,
+          "clock_cycle:unique": 7518459.0
+        },
+        "globe": {
+          "loss:sum": 0.00012896589396405034,
+          "clock_cycle:unique": 7518459.0
+        },
+        "recovery": {
+          "loss:sum": 0.00037446793976414483,
+          "clock_cycle:unique": 7518459.0
+        }
+      },
+      "domain_counts": {
+        "walk": 8,
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 4,
+        "globe": 4,
+        "recovery": 16
+      },
+      "tokens": 11979,
+      "batch_sha256": "cfc5992dd2ed161db4f96b558c23de9093b7e51b99fc59abfd2e7ccd76def8e4",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-19T08:02:07.938978+00:00"
+    },
+    {
+      "update": 32,
+      "domain_loss_metrics": {
+        "walk": {
+          "loss:sum": 6.889606358206947,
+          "clock_cycle:unique": 7518460.0
+        },
+        "alarm": {
+          "loss:sum": 0.005034068235545419,
+          "clock_cycle:unique": 7518460.0
+        },
+        "drawer": {
+          "loss:sum": 7.547368295490742e-05,
+          "clock_cycle:unique": 7518460.0
+        },
+        "laptop": {
+          "loss:sum": 0.011109156344900839,
+          "clock_cycle:unique": 7518460.0
+        },
+        "globe": {
+          "loss:sum": 0.00010833316264324822,
+          "clock_cycle:unique": 7518460.0
+        },
+        "recovery": {
+          "loss:sum": 0.00030048096959944814,
+          "clock_cycle:unique": 7518460.0
+        }
+      },
+      "domain_counts": {
+        "walk": 8,
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 4,
+        "globe": 4,
+        "recovery": 16
+      },
+      "tokens": 11962,
+      "batch_sha256": "2833110de1167c253e1d0ed985fa99dc0eb85f6cce1e71a001eb2bc3703175ea",
+      "forward_backward_completed": true,
+      "optimizer_completed": true,
+      "at": "2026-11-19T08:02:17.181224+00:00"
+    }
+  ],
+  "checkpoints": [
+    {
+      "update": 0,
+      "cumulative_updates": 104,
+      "checkpoint_id": "0188b0e78f749d276c613fa0d8adc8253fa90719b430be18e6f6bfb56673498f",
+      "development": {
+        "n": 3,
+        "complete_successes": 2,
+        "smooth_complete_successes": 2,
+        "wilson_95_complete_rate": [
+          0.2076549551264879,
+          0.9385096847238394
+        ],
+        "task_successes": {
+          "alarm": 3,
+          "drawer": 3,
+          "laptop": 2,
+          "globe": 2
+        },
+        "falls": 0,
+        "invalid_contacts": 1,
+        "mean_duration_s": 254.3570058701963,
+        "mean_roll_rms_deg": 0.2693522450393559,
+        "mean_contact_travel_m": 0.5734245644706005,
+        "recovery_successes": 10,
+        "successful_recovery_mean_joint_travel_rad": 5.5541073744562315
+      },
+      "probe_distributions": [
+        {
+          "domain": "walk",
+          "distribution": {
+            "W0": 0.43734902143478394,
+            "W1": 0.49558138847351074,
+            "W2": 0.0670696496963501
+          }
+        },
+        {
+          "domain": "alarm",
+          "distribution": {
+            "B": 0.04411071166396141,
+            "C": 0.5373784899711609,
+            "F": 0.4185107946395874
+          }
+        },
+        {
+          "domain": "drawer",
+          "distribution": {
+            "A": 0.9806221723556519,
+            "B": 0.010893728584051132,
+            "C": 0.00848404411226511
+          }
+        },
+        {
+          "domain": "laptop",
+          "distribution": {
+            "P0": 0.9168115258216858,
+            "P1": 0.07525647431612015,
+            "P2": 0.007931973785161972
+          }
+        },
+        {
+          "domain": "globe",
+          "distribution": {
+            "A": 0.9824659824371338,
+            "B": 0.01091421116143465,
+            "C": 0.006619803607463837
+          }
+        },
+        {
+          "domain": "recovery",
+          "distribution": {
+            "R0": 0.7706453800201416,
+            "R1": 0.22079360485076904,
+            "R3": 0.008561097085475922
+          }
+        }
+      ]
+    },
+    {
+      "update": 1,
+      "cumulative_updates": 105,
+      "checkpoint_id": "3513e4b5d2f530d5eb1c5dd1b14d516d7d9d9724f1a28321d60aa4abccc86975",
+      "development": {
+        "n": 3,
+        "complete_successes": 3,
+        "smooth_complete_successes": 3,
+        "wilson_95_complete_rate": [
+          0.43849391955098227,
+          1
+        ],
+        "task_successes": {
+          "alarm": 3,
+          "drawer": 3,
+          "laptop": 3,
+          "globe": 3
+        },
+        "falls": 0,
+        "invalid_contacts": 0,
+        "mean_duration_s": 255.02351602479277,
+        "mean_roll_rms_deg": 0.26337377935928524,
+        "mean_contact_travel_m": 0.6039176667306654,
+        "recovery_successes": 12,
+        "successful_recovery_mean_joint_travel_rad": 5.457785968867269
+      },
+      "probe_distributions": [
+        {
+          "domain": "walk",
+          "distribution": {
+            "W0": 0.5061465501785278,
+            "W1": 0.394187331199646,
+            "W2": 0.09966614842414856
+          }
+        },
+        {
+          "domain": "alarm",
+          "distribution": {
+            "B": 0.15134677290916443,
+            "C": 0.528252124786377,
+            "F": 0.3204011023044586
+          }
+        },
+        {
+          "domain": "drawer",
+          "distribution": {
+            "A": 0.9829908609390259,
+            "B": 0.008504536934196949,
+            "C": 0.008504536934196949
+          }
+        },
+        {
+          "domain": "laptop",
+          "distribution": {
+            "P0": 0.9147506952285767,
+            "P1": 0.07508730888366699,
+            "P2": 0.010161962360143661
+          }
+        },
+        {
+          "domain": "globe",
+          "distribution": {
+            "A": 0.9828601479530334,
+            "B": 0.009635621681809425,
+            "C": 0.00750422989949584
+          }
+        },
+        {
+          "domain": "recovery",
+          "distribution": {
+            "R0": 0.9249910712242126,
+            "R1": 0.06700613349676132,
+            "R3": 0.008002741262316704
+          }
+        }
+      ]
+    },
+    {
+      "update": 8,
+      "cumulative_updates": 112,
+      "checkpoint_id": "470f0fcf60f11940623754714bcb88b79c272f9b9e098996f376fe8a33d4179d",
+      "development": null,
+      "probe_distributions": [
+        {
+          "domain": "walk",
+          "distribution": {
+            "W0": 0.041923608630895615,
+            "W1": 0.003899503033608198,
+            "W2": 0.9541769027709961
+          }
+        },
+        {
+          "domain": "alarm",
+          "distribution": {
+            "B": 0.9067503809928894,
+            "C": 0.01881900243461132,
+            "F": 0.07443060725927353
+          }
+        },
+        {
+          "domain": "drawer",
+          "distribution": {
+            "A": 0.950957179069519,
+            "B": 0.007260647602379322,
+            "C": 0.04178214445710182
+          }
+        },
+        {
+          "domain": "laptop",
+          "distribution": {
+            "P0": 0.22481529414653778,
+            "P1": 0.6924798488616943,
+            "P2": 0.08270492404699326
+          }
+        },
+        {
+          "domain": "globe",
+          "distribution": {
+            "A": 0.9425994157791138,
+            "B": 0.010471333749592304,
+            "C": 0.0469292588531971
+          }
+        },
+        {
+          "domain": "recovery",
+          "distribution": {
+            "R0": 0.9701806902885437,
+            "R1": 0.003964907024055719,
+            "R3": 0.025854438543319702
+          }
+        }
+      ]
+    },
+    {
+      "update": 32,
+      "cumulative_updates": 136,
+      "checkpoint_id": "0d20bfd967de569ee5234c2964fb693d64148685963f1ea6ba68851b235f0891",
+      "development": null,
+      "probe_distributions": [
+        {
+          "domain": "walk",
+          "distribution": {
+            "W0": 0.7770397067070007,
+            "W1": 0.0003347040619701147,
+            "W2": 0.22262561321258545
+          }
+        },
+        {
+          "domain": "alarm",
+          "distribution": {
+            "B": 0.9998676776885986,
+            "C": 0.0001233934744959697,
+            "F": 8.938593055063393e-06
+          }
+        },
+        {
+          "domain": "drawer",
+          "distribution": {
+            "A": 0.9999845027923584,
+            "B": 1.300709573115455e-05,
+            "C": 2.561248948040884e-06
+          }
+        },
+        {
+          "domain": "laptop",
+          "distribution": {
+            "P0": 0.007576899603009224,
+            "P1": 0.9923779964447021,
+            "P2": 4.505389370024204e-05
+          }
+        },
+        {
+          "domain": "globe",
+          "distribution": {
+            "A": 0.9999810457229614,
+            "B": 1.473892007197719e-05,
+            "C": 4.222771167405881e-06
+          }
+        },
+        {
+          "domain": "recovery",
+          "distribution": {
+            "R0": 0.9999892711639404,
+            "R1": 8.939680810726713e-06,
+            "R3": 1.7603274500288535e-06
+          }
+        }
+      ]
+    }
+  ],
+  "held_out_opened": false,
+  "physics_receipts": [
+    {
+      "phase": "Remote feasibility preflight",
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 772.270404404,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt"
+      },
+      "seed": 41001
+    },
+    {
+      "phase": "Physical training branches on Modal",
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 37,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 3383.46763777,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt"
+      },
+      "seed": 42000
+    },
+    {
+      "phase": "Physical training branches on Modal",
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 37,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 3001.7888707429997,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt"
+      },
+      "seed": 42001
+    },
+    {
+      "phase": "Physical training branches on Modal",
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 37,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 3102.080155749,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt"
+      },
+      "seed": 42002
+    },
+    {
+      "phase": "Physical training branches on Modal",
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 37,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 2980.196197702,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt"
+      },
+      "seed": 42003
+    },
+    {
+      "phase": "dev-0",
+      "seed": 43002,
+      "model": "policy",
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 708.88521217,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "SkylakeX"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "SkylakeX"
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 2391,
+        "paired_on_one_worker": true
+      }
+    },
+    {
+      "phase": "dev-0",
+      "seed": 43000,
+      "model": "policy",
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 1214.25882273,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 3639,
+        "paired_on_one_worker": true
+      }
+    },
+    {
+      "phase": "dev-0",
+      "seed": 43001,
+      "model": "policy",
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 1247.97636374,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 3646,
+        "paired_on_one_worker": true
+      }
+    },
+    {
+      "phase": "dev-1",
+      "seed": 43002,
+      "model": "policy",
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 1070.695917775,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 3642,
+        "paired_on_one_worker": true
+      }
+    },
+    {
+      "phase": "dev-1",
+      "seed": 43001,
+      "model": "policy",
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 1101.945318433,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 3631,
+        "paired_on_one_worker": true
+      }
+    },
+    {
+      "phase": "dev-1",
+      "seed": 43000,
+      "model": "policy",
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 1135.8733870259998,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 3644,
+        "paired_on_one_worker": true
+      }
+    }
+  ],
+  "campaign_modal_rollouts_completed": 155,
+  "recovery": {
+    "source_training_run": 44482272455,
+    "evaluation_run": "44484708941",
+    "evaluation_source_sha": "a0a1cb78d042d71f6380f94af2733910a5a0ad18",
+    "extra_optimizer_updates": 0,
+    "original_error_type": "NameError",
+    "deadline_seconds": 1500,
+    "physics_unchanged": true,
+    "infrastructure_repairs": {
+      "src/mochi/terrain_v12/evaluation_remote.py": {
+        "source_sha256": "e86edab714dc4c34ad8151892b178736a3afd9725cb73b743e34b1651ba67e1e",
+        "repaired_sha256": "1cba216fd2f2f37e9659500bb4dea3abece1d1a9be9be5dd804c7216e24690ab",
+        "change": "Import json used to cache observations. No observation, physics, choice, verifier or weight changes."
+      }
+    },
+    "unavailable_completed_updates_after_last_durable": 0,
+    "evaluated_checkpoint_updates": [
+      0,
+      1,
+      8,
+      32
+    ],
+    "reuse_policy": "Reuse completed physical outcomes, including failures. Fill missing outputs only.",
+    "usage_or_reserved": {
+      "modal_rollouts": 6,
+      "modal_cpu_hours": 1.7998986171872222,
+      "inference_tokens": 20593,
+      "past_writes": 0,
+      "past_recalls": 0
+    },
+    "previous_budget_sources": {
+      "original": {
+        "modal_rollouts": 154,
+        "modal_cpu_hours": 4.7625195054313885,
+        "optimizer_updates": 0,
+        "training_token_presentations": 0,
+        "inference_tokens": 13718,
+        "exa_searches": 3,
+        "past_writes": 10,
+        "past_recalls": 9
+      },
+      "continuation": {
+        "modal_rollouts": 3,
+        "modal_cpu_hours": 1.25,
+        "optimizer_updates": 32,
+        "training_token_presentations": 383343,
+        "inference_tokens": 78872,
+        "exa_searches": 0,
+        "past_writes": 0,
+        "past_recalls": 0
+      }
+    }
+  },
+  "checkpoint_storage_count_before": 48,
+  "services": {
+    "actors": {
+      "source": {
+        "researcher": "mochi-t12-44472186998-researcher",
+        "designer": "mochi-t12-44472186998-designer",
+        "experimenter": "mochi-t12-44472186998-experimenter",
+        "critic": "mochi-t12-44472186998-critic"
+      },
+      "continuation": {
+        "researcher": "mochi-t12-resume-44482272455-researcher",
+        "designer": "mochi-t12-resume-44482272455-designer",
+        "experimenter": "mochi-t12-resume-44482272455-experimenter",
+        "critic": "mochi-t12-resume-44482272455-critic"
+      }
+    },
+    "audiences": {
+      "source": {
+        "shared": "mochi-t12-44472186998-shared",
+        "critic_private": "mochi-t12-44472186998-critic"
+      },
+      "continuation": {
+        "shared": "mochi-t12-resume-44482272455-shared",
+        "critic_private": "mochi-t12-resume-44482272455-critic"
+      }
+    },
+    "records": [
+      {
+        "id": "mochi-t12-44472186998-r0",
+        "role": "experimenter",
+        "author": "mochi-t12-44472186998-experimenter",
+        "audience": "mochi-t12-44472186998-shared",
+        "at": "2026-11-19T06:43:09.612836+00:00",
+        "sha256": "f091f782edb7ce0211dbd6cf2fca24c6f5a9bad53577ae4ba8e1176bfd17d36b",
+        "ingestion_id": "3c88b3d0-ccc7-4703-abe5-fd5ee34a9453",
+        "payload": {
+          "record_id": "mochi-t12-44472186998-r0",
+          "author": "mochi-t12-44472186998-experimenter",
+          "occurred_at": "2026-11-19T06:43:09.612836+00:00",
+          "content": {
+            "kind": "observation",
+            "study": "mochi-terrain-v12",
+            "remote_complete_reference": true,
+            "failure_history": "Backward lowering before clearing a riser caused falls. Staged clearance and shorter placements passed isolated descent. Collision-aware clock approach and an actual closer stance passed press/recovery in development.",
+            "held_out_opened": false
+          }
+        },
+        "status": "completed",
+        "write_to_ready_seconds": 10.360262078000005
+      },
+      {
+        "id": "mochi-t12-44472186998-r1",
+        "role": "researcher",
+        "author": "mochi-t12-44472186998-researcher",
+        "audience": "mochi-t12-44472186998-shared",
+        "at": "2026-11-19T06:43:21.641316+00:00",
+        "sha256": "9f08583d17413bd45f4f34370584554e2f29c781ce6a0d47dc0b7fa8cb5eea70",
+        "ingestion_id": "94ffbc7b-febb-4f53-a903-84456872eae0",
+        "payload": {
+          "record_id": "mochi-t12-44472186998-r1",
+          "author": "mochi-t12-44472186998-researcher",
+          "occurred_at": "2026-11-19T06:43:21.641316+00:00",
+          "content": {
+            "kind": "hypothesis",
+            "observation_record": "mochi-t12-44472186998-r0",
+            "sources": {
+              "query": "humanoid stair locomotion adaptive step timing contact aware manipulation arm recovery controller selection",
+              "request_id": "8aad79bb25d4ddbef1fff4bd827238ac",
+              "cost_dollars": {
+                "total": 0.007,
+                "search": {
+                  "neural": 0.007
+                }
+              },
+              "sources": [
+                {
+                  "url": "https://arxiv.org/html/2512.07464",
+                  "title": "Gait-Adaptive Perceptive Humanoid Locomotion with Real-Time Under-Base Terrain Reconstruction",
+                  "excerpt": "For full-size humanoid robots, even with recent advances in reinforcement learning-based control, achieving reliable locomotion on complex terrains, such as long staircases, remains challenging.",
+                  "retrieved_at": "2026-11-19T06:43:21.603834+00:00"
+                },
+                {
+                  "url": "https://arxiv.org/html/2601.10365",
+                  "title": "FastStair: Learning to Run Up Stairs with Humanoid Robots",
+                  "excerpt": "feasibility and stability structure, but enforcing their hard constraints often induces conservative motion that limits speed. We present FastStair, a planner-guided, multi-stage learning framework",
+                  "retrieved_at": "2026-11-19T06:43:21.603851+00:00"
+                },
+                {
+                  "url": "https://arxiv.org/abs/2409.14342",
+                  "title": "Adapting Gait Frequency for Posture-regulating Humanoid Push-recovery via Hierarchical Model Predictive Control",
+                  "excerpt": "Current humanoid push-recovery strategies often use whole-body motion, yet they tend to overlook posture regulation. For instance, in manipulation tasks, the upper body may",
+                  "retrieved_at": "2026-11-19T06:43:21.603895+00:00"
+                }
+              ],
+              "response_sha256": "d6bd09be2c40ce0b6a4d4b48b30c117e3943191853eaae80b3d9c68f233f2824",
+              "at": "2026-11-19T06:43:21.604061+00:00"
+            },
+            "mechanism": "Train decisions about walking speed/terrain strategies and force/retraction profiles on physical branches. This does not train the native gait network."
+          }
+        },
+        "status": "completed",
+        "write_to_ready_seconds": 5.160269589999871
+      },
+      {
+        "id": "mochi-t12-44472186998-r2",
+        "role": "designer",
+        "author": "mochi-t12-44472186998-designer",
+        "audience": "mochi-t12-44472186998-shared",
+        "at": "2026-11-19T06:43:30.002017+00:00",
+        "sha256": "5c6443016b21d0375c6fdec9f76f50cb3e5726ca31a48a65647f90668455a154",
+        "ingestion_id": "e61af7ae-e28c-4584-8be8-7d458b238770",
+        "payload": {
+          "record_id": "mochi-t12-44472186998-r2",
+          "author": "mochi-t12-44472186998-designer",
+          "occurred_at": "2026-11-19T06:43:30.002017+00:00",
+          "content": {
+            "kind": "proposal",
+            "source_record": "mochi-t12-44472186998-r1",
+            "allocation": "recovery_first",
+            "frozen_controller": true
+          }
+        },
+        "status": "completed",
+        "write_to_ready_seconds": 5.137777948000121
+      }
+    ],
+    "reads": [
+      {
+        "reader": "mochi-t12-44472186998-researcher",
+        "reader_role": "researcher",
+        "author": "mochi-t12-44472186998-experimenter",
+        "record_id": "mochi-t12-44472186998-r0",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "f091f782edb7ce0211dbd6cf2fca24c6f5a9bad53577ae4ba8e1176bfd17d36b",
+        "at": "2026-11-19T06:43:20.384135+00:00"
+      },
+      {
+        "reader": "mochi-t12-44472186998-designer",
+        "reader_role": "designer",
+        "author": "mochi-t12-44472186998-researcher",
+        "record_id": "mochi-t12-44472186998-r1",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "9f08583d17413bd45f4f34370584554e2f29c781ce6a0d47dc0b7fa8cb5eea70",
+        "at": "2026-11-19T06:43:27.401056+00:00"
+      },
+      {
+        "reader": "mochi-t12-44472186998-experimenter",
+        "reader_role": "experimenter",
+        "author": "mochi-t12-44472186998-designer",
+        "record_id": "mochi-t12-44472186998-r2",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "5c6443016b21d0375c6fdec9f76f50cb3e5726ca31a48a65647f90668455a154",
+        "at": "2026-11-19T06:43:35.503094+00:00"
+      }
+    ],
+    "calls": [
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-19T06:28:56.223730+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-19T06:28:56.393733+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-19T06:28:56.480261+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-19T06:28:56.605569+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "audiences",
+        "status": 201,
+        "at": "2026-11-19T06:28:56.682721+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "audiences",
+        "status": 201,
+        "at": "2026-11-19T06:28:56.704273+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-19T06:43:09.785659+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T06:43:09.844668+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T06:43:14.900301+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T06:43:19.973068+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-19T06:43:20.384061+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-19T06:43:21.721434+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T06:43:21.740536+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T06:43:26.801554+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-19T06:43:27.400994+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-19T06:43:30.067494+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T06:43:30.082611+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-19T06:43:35.139772+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-19T06:43:35.503036+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-19T07:48:44.148146+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-19T07:48:44.229145+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-19T07:48:44.277347+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-19T07:48:44.323616+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "audiences",
+        "status": 201,
+        "at": "2026-11-19T07:48:44.410545+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "audiences",
+        "status": 201,
+        "at": "2026-11-19T07:48:44.460361+00:00"
+      }
+    ],
+    "sources": [
+      {
+        "query": "humanoid stair locomotion adaptive step timing contact aware manipulation arm recovery controller selection",
+        "request_id": "8aad79bb25d4ddbef1fff4bd827238ac",
+        "cost_dollars": {
+          "total": 0.007,
+          "search": {
+            "neural": 0.007
+          }
+        },
+        "sources": [
+          {
+            "url": "https://arxiv.org/html/2512.07464",
+            "title": "Gait-Adaptive Perceptive Humanoid Locomotion with Real-Time Under-Base Terrain Reconstruction",
+            "excerpt": "For full-size humanoid robots, even with recent advances in reinforcement learning-based control, achieving reliable locomotion on complex terrains, such as long staircases, remains challenging.",
+            "retrieved_at": "2026-11-19T06:43:21.603834+00:00"
+          },
+          {
+            "url": "https://arxiv.org/html/2601.10365",
+            "title": "FastStair: Learning to Run Up Stairs with Humanoid Robots",
+            "excerpt": "feasibility and stability structure, but enforcing their hard constraints often induces conservative motion that limits speed. We present FastStair, a planner-guided, multi-stage learning framework",
+            "retrieved_at": "2026-11-19T06:43:21.603851+00:00"
+          },
+          {
+            "url": "https://arxiv.org/abs/2409.14342",
+            "title": "Adapting Gait Frequency for Posture-regulating Humanoid Push-recovery via Hierarchical Model Predictive Control",
+            "excerpt": "Current humanoid push-recovery strategies often use whole-body motion, yet they tend to overlook posture regulation. For instance, in manipulation tasks, the upper body may",
+            "retrieved_at": "2026-11-19T06:43:21.603895+00:00"
+          }
+        ],
+        "response_sha256": "d6bd09be2c40ce0b6a4d4b48b30c117e3943191853eaae80b3d9c68f233f2824",
+        "at": "2026-11-19T06:43:21.604061+00:00"
+      }
+    ],
+    "decisions": [
+      {
+        "role": "designer",
+        "question": "Choose balanced or recovery_first supervision. Both train every domain each update. balanced=16 walking,4 per task,8 recovery. recovery_first=8 walking,4 per task,16 recovery.",
+        "selected": "recovery_first",
+        "distribution": {
+          "balanced": 0.14804719388484955,
+          "recovery_first": 0.8519527316093445
+        },
+        "input_record_ids": [
+          "mochi-t12-44472186998-r0",
+          "mochi-t12-44472186998-r1"
+        ],
+        "context_sha256": "da7870100be6e539cf2c7ebb6a0d7667af47e3b9f2da9eec2660ab8a8e79345f",
+        "at": "2026-11-19T06:43:29.977059+00:00"
+      }
+    ],
+    "pending_ingestions": [],
+    "eligibility": {
+      "writers": 3,
+      "readers": 3,
+      "cross_agent_reads": 3,
+      "isolation_passed": false
+    }
+  },
+  "remote_reference_passed": true,
+  "domain_batch_counts": {
+    "walk": 8,
+    "alarm": 4,
+    "drawer": 4,
+    "laptop": 4,
+    "globe": 4,
+    "recovery": 16
+  },
+  "data_audit": {
+    "walk": {
+      "examples": 16,
+      "labels": {
+        "W2": 11,
+        "W0": 5
+      }
+    },
+    "alarm": {
+      "examples": 4,
+      "labels": {
+        "B": 3,
+        "C": 1
+      }
+    },
+    "drawer": {
+      "examples": 4,
+      "labels": {
+        "A": 4
+      }
+    },
+    "laptop": {
+      "examples": 4,
+      "labels": {
+        "P1": 2,
+        "P0": 2
+      }
+    },
+    "globe": {
+      "examples": 4,
+      "labels": {
+        "A": 4
+      }
+    },
+    "recovery": {
+      "examples": 16,
+      "labels": {
+        "R0": 16
+      }
+    }
+  },
+  "valid_teacher_sequences": 4,
+  "walking_label_diversity": 2,
+  "walking_adaptation_qualification": "A single preferred action is permitted but must be reported as a learned fixed preference, not evidence of adaptive control.",
+  "budget_usage_or_reserved": {
+    "modal_rollouts": 3,
+    "modal_cpu_hours": 1.25,
+    "optimizer_updates": 32,
+    "training_token_presentations": 383343,
+    "inference_tokens": 78872,
+    "exa_searches": 0,
+    "past_writes": 0,
+    "past_recalls": 0
+  },
+  "budget_sources": {
+    "original": {
+      "modal_rollouts": 154,
+      "modal_cpu_hours": 4.7625195054313885,
+      "optimizer_updates": 0,
+      "training_token_presentations": 0,
+      "inference_tokens": 13718,
+      "exa_searches": 3,
+      "past_writes": 10,
+      "past_recalls": 9
+    },
+    "continuation": {
+      "modal_rollouts": 3,
+      "modal_cpu_hours": 1.25,
+      "optimizer_updates": 32,
+      "training_token_presentations": 383343,
+      "inference_tokens": 78872,
+      "exa_searches": 0,
+      "past_writes": 0,
+      "past_recalls": 0
+    }
+  },
+  "first_optimizer_behavioral_probe": {
+    "walk": 0.10139405727386475,
+    "alarm": 0.10723606124520302,
+    "drawer": 0.002389191649854183,
+    "laptop": 0.0022299885749816895,
+    "globe": 0.001278589479625225,
+    "recovery": 0.15434569120407104
+  }
+}

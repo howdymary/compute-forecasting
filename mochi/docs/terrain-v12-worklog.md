@@ -111,3 +111,9 @@ The public status endpoint now shows the active continuation's budget separately
 Run 44482272455 completed 32 optimizer updates with six forward/backward domains per update and 383,343 training-token presentations. Durable states exist at updates 0, 1, 8 and 32. The first-step distribution probe changed every domain. Held-out scenarios remained unopened.
 
 The first remote development evaluation stopped before producing an outcome because `evaluation_remote.py` omitted its `json` import. The import is now repaired and checked with undefined-name linting. The evaluation-only continuation allows precisely that source-hash change, verifies every other frozen file, and contains no optimizer, state-save or deletion calls. It also corrects bookkeeping for checkpoints that existed before their development measurements. Prior uncompleted compute reservations remain archived.
+
+## First measured checkpoint gain
+
+The parent completed 2/3 development sequences with 2/3 within frozen smoothness limits. The one-update checkpoint completed 3/3 with 3/3 within limits. All six traversals passed the clock, book ascent/descent and drawer. The parent failure on seed 43002 was a left-hip contact with the laptop lid during release (0.487 N), not a clock collision. These are development results; the other checkpoints and final test remain pending.
+
+A read-only collector exports the completed immutable archives without simulations or model calls. The development preview contains all three scenarios, both complete trajectories, actual checkpoint IDs and explicit pending-final-test labels. It is not a frozen final checkpoint selection.

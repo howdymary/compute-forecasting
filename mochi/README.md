@@ -2,9 +2,9 @@
 
 The furnished-desk controller now completes the continuous **clock → drawer → laptop close → globe** sequence, including book ascent and descent, without hitting the clock. Two local engineering references and the subsequent remote reference passed the strict checks.
 
-[Watch the repaired route](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/terrain.html) · [V12 methods](docs/terrain-v12.md) · [Live training status](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/api/terrain-training)
+[Checkpoint development preview](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/terrain-trained.html) · [Watch the repaired route](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/terrain.html) · [V12 methods](docs/terrain-v12.md) · [Live training status](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/api/terrain-training)
 
-Those passes establish physical feasibility. Tinker has now completed **32 new optimizer updates and 192 domain-gradient calls** using the recorded physical comparisons, with durable checkpoints at 0, 1, 8 and 32. Matched physical evaluation is running; a gain from trained weights is not yet established. The native gait network remains fixed. Earlier V8 training and rejected V11 evidence below are preserved.
+Those passes establish physical feasibility. Tinker has now completed **32 new optimizer updates and 192 domain-gradient calls** using the recorded physical comparisons, with durable checkpoints at 0, 1, 8 and 32. The first matched development comparison passed 2/3 complete smooth sequences with the parent and 3/3 after one update. The other checkpoints and final testing remain pending; this is a small development result. The native gait network remains fixed. Earlier V8 training and rejected V11 evidence below are preserved.
 
 <!-- MOCHI_CURRICULUM_START -->
 ## Archived V8: learning walking, task and arm-recovery decisions

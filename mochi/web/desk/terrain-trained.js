@@ -41,12 +41,15 @@ async function init(){
  manifest=await json(folder+'manifest.json');stages=[createCurriculumStage($('#left'),{scene:manifest.scene,fullBody:true}),createCurriculumStage($('#right'),{scene:manifest.scene,fullBody:true})];await Promise.all(stages.map(s=>s.ready));
  for(const s of manifest.scenarios){const option=document.createElement('option');option.value=s.id;option.textContent=s.label;$('#scenario').append(option)}
  $('#scenario').onchange=e=>selectScenario(e.target.value);$('#checkpoint').oninput=()=>load();
- $('#scenario').value=manifest.default_scenario;
- $('#campaign-summary').textContent=`${manifest.optimizer_updates_completed} new optimizer updates. Selected update: ${manifest.selected_update}. The same model selects walking settings, contact profiles and arm recovery.`;
+ const query=new URLSearchParams(globalThis.location?.search||'');
+ const initialScenario=manifest.scenarios.some(s=>s.id===query.get('scenario'))?query.get('scenario'):manifest.default_scenario;
+ $('#scenario').value=initialScenario;
+ $('#campaign-summary').textContent=manifest.selection_finalized?`${manifest.optimizer_updates_completed} new optimizer updates. Selected update: ${manifest.selected_update}. The same model selects walking settings, contact profiles and arm recovery.`:`DEVELOPMENT PREVIEW · ${manifest.optimizer_updates_completed} optimizer updates completed. Showing update ${manifest.selected_update}; checkpoint selection and final testing are pending.`;
  for(const c of manifest.checkpoints){const p=document.createElement('p');p.textContent=`Update ${c.update}: ${c.development.complete_successes}/${c.development.n} complete · ${c.development.smooth_complete_successes}/${c.development.n} within smoothness limits`;$('#checkpoint-table').append(p)}
- for(const name of ['parent','selected','fixed']){const s=manifest.held_out[name],p=document.createElement('p');p.textContent=`${name}: ${s.complete_successes}/${s.n} complete · ${s.smooth_complete_successes}/${s.n} within smoothness limits`;$('#test-table').append(p)}
+ if(!manifest.held_out){const p=document.createElement('p');p.textContent='Final testing is pending. The recordings and counts above are development results.';$('#test-table').append(p)}
+ else for(const name of ['parent','selected','fixed']){const s=manifest.held_out[name],p=document.createElement('p');p.textContent=`${name}: ${s.complete_successes}/${s.n} complete · ${s.smooth_complete_successes}/${s.n} within smoothness limits`;$('#test-table').append(p)}
  for(const [id,stage]of [['left',stages[0]],['right',stages[1]]]){$('#'+id+'-follow').onclick=()=>stage.view(false);$('#'+id+'-wide').onclick=()=>stage.view(true);$('#'+id+'-feet').onclick=()=>stage.inspect('feet')}
  $('#play').onclick=()=>{playing=!playing;$('#play').textContent=playing?'Ⅱ':'▶'};$('#restart').onclick=()=>{time=0;playing=true};$('#scrub').oninput=e=>{time=+e.target.value;playing=false};
- await selectScenario(manifest.default_scenario);requestAnimationFrame(tick);
+ await selectScenario(initialScenario);const requestedTime=Number(query.get('t'));if(Number.isFinite(requestedTime)&&requestedTime>0){time=Math.min(requestedTime,+$('#scrub').max);playing=false}requestAnimationFrame(tick);
 }
 init().catch(e=>{$('#scope').textContent=e.message;console.error(e)});

@@ -9,7 +9,7 @@ const nodes=new Map(),stages=[];
 class El{constructor(){this.children=[];this.value='';this.style={}}append(...x){this.children.push(...x)}}
 for(const [,id]of fs.readFileSync(base+'terrain-trained.html','utf8').matchAll(/\bid="([^"]+)"/g))nodes.set('#'+id,new El());
 nodes.get('#speed').value='1';
-const context=vm.createContext({console,performance,Response,Blob,DecompressionStream,TextDecoder,Uint8Array,
+const context=vm.createContext({console,performance,Response,Blob,DecompressionStream,TextDecoder,Uint8Array,URLSearchParams,location:{search:''},
  requestAnimationFrame(fn){context.tick=fn;context.renderScheduled=true},document:{querySelector(q){assert(nodes.has(q),q);return nodes.get(q)},createElement(){return new El()}},
  fetch:async path=>fs.existsSync(base+path)?new Response(fs.readFileSync(base+path)):new Response('',{status:404}),
  createCurriculumStage(el,options){let stage={options,ready:Promise.resolve(),setEpisode(e){this.episode=e},view(){},inspect(){},frame(t){this.time=t;return this.episode.trajectory.frames.findLast(f=>f.t<=t)||this.episode.trajectory.frames[0]}};stages.push(stage);return stage}
@@ -32,6 +32,6 @@ for(const scenario of m.scenarios){
  }
 }
 assert.equal(nodes.get('#scenario').children.length,m.scenarios.length);
-assert(m.optimizer_updates_completed>0);assert.equal(m.held_out.parent.n,m.held_out.selected.n);
+assert(m.optimizer_updates_completed>0);if(m.held_out)assert.equal(m.held_out.parent.n,m.held_out.selected.n);else{assert.equal(m.evaluation_status,'development_preview');assert.equal(m.selection_finalized,false);assert.match(nodes.get('#test-table').children[0].textContent,/pending/)}
 for(const file of Object.keys(m.recordings))assert(gunzipSync(fs.readFileSync(base+'terrain-training/'+file)).length>0);
-console.log('Passed: actual checkpoint IDs, every recorded version and final scenario, gzip loading, synchronized full episodes, identical initial states and preserved failures. WebGL rendering is not tested.');
+console.log('Passed: actual checkpoint IDs, every available recorded version and scenario, gzip loading, synchronized full episodes, identical initial states and preserved failures. WebGL rendering is not tested.');
