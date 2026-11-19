@@ -38,3 +38,27 @@ def static_from_training(teachers):
         for e in teacher['examples']:
             votes[e['domain'] + ':' + e['task']][e['action']] += 1
     return {key: sorted(count, key=lambda a: (-count[a], a))[0] for key, count in votes.items()}
+
+
+def meaningful_corrections(teachers):
+    """Count corrections beyond roundoff or an arbitrary tie-break."""
+    counts = Counter()
+    for teacher in teachers:
+        examples = {(e['domain'], e['task']): e for e in teacher['examples']}
+        for trial in teacher['trials']:
+            example = examples.get((trial['domain'], trial['task']))
+            if not example or example['action'] == trial['student_preference']:
+                continue
+            by_action = {r['action']: r for r in trial['outcomes']}
+            old, best = by_action[trial['student_preference']], by_action[example['action']]
+            if not old['success'] or old['fall'] or old['invalid_contact']:
+                counts[trial['domain']] += 1
+                continue
+            a, b = branch_rank(trial['domain'], old), branch_rank(trial['domain'], best)
+            if trial['domain'] == 'walk':
+                substantial = a[:2] > b[:2] or a[2] - b[2] >= .1
+            else:
+                substantial = a[0] - b[0] >= .1
+            if substantial:
+                counts[trial['domain']] += 1
+    return dict(counts)

@@ -2,7 +2,7 @@
 import hashlib
 import numpy as np
 
-from mochi.terrain_v13.objective import branch_rank, checkpoint_rank, static_from_training
+from mochi.terrain_v13.objective import branch_rank, checkpoint_rank, static_from_training, meaningful_corrections
 
 
 def result(duration, roll=.2, lateral=.01, complete=True):
@@ -50,6 +50,18 @@ def test_static_control_uses_only_station_votes_with_deterministic_ties():
     teachers = [{'examples': [{'domain': 'walk', 'task': 'alarm', 'action': a}
                               for a in ['W2', 'W0', 'W2']]}]
     assert static_from_training(teachers) == {'walk:alarm': 'W2'}
+
+
+def test_arbitrary_walking_label_tie_is_not_a_training_opportunity():
+    make = lambda action, duration: {'action': action, 'success': True, 'fall': False,
+        'invalid_contact': False, 'duration_s': duration,
+        'metrics': {'roll_rms_deg': .2, 'lateral_rms_m': .01}}
+    teacher = {'examples': [{'domain': 'walk', 'task': 'alarm', 'action': 'W0'}],
+        'trials': [{'domain': 'walk', 'task': 'alarm', 'student_preference': 'W1',
+                    'outcomes': [make('W0', 10.), make('W1', 10.00001)]}]}
+    assert meaningful_corrections([teacher]) == {}
+    teacher['trials'][0]['outcomes'][1]['duration_s'] = 11.
+    assert meaningful_corrections([teacher]) == {'walk': 1}
 
 
 def test_diagnostic_clone_preserves_the_physical_state_and_next_step():

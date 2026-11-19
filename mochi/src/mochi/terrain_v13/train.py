@@ -20,7 +20,7 @@ from ..maintenance.checkpoints_by_date import inventory
 from ..terrain_v12.learning_remote import sampler_payload
 from ..terrain_v12.policy import decision
 from ..terrain_v12.train import summary
-from .objective import checkpoint_rank, static_from_training
+from .objective import checkpoint_rank, static_from_training, meaningful_corrections
 from .remote import app, collect, evaluate, components
 from .services import ContinuationServices
 
@@ -256,11 +256,13 @@ async def main():
             report['student_label_disagreements'] = {d: sum(max(e['student_distribution'], key=e['student_distribution'].get) != e['action']
                 for t in teachers for e in t['examples'] if e['domain'] == d) for d in domains}
             report['static_preference'] = static_from_training(teachers)
+            report['meaningful_correction_opportunities'] = meaningful_corrections(teachers)
             save('training-observations', data)
             assert report['guarded_student_sequences_complete'] >= 2, 'Insufficient physically valid complete data'
             assert all(data[d] for d in domains), 'Missing training domain'
-            assert report['student_label_disagreements']['walk'] > 0, 'No measured walking correction to learn'
-            assert sum(report['student_label_disagreements'][d] for d in TASKS) > 0, 'No measured task correction to learn'
+            opportunities = report['meaningful_correction_opportunities']
+            assert opportunities.get('walk', 0) > 0, 'No substantial measured walking correction to learn'
+            assert sum(opportunities.get(d, 0) for d in TASKS) > 0, 'No substantial measured task correction to learn'
             datums = {d: decision_choice_datums(services.renderer, [(decision(o), a) for o, a in data[d]]) for d in domains}
             probes = [data[d][0][0] for d in domains]
             initial = None
