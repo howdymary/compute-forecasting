@@ -9,14 +9,14 @@ class El{constructor(){this.children=[];this.value='';this.style={}}append(...x)
 for(const [,id]of fs.readFileSync(base+'terrain.html','utf8').matchAll(/\bid="([^"]+)"/g))nodes.set('#'+id,new El());
 nodes.get('#speed').value='1';
 const context=vm.createContext({console,performance,Response,DecompressionStream,
- requestAnimationFrame(fn){context.tick=fn},setInterval(){},
+ requestAnimationFrame(fn){context.tick=fn;context.renderScheduled=true},setInterval(){},
  document:{querySelector(q){assert(nodes.has(q),q);return nodes.get(q)},createElement(){return new El()}},
  fetch:async path=>path.startsWith('api/')?Response.json({optimizer_updates_completed:0,phase:'Physical reference passed; queued for training'}):new Response(fs.readFileSync(base+path)),
  createCurriculumStage(){stage={ready:Promise.resolve(),setEpisode(e){this.episode=e},view(){},inspect(){},frame(t){return this.episode.trajectory.frames.findLast(f=>f.t<=t)||this.episode.trajectory.frames[0]}};return stage}
 });
 vm.runInContext(fs.readFileSync(base+'terrain.js','utf8').replace(/^import[^\n]+\n/,''),context);
-for(let i=0;!context.tick&&i<1000;i++)await new Promise(r=>setTimeout(r,10));
-assert(context.tick,'Viewer did not load');
+for(let i=0;!context.renderScheduled&&i<1000;i++)await new Promise(r=>setTimeout(r,10));
+assert(context.renderScheduled,'Viewer did not load');
 const e=stage.episode;
 assert(manifest.complete);assert.equal(e.maximum_applied_base_force,0);assert(!e.invalid_contact&&!e.fall);
 assert.equal(Object.values(e.results).filter(r=>r.success).length,4);assert.equal(e.recoveries.filter(r=>r.success).length,4);
