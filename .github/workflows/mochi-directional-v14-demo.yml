@@ -1,0 +1,42 @@
+name: Mochi physical turning demo
+on:
+  push:
+    branches: [mochi-desk-v3]
+    paths: ['mochi/configs/directional-v14-preview-launch.json']
+permissions:
+  contents: read
+concurrency:
+  group: mochi-directional-v14-demo
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - run: python -m pip install modal==1.6.4
+      - name: Check physical replay and controls
+        run: node mochi/scripts/check_directional_ui.mjs
+      - name: Deploy independent navigation viewer
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: python -m modal deploy --strategy recreate mochi/scripts/deploy_directional.py
+      - name: Check published release
+        run: |
+          python - <<'PYCODE'
+          import json,os,time,urllib.request
+          base='https://howdymary--mochi-directional-v14-demo-web.us-east.modal.run'
+          for attempt in range(6):
+              try:
+                  health=json.load(urllib.request.urlopen(base+'/api/health',timeout=20))
+                  assert health['release']==os.environ['GITHUB_SHA']
+                  assert health['cases']>=1 and health['new_tinker_updates']==0
+                  print('Verified physical turning replay',health)
+                  break
+              except Exception:
+                  if attempt==5:raise
+                  time.sleep(5)
+          PYCODE

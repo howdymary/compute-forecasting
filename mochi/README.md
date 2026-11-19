@@ -1,5 +1,9 @@
 # MOCHI — Walking, Contact and Recovery Policy Learning
 
+[Turning and forward-walking comparison](https://howdymary--mochi-directional-v14-demo-web.us-east.modal.run/?case=desk-corner) · [Navigation changes and evidence](docs/directional-v14.md)
+
+The directional navigator turns toward the next corridor, walks forward, then aligns for the task. Its replay uses actual MuJoCo body orientations. This controller refinement is evaluated separately from the frozen Tinker checkpoint study below; it adds no model-training updates.
+
 The furnished-desk controller now completes the continuous **clock → drawer → laptop close → globe** sequence, including book ascent and descent, without hitting the clock. Two local engineering references and the subsequent remote reference passed the strict checks.
 
 [Checkpoint development preview](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/terrain-trained.html) · [Watch the repaired route](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/terrain.html) · [V12 methods](docs/terrain-v12.md) · [Live training status](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/api/terrain-training)

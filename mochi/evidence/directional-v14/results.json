@@ -1,0 +1,361 @@
+{
+  "study": "mochi-directional-v14",
+  "scope": "Navigation engineering; zero new Tinker updates; fixed native gait and manipulation/recovery profiles.",
+  "local_rollout_cap": 20,
+  "local_wall_seconds_cap": 5400,
+  "full_route": {
+    "seed": 41001,
+    "complete_sequence_success": true,
+    "failure": null,
+    "resume_source": null,
+    "scope": "Navigation engineering with fixed native gait and task profiles; zero new Tinker updates. One uninterrupted physical episode.",
+    "navigation_parameters": {
+      "yaw_gain": 1.8,
+      "max_yaw_rate": 0.6,
+      "turn_threshold_degrees": 35.0,
+      "lateral_limit": 0.004,
+      "alignment_lateral_limit": 0.012,
+      "near_distance": 0.035,
+      "parked_arms": false
+    },
+    "direction_metrics": {
+      "moving_distance_m": 1.2464239783914064,
+      "forward_distance_m": 1.1745629503066222,
+      "lateral_travel_m": 0.22230565934375052,
+      "backward_distance_m": 0.033924882333558795,
+      "distance_weighted_heading_error_degrees": 14.902217452565663,
+      "forward_facing_fraction": 0.9235536331514708,
+      "turning_seconds": 22.67169987029206,
+      "scope": "Travel velocity averaged over one miniature gait cycle; turning and low-speed balance excluded. Raw rendered motion is unfiltered."
+    },
+    "book_descent": "validated backward contact controller; flat-desk travel turns toward the path",
+    "source_sha256": {
+      "sequence.py": "c0178848191d654441009d3eb7573fc6749de48323ffe225f57f503a542a7ec0",
+      "__init__.py": "1775b1ab1ed699e40eb9e1f225795f90d594a2c0be8a8eddfc86a20070fbe41c",
+      "probe.py": "7ab9569f635d7bf54763ecbfd3f4cf4e2edf8c7df01fd4ffa4880e901e2264a0",
+      "navigation.py": "9061348967c396e88530869a5decfbb21b265e7a0f69696d2418dfd075997824"
+    },
+    "wall_seconds": 226.60069166775793
+  },
+  "physical_validation": {
+    "duration_s": 265.685771069439,
+    "task_results": {
+      "alarm": true,
+      "drawer": true,
+      "laptop": true,
+      "globe": true
+    },
+    "recoveries": [
+      {
+        "task": "alarm",
+        "success": true
+      },
+      {
+        "task": "drawer",
+        "success": true
+      },
+      {
+        "task": "laptop",
+        "success": true
+      },
+      {
+        "task": "globe",
+        "success": true
+      }
+    ],
+    "fall": false,
+    "invalid_contact": false,
+    "contact_failures": [],
+    "maximum_applied_base_force": 0.0
+  },
+  "raw_episode_sha256": "8be24b618a8cc4dbcd848e5e14f558393d448b003f62a40592c4e9f5672ad3a5",
+  "attempt_ledger": {
+    "local_rollouts": 11,
+    "attempts": {
+      "turn-right-0": {
+        "status": "completed",
+        "parameters": {
+          "id": "turn-right-0",
+          "mode": "turn",
+          "baseline": false,
+          "seed": 81000,
+          "parameters": "{}"
+        },
+        "success": true,
+        "failure": null,
+        "initial_yaw": 1.5760740602850345,
+        "final_yaw": 0.06858774320395486,
+        "root_displacement_m": 0.009859937182388399,
+        "direction_metrics": {
+          "moving_distance_m": 0.0038195393969934757,
+          "forward_distance_m": 0.0030381886545779438,
+          "lateral_travel_m": 0.0016413040994448964,
+          "backward_distance_m": 0.0,
+          "distance_weighted_heading_error_degrees": 28.21221327555043,
+          "forward_facing_fraction": 0.4439280599695403,
+          "turning_seconds": 2.042856348728718,
+          "scope": "Travel velocity averaged over one miniature gait cycle; turning and low-speed balance excluded. Raw rendered motion is unfiltered."
+        },
+        "wall_seconds": 2.7621683329343796
+      },
+      "corner-directional-0": {
+        "status": "completed",
+        "parameters": {
+          "id": "corner-directional-0",
+          "mode": "corner",
+          "baseline": false,
+          "seed": 81000,
+          "parameters": "{}"
+        },
+        "success": false,
+        "failure": "directional-navigation-timeout:direction-probe-1",
+        "initial_yaw": 1.5760740602850345,
+        "final_yaw": 0.12186323837650262,
+        "root_displacement_m": 0.18415188846676367,
+        "direction_metrics": {
+          "moving_distance_m": 0.19882881122675272,
+          "forward_distance_m": 0.1868383285629528,
+          "lateral_travel_m": 0.0424739537605594,
+          "backward_distance_m": 0.0,
+          "distance_weighted_heading_error_degrees": 13.39585414587237,
+          "forward_facing_fraction": 0.9193399605549354,
+          "turning_seconds": 1.6422962803497088,
+          "scope": "Travel velocity averaged over one miniature gait cycle; turning and low-speed balance excluded. Raw rendered motion is unfiltered."
+        },
+        "wall_seconds": 25.68202229216695
+      },
+      "corner-baseline-0": {
+        "status": "completed",
+        "parameters": {
+          "id": "corner-baseline-0",
+          "mode": "corner",
+          "baseline": true,
+          "seed": 81000,
+          "parameters": "{}"
+        },
+        "success": true,
+        "failure": null,
+        "initial_yaw": 1.5760740602850345,
+        "final_yaw": 1.6208430923009287,
+        "root_displacement_m": 0.19976618588018105,
+        "direction_metrics": {
+          "moving_distance_m": 0.20315256869623047,
+          "forward_distance_m": 0.15574648444260408,
+          "lateral_travel_m": 0.08252879578540218,
+          "backward_distance_m": 0.0,
+          "distance_weighted_heading_error_degrees": 29.495437053080767,
+          "forward_facing_fraction": 0.699371863111526,
+          "turning_seconds": 0.0,
+          "scope": "Travel velocity averaged over one miniature gait cycle; turning and low-speed balance excluded. Raw rendered motion is unfiltered."
+        },
+        "wall_seconds": 8.245490458793938
+      },
+      "corner-directional-1": {
+        "status": "completed",
+        "parameters": {
+          "id": "corner-directional-1",
+          "mode": "corner",
+          "baseline": false,
+          "seed": 81000,
+          "parameters": "{}"
+        },
+        "success": false,
+        "failure": "directional-navigation-timeout:direction-probe-0",
+        "initial_yaw": 1.5760740602850345,
+        "final_yaw": 1.1427983108159259,
+        "root_displacement_m": 0.13588123608808708,
+        "direction_metrics": {
+          "moving_distance_m": 0.1366650049888833,
+          "forward_distance_m": 0.1259774156344817,
+          "lateral_travel_m": 0.03186412178153654,
+          "backward_distance_m": 0.0,
+          "distance_weighted_heading_error_degrees": 14.953542905567701,
+          "forward_facing_fraction": 0.8580583662164691,
+          "turning_seconds": 0.0,
+          "scope": "Travel velocity averaged over one miniature gait cycle; turning and low-speed balance excluded. Raw rendered motion is unfiltered."
+        },
+        "wall_seconds": 2.3549130000174046
+      },
+      "corner-directional-2": {
+        "status": "completed",
+        "parameters": {
+          "id": "corner-directional-2",
+          "mode": "corner",
+          "baseline": false,
+          "seed": 81000,
+          "parameters": "{}"
+        },
+        "success": false,
+        "failure": "invalid_fixture_contact",
+        "initial_yaw": 1.5760740602850345,
+        "final_yaw": 0.29913851596180663,
+        "root_displacement_m": 0.20667055573198628,
+        "direction_metrics": {
+          "moving_distance_m": 0.21497227990322004,
+          "forward_distance_m": 0.2004813118711731,
+          "lateral_travel_m": 0.05211157676241579,
+          "backward_distance_m": 0.0,
+          "distance_weighted_heading_error_degrees": 15.061978509419626,
+          "forward_facing_fraction": 0.8693868505785908,
+          "turning_seconds": 2.4834724239434607,
+          "scope": "Travel velocity averaged over one miniature gait cycle; turning and low-speed balance excluded. Raw rendered motion is unfiltered."
+        },
+        "wall_seconds": 7.173995750024915
+      },
+      "corner-directional-3": {
+        "status": "completed",
+        "parameters": {
+          "id": "corner-directional-3",
+          "mode": "corner",
+          "baseline": false,
+          "seed": 81000,
+          "parameters": "{}"
+        },
+        "success": false,
+        "failure": "invalid_fixture_contact",
+        "initial_yaw": 1.5760740602850345,
+        "final_yaw": -2.80962437405524,
+        "root_displacement_m": 0.27183480997350956,
+        "direction_metrics": {
+          "moving_distance_m": 0.1410405980412002,
+          "forward_distance_m": 0.12473349620812023,
+          "lateral_travel_m": 0.056177351154780904,
+          "backward_distance_m": 4.254262332345519e-05,
+          "distance_weighted_heading_error_degrees": 24.641217326077317,
+          "forward_facing_fraction": 0.741573301460086,
+          "turning_seconds": 2.2030803760799826,
+          "scope": "Travel velocity averaged over one miniature gait cycle; turning and low-speed balance excluded. Raw rendered motion is unfiltered."
+        },
+        "wall_seconds": 1.70691008400172
+      },
+      "corner-directional-4": {
+        "status": "completed",
+        "parameters": {
+          "id": "corner-directional-4",
+          "mode": "corner",
+          "baseline": false,
+          "seed": 81000,
+          "parameters": "{}"
+        },
+        "success": true,
+        "failure": null,
+        "initial_yaw": 1.5760740602850345,
+        "final_yaw": 1.620656660725008,
+        "root_displacement_m": 0.20193810945122087,
+        "direction_metrics": {
+          "moving_distance_m": 0.20536867723435553,
+          "forward_distance_m": 0.19223087978689007,
+          "lateral_travel_m": 0.04747823721086557,
+          "backward_distance_m": 0.0,
+          "distance_weighted_heading_error_degrees": 14.393214168605294,
+          "forward_facing_fraction": 0.8903205038857417,
+          "turning_seconds": 2.6436964512946517,
+          "scope": "Travel velocity averaged over one miniature gait cycle; turning and low-speed balance excluded. Raw rendered motion is unfiltered."
+        },
+        "wall_seconds": 9.575579499825835
+      },
+      "corner-baseline-1": {
+        "status": "completed",
+        "parameters": {
+          "id": "corner-baseline-1",
+          "mode": "corner",
+          "baseline": true,
+          "seed": 81000,
+          "parameters": "{}"
+        },
+        "success": true,
+        "failure": null,
+        "initial_yaw": 1.5760740602850345,
+        "final_yaw": 1.6208430923009287,
+        "root_displacement_m": 0.19976618588018105,
+        "direction_metrics": {
+          "moving_distance_m": 0.1988596739975054,
+          "forward_distance_m": 0.15236777349671649,
+          "lateral_travel_m": 0.08057376063485795,
+          "backward_distance_m": 0.0,
+          "distance_weighted_heading_error_degrees": 29.488386419845636,
+          "forward_facing_fraction": 0.7059429744023993,
+          "turning_seconds": 0.0,
+          "scope": "Travel velocity averaged over one miniature gait cycle; turning and low-speed balance excluded. Raw rendered motion is unfiltered."
+        },
+        "wall_seconds": 8.527771041728556
+      },
+      "full-directional-0": {
+        "status": "completed",
+        "parameters": {
+          "id": "full-directional-0",
+          "seed": 41001,
+          "parameters": "{}",
+          "resume": null,
+          "until": "all",
+          "laptop": "P0"
+        },
+        "complete": false,
+        "failure": "invalid_fixture_contact",
+        "wall_seconds": 202.61414687521756,
+        "duration_s": 227.36116469030034,
+        "direction_metrics": {
+          "moving_distance_m": 0.9890184930401458,
+          "forward_distance_m": 0.9676846615881229,
+          "lateral_travel_m": 0.1633151891045539,
+          "backward_distance_m": 0.0,
+          "distance_weighted_heading_error_degrees": 9.611866480386864,
+          "forward_facing_fraction": 0.9642100094873775,
+          "turning_seconds": 14.700554509535664,
+          "scope": "Travel velocity averaged over one miniature gait cycle; turning and low-speed balance excluded. Raw rendered motion is unfiltered."
+        }
+      },
+      "late-directional-1": {
+        "status": "completed",
+        "parameters": {
+          "id": "late-directional-1",
+          "seed": 41001,
+          "parameters": "{}",
+          "resume": "full-directional-0-drawer.pickle",
+          "until": "all",
+          "laptop": "P0"
+        },
+        "complete": false,
+        "failure": null,
+        "wall_seconds": 53.48555033374578,
+        "duration_s": 265.685771069439,
+        "direction_metrics": {
+          "moving_distance_m": 0.8925122426509999,
+          "forward_distance_m": 0.82993168981967,
+          "lateral_travel_m": 0.15957291160358297,
+          "backward_distance_m": 0.034211470699280606,
+          "distance_weighted_heading_error_degrees": 16.77741117331874,
+          "forward_facing_fraction": 0.9164573519595179,
+          "turning_seconds": 15.381506625781185,
+          "scope": "Travel velocity averaged over one miniature gait cycle; turning and low-speed balance excluded. Raw rendered motion is unfiltered."
+        }
+      },
+      "full-directional-1": {
+        "status": "completed",
+        "parameters": {
+          "id": "full-directional-1",
+          "seed": 41001,
+          "parameters": "{}",
+          "resume": null,
+          "until": "all",
+          "laptop": "P0"
+        },
+        "complete": true,
+        "failure": null,
+        "wall_seconds": 226.60069166775793,
+        "duration_s": 265.685771069439,
+        "direction_metrics": {
+          "moving_distance_m": 1.2464239783914064,
+          "forward_distance_m": 1.1745629503066222,
+          "lateral_travel_m": 0.22230565934375052,
+          "backward_distance_m": 0.033924882333558795,
+          "distance_weighted_heading_error_degrees": 14.902217452565663,
+          "forward_facing_fraction": 0.9235536331514708,
+          "turning_seconds": 22.67169987029206,
+          "scope": "Travel velocity averaged over one miniature gait cycle; turning and low-speed balance excluded. Raw rendered motion is unfiltered."
+        }
+      }
+    }
+  },
+  "limits": "One complete development scenario and a matched corner probe in a fixed layout. No hardware or broad robustness claim."
+}
