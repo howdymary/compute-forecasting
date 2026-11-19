@@ -1,0 +1,64 @@
+"""Safety/utility and exact-state contracts for the next training campaign."""
+import hashlib
+import numpy as np
+
+from mochi.terrain_v13.objective import branch_rank, checkpoint_rank, static_from_training
+
+
+def result(duration, roll=.2, lateral=.01, complete=True):
+    return {'complete_sequence_success': complete, 'episode': {'duration': duration,
+        'balance_metrics': {'roll_rms_deg': roll, 'lateral_rms_m': lateral},
+        'recoveries': [{'arm_joint_travel_rad': 5.}]}}
+
+
+def totals(complete=2):
+    return {'complete_successes': complete, 'falls': 0, 'invalid_contacts': 0,
+        'task_successes': {t: complete for t in ['alarm', 'drawer', 'laptop', 'globe']},
+        'smooth_complete_successes': complete}
+
+
+def test_small_balance_difference_does_not_hide_large_time_improvement():
+    slow = checkpoint_rank(totals(), [result(260, .21), result(260, .21)])
+    fast = checkpoint_rank(totals(), [result(250, .22), result(250, .22)])
+    assert fast > slow
+    # The same practical tolerance governs teacher walking labels.
+    rows = [{'metrics': {'roll_rms_deg': r, 'lateral_rms_m': .01}, 'duration_s': t}
+            for r, t in [(.21, 100), (.22, 90)]]
+    assert branch_rank('walk', rows[1]) < branch_rank('walk', rows[0])
+
+
+def test_failed_short_episode_cannot_win_checkpoint_selection():
+    assert checkpoint_rank(totals(2), [result(260), result(260)]) > checkpoint_rank(
+        totals(1), [result(260), result(10, complete=False)])
+
+
+def test_task_label_charges_for_withdrawal_instead_of_only_press_force():
+    slow = {'duration_s': 5., 'coupled_recovery': {'arm_joint_travel_rad': 12.},
+            'result': {'max_force_n': .3}}
+    clean = {'duration_s': 5., 'coupled_recovery': {'arm_joint_travel_rad': 5.},
+             'result': {'max_force_n': .4}}
+    assert branch_rank('laptop', clean) < branch_rank('laptop', slow)
+
+
+def test_static_control_uses_only_station_votes_with_deterministic_ties():
+    teachers = [{'examples': [{'domain': 'walk', 'task': 'alarm', 'action': a}
+                              for a in ['W2', 'W0', 'W2']]}]
+    assert static_from_training(teachers) == {'walk:alarm': 'W2'}
+
+
+def test_diagnostic_clone_preserves_the_physical_state_and_next_step():
+    from mochi.terrain_v12.world import TerrainWorld
+    from mochi.balanced.onnx_walk import HubWalker, HoldWalker
+    from mochi.terrain_v12.snapshot import branch
+    w = TerrainWorld(71099, False)
+    while w.d.time < .4:
+        w.step(standing=True)
+    w.walker = HubWalker(w)
+    w.walker = HoldWalker(w)
+    a, b = branch(w), branch(w)
+    values = lambda x: np.r_[x.d.qpos, x.d.qvel, x.d.ctrl, x.d.time]
+    assert hashlib.sha256(values(a).tobytes()).digest() == hashlib.sha256(values(w).tobytes()).digest()
+    a.step()
+    b.step()
+    assert np.array_equal(a.d.qpos, b.d.qpos) and np.array_equal(a.d.qvel, b.d.qvel)
+    assert a.base_force == b.base_force == 0
