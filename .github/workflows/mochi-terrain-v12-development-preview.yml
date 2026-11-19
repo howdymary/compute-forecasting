@@ -9,6 +9,9 @@ jobs:
   inspect:
     runs-on: ubuntu-latest
     timeout-minutes: 25
+    concurrency:
+      group: mochi-curriculum-demo
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

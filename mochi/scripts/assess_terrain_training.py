@@ -54,8 +54,8 @@ def evidence(rows):
         'chosen_controls':[{'domain':d,'action':a,'count':n} for (d,a),n in sorted(choices.items())]}
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--source',required=True);p.add_argument('--out',default=str(ROOT/'docs/terrain-v12-assessment.md'));a=p.parse_args()
-    source=Path(a.source);report=json.loads((source/'report.json').read_text())
+    p=argparse.ArgumentParser();p.add_argument('--source',required=True);p.add_argument('--out',default=str(ROOT/'docs/terrain-v12-assessment.md'));args=p.parse_args()
+    source=Path(args.source);report=json.loads((source/'report.json').read_text())
     assert report['status']=='completed' and report['held_out_opened'],'Wait for completed physical evaluation'
     dev={c['update']:json.loads((source/f"checkpoint-{c['update']}.json").read_text()) for c in report['checkpoints']}
     held={label:json.loads((source/f'held-out-{label}.json').read_text()) for label in ['parent','selected','fixed']}
@@ -99,13 +99,13 @@ def main():
             '|---|---:|---:|---|']
     unchanged=[]
     for name,values in (report.get('isolated') or {}).items():
-        a,b=values['parent'],values['selected'];choices=audit['domain_control_choices'][name]
+        before,after=values['parent'],values['selected'];choices=audit['domain_control_choices'][name]
         same=choices['parent']==choices['selected']
-        lines.append(f"| {name} | {a['complete_successes']}/{a['n']} | {b['complete_successes']}/{b['n']} | {'Yes' if same else 'No'} |")
+        lines.append(f"| {name} | {before['complete_successes']}/{before['n']} | {after['complete_successes']}/{after['n']} | {'Yes' if same else 'No'} |")
         if same:unchanged.append(name)
     if unchanged:lines+=['',f"The {', '.join(unchanged)} checks recorded the same profile choices for both models. They do not demonstrate a learned change in those domains."]
     lines+=['','The full-route domain interventions help identify which decision domain changes an outcome. They do not establish a matched-pose recovery or manipulation effect.','',*audit['limits'],'',f"[Training receipts](https://github.com/howdymary/mochi-demo/actions/runs/{report['run_id'].split('-')[-1]}) · [Evaluation receipts](https://github.com/howdymary/mochi-demo/actions/runs/{report.get('recovery',{}).get('evaluation_run','')})"]
-    out=Path(a.out);out.parent.mkdir(parents=True,exist_ok=True);out.write_text('\n'.join(lines)+'\n')
+    out=Path(args.out);out.parent.mkdir(parents=True,exist_ok=True);out.write_text('\n'.join(lines)+'\n')
     out.with_suffix('.json').write_text(json.dumps(audit,indent=2)+'\n')
     print(json.dumps({'assessment':str(out),'numerical_audit':str(data),'paired_successes':len(paired),'selected_update':report['selected_checkpoint']['update']}))
 
