@@ -4,17 +4,17 @@ import assert from 'node:assert/strict';
 import {performance} from 'node:perf_hooks';
 import {gunzipSync} from 'node:zlib';
 
-const base='mochi/web/desk/',m=JSON.parse(fs.readFileSync(base+'terrain-training/manifest.json'));
+const base='mochi/web/desk/',v13=process.argv.includes('--v13'),folder=v13?'terrain-v13-training/':'terrain-training/',page=v13?'terrain-v13-trained':'terrain-trained',m=JSON.parse(fs.readFileSync(base+folder+'manifest.json'));
 const nodes=new Map(),stages=[];
 class El{constructor(){this.children=[];this.value='';this.style={}}append(...x){this.children.push(...x)}}
-for(const [,id]of fs.readFileSync(base+'terrain-trained.html','utf8').matchAll(/\bid="([^"]+)"/g))nodes.set('#'+id,new El());
+for(const [,id]of fs.readFileSync(base+page+'.html','utf8').matchAll(/\bid="([^"]+)"/g))nodes.set('#'+id,new El());
 nodes.get('#speed').value='1';
 const context=vm.createContext({console,performance,Response,Blob,DecompressionStream,TextDecoder,Uint8Array,URLSearchParams,location:{search:''},
  requestAnimationFrame(fn){context.tick=fn;context.renderScheduled=true},document:{querySelector(q){assert(nodes.has(q),q);return nodes.get(q)},createElement(){return new El()}},
  fetch:async path=>fs.existsSync(base+path)?new Response(fs.readFileSync(base+path)):new Response('',{status:404}),
  createCurriculumStage(el,options){let stage={options,ready:Promise.resolve(),setEpisode(e){this.episode=e},view(){},inspect(){},frame(t){this.time=t;return this.episode.trajectory.frames.findLast(f=>f.t<=t)||this.episode.trajectory.frames[0]}};stages.push(stage);return stage}
 });
-vm.runInContext(fs.readFileSync(base+'terrain-trained.js','utf8').replace(/^import[^\n]+\n/,''),context);
+vm.runInContext(fs.readFileSync(base+page+'.js','utf8').replace(/^import[^\n]+\n/,''),context);
 async function settle(){for(let i=0;i<1000;i++){await new Promise(r=>setTimeout(r,10));if(context.renderScheduled&&!vm.runInContext('loading',context))return}throw Error('Checkpoint viewer did not load')}
 await settle();
 assert.equal(stages.length,2);
@@ -33,6 +33,6 @@ for(const scenario of m.scenarios){
  }
 }
 assert.equal(nodes.get('#scenario').children.length,m.scenarios.length);
-assert(m.optimizer_updates_completed>0);if(m.held_out)assert.equal(m.held_out.parent.n,m.held_out.selected.n);else{assert.equal(m.evaluation_status,'development_preview');assert.equal(m.selection_finalized,Boolean(JSON.parse(fs.readFileSync(base+'terrain-training/report.json')).selected_checkpoint));assert.match(nodes.get('#test-table').children[0].textContent,/pending/)}
-for(const file of Object.keys(m.recordings))assert(gunzipSync(fs.readFileSync(base+'terrain-training/'+file)).length>0);
+assert(m.optimizer_updates_completed>0);if(m.held_out)assert.equal(m.held_out.parent.n,m.held_out.selected.n);else{assert.equal(m.evaluation_status,'development_preview');assert.equal(m.selection_finalized,Boolean(JSON.parse(fs.readFileSync(base+folder+'report.json')).selected_checkpoint));assert.match(nodes.get('#test-table').children[0].textContent,/pending/)}
+for(const file of Object.keys(m.recordings))assert(gunzipSync(fs.readFileSync(base+folder+file)).length>0);
 console.log('Passed: actual checkpoint IDs, every available recorded version and scenario, gzip loading, synchronized full episodes, identical initial states and preserved failures. WebGL rendering is not tested.');

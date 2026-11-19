@@ -42,7 +42,7 @@ async def main():
     cfg = json.loads((ROOT / 'configs/terrain-v13-training.json').read_text())
     source = Path(os.environ['MOCHI_PARENT_SOURCE'])
     previous = json.loads((source / 'report.json').read_text())
-    assessment_path = ROOT / 'artifacts/terrain-v12-assessment/final.json'
+    assessment_path = ROOT / 'docs/terrain-v12-assessment.json'
     assessment = json.loads(assessment_path.read_text())
     assert previous['status'] == 'completed' and previous['held_out_opened'], 'Finish the previous run first'
     assert previous['recovery']['evaluation_run'] == str(cfg['source_run'])
@@ -177,7 +177,12 @@ async def main():
             'qualification': 'Previous test scenarios are now historical evidence; V13 uses separate unopened final seeds.'})
         observation = await read('researcher', eid)
         await change('exa_searches', 1)
-        query = 'humanoid contact rich manipulation collision aware arm withdrawal coupled task motion planning stair support transfer timing'
+        problems = []
+        if any(v['failures'].get('fall', 0) for v in observation['failures'].values()):
+            problems.append('humanoid stair ascent descent support transfer stability')
+        if any(v['forbidden_contacts'] for v in observation['failures'].values()):
+            problems.append('whole body collision avoidance laptop lid manipulation release arm withdrawal')
+        query = 'robot motion policy research ' + ' '.join(problems or ['efficient balanced stepping and arm recovery'])
         sources = await services.search(query)
         hid = await write('researcher', {'kind': 'hypothesis', 'experiment_id': run_id,
             'observation_record': eid, 'sources': sources,
@@ -189,7 +194,7 @@ async def main():
         allocation = await services.decide('designer',
             'Choose a bounded six-domain training allocation: balanced uses 12 walking and 8 recovery labels per update; recovery_first uses 8 walking and 12 recovery. Every task gets four examples in either case.',
             {'mechanism': hypothesis['mechanism'], 'parent_complete': previous['held_out']['selected']['complete_successes'],
-             'parent_n': previous['held_out']['selected']['n'], 'source_urls': [s['url'] for s in sources['sources']]},
+             'parent_n': previous['held_out']['selected']['n'], 'sources': sources['sources']},
             ['balanced', 'recovery_first'], [eid, hid])
         pid = await write('designer', {'kind': 'proposal', 'experiment_id': run_id,
             'hypothesis_record': hid, 'allocation': allocation,
@@ -294,16 +299,21 @@ async def main():
                       ('selected', sampler_payload(snapshots[selected['update']]), None),
                       ('fixed', None, None), ('static', None, report['static_preference'])]
             bundles = await batch(evaluate, [(seed, label, payload, run_id, 'held-out', static,
-                label == 'fixed' and seed == cfg['component_seed']) for seed in cfg['held_out_seeds']
+                label == 'fixed') for seed in cfg['held_out_seeds']
                 for label, payload, static in models], 1500, 1, 24000)
             held = {label: [b['row'] for b in bundles if b['label'] == label] for label, _, _ in models}
             for label, rows in held.items():
                 save('held-out-' + label, rows)
             report['held_out'] = {label: summary(rows, cfg) for label, rows in held.items()}
-            reference = next(r for r in held['fixed'] if r['seed'] == cfg['component_seed'])['supported_states']
+            # This predeclared reference rule never looks at trained outcomes.
+            # All fixed failures remain in the full-cohort denominator.
+            reference_row = next((r for r in held['fixed'] if r['complete_sequence_success']),
+                max(held['fixed'], key=lambda r: len(r['supported_states']['keys'])))
+            reference = reference_row['supported_states']
+            report['component_reference_seed'] = reference_row['seed']
             report['phase'] = 'Exact shared-state walking, task and arm-recovery diagnostics'
             await publish()
-            report['component_results'] = await batch(components, [(cfg['component_seed'], task,
+            report['component_results'] = await batch(components, [(reference_row['seed'], task,
                 [('parent', sampler_payload(snapshots[0])), ('selected', sampler_payload(snapshots[selected['update']]))],
                 run_id, reference) for task in TASKS], 3000, 6, 24000)
             rid = await write('experimenter', {'kind': 'observation', 'experiment_id': run_id,

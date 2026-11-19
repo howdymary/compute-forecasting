@@ -91,6 +91,7 @@ def main():
         for c in e['forbidden_contacts']:lines.append(f"  Contact: {c['body']} with {c['fixture']} during {c['phase']} ({c['count']}).")
     lines+=['','The full-route domain interventions help identify which decision domain changes an outcome. They do not establish a matched-pose recovery or manipulation effect.','',*audit['limits'],'',f"[Training receipts](https://github.com/howdymary/mochi-demo/actions/runs/{report['run_id'].split('-')[-1]}) · [Evaluation receipts](https://github.com/howdymary/mochi-demo/actions/runs/{report.get('recovery',{}).get('evaluation_run','')})"]
     out=Path(a.out);out.parent.mkdir(parents=True,exist_ok=True);out.write_text('\n'.join(lines)+'\n')
+    out.with_suffix('.json').write_text(json.dumps(audit,indent=2)+'\n')
     print(json.dumps({'assessment':str(out),'numerical_audit':str(data),'paired_successes':len(paired),'selected_update':report['selected_checkpoint']['update']}))
 
 if __name__=='__main__':main()

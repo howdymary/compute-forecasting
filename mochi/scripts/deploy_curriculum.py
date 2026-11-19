@@ -17,6 +17,10 @@ if (WEB/'terrain-training/manifest.json').exists():
  image=(image.add_local_file(WEB/'terrain-trained.html',remote_path='/web/terrain-trained.html',copy=True)
         .add_local_file(WEB/'terrain-trained.js',remote_path='/web/terrain-trained.js',copy=True)
         .add_local_dir(WEB/'terrain-training',remote_path='/web/terrain-training',copy=True))
+if (WEB/'terrain-v13-training/manifest.json').exists():
+ image=(image.add_local_file(WEB/'terrain-v13-trained.html',remote_path='/web/terrain-v13-trained.html',copy=True)
+        .add_local_file(WEB/'terrain-v13-trained.js',remote_path='/web/terrain-v13-trained.js',copy=True)
+        .add_local_dir(WEB/'terrain-v13-training',remote_path='/web/terrain-v13-training',copy=True))
 app=modal.App('mochi-curriculum-demo')
 @app.function(image=image,serialized=True,cpu=.25,memory=512,max_containers=2,scaledown_window=120)
 @modal.asgi_app()
@@ -62,4 +66,11 @@ def web():
    return {**{k:report.get(k) for k in keys},'budget_usage_or_reserved':usage,
            'memory':report.get('services',{}).get('eligibility',{}),'engineering_complete_references':2}
   except Exception:return {'study':'mochi-terrain-v12','status':'unavailable','optimizer_updates_completed':0}
+ @api.get('/api/terrain-v13-training')
+ def terrain_v13_training():
+  try:
+   report=modal.Dict.from_name('mochi-terrain-v13-progress').get('latest',{})
+   keys=['study','run_id','created_at','status','phase','optimizer_updates_completed','campaign_modal_rollouts_completed','checkpoints','selected_checkpoint','held_out','component_reference_seed','budget_usage_or_reserved','first_optimizer_behavioral_probe','data_audit','student_label_disagreements']
+   return {**{k:report.get(k) for k in keys},'memory':report.get('services',{}).get('eligibility',{})}
+  except Exception:return {'study':'mochi-terrain-v13','status':'unavailable','optimizer_updates_completed':0}
  api.mount('/',StaticFiles(directory='/web',html=True));return api
