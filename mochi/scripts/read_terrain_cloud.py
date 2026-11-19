@@ -14,7 +14,7 @@ if run:
  for record in [r for r in report.get('physics_receipts',[]) if r.get('model')][-3:]:
   path=f"mochi-t12-final-{run}/{record['phase']}-{record['seed']}-{record['model']}.json.gz"
   raw=b''.join(volume.read_file(path));row=json.loads(gzip.decompress(raw));episode=row['episode']
-  print(json.dumps({'completed_evaluation':{'phase':record['phase'],'seed':row['seed'],
+  print(json.dumps({'completed_evaluation':{'phase':record['phase'],'model':record['model'],'seed':row['seed'],
    'complete':row['complete_sequence_success'],'failure':row['failure'],'duration':episode['duration'],
    'tasks':{k:v['success'] for k,v in episode['results'].items()},'balance':episode['balance_metrics'],
    'forbidden_contacts':episode.get('contact_failures',[]),
