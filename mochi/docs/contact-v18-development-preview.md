@@ -59,3 +59,5 @@ Checkpoint 4 verification covered a complete uninterrupted replay of development
 The checkpoint 4 release was also checked live with the 0.5× foot camera, actual shared physical time and pending-selection disclosure. [Live checkpoint 4 inspection](../evidence/contact-v18/development4-preview-phase-qa.json) · [Release health](../evidence/contact-v18/development4-preview-live-health.json).
 
 After development selection, browser verification checked the retained-parent disclosure, identical-recording comparison label and all three rejected checkpoint 16 attempts through their actual endpoints. [Selection and rejected-checkpoint verification](../evidence/contact-v18/selection-browser-qa.json).
+
+The published selection snapshot retains all twelve development recordings. Live verification checked the no-promotion disclosure while replaying checkpoint 4 steps at a labelled 0.5×. [Live retained-parent verification](../evidence/contact-v18/selection-preview-phase-qa.json) · [Published selection snapshot](../evidence/contact-v18/selection-preview-live-health.json).
