@@ -1,0 +1,83 @@
+{
+  "status": "verified_complete",
+  "verified_at": "2026-11-20T02:22:52.563868+00:00",
+  "source_sha": "87ba8d482efd13c789bb200ae9424924e0f77ad1",
+  "run_id": "mochi-t15-44625135986",
+  "demo_release": "ca0c48e074942e8fdfca6e5e09e2ee1236f6a48b",
+  "blog_commit": "05ad7dc44aaf207d4bd2d037151a044e4f0b87c6",
+  "checks": {
+    "training": "16 completed optimizer updates, 96 domain-gradient calls, distinct checkpoints 0/1/4/8/16; native gait fixed.",
+    "frozen_method": "149 frozen source files unchanged; development selection precedes disjoint final tests.",
+    "final_tests": "All four policies qualified on 4/4 fresh cases. Selected model reduced paired steps 40.9% and physical time 17.6% versus parent.",
+    "component_tests": "24 valid branches from 12 matched physical states, with separate walking, object control and recovery diagnostics.",
+    "budgets": "204/224 physical rollouts, 10.341/18 function CPU-hours, four-worker bound, 16/16 updates. No retraining during publication.",
+    "services": "Actual Tinker updates, Modal simulation receipts, one Exa search, six past.dev writes and seven logical recalls. Four writers/readers, five within-campaign verified cross-role reads, private-audience denial passed, no pending ingestion.",
+    "recording_integrity": "23 hashed continuous recordings; same initial frame within each comparison; all 16 final-policy recordings independently checked for endpoints and contact.",
+    "live_demo": "19 paired checkpoint/scenario views checked. Complete fresh-case playback observed without scrub or restart. Observer time window expired once and was continued on the same playing page; full horizon then attested.",
+    "scrubber": "Native slider end-rounding fixed and verified against both completed episode labels; physics and playback rates unchanged.",
+    "blog": "Published technical article uses the first declared fresh final case first, preserves development checkpoints and historical comparisons, and passes desktop/mobile checks with zero italics, em dashes or field-notes text.",
+    "archives": "81 provenance-tracked replay files retain their hashes. V13 remains incomplete with its original negative results and memory error. Forecasting endpoint returns HTTP 200.",
+    "workspace": "Active metagame checkout and empty normal index preserved; post-experiment research changes confined to mochi/. Website modifications confined to mochi/.",
+    "delivery": "README, final assessment, reproducible commands and past.dev/Tinker article draft published."
+  },
+  "limits": [
+    "Fixed-layout simulation, four final cases, no hardware validation.",
+    "A training-derived static policy nearly matches the selected model and is slightly faster; 46/48 categorical decisions match. No meaningful adaptive-selection advantage established.",
+    "Arm joint travel per recovery rose from 5.54 to 6.93 radians, and torso roll RMS rose slightly. Fewer steps does not establish smoother motion by every measure.",
+    "Tinker updates the shared LoRA controller-selection model, not the native gait network or low-level controller library.",
+    "Memory/search API use is verified; causal performance benefit was not isolated by ablation."
+  ],
+  "usage": {
+    "modal_rollouts": 204,
+    "modal_cpu_hours": 10.341109044191946,
+    "optimizer_updates": 16,
+    "training_token_presentations": 217812,
+    "inference_tokens": 143004,
+    "exa_searches": 1,
+    "past_writes": 6,
+    "past_recalls": 7
+  },
+  "selected_checkpoint_id": "63463997da27066bfabda9a834fbd05d627b4dd362720c764077a3d20dd74ebe",
+  "paired_summary": {
+    "n": 4,
+    "scenario_step_reductions": [
+      {
+        "seed": 93000,
+        "before": 804,
+        "after": 472,
+        "reduction_fraction": 0.4129353233830846
+      },
+      {
+        "seed": 93001,
+        "before": 804,
+        "after": 470,
+        "reduction_fraction": 0.41542288557213936
+      },
+      {
+        "seed": 93002,
+        "before": 802,
+        "after": 492,
+        "reduction_fraction": 0.3865336658354115
+      },
+      {
+        "seed": 93003,
+        "before": 814,
+        "after": 472,
+        "reduction_fraction": 0.4201474201474201
+      }
+    ],
+    "mean_step_reduction_fraction": 0.4087598237345139,
+    "mean_time_reduction_fraction": 0.17596560310653225,
+    "mean_step_reduction_bootstrap_95": [
+      0.39375597076959346,
+      0.4183443959563362
+    ],
+    "mean_time_reduction_bootstrap_95": [
+      0.1571041687221228,
+      0.18711808329277363
+    ],
+    "uncertainty_scope": "Deterministic paired resampling of this small fixed-layout cohort; not a guarantee for other layouts or hardware."
+  },
+  "live_demo": "https://howdymary--mochi-efficient-v15-demo-web.us-east.modal.run/?scenario=held-out-93000",
+  "blog": "https://howdymary.github.io/mochi/"
+}
