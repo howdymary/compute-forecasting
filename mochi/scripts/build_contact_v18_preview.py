@@ -77,6 +77,8 @@ def main():
         assert e['maximum_applied_base_force']==0
         files[name]={'checkpoint_update':update,'checkpoint_id':cps[update]['checkpoint_id'],
             'cumulative_updates':cps[update]['cumulative_updates'],'seed':row['seed'],
+            'execution_source_sha':report['carried_baseline']['source_sha'] if kind=='development' and update==0 and report.get('carried_baseline') else report['execution_source_sha'],
+            'execution_workflow_run':report['carried_baseline']['workflow_run'] if kind=='development' and update==0 and report.get('carried_baseline') else a.execution_workflow_run,
             'complete':row['complete_sequence_success'],'qualified_complete':row['qualified_complete'],
             'failure':row['failure'],'archive':row['archive'],'sha256':descriptor['sha256'],
             'uncompressed_sha256':descriptor['uncompressed_sha256'],

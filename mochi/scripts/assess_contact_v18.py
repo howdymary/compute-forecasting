@@ -239,6 +239,7 @@ def main():
                         'A foot-clearance gain alone does not establish fewer steps, faster completion or smoother arms.',
                         'Identical action prefixes with different physical states cannot be attributed to a changed selector.',
                         'The static control omits the three additional regression labels used for selector training.',
+                        'Parent proposals are evaluated on a guarded trajectory. Teacher overrides change subsequent states; these are not all states visited by the unmodified parent.',
                         'No causal search or memory ablation.']}
     output = ROOT / 'docs/contact-v18-assessment.json'
     output.write_text(json.dumps(audit, indent=2) + '\n')
@@ -246,7 +247,7 @@ def main():
         return 'Unavailable' if value is None else f'{value:.{places}f}'
     lines = ['# Laptop contact and flat-ground stepping study', '',
              f"Tinker completed 16 additional optimizer updates on the six-domain Qwen3.5-4B LoRA controller selector. Development selection chose update {audit['selected_update']}. The declared joint improvement target was {'met' if goal else 'not met'}.", '',
-             'The model chooses walking strategies, manipulation profiles and arm recovery. The native ONNX gait weights remain fixed. The bounded laptop force controls and foot-lift correction are controller engineering shared by the parent, intermediate checkpoints and fixed controls.', '',
+             'The model chooses walking strategies, manipulation profiles and arm recovery from structured simulator state. The camera is a rendered replay. The native ONNX gait weights remain fixed. The bounded laptop force controls and foot-lift correction are controller engineering shared by the parent, intermediate checkpoints and fixed controls.', '',
              '[Continuous checkpoint replay](https://howdymary--mochi-contact-v18-demo-web.us-east.modal.run/) · '
              f'[Execution and artifacts](https://github.com/howdymary/mochi-demo/actions/runs/{WORKFLOW}) · '
              '[Numerical audit](contact-v18-assessment.json)', '',
@@ -268,6 +269,7 @@ def main():
               '## Laptop repair and learning data', '',
               'P5 regulates upper-edge contact using lid angle, closing speed and measured foot loads, with a bounded pulse finish. P6 uses bounded intermittent contact. These controls passed three opened regression states with withdrawal. The old opened 103xxx cases are regression and training evidence, not fresh tests.', '',
               f"Two guarded training sequences supplied {teacher_branches} measured candidate branches. Each label was checked against valid branches starting from the same physical state. Three validated regression examples were added for laptop selection. No successful trajectories were invented.", '',
+              'The parent proposes actions, measured branches determine the accepted action, and the main trajectory executes that accepted action. Overrides therefore change subsequent states. The training states come from guarded trajectories, rather than exclusively from the unmodified parent policy.', '',
               'Training, development and final seeds are disjoint. The final seeds were unopened until the development-selected checkpoint was saved. Every optimizer update included walking, clock, drawer, laptop, globe and recovery examples. There were 96 completed domain-gradient calls. A change in selection probability verifies a changed decision policy; physical improvement requires the separate simulation results.', '',
               '## Checkpoint progression', '',
               '| Additional updates | Complete | Qualified | Clear stepping | Falls | Forbidden contacts |',

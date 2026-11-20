@@ -1,0 +1,26 @@
+{
+  "scope": "Supplemental provider confirmation; original reconciliation and its frozen hash remain unchanged.",
+  "provider_app": {
+    "app_id": "ap-C9jMf7ZkYGmAUZhLMu54Rm",
+    "description": "mochi-contact-v18-learning",
+    "state": "stopped",
+    "tasks": "0",
+    "created_at": "2026-11-20 10:21:51-08:00",
+    "stopped_at": "2026-11-20 11:09:23-08:00"
+  },
+  "teacher_input_ids": [
+    "fc-01M7X5MM8YRVXSGXJKFEHHEZGW",
+    "fc-01M7X5MM5TMRG4SV85J8SAHP74"
+  ],
+  "input_statuses": [
+    "terminated",
+    "terminated"
+  ],
+  "enqueued_to_provider_stop_plus_61s_seconds": [
+    238.56109,
+    238.66143
+  ],
+  "charged_seconds_per_input": 240,
+  "charged_cpu_hours": 0.13333333333333333,
+  "explanation": "Use enqueue time rather than start time, plus60seconds cancellation margin and1second timestamp-rounding margin. Both elapsed bounds fit the four-minute charge per input. No provider execution duration is inferred from the null timing field; this is a conservative bound, not an invoice."
+}

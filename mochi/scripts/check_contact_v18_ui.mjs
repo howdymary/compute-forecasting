@@ -45,6 +45,13 @@ for(const scenario of m.scenarios){
    if(measured!=null)assert(text.includes((measured*1000).toFixed(1)+' mm'));
    else assert.match(text,/No completed moving swings/);
   }
+  const l=m.recordings[scenario.parent_file].after_descent_clearance,r=meta.after_descent_clearance;
+  if(l?.completed_leg&&r?.completed_leg&&Math.min(l.end_t,r.end_t)>Math.max(l.start_t,r.start_t)){
+   assert.equal(nodes.get('#after-descent').disabled,false);nodes.get('#after-descent').onclick();
+   const inspectionTime=vm.runInContext('time',context);
+   assert(inspectionTime>=Math.max(l.start_t,r.start_t)&&inspectionTime<Math.min(l.end_t,r.end_t));
+   assert.equal(nodes.get('#speed').value,'0.5');
+  }else assert.equal(nodes.get('#after-descent').disabled,true);
   const nativeEnd=Math.floor(+nodes.get('#scrub').max/.02)*.02;
   nodes.get('#scrub').oninput({target:{value:nativeEnd}});context.tick(performance.now()+100);
   assert.equal(stages[0].time,a.duration);assert.equal(stages[1].time,b.duration);
