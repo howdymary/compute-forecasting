@@ -1,0 +1,401 @@
+{
+  "version": "richdesk-v19-paperfree",
+  "units": "metres",
+  "desk": [
+    1.2,
+    0.8
+  ],
+  "initial_pose": [
+    -0.375,
+    -0.225,
+    1.5707963267948966
+  ],
+  "clock_offset": [
+    0,
+    0,
+    0.024
+  ],
+  "globe_offset": [
+    0,
+    -0.37,
+    0
+  ],
+  "book_height": 0.008,
+  "book_collision_scope": "Fixed, nonsliding book terrain; visual meshes and collision envelopes share the same placements. No root motion is authored.",
+  "props": [
+    {
+      "name": "book-step-1",
+      "asset": "book",
+      "pos": [
+        -0.36,
+        0.02,
+        0
+      ],
+      "size": [
+        0.23,
+        0.3,
+        0.008
+      ],
+      "yaw": 0,
+      "color": "#334d56",
+      "shape": "box",
+      "climb": true,
+      "title": "FIELD NOTES"
+    },
+    {
+      "name": "book-step-2",
+      "asset": "book",
+      "pos": [
+        -0.36,
+        0.045,
+        0.008
+      ],
+      "size": [
+        0.22,
+        0.23,
+        0.008
+      ],
+      "yaw": 0,
+      "color": "#8f5248",
+      "shape": "box",
+      "climb": true,
+      "title": "ROBOT MOTION"
+    },
+    {
+      "name": "book-step-3",
+      "asset": "book",
+      "pos": [
+        -0.36,
+        0.07,
+        0.016
+      ],
+      "size": [
+        0.2,
+        0.18,
+        0.008
+      ],
+      "yaw": 0,
+      "color": "#777c55",
+      "shape": "box",
+      "climb": true,
+      "title": "PRACTICAL MECHANICS"
+    },
+    {
+      "name": "printer",
+      "asset": "printer",
+      "pos": [
+        0.435,
+        0.29,
+        0
+      ],
+      "size": [
+        0.28,
+        0.18,
+        0.17
+      ],
+      "yaw": 0,
+      "shape": "box"
+    },
+    {
+      "name": "coffee-mug",
+      "asset": "mug",
+      "pos": [
+        -0.06,
+        -0.13,
+        0
+      ],
+      "size": [
+        0.105,
+        0.085,
+        0.095
+      ],
+      "yaw": -0.3,
+      "shape": "cylinder"
+    },
+    {
+      "name": "spiral-notebook",
+      "asset": "notebook",
+      "pos": [
+        0.055,
+        -0.265,
+        0
+      ],
+      "size": [
+        0.2,
+        0.145,
+        0.007
+      ],
+      "yaw": -0.12,
+      "shape": "box"
+    },
+    {
+      "name": "pencil-1",
+      "asset": "pencil",
+      "pos": [
+        -0.214,
+        -0.239,
+        0
+      ],
+      "size": [
+        0.17,
+        0.007,
+        0.007
+      ],
+      "yaw": 0.22,
+      "shape": "capsule"
+    },
+    {
+      "name": "pencil-2",
+      "asset": "pencil",
+      "pos": [
+        0.1,
+        -0.235,
+        0.007
+      ],
+      "size": [
+        0.16,
+        0.0065,
+        0.0065
+      ],
+      "yaw": -0.46,
+      "shape": "capsule"
+    },
+    {
+      "name": "pencil-3",
+      "asset": "pencil",
+      "pos": [
+        -0.267,
+        0.293,
+        0
+      ],
+      "size": [
+        0.15,
+        0.007,
+        0.007
+      ],
+      "yaw": 0.33,
+      "shape": "capsule"
+    },
+    {
+      "name": "pen-1",
+      "asset": "pen",
+      "pos": [
+        -0.115,
+        -0.265,
+        0
+      ],
+      "size": [
+        0.145,
+        0.009,
+        0.009
+      ],
+      "yaw": -0.62,
+      "shape": "capsule"
+    },
+    {
+      "name": "pen-2",
+      "asset": "pen",
+      "pos": [
+        0.245,
+        -0.276,
+        0
+      ],
+      "size": [
+        0.14,
+        0.009,
+        0.009
+      ],
+      "yaw": 0.15,
+      "shape": "capsule"
+    },
+    {
+      "name": "stapler",
+      "asset": "stapler",
+      "pos": [
+        0.213,
+        0.327,
+        0
+      ],
+      "size": [
+        0.11,
+        0.035,
+        0.04
+      ],
+      "yaw": 0.12,
+      "shape": "box"
+    },
+    {
+      "name": "reading-glasses",
+      "asset": "glasses",
+      "pos": [
+        0.235,
+        -0.325,
+        0
+      ],
+      "size": [
+        0.14,
+        0.044,
+        0.016
+      ],
+      "yaw": -0.1,
+      "shape": "box"
+    },
+    {
+      "name": "reference-book",
+      "asset": "book",
+      "pos": [
+        -0.43,
+        0.285,
+        0
+      ],
+      "size": [
+        0.19,
+        0.14,
+        0.015
+      ],
+      "yaw": -0.08,
+      "color": "#545755",
+      "shape": "box",
+      "title": "WORKSHOP HANDBOOK"
+    },
+    {
+      "name": "loose-page-1",
+      "asset": "paper",
+      "pos": [
+        0.355,
+        -0.315,
+        0
+      ],
+      "size": [
+        0.15,
+        0.105,
+        0.0002
+      ],
+      "yaw": 0.12,
+      "shape": "box"
+    },
+    {
+      "name": "loose-page-2",
+      "asset": "paper",
+      "pos": [
+        0.365,
+        -0.298,
+        0.0002
+      ],
+      "size": [
+        0.15,
+        0.105,
+        0.0002
+      ],
+      "yaw": 0.07,
+      "shape": "box"
+    },
+    {
+      "name": "printer-output-tray",
+      "asset": "tray",
+      "pos": [
+        0.435,
+        0.185,
+        0.048
+      ],
+      "size": [
+        0.19,
+        0.065,
+        0.005
+      ],
+      "yaw": 0,
+      "shape": "box"
+    },
+    {
+      "name": "printer-printout",
+      "asset": "paper",
+      "pos": [
+        0.435,
+        0.181,
+        0.054
+      ],
+      "size": [
+        0.17,
+        0.085,
+        0.0002
+      ],
+      "yaw": 0.03,
+      "shape": "box"
+    }
+  ],
+  "route": [
+    {
+      "name": "climb-to-alarm",
+      "goal": [
+        -0.375,
+        0.025,
+        1.5707963267948966
+      ],
+      "surface_height": 0.024
+    },
+    {
+      "name": "descend-books",
+      "goal": [
+        -0.375,
+        -0.19,
+        1.5707963267948966
+      ],
+      "surface_height": 0
+    },
+    {
+      "name": "clear-books",
+      "goal": [
+        -0.19,
+        -0.17,
+        0
+      ],
+      "surface_height": 0
+    },
+    {
+      "name": "drawer",
+      "goal": [
+        -0.13,
+        0.02,
+        1.5707963267948966
+      ],
+      "surface_height": 0
+    },
+    {
+      "name": "laptop-corridor",
+      "goal": [
+        0.3,
+        0.02,
+        0
+      ],
+      "surface_height": 0
+    },
+    {
+      "name": "laptop",
+      "goal": [
+        0.3,
+        0.16,
+        1.5707963267948966
+      ],
+      "surface_height": 0
+    },
+    {
+      "name": "globe-corridor",
+      "goal": [
+        0.35,
+        0.02,
+        1.5707963267948966
+      ],
+      "surface_height": 0
+    },
+    {
+      "name": "globe",
+      "goal": [
+        0.35,
+        -0.145,
+        0
+      ],
+      "surface_height": 0
+    }
+  ],
+  "revision_notes": "Post-it stack removed from physics and rendering. Drawer-to-laptop transit is ordinary flat walking."
+}

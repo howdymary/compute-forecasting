@@ -1,0 +1,930 @@
+{
+  "study": "mochi-paperfree-v19-engineering",
+  "attempts": [
+    {
+      "id": "paperfree-w8-reference",
+      "status": "completed",
+      "at": "2026-11-20T23:34:06.116747+00:00",
+      "physical_attempts": 1,
+      "parameters": {
+        "id": "paperfree-w8-reference",
+        "seed": 185000,
+        "walk": "W8",
+        "laptop": "P4",
+        "snapshot": null,
+        "domain": "laptop",
+        "task": "laptop",
+        "action": null
+      },
+      "wall_seconds": 296.82128299959004,
+      "complete": true,
+      "qualified": false,
+      "failure": null,
+      "steps": 480,
+      "physical_seconds": 284.35105278640657,
+      "flat_legs": [
+        {
+          "task": "drawer",
+          "controller": "W8",
+          "start_t": 205.01890503951242,
+          "end_t": 223.5542091016384,
+          "steps": {
+            "attempts": 144,
+            "completed": 144,
+            "unfinished": 0,
+            "by_category": {
+              "turning": 36,
+              "flat_transit": 92,
+              "alignment": 16
+            },
+            "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+          },
+          "moving_swings": 128,
+          "moving_minimum_sole_clearance_m": 0.004825543088201343,
+          "success": true
+        },
+        {
+          "task": "laptop",
+          "controller": "W8",
+          "start_t": 227.8704482058117,
+          "end_t": 245.66594234572617,
+          "steps": {
+            "attempts": 138,
+            "completed": 138,
+            "unfinished": 0,
+            "by_category": {
+              "turning": 26,
+              "flat_transit": 88,
+              "alignment": 24
+            },
+            "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+          },
+          "moving_swings": 114,
+          "moving_minimum_sole_clearance_m": 0.004884110797447567,
+          "success": true
+        },
+        {
+          "task": "globe",
+          "controller": "W8",
+          "start_t": 257.4816468934005,
+          "end_t": 276.1501984884773,
+          "steps": {
+            "attempts": 138,
+            "completed": 138,
+            "unfinished": 0,
+            "by_category": {
+              "fixture_clearance": 30,
+              "turning": 35,
+              "flat_transit": 55,
+              "alignment": 18
+            },
+            "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+          },
+          "moving_swings": 120,
+          "moving_minimum_sole_clearance_m": 0.004650149727449727,
+          "success": true
+        }
+      ],
+      "step_reward": -1000000.0,
+      "paper_geometry_present": false,
+      "artifact_sha256": "28d0dbdc3d2bc2b822de4b828b01892bada1de50211070360c9b5fe10ba27a54"
+    },
+    {
+      "id": "paperfree-w9-reference",
+      "status": "completed",
+      "at": "2026-11-20T23:34:06.116723+00:00",
+      "physical_attempts": 1,
+      "parameters": {
+        "id": "paperfree-w9-reference",
+        "seed": 185000,
+        "walk": "W9",
+        "laptop": "P4",
+        "snapshot": null,
+        "domain": "laptop",
+        "task": "laptop",
+        "action": null
+      },
+      "wall_seconds": 267.37090920843184,
+      "complete": false,
+      "qualified": false,
+      "failure": "invalid_fixture_contact",
+      "steps": 305,
+      "physical_seconds": 248.50419654453103,
+      "flat_legs": [
+        {
+          "task": "drawer",
+          "controller": "W9",
+          "start_t": 205.01890503951242,
+          "end_t": 221.58329007130473,
+          "steps": {
+            "attempts": 128,
+            "completed": 128,
+            "unfinished": 0,
+            "by_category": {
+              "turning": 31,
+              "flat_transit": 82,
+              "alignment": 15
+            },
+            "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+          },
+          "moving_swings": 113,
+          "moving_minimum_sole_clearance_m": 0.004832580081013436,
+          "success": true
+        },
+        {
+          "task": "laptop",
+          "controller": "W9",
+          "start_t": 225.99108576253624,
+          "end_t": 241.32844903384293,
+          "steps": {
+            "attempts": 118,
+            "completed": 118,
+            "unfinished": 0,
+            "by_category": {
+              "turning": 21,
+              "flat_transit": 82,
+              "alignment": 15
+            },
+            "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+          },
+          "moving_swings": 103,
+          "moving_minimum_sole_clearance_m": 0.004894066671049223,
+          "success": true
+        }
+      ],
+      "step_reward": -1000000.0,
+      "paper_geometry_present": false,
+      "artifact_sha256": "486fb8d72d199d5bc1087f70f286c3cfa5c335821b379f630546d66999a9b832"
+    },
+    {
+      "id": "paperfree-w9-laptop-p6",
+      "status": "completed",
+      "at": "2026-11-20T23:38:58.536799+00:00",
+      "physical_attempts": 1,
+      "parameters": {
+        "id": "paperfree-w9-laptop-p6",
+        "seed": 185000,
+        "walk": "W8",
+        "laptop": "P4",
+        "snapshot": "mochi/artifacts/paperfree-v19-engineering/paperfree-w9-reference-laptop-laptop.pickle.gz",
+        "domain": "laptop",
+        "task": "laptop",
+        "action": "P6"
+      },
+      "wall_seconds": 15.306913000531495,
+      "complete": null,
+      "qualified": null,
+      "failure": null,
+      "steps": 307,
+      "physical_seconds": 253.62564313310028,
+      "flat_legs": [
+        {
+          "task": "drawer",
+          "controller": "W9",
+          "start_t": 205.01890503951242,
+          "end_t": 221.58329007130473,
+          "steps": {
+            "attempts": 128,
+            "completed": 128,
+            "unfinished": 0,
+            "by_category": {
+              "turning": 31,
+              "flat_transit": 82,
+              "alignment": 15
+            },
+            "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+          },
+          "moving_swings": 113,
+          "moving_minimum_sole_clearance_m": 0.004832580081013436,
+          "success": true
+        },
+        {
+          "task": "laptop",
+          "controller": "W9",
+          "start_t": 225.99108576253624,
+          "end_t": 241.32844903384293,
+          "steps": {
+            "attempts": 118,
+            "completed": 118,
+            "unfinished": 0,
+            "by_category": {
+              "turning": 21,
+              "flat_transit": 82,
+              "alignment": 15
+            },
+            "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+          },
+          "moving_swings": 103,
+          "moving_minimum_sole_clearance_m": 0.004894066671049223,
+          "success": true
+        }
+      ],
+      "step_reward": 996.9999519722281,
+      "paper_geometry_present": false,
+      "artifact_sha256": "14950e8f45adc5a43bb4d7577b543473238ed4d8a5e56aca379f693352fc380a"
+    },
+    {
+      "id": "paperfree-w9-laptop-p5",
+      "status": "completed",
+      "at": "2026-11-20T23:38:58.536765+00:00",
+      "physical_attempts": 1,
+      "parameters": {
+        "id": "paperfree-w9-laptop-p5",
+        "seed": 185000,
+        "walk": "W8",
+        "laptop": "P4",
+        "snapshot": "mochi/artifacts/paperfree-v19-engineering/paperfree-w9-reference-laptop-laptop.pickle.gz",
+        "domain": "laptop",
+        "task": "laptop",
+        "action": "P5"
+      },
+      "wall_seconds": 16.853844290599227,
+      "complete": null,
+      "qualified": null,
+      "failure": null,
+      "steps": 304,
+      "physical_seconds": 255.604736858707,
+      "flat_legs": [
+        {
+          "task": "drawer",
+          "controller": "W9",
+          "start_t": 205.01890503951242,
+          "end_t": 221.58329007130473,
+          "steps": {
+            "attempts": 128,
+            "completed": 128,
+            "unfinished": 0,
+            "by_category": {
+              "turning": 31,
+              "flat_transit": 82,
+              "alignment": 15
+            },
+            "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+          },
+          "moving_swings": 113,
+          "moving_minimum_sole_clearance_m": 0.004832580081013436,
+          "success": true
+        },
+        {
+          "task": "laptop",
+          "controller": "W9",
+          "start_t": 225.99108576253624,
+          "end_t": 241.32844903384293,
+          "steps": {
+            "attempts": 118,
+            "completed": 118,
+            "unfinished": 0,
+            "by_category": {
+              "turning": 21,
+              "flat_transit": 82,
+              "alignment": 15
+            },
+            "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+          },
+          "moving_swings": 103,
+          "moving_minimum_sole_clearance_m": 0.004894066671049223,
+          "success": true
+        }
+      ],
+      "step_reward": 999.9999349093736,
+      "paper_geometry_present": false,
+      "artifact_sha256": "8011592f399d555ac96b88411ac5d88b4948171f45ab489f095879725032d81c"
+    },
+    {
+      "id": "paperfree-globe-w8",
+      "status": "completed",
+      "at": "2026-11-20T23:40:20.895176+00:00",
+      "physical_attempts": 1,
+      "parameters": {
+        "id": "paperfree-globe-w8",
+        "seed": 185000,
+        "walk": "W8",
+        "laptop": "P4",
+        "snapshot": "mochi/artifacts/paperfree-v19-engineering/paperfree-w8-reference-walk-globe.pickle.gz",
+        "domain": "walk",
+        "task": "globe",
+        "action": "W8"
+      },
+      "wall_seconds": 15.784903792664409,
+      "complete": null,
+      "qualified": null,
+      "failure": null,
+      "steps": 466,
+      "physical_seconds": 274.43269501160836,
+      "flat_legs": [
+        {
+          "task": "drawer",
+          "controller": "W8",
+          "start_t": 205.01890503951242,
+          "end_t": 223.5542091016384,
+          "steps": {
+            "attempts": 144,
+            "completed": 144,
+            "unfinished": 0,
+            "by_category": {
+              "turning": 36,
+              "flat_transit": 92,
+              "alignment": 16
+            },
+            "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+          },
+          "moving_swings": 128,
+          "moving_minimum_sole_clearance_m": 0.004825543088201343,
+          "success": true
+        },
+        {
+          "task": "laptop",
+          "controller": "W8",
+          "start_t": 227.8704482058117,
+          "end_t": 245.66594234572617,
+          "steps": {
+            "attempts": 138,
+            "completed": 138,
+            "unfinished": 0,
+            "by_category": {
+              "turning": 26,
+              "flat_transit": 88,
+              "alignment": 24
+            },
+            "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+          },
+          "moving_swings": 114,
+          "moving_minimum_sole_clearance_m": 0.004884110797447567,
+          "success": true
+        },
+        {
+          "task": "globe",
+          "controller": "W8",
+          "start_t": 257.4816468934005,
+          "end_t": 274.43269501160836,
+          "steps": {
+            "attempts": 124,
+            "completed": 124,
+            "unfinished": 0,
+            "by_category": {
+              "fixture_clearance": 30,
+              "turning": 31,
+              "flat_transit": 50,
+              "alignment": 13
+            },
+            "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+          },
+          "moving_swings": 111,
+          "moving_minimum_sole_clearance_m": 0.004668220339138126,
+          "success": true
+        }
+      ],
+      "step_reward": 875.9999959640362,
+      "paper_geometry_present": false,
+      "artifact_sha256": "194b08fd0a00634d5e6554ce344cb8a87f048d6c60d87d6ffd92cbcdc5575a85"
+    },
+    {
+      "id": "paperfree-globe-w10",
+      "status": "completed",
+      "at": "2026-11-20T23:40:20.895176+00:00",
+      "physical_attempts": 1,
+      "parameters": {
+        "id": "paperfree-globe-w10",
+        "seed": 185000,
+        "walk": "W8",
+        "laptop": "P4",
+        "snapshot": "mochi/artifacts/paperfree-v19-engineering/paperfree-w8-reference-walk-globe.pickle.gz",
+        "domain": "walk",
+        "task": "globe",
+        "action": "W10"
+      },
+      "wall_seconds": 15.002435624599457,
+      "complete": null,
+      "qualified": null,
+      "failure": null,
+      "steps": 456,
+      "physical_seconds": 273.20730819017734,
+      "flat_legs": [
+        {
+          "task": "drawer",
+          "controller": "W8",
+          "start_t": 205.01890503951242,
+          "end_t": 223.5542091016384,
+          "steps": {
+            "attempts": 144,
+            "completed": 144,
+            "unfinished": 0,
+            "by_category": {
+              "turning": 36,
+              "flat_transit": 92,
+              "alignment": 16
+            },
+            "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+          },
+          "moving_swings": 128,
+          "moving_minimum_sole_clearance_m": 0.004825543088201343,
+          "success": true
+        },
+        {
+          "task": "laptop",
+          "controller": "W8",
+          "start_t": 227.8704482058117,
+          "end_t": 245.66594234572617,
+          "steps": {
+            "attempts": 138,
+            "completed": 138,
+            "unfinished": 0,
+            "by_category": {
+              "turning": 26,
+              "flat_transit": 88,
+              "alignment": 24
+            },
+            "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+          },
+          "moving_swings": 114,
+          "moving_minimum_sole_clearance_m": 0.004884110797447567,
+          "success": true
+        },
+        {
+          "task": "globe",
+          "controller": "W10",
+          "start_t": 257.4816468934005,
+          "end_t": 273.20730819017734,
+          "steps": {
+            "attempts": 114,
+            "completed": 114,
+            "unfinished": 0,
+            "by_category": {
+              "fixture_clearance": 30,
+              "turning": 29,
+              "flat_transit": 43,
+              "alignment": 12
+            },
+            "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+          },
+          "moving_swings": 102,
+          "moving_minimum_sole_clearance_m": 0.004675239149166127,
+          "success": true
+        }
+      ],
+      "step_reward": 885.9999962557949,
+      "paper_geometry_present": false,
+      "artifact_sha256": "f231141a7beac65f57160f6ebcb987fa9afa1176b1d1001ad658d510761993b2"
+    },
+    {
+      "id": "paperfree-globe-w9",
+      "status": "completed",
+      "at": "2026-11-20T23:40:20.895223+00:00",
+      "physical_attempts": 1,
+      "parameters": {
+        "id": "paperfree-globe-w9",
+        "seed": 185000,
+        "walk": "W8",
+        "laptop": "P4",
+        "snapshot": "mochi/artifacts/paperfree-v19-engineering/paperfree-w8-reference-walk-globe.pickle.gz",
+        "domain": "walk",
+        "task": "globe",
+        "action": "W9"
+      },
+      "wall_seconds": 15.73821016587317,
+      "complete": null,
+      "qualified": null,
+      "failure": null,
+      "steps": 466,
+      "physical_seconds": 274.43024260302644,
+      "flat_legs": [
+        {
+          "task": "drawer",
+          "controller": "W8",
+          "start_t": 205.01890503951242,
+          "end_t": 223.5542091016384,
+          "steps": {
+            "attempts": 144,
+            "completed": 144,
+            "unfinished": 0,
+            "by_category": {
+              "turning": 36,
+              "flat_transit": 92,
+              "alignment": 16
+            },
+            "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+          },
+          "moving_swings": 128,
+          "moving_minimum_sole_clearance_m": 0.004825543088201343,
+          "success": true
+        },
+        {
+          "task": "laptop",
+          "controller": "W8",
+          "start_t": 227.8704482058117,
+          "end_t": 245.66594234572617,
+          "steps": {
+            "attempts": 138,
+            "completed": 138,
+            "unfinished": 0,
+            "by_category": {
+              "turning": 26,
+              "flat_transit": 88,
+              "alignment": 24
+            },
+            "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+          },
+          "moving_swings": 114,
+          "moving_minimum_sole_clearance_m": 0.004884110797447567,
+          "success": true
+        },
+        {
+          "task": "globe",
+          "controller": "W9",
+          "start_t": 257.4816468934005,
+          "end_t": 274.43024260302644,
+          "steps": {
+            "attempts": 124,
+            "completed": 124,
+            "unfinished": 0,
+            "by_category": {
+              "fixture_clearance": 30,
+              "turning": 31,
+              "flat_transit": 50,
+              "alignment": 13
+            },
+            "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+          },
+          "moving_swings": 111,
+          "moving_minimum_sole_clearance_m": 0.00467553971419803,
+          "success": true
+        }
+      ],
+      "step_reward": 875.9999959646201,
+      "paper_geometry_present": false,
+      "artifact_sha256": "bf3d64c7cb7a0f400432c89dde907aa07e36fbe200caac68839b6d57ed18dfaf"
+    },
+    {
+      "id": "paperfree-w10-p5-full",
+      "status": "completed",
+      "at": "2026-11-20T23:42:44.477463+00:00",
+      "physical_attempts": 1,
+      "parameters": {
+        "id": "paperfree-w10-p5-full",
+        "seed": 185000,
+        "walk": "W10",
+        "laptop": "P5",
+        "snapshot": null,
+        "domain": "laptop",
+        "task": "laptop",
+        "action": null
+      },
+      "sources_at_start": {
+        "src/mochi/paperfree_v19/world.py": "960b9b29a571eb56869f2a2d2093af157983584c517a304b9851372f7b19c36e",
+        "src/mochi/paperfree_v19/policy.py": "225debe9065f38a734f11176b30807d8a71a4d4ae4184144dfaf1ecd42bb3e21",
+        "src/mochi/paperfree_v19/sequence.py": "68950c8e20ff8e344aeb3e9f8c86ee92aadcb94002cabf4554b29b6c1d9dfbba",
+        "src/mochi/paperfree_v19/objective.py": "d86f572dbba7c3082d4570bfa993ef171d45de017c01a9f8fc8d51a74af2891f",
+        "src/mochi/paperfree_v19/engineering.py": "3ac4f7041fe623874d805c47a1d98aafe8ed53d78546f4a779ce7786df8637f9",
+        "configs/paperfree-v19-controls.json": "afbbec9ae2dd28983dfc697d5b94bb43dab6bcc1f4b655f63fc7697fa73e33b4",
+        "configs/richdesk-v19-paperfree.json": "41b107289ced204e0f881df44c4ff20c4eb716db74fec4e6d27034a5e371a9cc"
+      },
+      "wall_seconds": 299.4111320003867,
+      "complete": true,
+      "qualified": true,
+      "failure": null,
+      "steps": 414,
+      "physical_seconds": 277.9715205953141,
+      "flat_legs": [
+        {
+          "task": "drawer",
+          "controller": "W10",
+          "start_t": 205.01890503951242,
+          "end_t": 221.09853064161254,
+          "steps": {
+            "attempts": 124,
+            "completed": 124,
+            "unfinished": 0,
+            "by_category": {
+              "turning": 29,
+              "flat_transit": 75,
+              "alignment": 20
+            },
+            "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+          },
+          "moving_swings": 104,
+          "moving_minimum_sole_clearance_m": 0.0048625895520350085,
+          "success": true
+        },
+        {
+          "task": "laptop",
+          "controller": "W10",
+          "start_t": 225.1875132171949,
+          "end_t": 239.5422781166803,
+          "steps": {
+            "attempts": 110,
+            "completed": 110,
+            "unfinished": 0,
+            "by_category": {
+              "turning": 22,
+              "flat_transit": 76,
+              "alignment": 12
+            },
+            "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+          },
+          "moving_swings": 98,
+          "moving_minimum_sole_clearance_m": 0.0049121117878799,
+          "success": true
+        },
+        {
+          "task": "globe",
+          "controller": "W10",
+          "start_t": 253.10491504420665,
+          "end_t": 269.8082698956409,
+          "steps": {
+            "attempts": 122,
+            "completed": 122,
+            "unfinished": 0,
+            "by_category": {
+              "fixture_clearance": 28,
+              "turning": 36,
+              "flat_transit": 45,
+              "alignment": 13
+            },
+            "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+          },
+          "moving_swings": 109,
+          "moving_minimum_sole_clearance_m": 0.0047051602047934165,
+          "success": true
+        }
+      ],
+      "step_reward": 585.9997737681641,
+      "paper_geometry_present": false,
+      "artifact_sha256": "9a2338cd81f0dbbd6203d859aa506e096c7d6d84d8b02e0da4fa7627f6e0fd7f"
+    },
+    {
+      "id": "paperfree-w8-laptop-p5",
+      "status": "completed",
+      "at": "2026-11-20T23:42:44.477426+00:00",
+      "physical_attempts": 1,
+      "parameters": {
+        "id": "paperfree-w8-laptop-p5",
+        "seed": 185000,
+        "walk": "W8",
+        "laptop": "P4",
+        "snapshot": "mochi/artifacts/paperfree-v19-engineering/paperfree-w8-reference-laptop-laptop.pickle.gz",
+        "domain": "laptop",
+        "task": "laptop",
+        "action": "P5"
+      },
+      "sources_at_start": {
+        "src/mochi/paperfree_v19/world.py": "960b9b29a571eb56869f2a2d2093af157983584c517a304b9851372f7b19c36e",
+        "src/mochi/paperfree_v19/policy.py": "225debe9065f38a734f11176b30807d8a71a4d4ae4184144dfaf1ecd42bb3e21",
+        "src/mochi/paperfree_v19/sequence.py": "68950c8e20ff8e344aeb3e9f8c86ee92aadcb94002cabf4554b29b6c1d9dfbba",
+        "src/mochi/paperfree_v19/objective.py": "d86f572dbba7c3082d4570bfa993ef171d45de017c01a9f8fc8d51a74af2891f",
+        "src/mochi/paperfree_v19/engineering.py": "3ac4f7041fe623874d805c47a1d98aafe8ed53d78546f4a779ce7786df8637f9",
+        "configs/paperfree-v19-controls.json": "afbbec9ae2dd28983dfc697d5b94bb43dab6bcc1f4b655f63fc7697fa73e33b4",
+        "configs/richdesk-v19-paperfree.json": "41b107289ced204e0f881df44c4ff20c4eb716db74fec4e6d27034a5e371a9cc"
+      },
+      "wall_seconds": 16.22979654185474,
+      "complete": null,
+      "qualified": null,
+      "failure": null,
+      "steps": 340,
+      "physical_seconds": 258.67923975090315,
+      "flat_legs": [
+        {
+          "task": "drawer",
+          "controller": "W8",
+          "start_t": 205.01890503951242,
+          "end_t": 223.5542091016384,
+          "steps": {
+            "attempts": 144,
+            "completed": 144,
+            "unfinished": 0,
+            "by_category": {
+              "turning": 36,
+              "flat_transit": 92,
+              "alignment": 16
+            },
+            "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+          },
+          "moving_swings": 128,
+          "moving_minimum_sole_clearance_m": 0.004825543088201343,
+          "success": true
+        },
+        {
+          "task": "laptop",
+          "controller": "W8",
+          "start_t": 227.8704482058117,
+          "end_t": 245.66594234572617,
+          "steps": {
+            "attempts": 138,
+            "completed": 138,
+            "unfinished": 0,
+            "by_category": {
+              "turning": 26,
+              "flat_transit": 88,
+              "alignment": 24
+            },
+            "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+          },
+          "moving_swings": 114,
+          "moving_minimum_sole_clearance_m": 0.004884110797447567,
+          "success": true
+        }
+      ],
+      "step_reward": 999.9999306635751,
+      "paper_geometry_present": false,
+      "artifact_sha256": "a872058c06222d384b166d5212ae7ff85a90f99534052e331a2c9d84a9c44a81"
+    },
+    {
+      "id": "paperfree-w9-p5-full",
+      "status": "completed",
+      "at": "2026-11-20T23:42:44.478672+00:00",
+      "physical_attempts": 1,
+      "parameters": {
+        "id": "paperfree-w9-p5-full",
+        "seed": 185000,
+        "walk": "W9",
+        "laptop": "P5",
+        "snapshot": null,
+        "domain": "laptop",
+        "task": "laptop",
+        "action": null
+      },
+      "sources_at_start": {
+        "src/mochi/paperfree_v19/world.py": "960b9b29a571eb56869f2a2d2093af157983584c517a304b9851372f7b19c36e",
+        "src/mochi/paperfree_v19/policy.py": "225debe9065f38a734f11176b30807d8a71a4d4ae4184144dfaf1ecd42bb3e21",
+        "src/mochi/paperfree_v19/sequence.py": "68950c8e20ff8e344aeb3e9f8c86ee92aadcb94002cabf4554b29b6c1d9dfbba",
+        "src/mochi/paperfree_v19/objective.py": "d86f572dbba7c3082d4570bfa993ef171d45de017c01a9f8fc8d51a74af2891f",
+        "src/mochi/paperfree_v19/engineering.py": "3ac4f7041fe623874d805c47a1d98aafe8ed53d78546f4a779ce7786df8637f9",
+        "configs/paperfree-v19-controls.json": "afbbec9ae2dd28983dfc697d5b94bb43dab6bcc1f4b655f63fc7697fa73e33b4",
+        "configs/richdesk-v19-paperfree.json": "41b107289ced204e0f881df44c4ff20c4eb716db74fec4e6d27034a5e371a9cc"
+      },
+      "wall_seconds": 300.2902999166399,
+      "complete": true,
+      "qualified": true,
+      "failure": null,
+      "steps": 422,
+      "physical_seconds": 279.50100608090276,
+      "flat_legs": [
+        {
+          "task": "drawer",
+          "controller": "W9",
+          "start_t": 205.01890503951242,
+          "end_t": 221.58329007130473,
+          "steps": {
+            "attempts": 128,
+            "completed": 128,
+            "unfinished": 0,
+            "by_category": {
+              "turning": 31,
+              "flat_transit": 82,
+              "alignment": 15
+            },
+            "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+          },
+          "moving_swings": 113,
+          "moving_minimum_sole_clearance_m": 0.004832580081013436,
+          "success": true
+        },
+        {
+          "task": "laptop",
+          "controller": "W9",
+          "start_t": 225.99108576253624,
+          "end_t": 241.32844903384293,
+          "steps": {
+            "attempts": 118,
+            "completed": 118,
+            "unfinished": 0,
+            "by_category": {
+              "turning": 21,
+              "flat_transit": 82,
+              "alignment": 15
+            },
+            "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+          },
+          "moving_swings": 103,
+          "moving_minimum_sole_clearance_m": 0.004894066671049223,
+          "success": true
+        },
+        {
+          "task": "globe",
+          "controller": "W9",
+          "start_t": 255.604736858707,
+          "end_t": 271.8159750547033,
+          "steps": {
+            "attempts": 118,
+            "completed": 118,
+            "unfinished": 0,
+            "by_category": {
+              "fixture_clearance": 24,
+              "turning": 31,
+              "flat_transit": 50,
+              "alignment": 13
+            },
+            "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+          },
+          "moving_swings": 105,
+          "moving_minimum_sole_clearance_m": 0.004687776004391304,
+          "success": true
+        }
+      ],
+      "step_reward": 577.999777964164,
+      "paper_geometry_present": false,
+      "artifact_sha256": "33e197edc84c8f9c9fdb7c8ca4d27aa98faabeab4b3f7be38bbfd22fe19b8940"
+    },
+    {
+      "id": "paperfree-w8-p5-full",
+      "status": "completed",
+      "at": "2026-11-20T23:43:22.419679+00:00",
+      "physical_attempts": 1,
+      "parameters": {
+        "id": "paperfree-w8-p5-full",
+        "seed": 185000,
+        "walk": "W8",
+        "laptop": "P5",
+        "snapshot": null,
+        "domain": "laptop",
+        "task": "laptop",
+        "action": null
+      },
+      "sources_at_start": {
+        "src/mochi/paperfree_v19/world.py": "960b9b29a571eb56869f2a2d2093af157983584c517a304b9851372f7b19c36e",
+        "src/mochi/paperfree_v19/policy.py": "225debe9065f38a734f11176b30807d8a71a4d4ae4184144dfaf1ecd42bb3e21",
+        "src/mochi/paperfree_v19/sequence.py": "68950c8e20ff8e344aeb3e9f8c86ee92aadcb94002cabf4554b29b6c1d9dfbba",
+        "src/mochi/paperfree_v19/objective.py": "d86f572dbba7c3082d4570bfa993ef171d45de017c01a9f8fc8d51a74af2891f",
+        "src/mochi/paperfree_v19/engineering.py": "3ac4f7041fe623874d805c47a1d98aafe8ed53d78546f4a779ce7786df8637f9",
+        "configs/paperfree-v19-controls.json": "79fc5e2749cc3e8937b0bbfcb1a0c4ecee8af7dcbb665c5a2f35800fe4070321",
+        "configs/richdesk-v19-paperfree.json": "41b107289ced204e0f881df44c4ff20c4eb716db74fec4e6d27034a5e371a9cc"
+      },
+      "wall_seconds": 300.6658333754167,
+      "complete": true,
+      "qualified": true,
+      "failure": null,
+      "steps": 468,
+      "physical_seconds": 284.05594628704927,
+      "flat_legs": [
+        {
+          "task": "drawer",
+          "controller": "W8",
+          "start_t": 205.01890503951242,
+          "end_t": 223.5542091016384,
+          "steps": {
+            "attempts": 144,
+            "completed": 144,
+            "unfinished": 0,
+            "by_category": {
+              "turning": 36,
+              "flat_transit": 92,
+              "alignment": 16
+            },
+            "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+          },
+          "moving_swings": 128,
+          "moving_minimum_sole_clearance_m": 0.004825543088201343,
+          "success": true
+        },
+        {
+          "task": "laptop",
+          "controller": "W8",
+          "start_t": 227.8704482058117,
+          "end_t": 245.66594234572617,
+          "steps": {
+            "attempts": 138,
+            "completed": 138,
+            "unfinished": 0,
+            "by_category": {
+              "turning": 26,
+              "flat_transit": 88,
+              "alignment": 24
+            },
+            "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+          },
+          "moving_swings": 114,
+          "moving_minimum_sole_clearance_m": 0.004884110797447567,
+          "success": true
+        },
+        {
+          "task": "globe",
+          "controller": "W8",
+          "start_t": 258.67923975090315,
+          "end_t": 276.1183171769124,
+          "steps": {
+            "attempts": 128,
+            "completed": 128,
+            "unfinished": 0,
+            "by_category": {
+              "fixture_clearance": 36,
+              "turning": 30,
+              "flat_transit": 49,
+              "alignment": 13
+            },
+            "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+          },
+          "moving_swings": 115,
+          "moving_minimum_sole_clearance_m": 0.004657746292956299,
+          "success": true
+        }
+      ],
+      "step_reward": 531.9997717847839,
+      "paper_geometry_present": false,
+      "artifact_sha256": "df3ea8ef2aec58adb5b112830b7255980ec760047c976dd4f0e9721ba44d41ab"
+    }
+  ],
+  "physical_rollouts": 11,
+  "simulation_cpu_hours": 0.4331876558101633,
+  "scope": "One CPU per local process, elapsed process time. Includes failed diagnostic branches. No new optimizer updates.",
+  "source_caveat": "First seven preliminary attempts predate per-attempt source hashing. Later source hashes are launch-time measurements.",
+  "reference": "paperfree-w8-p5-full"
+}
