@@ -161,6 +161,14 @@ def main():
         assert example['evidence_sha256'] == evidence['sha256']
         assert example['initial_state_sha256'] == evidence['initial_state_sha256']
         assert evidence['success'] and evidence['recovery_success'] and not evidence['fall'] and not evidence['invalid_contact']
+    observation_labels = {}
+    for teacher in teachers:
+        for example in teacher['examples']:
+            key = json.dumps(example['observation'], sort_keys=True)
+            observation_labels.setdefault(key, []).append({'seed': teacher['seed'], 'action': example['action']})
+    label_conflicts = [{'observation': json.loads(key), 'labels': labels}
+                      for key, labels in observation_labels.items()
+                      if len({row['action'] for row in labels}) > 1]
 
     held = {label: read(folder / f'held-out-{label}.json') for label in ['parent', 'selected', 'fixed', 'static']}
     failures = {}
@@ -252,6 +260,7 @@ def main():
              'static_choice_audit': static_comparisons, 'failures': failures, 'service_eligibility': eligibility,
              'after_descent_clearance':{label:[{'seed':row['seed'],**after_descent_clearance(row['episode'])} for row in rows] for label,rows in held.items()},
              'walking_training_candidates': walking_candidates,
+             'identical_observation_label_conflicts': label_conflicts,
              'static_control_training_scope': 'Built from the two guarded teachers. The selector additionally receives three laptop regression examples; this static control does not receive those three labels.',
              'resource_receipt_caveat': 'The shared receipt helper reports 3072 MiB, inherited from an older function. C18 functions declare 4096 MiB. CPU and measured duration accounting use the actual one-CPU configuration.',
              'limits': ['Four final scenarios in one furnished layout. No hardware validation.',
@@ -331,6 +340,7 @@ def main():
     for row in walking_candidates:
         lines.append(f"| {row['seed']} | {row['destination']} | {row['action']} | {'Yes' if row['valid'] else 'No'} | {'Yes' if row['selected_training_label'] else 'No'} | {number(row['moving_sole_clearance_m'] * 1000)} | {row['steps']} | {number(row['duration_s'], 1)} | {number(row['native_acceleration_rms_rad_s2'])} |")
     lines += ['', 'The frozen native-acceleration limit is 161.4 rad/s². A completed route can still be invalid. More foot clearance can also require more steps; the final evaluation reports those costs separately.', '',
+              f"The two guarded trajectories contain {len(label_conflicts)} identical-observation groups with different teaching labels. The audit retains their observations, seeds and labels. A deterministic selector cannot choose different actions from identical inputs. Additional updates alone cannot recover physical distinctions removed by observation rounding, and a near-threshold validity change also motivates improving the controller's safety margin.", '',
               '## Services and resource accounting', '',
               f"Accounted physical attempts: {usage['physical_rollouts']}, including 58 local engineering attempts. Confirmed completed attempts: {report['total_physical_rollouts_completed']}. Accounted simulation CPU-hours: {usage['simulation_cpu_hours']:.3f}. Limits were 160 attempts, 14 CPU-hours, 16 optimizer updates and four parallel workers. These are measured budget records, not a billing invoice.", '',
               'Four unfinished stages and eight CPU-minutes were conservatively charged for two interrupted teacher inputs. Their reserved inference tokens were retained. A separate cloud wrapper check intentionally reached the invalid-action validator after physical initialization; its failed attempt was charged and provided no training label.', '',
