@@ -1,0 +1,48 @@
+{
+  "scope": "Release unused reservations and carry every recorded attempt into the same 224-attempt/18-hour budget. This is not a budget reset.",
+  "budget_dict": "mochi-t16r1-44686221838-budget",
+  "before": {
+    "physical_rollouts": 162,
+    "simulation_cpu_hours": 9.00121088449093,
+    "optimizer_updates": 0,
+    "training_token_presentations": 0,
+    "inference_tokens": 98000,
+    "exa_searches": 1,
+    "past_writes": 3,
+    "past_recalls": 4
+  },
+  "after": {
+    "physical_rollouts": 72,
+    "simulation_cpu_hours": 3.827221737938345,
+    "optimizer_updates": 0,
+    "training_token_presentations": 0,
+    "inference_tokens": 98000,
+    "exa_searches": 1,
+    "past_writes": 3,
+    "past_recalls": 4
+  },
+  "finished_remote_stages": 51,
+  "unfinished_remote_stages": 2,
+  "completed_worker_cpu_hours": 1.4138499127183333,
+  "unfinished_worker_cpu_hours_upper_bound": 1.0,
+  "supervisor_cpu_hours_upper_bound": 1.125,
+  "previous_local_probe": {
+    "scope": "Local state probe only; not a task completion or model result.",
+    "physical_attempts": 3,
+    "single_worker_seconds": 4.359184167347848,
+    "simulation_cpu_hours": 0.0012108844909299579,
+    "initialization_physical_seconds": 0.4005600683781674,
+    "checkpoint_physical_hash": "c1cf77c5117e2362bab31793cee864770aecb50697cd692fa17f752bffd2c72d",
+    "next_step_physical_hash": "b4fd8c18ab63f105f270c3f2f67d24dd2beadd5aaab06ea114c0d0a46c135726",
+    "serialized_state_and_next_step_exact": true,
+    "source_sha256": "950d9217ff805754e9f10936b5c38fd1f625f2ac4f90df0cffc23b33599f17a9"
+  },
+  "new_local_attempts": 16,
+  "new_local_worker_hours": 0.2871609407290816,
+  "stage_snapshot_sha256": "32cae8fd4b393cf80d1e94894a4955a3608a42de52c5e66a4e474355a6e6edb7",
+  "unfinished_stage_ids": [
+    "101001:9:branch:W3",
+    "101002:10:branch:G0"
+  ],
+  "qualification": "Per-function timeout bounds are retained for interrupted work; supervisor CPU is conservatively bounded by all three full 10800-second timeouts. These are accounted resource bounds, not invoices."
+}

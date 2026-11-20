@@ -1,18 +1,18 @@
 # MOCHI: Walking, Contact and Recovery Policy Learning
 
-## Current work: V16 forward descent and arm recovery
+## Current work: feasible contact actions and post-training
 
-[Physical route preview](https://howdymary--mochi-smooth-v16-engineering-web.us-east.modal.run/) · [Training execution](https://github.com/howdymary/mochi-demo/actions/runs/44669222147) · [Frozen protocol](docs/smooth-v16-plan.md) · [Engineering evidence](evidence/smooth-v16/engineering.json)
+[Execution prompt](docs/smooth-v17-prompt.md) · [Controller evidence](evidence/smooth-v17/engineering.json) · [Resource reconciliation](evidence/smooth-v17/carried-budget.json) · [Existing route preview](https://howdymary--mochi-smooth-v16-engineering-web.us-east.modal.run/)
 
-The new route includes a supported 180-degree turnaround on the books, forward-facing descent, and verified loaded contact on the Post-it between drawer and laptop. Both physical engineering references completed all four tasks. On the same known scenario, W4 used 476 steps and 347.37 physical seconds; W5 used 462 steps and 331.92 seconds. The preview shows fixed controllers and zero new Tinker updates. These are engineering results, not a measured training gain.
+The revised fixed reference completed the uninterrupted clock, book turnaround, forward descent, drawer, loaded Post-it crossing, laptop and globe sequence in 339.60 physical seconds and 470 steps. It passed the unchanged quality checks with no fall or forbidden contact. This is a controller-engineering result. New Tinker results remain pending.
 
-The direct drawer-to-paper approach used 108 steps versus 218 for the detour in an isolated matched-state test. The longer route also exposed passive laptop-hinge creep. The new scene adds 0.015 N m of physical hinge friction and uses a 42-degree hand-release threshold. Contact-based task success remains required. All new checkpoints and baselines use the same revised scene and route.
+Two actions address measured limitations. H0 adds a joint-rest prior to clock inverse kinematics; a matched development case reduced R4 recovery travel from 9.06 to 3.62 rad. P4 uses steady 0.60 N laptop control with a 16-second action horizon; it closed the hard development case in 12.72 seconds with 0.619 N peak contact force. The global force limit stays 0.8 N. Every model checkpoint and baseline receives the same extended library. Native gait weights remain fixed.
 
-Execution [44669222147](https://github.com/howdymary/mochi-demo/actions/runs/44669222147) timed out during collection before any optimizer update. It preserved 68 completed action tests. The parent completed two of three development sequences, but none passed every smoothness criterion. No new trained-checkpoint improvement was established. [Stopped-run accounting](evidence/smooth-v16/stopped-execution.json) separates completed attempts, unfinished work and conservative reservations.
+Execution [44669222147](https://github.com/howdymary/mochi-demo/actions/runs/44669222147) timed out in collection. Execution [44686221838](https://github.com/howdymary/mochi-demo/actions/runs/44686221838) preserved its physical states but stopped when none of the original laptop actions succeeded on one training approach. Both completed zero optimizer updates. Their failures and checkpoints remain archived.
 
-The [continuation prompt](docs/smooth-v16-continuation-prompt.md) replaces monolithic collection with durable physical stages. It preserves the physical scene and quality limits, validates cached outcomes against exact initial-state hashes, and records previous expenditure separately. The additional execution is bounded at 16 updates, 224 physical stages/branches, 18 aggregate CPU-hours and four physics workers. Model training and final-test results remain pending. Tinker updates shared controller-selection weights; the native gait stays fixed.
+The repair continues against the budget opened by the second execution, with an audited starting debit of 73 attempts and 3.835 accounted CPU-hours. This includes conservative bounds for two interrupted calls and old supervisors. It does not reset previous usage. The limits remain 224 attempts, 18 accounted CPU-hours, 16 optimizer updates and four physics workers. The old route viewers and forecasting application are preserved.
 
-Thirty local engineering attempts used 1.190 single-worker hours, already charged to the stopped execution. Neither that ledger nor its checkpoints are reset. Archived V15 results, the working preview and the forecasting application are preserved.
+Training will use historical parent-prefix states plus newly measured clock, laptop and recovery alternatives. Final displayed evaluations will be uninterrupted rollouts from reset. The study will distinguish manually engineered capability from improvements caused by trained choices, and compare against fixed and training-derived static controls.
 
 ## Completed V15 walking and task-control study
 

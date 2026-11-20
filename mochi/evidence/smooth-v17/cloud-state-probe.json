@@ -1,0 +1,218 @@
+{
+  "status": "completed",
+  "before": {
+    "physical_rollouts": 72,
+    "simulation_cpu_hours": 3.827221737938345,
+    "optimizer_updates": 0,
+    "training_token_presentations": 0,
+    "inference_tokens": 98000,
+    "exa_searches": 1,
+    "past_writes": 3,
+    "past_recalls": 4
+  },
+  "after": {
+    "physical_rollouts": 73,
+    "simulation_cpu_hours": 3.834878270621678,
+    "optimizer_updates": 0,
+    "training_token_presentations": 0,
+    "inference_tokens": 98000,
+    "exa_searches": 1,
+    "past_writes": 3,
+    "past_recalls": 4
+  },
+  "receipt": {
+    "provider": "Modal",
+    "physical_rollouts": 1,
+    "cpu": 1,
+    "memory_mib": 4096,
+    "duration_seconds": 27.563517660000002,
+    "architecture": "x86_64",
+    "threadpools": [
+      {
+        "user_api": "blas",
+        "internal_api": "openblas",
+        "num_threads": 1,
+        "prefix": "libscipy_openblas",
+        "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+        "version": "0.3.30",
+        "threading_layer": "pthreads",
+        "architecture": "Haswell"
+      },
+      {
+        "user_api": "blas",
+        "internal_api": "openblas",
+        "num_threads": 1,
+        "prefix": "libscipy_openblas",
+        "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+        "version": "0.3.29.dev",
+        "threading_layer": "pthreads",
+        "architecture": "Haswell"
+      },
+      {
+        "user_api": "openmp",
+        "internal_api": "openmp",
+        "num_threads": 1,
+        "prefix": "libgomp",
+        "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+        "version": null
+      }
+    ],
+    "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+    "operation": "branch",
+    "cursor": 1
+  },
+  "outcome": {
+    "action": "H0",
+    "success": true,
+    "failure": null,
+    "duration_s": 5.06749359976709,
+    "metrics": {
+      "roll_rms_deg": 0.08344392663668908,
+      "lateral_rms_m": 0.0015060067113361925,
+      "roll_peak_deg": 0.26202672659639586,
+      "sampled_joint_speed_rms_rad_s": 0.050661498436234846
+    },
+    "steps": {
+      "attempts": 0,
+      "completed": 0,
+      "unfinished": 0,
+      "by_category": {},
+      "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+    },
+    "result": {
+      "task": "alarm",
+      "success": true,
+      "value": -0.00031198716822478925,
+      "duration": 3.419475032719106,
+      "contacts": 712,
+      "non_hand_contact_steps": 0,
+      "max_force_n": 0.12250627407175825,
+      "fall": false,
+      "profile": {
+        "code": "H0",
+        "speed": 0.025,
+        "depth": 0.0008,
+        "force": 0.3,
+        "brake": 0.0005,
+        "hold": 0.4
+      },
+      "phase": "release",
+      "final_tip": [
+        -0.335156994149442,
+        0.09986090250066885,
+        0.17062927115257984
+      ],
+      "final_target": [
+        -0.335,
+        0.1,
+        0.17049999999999998
+      ],
+      "controller": "home-regularized absolute IK, 0.0007 m/rad"
+    },
+    "coupled_recovery": {
+      "task": "alarm",
+      "action": "R4",
+      "success": true,
+      "duration_s": 1.648018567047984,
+      "arm_joint_travel_rad": 3.621223045837607,
+      "hand_path_m": 0.1181254040312784,
+      "fixture_contact_steps": 0,
+      "peak_fixture_force_n": 0.0,
+      "end_max_joint_error_rad": 6.357871082221922e-07,
+      "end_max_joint_speed_rad_s": 7.789734992791191e-07,
+      "fall": false,
+      "observation": {
+        "domain": "recovery",
+        "task": "alarm",
+        "active_arm": "right",
+        "joint_error_degrees": [
+          -12.4,
+          -54.6,
+          -7.8,
+          -56.2,
+          -0.0,
+          -41.5,
+          34.9
+        ],
+        "joint_speed_degrees_s": [
+          -0.1,
+          -0.0,
+          -0.0,
+          -0.0,
+          0.0,
+          -0.0,
+          -0.0
+        ],
+        "hand_body_offset_mm": [
+          62.0,
+          -39.6,
+          29.0
+        ],
+        "body_tilt_degrees": 0.5,
+        "hand_contact": false,
+        "maximum_joint_error_degrees": 56.2
+      },
+      "profile": {
+        "code": "R4",
+        "duration": 1.2,
+        "clearance": 0.55
+      }
+    },
+    "fall": false,
+    "invalid_contact": false,
+    "native_smoothness": {
+      "sampled_acceleration_rms_rad_s2": null,
+      "sampled_torque_change_rms_nm": null,
+      "scope": "Only adjacent samples inside native walking and turning, excluding holds and book-controller phases."
+    },
+    "longest_unsupported_seconds": 0.0,
+    "initial_state_sha256": "c44979a19bfe678a19a45f5cd3f9e6ac15961ff49b3ce04eac95455966d7548f",
+    "posttask_state": {
+      "path": "mochi-v17-cloud-state-probe-20261120/augmentation/101000-H0-posttask.pickle.gz",
+      "sha256": "eee5f022724f59b7d003259bdfeac2fdea9cecbe0aad42c188220b484a14f13c",
+      "physical_state_sha256": "e243691d4c4152ca644642d96331c035ffb6739e999c5b93576063d3479a98bb"
+    },
+    "posttask_observation": {
+      "domain": "recovery",
+      "task": "alarm",
+      "active_arm": "right",
+      "joint_error_degrees": [
+        -10,
+        -55,
+        -10,
+        -55,
+        0,
+        -40,
+        35
+      ],
+      "joint_speed_degrees_s": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "hand_body_offset_mm": [
+        60,
+        -40,
+        30
+      ],
+      "body_tilt_degrees": 0,
+      "hand_contact": false,
+      "maximum_joint_error_degrees": 56.2,
+      "available_actions": [
+        "R0",
+        "R1",
+        "R4"
+      ]
+    },
+    "archive": {
+      "volume": "mochi-smooth-v16-artifacts",
+      "path": "mochi-v17-cloud-state-probe-20261120/branch-101000-alarm-alarm-H0.json.gz",
+      "uncompressed_sha256": "1b89df643b294d53d06331e7bbc6333ad48c2718d36c120e21c9ca943cd340d5",
+      "compressed_bytes": 1364
+    }
+  }
+}

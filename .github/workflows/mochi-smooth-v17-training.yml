@@ -1,0 +1,91 @@
+name: Mochi feasible contact and recovery policy post-training
+on:
+  push:
+    branches: [mochi-desk-v3]
+    paths: ['mochi/configs/smooth-v17-training-launch.json']
+permissions:
+  contents: read
+  actions: read
+# Separate study. The backend restores only the completed V15 selected checkpoint.
+concurrency:
+  group: mochi-smooth-v16r1-resource-budget
+  cancel-in-progress: false
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    env:
+      PYTHONPATH: ${{ github.workspace }}/mochi/src
+      MOCHI_ROOT: ${{ github.workspace }}/mochi
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - name: Install the pinned isolated runtime
+        run: |
+          python -m pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install './mochi[remote,robotics,dev]' pyyaml==6.0.2
+          python mochi/scripts/fetch_visual_models.py
+      - name: Verify movement measurements and preserved controller contracts
+        run: python -m pytest -q mochi/tests/test_smooth_v17.py mochi/tests/test_smooth_v16_resume.py mochi/tests/test_smooth_v16.py mochi/tests/test_efficient_v15.py mochi/tests/test_directional_v14.py mochi/tests/test_terrain_v13.py mochi/tests/test_terrain_v12.py
+      - name: Resume physical collection, post-train Tinker and evaluate
+        timeout-minutes: 335
+        env:
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+          EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
+          PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
+        run: python -u -m mochi.smooth_v17.train
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mochi-smooth-v17-training-${{ github.run_id }}
+          path: mochi/artifacts/smooth-v17-training/
+          retention-days: 30
+  publish:
+    needs: train
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      PYTHONPATH: ${{ github.workspace }}/mochi/src
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - uses: actions/download-artifact@v4
+        with:
+          name: mochi-smooth-v17-training-${{ github.run_id }}
+          path: mochi/.cache/v17-completed
+      - run: python -m pip install modal==1.6.4
+      - name: Export actual completed checkpoint recordings
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: |
+          python mochi/scripts/build_smooth_v17_preview.py --source mochi/.cache/v17-completed
+          node mochi/scripts/check_smooth_v17_ui.mjs
+      - name: Deploy separate completed study
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: python -m modal deploy --strategy recreate mochi/scripts/deploy_smooth_v17.py
+      - name: Verify published release and actual training count
+        run: |
+          python - <<'PYCODE'
+          import json,os,urllib.request
+          base='https://howdymary--mochi-smooth-v17-demo-web.us-east.modal.run'
+          health=json.load(urllib.request.urlopen(base+'/api/health',timeout=30))
+          assert health['release']==os.environ['GITHUB_SHA']
+          assert health['new_tinker_updates']==16
+          manifest=json.load(urllib.request.urlopen(base+'/smooth-v17/manifest.json',timeout=30))
+          assert manifest['workflow_run']=='mochi-t17-'+os.environ['GITHUB_RUN_ID']
+          assert manifest['evaluation_status']=='completed' and manifest['test_pairs_available']==4
+          print('Verified completed model comparison',health)
+          PYCODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mochi-smooth-v17-public-${{ github.run_id }}
+          path: mochi/web/desk/smooth-v17/
+          retention-days: 30
