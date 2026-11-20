@@ -11,9 +11,25 @@ from build_terrain_training_preview import public_report
 ROOT=Path(__file__).resolve().parents[1]
 
 
+def public_evidence(value,campaign):
+    """Keep the verified Mochi handoff and omit unrelated recall metadata."""
+    if isinstance(value,list):
+        return [public_evidence(item,campaign) for item in value]
+    if isinstance(value,dict):
+        result={key:public_evidence(item,campaign) for key,item in value.items() if key!='returned_source_ids'}
+        if 'returned_source_ids' in value:
+            ids=value['returned_source_ids']
+            result['returned_source_ids']=[item for item in ids if item.startswith(campaign)]
+            result['unrelated_source_ids_omitted']=sum(not item.startswith(campaign) for item in ids)
+            result['all_returned_source_ids_sha256']=hashlib.sha256(json.dumps(ids).encode()).hexdigest()
+        return result
+    return value
+
+
 def main():
     p=argparse.ArgumentParser()
     p.add_argument('--source',required=True)
+    p.add_argument('--execution-workflow-run',type=int,default=44791618165)
     p.add_argument('--development-preview',action='store_true',help='Inspect completed development recordings while the final cohort is still pending; never marks the campaign complete.')
     a=p.parse_args()
     source=Path(a.source)
@@ -62,7 +78,7 @@ def main():
             'failure':row['failure'],'archive':row['archive'],'sha256':descriptor['sha256'],
             'uncompressed_sha256':descriptor['uncompressed_sha256'],
             'steps':e['steps'],'duration':e['duration'],'direction_metrics':row['direction_metrics'],
-            'native_smoothness':e['native_smoothness'],
+            'native_smoothness':e['native_smoothness'],'flat_foot_clearance':e.get('flat_foot_clearance'),
             'recovery_arm_joint_travel_rad':sum(x['arm_joint_travel_rad'] for x in e['recoveries']),
             'intertask_arm_joint_travel_rad':sum(e['intertask_arm_joint_travel_rad'].values()),
             'postit_loaded_contacts':len(e['postit_crossings']),
@@ -98,15 +114,17 @@ def main():
         'held_out':report.get('held_out'),'paired_held_out':report.get('paired_held_out'),
         'improvement_goal_met':report.get('improvement_goal_met'),'component_results':report.get('component_results'),
         'test_pairs_available':len(parents),'evaluation_status':'development_preview' if a.development_preview else 'completed','selection_finalized':True,
-        'default_scenario':next((s['id'] for s in scenarios if s['partition']=='held_out'),scenarios[0]['id']),'workflow_run':report['run_id'],'source_sha':report['source_sha'],
+        'default_scenario':next((s['id'] for s in scenarios if s['partition']=='held_out'),scenarios[0]['id']),'workflow_run':report['run_id'],
+        'campaign_id':report['run_id'],'execution_workflow_run':a.execution_workflow_run,'source_sha':report['source_sha'],
         'services':report['services']['eligibility'],'campaign_modal_rollouts_completed':report['campaign_modal_rollouts_completed'],
         'total_physical_attempts_accounted':report['total_physical_attempts_accounted'],
         'total_physical_rollouts_completed':report['total_physical_rollouts_completed'],'engineering_usage':report['engineering_usage'],
-        'display_note':'Actual uninterrupted 25-Hz MuJoCo trajectories, display precision six decimals. Steps are measured from 100-Hz sole poses and contacts. Every checkpoint uses the same frozen contact-repair library and playback speed. Native gait weights remain fixed. Training changes controller-selection weights.'}
+        'display_note':'Actual uninterrupted MuJoCo trajectories, target100-Hz flat transit/25-Hz elsewhere, using real timestamps; display precision six decimals. Steps are measured from 100-Hz sole poses and contacts. Every checkpoint uses the same frozen contact-repair library and playback speed. Native gait weights remain fixed. Training changes controller-selection weights.'}
     manifest['scene']['version']=report['protocol']['scene_revision']['version']
     manifest['scene']['physics']={'laptop_hinge_friction_increment_nm':.015}
     (out/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
-    published=public_report(report)
+    published=public_evidence(public_report(report),report['run_id'])
+    published['execution_workflow_run']=a.execution_workflow_run
     encoded=json.dumps(published,indent=2)+'\n'
     assert 'tinker://' not in encoded, 'Private optimizer references must stay backend-only'
     (out/'report.json').write_text(encoded)
