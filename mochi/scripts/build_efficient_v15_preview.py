@@ -14,12 +14,18 @@ ROOT=Path(__file__).resolve().parents[1]
 def main():
     p=argparse.ArgumentParser()
     p.add_argument('--source',required=True)
+    p.add_argument('--development-preview',action='store_true',help='Inspect completed development recordings while the final cohort is still pending; never marks the campaign complete.')
     a=p.parse_args()
     source=Path(a.source)
     report=json.loads((source/'report.json').read_text())
-    assert report['status']=='completed' and report['held_out_opened']
+    if a.development_preview:
+        assert report['status']=='running' and not report.get('held_out'), 'Use the completed export for completed final tests'
+    else:
+        assert report['status']=='completed' and report['held_out_opened']
     assert report['study']=='mochi-efficient-v15'
     out=ROOT/'web/desk/efficient-v15'
+    if a.development_preview and (out/'manifest.json').exists():
+        assert json.loads((out/'manifest.json').read_text()).get('evaluation_status')!='completed', 'Preserve the completed public evidence'
     out.mkdir(parents=True,exist_ok=True)
     volume=modal.Volume.from_name('mochi-efficient-v15-artifacts')
     cps={c['update']:c for c in report['checkpoints']}
@@ -65,9 +71,10 @@ def main():
             versions.append({'update':update,'file':recording(row,update,'development')})
         scenarios.append({'id':'development-'+str(seed),'label':f'Development scenario · {seed}',
             'partition':'development','versions':versions,'parent_file':versions[0]['file']})
-    parents=json.loads((source/'held-out-parent.json').read_text())
-    trained={r['seed']:r for r in json.loads((source/'held-out-selected.json').read_text())}
-    assert len(parents)==len(trained)==len(report['protocol']['held_out_seeds'])
+    parents=[] if a.development_preview else json.loads((source/'held-out-parent.json').read_text())
+    trained={} if a.development_preview else {r['seed']:r for r in json.loads((source/'held-out-selected.json').read_text())}
+    if not a.development_preview:
+        assert len(parents)==len(trained)==len(report['protocol']['held_out_seeds'])
     for before in parents:
         after=trained[before['seed']]
         bf=recording(before,0,'held-out-parent')
@@ -77,9 +84,9 @@ def main():
     manifest={'study':report['study'],'optimizer_updates_completed':report['optimizer_updates_completed'],
         'selected_update':selected,'scope':report['scope'],'scene':json.loads((ROOT/'configs/richdesk-v9.json').read_text()),
         'scenarios':scenarios,'recordings':files,'checkpoints':[cps[k] for k in sorted(cps)],
-        'held_out':report['held_out'],'paired_held_out':report['paired_held_out'],
-        'improvement_goal_met':report['improvement_goal_met'],'component_results':report['component_results'],
-        'test_pairs_available':len(parents),'evaluation_status':'completed','selection_finalized':True,
+        'held_out':report.get('held_out'),'paired_held_out':report.get('paired_held_out'),
+        'improvement_goal_met':report.get('improvement_goal_met'),'component_results':report.get('component_results'),
+        'test_pairs_available':len(parents),'evaluation_status':'development_preview' if a.development_preview else 'completed','selection_finalized':True,
         'default_scenario':scenarios[0]['id'],'workflow_run':report['run_id'],'source_sha':report['source_sha'],
         'services':report['services']['eligibility'],'campaign_modal_rollouts_completed':report['campaign_modal_rollouts_completed'],
         'display_note':'Actual uninterrupted 25-Hz MuJoCo trajectories, display precision six decimals. Steps are measured from 100-Hz sole poses and contacts. Both sides use the turning fix and identical playback speed. Native gait weights remain fixed.'}
@@ -89,7 +96,7 @@ def main():
     assert 'tinker://' not in encoded, 'Private optimizer references must stay backend-only'
     (out/'report.json').write_text(encoded)
     print(json.dumps({'recordings':len(files),'scenarios':len(scenarios),'updates':report['optimizer_updates_completed'],
-                      'selected':selected,'goal_met':report['improvement_goal_met']}))
+                      'selected':selected,'evaluation_status':manifest['evaluation_status'],'goal_met':report.get('improvement_goal_met')}))
 
 
 if __name__=='__main__':

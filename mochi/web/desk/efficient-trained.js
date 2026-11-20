@@ -9,6 +9,7 @@ async function json(path){const r=await fetch(path);if(!r.ok)throw Error('Missin
 async function episode(file){if(!cache.has(file))cache.set(file,(async()=>{const r=await fetch(folder+file);if(!r.ok)throw Error('Missing measured trajectory');const bytes=new Uint8Array(await r.arrayBuffer());return bytes[0]===31&&bytes[1]===139?new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'))).json():JSON.parse(new TextDecoder().decode(bytes))})());return cache.get(file)}
 async function load(){
  const id=++requestId,wanted=scenario.versions[+$('#checkpoint').value],selectedScenario=scenario;loading=true;setPlayback(false);
+ $('#scope').textContent=`Loading ${selectedScenario.label}, update ${wanted.update}…`;
  try{
   const loaded=await Promise.all([episode(selectedScenario.parent_file),episode(wanted.file)]);if(id!==requestId)return;
   version=wanted;episodes=loaded;
@@ -17,7 +18,7 @@ async function load(){
   $('#left-id').textContent=before.checkpoint_id.slice(0,12);$('#right-id').textContent=after.checkpoint_id.slice(0,12);
   $('#right-title').textContent=`${version.update} NEW OPTIMIZER UPDATE${version.update===1?'':'S'}`;
   $('#checkpoint-label').textContent=`Update ${version.update} · ${after.cumulative_updates} cumulative`;
-  $('#scope').textContent=(scenario.partition.startsWith('held_out')?'Final test scenario. The checkpoint was frozen before this test. '+(scenario.partition==='held_out_pending'?'The full cohort is still in progress. ':''):'Development scenario used for checkpoint selection. ')+manifest.display_note;
+  $('#scope').textContent=scenario.label+'. '+(scenario.partition.startsWith('held_out')?'Final test scenario. The checkpoint was frozen before this test. '+(scenario.partition==='held_out_pending'?'The full cohort is still in progress. ':''):'Development scenario used for checkpoint selection. ')+manifest.display_note;
   const comparison=comparisonEvidence(before,after);$('#pair-result').className='pair-result '+comparison.status;$('#pair-headline').textContent=comparison.headline;$('#pair-detail').textContent=comparison.detail;
   setPlayback(true);
   for(const key of cache.keys()){if(cache.size<=4)break;if(key!==scenario.parent_file&&key!==version.file)cache.delete(key)}
