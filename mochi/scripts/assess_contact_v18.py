@@ -134,6 +134,26 @@ def main():
             assert example['initial_state_sha256'] == best['initial_state_sha256']
             assert sha(json.dumps(trial['outcomes'], sort_keys=True).encode()) == example['outcomes_sha256']
     assert teacher_branches + len(teachers) == sum(t['receipt']['physical_rollouts'] for t in teachers)
+    walking_candidates = []
+    for teacher in teachers:
+        for trial in teacher['trials']:
+            if trial['domain'] != 'walk':
+                continue
+            for candidate in trial['outcomes']:
+                clearance = candidate.get('flat_foot_clearance') or {}
+                if clearance.get('moving_swings_measured', 0) < 2:
+                    continue
+                walking_candidates.append({
+                    'seed': teacher['seed'], 'destination': trial['task'],
+                    'action': candidate['action'], 'valid': valid_branch(candidate),
+                    'success': candidate['success'], 'failure': candidate['failure'],
+                    'moving_sole_clearance_m': clearance['moving_median_peak_m'],
+                    'steps': candidate['steps']['attempts'], 'duration_s': candidate['duration_s'],
+                    'native_acceleration_rms_rad_s2': candidate['native_smoothness']['sampled_acceleration_rms_rad_s2'],
+                    'selected_training_label': next(e['action'] for e in teacher['examples']
+                        if e['domain'] == trial['domain'] and e['task'] == trial['task']) == candidate['action'],
+                    'initial_state_sha256': candidate['initial_state_sha256'],
+                })
     assert report['data_collection_provenance']['reused_regression_examples'] == 3
     for example in cfg['engineering_training_examples']:
         assert example['domain'] == 'laptop' and example['evidence_id'] in cfg['engineering_evidence']['production_validations']
@@ -231,6 +251,7 @@ def main():
              'runtime_amendment': amendment, 'runtime_reconciliation': reconciliation,
              'static_choice_audit': static_comparisons, 'failures': failures, 'service_eligibility': eligibility,
              'after_descent_clearance':{label:[{'seed':row['seed'],**after_descent_clearance(row['episode'])} for row in rows] for label,rows in held.items()},
+             'walking_training_candidates': walking_candidates,
              'static_control_training_scope': 'Built from the two guarded teachers. The selector additionally receives three laptop regression examples; this static control does not receive those three labels.',
              'resource_receipt_caveat': 'The shared receipt helper reports 3072 MiB, inherited from an older function. C18 functions declare 4096 MiB. CPU and measured duration accounting use the actual one-CPU configuration.',
              'limits': ['Four final scenarios in one furnished layout. No hardware validation.',
@@ -303,7 +324,14 @@ def main():
         for row in audit['after_descent_clearance'][label]:
             value = row['median_peak_m']
             lines.append(f"| {label} | {row['seed']} | {'Yes' if row['completed_leg'] else 'No'} | {row['moving_swings']} | {number(None if value is None else value * 1000)} |")
-    lines += ['', '## Services and resource accounting', '',
+    lines += ['', '## Measured walking candidates used for training', '',
+              'These are candidate controllers tested from matched training states, not checkpoint gains. Each row covers the complete leg to its destination, including any book or paper transitions. The clearance column covers moving flat-ground swings only. Invalid candidates remain visible and cannot supply a positive training label.', '',
+              '| Seed | Destination | Controller | Valid | Teaching label | Sole clearance, mm | Steps | Physical seconds | Native acceleration RMS, rad/s² |',
+              '| --- | --- | --- | --- | --- | --- | --- | --- | --- |']
+    for row in walking_candidates:
+        lines.append(f"| {row['seed']} | {row['destination']} | {row['action']} | {'Yes' if row['valid'] else 'No'} | {'Yes' if row['selected_training_label'] else 'No'} | {number(row['moving_sole_clearance_m'] * 1000)} | {row['steps']} | {number(row['duration_s'], 1)} | {number(row['native_acceleration_rms_rad_s2'])} |")
+    lines += ['', 'The frozen native-acceleration limit is 161.4 rad/s². A completed route can still be invalid. More foot clearance can also require more steps; the final evaluation reports those costs separately.', '',
+              '## Services and resource accounting', '',
               f"Accounted physical attempts: {usage['physical_rollouts']}, including 58 local engineering attempts. Confirmed completed attempts: {report['total_physical_rollouts_completed']}. Accounted simulation CPU-hours: {usage['simulation_cpu_hours']:.3f}. Limits were 160 attempts, 14 CPU-hours, 16 optimizer updates and four parallel workers. These are measured budget records, not a billing invoice.", '',
               'Four unfinished stages and eight CPU-minutes were conservatively charged for two interrupted teacher inputs. Their reserved inference tokens were retained. A separate cloud wrapper check intentionally reached the invalid-action validator after physical initialization; its failed attempt was charged and provided no training label.', '',
               'Each cloud function requests one CPU and 4096 MiB memory. The reused receipt helper carries a stale 3072 MiB memory label; that field is not an accurate allocation or billing receipt. The CPU-duration budget calculation is unaffected.', '',
