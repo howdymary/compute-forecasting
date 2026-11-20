@@ -1,0 +1,407 @@
+{
+  "study": "mochi-smooth-v16-engineering",
+  "scope": "Physical controller and route engineering before gradients. Zero new Tinker optimizer updates.",
+  "validated_route": {
+    "id": "continuous-route-7",
+    "path": "artifacts/smooth-v16-engineering/continuous-route-7.json",
+    "sha256": "18bf7b9ca64144eb909bf059b172c750d33e3d6304387de36288872fbe0ecc95",
+    "complete_sequence_success": true,
+    "failure": null,
+    "physical_seconds": 347.3656912987547,
+    "steps": {
+      "attempts": 476,
+      "completed": 476,
+      "unfinished": 0,
+      "by_category": {
+        "book_ascent": 20,
+        "arm_recovery": 4,
+        "book_turnaround": 18,
+        "book_descent": 16,
+        "turning": 121,
+        "flat_transit": 181,
+        "alignment": 78,
+        "postit_crossing": 12,
+        "fixture_clearance": 26
+      },
+      "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+    },
+    "fall": false,
+    "invalid_contact": false,
+    "task_outcomes": {
+      "alarm": true,
+      "drawer": true,
+      "laptop": true,
+      "globe": true
+    },
+    "recovery_joint_travel_rad": 21.193957118912977,
+    "postit_loaded_contact_samples": 1083,
+    "scene_version": "richdesk-v16-open-hinge",
+    "hinge_friction_nm": 0.06836046170074428,
+    "source_snapshot": "artifacts/smooth-v16-engineering/source-snapshots/continuous-route-7/src/mochi/smooth_v16"
+  },
+  "matched_full_routes": {
+    "continuous-route-7": {
+      "id": "continuous-route-7",
+      "path": "artifacts/smooth-v16-engineering/continuous-route-7.json",
+      "sha256": "18bf7b9ca64144eb909bf059b172c750d33e3d6304387de36288872fbe0ecc95",
+      "complete_sequence_success": true,
+      "failure": null,
+      "physical_seconds": 347.3656912987547,
+      "steps": {
+        "attempts": 476,
+        "completed": 476,
+        "unfinished": 0,
+        "by_category": {
+          "book_ascent": 20,
+          "arm_recovery": 4,
+          "book_turnaround": 18,
+          "book_descent": 16,
+          "turning": 121,
+          "flat_transit": 181,
+          "alignment": 78,
+          "postit_crossing": 12,
+          "fixture_clearance": 26
+        },
+        "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+      },
+      "fall": false,
+      "invalid_contact": false,
+      "task_outcomes": {
+        "alarm": true,
+        "drawer": true,
+        "laptop": true,
+        "globe": true
+      },
+      "recovery_joint_travel_rad": 21.193957118912977,
+      "postit_loaded_contact_samples": 1083,
+      "scene_version": "richdesk-v16-open-hinge",
+      "hinge_friction_nm": 0.06836046170074428,
+      "source_snapshot": "artifacts/smooth-v16-engineering/source-snapshots/continuous-route-7/src/mochi/smooth_v16"
+    },
+    "continuous-route-8": {
+      "id": "continuous-route-8",
+      "path": "artifacts/smooth-v16-engineering/continuous-route-8.json",
+      "sha256": "361d657c3bb0a414dbbf86c5991c52c7bf0992d655e9e7c57f8dd14898109608",
+      "complete_sequence_success": true,
+      "failure": null,
+      "physical_seconds": 331.9187871107891,
+      "steps": {
+        "attempts": 462,
+        "completed": 462,
+        "unfinished": 0,
+        "by_category": {
+          "book_ascent": 20,
+          "arm_recovery": 4,
+          "book_turnaround": 18,
+          "book_descent": 16,
+          "turning": 121,
+          "flat_transit": 168,
+          "alignment": 63,
+          "postit_crossing": 12,
+          "fixture_clearance": 40
+        },
+        "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+      },
+      "fall": false,
+      "invalid_contact": false,
+      "task_outcomes": {
+        "alarm": true,
+        "drawer": true,
+        "laptop": true,
+        "globe": true
+      },
+      "recovery_joint_travel_rad": 20.9409209193375,
+      "postit_loaded_contact_samples": 1020,
+      "scene_version": "richdesk-v16-open-hinge",
+      "hinge_friction_nm": 0.06836046170074428,
+      "source_snapshot": "artifacts/smooth-v16-engineering/source-snapshots/continuous-route-8/src/mochi/smooth_v16"
+    }
+  },
+  "route_candidate_comparison": {
+    "scope": "Isolated matched-state approach and paper crossing, same final controlled exit; controller engineering, not training.",
+    "source": "artifacts/directional-v14/states/full-directional-1-drawer.pickle",
+    "source_sha256": "c0534ea459cb7dc41bd666ed7880882e13838aedfb90757560373bb2e7ae7475",
+    "detour": {
+      "id": "postit-detour-1",
+      "path": "artifacts/smooth-v16-engineering/postit-detour-1.json",
+      "sha256": "90519e6687022ad248c12b1e4ed3f153c02a7cb222c2e2b870ad50ef5652c11a",
+      "complete_sequence_success": true,
+      "failure": null,
+      "physical_seconds": 250.3712969448969,
+      "steps": {
+        "attempts": 218,
+        "completed": 218,
+        "unfinished": 0,
+        "by_category": {
+          "turning": 68,
+          "flat_transit": 92,
+          "alignment": 46,
+          "postit_crossing": 12
+        },
+        "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+      },
+      "fall": false,
+      "invalid_contact": false,
+      "task_outcomes": {
+        "alarm": true,
+        "drawer": true
+      },
+      "recovery_joint_travel_rad": 12.861283173928376,
+      "postit_loaded_contact_samples": 1054,
+      "scene_version": "richdesk-v9",
+      "hinge_friction_nm": 0.05336046170074429,
+      "source_snapshot": "artifacts/smooth-v16-engineering/source-snapshots/postit-detour-1/src/mochi/smooth_v16"
+    },
+    "direct": {
+      "id": "postit-direct-0",
+      "path": "artifacts/smooth-v16-engineering/postit-direct-0.json",
+      "sha256": "a61e55a8044a265d5ceaa3a62926883ee56e02a2358116bf5c1dbbeb4d07b855",
+      "complete_sequence_success": true,
+      "failure": null,
+      "physical_seconds": 236.92147081213872,
+      "steps": {
+        "attempts": 108,
+        "completed": 108,
+        "unfinished": 0,
+        "by_category": {
+          "turning": 16,
+          "flat_transit": 53,
+          "alignment": 27,
+          "postit_crossing": 12
+        },
+        "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+      },
+      "fall": false,
+      "invalid_contact": false,
+      "task_outcomes": {
+        "alarm": true,
+        "drawer": true
+      },
+      "recovery_joint_travel_rad": 12.861283173928376,
+      "postit_loaded_contact_samples": 1045,
+      "scene_version": "richdesk-v9",
+      "hinge_friction_nm": 0.05336046170074429,
+      "source_snapshot": "artifacts/smooth-v16-engineering/source-snapshots/postit-direct-0/src/mochi/smooth_v16"
+    },
+    "step_reduction_fraction": 0.5045871559633027,
+    "time_reduction_fraction": 0.18883277860667969
+  },
+  "forward_descent": {
+    "continuous-route-7": {
+      "verified": true,
+      "descending_steps": [
+        {
+          "side": "left",
+          "touchdown_t": 168.70609116707269,
+          "drop_m": 0.008007027708583234,
+          "body_error_degrees": 0.0781989228199714,
+          "foot_error_degrees": 0.07307610208452911,
+          "forward": true
+        },
+        {
+          "side": "right",
+          "touchdown_t": 172.3193064777632,
+          "drop_m": 0.008079954599552071,
+          "body_error_degrees": 0.18255589834974606,
+          "foot_error_degrees": 0.16274644992071388,
+          "forward": true
+        },
+        {
+          "side": "left",
+          "touchdown_t": 182.68073273636102,
+          "drop_m": 0.007996317077915954,
+          "body_error_degrees": 0.30106274427746116,
+          "foot_error_degrees": 0.2956667168155209,
+          "forward": true
+        },
+        {
+          "side": "right",
+          "touchdown_t": 186.11328728151702,
+          "drop_m": 0.008132335712203839,
+          "body_error_degrees": 0.3874754267984716,
+          "foot_error_degrees": 0.3197727262139586,
+          "forward": true
+        },
+        {
+          "side": "left",
+          "touchdown_t": 196.50659485167975,
+          "drop_m": 0.007981545306204698,
+          "body_error_degrees": 0.41197904088054793,
+          "foot_error_degrees": 0.40402870370082655,
+          "forward": true
+        },
+        {
+          "side": "right",
+          "touchdown_t": 199.94977650069072,
+          "drop_m": 0.008139447268019802,
+          "body_error_degrees": 0.4644297756927115,
+          "foot_error_degrees": 0.41398777263585335,
+          "forward": true
+        }
+      ],
+      "definition": "Actual descending foot placements, verified loaded touchdown, and body/foot yaw within20 degrees of that footstep direction."
+    },
+    "continuous-route-8": {
+      "verified": true,
+      "descending_steps": [
+        {
+          "side": "left",
+          "touchdown_t": 162.489235411914,
+          "drop_m": 0.008005460209750587,
+          "body_error_degrees": 0.07202257379794262,
+          "foot_error_degrees": 0.07186273699088368,
+          "forward": true
+        },
+        {
+          "side": "right",
+          "touchdown_t": 165.9536712686349,
+          "drop_m": 0.008057840252243695,
+          "body_error_degrees": 0.16272348810654055,
+          "foot_error_degrees": 0.12702647688462188,
+          "forward": true
+        },
+        {
+          "side": "left",
+          "touchdown_t": 175.53931894581976,
+          "drop_m": 0.008004827076327907,
+          "body_error_degrees": 0.37862906578280237,
+          "foot_error_degrees": 0.3821726523827455,
+          "forward": true
+        },
+        {
+          "side": "right",
+          "touchdown_t": 178.81246693315117,
+          "drop_m": 0.008150215894502396,
+          "body_error_degrees": 0.4605018428187404,
+          "foot_error_degrees": 0.41570119926994187,
+          "forward": true
+        },
+        {
+          "side": "left",
+          "touchdown_t": 188.47250433732083,
+          "drop_m": 0.008005070565535073,
+          "body_error_degrees": 0.5197869231408689,
+          "foot_error_degrees": 0.5251191621820099,
+          "forward": true
+        },
+        {
+          "side": "right",
+          "touchdown_t": 191.73502522079727,
+          "drop_m": 0.008156827127698316,
+          "body_error_degrees": 0.5075728781297347,
+          "foot_error_degrees": 0.4392423102799568,
+          "forward": true
+        }
+      ],
+      "definition": "Actual descending foot placements, verified loaded touchdown, and body/foot yaw within20 degrees of that footstep direction."
+    }
+  },
+  "failed_attempts": {
+    "book-native-turn-0": {
+      "failure": "invalid_fixture_contact",
+      "wall_seconds": 1.8344417922198772
+    },
+    "book-clear-turn-1": {
+      "failure": "book-turn-clearance-controller-timeout",
+      "wall_seconds": 177.3973686248064
+    },
+    "postit-path-0": {
+      "failure": "invalid_fixture_contact",
+      "wall_seconds": 3.18919812515378
+    },
+    "book-clear-turn-2": {
+      "failure": "invalid_fixture_contact",
+      "wall_seconds": 65.61792258359492
+    },
+    "postit-path-1": {
+      "failure": "invalid_fixture_contact",
+      "wall_seconds": 23.79811970796436
+    },
+    "book-clear-turn-3": {
+      "failure": "invalid_fixture_contact",
+      "wall_seconds": 59.28245195839554
+    },
+    "postit-path-2": {
+      "failure": "directional-navigation-timeout:postit-approach-3",
+      "wall_seconds": 36.23127266578376
+    },
+    "postit-path-3": {
+      "failure": "invalid_fixture_contact",
+      "wall_seconds": 20.944714666344225
+    },
+    "book-forward-descent-0": {
+      "failure": "book-forward-descent-controller-timeout",
+      "wall_seconds": 121.57533087488264
+    },
+    "postit-path-4": {
+      "failure": "invalid_fixture_contact",
+      "wall_seconds": 27.547831625677645
+    },
+    "postit-path-5": {
+      "failure": "invalid_fixture_contact",
+      "wall_seconds": 27.602122084237635
+    },
+    "book-forward-descent-1": {
+      "failure": "fall",
+      "wall_seconds": 15.927256791852415
+    },
+    "book-forward-descent-2": {
+      "failure": "book-forward-descent-controller-timeout",
+      "wall_seconds": 89.51714874990284
+    },
+    "postit-path-6": {
+      "failure": "postit-loaded-crossing-controller-timeout",
+      "wall_seconds": 91.0596739994362
+    },
+    "postit-path-7": {
+      "failure": "fall",
+      "wall_seconds": 38.8295582504943
+    },
+    "continuous-route-0": {
+      "failure": "invalid_fixture_contact",
+      "wall_seconds": 345.4165390422568
+    },
+    "continuous-route-1": {
+      "failure": "invalid_fixture_contact",
+      "wall_seconds": 267.67290687467903
+    },
+    "continuous-route-2": {
+      "failure": "laptop-failed:laptop",
+      "wall_seconds": 382.80551249999553
+    },
+    "continuous-route-3": {
+      "failure": "book-top-turnaround-controller-timeout",
+      "wall_seconds": 243.15462983306497
+    }
+  },
+  "engineering_usage": {
+    "physical_rollouts": 30,
+    "single_worker_hours": 1.18995141038102
+  },
+  "limits": [
+    "One known engineering scenario, not held-out performance.",
+    "Scene hinge friction and42-degree laptop release are engineering changes shared by all later weights.",
+    "Early exploratory attempts captured source hashes retrospectively; final references ran from immutable complete source snapshots.",
+    "Native gait weights remain fixed."
+  ],
+  "public_engineering_recordings": {
+    "continuous-route-7": {
+      "path": "web/desk/smooth-v16-engineering/continuous-route-7.json.gz",
+      "sha256": "464c38f1a8aaaf6b3ffbf8bb6d47c83d2988b26bee51e24ed9437d0a2e41f70b",
+      "uncompressed_sha256": "de082934dba29fc1a7d27680d04985a312dbec95d254badfd5b2c8b84870ea8b",
+      "bytes": 7828159,
+      "steps": 476,
+      "physical_seconds": 347.3656912987547,
+      "optimizer_updates": 0
+    },
+    "continuous-route-8": {
+      "path": "web/desk/smooth-v16-engineering/continuous-route-8.json.gz",
+      "sha256": "174cf03beea4aaf3eb812eec958f324374aaf747661d53fddd8651e1cbd9b3e6",
+      "uncompressed_sha256": "ad5c7b76226533bc562ad3917ae2910d2de3d4ce947e1ba4284c69052e7f65c4",
+      "bytes": 7473726,
+      "steps": 462,
+      "physical_seconds": 331.9187871107891,
+      "optimizer_updates": 0
+    }
+  }
+}
