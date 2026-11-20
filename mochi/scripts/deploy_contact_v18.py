@@ -8,7 +8,7 @@ WEB = Path(__file__).resolve().parents[1] / 'web/desk'
 image = (modal.Image.debian_slim(python_version='3.11')
          .pip_install('fastapi==0.121.1')
          .env({'MOCHI_RELEASE': os.environ.get('GITHUB_SHA', 'local')}))
-for name in ['contact-v18.html', 'contact-v18.js', 'contact-v18.css', 'efficient-evidence.mjs', 'smooth-stage.js', 'curriculum-stage.js', 'g1-stage.js',
+for name in ['contact-v18.html', 'contact-v18.js', 'contact-v18.css', 'contact-v18-preflight.html', 'contact-v18-preflight.js', 'efficient-evidence.mjs', 'smooth-stage.js', 'curriculum-stage.js', 'g1-stage.js',
              'vintage-clock.js', 'realism.js', 'richdesk-stage.js', 'richdesk.css', 'balanced.css']:
     image = image.add_local_file(WEB / name, remote_path='/web/' + name, copy=True)
 image = (image.add_local_file(WEB / 'contact-v18.html', remote_path='/web/index.html', copy=True)
