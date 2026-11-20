@@ -1,14 +1,35 @@
 # MOCHI — Walking, Contact and Recovery Policy Learning
 
+## Current: step-efficient walking and task control (V15)
+
+[Latest recorded checkpoints and project history](https://howdymary.github.io/mochi/) · [Frozen V15 protocol](docs/efficient-v15.md) · [Training and evaluation execution](https://github.com/howdymary/mochi-demo/actions/runs/44625135986)
+
+Tinker completed **16 new optimizer updates and 96 domain-gradient calls** for the shared Qwen3.5-4B LoRA decision model. Every update included walking, clock, drawer, laptop, globe and arm-recovery examples. Saved checkpoints are 0, 1, 4, 8 and 16; an additional durable optimizer state is retained at 12. The native gait network, actuator controllers, scene, route and verifiers remain fixed.
+
+The first declared development scenario has the following recorded outcomes. These are separate continuous clock → drawer → laptop → globe episodes with identical initial states and playback speed.
+
+| New optimizer updates | Complete within quality limits | Measured step attempts | Physical seconds |
+|---|---:|---:|---:|
+| 0 | Yes | 806 | 265.4 |
+| 1 | Yes | 586 | 237.8 |
+| 4 | Yes | 480 | 216.7 |
+| 8 | Yes | 476 | 216.4 |
+
+**Evaluation remains in progress.** This is one development case, not a final-test result or a general reliability claim. The full three-scenario development comparison determines checkpoint selection before four fresh final scenarios are opened. Final tests include parent, selected, fixed and training-only static policies, followed by exact-state walking, manipulation and recovery comparisons. The target is at least 20% fewer safe steps without lower completion or longer successful completion time; that complete final-test goal is not yet established.
+
+The four data collectors returned 148 physical rollouts: 144 same-state action branches and four continuous collection sequences. The campaign retains the existing limits of **224 total physical rollouts, 18 simulation CPU-hours and four concurrent workers**. No more than 16 new optimizer updates are authorized. Failed attempts and archived checkpoints remain preserved.
+
+## Completed terrain study (V12) and navigation refinement (V14)
+
 [Turning and forward-walking comparison](https://howdymary--mochi-directional-v14-demo-web.us-east.modal.run/?case=desk-corner) · [Navigation changes and evidence](docs/directional-v14.md)
 
 The directional navigator turns toward the next corridor, walks forward, then aligns for the task. Its replay uses actual MuJoCo body orientations. This controller refinement is evaluated separately from the frozen Tinker checkpoint study below; it adds no model-training updates.
 
 The furnished-desk controller now completes the continuous **clock → drawer → laptop close → globe** sequence, including book ascent and descent, without hitting the clock. Two local engineering references and the subsequent remote reference passed the strict checks.
 
-[Checkpoint development preview](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/terrain-trained.html) · [Watch the repaired route](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/terrain.html) · [V12 methods](docs/terrain-v12.md) · [Live training status](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/api/terrain-training)
+[V12 checkpoint comparison](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/terrain-trained.html) · [Recorded repaired route](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/terrain.html) · [V12 methods](docs/terrain-v12.md) · [V12 execution status](https://howdymary--mochi-curriculum-demo-web.us-east.modal.run/api/terrain-training)
 
-Those passes establish physical feasibility. Tinker has now completed **32 new optimizer updates and 192 domain-gradient calls** using the recorded physical comparisons, with durable checkpoints at 0, 1, 8 and 32. The first matched development comparison passed 2/3 complete smooth sequences with the parent and 3/3 after one update. The eight- and 32-update checkpoints also passed 3/3. The frozen rule selected update 1 for its lower torso roll among successful checkpoints. Six final-test scenarios are in progress; these are small development results. The native gait network remains fixed. Earlier V8 training and rejected V11 evidence below are preserved.
+Those passes establish physical feasibility. V12 completed **32 new optimizer updates and 192 domain-gradient calls** using the recorded physical comparisons, with durable checkpoints at 0, 1, 8 and 32. The first matched development comparison passed 2/3 complete smooth sequences with the parent and 3/3 after one update. The eight- and 32-update checkpoints also passed 3/3. The frozen rule selected update 1 for its lower torso roll among successful checkpoints. On six final-test scenarios, the parent completed 3/6, selected checkpoint 6/6 and fixed controller 5/6. These are small simulated cohorts; component checks did not establish learned manipulation or recovery improvement in V12. [Completed assessment](docs/terrain-v12-assessment.md). The native gait network remains fixed. Earlier V8 training and rejected V11 evidence below are preserved.
 
 <!-- MOCHI_CURRICULUM_START -->
 ## Archived V8: learning walking, task and arm-recovery decisions
