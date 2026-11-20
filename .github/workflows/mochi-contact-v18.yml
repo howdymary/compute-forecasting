@@ -1,0 +1,47 @@
+name: Mochi laptop repair and six-domain post-training
+on:
+  push:
+    branches: [mochi-desk-v3]
+    paths: ['mochi/configs/contact-v18-launch.json']
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: mochi-contact-v18-budget
+  cancel-in-progress: false
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    env:
+      PYTHONPATH: ${{ github.workspace }}/mochi/src
+      MOCHI_ROOT: ${{ github.workspace }}/mochi
+      PYTHONHASHSEED: '0'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - name: Install isolated pinned simulation and training runtime
+        run: |
+          python -m pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install './mochi[remote,robotics,dev]' pyyaml==6.0.2
+          python mochi/scripts/fetch_visual_models.py
+      - name: Verify contact geometry and preserved safety contracts
+        run: python -m pytest -q mochi/tests/test_contact_v18.py mochi/tests/test_smooth_v17.py mochi/tests/test_smooth_v16.py
+      - name: Execute bounded repaired-contact Tinker continuation
+        timeout-minutes: 335
+        env:
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+          EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
+          PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
+        run: python -u -m mochi.contact_v18.train
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mochi-contact-v18-training-${{ github.run_id }}
+          path: mochi/artifacts/contact-v18-training/
+          retention-days: 30
