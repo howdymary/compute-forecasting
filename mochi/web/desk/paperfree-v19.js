@@ -1,6 +1,6 @@
 import {createCurriculumStage} from './smooth-stage.js';
 import {stepCountAt,taskStatesAt,comparisonEvidence,taskNames,activityAt} from './efficient-evidence.mjs';
-const $=q=>document.querySelector(q),folder='paperfree-v19/';
+const $=q=>document.querySelector(q),folder='paperfree-v19/',engineeringMode=new URLSearchParams(globalThis.location?.search||'').get('mode')==='engineering';
 let manifest,stages,scenario,version,episodes,playing=true,time=0,last=performance.now(),loading=false,requestId=0;
 const cache=new Map();
 function setPlayback(value){playing=value;last=performance.now();$('#play').textContent=value?'Ⅱ':'▶'}
@@ -57,7 +57,7 @@ function tick(now){
  requestAnimationFrame(tick);
 }
 async function init(){
- manifest=await json(folder+'manifest.json');if(manifest.evaluation_status==='engineering')document.querySelector('label[for=checkpoint]').textContent='Controller setting';stages=[createCurriculumStage($('#left'),{scene:manifest.scene,fullBody:true,cameraOffset:[.45,-.52,.30]}),createCurriculumStage($('#right'),{scene:manifest.scene,fullBody:true,cameraOffset:[.45,-.52,.30]})];await Promise.all(stages.map(s=>s.ready));
+ manifest=await json(folder+(engineeringMode?'engineering-manifest.json':'manifest.json'));if(engineeringMode)document.querySelectorAll('a[href="paperfree-v19/report.json"]').forEach(a=>a.href='paperfree-v19/engineering-report.json');if(manifest.evaluation_status==='engineering')document.querySelector('label[for=checkpoint]').textContent='Controller setting';stages=[createCurriculumStage($('#left'),{scene:manifest.scene,fullBody:true,cameraOffset:[.45,-.52,.30]}),createCurriculumStage($('#right'),{scene:manifest.scene,fullBody:true,cameraOffset:[.45,-.52,.30]})];await Promise.all(stages.map(s=>s.ready));
  for(const s of manifest.scenarios){const option=document.createElement('option');option.value=s.id;option.textContent=s.label;$('#scenario').append(option)}
  $('#scenario').onchange=e=>selectScenario(e.target.value);$('#checkpoint').oninput=()=>load();
  const query=new URLSearchParams(globalThis.location?.search||'');

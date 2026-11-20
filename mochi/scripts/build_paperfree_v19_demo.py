@@ -140,6 +140,8 @@ def main():
         raw = json.dumps(value, indent=2) + '\n'
         assert 'tinker://' not in raw, 'Private optimizer references stay backend-only'
         (OUT / (name + '.json')).write_text(raw)
+        if a.engineering:
+            (OUT / ('engineering-' + name + '.json')).write_text(raw)
     print(json.dumps({'recordings': len(files), 'scenarios': len(scenarios), 'status': manifest['evaluation_status']}))
 
 
