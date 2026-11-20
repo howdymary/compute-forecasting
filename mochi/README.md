@@ -1,6 +1,18 @@
 # MOCHI: Walking, Contact and Recovery Policy Learning
 
-## Current: completed V15 walking and task-control study
+## Current work: V16 forward descent and arm recovery
+
+[Physical route preview](https://howdymary--mochi-smooth-v16-engineering-web.us-east.modal.run/) · [Training execution](https://github.com/howdymary/mochi-demo/actions/runs/44669222147) · [Frozen protocol](docs/smooth-v16-plan.md) · [Engineering evidence](evidence/smooth-v16/engineering.json)
+
+The new route includes a supported 180-degree turnaround on the books, forward-facing descent, and verified loaded contact on the Post-it between drawer and laptop. Both physical engineering references completed all four tasks. On the same known scenario, W4 used 476 steps and 347.37 physical seconds; W5 used 462 steps and 331.92 seconds. The preview shows fixed controllers and zero new Tinker updates. These are engineering results, not a measured training gain.
+
+The direct drawer-to-paper approach used 108 steps versus 218 for the detour in an isolated matched-state test. The longer route also exposed passive laptop-hinge creep. The new scene adds 0.015 N m of physical hinge friction and uses a 42-degree hand-release threshold. Contact-based task success remains required. All new checkpoints and baselines use the same revised scene and route.
+
+The separate bounded campaign restores the completed V15 selection and will compare additional updates 0, 1, 4, 8 and 16. Its targets are 10% fewer steps and 15% less recovery joint travel without reduced completion or longer successful time. Held-out gains remain pending. Tinker updates the shared controller-selection weights; the native gait remains fixed.
+
+Thirty local engineering attempts used 1.190 single-worker hours and are already charged to the campaign's overall 224-rollout, 18-hour budget. The new workflow uses the existing backend secret references and separate Mochi app, artifact and memory names. Archived V15 results and the forecasting application are preserved.
+
+## Completed V15 walking and task-control study
 
 [Uninterrupted checkpoint comparison](https://howdymary--mochi-efficient-v15-demo-web.us-east.modal.run/) · [Fresh test scenario](https://howdymary--mochi-efficient-v15-demo-web.us-east.modal.run/?scenario=held-out-93000) · [Technical blog](https://howdymary.github.io/mochi/) · [Assessment](docs/efficient-v15-assessment.md) · [Numerical assessment](docs/efficient-v15-assessment.json)
 
