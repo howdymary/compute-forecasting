@@ -31,3 +31,5 @@ Execution source: `bdba8600e9abb94c20aa1dc68ee617b51ee4999c`. Parent recordings 
 [Recording manifest](../web/desk/contact-v18/manifest.json) · [Training interface](contact-v18-training-interface.md) · [Earlier fixed-controller preflight](contact-v18-preflight.md)
 
 The fixed preflight completed all four tasks before training, but exceeded the lateral-motion quality limit. It remains available at its explicit preflight URL and is not credited to the trained model.
+
+Browser verification covered a complete uninterrupted parent/checkpoint replay, all three development failures, post-descent foot inspection and the live inspection link. No browser exceptions or console errors were observed. [Full replay verification](../evidence/contact-v18/development-preview-browser-qa.json) · [Live inspection verification](../evidence/contact-v18/development-preview-phase-qa.json) · [Published release](../evidence/contact-v18/development-preview-live-health.json).
