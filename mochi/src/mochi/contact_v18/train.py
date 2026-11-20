@@ -45,7 +45,7 @@ async def main():
  services.audience,services.private=run_id+'-shared',run_id+'-critic'
  report={'study':cfg['study'],'run_id':run_id,'source_sha':os.environ['GITHUB_SHA'],
   'execution_source_sha':os.environ['GITHUB_SHA'],'created_at':now(),'protocol':cfg,
-  'scope':cfg['scope'],'status':'running','phase':'Validate credentials, saved parent and frozen repair',
+  'scope':cfg['scope'],'protocol_sha256':digest(cfg),'status':'running','phase':'Validate credentials, saved parent and frozen repair',
   'optimizer_updates_completed':0,'training_log':[],'checkpoints':[],'physics_receipts':[],
   'campaign_modal_rollouts_completed':0,'held_out_opened':False,'parent_selection':parent_info,
   'engineering_usage':cfg['engineering_usage']}
@@ -203,7 +203,7 @@ async def main():
    pp=report['paired_held_out']
    report['all_fresh_tasks_qualified']=report['held_out']['selected']['qualified_complete_successes']==len(cfg['held_out_seeds'])
    report['all_fresh_clear_stepping']=report['held_out']['selected']['clear_stepping_successes']==len(cfg['held_out_seeds'])
-   report['improvement_goal_met']=bool(report['all_fresh_tasks_qualified'] and pp['n']>=2 and
+   report['improvement_goal_met']=bool(report['all_fresh_tasks_qualified'] and report['all_fresh_clear_stepping'] and pp['n']>=2 and
       pp['mean_step_reduction_fraction']>=.10 and pp['mean_recovery_arm_travel_reduction_fraction']>=.15 and pp['mean_time_reduction_fraction']>=0)
    report['phase']='Source-verified final review of numerical outcomes';await publish()
    result=await write('experimenter',{'kind':'final-observation','experiment_id':run_id,
