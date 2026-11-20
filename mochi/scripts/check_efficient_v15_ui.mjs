@@ -31,7 +31,8 @@ for(const scenario of m.scenarios){
   assert.equal(a.maximum_applied_base_force,0);assert.equal(b.maximum_applied_base_force,0);assert.equal(a.steps.attempts,a.step_events.length);assert.equal(b.steps.attempts,b.step_events.length);
   assert.match(meta.checkpoint_id,/^[0-9a-f]{64}$/);assert.equal(meta.checkpoint_update,v.update);
   assert.equal(nodes.get('#right-id').textContent,meta.checkpoint_id.slice(0,12));
-  nodes.get('#scrub').oninput({target:{value:nodes.get('#scrub').max}});context.tick(performance.now()+100);
+  const nativeEnd=Math.floor(+nodes.get('#scrub').max/.02)*.02;
+  nodes.get('#scrub').oninput({target:{value:nativeEnd}});context.tick(performance.now()+100);
   assert.equal(stages[0].time,a.duration);assert.equal(stages[1].time,b.duration);
   assert.equal(+nodes.get('#left-steps').textContent,a.steps.attempts);assert.equal(+nodes.get('#right-steps').textContent,b.steps.attempts);
   assert.equal(+nodes.get('#right-elapsed').textContent,+b.duration.toFixed(1));

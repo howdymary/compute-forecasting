@@ -57,7 +57,7 @@ async function init(){
  if(!manifest.held_out){const p=document.createElement('p');p.textContent=`Final testing is pending. ${manifest.test_pairs_available||0} matched test case${manifest.test_pairs_available===1?'':'s'} available to inspect; the full cohort summary is pending.`;$('#test-table').append(p)}
  else for(const [name,s]of Object.entries(manifest.held_out)){const p=document.createElement('p');p.textContent=`${name}: ${s.qualified_complete_successes}/${s.n} qualified completions · ${s.successful_mean_steps?.toFixed(0)??'—'} steps on successful cases`;$('#test-table').append(p)}
  for(const [id,stage]of [['left',stages[0]],['right',stages[1]]]){$('#'+id+'-follow').onclick=()=>stage.view(false);$('#'+id+'-wide').onclick=()=>stage.view(true);$('#'+id+'-feet').onclick=()=>stage.inspect('feet')}
- $('#play').onclick=()=>{if(!playing&&time>=+$('#scrub').max)time=0;setPlayback(!playing)};$('#restart').onclick=()=>{time=0;setPlayback(true)};$('#scrub').oninput=e=>{time=+e.target.value;setPlayback(false)};
+ $('#play').onclick=()=>{if(!playing&&time>=+$('#scrub').max)time=0;setPlayback(!playing)};$('#restart').onclick=()=>{time=0;setPlayback(true)};$('#scrub').oninput=e=>{const value=+e.target.value,maximum=+$('#scrub').max;time=maximum-value<=.021?maximum:value;setPlayback(false)};
  await selectScenario(initialScenario);const requestedTime=Number(query.get('t'));if(Number.isFinite(requestedTime)&&requestedTime>0){time=Math.min(requestedTime,+$('#scrub').max);setPlayback(false)}requestAnimationFrame(tick);
 }
 init().catch(e=>{$('#scope').textContent=e.message;console.error(e)});
