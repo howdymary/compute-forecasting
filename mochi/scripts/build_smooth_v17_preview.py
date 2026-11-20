@@ -27,7 +27,7 @@ def main():
     if a.development_preview and (out/'manifest.json').exists():
         assert json.loads((out/'manifest.json').read_text()).get('evaluation_status')!='completed', 'Preserve the completed public evidence'
     out.mkdir(parents=True,exist_ok=True)
-    volume=modal.Volume.from_name('mochi-smooth-v17-artifacts')
+    volumes={}
     cps={c['update']:c for c in report['checkpoints']}
     assert set(cps)=={0,1,4,8,16} and report['optimizer_updates_completed']==16
     selected=report['selected_checkpoint']['update']
@@ -35,6 +35,10 @@ def main():
 
     def recording(row,update,kind):
         descriptor=row['public_recording']
+        volume_name=descriptor['volume']
+        if volume_name not in volumes:
+            volumes[volume_name]=modal.Volume.from_name(volume_name)
+        volume=volumes[volume_name]
         name=f'{kind}-{row["seed"]}-{update}.json.gz'
         target=out/name
         if target.exists():
@@ -96,7 +100,7 @@ def main():
         'services':report['services']['eligibility'],'campaign_modal_rollouts_completed':report['campaign_modal_rollouts_completed'],
         'total_physical_attempts_accounted':report['total_physical_attempts_accounted'],
         'total_physical_rollouts_completed':report['total_physical_rollouts_completed'],'engineering_usage':report['engineering_usage'],
-        'display_note':'Actual uninterrupted 25-Hz MuJoCo trajectories, display precision six decimals. Steps are measured from 100-Hz sole poses and contacts. Every checkpoint uses the same engineered H0/P4 library and playback speed. Native gait weights remain fixed. Training changes controller-selection weights.'}
+        'display_note':'Actual uninterrupted 25-Hz MuJoCo trajectories, display precision six decimals. Steps are measured from 100-Hz sole poses and contacts. Every checkpoint uses the same engineered H0/P4/W6 library and playback speed. Native gait weights remain fixed. Training changes controller-selection weights.'}
     manifest['scene']['version']=report['protocol']['scene_revision']['version']
     manifest['scene']['physics']={'laptop_hinge_friction_increment_nm':.015}
     (out/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
