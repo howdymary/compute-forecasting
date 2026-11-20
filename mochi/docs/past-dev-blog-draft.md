@@ -2,7 +2,7 @@
 
 Methods and results using past.dev and Tinker.
 
-[Watch the newest recording and the project’s development](https://howdymary.github.io/mochi/). Updated November 19, 2026; the newest campaign’s final evaluation is still running.
+[Watch the newest recording and the project’s development](https://howdymary.github.io/mochi/). Updated November 19, 2026; V15 training, evaluation and the final memory handoff are complete.
 
 Mochi is a miniature humanoid simulated in MuJoCo. It climbs books, silences an alarm clock, closes a drawer and laptop, then turns a globe to a target. The study measures whether supervised post-training improves the model’s selection of walking, manipulation and arm-recovery controllers.
 
@@ -46,22 +46,30 @@ The component checks made the result more specific. In a walking-only interventi
 
 The final evaluation was written to past.dev, recalled for review, and followed by a qualified conclusion. The research stage recalled that conclusion before the next campaign. The stored result includes the limitations of the component tests.
 
-## V15 continuation
+## V15: Fewer steps after post-training
 
-The next campaign, V15, starts by recalling the earlier assessment from past.dev. A source-verified finding informs what to investigate through Exa. The design step then reads the sourced hypothesis and chooses a training allocation: twelve walking examples and twelve recovery examples per update, with four for each object task. The decision record identifies the findings it used.
+V15 began by recalling the earlier assessment from past.dev. A source-verified finding informed the Exa research query. The design stage read the sourced hypothesis and chose twelve walking examples and twelve recovery examples per update, with four examples for each object task. The record identifies the findings used for that allocation.
 
-Before comparing model weights, we engineered and froze a turning controller that faces the next corridor before walking forward. We also checked faster approach options in physical simulation. Every model in the new study has the same options and uses the same scene, route and success rules. This lets us ask whether training changes which options the model chooses.
+We engineered and froze turn-first navigation and bounded faster-approach options before comparing weights. Every checkpoint used the same scene, route, action library and success criteria. Modal collected 148 physical rollouts: 144 action branches from matching states and four continuous collection routes. Those experiments supplied 48 labeled observation records, reused during training.
 
-Modal collected 148 physical rollouts: 144 action branches from matching states and four continuous collection routes. Those experiments supplied 48 labeled observations. Each training update reuses examples from that measured set; repeated presentations do not count as new physical evidence.
+Tinker completed sixteen new optimizer updates and 96 gradient calculations across walking, clock, drawer, laptop, globe and recovery. We retained updates 0, 1, 4, 8 and 16. The native gait network and physical controllers stayed fixed. Development evaluation selected update 16 before the final scenarios were opened.
 
-Tinker has completed sixteen new optimizer updates, each with gradient calculations for walking, clock, drawer, laptop, globe and recovery. We saved checkpoints at 0, 1, 4, 8 and 16. Update 0 is a previously trained model, not a robot starting from scratch. The native gait network and physical controllers remain fixed.
+All four policies completed all four final-test scenarios within the declared limits. The selected model averaged 476.5 footsteps and 219.5 simulated seconds, compared with 806.0 footsteps and 266.4 seconds for the parent. The paired reductions were 40.9% in steps and 17.6% in time.
 
-All five checkpoints completed the three development scenarios within the declared limits. The predeclared rule selected update 16, averaging 485.3 footsteps and 218.1 simulated seconds, compared with 805.3 footsteps and 265.5 seconds for the parent. Arm-joint travel during successful recovery increased, and torso roll was slightly higher; both remained within the limits. We should not turn a reduction in footsteps into a claim that every movement became smoother.
+The static baseline limits the interpretation. It used fixed station-specific choices derived from training labels and averaged 482.0 steps and 219.1 seconds. Its choices matched the selected model in 46 of 48 decisions. The two differences were laptop profiles. The model improved over its parent, but these results do not establish a useful adaptive-selection advantage.
 
-The checkpoint was frozen before opening four fresh final-test scenarios. That evaluation also includes fixed controls and static choices derived from the training data. Separate tests start both models from identical walking, manipulation and recovery states. The full final result, component attribution and final memory handoff remain pending. [Frozen methods](https://github.com/howdymary/mochi-demo/blob/87ba8d482efd13c789bb200ae9424924e0f77ad1/mochi/docs/efficient-v15.md) · [Actual training and evaluation](https://github.com/howdymary/mochi-demo/actions/runs/44625135986).
+Motion measures also differed. Average arm-joint travel per successful recovery increased from 5.54 to 6.93 radians, and torso roll RMS was slightly higher. Both stayed within the declared limits. The study did not demonstrate improvement in every aspect of motion.
 
-V13 completed sixteen updates but did not improve full-route completion on its four final scenarios. The final recall could not verify the required memory source, so the workflow stopped with its numerical evidence preserved. The project history retains that failure alongside the completed studies.
+Separate component tests compared both models from twelve identical supported states, producing 24 valid diagnostic branches. These confirmed faster flat walking and faster recovery. Recovery used more joint travel. The continuous final-test results and the isolated tests remain separate in the assessment.
 
-We have not isolated whether memory itself improved performance. Establishing that would require a matched experiment without shared memory. What we demonstrated was an operational chain: recalled evidence informed a training allocation, Tinker updated decision weights, and subsequent simulations measured the consequences.
+The final measurements were written to past.dev, recalled for criticism, followed by a qualified conclusion and recalled again for the next research step. V15 used six memory writes and seven logical recalls, including the earlier assessment. Four identities wrote, four identities performed source-verified reads, and five within-campaign cross-role handoffs were verified. The private-canary denial test passed and no ingestions remained pending.
 
-The workflow links source-verified findings in past.dev to training decisions, Tinker checkpoints and numerical evaluations. Exact artifacts preserve the measured outcomes and the limits of each conclusion.
+The campaign used 204 physical rollouts and 10.341 function CPU-hours, within its limits. The results come from four fixed-layout simulated final cases. A 4/4 completion result has an approximately 51% to 100% Wilson interval at 95% confidence. Hardware performance and a causal benefit from memory or web search remain untested.
+
+## Unsuccessful follow-up and limitations
+
+V13 completed sixteen updates but did not improve completion on its four final scenarios. Its final recall could not verify the required memory source, so that workflow stopped with numerical evidence preserved. V15 retained that history and used a separate experiment identity and test set.
+
+The workflow links source-verified findings in past.dev to training decisions, Tinker checkpoints and physical evaluations. Exact artifacts preserve both the numerical outcomes and the limits of their interpretation.
+
+[Completed V15 assessment](https://github.com/howdymary/mochi-demo/blob/mochi-desk-v3/mochi/docs/efficient-v15-assessment.md) · [Frozen methods](https://github.com/howdymary/mochi-demo/blob/87ba8d482efd13c789bb200ae9424924e0f77ad1/mochi/docs/efficient-v15.md) · [Training and evaluation](https://github.com/howdymary/mochi-demo/actions/runs/44625135986).

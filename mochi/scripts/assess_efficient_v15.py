@@ -230,6 +230,13 @@ def main():
     lines += ['', '## Comparison with training-derived static choices', '',
         f"The selected and static policies made the same categorical choice in {matching_choices}/{total_choices} corresponding decisions. Their complete choice vectors matched in {sum(not r['different_choices'] for r in static_choices)}/{len(static_choices)} scenarios.",
         'The static policy uses station-specific preferences chosen only from training labels. Compare its full completion, step and time results above before attributing gains to adaptive selection. Cost differences between identical categorical choice vectors remain unexplained; no repeated-policy numerical-variance study was run.']
+    parent_stats, selected_stats = report['held_out']['parent'], report['held_out']['selected']
+    lines += ['', '## Motion tradeoffs and uncertainty', '',
+        f"Average total arm-joint travel per successful recovery increased from {parent_stats['successful_recovery_mean_joint_travel_rad']:.2f} to {selected_stats['successful_recovery_mean_joint_travel_rad']:.2f} radians. This sums joint-angle travel; it is not hand-path length or energy.",
+        f"Mean torso roll RMS was {parent_stats['mean_roll_rms_deg']:.3f} degrees for the parent and {selected_stats['mean_roll_rms_deg']:.3f} degrees for the selected policy. Both stayed within the declared limits. The step reduction does not establish smoother motion in every measure.",
+        'Each 4/4 completion result has an approximately 51% to 100% Wilson interval at 95% confidence. The paired bootstrap intervals describe only these four fixed-layout cases; they do not establish reliability across other layouts or hardware.', '',
+        '## Exact-state component checks', '',
+        f"The fixed reference route at seed {report['component_reference_seed']} supplied twelve physical states. Both models were tested from each state, giving twenty-four separate branches. These are diagnostic comparisons, not additional continuous sequences."]
     lines += ['', '| Exact-state test | Parent action / success | Selected action / success |', '|---|---|---|']
     for key, rows in sorted(components.items()):
         by_model = {r['model']: r for r in rows if r.get('status') != 'reference_not_reached'}

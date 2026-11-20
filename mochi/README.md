@@ -1,24 +1,88 @@
-# MOCHI — Walking, Contact and Recovery Policy Learning
+# MOCHI: Walking, Contact and Recovery Policy Learning
 
-## Current: step-efficient walking and task control (V15)
+## Current: completed V15 walking and task-control study
 
-[Latest recorded checkpoints and project history](https://howdymary.github.io/mochi/) · [Frozen V15 protocol](docs/efficient-v15.md) · [Training and evaluation execution](https://github.com/howdymary/mochi-demo/actions/runs/44625135986)
+[Uninterrupted checkpoint comparison](https://howdymary--mochi-efficient-v15-demo-web.us-east.modal.run/) · [Fresh test scenario](https://howdymary--mochi-efficient-v15-demo-web.us-east.modal.run/?scenario=held-out-93000) · [Technical blog](https://howdymary.github.io/mochi/) · [Assessment](docs/efficient-v15-assessment.md) · [Numerical assessment](docs/efficient-v15-assessment.json)
 
-Tinker completed **16 new optimizer updates and 96 domain-gradient calls** for the shared Qwen3.5-4B LoRA decision model. Every update included walking, clock, drawer, laptop, globe and arm-recovery examples. Saved checkpoints are 0, 1, 4, 8 and 16; an additional durable optimizer state is retained at 12. Update 0 restores the previously qualified V12 decision checkpoint, with 105 cumulative updates. The native gait network, actuator controllers, scene, route and verifiers remain fixed.
+Tinker completed **16 new optimizer updates and 96 domain-gradient calculations** for the shared Qwen3.5-4B LoRA decision model. Every update included walking, clock, drawer, laptop, globe and arm-recovery examples. Checkpoints 0, 1, 4, 8 and 16 were evaluated on all three development scenarios. The frozen rule selected update 16 before opening four fresh final-test scenarios.
 
-The first declared development scenario has the following recorded outcomes. These are separate continuous clock → drawer → laptop → globe episodes with identical initial states and playback speed.
+Update 0 restores a previously trained checkpoint with 105 cumulative updates. The selected checkpoint has 121 cumulative updates. The native ONNX gait, physical controllers, scene, route, step detector and success criteria stayed fixed throughout this comparison. Tinker trained controller selection, including walking commands and task/recovery profiles.
 
-| New optimizer updates | Complete within quality limits | Measured step attempts | Physical seconds |
+| Final-test policy | Complete within quality limits | Mean step attempts | Physical seconds |
 |---|---:|---:|---:|
-| 0 | Yes | 806 | 265.4 |
-| 1 | Yes | 586 | 237.8 |
-| 4 | Yes | 480 | 216.7 |
-| 8 | Yes | 476 | 216.4 |
-| 16 | Yes | 482 | 217.2 |
+| Parent | 4/4 | 806.0 | 266.4 |
+| Selected update 16 | 4/4 | 476.5 | 219.5 |
+| Fixed controller | 4/4 | 809.5 | 264.9 |
+| Training-derived static | 4/4 | 482.0 | 219.1 |
 
-**Final evaluation remains in progress.** The table is one development case, not a final-test result or a general reliability claim. Every saved checkpoint completed all three development scenarios within the quality limits. The frozen rule selected update 16, averaging 485.3 steps and 218.1 physical seconds versus 805.3 steps and 265.5 seconds for the parent. Selection preceded opening four fresh final scenarios. Final tests include parent, selected, fixed and training-only static policies, followed by exact-state walking, manipulation and recovery comparisons. The target is at least 20% fewer safe steps without lower completion or longer successful completion time; that complete final-test goal is not yet established.
+The declared 20% step-reduction target was met on this cohort. Across the four matched successful pairs, the selected model used **40.9% fewer steps** and **17.6% less simulated time** than the parent. No policy fell or made a forbidden contact in these final tests. Completion rates were equal at 4/4.
 
-The four data collectors returned 148 physical rollouts: 144 same-state action branches and four continuous collection sequences. The campaign retains the existing limits of **224 total physical rollouts, 18 simulation CPU-hours and four concurrent workers**. No more than 16 new optimizer updates are authorized. Failed attempts and archived checkpoints remain preserved.
+The paired bootstrap intervals are 39.4% to 41.8% for steps and 15.7% to 18.7% for time. They describe four fixed-layout cases. A 4/4 completion result has an approximately 51% to 100% Wilson interval at 95% confidence. This is a small simulation study without hardware validation.
+
+### Static control and motion tradeoffs
+
+The training-derived static policy was close: 482.0 steps and 219.1 seconds, compared with 476.5 steps and 219.5 seconds for the selected model. Their choices matched in 46/48 corresponding decisions. The two differences were laptop profiles on seeds 93000 and 93003. No meaningful adaptive-policy advantage was established. Small cost differences under identical choice vectors remain unexplained.
+
+Average total arm-joint travel per successful recovery increased from 5.54 to 6.93 radians. Mean torso roll RMS increased slightly, from 0.271 to 0.279 degrees. Both remained within the declared limits. Fewer footsteps did not establish lower arm travel or smoother motion in every measure.
+
+### Development checkpoint progression
+
+| New updates | Qualified development completions | Mean steps | Physical seconds |
+|---|---:|---:|---:|
+| 0 | 3/3 | 805.3 | 265.5 |
+| 1 | 3/3 | 583.3 | 237.9 |
+| 4 | 3/3 | 494.7 | 219.0 |
+| 8 | 3/3 | 488.0 | 218.2 |
+| 16 | 3/3 | 485.3 | 218.1 |
+
+The viewer retains all five versions on all three development scenarios, plus every parent/selected final-test pair. Each pane is one uninterrupted clock, drawer, laptop and globe episode with identical initial conditions and playback speed. Body motion and object outcomes come from recorded MuJoCo physics.
+
+### Component checks
+
+The first qualified fixed reference route supplied twelve supported physical states. Both models were tested from each state, producing **24 diagnostic branches**. All branches passed the frozen branch validity checks. These branches are separate from the continuous four-task tests.
+
+Across the four walking branches, measured attempts fell from 808 to 472 and total physical time fell from 229.04 to 184.86 seconds. The laptop approach used 324 versus 172 steps from the same state. Task-plus-fixed-withdrawal time summed to 35.81 versus 32.51 seconds. Recovery time summed to 6.65 versus 5.30 seconds, while summed arm-joint travel increased from 22.15 to 26.77 radians. These totals combine separate branches, not one route.
+
+### Execution and sponsor integrations
+
+- Tinker: 16 completed optimizer updates, 96 gradient calculations, 217,812 training-token presentations and retained parent/intermediate states. Training examples include reuse of 48 measured observation records.
+- Modal: 204 physical rollouts and 10.341 function CPU-hours, within the 224-rollout, 18-hour and four-worker limits. This reports function execution at the declared CPU allocation, not an invoice.
+- Exa: one search in the research loop, selected from measured turning and alignment failures. Source URLs and provenance remain in the public report.
+- past.dev: six writes and seven logical recalls, including one cross-run recall. The completed handoff includes results, critic review, a qualified conclusion and a subsequent research recall.
+
+The 204 physical rollouts comprise one preflight, 148 data-generation branches/continuations, fifteen development episodes, sixteen final episodes and twenty-four component branches. No extra gradients or physical rollouts were needed for publication.
+
+### past.dev challenge
+
+**Agents:** research, design, execution and review use distinct service identities with explicit shared and private audiences.
+
+**Layers:** prompts contain working context; past.dev stores observations, sourced hypotheses and qualified conclusions; code contains procedures; artifact storage contains exact numerical records and trajectories.
+
+**Results:** four writing identities, four verified reading identities and five source-verified cross-role handoffs within V15. A separate cross-run recall retrieved the earlier assessment. The private-canary denial test passed, with no pending ingestions.
+
+**Caveats:** canonical journal payloads are used after verifying returned source IDs. The study did not isolate a causal benefit from memory or search. API activity is distinct from billed credits.
+
+### Replay and audit
+
+Run from the repository root after the environment and visual-asset setup below. Downloading the public artifact reuses archived trajectories:
+
+```sh
+gh run download 44625135986 --repo howdymary/mochi-demo --name mochi-efficient-v15-public-44625135986 --dir mochi/web/desk/efficient-v15
+python3 -m http.server 4118 --directory mochi/web/desk
+```
+
+Open `http://127.0.0.1:4118/efficient-trained.html`. To audit the retained numerical evidence:
+
+```sh
+gh run download 44625135986 --repo howdymary/mochi-demo --name mochi-efficient-v15-training-44625135986 --dir mochi/.cache/v15-completed
+node mochi/scripts/check_efficient_evidence.mjs
+node mochi/scripts/check_efficient_v15_ui.mjs
+mochi/.venv/bin/python mochi/scripts/assess_efficient_v15.py --source mochi/.cache/v15-completed
+```
+
+[Frozen methods](docs/efficient-v15.md) · [Execution and artifacts](https://github.com/howdymary/mochi-demo/actions/runs/44625135986) · [past.dev and Tinker article draft](docs/past-dev-blog-draft.md)
+
+Policy reruns require access to the retained Tinker states and backend credentials. Replays load the archived trajectories. Forecasting code, deployments, old checkpoints and earlier studies remain preserved.
 
 ## Completed terrain study (V12) and navigation refinement (V14)
 
