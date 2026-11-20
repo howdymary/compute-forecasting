@@ -1,6 +1,6 @@
 # Flat-ground foot-lift preflight
 
-[Inspect the physical recording](https://howdymary--mochi-contact-v18-demo-web.us-east.modal.run/contact-v18-preflight.html?phase=desk) · [Training workflow](https://github.com/howdymary/mochi-demo/actions/runs/44791618165)
+[Inspect the physical recording](https://howdymary--mochi-contact-v18-demo-web.us-east.modal.run/contact-v18-preflight.html?phase=desk) · [Current training workflow](https://github.com/howdymary/mochi-demo/actions/runs/44800327838)
 
 The fixed-controller check completed clock, book turnaround, forward-facing descent, drawer, Post-it crossing, laptop and globe in one uninterrupted MuJoCo episode. It had no fall, forbidden fixture contact or applied base force. It did not pass every smoothness criterion: lateral peak-to-peak excursion reached 6.82 cm, above the frozen 6 cm limit. It is not a qualified smooth completion.
 

@@ -30,5 +30,6 @@ def web():
         return {'status':'ok','release':os.environ.get('MOCHI_RELEASE'),'study':meta['study'],
                 'mode':meta['mode'],'new_tinker_updates':0,'recorded_source_sha':meta['source_sha'],
                 'seed':meta['seed'],'complete':meta['complete'],'qualified':meta['qualified'],
-                'execution_workflow_run':meta['execution_workflow_run']}
+                'execution_workflow_run':meta['execution_workflow_run'],
+                'current_campaign_workflow_run':meta.get('current_campaign_workflow_run',meta['execution_workflow_run'])}
     api.mount('/',StaticFiles(directory='/web',html=True));return api
