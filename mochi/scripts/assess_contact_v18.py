@@ -8,7 +8,8 @@ import math
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-EXECUTION = '4d2be964a9be26f6697513a314a3b23a64d07b90'
+EXECUTION = 'bdba8600e9abb94c20aa1dc68ee617b51ee4999c'
+WORKFLOW = 44800327838
 
 
 def read(path):
@@ -59,6 +60,7 @@ def main():
     from mochi.control_v8.verification import full_success
     from mochi.smooth_v16.verification import forward_descent_check
     from assess_smooth_v17 import qualification_failures, failure_details
+    from foot_clearance_evidence import after_descent_clearance
 
     report = read(folder / 'report.json')
     cfg = report['protocol']
@@ -75,10 +77,24 @@ def main():
         assert all(n > 0 for n in entry['domain_counts'].values()) and entry['tokens'] > 0
         assert len(entry['batch_sha256']) == 64
     assert max(report['first_optimizer_probability_change'].values()) > 1e-7
-    assert len(cfg['frozen_sha256']) == 211
+    assert len(cfg['frozen_sha256']) == 212
     for name, expected in cfg['frozen_sha256'].items():
         assert sha((ROOT / name).read_bytes()) == expected, name
     assert sha((ROOT / cfg['implementation_prompt']).read_bytes()) == cfg['prompt_sha256']
+    amendment = cfg['runtime_amendment']
+    assert sha((ROOT / amendment['document']).read_bytes()) == amendment['document_sha256']
+    prior = read(folder / 'prior-runtime-execution.json')
+    assert prior['source_sha'] == '4d2be964a9be26f6697513a314a3b23a64d07b90'
+    assert prior['optimizer_updates_completed'] == 0 and not prior['held_out_opened']
+    assert sum(p != 'src/mochi/contact_v18/train.py' and cfg['frozen_sha256'][p] == h
+               for p, h in prior['protocol']['frozen_sha256'].items()) == 210
+    reconciliation = read(folder / 'runtime-reservation-reconciliation.json')
+    assert reconciliation == report['runtime_reservation_reconciliation']
+    assert sha((folder / 'checkpoint-0.json').read_bytes()) == reconciliation['baseline_artifact_sha256']
+    assert report['carried_baseline']['sha256'] == reconciliation['baseline_artifact_sha256']
+    assert reconciliation['interrupted_physical_attempts_upper_bound'] == 4
+    assert report['runtime_wrapper_probe']['expected_error'] == 'Unavailable action'
+    assert report['runtime_wrapper_probe']['receipt']['physical_rollouts'] == 1
     engineering = read(ROOT / cfg['engineering_evidence']['path'])
     assert sha((ROOT / cfg['engineering_evidence']['path']).read_bytes()) == cfg['engineering_evidence']['sha256']
     assert engineering['physical_attempts'] == cfg['engineering_usage']['physical_rollouts'] == 58
@@ -92,13 +108,15 @@ def main():
     assert selection['selected_checkpoint']['checkpoint_id'] == report['selected_checkpoint']['checkpoint_id']
     partitions = [set(cfg[key]) for key in ['training_seeds', 'development_seeds', 'held_out_seeds']]
     assert not any(a & b for i, a in enumerate(partitions) for b in partitions[i + 1:])
-    development = {u: read(folder / f'checkpoint-{u}.json') for u in checkpoints}
+    evaluated = cfg['training']['evaluation_checkpoints']
+    assert evaluated == [0, 1, 4, 16] and checkpoints[8]['development'] is None
+    development = {u: read(folder / f'checkpoint-{u}.json') for u in evaluated}
     for update, rows in development.items():
         assert {row['seed'] for row in rows} == partitions[1]
         recomputed = summary(deepcopy(rows), cfg)
         for key, value in checkpoints[update]['development'].items():
             same(value, recomputed[key])
-    assert select_checkpoint(list(checkpoints.values()), development, cfg)['checkpoint_id'] == report['selected_checkpoint']['checkpoint_id']
+    assert select_checkpoint([checkpoints[u] for u in evaluated], development, cfg)['checkpoint_id'] == report['selected_checkpoint']['checkpoint_id']
 
     teachers = [read(folder / f'teacher-{seed}.json') for seed in cfg['training_seeds']]
     teacher_branches = 0
@@ -127,7 +145,8 @@ def main():
     held = {label: read(folder / f'held-out-{label}.json') for label in ['parent', 'selected', 'fixed', 'static']}
     failures = {}
     for label, rows in held.items():
-        assert len(rows) == 4 and {row['seed'] for row in rows} == partitions[2]
+        expected_seeds = partitions[2] if label in ['parent', 'selected'] else set(cfg['control_seeds'])
+        assert len(rows) == len(expected_seeds) and {row['seed'] for row in rows} == expected_seeds
         recomputed = summary(deepcopy(rows), cfg)
         for key, value in report['held_out'][label].items():
             same(value, recomputed[key])
@@ -159,15 +178,19 @@ def main():
                 and pp['mean_time_reduction_fraction'] >= 0)
     assert goal == report['improvement_goal_met']
     choice_audits = [decision_audit(a, next(b for b in held['selected'] if b['seed'] == a['seed'])) for a in held['parent']]
+    static_seeds = {row['seed'] for row in held['static']}
     static_comparisons = [{'seed': a['seed'], 'identical_action_sequence': choices(a) == choices(next(b for b in held['static'] if b['seed'] == a['seed']))}
-                          for a in held['selected']]
+                          for a in held['selected'] if a['seed'] in static_seeds]
 
     usage, eng = report['budget_usage_or_reserved'], cfg['engineering_usage']
     receipts = [entry['receipt'] for entry in report['physics_receipts']]
     assert all(r['cpu'] == 1 for r in receipts)
-    assert usage['physical_rollouts'] == eng['physical_rollouts'] + sum(r['physical_rollouts'] for r in receipts)
-    assert usage['physical_rollouts'] == report['total_physical_attempts_accounted'] == report['total_physical_rollouts_completed']
-    same(usage['simulation_cpu_hours'], eng['simulation_cpu_hours'] + sum(r['duration_seconds'] / 3600 for r in receipts))
+    interrupted = report['interrupted_physical_attempts_accounted']
+    assert interrupted == reconciliation['interrupted_physical_attempts_upper_bound']
+    assert usage['physical_rollouts'] == eng['physical_rollouts'] + sum(r['physical_rollouts'] for r in receipts) + interrupted
+    assert usage['physical_rollouts'] == report['total_physical_attempts_accounted']
+    assert usage['physical_rollouts'] - interrupted == report['total_physical_rollouts_completed']
+    same(usage['simulation_cpu_hours'], eng['simulation_cpu_hours'] + sum(r['duration_seconds'] / 3600 for r in receipts) + report['interrupted_simulation_cpu_hours_bound'])
     assert usage['optimizer_updates'] == 16
     assert usage['training_token_presentations'] == sum(entry['tokens'] for entry in log)
     assert all(0 <= usage[key] <= limit for key, limit in cfg['bounds'].items() if key != 'modal_concurrency')
@@ -198,14 +221,16 @@ def main():
             for version in scenario['versions']:
                 assert starts[scenario['parent_file']] == starts[version['file']]
         recordings = len(starts)
-        assert recordings == 23
+        assert recordings == 20
 
     audit = {'study': report['study'], 'source_sha': EXECUTION, 'run_id': report['run_id'],
-             'execution_workflow_run': 44791618165, 'optimizer_updates': 16, 'domain_gradient_calls': 96,
+             'execution_workflow_run': WORKFLOW, 'optimizer_updates': 16, 'domain_gradient_calls': 96,
              'selected_update': report['selected_checkpoint']['update'], 'held_out': report['held_out'],
              'paired': pp, 'improvement_goal_met': goal, 'budget_usage': usage, 'teacher_branches_verified': teacher_branches,
-             'public_recordings_verified': recordings, 'frozen_files_verified': 211, 'choice_audit': choice_audits,
+             'public_recordings_verified': recordings, 'frozen_files_verified': 212, 'choice_audit': choice_audits,
+             'runtime_amendment': amendment, 'runtime_reconciliation': reconciliation,
              'static_choice_audit': static_comparisons, 'failures': failures, 'service_eligibility': eligibility,
+             'after_descent_clearance':{label:[{'seed':row['seed'],**after_descent_clearance(row['episode'])} for row in rows] for label,rows in held.items()},
              'static_control_training_scope': 'Built from the two guarded teachers. The selector additionally receives three laptop regression examples; this static control does not receive those three labels.',
              'resource_receipt_caveat': 'The shared receipt helper reports 3072 MiB, inherited from an older function. C18 functions declare 4096 MiB. CPU and measured duration accounting use the actual one-CPU configuration.',
              'limits': ['Four final scenarios in one furnished layout. No hardware validation.',
@@ -223,16 +248,17 @@ def main():
              f"Tinker completed 16 additional optimizer updates on the six-domain Qwen3.5-4B LoRA controller selector. Development selection chose update {audit['selected_update']}. The declared joint improvement target was {'met' if goal else 'not met'}.", '',
              'The model chooses walking strategies, manipulation profiles and arm recovery. The native ONNX gait weights remain fixed. The bounded laptop force controls and foot-lift correction are controller engineering shared by the parent, intermediate checkpoints and fixed controls.', '',
              '[Continuous checkpoint replay](https://howdymary--mochi-contact-v18-demo-web.us-east.modal.run/) · '
-             '[Execution and artifacts](https://github.com/howdymary/mochi-demo/actions/runs/44791618165) · '
+             f'[Execution and artifacts](https://github.com/howdymary/mochi-demo/actions/runs/{WORKFLOW}) · '
              '[Numerical audit](contact-v18-assessment.json)', '',
              '## Fresh final scenarios', '',
-             '| Policy | Complete | Within quality limits | Clear stepping | Mean steps | Seconds | Recovery travel, rad | Moving sole clearance, mm |',
-             '| --- | --- | --- | --- | --- | --- | --- | --- |']
+             '| Policy | Complete | Within quality limits | Clear stepping | Mean steps | Seconds | Recovery travel, rad | Intertask arm travel, rad | Moving sole clearance, mm |',
+             '| --- | --- | --- | --- | --- | --- | --- | --- | --- |']
     for label, stats in report['held_out'].items():
         clearance = stats['successful_mean_flat_sole_clearance_m']
-        lines.append(f"| {label} | {stats['complete_successes']}/{stats['n']} | {stats['qualified_complete_successes']}/{stats['n']} | {stats['clear_stepping_successes']}/{stats['n']} | {number(stats['successful_mean_steps'], 1)} | {number(stats['successful_mean_seconds'], 1)} | {number(stats['successful_mean_recovery_arm_joint_travel_rad'])} | {number(None if clearance is None else clearance * 1000)} |")
+        lines.append(f"| {label} | {stats['complete_successes']}/{stats['n']} | {stats['qualified_complete_successes']}/{stats['n']} | {stats['clear_stepping_successes']}/{stats['n']} | {number(stats['successful_mean_steps'], 1)} | {number(stats['successful_mean_seconds'], 1)} | {number(stats['successful_mean_recovery_arm_joint_travel_rad'])} | {number(stats['successful_mean_intertask_arm_joint_travel_rad'])} | {number(None if clearance is None else clearance * 1000)} |")
     lines += ['', 'Cost and clearance means use qualified completions only. Recovery travel is the mean joint travel per recovery. The replay counter totals all recoveries. An early failed attempt is not a cheap successful run.', '',
               f"Matched qualified pairs: {pp['n']}. Step reduction: {number(None if pp['mean_step_reduction_fraction'] is None else 100 * pp['mean_step_reduction_fraction'])}%. Recovery-travel reduction: {number(None if pp['mean_recovery_arm_travel_reduction_fraction'] is None else 100 * pp['mean_recovery_arm_travel_reduction_fraction'])}%. Time reduction: {number(None if pp['mean_time_reduction_fraction'] is None else 100 * pp['mean_time_reduction_fraction'])}%.", '',
+              f"Intertask arm-travel reduction: {number(None if pp['mean_intertask_arm_travel_reduction_fraction'] is None else 100 * pp['mean_intertask_arm_travel_reduction_fraction'])}%. This includes walking, turning and recovery. Native walking arm swing remains fixed. A reduction in recovery travel alone does not establish less total arm movement between tasks.", '',
               'The frozen joint target requires all four fresh scenarios to complete within the quality limits and meet the 4.5 mm moving-sole-clearance target, at least two qualified pairs, at least 10% fewer steps and 15% less recovery joint travel, without longer successful time. Four scenarios in one layout do not establish reliability on other desks or hardware.', '',
               '## Why the old walking looked like a shuffle', '',
               'Book traversal uses planned contact footsteps. Flat-ground travel then switches to a fixed ONNX gait with much lower swing clearance. A 25 Hz replay could also hide short lift peaks. The new recorder targets 100 Hz during flat transit and renders the measured body transforms at their actual timestamps.', '',
@@ -248,11 +274,15 @@ def main():
               '| --- | --- | --- | --- | --- | --- |']
     for update, cp in sorted(checkpoints.items()):
         stats = cp['development']
+        if stats is None:
+            lines.append(f'| {update} | Saved, not evaluated | Unavailable | Unavailable | Unavailable | Unavailable |')
+            continue
         lines.append(f"| {update} | {stats['complete_successes']}/{stats['n']} | {stats['qualified_complete_successes']}/{stats['n']} | {stats['clear_stepping_successes']}/{stats['n']} | {stats['falls']} | {stats['invalid_contacts']} |")
-    lines += ['', 'The parent has 121 cumulative updates. The counts above are additional updates in this campaign. All five checkpoints use the same frozen physical scene, controller library, route, verifiers and quality limits.', '',
+    lines += ['', 'The parent has 121 cumulative updates. The counts above are additional updates in this campaign. Five states were saved; four checkpoints were physically evaluated. All physical comparisons use the same frozen scene, controller library, route, verifiers and quality limits.', '',
+              'Before training and final tests, the paired runtime was extended to 3600 seconds after one parent input took nearly 24 minutes. The completed baselines were retained. Update 8 remained saved without physical evaluation, and fixed/static controls used the predeclared seeds 186000 and 186001. The four fresh parent/selected pairs and original improvement criteria remained unchanged. See the [runtime amendment](contact-v18-runtime-amendment.md).', '',
               '## Attribution and failures', '',
               f"Parent and selected final tests run sequentially in the same worker from reset. {sum(x['unexplained_prefix_variation'] for x in choice_audits)}/4 pairs had a different physical state or time during their shared action prefix. Such variation cannot be attributed to learned selection. The numerical audit retains every prefix check.", '',
-              f"The selected policy and training-derived static control chose identical complete action sequences in {sum(x['identical_action_sequence'] for x in static_comparisons)}/4 final scenarios. This comparison limits claims that context-dependent selection was necessary.", '',
+              f"The selected policy and training-derived static control chose identical complete action sequences in {sum(x['identical_action_sequence'] for x in static_comparisons)}/{len(static_comparisons)} matched control scenarios. This comparison limits claims that context-dependent selection was necessary.", '',
               'The static preference uses the two guarded teachers. The selector additionally receives three laptop regression labels. The fixed heuristic uses the regression-derived lid-angle rule. These information differences limit a claim of equal-data superiority over the static control.', '',
               'All failed attempts remain in the final table and replay. No checkpoint was selected using final-test outcomes. No service ablation establishes a causal improvement from Exa or past.dev.', '',
               '| Policy | Seed | Last decision | Failure |', '| --- | --- | --- | --- |']
@@ -263,12 +293,21 @@ def main():
             lines.append(f"| {label} | {row['seed']} | {row['last_decision_domain']} | {row['failure']} |")
     if not any_failure:
         lines.append('| All | All final seeds | Complete | No failed final attempts |')
+    lines += ['', '## Desk walking immediately after descent', '',
+              'This diagnostic covers moving and turning swings between the verified descent-exit stance and drawer-station arrival. Book steps and station alignment are excluded. It was added for the post-descent walking question and was not a checkpoint-selection or joint-goal criterion. A partially completed leg stays labelled incomplete.', '',
+              '| Policy | Seed | Leg completed | Measured moving swings | Median minimum sole clearance, mm |',
+              '| --- | --- | --- | --- | --- |']
+    for label in ['parent', 'selected']:
+        for row in audit['after_descent_clearance'][label]:
+            value = row['median_peak_m']
+            lines.append(f"| {label} | {row['seed']} | {'Yes' if row['completed_leg'] else 'No'} | {row['moving_swings']} | {number(None if value is None else value * 1000)} |")
     lines += ['', '## Services and resource accounting', '',
               f"Accounted physical attempts: {usage['physical_rollouts']}, including 58 local engineering attempts. Confirmed completed attempts: {report['total_physical_rollouts_completed']}. Accounted simulation CPU-hours: {usage['simulation_cpu_hours']:.3f}. Limits were 160 attempts, 14 CPU-hours, 16 optimizer updates and four parallel workers. These are measured budget records, not a billing invoice.", '',
+              'Four unfinished stages and eight CPU-minutes were conservatively charged for two interrupted teacher inputs. Their reserved inference tokens were retained. A separate cloud wrapper check intentionally reached the invalid-action validator after physical initialization; its failed attempt was charged and provided no training label.', '',
               'Each cloud function requests one CPU and 4096 MiB memory. The reused receipt helper carries a stale 3072 MiB memory label; that field is not an accurate allocation or billing receipt. The CPU-duration budget calculation is unaffected.', '',
               'Tinker performed the optimizer updates, checkpoint storage and decision inference. Modal ran measured MuJoCo branches and uninterrupted evaluation episodes. Exa searched for contact and support mechanisms in the main research loop. past.dev carried the sourced hypothesis, experiment plan, actual results and qualified verdict across distinct identities, with source-verified reads and a private-canary access check.', '',
               'An initial Modal image configuration failed before cloud physics or optimizer updates. The corrected execution preserved its research records, API usage and original campaign budget. No gradients were repeated by that setup recovery.', '',
-              f"Frozen execution source: `{EXECUTION}`. Campaign: `{report['run_id']}`. Execution workflow: `44791618165`. The audit verified all 211 frozen files and {recordings} public recordings.", '',
+              f"Frozen execution source: `{EXECUTION}`. Campaign: `{report['run_id']}`. Execution workflow: `{WORKFLOW}`. The audit verified all 212 frozen files and {recordings} public recordings. The carried baseline retains the original hashes for all 210 support files except the coordinator.", '',
               '## Reproduction', '', 'From the repository root:', '', '```bash',
               'PYTHONPATH=mochi/src mochi/.venv/bin/python mochi/scripts/build_contact_v18_preview.py --source <downloaded-artifact-folder>',
               'PYTHONPATH=mochi/src mochi/.venv/bin/python mochi/scripts/assess_contact_v18.py --source <downloaded-artifact-folder>',

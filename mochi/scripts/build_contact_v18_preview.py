@@ -7,6 +7,7 @@ from pathlib import Path
 
 import modal
 from build_terrain_training_preview import public_report
+from foot_clearance_evidence import after_descent_clearance
 
 ROOT=Path(__file__).resolve().parents[1]
 
@@ -29,7 +30,7 @@ def public_evidence(value,campaign):
 def main():
     p=argparse.ArgumentParser()
     p.add_argument('--source',required=True)
-    p.add_argument('--execution-workflow-run',type=int,default=44791618165)
+    p.add_argument('--execution-workflow-run',type=int,default=44800327838)
     p.add_argument('--development-preview',action='store_true',help='Inspect completed development recordings while the final cohort is still pending; never marks the campaign complete.')
     a=p.parse_args()
     source=Path(a.source)
@@ -46,6 +47,8 @@ def main():
     volumes={}
     cps={c['update']:c for c in report['checkpoints']}
     assert set(cps)=={0,1,4,8,16} and report['optimizer_updates_completed']==16
+    evaluated={u:c for u,c in cps.items() if c['development'] is not None}
+    assert set(evaluated)==set(report['protocol']['training'].get('evaluation_checkpoints',cps))
     selected=report['selected_checkpoint']['update']
     files={}
 
@@ -79,6 +82,7 @@ def main():
             'uncompressed_sha256':descriptor['uncompressed_sha256'],
             'steps':e['steps'],'duration':e['duration'],'direction_metrics':row['direction_metrics'],
             'native_smoothness':e['native_smoothness'],'flat_foot_clearance':e.get('flat_foot_clearance'),
+            'after_descent_clearance':after_descent_clearance(e),
             'recovery_arm_joint_travel_rad':sum(x['arm_joint_travel_rad'] for x in e['recoveries']),
             'intertask_arm_joint_travel_rad':sum(e['intertask_arm_joint_travel_rad'].values()),
             'postit_loaded_contacts':len(e['postit_crossings']),
@@ -88,10 +92,16 @@ def main():
         return name
 
     scenarios=[]
-    development={update:json.loads((source/f'checkpoint-{update}.json').read_text()) for update in cps}
+    development={update:json.loads((source/f'checkpoint-{update}.json').read_text()) for update in evaluated}
+    # The coordinator saves raw rows before computing the frozen qualification
+    # flags. Derive presentation flags using exactly those unchanged criteria.
+    from mochi.smooth_v16.objective import qualify
+    for rows in development.values():
+        for row in rows:
+            qualify(row,report['protocol'])
     for seed in report['protocol']['development_seeds']:
         versions=[]
-        for update in sorted(cps):
+        for update in sorted(evaluated):
             row=next(r for r in development[update] if r['seed']==seed)
             versions.append({'update':update,'file':recording(row,update,'development')})
         scenarios.append({'id':'development-'+str(seed),'label':f'Development scenario · {seed}',
@@ -109,6 +119,10 @@ def main():
     manifest={'study':report['study'],'optimizer_updates_completed':report['optimizer_updates_completed'],
         'execution_source_sha':report.get('execution_source_sha',report['source_sha']),
         'prior_execution':report.get('prior_execution'),'data_collection_provenance':report.get('data_collection_provenance'),
+        'runtime_amendment':report.get('runtime_amendment'),'carried_baseline':report.get('carried_baseline'),
+        'runtime_reservation_reconciliation':report.get('runtime_reservation_reconciliation'),
+        'interrupted_physical_attempts_accounted':report.get('interrupted_physical_attempts_accounted',0),
+        'physical_evaluation_updates':sorted(evaluated),'saved_checkpoint_updates':sorted(cps),
         'selected_update':selected,'scope':report['scope'],'scene':json.loads((ROOT/'configs/richdesk-v9.json').read_text()),
         'scene_revision':report['protocol']['scene_revision'],'scenarios':scenarios,'recordings':files,'checkpoints':[cps[k] for k in sorted(cps)],
         'held_out':report.get('held_out'),'paired_held_out':report.get('paired_held_out'),
