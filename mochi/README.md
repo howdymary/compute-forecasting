@@ -1,5 +1,13 @@
 # MOCHI: Walking, Contact and Recovery Policy Learning
 
+## V19: paper-free desk and step-first post-training
+
+[Paper-free comparison](https://howdymary--mochi-paperfree-v19-demo-web.us-east.modal.run/) · [Training run](https://github.com/howdymary/mochi-demo/actions/runs/44839589468) · [Frozen protocol](docs/paperfree-v19-protocol.md) · [Engineering records](evidence/paperfree-v19/engineering.json)
+
+The Post-it and its forced crossing are removed from both physics and rendering. Ordinary flat walking connects drawer and laptop. In a matched physical engineering check, W8 used 468 steps and W10 used 414, with all four tasks and existing quality limits satisfied. This 11.5% reduction precedes new training and is not attributed to Tinker.
+
+The new reward first requires valid completion and visible foot lift, then charges one point for every measured step, including turns, alignment and corrections. One fewer step outweighs every time or arm-travel tie-breaker. Failed or shuffling attempts cannot win. An eight-update Tinker study is running with new-scene parent baselines, intermediate checkpoints and fresh paired tests. No new training improvement is established yet. The native gait network and book controller remain fixed.
+
 ## V18: lifted footsteps, no promoted checkpoint
 
 [Inspect stepping after the books](https://howdymary--mochi-contact-v18-demo-web.us-east.modal.run/?scenario=development-185000&checkpoint=4&phase=desk) · [Complete development attempt](https://howdymary--mochi-contact-v18-demo-web.us-east.modal.run/?scenario=development-185000&checkpoint=4) · [Final evaluation](https://howdymary--mochi-contact-v18-demo-web.us-east.modal.run/) · [Assessment](docs/contact-v18-assessment.md) · [Numerical audit](docs/contact-v18-assessment.json)
