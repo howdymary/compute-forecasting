@@ -14,6 +14,7 @@ from ..smooth_v17.finalize_memory import ReviewServices
 from ..terrain_v12.learning_remote import sampler_payload
 from ..maintenance.checkpoints_by_date import inventory
 from .remote import app,evaluate,collect
+from .paired_remote import evaluate_pair,probe_pair_wrapper
 from .policy import decision
 
 OUT=ROOT/'artifacts/contact-v18-training'
@@ -32,11 +33,39 @@ async def main():
  for p,h in cfg['frozen_sha256'].items():
   assert hashlib.sha256((ROOT/p).read_bytes()).hexdigest()==h,'Frozen source changed: '+p
  assert hashlib.sha256((ROOT/cfg['implementation_prompt']).read_bytes()).hexdigest()==cfg['prompt_sha256']
+ if cfg.get('runtime_amendment'):
+  amendment=cfg['runtime_amendment']
+  assert hashlib.sha256((ROOT/amendment['document']).read_bytes()).hexdigest()==amendment['document_sha256']
  previous,parent,parent_info=await load_parent(cfg)
- run_id=cfg.get('resume',{}).get('campaign_run_id','mochi-c18-'+os.environ['GITHUB_RUN_ID'])
+ resume=cfg.get('resume',{});runtime_resume=resume.get('mode')=='paired-runtime-amendment'
+ run_id=resume.get('campaign_run_id','mochi-c18-'+os.environ['GITHUB_RUN_ID'])
  progress=modal.Dict.from_name('mochi-contact-v18-progress',create_if_missing=True)
  prior=await progress.get.aio(run_id)
- if cfg.get('resume'):
+ resume_dir=ROOT/'artifacts/contact-v18-resume'
+ reconciliation=None
+ if runtime_resume:
+  workflow=json.loads((resume_dir/'prior-workflow.json').read_text())
+  assert workflow['conclusion']=='cancelled' and workflow['headSha']==resume['execution_source_sha']
+  assert prior and prior['source_sha']==resume['execution_source_sha']
+  assert prior['optimizer_updates_completed']==0 and not prior['training_log'] and not prior['held_out_opened']
+  assert prior['campaign_modal_rollouts_completed']==4 and prior['parent_baseline']['n']==3
+  prior=json.loads((resume_dir/'progress.json').read_text())
+  assert prior['source_sha']==resume['execution_source_sha'] and prior['optimizer_updates_completed']==0
+  assert prior['campaign_modal_rollouts_completed']==4 and not prior['held_out_opened']
+  old_paths=json.loads((resume_dir/'checkpoint-paths.json').read_text())
+  assert digest(old_paths['0']['optimizer'])==digest(parent),'Resume the identical optimizer parent'
+  original=prior['protocol']['frozen_sha256']
+  unchanged=[p for p,h in original.items() if p!='src/mochi/contact_v18/train.py' and cfg['frozen_sha256'][p]==h]
+  assert len(unchanged)==210 and len(original)==211,'Only orchestration may differ from the carried baseline'
+  assert all(prior['protocol'][k]==cfg[k] for k in ['smoothness','objective','walking_goal','scene_revision','training_seeds','development_seeds','held_out_seeds'])
+  assert prior['protocol']['training']=={k:v for k,v in cfg['training'].items() if k!='evaluation_checkpoints'}
+  path=ROOT/resume['reconciliation_path'];assert hashlib.sha256(path.read_bytes()).hexdigest()==resume['reconciliation_sha256']
+  reconciliation=json.loads(path.read_text())
+  assert len(reconciliation['terminated_teacher_calls'])==2 and all(c['status']=='terminated' for c in reconciliation['terminated_teacher_calls'])
+  assert reconciliation['optimizer_updates_completed']==0 and not reconciliation['final_tests_opened']
+  save('prior-runtime-execution',prior);save('runtime-reservation-reconciliation',reconciliation)
+  await progress.put.aio(run_id+'-runtime-stop',prior)
+ elif cfg.get('resume'):
   assert prior and prior['status']=='incomplete' and prior['error_type']=='InvalidError'
   assert 'build step after using' in prior['error']
   assert prior['optimizer_updates_completed']==0 and prior['campaign_modal_rollouts_completed']==0
@@ -45,7 +74,13 @@ async def main():
   await progress.put.aio(run_id+'-setup-failure',prior)
  else:assert prior is None,'Existing campaign: inspect durable evidence before any retry'
  ledger=modal.Dict.from_name(run_id+'-budget',create_if_missing=True)
- if prior:
+ if runtime_resume:
+  usage=await ledger.get.aio('usage');assert usage==reconciliation['usage_before']
+  usage=dict(reconciliation['usage_after'])
+  assert usage['physical_rollouts']==58+4+reconciliation['interrupted_physical_attempts_upper_bound']
+  assert usage['optimizer_updates']==usage['training_token_presentations']==0
+  assert all(0<=usage[k]<=cfg['bounds'][k] for k in usage)
+ elif prior:
   usage=await ledger.get.aio('usage')
   assert usage==prior['budget_usage_or_reserved']
   # The first outer planning decision was not in its token counter. Carry
@@ -68,7 +103,17 @@ async def main():
   'optimizer_updates_completed':0,'training_log':[],'checkpoints':[],'physics_receipts':[],
   'campaign_modal_rollouts_completed':0,'held_out_opened':False,'parent_selection':parent_info,
   'engineering_usage':cfg['engineering_usage']}
- if prior:report['prior_execution']={'workflow_run':cfg['resume']['workflow_run'],'source_sha':prior['source_sha'],
+ if runtime_resume:
+  report['runtime_amendment']=cfg['runtime_amendment']
+  report['runtime_reservation_reconciliation']=reconciliation
+  report['interrupted_physical_attempts_accounted']=reconciliation['interrupted_physical_attempts_upper_bound']
+  report['interrupted_simulation_cpu_hours_bound']=reconciliation['interrupted_simulation_cpu_hours_bound']
+  report['physics_receipts']=list(prior['physics_receipts'])
+  report['campaign_modal_rollouts_completed']=prior['campaign_modal_rollouts_completed']
+  report['prior_execution']={'workflow_run':resume['workflow_run'],'source_sha':prior['source_sha'],
+    'optimizer_updates':0,'completed_cloud_rollouts':4,'reason':'Paired runtime amended before training; completed baselines retained.',
+    'earlier_image_setup_recovery':prior.get('prior_execution')}
+ elif prior:report['prior_execution']={'workflow_run':cfg['resume']['workflow_run'],'source_sha':prior['source_sha'],
     'error_type':prior['error_type'],'optimizer_updates':0,'physical_rollouts':0,
     'carried_budget_usage':dict(usage),'scope':'Image setup repair only. Existing research/plan records and usage retained.'}
  lock=asyncio.Lock();publish_lock=asyncio.Lock();slots=asyncio.Semaphore(cfg['bounds']['modal_concurrency'])
@@ -145,14 +190,24 @@ async def main():
   samplers[0]=await trainer.save_weights_and_get_sampling_client(kind='snapshot')
   checkpoint_paths['0']={'optimizer':parent};save('checkpoint-paths',checkpoint_paths)
   async with app.run():
+   report['phase']='Verify paired runtime wrapper without changing the physical evaluator';await publish()
+   report['runtime_wrapper_probe']=(await batch(probe_pair_wrapper,[(cfg['preflight_seed'],run_id,'runtime-probe')],120,1,0))[0]
    report['phase']='Frozen repair preflight and untrained-parent development baseline';await publish()
-   preflight=(await batch(evaluate,[(cfg['preflight_seed'],[('fixed',None,None)],run_id,'preflight')],2400,1,0))[0]['rows']['fixed']
-   report['remote_reference']=preflight
-   report['preflight_complete']=preflight['complete_sequence_success']
-   # The preflight remains recorded even if this fixed heuristic fails. The
-   # learning gate below requires both actually completed guarded sequences.
-   baseline=await batch(evaluate,[(s,[('policy',sampler_payload(samplers[0]),None)],run_id,'dev-0') for s in cfg['development_seeds']],2400,1,24000)
-   development[0]=[x['rows']['policy'] for x in baseline];save('checkpoint-0',development[0])
+   if runtime_resume:
+    report['remote_reference']=prior['remote_reference'];report['preflight_complete']=prior['preflight_complete']
+    p=resume_dir/'checkpoint-0.json'
+    assert hashlib.sha256(p.read_bytes()).hexdigest()==reconciliation['baseline_artifact_sha256']
+    development[0]=json.loads(p.read_text())
+    assert {r['seed'] for r in development[0]}==set(cfg['development_seeds'])
+    report['carried_baseline']={'workflow_run':resume['workflow_run'],'source_sha':prior['source_sha'],
+       'sha256':reconciliation['baseline_artifact_sha256'],'unchanged_support_files':210,'new_physical_rollouts':0}
+   else:
+    preflight=(await batch(evaluate,[(cfg['preflight_seed'],[('fixed',None,None)],run_id,'preflight')],2400,1,0))[0]['rows']['fixed']
+    report['remote_reference']=preflight
+    report['preflight_complete']=preflight['complete_sequence_success']
+    baseline=await batch(evaluate,[(s,[('policy',sampler_payload(samplers[0]),None)],run_id,'dev-0') for s in cfg['development_seeds']],2400,1,24000)
+    development[0]=[x['rows']['policy'] for x in baseline]
+   save('checkpoint-0',development[0])
    report['parent_baseline']=summary(development[0],cfg);await publish()
    report['phase']='Guarded collection on actual parent-visited training states';await publish()
    teachers=await batch(collect,[(s,sampler_payload(samplers[0]),run_id) for s in cfg['training_seeds']],7200,35,24000)
@@ -213,21 +268,25 @@ async def main():
    report['phase']='Matched development evaluations at every actual checkpoint';await publish()
    for cp in report['checkpoints']:
     u=cp['update']
+    if u not in cfg['training'].get('evaluation_checkpoints',cfg['training']['checkpoints']):
+     cp['evaluation_scope']='Saved and probed; no physical development evaluation in the amended budget.'
+     await publish();continue
     if u:
      rows=await batch(evaluate,[(s,[('policy',sampler_payload(samplers[u]),None)],run_id,'dev-'+str(u)) for s in cfg['development_seeds']],2400,1,24000)
      development[u]=[r['rows']['policy'] for r in rows];save('checkpoint-'+str(u),development[u])
     cp['development']=summary(development[u],cfg);await publish()
-   selected=select_checkpoint(report['checkpoints'],development,cfg);report['selected_checkpoint']=selected
+   selected=select_checkpoint([c for c in report['checkpoints'] if c['development'] is not None],development,cfg);report['selected_checkpoint']=selected
    save('selection-freeze',report);report['held_out_opened']=True
    report['phase']='Fresh final tests with paired reset playback and fixed/static controls';await publish()
    selected_payload=sampler_payload(samplers[selected['update']]);parent_payload=sampler_payload(samplers[0])
-   pairs=await batch(evaluate,[(s,[('parent',parent_payload,None),('selected',selected_payload,None)],run_id,'held-out') for s in cfg['held_out_seeds']],2400,2,48000)
-   controls=await batch(evaluate,[(s,[('fixed',None,None),('static',None,report['static_preference'])],run_id,'held-out-controls') for s in cfg['held_out_seeds']],2400,2,0)
+   pairs=await batch(evaluate_pair,[(s,[('parent',parent_payload,None),('selected',selected_payload,None)],run_id,'held-out') for s in cfg['held_out_seeds']],3600,2,48000)
+   controls=await batch(evaluate_pair,[(s,[('fixed',None,None),('static',None,report['static_preference'])],run_id,'held-out-controls') for s in cfg.get('control_seeds',cfg['held_out_seeds'])],3600,2,0)
    held={label:[bundle['rows'][label] for bundle in (pairs if label in ['parent','selected'] else controls)] for label in ['parent','selected','fixed','static']}
    report['held_out']={label:summary(rows,cfg) for label,rows in held.items()}
    for label,rows in held.items():save('held-out-'+label,rows)
    report['paired_held_out']=paired(held['parent'],held['selected'])
-   report['paired_fixed_control']=paired(held['fixed'],held['selected'])
+   control_seeds={r['seed'] for r in held['fixed']}
+   report['paired_fixed_control']=paired(held['fixed'],[r for r in held['selected'] if r['seed'] in control_seeds])
    pp=report['paired_held_out']
    report['all_fresh_tasks_qualified']=report['held_out']['selected']['qualified_complete_successes']==len(cfg['held_out_seeds'])
    report['all_fresh_clear_stepping']=report['held_out']['selected']['clear_stepping_successes']==len(cfg['held_out_seeds'])

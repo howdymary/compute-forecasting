@@ -30,6 +30,13 @@ jobs:
           python mochi/scripts/fetch_visual_models.py
       - name: Verify contact geometry and preserved safety contracts
         run: python -m pytest -q mochi/tests/test_contact_v18.py mochi/tests/test_smooth_v17.py mochi/tests/test_smooth_v16.py
+      - name: Retain the completed baseline and zero-update runtime evidence
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p mochi/artifacts/contact-v18-resume
+          gh run download 44791618165 --repo howdymary/mochi-demo --name mochi-contact-v18-training-44791618165 --dir mochi/artifacts/contact-v18-resume
+          gh run view 44791618165 --repo howdymary/mochi-demo --json status,conclusion,headSha,url > mochi/artifacts/contact-v18-resume/prior-workflow.json
       - name: Execute bounded repaired-contact Tinker continuation
         timeout-minutes: 335
         env:

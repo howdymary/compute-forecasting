@@ -1,0 +1,60 @@
+{
+  "campaign_id": "mochi-c18-44790861532",
+  "prior_workflow_run": 44791618165,
+  "prior_execution_source_sha": "4d2be964a9be26f6697513a314a3b23a64d07b90",
+  "prior_conclusion": "cancelled",
+  "reason": "Measured completed parent input took1425.90seconds. A40minute same-worker pair could time out. Amend paired runtime before any optimizer update.",
+  "optimizer_updates_completed": 0,
+  "final_tests_opened": false,
+  "confirmed_completed_cloud_rollouts": 4,
+  "terminated_teacher_calls": [
+    {
+      "function_call_id": "fc-01M7X5MM8YRVXSGXJKFEHHEZGW",
+      "service_method_name": null,
+      "enqueued_at": "2026-11-20T19:06:25.438910Z",
+      "started_at": "2026-11-20T19:06:37.147690Z",
+      "container_id": "ta-01M7X5MP0QFQM470C3FT8F1MAR",
+      "startup_time_seconds": null,
+      "execution_time_seconds": null,
+      "status": "terminated"
+    },
+    {
+      "function_call_id": "fc-01M7X5MM5TMRG4SV85J8SAHP74",
+      "service_method_name": null,
+      "enqueued_at": "2026-11-20T19:06:25.338570Z",
+      "started_at": "2026-11-20T19:06:36.208739Z",
+      "container_id": "ta-01M7X5MMWA1T4NAXFRQJQ8VMVR",
+      "startup_time_seconds": null,
+      "execution_time_seconds": null,
+      "status": "terminated"
+    }
+  ],
+  "interrupted_physical_attempts_upper_bound": 4,
+  "interrupted_simulation_cpu_hours_bound": 0.13333333333333333,
+  "interrupted_input_elapsed_bound_seconds": 240,
+  "bound_evidence": "Two terminated one-CPU inputs enqueued19:06:25UTC; app-stop log19:08:47UTC. Four minutes per input includes queue, runtime and a cancellation margin. Both inputs logged only the initial walk/alarm branch at attempt2. No branch or teacher archive exists. Main prefixes and the two unfinished branch attempts are charged, without success labels.",
+  "last_log_sha256": "fa944c54784989cc756955560c5fc3428c65873c91a7124046d50c5d2d9165e0",
+  "volume_listing_sha256": "0416b9636fdc6a8a3a401e71a84d5a4986ea4dd4d74ab9b21f2c2125c72444be",
+  "baseline_artifact_sha256": "bad1937199573bf7d0335ee552155f2f99aff8445c2ac590d3cd564db76e9f41",
+  "usage_before": {
+    "physical_rollouts": 132,
+    "simulation_cpu_hours": 6.257219892906162,
+    "optimizer_updates": 0,
+    "training_token_presentations": 0,
+    "inference_tokens": 65927,
+    "exa_searches": 1,
+    "past_writes": 2,
+    "past_recalls": 3
+  },
+  "usage_after": {
+    "physical_rollouts": 66,
+    "simulation_cpu_hours": 2.3905532262394953,
+    "optimizer_updates": 0,
+    "training_token_presentations": 0,
+    "inference_tokens": 65927,
+    "exa_searches": 1,
+    "past_writes": 2,
+    "past_recalls": 3
+  },
+  "scope": "Refund unused reservations only. Retain completed evidence and charge interrupted-input bounds. Keep all65927 inference tokens including two unfinished input caps. No budget reset, repeated optimizer update or positive label from interrupted data."
+}

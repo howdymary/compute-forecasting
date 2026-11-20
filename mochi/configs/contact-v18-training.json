@@ -187,6 +187,12 @@
       "laptop",
       "globe",
       "recovery"
+    ],
+    "evaluation_checkpoints": [
+      0,
+      1,
+      4,
+      16
     ]
   },
   "frozen_sha256": {
@@ -398,9 +404,10 @@
     "src/mochi/contact_v18/residual.py": "cf67d3ed26c5c3625d12718cc0f07472ebd596adab107985a157f49e42117838",
     "src/mochi/contact_v18/sequence.py": "06d9e57ca49ea6c4efe4260793840586627abc071fbea647f8e22bb9e6283ecb",
     "src/mochi/contact_v18/stance.py": "4a61cf99f06cdb4662d12326f3c35f08309e935c41ec0c75ed0e9a7a69ad7685",
-    "src/mochi/contact_v18/train.py": "636ad6904e9c7dc370e36951ddd37d0be1b4c9ed227ecf04810e48363b626c2a",
+    "src/mochi/contact_v18/train.py": "9f01f276078b66f2a122074f4f12f98a40032174829cfa612877b1faf3c64fd5",
     "src/mochi/contact_v18/walking.py": "1fb2721d5090296e25d1c5bafd35ee5c1f88b423b588ac0a9167570c25f46da5",
-    "src/mochi/contact_v18/world.py": "2fcbed6b0b6e5f12fcd8611fc4c5ec5a4d78ef941fc9e907cd72ab8ea0ddc004"
+    "src/mochi/contact_v18/world.py": "2fcbed6b0b6e5f12fcd8611fc4c5ec5a4d78ef941fc9e907cd72ab8ea0ddc004",
+    "src/mochi/contact_v18/paired_remote.py": "87b6c3556b79c790d162b88f3818bb661db38f9f7588863b19e58c52d64a22b7"
   },
   "scope": "Tinker updates six-domain Qwen3.5-4B LoRA controller-selection weights. Native ONNX weights remain fixed. All checkpoints and controls share the frozen laptop force/pulse library and measured swing-clearance option. Root/feet move only through forces and contacts. Fresh tests are uninterrupted from reset; previous 103xxx cases are training/regression evidence.",
   "walking_goal": {
@@ -409,10 +416,44 @@
     "trajectory_sampling": "Target 100 Hz on flat transit / 25 Hz elsewhere; variable actual timestamps."
   },
   "resume": {
+    "mode": "paired-runtime-amendment",
     "campaign_run_id": "mochi-c18-44790861532",
-    "workflow_run": 44790861532,
-    "expected_failure": "Modal image build configuration validation before physics/optimizer updates",
+    "workflow_run": 44791618165,
+    "execution_source_sha": "4d2be964a9be26f6697513a314a3b23a64d07b90",
     "budget_pool": "mochi-c18-44790861532-budget",
-    "planning_inference_carry_bound_tokens": 3000
+    "reconciliation_path": "evidence/contact-v18/runtime-reconciliation.json",
+    "reconciliation_sha256": "f3c76c2763535cb33cb4be70d82d017fc1cabdc07d1f51ab08825a89b1592a37"
+  },
+  "control_seeds": [
+    186000,
+    186001
+  ],
+  "runtime_amendment": {
+    "document": "docs/contact-v18-runtime-amendment.md",
+    "document_sha256": "32e39a044de1e7ff9bd55e2775db81a3a62efb54bda9ba817b0ce25eb72daa75",
+    "before_optimizer_updates": true,
+    "before_final_tests": true,
+    "paired_runtime_seconds_max": 3600,
+    "original_single_runtime_seconds_max": 2400,
+    "saved_checkpoint_updates": [
+      0,
+      1,
+      4,
+      8,
+      16
+    ],
+    "physical_evaluation_updates": [
+      0,
+      1,
+      4,
+      16
+    ],
+    "control_seeds": [
+      186000,
+      186001
+    ],
+    "unchanged_baseline_support_files": 210,
+    "maximum_planned_physical_attempts": 158,
+    "scope": "Runtime and secondary evaluation budget amendment only. Original controller/evaluator algorithms, verifiers, seed partitions, primary fresh tests and improvement criteria unchanged."
   }
 }
