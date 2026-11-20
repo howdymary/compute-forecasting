@@ -3,7 +3,7 @@ import {stepCountAt,taskStatesAt,comparisonEvidence,taskNames,activityAt} from '
 const $=q=>document.querySelector(q),folder='smooth-v17/';
 let manifest,stages,scenario,version,episodes,playing=true,time=0,last=performance.now(),loading=false,requestId=0;
 const cache=new Map();
-function setPlayback(value){playing=value;$('#play').textContent=value?'Ⅱ':'▶'}
+function setPlayback(value){playing=value;last=performance.now();$('#play').textContent=value?'Ⅱ':'▶'}
 function outcomeLabel(value){return ({fall:'Stopped: fall',invalid_fixture_contact:'Stopped: unintended contact',inference_token_limit:'Stopped: inference limit'})[value]||String(value).replaceAll('_',' ')}
 async function json(path){const r=await fetch(path);if(!r.ok)throw Error('Missing completed recording');return r.json()}
 async function episode(file){if(!cache.has(file))cache.set(file,(async()=>{const r=await fetch(folder+file);if(!r.ok)throw Error('Missing measured trajectory');const bytes=new Uint8Array(await r.arrayBuffer());return bytes[0]===31&&bytes[1]===139?new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'))).json():JSON.parse(new TextDecoder().decode(bytes))})());return cache.get(file)}
@@ -19,7 +19,9 @@ async function load(){
   $('#right-title').textContent=`${version.update} NEW OPTIMIZER UPDATE${version.update===1?'':'S'}`;
   $('#checkpoint-label').textContent=`Update ${version.update} · ${after.cumulative_updates} cumulative`;
   $('#scope').textContent=scenario.label+'. '+(scenario.partition.startsWith('held_out')?'Final test scenario. The checkpoint was frozen before this test. '+(scenario.partition==='held_out_pending'?'The full cohort is still in progress. ':''):'Development scenario used for checkpoint selection. ')+manifest.display_note;
-  const comparison=comparisonEvidence(before,after);$('#pair-result').className='pair-result '+comparison.status;$('#pair-headline').textContent=comparison.headline;$('#pair-detail').textContent=comparison.detail+` Recovery travel: ${before.recovery_arm_joint_travel_rad.toFixed(2)} to ${after.recovery_arm_joint_travel_rad.toFixed(2)} rad.`;
+  const comparison=comparisonEvidence(before,after);$('#pair-result').className='pair-result '+comparison.status;$('#pair-headline').textContent=comparison.headline;
+  const comparable=before.qualified_complete&&after.qualified_complete;
+  $('#pair-detail').textContent=comparison.detail+` ${before.complete&&after.complete?'Complete-attempt':'Partial-attempt'} recovery totals: ${before.recovery_arm_joint_travel_rad.toFixed(2)} and ${after.recovery_arm_joint_travel_rad.toFixed(2)} rad.`+(comparable?'':' These totals do not establish an efficiency gain.');
   setPlayback(true);
   for(const key of cache.keys()){if(cache.size<=4)break;if(key!==scenario.parent_file&&key!==version.file)cache.delete(key)}
  }finally{if(id===requestId)loading=false}
@@ -29,9 +31,9 @@ async function selectScenario(id){
  const selected=scenario.versions.findIndex(v=>v.update===manifest.selected_update);$('#checkpoint').value=selected<0?0:selected;await load();
 }
 function tick(now){
- const dt=Math.max(0,Math.min(.07,(now-last)/1000));last=now;
+ const dt=Math.max(0,(now-last)/1000);last=Math.max(last,now);
  if(episodes&&!loading){
-  if(playing){time=Math.min(+$('#scrub').max,time+dt*+$('#speed').value);if(time>=+$('#scrub').max)setPlayback(false)}
+  if(playing&&!document.hidden){time=Math.min(+$('#scrub').max,time+dt*+$('#speed').value);if(time>=+$('#scrub').max)setPlayback(false)}
   for(let i=0;i<2;i++){
    const e=episodes[i],f=stages[i].frame(Math.min(time,e.duration)),m=e.balance_measurements.findLast(x=>x.t<=time)||e.balance_measurements[0];
    const meta=manifest.recordings[i?version.file:scenario.parent_file];
@@ -39,8 +41,9 @@ function tick(now){
    const side=i?'right':'left';
    const recovered=e.events.filter(x=>x.phase==='recover'&&x.t<=time);
    $('#'+side+'-arms').textContent=recovered.reduce((sum,x)=>sum+(x.arm_joint_travel_rad||0),0).toFixed(2);
-   const paper=e.postit_crossings.some(x=>x.t<=time),turn=e.events.some(x=>x.label==='book-top-turnaround'&&x.t<=time),descent=e.events.some(x=>x.label==='book-forward-descent'&&x.t<=time);
-   $('#'+side+'-route').textContent=`Book turn: ${turn?'verified':'pending'} · Forward descent: ${descent?'verified':'pending'} · Post-it: ${paper?'loaded contact':'pending'}`;$('#'+side+'-steps').textContent=String(stepCount);$('#'+side+'-elapsed').textContent=Math.min(time,e.duration).toFixed(1);
+   const paper=e.postit_crossings.some(x=>x.physical_paper_contact&&x.load_n>=.08&&x.t<=time),turn=e.events.some(x=>x.label==='book-top-turnaround'&&x.t<=time),descent=e.events.some(x=>x.label==='book-forward-descent'&&x.t<=time);
+   const turnStatus=turn?(meta.book_turnaround_verified?'verified':'unverified'):'pending',descentStatus=descent?(meta.forward_descent_verified?'verified':'unverified'):'pending';
+   $('#'+side+'-route').textContent=`Book turn: ${turnStatus} · Forward descent: ${descentStatus} · Post-it: ${paper?'loaded contact':'pending'}`;$('#'+side+'-steps').textContent=String(stepCount);$('#'+side+'-elapsed').textContent=Math.min(time,e.duration).toFixed(1);
    for(const state of taskStatesAt(e,Math.min(time,e.duration))){const node=$('#'+side+'-task-'+state.task);node.className='task-state '+state.status;node.textContent=taskNames[state.task]+(state.status==='passed'?' ✓':state.status==='failed'?' ×':state.status==='active'?' …':'')}
    const motionLabel=({book_turnaround:'Supported book turnaround',book_descent:'Forward-facing book descent',postit_crossing:'Post-it crossing',turning:'Turning toward travel'})[m.step_category];
    const phase=time>=e.duration?(meta.complete?(meta.qualified_complete?'All tasks verified':'Tasks verified; quality limits exceeded'):outcomeLabel(meta.failure||'Incomplete')):motionLabel||activityAt(e,time).label;
@@ -57,13 +60,17 @@ async function init(){
  const query=new URLSearchParams(globalThis.location?.search||'');
  const initialScenario=manifest.scenarios.some(s=>s.id===query.get('scenario'))?query.get('scenario'):manifest.default_scenario;
  $('#scenario').value=initialScenario;
- $('#campaign-summary').textContent=manifest.evaluation_status==='completed'?`${manifest.optimizer_updates_completed} real Tinker optimizer updates. Selected update: ${manifest.selected_update}. Targets: 10% fewer steps, 15% less recovery joint travel, no lower completion or longer successful time. ${manifest.improvement_goal_met?'The final-test goal was met.':'The complete final-test goal was not met; inspect the measured results below.'}`:`DEVELOPMENT PREVIEW · ${manifest.optimizer_updates_completed} optimizer updates completed. ${manifest.selection_finalized?'Update '+manifest.selected_update+' selected on development data':'Showing update '+manifest.selected_update+'; checkpoint selection is pending'}. Final testing is pending.`;
- for(const c of manifest.checkpoints){const p=document.createElement('p');p.textContent=`Update ${c.update}: ${c.development.qualified_complete_successes}/${c.development.n} qualified completions · ${c.development.successful_mean_steps?.toFixed(0)??'unavailable'} steps · ${c.development.successful_mean_recovery_arm_joint_travel_rad?.toFixed(2)??'unavailable'} rad/recovery · ${c.development.successful_mean_seconds?.toFixed(1)??'unavailable'} s on successful cases`;$('#checkpoint-table').append(p)}
+ if(manifest.evaluation_status==='completed'){
+  const p=manifest.held_out.parent,s=manifest.held_out.selected;
+  $('#campaign-summary').textContent=`${manifest.optimizer_updates_completed} real Tinker optimizer updates; development selected update ${manifest.selected_update}. Final scenarios: selected ${s.complete_successes}/${s.n} complete (${s.qualified_complete_successes}/${s.n} within all quality limits); parent ${p.complete_successes}/${p.n} complete (${p.qualified_complete_successes}/${p.n} qualified). ${manifest.improvement_goal_met?'The joint improvement target was met.':'The target of fewer steps and less recovery travel was not met. The previous validated study remains available above.'}`;
+ }else $('#campaign-summary').textContent=`DEVELOPMENT PREVIEW · ${manifest.optimizer_updates_completed} optimizer updates completed. ${manifest.selection_finalized?'Update '+manifest.selected_update+' selected on development data':'Showing update '+manifest.selected_update+'; checkpoint selection is pending'}. Final testing is pending.`;
+ for(const c of manifest.checkpoints){const p=document.createElement('p');p.textContent=`Update ${c.update}: ${c.development.complete_successes}/${c.development.n} complete · ${c.development.qualified_complete_successes}/${c.development.n} qualified · ${c.development.successful_mean_steps?.toFixed(0)??'unavailable'} steps · ${c.development.successful_mean_recovery_arm_joint_travel_rad?.toFixed(2)??'unavailable'} rad/recovery · ${c.development.successful_mean_seconds?.toFixed(1)??'unavailable'} s on qualified cases`;$('#checkpoint-table').append(p)}
  if(!manifest.held_out){const p=document.createElement('p');p.textContent=`Final testing is pending. ${manifest.test_pairs_available||0} matched test case${manifest.test_pairs_available===1?'':'s'} available to inspect; the full cohort summary is pending.`;$('#test-table').append(p)}
- else for(const [name,s]of Object.entries(manifest.held_out)){const p=document.createElement('p');p.textContent=`${name}: ${s.qualified_complete_successes}/${s.n} qualified completions · ${s.successful_mean_steps?.toFixed(0)??'unavailable'} steps · ${s.successful_mean_recovery_arm_joint_travel_rad?.toFixed(2)??'unavailable'} rad/recovery on successful cases`;$('#test-table').append(p)}
+ else for(const [name,s]of Object.entries(manifest.held_out)){const p=document.createElement('p');p.textContent=`${name}: ${s.complete_successes}/${s.n} complete · ${s.qualified_complete_successes}/${s.n} within all quality limits · ${s.successful_mean_steps?.toFixed(0)??'unavailable'} steps · ${s.successful_mean_recovery_arm_joint_travel_rad?.toFixed(2)??'unavailable'} rad/recovery on qualified cases`;$('#test-table').append(p)}
  for(const [id,stage]of [['left',stages[0]],['right',stages[1]]]){$('#'+id+'-follow').onclick=()=>stage.view(false);$('#'+id+'-wide').onclick=()=>stage.view(true);$('#'+id+'-feet').onclick=()=>stage.inspect('feet')}
  $('#footfalls').onchange=e=>stages.forEach(s=>s.showFootfalls(e.target.checked));
  $('#play').onclick=()=>{if(!playing&&time>=+$('#scrub').max)time=0;setPlayback(!playing)};$('#restart').onclick=()=>{time=0;setPlayback(true)};$('#scrub').oninput=e=>{const value=+e.target.value,maximum=+$('#scrub').max;time=maximum-value<=.021?maximum:value;setPlayback(false)};
  await selectScenario(initialScenario);const requestedTime=Number(query.get('t'));if(Number.isFinite(requestedTime)&&requestedTime>0){time=Math.min(requestedTime,+$('#scrub').max);setPlayback(false)}requestAnimationFrame(tick);
 }
+document.addEventListener?.('visibilitychange',()=>{last=performance.now()});
 init().catch(e=>{$('#scope').textContent=e.message;console.error(e)});

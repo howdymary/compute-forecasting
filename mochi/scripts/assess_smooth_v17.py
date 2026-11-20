@@ -13,6 +13,18 @@ ROOT=Path(__file__).resolve().parents[1]
 BASE_SOURCE='795a664f98433e514b5a76e9c2c606ba6136b130'
 def read(p):return json.loads(p.read_text())
 def close(a,b):assert math.isclose(a,b,rel_tol=1e-9,abs_tol=1e-9),(a,b)
+def failure_details(row):
+    e=row['episode'];seen=set();contacts=[]
+    for contact in e.get('contact_failures',[]):
+        key=(contact.get('body'),contact.get('fixture'))
+        if key not in seen:
+            seen.add(key);contacts.append({k:contact.get(k) for k in ['body','fixture','phase','force_n']})
+    return {'seed':row['seed'],'failure':row['failure'],'duration_s':e['duration'],
+        'last_station':row['arrivals'][-1]['label'] if row['arrivals'] else None,
+        'last_decision_domain':row['model_decisions'][-1]['observation']['domain'] if row['model_decisions'] else None,
+        'verified_tasks':[task for task,r in e['results'].items() if r['success']],
+        'postit_loaded_contact':bool(e['postit_crossings']),
+        'contact_examples':contacts}
 def qualification_failures(row,cfg):
     e=row['episode'];m=e['balance_metrics'];s=cfg['smoothness'];n=e['native_smoothness']
     checks={
@@ -38,6 +50,11 @@ def main():
     from mochi.smooth_v16.verification import forward_descent_check
     from mochi.control_v8.verification import full_success
     r=read(folder/'report.json');cfg=r['protocol'];SOURCE=r['source_sha'];assert r['status']=='completed' and r['base_source_sha']==BASE_SOURCE
+    if r.get('memory_finalization'):
+        from mochi.smooth_v17.finalize_memory import result_digest
+        recovery=r['memory_finalization']
+        assert recovery['additional_optimizer_updates']==recovery['additional_physical_stages']==0
+        assert recovery['frozen_result_sha256_before']==recovery['frozen_result_sha256_after']==result_digest(r)
     assert r['optimizer_updates_completed']==16 and [x['update'] for x in r['training_log']]==list(range(1,17))
     assert all(x['optimizer_completed'] and x['forward_backward_completed'] and set(x['domain_loss_metrics'])==set(cfg['training']['domains']) for x in r['training_log'])
     assert all(r['first_optimizer_behavioral_probe'][d]>1e-7 for d in ['walk','recovery'])
@@ -87,6 +104,21 @@ def main():
         'parent_steps':before['steps']['attempts'],'update_1_steps':after['steps']['attempts'],
         'parent_seconds':before['duration_s'],'update_1_seconds':after['duration_s'],
         'interpretation':'Identical discrete actions do not guarantee identical measured trajectories in these remote executions. The cause of this variation was not isolated. Do not attribute such cost differences to learned action selection.'}
+    development_choices=[];development_falls=[]
+    parent_development={row['seed']:row for row in read(folder/'checkpoint-0.json')}
+    for update in [1,4,8,16]:
+        for row in read(folder/f'checkpoint-{update}.json'):
+            if row['episode']['fall']:development_falls.append({'update':update,**failure_details(row)})
+            parent_row=parent_development[row['seed']]
+            old,new=decision_sequence(parent_row),decision_sequence(row)
+            common=min(len(old),len(new))
+            development_choices.append({'update':update,'seed':row['seed'],
+                'parent_decisions':len(old),'checkpoint_decisions':len(new),'common_prefix_length':common,
+                'shared_action_prefix_equal':old[:common]==new[:common],
+                'whole_action_sequence_equal':old==new,
+                'changed_shared_decisions':[{'position':i,'parent':a,'checkpoint':b} for i,(a,b) in enumerate(zip(old,new)) if a!=b],
+                'parent_complete':parent_row['complete_sequence_success'],'checkpoint_complete':row['complete_sequence_success'],
+                'parent_qualified':parent_row['qualified_complete'],'checkpoint_qualified':row['qualified_complete']})
     components=defaultdict(list)
     for batch in r['component_results']:
         for row in batch['results']:components[row['domain']+':'+row['task']].append(row)
@@ -120,25 +152,66 @@ def main():
         'held_out':r['held_out'],'paired_summary':pp,'improvement_goal_met':goal,'usage':usage,'engineering_usage':eng,
         'prior_execution':r.get('prior_execution'),'data_collection_provenance':r.get('data_collection_provenance'),
         'execution_source_sha':r.get('execution_source_sha',SOURCE),'component_branches':len(reached),'valid_component_branches':sum(valid_branch(x) for x in reached),
+        'component_reference_seed':r['component_reference_seed'],
         'qualification_failures':{label:[{'seed':row['seed'],'failed_criteria':qualification_failures(row,cfg)} for row in rows] for label,rows in held.items()},
         'static_choice_audit':comparisons,'first_checkpoint_same_action_variation':probe_variation,
+        'development_choice_audit':development_choices,
+        'post_test_failure_localization':{label:[failure_details(row) for row in rows if not row['complete_sequence_success']] for label,rows in held.items()},
+        'later_development_falls':development_falls,
         'public_recordings_verified':len(starts),'selection_preceded_final_tests':True,
-        'service_eligibility':eligible,'limits':['Four final scenarios in one fixed furnished layout. No hardware validation.','Native gait and physical controllers remain fixed; Tinker updates shared LoRA decision weights.','Engineering changes include home-regularized clock IK, the bounded P4 laptop force/horizon and W6 globe-leg commands. These are shared by all new checkpoints, including the parent.','No causal memory/search ablation. Static-policy equivalence and unchanged decisions limit adaptation claims.']}
+        'service_eligibility':eligible,'memory_finalization':r.get('memory_finalization'),
+        'limits':['Four final scenarios in one fixed furnished layout. No hardware validation.','Native gait and physical controllers remain fixed; Tinker updates shared LoRA decision weights.','Engineering changes include home-regularized clock IK, the bounded P4 laptop force/horizon and W6 globe-leg commands. These are shared by all new checkpoints, including the parent.',f"Component tests cover the fixed reference trajectory on seed {r['component_reference_seed']}; they do not cover every state reached by the learned policy.",'No causal memory/search ablation. Static-policy equivalence and unchanged decisions limit adaptation claims.']}
     (ROOT/'docs/smooth-v17-assessment.json').write_text(json.dumps(audit,indent=2)+'\n')
     def num(x):return 'Unavailable' if x is None else f'{x:.2f}'
-    lines=['# Walking and arm-recovery post-training results','',f"Frozen source: `{SOURCE}`. Run: `{r['run_id']}`.",'','Tinker completed16 optimizer updates with96 domain-gradient calls. Native gait weights stayed fixed. Counts0,1,4,8 and16 are additional updates after the verified121-update parent.','','| Policy | Qualified | Mean steps | Mean recovery travel, rad | Physical seconds |','| --- | --- | --- | --- | --- |']
-    for label,stats in r['held_out'].items():lines.append(f"| {label} | {stats['qualified_complete_successes']}/{stats['n']} | {num(stats['successful_mean_steps'])} | {num(stats['successful_mean_recovery_arm_joint_travel_rad'])} | {num(stats['successful_mean_seconds'])} |")
-    lines+=['',f"The selected checkpoint is update{audit['selected_update']}. The declared joint target was {'met' if goal else 'not met'} on the final cohort. Matched qualified pairs: {pp['n']}.",'',f"Accounted physical attempts and stages: {usage['physical_rollouts']}, including{eng['physical_rollouts']} carried attempts. Confirmed completed attempts and stages: {r['total_physical_rollouts_completed']}. Accounted CPU-hours: {usage['simulation_cpu_hours']:.3f}, including conservative bounds for interrupted calls and supervisors. These are budget records, not a billing receipt. All are inside the authorized224-attempt,18-hour,16-update limits.",'',f"Verified{len(starts)} continuous public recordings. Component diagnostics reached{len(reached)} branches; {audit['valid_component_branches']} passed the frozen branch criteria. Diagnostics are separate from uninterrupted routes.",'','## Limitations','']+['- '+x for x in audit['limits']]+['','Numerical details, static-policy choices, confidence intervals and provider activity are retained in the companion JSON and campaign report. The first frame, scenario, task order and playback speed match within each displayed pair.','']
+    parent_stats,selected_stats=r['held_out']['parent'],r['held_out']['selected']
+    lines=['# Walking and arm-recovery post-training results','',
+        f"Tinker completed 16 optimizer updates and 96 domain-gradient calls. The declared joint improvement target was {'met' if goal else 'not met'}.",'',
+        f"Development selection chose update {audit['selected_update']}. On four fresh scenarios it completed {selected_stats['complete_successes']}/4 sequences, with {selected_stats['qualified_complete_successes']}/4 within all quality limits. The parent completed {parent_stats['complete_successes']}/4, with {parent_stats['qualified_complete_successes']}/4 qualified. Matched qualified pairs: {pp['n']}.",'',
+        'The target required at least 10% fewer measured steps and 15% less recovery joint travel, without lower completion or longer successful time.',
+        f"Frozen source: `{SOURCE}`. Run: `{r['run_id']}`.",'',
+        '## Final scenarios','',
+        '| Policy | Complete | Within all quality limits | Mean steps | Mean recovery travel, rad | Physical seconds |',
+        '| --- | --- | --- | --- | --- | --- |']
+    for label,stats in r['held_out'].items():
+        lines.append(f"| {label} | {stats['complete_successes']}/{stats['n']} | {stats['qualified_complete_successes']}/{stats['n']} | {num(stats['successful_mean_steps'])} | {num(stats['successful_mean_recovery_arm_joint_travel_rad'])} | {num(stats['successful_mean_seconds'])} |")
+    lines+=['',
+        'Cost means use qualified completions only. Mean recovery travel is per recovery; the replay counter totals all recoveries. Early failures do not count as cheap successful runs.',
+        'A comparison with no matched qualified pair has no defined step, time or recovery reduction. Four scenarios in one layout do not establish performance on other desks or hardware.','',
+        '## Development checkpoints','',
+        'Counts 0, 1, 4, 8 and 16 are additional updates after the verified 121-update parent. Native gait weights stayed fixed. Tinker updated the shared LoRA model that chooses walking, contact and recovery controllers.','',
+        '| New updates | Complete | Qualified | Falls | Forbidden contacts |',
+        '| --- | --- | --- | --- | --- |']
+    for update,c in sorted(cps.items()):
+        s=c['development'];lines.append(f"| {update} | {s['complete_successes']}/{s['n']} | {s['qualified_complete_successes']}/{s['n']} | {s['falls']} | {s['invalid_contacts']} |")
+    lines+=['',
+        'All versions received the same engineered H0 clock reach, P4 laptop action and W6 globe approach. The fixed native gait, route, scene, task verifiers and quality limits were shared. Local controller engineering is recorded separately from model post-training.','',
+        '## Recordings and component checks','',
+        f"The audit verified {len(starts)} continuous public recordings. The first frame, scenario, task order and playback speed match within each displayed pair. Failed attempts remain available.",
+        f"Component diagnostics reached {len(reached)} branches; {audit['valid_component_branches']} passed the frozen branch criteria. Parent and selected policies used identical saved physical states. These branches are separate from the uninterrupted route recordings.",'',
+        f"The reference states came from the fixed controller on seed {r['component_reference_seed']}. Their coverage is limited to that reference trajectory. The results motivate collecting and checking the laptop-contact states reached by the learned policy.",'',
+        '## Resource accounting','',
+        f"Accounted physical attempts and stages: {usage['physical_rollouts']}, including {eng['physical_rollouts']} carried attempts. Confirmed completed attempts and stages: {r['total_physical_rollouts_completed']}.",
+        f"Accounted CPU-hours: {usage['simulation_cpu_hours']:.3f}, including conservative bounds for interrupted calls and supervisors. These are budget records, not a billing receipt. Usage stayed within the authorized 224-attempt, 18-hour and 16-update limits."]
+    selected_failures=audit['post_test_failure_localization']['selected']
+    if len(selected_failures)==4 and all(x['last_decision_domain']=='laptop' for x in selected_failures):
+        lines+=['','## Post-test failure localization','',
+            'All four selected-model attempts completed the clock and drawer and arrived at the laptop. They then failed during the laptop action: two falls and two forbidden contacts. The contact records identify the right knee against the printer output tray on seed 103001 and the left hip against the laptop on seed 103002.',
+            'The later development checkpoints also fell during the laptop action on seed 102001. These observations locate the failures; they do not isolate the physical cause of the falls. Laptop stance, force control and fixture clearance are the next controller issues to investigate. No controller was changed after the final tests were opened.','']
     if r.get('prior_execution'):
         prior=r['prior_execution'];u=prior['budget_usage_or_reserved']
-        lines+=['',f"The preceding execution `{prior['run_id']}` stopped before training with `{prior['error_type']}`. Its original ledger snapshot recorded {u['physical_rollouts']} reserved physical attempts and {u['simulation_cpu_hours']:.3f} reserved CPU-hours. This continuation uses the same pool after the documented reconciliation of reservations against completed receipts and conservative interruption bounds. It did not open a fresh allowance. Those reservations include unfinished work and are not an invoice.",'',f"This continuation reused {len(r['data_collection_provenance']['historical_prefixes'])} historical parent-prefix states and measured new alternatives from their recorded physical snapshots. New collection uses exact snapshots between training stages. The displayed evaluations are uninterrupted physical episodes.",'',"The starting budget includes the interrupted R1 stages, supervisor bounds and local controller probes. Two unfinished calls remain charged at full timeout bounds. No previous resource counter was reset.",'',"Recovery examples can retain an already good parent choice. Only measured physical differences establish an improvement. The table reports mean joint travel per recovery; the viewer counter totals the four recoveries.",'']
+        lines+=['','## Preserved interrupted executions','',f"The preceding execution `{prior['run_id']}` stopped before training with `{prior['error_type']}`. Its original ledger snapshot recorded {u['physical_rollouts']} reserved physical attempts and {u['simulation_cpu_hours']:.3f} reserved CPU-hours. This continuation uses the same pool after the documented reconciliation of reservations against completed receipts and conservative interruption bounds. It did not open a fresh allowance. Those reservations include unfinished work and are not an invoice.",'',f"This continuation reused {len(r['data_collection_provenance']['historical_prefixes'])} historical parent-prefix states and measured new alternatives from their recorded physical snapshots. New collection uses exact snapshots between training stages. The displayed evaluations are uninterrupted physical episodes.",'',"The starting budget includes the interrupted R1 stages, supervisor bounds and local controller probes. Two unfinished calls remain charged at full timeout bounds. No previous resource counter was reset.",'',"Recovery examples can retain an already good parent choice. Only measured physical differences establish an improvement. The table reports mean joint travel per recovery; the viewer counter totals the four recoveries.",'']
     if r.get('earlier_execution'):
         earlier=r['earlier_execution'];u=earlier['budget_usage_or_reserved']
         lines+=['',f"The earlier execution `{earlier['run_id']}` has a separately preserved ledger of {u['physical_rollouts']} reserved attempts and {u['simulation_cpu_hours']:.3f} reserved CPU-hours. It stopped before any optimizer update. Its reservations are not represented as completed work or included in the current pool.",'']
     if probe_variation['identical_action_sequence']:
         lines+=['','## Variation with identical choices','',f"The first-checkpoint probe selected the same action sequence as the parent, but used {probe_variation['update_1_steps']} steps versus {probe_variation['parent_steps']} and {probe_variation['update_1_seconds']:.2f} physical seconds versus {probe_variation['parent_seconds']:.2f}. Their initial physical-state hashes match. The cause of this variation was not isolated. These differences do not establish an effect from learned action selection. Interpret small cost differences and static-policy comparisons with this limitation.",'']
+    first=[x for x in development_choices if x['update']==1]
+    unchanged=[x for x in first if x['shared_action_prefix_equal']]
+    changed_outcomes=[x for x in unchanged if x['parent_complete']!=x['checkpoint_complete']]
+    lines+=['',f"Across the three development scenarios, update 1 matched the parent's shared action prefix in {len(unchanged)}/3 cases. Of those cases, {len(changed_outcomes)} had a different completion outcome. A changed outcome before any changed selected action does not establish a benefit from learned action selection. Per-checkpoint decision comparisons are retained in the JSON audit.",'']
+    lines+=['','## Limitations','']+['- '+x for x in audit['limits']]+['',
+        'The companion JSON retains per-case qualification failures, static-policy choices, confidence intervals, initial-state checks and provider activity. Search and shared memory were used in the workflow; this study did not isolate their causal effect on performance.','']
     text='\n'.join(lines)
-    for old,new in [('completed16','completed 16'),('with96','with 96'),('Counts0','Counts 0'),('and16','and 16'),('verified121','verified 121'),('update'+str(audit['selected_update']),'update '+str(audit['selected_update'])),('including'+str(eng['physical_rollouts']),'including '+str(eng['physical_rollouts'])),('authorized224','authorized 224'),(',18-hour',', 18-hour'),(',16-update',', 16-update'),('Verified'+str(len(starts)),'Verified '+str(len(starts))),('reached'+str(len(reached)),'reached '+str(len(reached)))]:text=text.replace(old,new)
     (ROOT/'docs/smooth-v17-assessment.md').write_text(text)
     print(json.dumps({'updates':16,'goal_met':goal,'selected_update':audit['selected_update'],'recordings':len(starts),'rollouts':usage['physical_rollouts']}))
 if __name__=='__main__':main()

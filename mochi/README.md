@@ -1,18 +1,76 @@
 # MOCHI: Walking, Contact and Recovery Policy Learning
 
-## Current work: feasible contact actions and post-training
+## V17: completed training, failed transfer test
+
+[Checkpoint replay](https://howdymary--mochi-smooth-v17-demo-web.us-east.modal.run/) · [Assessment](docs/smooth-v17-assessment.md) · [Numerical audit](docs/smooth-v17-assessment.json) · [Execution prompt](docs/smooth-v17-prompt.md) · [Previous validated study](https://howdymary--mochi-efficient-v15-demo-web.us-east.modal.run/)
+
+Tinker completed 16 additional optimizer updates and 96 domain-gradient calls on the shared Qwen3.5-4B LoRA controller selector. Every update included walking, clock, drawer, laptop, globe and arm-recovery examples. The native ONNX gait and physical controllers stayed fixed throughout the comparison.
+
+The development rule selected update 1, with 122 cumulative optimizer updates. Updates 4, 8 and 16 each fell on one of the three development scenarios and produced zero completions within all quality limits. They were rejected despite learning to choose a shorter clock reach.
+
+| Four fresh final scenarios | Complete sequences | Within all quality limits |
+| --- | ---: | ---: |
+| Parent | 1/4 | 0/4 |
+| Selected update 1 | 0/4 | 0/4 |
+| Fixed controller | 2/4 | 2/4 |
+| Training-derived static policy | 2/4 | 1/4 |
+
+The target was at least 10% fewer steps and 15% less recovery joint travel, without lower completion or longer successful time. It was not met. There were no matched qualified parent/selected pairs, so an efficiency reduction is undefined. Early failures do not count as faster runs. The fixed and static controls also failed on some scenarios, showing that the underlying route is not yet reliable across this parameter range.
+
+All four selected-model attempts completed the clock, book turnaround and forward descent, drawer and loaded Post-it crossing, then reached the laptop. They failed during laptop contact: two falls, one knee contact with the printer tray, and one hip contact with the laptop. All 24 separate component branches passed from a fixed reference trajectory's saved states on seed 103001. Their coverage is limited to that reference trajectory. The results motivate collecting and validating the actual laptop-contact states reached by the learned policy.
+
+This checkpoint does not replace the previous validated V15 study. Four cases in one furnished layout are a small simulation pilot, with no hardware validation. The viewer retains all five development checkpoints and all four fresh parent/selected pairs, including failures. Development scenario 102001 has a complete matched replay; its status as development data is shown explicitly.
+
+The audit verified 23 continuous recordings, matched initial states, the frozen source files, numerical summaries and resource accounting. Update 1 matched the parent's shared action prefix in all three development cases, while one completion outcome changed. Small physical differences with identical chosen actions remain unexplained and cannot be attributed to learned action selection.
+
+### Execution and service evidence
+
+- [Training and evaluation](https://github.com/howdymary/mochi-demo/actions/runs/44699655265): 16 optimizer updates, 96 domain-gradient calls and 247,758 training-token presentations. No native gait weights were trained.
+- Modal: 223 accounted attempts and stages, including the 77-attempt starting debit. Of these, 221 completed; two older interrupted calls remain charged. Accounted CPU-hours were 14.886, including conservative carry bounds. These are budget records rather than an invoice.
+- [Memory-only continuation](https://github.com/howdymary/mochi-demo/actions/runs/44735240968): completed the final source-verified review with zero additional optimizer updates or physical stages. The numerical result digest remained unchanged.
+- Exa: two new searches in this study, including a failure-driven follow-up selected after the critic's verdict. Candidate methods were recorded for a future study; the frozen controllers were unchanged.
+
+Public evidence: [compressed results](evidence/smooth-v17/results.json.gz), [service receipts](evidence/smooth-v17/service-receipts.json), [recording manifest](evidence/smooth-v17/recording-manifest.json) and [browser verification](evidence/smooth-v17/browser-qa.json). Browser verification includes continuous playback of the complete development comparison and inspection of a fresh-scenario failure and a rejected later checkpoint.
+
+### past.dev challenge
+
+Agents: research, design, execution and review used four writing identities and four verified reading identities, with explicit shared and critic-private audiences.
+
+Layers: prompts hold working context; past.dev holds sourced findings and conclusions; versioned code holds procedures; exact measurements and trajectories stay in artifacts.
+
+Results: six verified cross-role recalls within this study, plus the separately recorded cross-run recall. The critic rejected the final result. The researcher recalled that verdict, chose research on policy-generated laptop states and searched Exa. The designer recalled the sourced proposal and selected laptop-contact state collection as future work. The private-audience canary passed, with no pending ingestion.
+
+Caveats: an oversized result record failed its first required-source recall. A compact, hash-linked summary recovered the handoff; the failed recall remains recorded. Canonical numerical payloads are resolved only after source-ID verification. Memory/search performance benefits were not isolated, and API activity is not a billed-credit total. [Recovery details](docs/smooth-v17-memory-recovery.md).
+
+### Replay and audit
+
+From the repository root, after the package and visual assets below are available:
+
+```sh
+gh run download 44735240968 --repo howdymary/mochi-demo --name mochi-smooth-v17-finalized-44735240968 --dir mochi/.cache/v17-finalized
+mochi/.venv/bin/python mochi/scripts/build_smooth_v17_preview.py --source mochi/.cache/v17-finalized
+node mochi/scripts/check_smooth_v17_ui.mjs
+PYTHONPATH=mochi/src mochi/.venv/bin/python mochi/scripts/assess_smooth_v17.py --source mochi/.cache/v17-finalized
+python3 -m http.server 4119 --directory mochi/web/desk
+```
+
+Open `http://127.0.0.1:4119/contact-trained.html`. Exporting retained recordings through Modal requires the owner's authenticated profile. Public web replay makes no Tinker, Exa or past.dev calls. Provider keys stay server-side. Canonical checkpoint references remain in backend artifacts.
+
+Integration paths: [Tinker training and main research loop](src/mochi/smooth_v17/train.py), [parallel physics](src/mochi/smooth_v17/remote.py), [durable staged collection](src/mochi/smooth_v17/staged.py), [memory-only review](src/mochi/smooth_v17/finalize_memory.py), and [runtime inventory](docs/integrations.md).
+
+### Engineering and interrupted runs before V17
 
 [Execution prompt](docs/smooth-v17-prompt.md) · [Controller evidence](evidence/smooth-v17/engineering.json) · [Resource reconciliation](evidence/smooth-v17/carried-budget.json) · [Existing route preview](https://howdymary--mochi-smooth-v16-engineering-web.us-east.modal.run/)
 
-The revised fixed reference completed the uninterrupted clock, book turnaround, forward descent, drawer, loaded Post-it crossing, laptop and globe sequence in 339.60 physical seconds and 470 steps. It passed the unchanged quality checks with no fall or forbidden contact. This is a controller-engineering result. New Tinker results remain pending.
+The revised fixed reference completed the uninterrupted clock, book turnaround, forward descent, drawer, loaded Post-it crossing, laptop and globe sequence in 339.60 physical seconds and 470 steps. It passed the unchanged quality checks with no fall or forbidden contact. This was a controller-engineering result before V17 training. It did not establish reliability across the later final-test scenarios.
 
 Three actions address measured limitations. H0 adds a joint-rest prior to clock inverse kinematics; a matched development case reduced R4 recovery travel from 9.06 to 3.62 rad. P4 uses steady 0.60 N laptop control with a 16-second action horizon; it closed the hard development case in 12.72 seconds with 0.619 N peak contact force. W6 adds a bounded globe-leg turning/speed profile; a matched development branch used 122 steps versus 138. The global force limit stays 0.8 N. Every model checkpoint and baseline receives the same extended library. Native gait weights remain fixed.
 
 Execution [44669222147](https://github.com/howdymary/mochi-demo/actions/runs/44669222147) timed out in collection. Execution [44686221838](https://github.com/howdymary/mochi-demo/actions/runs/44686221838) preserved its physical states but stopped when none of the original laptop actions succeeded on one training approach. Both completed zero optimizer updates. Their failures and checkpoints remain archived.
 
-The repair continues against the budget opened by the second execution, with an audited starting debit of 77 attempts and 3.870 accounted CPU-hours. This includes conservative bounds for two interrupted calls and old supervisors. It does not reset previous usage. The limits remain 224 attempts, 18 accounted CPU-hours, 16 optimizer updates and four physics workers. The old route viewers and forecasting application are preserved.
+V17 continued against the budget opened by the second execution, with an audited starting debit of 77 attempts and 3.870 accounted CPU-hours. This includes conservative bounds for two interrupted calls and old supervisors. It did not reset previous usage. The limits remained 224 attempts, 18 accounted CPU-hours, 16 optimizer updates and four physics workers. The old route viewers and forecasting application are preserved.
 
-Training will use historical parent-prefix states plus newly measured clock, laptop and recovery alternatives. Final displayed evaluations will be uninterrupted rollouts from reset. The study will distinguish manually engineered capability from improvements caused by trained choices, and compare against fixed and training-derived static controls.
+Training used historical parent-prefix states plus newly measured clock, laptop and recovery alternatives. Final evaluations were uninterrupted rollouts from reset. Every checkpoint received the same manually engineered library, and the study included fixed and training-derived static controls.
 
 ## Completed V15 walking and task-control study
 

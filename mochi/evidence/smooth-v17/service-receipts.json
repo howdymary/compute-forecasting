@@ -1,0 +1,1210 @@
+{
+  "actors": {
+    "researcher": "mochi-t17-44699655265-researcher",
+    "designer": "mochi-t17-44699655265-designer",
+    "experimenter": "mochi-t17-44699655265-experimenter",
+    "critic": "mochi-t17-44699655265-critic"
+  },
+  "audiences": {
+    "shared": "mochi-t17-44699655265-shared",
+    "critic_private": "mochi-t17-44699655265-critic"
+  },
+  "reads": [
+    {
+      "reader": "mochi-t17-44699655265-researcher",
+      "reader_role": "researcher",
+      "author": "mochi-t17-44699655265-experimenter",
+      "record_id": "mochi-t17-44699655265-r0",
+      "source_id_verified": true,
+      "expected_access": true,
+      "cross_agent_use": true,
+      "sha256": "490b100ba1a80f5b676c39162a0c21f8b57992c16038d3e5214bf44d4867428a",
+      "at": "2026-11-20T08:10:11.518791+00:00"
+    },
+    {
+      "reader": "mochi-t17-44699655265-designer",
+      "reader_role": "designer",
+      "author": "mochi-t17-44699655265-researcher",
+      "record_id": "mochi-t17-44699655265-r1",
+      "source_id_verified": true,
+      "expected_access": true,
+      "cross_agent_use": true,
+      "sha256": "cde85612e97fc6a5f86a3691a21e1740b0225d326e39c7ae1ff159bc198058d7",
+      "at": "2026-11-20T08:10:26.321235+00:00"
+    },
+    {
+      "reader": "mochi-t17-44699655265-experimenter",
+      "reader_role": "experimenter",
+      "author": "mochi-t17-44699655265-designer",
+      "record_id": "mochi-t17-44699655265-r2",
+      "source_id_verified": true,
+      "expected_access": true,
+      "cross_agent_use": true,
+      "sha256": "80d7e4b831cd512311f8d2a2782bd7f8f5c3524bd8113a4e38d108efb162bf1c",
+      "at": "2026-11-20T08:10:39.865759+00:00"
+    },
+    {
+      "reader": "mochi-t17-44699655265-critic",
+      "reader_role": "critic",
+      "author": "mochi-t17-44699655265-experimenter",
+      "record_id": "mochi-t17-44699655265-r3",
+      "source_id_verified": false,
+      "expected_access": true,
+      "cross_agent_use": false,
+      "sha256": null,
+      "at": "2026-11-20T12:08:59.194547+00:00"
+    },
+    {
+      "reader": "mochi-t17-44699655265-critic",
+      "reader_role": "critic",
+      "author": "mochi-t17-44699655265-experimenter",
+      "record_id": "mochi-t17-44699655265-r4",
+      "source_id_verified": true,
+      "expected_access": true,
+      "cross_agent_use": true,
+      "sha256": "c23fb9c1a88eddfe1c3725b5ce1af64fabcc2f0c987ac529ec05966b4ec7d637",
+      "at": "2026-11-20T12:24:17.718273+00:00",
+      "retrieval": "source-verified compact evidence, 8000-token budget, no occurrence window",
+      "attempts": [
+        {
+          "at": "2026-11-20T12:24:17.718257+00:00",
+          "returned_documents": 36,
+          "used_evidence_tokens": 7988,
+          "required_source_verified": true,
+          "returned_source_ids": [
+            "boundforge-43670325538-verifier-baseline",
+            "boundforge-43670325538-verifier-review",
+            "boundforge-43675810337-verifier-v2-guard",
+            "boundforge-methods-v3-validated-failures-43749410835",
+            "mochi-t17-44699655265-r0",
+            "mochi-t17-44699655265-r1",
+            "mochi-t17-44699655265-r2",
+            "mochi-t17-44699655265-r4"
+          ]
+        }
+      ]
+    },
+    {
+      "reader": "mochi-t17-44699655265-researcher",
+      "reader_role": "researcher",
+      "author": "mochi-t17-44699655265-critic",
+      "record_id": "mochi-t17-44699655265-r5",
+      "source_id_verified": true,
+      "expected_access": true,
+      "cross_agent_use": true,
+      "sha256": "73f4955017fa4d6a98c0ddd65d489b802ffe14795718ecdac73f56e4a50bb5b3",
+      "at": "2026-11-20T12:24:42.939372+00:00",
+      "retrieval": "source-verified compact evidence, 8000-token budget, no occurrence window",
+      "attempts": [
+        {
+          "at": "2026-11-20T12:24:42.939361+00:00",
+          "returned_documents": 32,
+          "used_evidence_tokens": 7990,
+          "required_source_verified": true,
+          "returned_source_ids": [
+            "boundforge-43670325538-verifier-baseline",
+            "boundforge-43670325538-verifier-review",
+            "boundforge-43670827227-proposer-precision-plan-0",
+            "boundforge-43671271112-proposer-precision-plan-1",
+            "boundforge-43671271112-proposer-precision-plan-2",
+            "boundforge-43675810337-proposer-v2-development",
+            "boundforge-43675810337-verifier-v2-guard",
+            "boundforge-c49-43679935507-controller",
+            "mochi-t17-44699655265-r0",
+            "mochi-t17-44699655265-r1",
+            "mochi-t17-44699655265-r2",
+            "mochi-t17-44699655265-r4",
+            "mochi-t17-44699655265-r5"
+          ]
+        }
+      ]
+    },
+    {
+      "reader": "mochi-t17-44699655265-designer",
+      "reader_role": "designer",
+      "author": "mochi-t17-44699655265-researcher",
+      "record_id": "mochi-t17-44699655265-r6",
+      "source_id_verified": true,
+      "expected_access": true,
+      "cross_agent_use": true,
+      "sha256": "12050c51f7e3e86f50e9fe5db1592b4e79e8b624a0a8ee096779c3aa90e8e002",
+      "at": "2026-11-20T12:25:03.435081+00:00",
+      "retrieval": "source-verified compact evidence, 8000-token budget, no occurrence window",
+      "attempts": [
+        {
+          "at": "2026-11-20T12:25:03.435070+00:00",
+          "returned_documents": 25,
+          "used_evidence_tokens": 7999,
+          "required_source_verified": true,
+          "returned_source_ids": [
+            "boundforge-43670325538-verifier-review",
+            "boundforge-43675810337-verifier-v2-guard",
+            "boundforge-c49-43679780777-experimenter",
+            "boundforge-methods-v3-validated-failures-43749410835",
+            "mochi-t17-44699655265-r0",
+            "mochi-t17-44699655265-r1",
+            "mochi-t17-44699655265-r2",
+            "mochi-t17-44699655265-r4",
+            "mochi-t17-44699655265-r5",
+            "mochi-t17-44699655265-r6"
+          ]
+        }
+      ]
+    },
+    {
+      "reader": "mochi-t17-44699655265-designer",
+      "reader_role": "designer",
+      "author": "mochi-t17-44699655265-critic",
+      "record_id": "mochi-t17-44699655265-r7",
+      "source_id_verified": false,
+      "expected_access": false,
+      "cross_agent_use": false,
+      "sha256": null,
+      "at": "2026-11-20T12:25:19.784278+00:00",
+      "retrieval": "source-verified compact evidence, 8000-token budget, no occurrence window",
+      "attempts": [
+        {
+          "at": "2026-11-20T12:25:19.784035+00:00",
+          "returned_documents": 28,
+          "used_evidence_tokens": 7989,
+          "required_source_verified": false,
+          "returned_source_ids": [
+            "boundforge-43670325538-proposer-failed-neighborhoods",
+            "boundforge-43670325538-verifier-review",
+            "boundforge-43671271112-proposer-precision-plan-2",
+            "boundforge-43675810337-literature-v2-review",
+            "boundforge-43675810337-verifier-v2-guard",
+            "boundforge-methods-v3-validated-failures-43749410835",
+            "mochi-t17-44699655265-r0",
+            "mochi-t17-44699655265-r1",
+            "mochi-t17-44699655265-r2",
+            "mochi-t17-44699655265-r4",
+            "mochi-t17-44699655265-r5",
+            "mochi-t17-44699655265-r6"
+          ]
+        }
+      ]
+    }
+  ],
+  "decisions": [
+    {
+      "role": "researcher",
+      "question": "Choose a research emphasis from measured support-transfer failures and excessive recovery joint travel. This chooses an Exa query, not a change to frozen physics.",
+      "selected": "forward_descent",
+      "distribution": {
+        "turning_steps": 0.3434125781059265,
+        "forward_descent": 0.3891374468803406,
+        "task_withdrawal": 0.2674499750137329
+      },
+      "input_record_ids": [
+        "mochi-t17-44699655265-r0"
+      ],
+      "context_sha256": "5999f1c3f818dc6faa4d98947ae41f99837de9bb058b37f6ea9667ca2681246b",
+      "at": "2026-11-20T08:10:14.217875+00:00"
+    },
+    {
+      "role": "designer",
+      "question": "Choose the six-domain allocation: recovery_first uses 12 walking,16 recovery and3 examples per object task; balanced uses16 walking,16 recovery and2 per object task. Both target walking and recovery with all tasks represented.",
+      "selected": "recovery_first",
+      "distribution": {
+        "recovery_first": 0.5926666259765625,
+        "balanced": 0.4073334336280823
+      },
+      "input_record_ids": [
+        "mochi-t17-44699655265-r0",
+        "mochi-t17-44699655265-r1"
+      ],
+      "context_sha256": "cf63924c953cabba2c676d4c936090d539b1a22803e4e7204ef4b9db39a488fd",
+      "at": "2026-11-20T08:10:28.867901+00:00"
+    },
+    {
+      "role": "critic",
+      "question": "Classify the measured full-route results. Zero qualified pairs has no defined efficiency gain. Changed probabilities alone do not establish better control. Keep the small simulated cohort qualified.",
+      "selected": "no_demonstrated_gain",
+      "distribution": {
+        "bounded_simulated_gain": 0.010333595797419548,
+        "no_demonstrated_gain": 0.9302006363868713,
+        "regression_or_uncertain": 0.05946573615074158
+      },
+      "input_record_ids": [
+        "mochi-t17-44699655265-r4"
+      ],
+      "context_sha256": "3f031cd2fe80c4f866cc70e57b2f2dc6dc74af5898c84322e5ae317149e1809d",
+      "at": "2026-11-20T12:24:21.790208+00:00"
+    },
+    {
+      "role": "researcher",
+      "question": "Choose the next research question from the recalled rejection. Do not change the frozen experiment or request more optimizer updates.",
+      "selected": "on_policy_laptop_states",
+      "distribution": {
+        "laptop_contact_balance": 0.30923447012901306,
+        "printer_fixture_clearance": 0.24083204567432404,
+        "on_policy_laptop_states": 0.4499334692955017
+      },
+      "input_record_ids": [
+        "mochi-t17-44699655265-r5"
+      ],
+      "context_sha256": "aa031f65ccf6a75bd073c6ce4ed9d93b32836f08567ed328a59a5c45b22a547b",
+      "at": "2026-11-20T12:24:46.518732+00:00"
+    },
+    {
+      "role": "designer",
+      "question": "Choose which prerequisite to investigate next using the recalled sourced hypothesis. All options are future work, not changes to this completed comparison.",
+      "selected": "collect_laptop_contact_states",
+      "distribution": {
+        "stabilize_laptop_contact": 0.05302013084292412,
+        "verify_fixture_clearance": 0.007175494451075792,
+        "collect_laptop_contact_states": 0.9398043155670166
+      },
+      "input_record_ids": [
+        "mochi-t17-44699655265-r6"
+      ],
+      "context_sha256": "ed7cdd504e7be3a361edbec31b28061bb240ee27b14936a4bcb3291c46f9f0fb",
+      "at": "2026-11-20T12:25:08.286455+00:00"
+    }
+  ],
+  "calls": [
+    {
+      "provider": "past.dev",
+      "method": "PUT",
+      "kind": "identities",
+      "status": 200,
+      "at": "2026-11-20T08:06:45.289001+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "PUT",
+      "kind": "identities",
+      "status": 200,
+      "at": "2026-11-20T08:06:45.375974+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "PUT",
+      "kind": "identities",
+      "status": 200,
+      "at": "2026-11-20T08:06:45.526758+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "PUT",
+      "kind": "identities",
+      "status": 200,
+      "at": "2026-11-20T08:06:45.612781+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "PUT",
+      "kind": "audiences",
+      "status": 201,
+      "at": "2026-11-20T08:06:45.823279+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "PUT",
+      "kind": "audiences",
+      "status": 201,
+      "at": "2026-11-20T08:06:45.930441+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "POST",
+      "kind": "ingest",
+      "status": 202,
+      "at": "2026-11-20T08:06:52.158785+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:06:52.213694+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:06:57.264556+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:07:02.329228+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:07:07.378109+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:07:12.489461+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:07:17.708068+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:07:22.794146+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:07:27.876162+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:07:32.955731+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:07:38.030507+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:07:43.088000+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:07:48.238208+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:07:53.327428+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:07:58.379893+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:08:03.435931+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:08:08.514285+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:08:13.615642+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:08:18.772437+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:08:23.897594+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:08:28.973493+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:08:34.039892+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:08:39.110274+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:08:44.188073+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:08:49.306044+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:08:54.421466+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:08:59.524965+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:09:04.595905+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:09:09.650907+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:09:14.728918+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:09:19.837601+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:09:25.024653+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:09:30.131806+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:09:35.212738+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:09:40.262829+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:09:45.318834+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:09:50.394545+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:09:55.470978+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:10:00.566001+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:10:05.646317+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:10:10.775728+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "POST",
+      "kind": "recall",
+      "status": 200,
+      "at": "2026-11-20T08:10:11.518443+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "POST",
+      "kind": "ingest",
+      "status": 202,
+      "at": "2026-11-20T08:10:15.446544+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:10:15.468113+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:10:20.538211+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:10:25.624971+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "POST",
+      "kind": "recall",
+      "status": 200,
+      "at": "2026-11-20T08:10:26.321153+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "POST",
+      "kind": "ingest",
+      "status": 202,
+      "at": "2026-11-20T08:10:29.105833+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:10:29.127032+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:10:34.176446+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T08:10:39.248440+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "POST",
+      "kind": "recall",
+      "status": 200,
+      "at": "2026-11-20T08:10:39.865697+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "POST",
+      "kind": "ingest",
+      "status": 202,
+      "at": "2026-11-20T12:07:50.621772+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T12:07:50.677776+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T12:07:55.778001+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T12:08:00.834118+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "POST",
+      "kind": "recall",
+      "status": 200,
+      "at": "2026-11-20T12:08:04.718384+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "POST",
+      "kind": "recall",
+      "status": 200,
+      "at": "2026-11-20T12:08:08.148506+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "POST",
+      "kind": "recall",
+      "status": 200,
+      "at": "2026-11-20T12:08:12.536177+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "POST",
+      "kind": "recall",
+      "status": 200,
+      "at": "2026-11-20T12:08:17.904764+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "POST",
+      "kind": "recall",
+      "status": 200,
+      "at": "2026-11-20T12:08:24.472475+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "POST",
+      "kind": "recall",
+      "status": 200,
+      "at": "2026-11-20T12:08:32.031705+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "POST",
+      "kind": "recall",
+      "status": 200,
+      "at": "2026-11-20T12:08:40.796780+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "POST",
+      "kind": "recall",
+      "status": 200,
+      "at": "2026-11-20T12:08:50.185317+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "PUT",
+      "kind": "identities",
+      "status": 200,
+      "at": "2026-11-20T12:23:50.197661+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "PUT",
+      "kind": "identities",
+      "status": 200,
+      "at": "2026-11-20T12:23:50.372712+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "PUT",
+      "kind": "identities",
+      "status": 200,
+      "at": "2026-11-20T12:23:50.447724+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "PUT",
+      "kind": "identities",
+      "status": 200,
+      "at": "2026-11-20T12:23:50.523576+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "PUT",
+      "kind": "audiences",
+      "status": 200,
+      "at": "2026-11-20T12:23:50.631629+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "PUT",
+      "kind": "audiences",
+      "status": 200,
+      "at": "2026-11-20T12:23:50.716726+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "POST",
+      "kind": "ingest",
+      "status": 202,
+      "at": "2026-11-20T12:24:02.288996+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T12:24:02.367523+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T12:24:07.621915+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T12:24:12.938185+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "POST",
+      "kind": "recall",
+      "status": 200,
+      "at": "2026-11-20T12:24:17.717981+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "POST",
+      "kind": "ingest",
+      "status": 202,
+      "at": "2026-11-20T12:24:23.845624+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T12:24:23.963020+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T12:24:29.225921+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T12:24:34.481790+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T12:24:39.754140+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "POST",
+      "kind": "recall",
+      "status": 200,
+      "at": "2026-11-20T12:24:42.939100+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "POST",
+      "kind": "ingest",
+      "status": 202,
+      "at": "2026-11-20T12:24:49.632878+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T12:24:49.728004+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T12:24:55.036641+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T12:25:00.367899+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "POST",
+      "kind": "recall",
+      "status": 200,
+      "at": "2026-11-20T12:25:03.434856+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "POST",
+      "kind": "ingest",
+      "status": 202,
+      "at": "2026-11-20T12:25:10.017108+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T12:25:10.095264+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "GET",
+      "kind": "ingest",
+      "status": 200,
+      "at": "2026-11-20T12:25:15.350007+00:00"
+    },
+    {
+      "provider": "past.dev",
+      "method": "POST",
+      "kind": "recall",
+      "status": 200,
+      "at": "2026-11-20T12:25:19.783801+00:00"
+    }
+  ],
+  "sources": [
+    {
+      "query": "robot control research robot manipulation hinged objects friction force control stability",
+      "request_id": "1ee684aedff7e98447e1490d321af154",
+      "cost_dollars": {
+        "total": 0.007,
+        "search": {
+          "neural": 0.007
+        }
+      },
+      "sources": [
+        {
+          "url": "https://doi.org/10.1109/tro.2024.3422053",
+          "title": "Robust Pivoting Manipulation Using Contact Implicit Bilevel Optimization",
+          "retrieved_at": "2026-11-20T08:10:15.200739+00:00",
+          "excerpt_sha256": "c3b68a2a8b868774a29ef8679d89e91d6365730f90b1a04bf16feeb5a09bd122",
+          "excerpt_storage": "Backend artifact; URL and provenance retained in this public report"
+        },
+        {
+          "url": "https://doi.org/10.1109/icra57147.2024.10611406",
+          "title": "Differentiable Compliant Contact Primitives for Estimation and Model Predictive Control",
+          "retrieved_at": "2026-11-20T08:10:15.200763+00:00",
+          "excerpt_sha256": "26b1e1ea86cd1319d9dc26169d64f22183d2f22241fe65a269bbbea72195fb88",
+          "excerpt_storage": "Backend artifact; URL and provenance retained in this public report"
+        },
+        {
+          "url": "https://arxiv.org/abs/2611.00898",
+          "title": "Trading Transparency for Stability: Friction-Cone-Constrained Bilateral Teleoperation for Opening Doors of Unsecured Furniture",
+          "retrieved_at": "2026-11-20T08:10:15.200827+00:00",
+          "excerpt_sha256": "5982ecfdb36340167ed5f287a4d37a7a12d84afc9d2be55bb62c7c3371b1f3c5",
+          "excerpt_storage": "Backend artifact; URL and provenance retained in this public report"
+        }
+      ],
+      "response_sha256": "6c5ca6707121642638232c4fceb5eb457f08f7825cbdf782f6ff52fdc0f6874c",
+      "at": "2026-11-20T08:10:15.200927+00:00"
+    },
+    {
+      "query": "robot imitation learning on policy data aggregation contact rich manipulation compounding errors research",
+      "request_id": "25518e5c70d0b192dc12271387c84056",
+      "cost_dollars": {
+        "total": 0.007,
+        "search": {
+          "neural": 0.007
+        }
+      },
+      "sources": [
+        {
+          "url": "https://arxiv.org/html/2604.11351v1",
+          "title": "WM-DAgger: Enabling Efficient Data Aggregation for Imitation Learning with World Models",
+          "retrieved_at": "2026-11-20T12:24:47.848274+00:00",
+          "excerpt_sha256": "291641ed7c21a82348550e22925996f5a2397cfb8807815531212224f0db5df5",
+          "excerpt_storage": "Backend artifact; URL and provenance retained in this public report"
+        },
+        {
+          "url": "https://compliant-residual-dagger.github.io/files/CR_DAgger_extended.pdf",
+          "title": "Compliant Residual DAgger: Improving Real-World Contact-Rich Manipulation with Human Corrections",
+          "retrieved_at": "2026-11-20T12:24:47.848333+00:00",
+          "excerpt_sha256": "56bcc8339335f14b39813b0aab46c93e10ad60689bd752a0fea82f59cf72c464",
+          "excerpt_storage": "Backend artifact; URL and provenance retained in this public report"
+        },
+        {
+          "url": "https://arxiv.org/html/2606.09615",
+          "title": "DexPIE: Stable Dexterous Policy Improvement from Real-World Experience",
+          "retrieved_at": "2026-11-20T12:24:47.848345+00:00",
+          "excerpt_sha256": "e5e29873bc60d63dfbb6cbbcfa61466ec492e29e7007ecfd03ce83378f4d5983",
+          "excerpt_storage": "Backend artifact; URL and provenance retained in this public report"
+        }
+      ],
+      "response_sha256": "62a83f3be2c67b5744f3ac7c343193273f052ae7b39ae645bc3877c712307072",
+      "at": "2026-11-20T12:24:47.848423+00:00"
+    }
+  ],
+  "eligibility": {
+    "writers": 4,
+    "readers": 4,
+    "cross_agent_reads": 6,
+    "isolation_passed": true
+  },
+  "pending_ingestions": [],
+  "records": [
+    {
+      "id": "mochi-t17-44699655265-r0",
+      "role": "experimenter",
+      "author": "mochi-t17-44699655265-experimenter",
+      "audience": "mochi-t17-44699655265-shared",
+      "at": "2026-11-20T08:06:51.746843+00:00",
+      "sha256": "490b100ba1a80f5b676c39162a0c21f8b57992c16038d3e5214bf44d4867428a",
+      "ingestion_id": "4b3bd319-1085-4e2f-b647-74bbd4f0fe84",
+      "status": "completed",
+      "write_to_ready_seconds": 199.028912181,
+      "kind": "observation"
+    },
+    {
+      "id": "mochi-t17-44699655265-r1",
+      "role": "researcher",
+      "author": "mochi-t17-44699655265-researcher",
+      "audience": "mochi-t17-44699655265-shared",
+      "at": "2026-11-20T08:10:15.361118+00:00",
+      "sha256": "cde85612e97fc6a5f86a3691a21e1740b0225d326e39c7ae1ff159bc198058d7",
+      "ingestion_id": "ec552431-edf5-4625-b2f1-929d2ab723f0",
+      "status": "completed",
+      "write_to_ready_seconds": 10.263876536999987,
+      "kind": "hypothesis"
+    },
+    {
+      "id": "mochi-t17-44699655265-r2",
+      "role": "designer",
+      "author": "mochi-t17-44699655265-designer",
+      "audience": "mochi-t17-44699655265-shared",
+      "at": "2026-11-20T08:10:29.017966+00:00",
+      "sha256": "80d7e4b831cd512311f8d2a2782bd7f8f5c3524bd8113a4e38d108efb162bf1c",
+      "ingestion_id": "712e3d08-cf80-4c04-87b5-f069b37807c2",
+      "status": "completed",
+      "write_to_ready_seconds": 10.230499656000006,
+      "kind": "proposal"
+    },
+    {
+      "id": "mochi-t17-44699655265-r3",
+      "role": "experimenter",
+      "author": "mochi-t17-44699655265-experimenter",
+      "audience": "mochi-t17-44699655265-shared",
+      "at": "2026-11-20T12:07:49.863108+00:00",
+      "sha256": "f598d2b40361d881975fe9f019f61032126f04d40d4ab4d39bf260cb41164ade",
+      "ingestion_id": "82384349-0679-4a5f-8115-45400a06c111",
+      "status": "completed",
+      "write_to_ready_seconds": 10.971031114000652,
+      "kind": "observation"
+    },
+    {
+      "id": "mochi-t17-44699655265-r4",
+      "role": "experimenter",
+      "author": "mochi-t17-44699655265-experimenter",
+      "audience": "mochi-t17-44699655265-shared",
+      "at": "2026-11-20T12:24:01.928106+00:00",
+      "sha256": "c23fb9c1a88eddfe1c3725b5ce1af64fabcc2f0c987ac529ec05966b4ec7d637",
+      "ingestion_id": "3076e011-b74d-48e6-a951-708c08e6e857",
+      "status": "completed",
+      "write_to_ready_seconds": 11.010129720999998,
+      "kind": "compact-observation"
+    },
+    {
+      "id": "mochi-t17-44699655265-r5",
+      "role": "critic",
+      "author": "mochi-t17-44699655265-critic",
+      "audience": "mochi-t17-44699655265-shared",
+      "at": "2026-11-20T12:24:23.502683+00:00",
+      "sha256": "73f4955017fa4d6a98c0ddd65d489b802ffe14795718ecdac73f56e4a50bb5b3",
+      "ingestion_id": "1f590803-48b3-481e-ab2b-70e80b25e931",
+      "status": "completed",
+      "write_to_ready_seconds": 16.251477553,
+      "kind": "qualified-conclusion"
+    },
+    {
+      "id": "mochi-t17-44699655265-r6",
+      "role": "researcher",
+      "author": "mochi-t17-44699655265-researcher",
+      "audience": "mochi-t17-44699655265-shared",
+      "at": "2026-11-20T12:24:49.259520+00:00",
+      "sha256": "12050c51f7e3e86f50e9fe5db1592b4e79e8b624a0a8ee096779c3aa90e8e002",
+      "ingestion_id": "2ea3da5c-2ceb-4122-8b6c-91728cc06f16",
+      "status": "completed",
+      "write_to_ready_seconds": 11.108410547999995,
+      "kind": "future-hypothesis"
+    }
+  ],
+  "study": "mochi-smooth-v17",
+  "workflow_run": "mochi-t17-44699655265",
+  "memory_finalization": {
+    "workflow_run": "44735240968",
+    "source_sha": "a09d9fffd5ea1c1050435f8857cec725f4e6d79d",
+    "script_sha256": "e2e0792e3728848ada0e10bf23a31807d32adc210df4575167c458da1c0907c5",
+    "original_status": "incomplete",
+    "original_error": "Required memory source absent; no silent fallback",
+    "original_source_id": "mochi-t17-44699655265-r3",
+    "pre_review_validation_failure": {
+      "workflow_run": 44734727709,
+      "cause": "Inherited adapter imported unavailable robot meshes; no provider calls or budget debits occurred."
+    },
+    "original_content_characters": 72018,
+    "requested_original_evidence_tokens": 16000,
+    "frozen_result_sha256_before": "879144b8d8e8ddabcb8cad86ac74661cf4b9575f7dc3ce1c6db0f511a5914432",
+    "additional_optimizer_updates": 0,
+    "additional_physical_stages": 0,
+    "documentation": "https://past.dev/docs/memory-api/api-reference#post-api-v1-recall",
+    "repair": "Compact semantic summary linked to immutable full evidence; exact-source verification and original audiences retained.",
+    "compact_record_id": "mochi-t17-44699655265-r4",
+    "compact_content_characters": 8247,
+    "failure_localization": [
+      {
+        "seed": 103000,
+        "failure": "fall",
+        "verified_tasks": [
+          "alarm",
+          "drawer"
+        ],
+        "last_station": "laptop-station",
+        "last_decision_domain": "laptop",
+        "contact_examples": []
+      },
+      {
+        "seed": 103001,
+        "failure": "invalid_fixture_contact",
+        "verified_tasks": [
+          "alarm",
+          "drawer"
+        ],
+        "last_station": "laptop-station",
+        "last_decision_domain": "laptop",
+        "contact_examples": [
+          {
+            "body": "right_knee_link",
+            "fixture": "printer-output-tray-contact",
+            "phase": null,
+            "force_n": 0.9173693468741062
+          }
+        ]
+      },
+      {
+        "seed": 103002,
+        "failure": "invalid_fixture_contact",
+        "verified_tasks": [
+          "alarm",
+          "drawer"
+        ],
+        "last_station": "laptop-station",
+        "last_decision_domain": "laptop",
+        "contact_examples": [
+          {
+            "body": "left_hip_roll_link",
+            "fixture": "laptop-contact",
+            "phase": "push",
+            "force_n": 0.384930569333881
+          }
+        ]
+      },
+      {
+        "seed": 103003,
+        "failure": "fall",
+        "verified_tasks": [
+          "alarm",
+          "drawer"
+        ],
+        "last_station": "laptop-station",
+        "last_decision_domain": "laptop",
+        "contact_examples": []
+      }
+    ],
+    "future_research": {
+      "focus": "on_policy_laptop_states",
+      "record_id": "mochi-t17-44699655265-r6",
+      "designer_next_investigation": "collect_laptop_contact_states",
+      "implemented": false
+    },
+    "frozen_result_sha256_after": "879144b8d8e8ddabcb8cad86ac74661cf4b9575f7dc3ce1c6db0f511a5914432"
+  },
+  "budget_usage_or_reserved": {
+    "physical_rollouts": 223,
+    "simulation_cpu_hours": 14.885900584491504,
+    "optimizer_updates": 16,
+    "training_token_presentations": 247758,
+    "inference_tokens": 237252,
+    "exa_searches": 3,
+    "past_writes": 11,
+    "past_recalls": 13
+  },
+  "full_report": {
+    "file": "results.json.gz",
+    "sha256": "8948849abba66cdd71cd06b725c51e1c91fc8dc0c5b6dee01811e28d996709e9",
+    "uncompressed_sha256": "9c8865b87679520de3bfe8d01bb03d737c61abe3b8de09d0012d8f79ed4bf9f7"
+  }
+}

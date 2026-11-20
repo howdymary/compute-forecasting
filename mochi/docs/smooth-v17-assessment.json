@@ -1,0 +1,1235 @@
+{
+  "study": "mochi-smooth-v17",
+  "source_sha": "5cb4bf7e5f65de46b236d10b6501dac9f43fb815",
+  "run_id": "mochi-t17-44699655265",
+  "optimizer_updates": 16,
+  "domain_backward_calls": 96,
+  "selected_update": 1,
+  "selected_checkpoint_id": "44cd7280ced903d14bbf7a94ebb48fc69d602185838d2029e499cc269cb2fdca",
+  "held_out": {
+    "parent": {
+      "n": 4,
+      "complete_successes": 1,
+      "smooth_complete_successes": 0,
+      "wilson_95_complete_rate": [
+        0.045586062644636216,
+        0.6993639475573634
+      ],
+      "task_successes": {
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 1,
+        "globe": 1
+      },
+      "falls": 1,
+      "invalid_contacts": 2,
+      "mean_duration_s": 308.72983339709447,
+      "mean_roll_rms_deg": 0.4074921148469319,
+      "mean_contact_travel_m": 0.40345928373156237,
+      "recovery_successes": 10,
+      "successful_recovery_mean_joint_travel_rad": 5.312709388781129,
+      "qualified_complete_successes": 0,
+      "successful_mean_steps": null,
+      "successful_mean_seconds": null,
+      "successful_mean_forward_facing_fraction": null,
+      "successful_mean_recovery_arm_joint_travel_rad": null,
+      "successful_mean_intertask_arm_joint_travel_rad": null
+    },
+    "selected": {
+      "n": 4,
+      "complete_successes": 0,
+      "smooth_complete_successes": 0,
+      "wilson_95_complete_rate": [
+        0,
+        0.48990002040399916
+      ],
+      "task_successes": {
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 0,
+        "globe": 0
+      },
+      "falls": 2,
+      "invalid_contacts": 2,
+      "mean_duration_s": 301.43166982469234,
+      "mean_roll_rms_deg": 0.4328456172739993,
+      "mean_contact_travel_m": 0.37975245958897424,
+      "recovery_successes": 8,
+      "successful_recovery_mean_joint_travel_rad": 5.599443280196461,
+      "qualified_complete_successes": 0,
+      "successful_mean_steps": null,
+      "successful_mean_seconds": null,
+      "successful_mean_forward_facing_fraction": null,
+      "successful_mean_recovery_arm_joint_travel_rad": null,
+      "successful_mean_intertask_arm_joint_travel_rad": null
+    },
+    "fixed": {
+      "n": 4,
+      "complete_successes": 2,
+      "smooth_complete_successes": 2,
+      "wilson_95_complete_rate": [
+        0.15003570882017148,
+        0.8499642911798285
+      ],
+      "task_successes": {
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 2,
+        "globe": 2
+      },
+      "falls": 2,
+      "invalid_contacts": 0,
+      "mean_duration_s": 324.54521197449304,
+      "mean_roll_rms_deg": 0.4139432514205277,
+      "mean_contact_travel_m": 0.45193393663938497,
+      "recovery_successes": 12,
+      "successful_recovery_mean_joint_travel_rad": 3.479397687908211,
+      "qualified_complete_successes": 2,
+      "successful_mean_steps": 466.0,
+      "successful_mean_seconds": 339.1542098969705,
+      "successful_mean_forward_facing_fraction": 0.9521510645798817,
+      "successful_mean_recovery_arm_joint_travel_rad": 3.6712736572656834,
+      "successful_mean_intertask_arm_joint_travel_rad": 130.09362294463222
+    },
+    "static": {
+      "n": 4,
+      "complete_successes": 2,
+      "smooth_complete_successes": 1,
+      "wilson_95_complete_rate": [
+        0.15003570882017148,
+        0.8499642911798285
+      ],
+      "task_successes": {
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 2,
+        "globe": 2
+      },
+      "falls": 2,
+      "invalid_contacts": 0,
+      "mean_duration_s": 310.15897449820636,
+      "mean_roll_rms_deg": 0.4102143998646871,
+      "mean_contact_travel_m": 0.44459382316652096,
+      "recovery_successes": 12,
+      "successful_recovery_mean_joint_travel_rad": 3.3567453596420527,
+      "qualified_complete_successes": 1,
+      "successful_mean_steps": 453.0,
+      "successful_mean_seconds": 325.8662427306188,
+      "successful_mean_forward_facing_fraction": 0.948979800194334,
+      "successful_mean_recovery_arm_joint_travel_rad": 3.4544265929055062,
+      "successful_mean_intertask_arm_joint_travel_rad": 125.72703329439912
+    }
+  },
+  "paired_summary": {
+    "n": 0,
+    "scenario_step_reductions": [],
+    "mean_step_reduction_fraction": null,
+    "mean_time_reduction_fraction": null,
+    "mean_recovery_arm_travel_reduction_fraction": null,
+    "mean_intertask_arm_travel_reduction_fraction": null,
+    "mean_step_reduction_bootstrap_95": null,
+    "mean_time_reduction_bootstrap_95": null,
+    "uncertainty_scope": "Deterministic paired resampling of this small fixed-layout cohort; not a guarantee for other layouts or hardware."
+  },
+  "improvement_goal_met": false,
+  "usage": {
+    "physical_rollouts": 223,
+    "simulation_cpu_hours": 14.885900584491504,
+    "optimizer_updates": 16,
+    "training_token_presentations": 247758,
+    "inference_tokens": 237252,
+    "exa_searches": 3,
+    "past_writes": 11,
+    "past_recalls": 13
+  },
+  "engineering_usage": {
+    "physical_rollouts": 77,
+    "simulation_cpu_hours": 3.870402069239898
+  },
+  "prior_execution": {
+    "run_id": "mochi-t16r1-44686221838",
+    "status": "incomplete",
+    "error_type": "RuntimeError",
+    "optimizer_updates_completed": 0,
+    "budget_usage_or_reserved": {
+      "physical_rollouts": 162,
+      "simulation_cpu_hours": 9.00121088449093,
+      "optimizer_updates": 0,
+      "training_token_presentations": 0,
+      "inference_tokens": 98000,
+      "exa_searches": 1,
+      "past_writes": 3,
+      "past_recalls": 4
+    },
+    "confirmed_completed_rollouts": 3,
+    "completed_physical_stages": 51,
+    "carried_budget_reconciliation": {
+      "scope": "Release unused reservations and carry every recorded attempt into the same 224-attempt/18-hour budget. This is not a budget reset.",
+      "budget_dict": "mochi-t16r1-44686221838-budget",
+      "before": {
+        "physical_rollouts": 162,
+        "simulation_cpu_hours": 9.00121088449093,
+        "optimizer_updates": 0,
+        "training_token_presentations": 0,
+        "inference_tokens": 98000,
+        "exa_searches": 1,
+        "past_writes": 3,
+        "past_recalls": 4
+      },
+      "after": {
+        "physical_rollouts": 72,
+        "simulation_cpu_hours": 3.827221737938345,
+        "optimizer_updates": 0,
+        "training_token_presentations": 0,
+        "inference_tokens": 98000,
+        "exa_searches": 1,
+        "past_writes": 3,
+        "past_recalls": 4
+      },
+      "finished_remote_stages": 51,
+      "unfinished_remote_stages": 2,
+      "completed_worker_cpu_hours": 1.4138499127183333,
+      "unfinished_worker_cpu_hours_upper_bound": 1.0,
+      "supervisor_cpu_hours_upper_bound": 1.125,
+      "previous_local_probe": {
+        "scope": "Local state probe only; not a task completion or model result.",
+        "physical_attempts": 3,
+        "single_worker_seconds": 4.359184167347848,
+        "simulation_cpu_hours": 0.0012108844909299579,
+        "initialization_physical_seconds": 0.4005600683781674,
+        "checkpoint_physical_hash": "c1cf77c5117e2362bab31793cee864770aecb50697cd692fa17f752bffd2c72d",
+        "next_step_physical_hash": "b4fd8c18ab63f105f270c3f2f67d24dd2beadd5aaab06ea114c0d0a46c135726",
+        "serialized_state_and_next_step_exact": true,
+        "source_sha256": "950d9217ff805754e9f10936b5c38fd1f625f2ac4f90df0cffc23b33599f17a9"
+      },
+      "new_local_attempts": 16,
+      "new_local_worker_hours": 0.2871609407290816,
+      "stage_snapshot_sha256": "32cae8fd4b393cf80d1e94894a4955a3608a42de52c5e66a4e474355a6e6edb7",
+      "unfinished_stage_ids": [
+        "101001:9:branch:W3",
+        "101002:10:branch:G0"
+      ],
+      "qualification": "Per-function timeout bounds are retained for interrupted work; supervisor CPU is conservatively bounded by all three full 10800-second timeouts. These are accounted resource bounds, not invoices."
+    },
+    "accounting": {
+      "scope": "Release unused reservations and carry every recorded attempt into the same 224-attempt/18-hour budget. This is not a budget reset.",
+      "budget_dict": "mochi-t16r1-44686221838-budget",
+      "before": {
+        "physical_rollouts": 162,
+        "simulation_cpu_hours": 9.00121088449093,
+        "optimizer_updates": 0,
+        "training_token_presentations": 0,
+        "inference_tokens": 98000,
+        "exa_searches": 1,
+        "past_writes": 3,
+        "past_recalls": 4
+      },
+      "after": {
+        "physical_rollouts": 72,
+        "simulation_cpu_hours": 3.827221737938345,
+        "optimizer_updates": 0,
+        "training_token_presentations": 0,
+        "inference_tokens": 98000,
+        "exa_searches": 1,
+        "past_writes": 3,
+        "past_recalls": 4
+      },
+      "finished_remote_stages": 51,
+      "unfinished_remote_stages": 2,
+      "completed_worker_cpu_hours": 1.4138499127183333,
+      "unfinished_worker_cpu_hours_upper_bound": 1.0,
+      "supervisor_cpu_hours_upper_bound": 1.125,
+      "previous_local_probe": {
+        "scope": "Local state probe only; not a task completion or model result.",
+        "physical_attempts": 3,
+        "single_worker_seconds": 4.359184167347848,
+        "simulation_cpu_hours": 0.0012108844909299579,
+        "initialization_physical_seconds": 0.4005600683781674,
+        "checkpoint_physical_hash": "c1cf77c5117e2362bab31793cee864770aecb50697cd692fa17f752bffd2c72d",
+        "next_step_physical_hash": "b4fd8c18ab63f105f270c3f2f67d24dd2beadd5aaab06ea114c0d0a46c135726",
+        "serialized_state_and_next_step_exact": true,
+        "source_sha256": "950d9217ff805754e9f10936b5c38fd1f625f2ac4f90df0cffc23b33599f17a9"
+      },
+      "new_local_attempts": 16,
+      "new_local_worker_hours": 0.2871609407290816,
+      "stage_snapshot_sha256": "32cae8fd4b393cf80d1e94894a4955a3608a42de52c5e66a4e474355a6e6edb7",
+      "unfinished_stage_ids": [
+        "101001:9:branch:W3",
+        "101002:10:branch:G0"
+      ],
+      "qualification": "Per-function timeout bounds are retained for interrupted work; supervisor CPU is conservatively bounded by all three full 10800-second timeouts. These are accounted resource bounds, not invoices."
+    },
+    "qualification": "Prior ledger preserved. Reserved amounts include unfinished work and are not an invoice."
+  },
+  "data_collection_provenance": {
+    "historical_prefixes": [
+      {
+        "run_id": "mochi-t16r1-44686221838",
+        "state": {
+          "path": "mochi-t16r1-44686221838/stages/101000-7-advanced.pickle.gz",
+          "sha256": "ee191a1371098076caac25753ab8d7af69e1a7e41594901d1c2083888386abfa",
+          "physical_state_sha256": "77a0b1ca7ff6d9478ae24a80051190cf9e642b99facc9044eaa269fb8134d122"
+        },
+        "behavior_policy": "Verified 121-update parent before adding H0/P4. Prefix is recorded history, not a new extended-policy rollout."
+      },
+      {
+        "run_id": "mochi-t16r1-44686221838",
+        "state": {
+          "path": "mochi-t16r1-44686221838/stages/101001-7-advanced.pickle.gz",
+          "sha256": "9d0f4c1e4d722cb2bc76fade77df01ad01e4a2ac7cf999003fb8ce0731eeef4b",
+          "physical_state_sha256": "3894cd7f0e59c66af25a51498b3c782518f20b19f5bec537da25474ad2993a44"
+        },
+        "behavior_policy": "Verified 121-update parent before adding H0/P4. Prefix is recorded history, not a new extended-policy rollout."
+      },
+      {
+        "run_id": "mochi-t16r1-44686221838",
+        "state": {
+          "path": "mochi-t16r1-44686221838/stages/101002-7-advanced.pickle.gz",
+          "sha256": "f848a6aa28a98a727ffa821f0a9d94126b616a78864c1ca131df418f091df0f0",
+          "physical_state_sha256": "5e1d519589ddba5fa1267e5fbcf90ad7127fd0ea38e49c6f734717de24044b8c"
+        },
+        "behavior_policy": "Verified 121-update parent before adding H0/P4. Prefix is recorded history, not a new extended-policy rollout."
+      }
+    ],
+    "historical_behavior_policy": "121-update parent, original action library; source episodes are not relabeled as new online behavior.",
+    "new_physical_stage_count": 90,
+    "reused_clock_R4_subsegments": 3,
+    "new_clock_reach_and_recovery_branches": true,
+    "snapshot_training_only": true,
+    "final_evaluation_uses_uninterrupted_run": true
+  },
+  "execution_source_sha": "5cb4bf7e5f65de46b236d10b6501dac9f43fb815",
+  "component_branches": 24,
+  "valid_component_branches": 24,
+  "component_reference_seed": 103001,
+  "qualification_failures": {
+    "parent": [
+      {
+        "seed": 103000,
+        "failed_criteria": {
+          "sequence_completed": {
+            "observed": false,
+            "limit": true
+          },
+          "roll_peak_deg": {
+            "observed": 24.156219103152715,
+            "limit": 12
+          },
+          "lateral_peak_to_peak_m": {
+            "observed": 0.06942818083547865,
+            "limit": 0.06
+          }
+        }
+      },
+      {
+        "seed": 103001,
+        "failed_criteria": {
+          "sequence_completed": {
+            "observed": false,
+            "limit": true
+          }
+        }
+      },
+      {
+        "seed": 103002,
+        "failed_criteria": {
+          "lateral_peak_to_peak_m": {
+            "observed": 0.06000574316001713,
+            "limit": 0.06
+          }
+        }
+      },
+      {
+        "seed": 103003,
+        "failed_criteria": {
+          "sequence_completed": {
+            "observed": false,
+            "limit": true
+          },
+          "lateral_peak_to_peak_m": {
+            "observed": 0.06071034067950781,
+            "limit": 0.06
+          }
+        }
+      }
+    ],
+    "selected": [
+      {
+        "seed": 103000,
+        "failed_criteria": {
+          "sequence_completed": {
+            "observed": false,
+            "limit": true
+          },
+          "roll_peak_deg": {
+            "observed": 25.040160134101033,
+            "limit": 12
+          },
+          "lateral_peak_to_peak_m": {
+            "observed": 0.07029401777735633,
+            "limit": 0.06
+          }
+        }
+      },
+      {
+        "seed": 103001,
+        "failed_criteria": {
+          "sequence_completed": {
+            "observed": false,
+            "limit": true
+          }
+        }
+      },
+      {
+        "seed": 103002,
+        "failed_criteria": {
+          "sequence_completed": {
+            "observed": false,
+            "limit": true
+          },
+          "lateral_peak_to_peak_m": {
+            "observed": 0.06000955919094654,
+            "limit": 0.06
+          }
+        }
+      },
+      {
+        "seed": 103003,
+        "failed_criteria": {
+          "sequence_completed": {
+            "observed": false,
+            "limit": true
+          },
+          "roll_peak_deg": {
+            "observed": 24.79561578905235,
+            "limit": 12
+          },
+          "lateral_peak_to_peak_m": {
+            "observed": 0.06817887529311145,
+            "limit": 0.06
+          }
+        }
+      }
+    ],
+    "fixed": [
+      {
+        "seed": 103000,
+        "failed_criteria": {
+          "sequence_completed": {
+            "observed": false,
+            "limit": true
+          },
+          "roll_peak_deg": {
+            "observed": 25.97627253053895,
+            "limit": 12
+          },
+          "lateral_peak_to_peak_m": {
+            "observed": 0.06918324153846445,
+            "limit": 0.06
+          }
+        }
+      },
+      {
+        "seed": 103001,
+        "failed_criteria": {}
+      },
+      {
+        "seed": 103002,
+        "failed_criteria": {}
+      },
+      {
+        "seed": 103003,
+        "failed_criteria": {
+          "sequence_completed": {
+            "observed": false,
+            "limit": true
+          },
+          "roll_peak_deg": {
+            "observed": 22.37703978547756,
+            "limit": 12
+          },
+          "lateral_peak_to_peak_m": {
+            "observed": 0.07157496181828592,
+            "limit": 0.06
+          }
+        }
+      }
+    ],
+    "static": [
+      {
+        "seed": 103000,
+        "failed_criteria": {
+          "sequence_completed": {
+            "observed": false,
+            "limit": true
+          },
+          "roll_peak_deg": {
+            "observed": 23.789470830705596,
+            "limit": 12
+          },
+          "lateral_peak_to_peak_m": {
+            "observed": 0.06962453980694543,
+            "limit": 0.06
+          }
+        }
+      },
+      {
+        "seed": 103001,
+        "failed_criteria": {}
+      },
+      {
+        "seed": 103002,
+        "failed_criteria": {
+          "lateral_peak_to_peak_m": {
+            "observed": 0.060914540147975794,
+            "limit": 0.06
+          }
+        }
+      },
+      {
+        "seed": 103003,
+        "failed_criteria": {
+          "sequence_completed": {
+            "observed": false,
+            "limit": true
+          },
+          "roll_peak_deg": {
+            "observed": 22.291384478596058,
+            "limit": 12
+          },
+          "lateral_peak_to_peak_m": {
+            "observed": 0.07141828192905056,
+            "limit": 0.06
+          }
+        }
+      }
+    ]
+  },
+  "static_choice_audit": [
+    {
+      "seed": 103000,
+      "selected_decisions": 8,
+      "static_decisions": 8,
+      "common_decisions": 8,
+      "matching_decisions": 7,
+      "differences": {
+        "alarm:alarm": {
+          "selected": "F",
+          "static": "H0"
+        }
+      }
+    },
+    {
+      "seed": 103001,
+      "selected_decisions": 8,
+      "static_decisions": 12,
+      "common_decisions": 8,
+      "matching_decisions": 7,
+      "differences": {
+        "alarm:alarm": {
+          "selected": "F",
+          "static": "H0"
+        }
+      }
+    },
+    {
+      "seed": 103002,
+      "selected_decisions": 8,
+      "static_decisions": 12,
+      "common_decisions": 8,
+      "matching_decisions": 7,
+      "differences": {
+        "alarm:alarm": {
+          "selected": "F",
+          "static": "H0"
+        }
+      }
+    },
+    {
+      "seed": 103003,
+      "selected_decisions": 8,
+      "static_decisions": 8,
+      "common_decisions": 8,
+      "matching_decisions": 7,
+      "differences": {
+        "alarm:alarm": {
+          "selected": "F",
+          "static": "H0"
+        }
+      }
+    }
+  ],
+  "first_checkpoint_same_action_variation": {
+    "seed": 102000,
+    "identical_action_sequence": true,
+    "identical_initial_physical_hash": false,
+    "parent_steps": 444,
+    "update_1_steps": 450,
+    "parent_seconds": 326.96001695815363,
+    "update_1_seconds": 328.21238027398573,
+    "interpretation": "Identical discrete actions do not guarantee identical measured trajectories in these remote executions. The cause of this variation was not isolated. Do not attribute such cost differences to learned action selection."
+  },
+  "development_choice_audit": [
+    {
+      "update": 1,
+      "seed": 102000,
+      "parent_decisions": 12,
+      "checkpoint_decisions": 12,
+      "common_prefix_length": 12,
+      "shared_action_prefix_equal": true,
+      "whole_action_sequence_equal": true,
+      "changed_shared_decisions": [],
+      "parent_complete": true,
+      "checkpoint_complete": true,
+      "parent_qualified": false,
+      "checkpoint_qualified": false
+    },
+    {
+      "update": 1,
+      "seed": 102001,
+      "parent_decisions": 12,
+      "checkpoint_decisions": 12,
+      "common_prefix_length": 12,
+      "shared_action_prefix_equal": true,
+      "whole_action_sequence_equal": true,
+      "changed_shared_decisions": [],
+      "parent_complete": true,
+      "checkpoint_complete": true,
+      "parent_qualified": true,
+      "checkpoint_qualified": true
+    },
+    {
+      "update": 1,
+      "seed": 102002,
+      "parent_decisions": 8,
+      "checkpoint_decisions": 12,
+      "common_prefix_length": 8,
+      "shared_action_prefix_equal": true,
+      "whole_action_sequence_equal": false,
+      "changed_shared_decisions": [],
+      "parent_complete": false,
+      "checkpoint_complete": true,
+      "parent_qualified": false,
+      "checkpoint_qualified": false
+    },
+    {
+      "update": 4,
+      "seed": 102000,
+      "parent_decisions": 12,
+      "checkpoint_decisions": 12,
+      "common_prefix_length": 12,
+      "shared_action_prefix_equal": false,
+      "whole_action_sequence_equal": false,
+      "changed_shared_decisions": [
+        {
+          "position": 1,
+          "parent": [
+            "alarm",
+            null,
+            "F"
+          ],
+          "checkpoint": [
+            "alarm",
+            null,
+            "H0"
+          ]
+        }
+      ],
+      "parent_complete": true,
+      "checkpoint_complete": true,
+      "parent_qualified": false,
+      "checkpoint_qualified": false
+    },
+    {
+      "update": 4,
+      "seed": 102001,
+      "parent_decisions": 12,
+      "checkpoint_decisions": 8,
+      "common_prefix_length": 8,
+      "shared_action_prefix_equal": false,
+      "whole_action_sequence_equal": false,
+      "changed_shared_decisions": [
+        {
+          "position": 1,
+          "parent": [
+            "alarm",
+            null,
+            "F"
+          ],
+          "checkpoint": [
+            "alarm",
+            null,
+            "H0"
+          ]
+        }
+      ],
+      "parent_complete": true,
+      "checkpoint_complete": false,
+      "parent_qualified": true,
+      "checkpoint_qualified": false
+    },
+    {
+      "update": 4,
+      "seed": 102002,
+      "parent_decisions": 8,
+      "checkpoint_decisions": 12,
+      "common_prefix_length": 8,
+      "shared_action_prefix_equal": false,
+      "whole_action_sequence_equal": false,
+      "changed_shared_decisions": [
+        {
+          "position": 1,
+          "parent": [
+            "alarm",
+            null,
+            "F"
+          ],
+          "checkpoint": [
+            "alarm",
+            null,
+            "H0"
+          ]
+        }
+      ],
+      "parent_complete": false,
+      "checkpoint_complete": true,
+      "parent_qualified": false,
+      "checkpoint_qualified": false
+    },
+    {
+      "update": 8,
+      "seed": 102000,
+      "parent_decisions": 12,
+      "checkpoint_decisions": 12,
+      "common_prefix_length": 12,
+      "shared_action_prefix_equal": false,
+      "whole_action_sequence_equal": false,
+      "changed_shared_decisions": [
+        {
+          "position": 1,
+          "parent": [
+            "alarm",
+            null,
+            "F"
+          ],
+          "checkpoint": [
+            "alarm",
+            null,
+            "H0"
+          ]
+        },
+        {
+          "position": 10,
+          "parent": [
+            "globe",
+            null,
+            "G0"
+          ],
+          "checkpoint": [
+            "globe",
+            null,
+            "G1"
+          ]
+        }
+      ],
+      "parent_complete": true,
+      "checkpoint_complete": true,
+      "parent_qualified": false,
+      "checkpoint_qualified": false
+    },
+    {
+      "update": 8,
+      "seed": 102001,
+      "parent_decisions": 12,
+      "checkpoint_decisions": 8,
+      "common_prefix_length": 8,
+      "shared_action_prefix_equal": false,
+      "whole_action_sequence_equal": false,
+      "changed_shared_decisions": [
+        {
+          "position": 1,
+          "parent": [
+            "alarm",
+            null,
+            "F"
+          ],
+          "checkpoint": [
+            "alarm",
+            null,
+            "H0"
+          ]
+        }
+      ],
+      "parent_complete": true,
+      "checkpoint_complete": false,
+      "parent_qualified": true,
+      "checkpoint_qualified": false
+    },
+    {
+      "update": 8,
+      "seed": 102002,
+      "parent_decisions": 8,
+      "checkpoint_decisions": 12,
+      "common_prefix_length": 8,
+      "shared_action_prefix_equal": false,
+      "whole_action_sequence_equal": false,
+      "changed_shared_decisions": [
+        {
+          "position": 1,
+          "parent": [
+            "alarm",
+            null,
+            "F"
+          ],
+          "checkpoint": [
+            "alarm",
+            null,
+            "H0"
+          ]
+        }
+      ],
+      "parent_complete": false,
+      "checkpoint_complete": true,
+      "parent_qualified": false,
+      "checkpoint_qualified": false
+    },
+    {
+      "update": 16,
+      "seed": 102000,
+      "parent_decisions": 12,
+      "checkpoint_decisions": 12,
+      "common_prefix_length": 12,
+      "shared_action_prefix_equal": false,
+      "whole_action_sequence_equal": false,
+      "changed_shared_decisions": [
+        {
+          "position": 1,
+          "parent": [
+            "alarm",
+            null,
+            "F"
+          ],
+          "checkpoint": [
+            "alarm",
+            null,
+            "H0"
+          ]
+        }
+      ],
+      "parent_complete": true,
+      "checkpoint_complete": true,
+      "parent_qualified": false,
+      "checkpoint_qualified": false
+    },
+    {
+      "update": 16,
+      "seed": 102001,
+      "parent_decisions": 12,
+      "checkpoint_decisions": 8,
+      "common_prefix_length": 8,
+      "shared_action_prefix_equal": false,
+      "whole_action_sequence_equal": false,
+      "changed_shared_decisions": [
+        {
+          "position": 1,
+          "parent": [
+            "alarm",
+            null,
+            "F"
+          ],
+          "checkpoint": [
+            "alarm",
+            null,
+            "H0"
+          ]
+        },
+        {
+          "position": 6,
+          "parent": [
+            "walk",
+            "laptop",
+            "W5"
+          ],
+          "checkpoint": [
+            "walk",
+            "laptop",
+            "W4"
+          ]
+        }
+      ],
+      "parent_complete": true,
+      "checkpoint_complete": false,
+      "parent_qualified": true,
+      "checkpoint_qualified": false
+    },
+    {
+      "update": 16,
+      "seed": 102002,
+      "parent_decisions": 8,
+      "checkpoint_decisions": 12,
+      "common_prefix_length": 8,
+      "shared_action_prefix_equal": false,
+      "whole_action_sequence_equal": false,
+      "changed_shared_decisions": [
+        {
+          "position": 1,
+          "parent": [
+            "alarm",
+            null,
+            "F"
+          ],
+          "checkpoint": [
+            "alarm",
+            null,
+            "H0"
+          ]
+        },
+        {
+          "position": 6,
+          "parent": [
+            "walk",
+            "laptop",
+            "W5"
+          ],
+          "checkpoint": [
+            "walk",
+            "laptop",
+            "W4"
+          ]
+        }
+      ],
+      "parent_complete": false,
+      "checkpoint_complete": true,
+      "parent_qualified": false,
+      "checkpoint_qualified": false
+    }
+  ],
+  "post_test_failure_localization": {
+    "parent": [
+      {
+        "seed": 103000,
+        "failure": "fall",
+        "duration_s": 301.108360626643,
+        "last_station": "laptop-station",
+        "last_decision_domain": "laptop",
+        "verified_tasks": [
+          "alarm",
+          "drawer"
+        ],
+        "postit_loaded_contact": true,
+        "contact_examples": []
+      },
+      {
+        "seed": 103001,
+        "failure": "invalid_fixture_contact",
+        "duration_s": 300.156008627332,
+        "last_station": "laptop-station",
+        "last_decision_domain": "laptop",
+        "verified_tasks": [
+          "alarm",
+          "drawer"
+        ],
+        "postit_loaded_contact": true,
+        "contact_examples": [
+          {
+            "body": "right_knee_link",
+            "fixture": "printer-output-tray-contact",
+            "phase": null,
+            "force_n": 0.9173693468741062
+          }
+        ]
+      },
+      {
+        "seed": 103003,
+        "failure": "invalid_fixture_contact",
+        "duration_s": 305.7246110473374,
+        "last_station": "laptop-station",
+        "last_decision_domain": "laptop",
+        "verified_tasks": [
+          "alarm",
+          "drawer"
+        ],
+        "postit_loaded_contact": true,
+        "contact_examples": [
+          {
+            "body": "right_knee_link",
+            "fixture": "printer-output-tray-contact",
+            "phase": null,
+            "force_n": 0.9647017624492182
+          }
+        ]
+      }
+    ],
+    "selected": [
+      {
+        "seed": 103000,
+        "failure": "fall",
+        "duration_s": 301.9340048492216,
+        "last_station": "laptop-station",
+        "last_decision_domain": "laptop",
+        "verified_tasks": [
+          "alarm",
+          "drawer"
+        ],
+        "postit_loaded_contact": true,
+        "contact_examples": []
+      },
+      {
+        "seed": 103001,
+        "failure": "invalid_fixture_contact",
+        "duration_s": 300.156008627332,
+        "last_station": "laptop-station",
+        "last_decision_domain": "laptop",
+        "verified_tasks": [
+          "alarm",
+          "drawer"
+        ],
+        "postit_loaded_contact": true,
+        "contact_examples": [
+          {
+            "body": "right_knee_link",
+            "fixture": "printer-output-tray-contact",
+            "phase": null,
+            "force_n": 0.9173693468741062
+          }
+        ]
+      },
+      {
+        "seed": 103002,
+        "failure": "invalid_fixture_contact",
+        "duration_s": 300.0758966136561,
+        "last_station": "laptop-station",
+        "last_decision_domain": "laptop",
+        "verified_tasks": [
+          "alarm",
+          "drawer"
+        ],
+        "postit_loaded_contact": true,
+        "contact_examples": [
+          {
+            "body": "left_hip_roll_link",
+            "fixture": "laptop-contact",
+            "phase": "push",
+            "force_n": 0.384930569333881
+          }
+        ]
+      },
+      {
+        "seed": 103003,
+        "failure": "fall",
+        "duration_s": 303.56076920855963,
+        "last_station": "laptop-station",
+        "last_decision_domain": "laptop",
+        "verified_tasks": [
+          "alarm",
+          "drawer"
+        ],
+        "postit_loaded_contact": true,
+        "contact_examples": []
+      }
+    ],
+    "fixed": [
+      {
+        "seed": 103000,
+        "failure": "fall",
+        "duration_s": 309.4375576403592,
+        "last_station": "laptop-station",
+        "last_decision_domain": null,
+        "verified_tasks": [
+          "alarm",
+          "drawer"
+        ],
+        "postit_loaded_contact": true,
+        "contact_examples": []
+      },
+      {
+        "seed": 103003,
+        "failure": "fall",
+        "duration_s": 310.434870463672,
+        "last_station": "laptop-station",
+        "last_decision_domain": null,
+        "verified_tasks": [
+          "alarm",
+          "drawer"
+        ],
+        "postit_loaded_contact": true,
+        "contact_examples": []
+      }
+    ],
+    "static": [
+      {
+        "seed": 103000,
+        "failure": "fall",
+        "duration_s": 297.1321888458288,
+        "last_station": "laptop-station",
+        "last_decision_domain": "laptop",
+        "verified_tasks": [
+          "alarm",
+          "drawer"
+        ],
+        "postit_loaded_contact": true,
+        "contact_examples": []
+      },
+      {
+        "seed": 103003,
+        "failure": "fall",
+        "duration_s": 295.42776488139674,
+        "last_station": "laptop-station",
+        "last_decision_domain": "laptop",
+        "verified_tasks": [
+          "alarm",
+          "drawer"
+        ],
+        "postit_loaded_contact": true,
+        "contact_examples": []
+      }
+    ]
+  },
+  "later_development_falls": [
+    {
+      "update": 4,
+      "seed": 102001,
+      "failure": "fall",
+      "duration_s": 296.7945739310516,
+      "last_station": "laptop-station",
+      "last_decision_domain": "laptop",
+      "verified_tasks": [
+        "alarm",
+        "drawer"
+      ],
+      "postit_loaded_contact": true,
+      "contact_examples": []
+    },
+    {
+      "update": 8,
+      "seed": 102001,
+      "failure": "fall",
+      "duration_s": 296.7945739310516,
+      "last_station": "laptop-station",
+      "last_decision_domain": "laptop",
+      "verified_tasks": [
+        "alarm",
+        "drawer"
+      ],
+      "postit_loaded_contact": true,
+      "contact_examples": []
+    },
+    {
+      "update": 16,
+      "seed": 102001,
+      "failure": "fall",
+      "duration_s": 299.90995029961306,
+      "last_station": "laptop-station",
+      "last_decision_domain": "laptop",
+      "verified_tasks": [
+        "alarm",
+        "drawer"
+      ],
+      "postit_loaded_contact": true,
+      "contact_examples": []
+    }
+  ],
+  "public_recordings_verified": 23,
+  "selection_preceded_final_tests": true,
+  "service_eligibility": {
+    "writers": 4,
+    "readers": 4,
+    "cross_agent_reads": 6,
+    "isolation_passed": true
+  },
+  "memory_finalization": {
+    "workflow_run": "44735240968",
+    "source_sha": "a09d9fffd5ea1c1050435f8857cec725f4e6d79d",
+    "script_sha256": "e2e0792e3728848ada0e10bf23a31807d32adc210df4575167c458da1c0907c5",
+    "original_status": "incomplete",
+    "original_error": "Required memory source absent; no silent fallback",
+    "original_source_id": "mochi-t17-44699655265-r3",
+    "pre_review_validation_failure": {
+      "workflow_run": 44734727709,
+      "cause": "Inherited adapter imported unavailable robot meshes; no provider calls or budget debits occurred."
+    },
+    "original_content_characters": 72018,
+    "requested_original_evidence_tokens": 16000,
+    "frozen_result_sha256_before": "879144b8d8e8ddabcb8cad86ac74661cf4b9575f7dc3ce1c6db0f511a5914432",
+    "additional_optimizer_updates": 0,
+    "additional_physical_stages": 0,
+    "documentation": "https://past.dev/docs/memory-api/api-reference#post-api-v1-recall",
+    "repair": "Compact semantic summary linked to immutable full evidence; exact-source verification and original audiences retained.",
+    "compact_record_id": "mochi-t17-44699655265-r4",
+    "compact_content_characters": 8247,
+    "failure_localization": [
+      {
+        "seed": 103000,
+        "failure": "fall",
+        "verified_tasks": [
+          "alarm",
+          "drawer"
+        ],
+        "last_station": "laptop-station",
+        "last_decision_domain": "laptop",
+        "contact_examples": []
+      },
+      {
+        "seed": 103001,
+        "failure": "invalid_fixture_contact",
+        "verified_tasks": [
+          "alarm",
+          "drawer"
+        ],
+        "last_station": "laptop-station",
+        "last_decision_domain": "laptop",
+        "contact_examples": [
+          {
+            "body": "right_knee_link",
+            "fixture": "printer-output-tray-contact",
+            "phase": null,
+            "force_n": 0.9173693468741062
+          }
+        ]
+      },
+      {
+        "seed": 103002,
+        "failure": "invalid_fixture_contact",
+        "verified_tasks": [
+          "alarm",
+          "drawer"
+        ],
+        "last_station": "laptop-station",
+        "last_decision_domain": "laptop",
+        "contact_examples": [
+          {
+            "body": "left_hip_roll_link",
+            "fixture": "laptop-contact",
+            "phase": "push",
+            "force_n": 0.384930569333881
+          }
+        ]
+      },
+      {
+        "seed": 103003,
+        "failure": "fall",
+        "verified_tasks": [
+          "alarm",
+          "drawer"
+        ],
+        "last_station": "laptop-station",
+        "last_decision_domain": "laptop",
+        "contact_examples": []
+      }
+    ],
+    "future_research": {
+      "focus": "on_policy_laptop_states",
+      "record_id": "mochi-t17-44699655265-r6",
+      "designer_next_investigation": "collect_laptop_contact_states",
+      "implemented": false
+    },
+    "frozen_result_sha256_after": "879144b8d8e8ddabcb8cad86ac74661cf4b9575f7dc3ce1c6db0f511a5914432"
+  },
+  "limits": [
+    "Four final scenarios in one fixed furnished layout. No hardware validation.",
+    "Native gait and physical controllers remain fixed; Tinker updates shared LoRA decision weights.",
+    "Engineering changes include home-regularized clock IK, the bounded P4 laptop force/horizon and W6 globe-leg commands. These are shared by all new checkpoints, including the parent.",
+    "Component tests cover the fixed reference trajectory on seed 103001; they do not cover every state reached by the learned policy.",
+    "No causal memory/search ablation. Static-policy equivalence and unchanged decisions limit adaptation claims."
+  ]
+}

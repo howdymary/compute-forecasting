@@ -1,5 +1,26 @@
+# Current capability inventory: V17, November 20, 2026
+
+[Execution](https://github.com/howdymary/mochi-demo/actions/runs/44699655265) · [Frozen continuation prompt](smooth-v17-prompt.md) · [Current result](../README.md#v17-completed-training-failed-transfer-test)
+
+| Service | Usable execution path | Verified V17 activity |
+| --- | --- | --- |
+| Tinker | Existing GitHub Actions key and backend Modal secret | 16 completed LoRA optimizer updates, 96 domain-gradient calls, retained parent and checkpoints 1, 4, 8 and 16 |
+| Modal | Authenticated local profile and existing Actions token references; SDK 1.6.4 | 32 attempts from reset, 24 matched-state branches, durable data generation; 223 accounted attempts/stages including the carried debit, 14.886 accounted CPU-hours |
+| Exa | Existing backend Actions secret | Two new searches: initial failure research and the failure-driven follow-up after critic recall; request IDs and provenance retained |
+| past.dev | Existing Actions secret, separate Mochi reader identities and audiences | Four writers, four verified readers, six cross-role recalls, passed private-audience canary; no pending ingestion |
+| GitHub | Authenticated CLI and existing Actions secrets | Separate `mochi-desk-v3` publication through an alternate index; active checkout and forecasting default branch preserved |
+| Rendering | Existing measured-transform viewer | V17 replays use MuJoCo trajectories. This continuation does not claim a new Blender render |
+
+The local Python process has none of the Tinker, Exa, past.dev or Modal token variables loaded. Local Modal authentication works through its saved profile; the provider-dependent training loop uses the existing secret references in `.github/workflows/mochi-smooth-v17-training.yml`. Secret values stay with the authenticated backend and are not printed, committed or included in the replay.
+
+Actual training did not establish better control. Development selected update 1; it completed 0/4 fresh final sequences, versus 1/4 for the parent. The joint improvement target failed. The previous V15 study remains separate. Native gait weights stayed fixed; Tinker trained the shared controller selector. API receipts demonstrate use rather than billed credits or a causal benefit from memory/search.
+
+The [memory-only continuation](https://github.com/howdymary/mochi-demo/actions/runs/44735240968) recovered an oversized-document recall failure through a compact, source-verified summary. Numerical results, physical counters and optimizer counters stayed unchanged. [Recovery details](smooth-v17-memory-recovery.md).
+
+The inventories below are historical snapshots. Their statements about missing local Modal authentication and unexecuted training apply to those earlier dates.
+
 <!-- MOCHI_BALANCED_V11_INTEGRATIONS_START -->
-# V11 furnished-desk continuation · incomplete
+# Archived V11 furnished-desk continuation
 
 The apparent physical reference was invalidated by clock contacts. The
 pending [campaign](https://github.com/howdymary/mochi-demo/actions/runs/44447254287)
@@ -29,7 +50,7 @@ No new credentials, billing changes or checkpoint deletion were involved.
 <!-- MOCHI_BALANCED_V11_INTEGRATIONS_END -->
 
 <!-- MOCHI_CONTROL_INTEGRATIONS_START -->
-# Current capability inventory · V8 source study
+# Archived V8 source study
 
 The completed source study is [run 44382265039](https://github.com/howdymary/mochi-demo/actions/runs/44382265039). Its numerical results and the separately frozen laptop-clearance evaluation remain separate.
 

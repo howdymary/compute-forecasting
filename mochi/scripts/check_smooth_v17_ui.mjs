@@ -21,6 +21,14 @@ await settle();
 assert.equal(stages.length,2);
 context.tick(performance.now()-1000);
 assert(parseFloat(nodes.get('#time').textContent)>=0,'A stale animation timestamp must not reverse the replay clock');
+const beforeDelayedFrame=vm.runInContext('time',context);
+context.tick(vm.runInContext('last',context)+1000);
+assert(Math.abs(vm.runInContext('time',context)-beforeDelayedFrame-1)<1e-8,'A delayed rendered frame must retain the selected wall-clock playback speed');
+context.document.hidden=true;
+const beforeHiddenFrame=vm.runInContext('time',context);
+context.tick(vm.runInContext('last',context)+1000);
+assert.equal(vm.runInContext('time',context),beforeHiddenFrame,'A hidden tab must retain its replay position');
+context.document.hidden=false;
 for(const scenario of m.scenarios){
  if(scenario.partition==='held_out_pending')assert.equal(m.selection_finalized,true);
  await nodes.get('#scenario').onchange({target:{value:scenario.id}});await settle();
@@ -39,6 +47,9 @@ for(const scenario of m.scenarios){
   for(const [side,episode]of [['left',a],['right',b]]){
    const travel=episode.recoveries.reduce((sum,r)=>sum+r.arm_joint_travel_rad,0);
    assert.equal(+nodes.get('#'+side+'-arms').textContent,+travel.toFixed(2));
+   const evidence=m.recordings[side==='left'?scenario.parent_file:v.file],routeText=nodes.get('#'+side+'-route').textContent;
+   if(!evidence.book_turnaround_verified)assert(!routeText.includes('Book turn: verified'),'A recorded turn is not sufficient verification');
+   if(!evidence.forward_descent_verified)assert(!routeText.includes('Forward descent: verified'),'A recorded descent is not sufficient verification');
    if(side==='right'&&meta.complete){
     assert(episode.postit_crossings.length>0);
     assert.match(nodes.get('#right-route').textContent,/Book turn: verified.*Forward descent: verified.*Post-it: loaded contact/);

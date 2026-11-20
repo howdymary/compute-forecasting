@@ -66,6 +66,8 @@ def main():
             'recovery_arm_joint_travel_rad':sum(x['arm_joint_travel_rad'] for x in e['recoveries']),
             'intertask_arm_joint_travel_rad':sum(e['intertask_arm_joint_travel_rad'].values()),
             'postit_loaded_contacts':len(e['postit_crossings']),
+            'book_turnaround_verified':any(a['label']=='book-top-turnaround' and a['success'] and a.get('book_top',{}).get('instant_valid') for a in row['arrivals']),
+            'forward_descent_verified':any(a['label']=='book-forward-descent' and a['success'] and a.get('forward_verification',{}).get('verified') for a in row['arrivals']),
             'task_outcomes':{t:r['success'] for t,r in e['results'].items()}}
         return name
 
