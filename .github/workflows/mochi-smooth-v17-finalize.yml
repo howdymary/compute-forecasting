@@ -1,0 +1,47 @@
+name: Mochi V17 memory review only
+on:
+  push:
+    branches: [mochi-desk-v3]
+    paths: ['mochi/configs/smooth-v17-finalize-launch.json']
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: mochi-smooth-v16r1-resource-budget
+  cancel-in-progress: false
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      PYTHONPATH: ${{ github.workspace }}/mochi/src
+      MOCHI_ROOT: ${{ github.workspace }}/mochi
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - name: Read preserved source artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run download 44699655265 --name mochi-smooth-v17-training-44699655265 --dir mochi/.cache/v17-memory-source
+      - name: Install the existing isolated client runtime
+        run: |
+          python -m pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install './mochi[remote,robotics]'
+      - name: Verify preserved evidence without provider calls
+        run: python -m mochi.smooth_v17.finalize_memory --source mochi/.cache/v17-memory-source --validate-only
+      - name: Complete source-verified memory review with zero new training or simulation
+        timeout-minutes: 30
+        env:
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+          PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
+          EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: python -u -m mochi.smooth_v17.finalize_memory --source mochi/.cache/v17-memory-source
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mochi-smooth-v17-finalized-${{ github.run_id }}
+          path: mochi/artifacts/smooth-v17-finalized/
+          retention-days: 30
