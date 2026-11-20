@@ -1,26 +1,26 @@
-# What a robot should remember after it falls
+# MOCHI: Shared experiment memory and controller post-training
 
-*Building Mochi’s learning workflow with past.dev and Tinker.*
+Methods and results using past.dev and Tinker.
 
 [Watch the newest recording and the project’s development](https://howdymary.github.io/mochi/). Updated November 19, 2026; the newest campaign’s final evaluation is still running.
 
-Mochi is a simulated miniature humanoid with a small list of chores: climb a stack of books, silence an alarm clock, close a drawer and laptop, then turn a globe to a target. The interesting work happens between attempts. A fall, a bad approach or an awkward withdrawal should change what the system investigates and how the next model is trained.
+Mochi is a miniature humanoid simulated in MuJoCo. It climbs books, silences an alarm clock, closes a drawer and laptop, then turns a globe to a target. The study measures whether supervised post-training improves the model’s selection of walking, manipulation and arm-recovery controllers.
 
 We use past.dev to carry those findings between the parts of the research workflow. Tinker updates the model that chooses walking strategies, contact profiles and arm recovery. MuJoCo supplies the physical measurements used to judge those choices.
 
-That gives us a question we can test: does the system make better decisions after training, and can we trace the training choices back to the evidence that informed them?
+Checkpoint comparisons hold the simulator, available controllers, scene, route and success criteria fixed. Experiment records identify the evidence used to choose the training allocation.
 
-## Giving an experiment a usable memory
+## Experiment records in past.dev
 
-A robot falling off a book produces plenty of data. Joint positions, foot contacts and body orientation tell us what happened. They take more work to interpret: which part of the movement failed, what explanation seems plausible, and what should the next experiment test?
+Rollouts record joint positions, foot contacts, body orientation and task outcomes. The research workflow uses these measurements to identify failure modes and propose changes to test.
 
-We keep exact trajectories and numerical records in artifact storage. In past.dev, we store the findings someone working on the next experiment needs: the observed failure, a proposed explanation, supporting sources and the result of testing it. Each record carries an author, timestamp, audience and source identifier. Hypotheses and conclusions remain distinguishable.
+Exact trajectories and numerical records remain in artifact storage. past.dev stores observations, hypotheses, supporting sources, experiment results and qualified conclusions. Each record includes an author, timestamp, audience and source identifier. Its record type distinguishes hypotheses from measured results.
 
 One recorded failure involved descending before the foot had cleared a book edge. The experiment history described the falls and the subsequent development tests of staged clearance and shorter placements. That evidence became part of a shared observation, alongside findings about the clock approach and arm withdrawal. The research stage recalled it before searching for relevant methods. The design stage then recalled the sourced hypothesis before choosing a training allocation. [Memory implementation](https://github.com/howdymary/mochi-demo/blob/mochi-desk-v3/mochi/src/mochi/desk/services.py).
 
-The handoff had a concrete consequence. The design stage selected an allocation that gave arm recovery more supervision than the balanced alternative. The resulting training batches contained 16 recovery examples and eight walking examples per update, plus four for each manipulation task. The recorded decision includes the source records it used, so we can inspect what informed that choice. This establishes a real use of recalled evidence; measuring whether memory itself improved performance would require a separate comparison without it. [Recorded findings and decisions](https://github.com/howdymary/mochi-demo/blob/mochi-desk-v3/mochi/web/desk/terrain-training/report.json).
+In V12, the design stage selected an allocation with more recovery supervision than the balanced alternative. Training batches contained 16 recovery examples and eight walking examples per update, plus four for each manipulation task. The decision record identifies the source records used for that choice. Measuring whether memory itself improved performance would require a separate comparison without it. [Recorded findings and decisions](https://github.com/howdymary/mochi-demo/blob/mochi-desk-v3/mochi/web/desk/terrain-training/report.json).
 
-## Making the handoff dependable
+## Ingestion, source verification and access control
 
 A successful write request does not mean a finding is ready to recall. Our integration waits for ingestion to complete before a dependent read. Pending ingestion identifiers are journaled so an interruption does not erase the state of the handoff.
 
@@ -28,15 +28,15 @@ On recall, we check the returned source identifiers against the record we need. 
 
 The workflow also separates shared findings from private review material through past.dev audiences. We tested that boundary with a synthetic private record and a read from an identity outside its audience. The completed audit recorded the expected denial. These controls matter when several processes share memory but should not share every piece of working context. [Ingestion and journaling](https://github.com/howdymary/mochi-demo/blob/mochi-desk-v3/mochi/src/mochi/terrain_v12/services.py).
 
-## Turning physical evidence into training
+## Post-training in Tinker
 
 Tinker trains a Qwen3.5-4B model with LoRA, which updates a smaller set of model parameters. The model reads structured observations and selects among bounded controller options. Those choices affect walking strategy, how a hand approaches and contacts an object, and how the arm withdraws afterward.
 
 The native gait network, balance controller and manipulation primitives remain fixed during the checkpoint comparison. Tinker updates the decision model above them. Its outputs are executed through MuJoCo actuators, and the simulator measures whether the robot actually reaches the station, makes valid contact and finishes safely.
 
-Training examples come from physical comparisons of available actions. Completed training includes real gradient calculations and optimizer updates, followed by saved checkpoints and model inference in new rollouts. A nicer replay or a revised prompt does not count as a trained checkpoint. [Training implementation](https://github.com/howdymary/mochi-demo/blob/mochi-desk-v3/mochi/src/mochi/terrain_v12/train.py) and [Tinker training API](https://tinker-docs.thinkingmachines.ai/tinker/api-reference/trainingclient/).
+Training examples come from physical comparisons of available actions. Tinker performs gradient calculations and optimizer updates, saves checkpoints, and supplies model inference in new rollouts. [Training implementation](https://github.com/howdymary/mochi-demo/blob/mochi-desk-v3/mochi/src/mochi/terrain_v12/train.py) and [Tinker training API](https://tinker-docs.thinkingmachines.ai/tinker/api-reference/trainingclient/).
 
-## What the completed experiment showed
+## V12 evaluation
 
 One completed campaign performed 32 new optimizer updates. Development evaluation selected the checkpoint after the first update, rather than the final checkpoint.
 
@@ -44,9 +44,9 @@ On six held-out simulation scenarios, the starting model completed the full sequ
 
 The component checks made the result more specific. In a walking-only intervention, the starting model fell and the selected model completed the sequence after making a different walking choice. The manipulation and recovery interventions recorded the same profile choices under both models. Those checks did not establish a learned improvement in manipulation or recovery.
 
-That distinction belongs in memory too. The final evaluation was written to past.dev, recalled for review, and followed by a qualified conclusion. The research stage recalled that conclusion. A later experiment can therefore use both the successful result and the narrower explanation of what changed.
+The final evaluation was written to past.dev, recalled for review, and followed by a qualified conclusion. The research stage recalled that conclusion before the next campaign. The stored result includes the limitations of the component tests.
 
-## What the next run can inherit
+## V15 continuation
 
 The next campaign, V15, starts by recalling the earlier assessment from past.dev. A source-verified finding informs what to investigate through Exa. The design step then reads the sourced hypothesis and chooses a training allocation: twelve walking examples and twelve recovery examples per update, with four for each object task. The decision record identifies the findings it used.
 
@@ -60,8 +60,8 @@ All five checkpoints completed the three development scenarios within the declar
 
 The checkpoint was frozen before opening four fresh final-test scenarios. That evaluation also includes fixed controls and static choices derived from the training data. Separate tests start both models from identical walking, manipulation and recovery states. The full final result, component attribution and final memory handoff remain pending. [Frozen methods](https://github.com/howdymary/mochi-demo/blob/87ba8d482efd13c789bb200ae9424924e0f77ad1/mochi/docs/efficient-v15.md) · [Actual training and evaluation](https://github.com/howdymary/mochi-demo/actions/runs/44625135986).
 
-An intervening follow-up also matters. V13 completed sixteen updates but did not improve full-route completion on its four final scenarios. Our final recall could not verify the required memory source, so the workflow stopped with its numerical evidence preserved. The later project history includes that failure. It is a practical reason to keep a journal of exact artifacts and to verify a memory handoff before depending on it.
+V13 completed sixteen updates but did not improve full-route completion on its four final scenarios. The final recall could not verify the required memory source, so the workflow stopped with its numerical evidence preserved. The project history retains that failure alongside the completed studies.
 
 We have not isolated whether memory itself improved performance. Establishing that would require a matched experiment without shared memory. What we demonstrated was an operational chain: recalled evidence informed a training allocation, Tinker updated decision weights, and subsequent simulations measured the consequences.
 
-For Mochi, a useful experiment produces more than a successful replay. It leaves a finding another process can retrieve, a checkpoint we can test, and a record of what the evidence supports. That is the connection we are building between past.dev and Tinker.
+The workflow links source-verified findings in past.dev to training decisions, Tinker checkpoints and numerical evaluations. Exact artifacts preserve the measured outcomes and the limits of each conclusion.
