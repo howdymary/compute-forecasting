@@ -123,6 +123,29 @@ def main():
         and report['held_out']['selected']['invalid_contacts'] <= report['held_out']['parent']['invalid_contacts'])
     assert report['improvement_goal_met'] == met
 
+    static_by_seed = {r['seed']: r for r in held['static']}
+    static_choices = []
+    matching_choices = total_choices = 0
+    for row in held['selected']:
+        def choices(record):
+            result = {}
+            for decision in record['model_decisions']:
+                obs = decision['observation']
+                key = obs['domain'] + ':' + obs.get('station', obs.get('task', obs['domain']))
+                assert key not in result
+                result[key] = decision['action']
+            return result
+        a, b = choices(row), choices(static_by_seed[row['seed']])
+        assert len(a) == len(b) == 12 and a.keys() == b.keys()
+        differences = {key: {'selected': value, 'static': b[key]} for key, value in a.items() if value != b[key]}
+        total_choices += len(a)
+        matching_choices += len(a) - len(differences)
+        static_choices.append({'seed': row['seed'], 'different_choices': differences,
+            'selected_steps': row['episode']['steps']['attempts'],
+            'static_steps': static_by_seed[row['seed']]['episode']['steps']['attempts'],
+            'selected_seconds': row['episode']['duration'],
+            'static_seconds': static_by_seed[row['seed']]['episode']['duration']})
+
     components = defaultdict(list)
     for batch in report['component_results']:
         for row in batch['results']:
@@ -178,6 +201,8 @@ def main():
         'development': {str(k): c['development'] for k, c in cps.items()}, 'held_out': evidence,
         'paired_qualified_completions': pairs, 'paired_summary': paired, 'improvement_goal_met': met,
         'component_results': dict(components), 'usage': usage, 'service_eligibility': eligibility,
+        'static_choice_audit': {'matched_decisions': matching_choices, 'paired_decisions': total_choices,
+            'cases': static_choices, 'scope': 'Categorical choices at corresponding station/domain decisions; later observations can differ. No adaptive-policy advantage is established by small cost differences.'},
         'public_recordings_verified': len(first_frames), 'selection_preceded_held_out': True,
         'limits': ['Small fixed-layout simulation cohort; no hardware or broad reliability claim.',
             'Native gait weights and the physical controller library stayed fixed.',
@@ -202,6 +227,9 @@ def main():
             interval = paired[field]
             if interval:
                 lines.append(f"{title} paired bootstrap interval: {interval[0]:.1%} to {interval[1]:.1%}. This describes the small observed cohort.")
+    lines += ['', '## Comparison with training-derived static choices', '',
+        f"The selected and static policies made the same categorical choice in {matching_choices}/{total_choices} corresponding decisions. Their complete choice vectors matched in {sum(not r['different_choices'] for r in static_choices)}/{len(static_choices)} scenarios.",
+        'The static policy uses station-specific preferences chosen only from training labels. Compare its full completion, step and time results above before attributing gains to adaptive selection. Cost differences between identical categorical choice vectors remain unexplained; no repeated-policy numerical-variance study was run.']
     lines += ['', '| Exact-state test | Parent action / success | Selected action / success |', '|---|---|---|']
     for key, rows in sorted(components.items()):
         by_model = {r['model']: r for r in rows if r.get('status') != 'reference_not_reached'}
