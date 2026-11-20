@@ -33,22 +33,44 @@ async def main():
   assert hashlib.sha256((ROOT/p).read_bytes()).hexdigest()==h,'Frozen source changed: '+p
  assert hashlib.sha256((ROOT/cfg['implementation_prompt']).read_bytes()).hexdigest()==cfg['prompt_sha256']
  previous,parent,parent_info=await load_parent(cfg)
- run_id='mochi-c18-'+os.environ['GITHUB_RUN_ID']
+ run_id=cfg.get('resume',{}).get('campaign_run_id','mochi-c18-'+os.environ['GITHUB_RUN_ID'])
  progress=modal.Dict.from_name('mochi-contact-v18-progress',create_if_missing=True)
- assert await progress.get.aio(run_id) is None,'Existing campaign: inspect durable evidence before any retry'
+ prior=await progress.get.aio(run_id)
+ if cfg.get('resume'):
+  assert prior and prior['status']=='incomplete' and prior['error_type']=='InvalidError'
+  assert 'build step after using' in prior['error']
+  assert prior['optimizer_updates_completed']==0 and prior['campaign_modal_rollouts_completed']==0
+  assert not prior['training_log'] and not prior['physics_receipts']
+  save('prior-image-setup-failure',prior)
+  await progress.put.aio(run_id+'-setup-failure',prior)
+ else:assert prior is None,'Existing campaign: inspect durable evidence before any retry'
  ledger=modal.Dict.from_name(run_id+'-budget',create_if_missing=True)
- usage={k:0 for k in cfg['bounds'] if k!='modal_concurrency'}
- usage.update(cfg['engineering_usage'])
+ if prior:
+  usage=await ledger.get.aio('usage')
+  assert usage==prior['budget_usage_or_reserved']
+  # The first outer planning decision was not in its token counter. Carry
+  # a conservative 3k-token bound; no previous API counter is reset.
+  usage['inference_tokens']+=3000
+ else:
+  usage={k:0 for k in cfg['bounds'] if k!='modal_concurrency'}
+  usage.update(cfg['engineering_usage'])
  await ledger.put.aio('usage',usage)
  services=Services();services.run_id=run_id
  services.actors={role:run_id+'-'+role for role in ['researcher','designer','experimenter','critic']}
  services.audience,services.private=run_id+'-shared',run_id+'-critic'
+ if prior:
+  for name in ['reads','decisions','calls','sources']:setattr(services,name,list(prior['services'][name]))
+  services.records={r['id']:r for r in prior['services']['records']}
+  assert len(services.records)==2 and all(r.get('status')=='completed' for r in services.records.values())
  report={'study':cfg['study'],'run_id':run_id,'source_sha':os.environ['GITHUB_SHA'],
   'execution_source_sha':os.environ['GITHUB_SHA'],'created_at':now(),'protocol':cfg,
   'scope':cfg['scope'],'protocol_sha256':digest(cfg),'status':'running','phase':'Validate credentials, saved parent and frozen repair',
   'optimizer_updates_completed':0,'training_log':[],'checkpoints':[],'physics_receipts':[],
   'campaign_modal_rollouts_completed':0,'held_out_opened':False,'parent_selection':parent_info,
   'engineering_usage':cfg['engineering_usage']}
+ if prior:report['prior_execution']={'workflow_run':cfg['resume']['workflow_run'],'source_sha':prior['source_sha'],
+    'error_type':prior['error_type'],'optimizer_updates':0,'physical_rollouts':0,
+    'carried_budget_usage':dict(usage),'scope':'Image setup repair only. Existing research/plan records and usage retained.'}
  lock=asyncio.Lock();publish_lock=asyncio.Lock();slots=asyncio.Semaphore(cfg['bounds']['modal_concurrency'])
  condition=asyncio.Condition(lock);reservations=0
  async def change(kind,n):
@@ -101,18 +123,24 @@ async def main():
  try:
   assert len(await inventory(tinker.RestClient()))+5<100,'No checkpoint deletion is authorized'
   await services.setup();await publish()
-  await change('exa_searches',1)
-  sources=await services.search('humanoid robot quasi static laptop lid pushing contact force support polygon whole body manipulation balance')
-  research=await write('researcher',{'kind':'hypothesis','experiment_id':run_id,
-   'observation':'V17 selected model failed at laptop contact on all four opened cases; those cases are now regression evidence.',
-   'engineering_evidence':cfg['engineering_evidence'],'sources':sources['sources'],
-   'hypothesis':'A verified contact mechanism and arm posture can preserve support during lid closure. Evaluate the frozen repair; do not infer success from a source.'})
-  context=await read('designer',research)
-  allocation=await services.decide('designer','Choose a balanced six-domain training allocation or extra laptop/recovery examples.',
-      context,['balanced','contact_and_recovery'],[research])
-  design=await write('designer',{'kind':'experiment-plan','experiment_id':run_id,'allocation':allocation,
-      'training_seeds':cfg['training_seeds'],'criteria':'Actual completed contact and safe withdrawal; fixed verifiers; no positive labels for failed branches.'})
-  await read('experimenter',design)
+  if prior:
+   design=next(r['id'] for r in services.records.values() if r['role']=='designer')
+   recalled=await read('experimenter',design)
+   allocation=recalled['allocation']
+  else:
+   await change('exa_searches',1)
+   sources=await services.search('humanoid robot quasi static laptop lid pushing contact force support polygon whole body manipulation balance')
+   research=await write('researcher',{'kind':'hypothesis','experiment_id':run_id,
+    'observation':'V17 selected model failed at laptop contact on all four opened cases; those cases are now regression evidence.',
+    'engineering_evidence':cfg['engineering_evidence'],'sources':sources['sources'],
+    'hypothesis':'A verified contact mechanism and arm posture can preserve support during lid closure. Evaluate the frozen repair; do not infer success from a source.'})
+   context=await read('designer',research)
+   await change('inference_tokens',3000)
+   allocation=await services.decide('designer','Choose a balanced six-domain training allocation or extra laptop/recovery examples.',
+       context,['balanced','contact_and_recovery'],[research])
+   design=await write('designer',{'kind':'experiment-plan','experiment_id':run_id,'allocation':allocation,
+       'training_seeds':cfg['training_seeds'],'criteria':'Actual completed contact and safe withdrawal; fixed verifiers; no positive labels for failed branches.'})
+   await read('experimenter',design)
   trainer=await services.service.create_training_client_from_state_with_optimizer(parent)
   samplers[0]=await trainer.save_weights_and_get_sampling_client(kind='snapshot')
   checkpoint_paths['0']={'optimizer':parent};save('checkpoint-paths',checkpoint_paths)
@@ -212,6 +240,7 @@ async def main():
       'paired':report['paired_held_out'],'all_fresh_tasks_qualified':report['all_fresh_tasks_qualified'],
       'improvement_goal_met':report['improvement_goal_met']})
    recalled=await read('critic',result)
+   await change('inference_tokens',5000)
    verdict=await services.decide('critic','Does this evidence establish both complete fresh-scenario success and the declared efficiency improvement?',
        recalled,['qualified_success','reject_joint_improvement'],[result])
    review=await write('critic',{'kind':'conclusion','experiment_id':run_id,'model_verdict':verdict,

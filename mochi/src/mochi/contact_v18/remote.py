@@ -14,7 +14,9 @@ from .sequence import run
 from .policy import observation,decision,choices,execute,fixed
 
 VOLUME='mochi-contact-v18-artifacts'
-image=base_image.env({'PYTHONHASHSEED':'0'})
+# The reused pinned image already has runtime local mounts. Image build
+# operations must precede those mounts; reuse it without appending .env().
+image=base_image
 volume=modal.Volume.from_name(VOLUME,create_if_missing=True)
 app=modal.App('mochi-contact-v18-learning')
 
