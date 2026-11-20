@@ -4,7 +4,7 @@
 
 [Latest recorded checkpoints and project history](https://howdymary.github.io/mochi/) · [Frozen V15 protocol](docs/efficient-v15.md) · [Training and evaluation execution](https://github.com/howdymary/mochi-demo/actions/runs/44625135986)
 
-Tinker completed **16 new optimizer updates and 96 domain-gradient calls** for the shared Qwen3.5-4B LoRA decision model. Every update included walking, clock, drawer, laptop, globe and arm-recovery examples. Saved checkpoints are 0, 1, 4, 8 and 16; an additional durable optimizer state is retained at 12. The native gait network, actuator controllers, scene, route and verifiers remain fixed.
+Tinker completed **16 new optimizer updates and 96 domain-gradient calls** for the shared Qwen3.5-4B LoRA decision model. Every update included walking, clock, drawer, laptop, globe and arm-recovery examples. Saved checkpoints are 0, 1, 4, 8 and 16; an additional durable optimizer state is retained at 12. Update 0 restores the previously qualified V12 decision checkpoint, with 105 cumulative updates. The native gait network, actuator controllers, scene, route and verifiers remain fixed.
 
 The first declared development scenario has the following recorded outcomes. These are separate continuous clock → drawer → laptop → globe episodes with identical initial states and playback speed.
 
@@ -14,6 +14,7 @@ The first declared development scenario has the following recorded outcomes. The
 | 1 | Yes | 586 | 237.8 |
 | 4 | Yes | 480 | 216.7 |
 | 8 | Yes | 476 | 216.4 |
+| 16 | Yes | 482 | 217.2 |
 
 **Evaluation remains in progress.** This is one development case, not a final-test result or a general reliability claim. The full three-scenario development comparison determines checkpoint selection before four fresh final scenarios are opened. Final tests include parent, selected, fixed and training-only static policies, followed by exact-state walking, manipulation and recovery comparisons. The target is at least 20% fewer safe steps without lower completion or longer successful completion time; that complete final-test goal is not yet established.
 
