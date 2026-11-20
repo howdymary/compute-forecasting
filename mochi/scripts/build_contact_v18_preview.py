@@ -32,6 +32,7 @@ def main():
     p.add_argument('--source',required=True)
     p.add_argument('--execution-workflow-run',type=int,default=44800327838)
     p.add_argument('--development-preview',action='store_true',help='Inspect completed development recordings while the final cohort is still pending; never marks the campaign complete.')
+    p.add_argument('--preview-update',type=int,help='Show an evaluated checkpoint before selection, with selection explicitly pending.')
     a=p.parse_args()
     source=Path(a.source)
     report=json.loads((source/'report.json').read_text())
@@ -48,8 +49,14 @@ def main():
     cps={c['update']:c for c in report['checkpoints']}
     assert set(cps)=={0,1,4,8,16} and report['optimizer_updates_completed']==16
     evaluated={u:c for u,c in cps.items() if c['development'] is not None}
-    assert set(evaluated)==set(report['protocol']['training'].get('evaluation_checkpoints',cps))
-    selected=report['selected_checkpoint']['update']
+    planned=set(report['protocol']['training'].get('evaluation_checkpoints',cps))
+    if a.development_preview:
+        assert 0 in evaluated and set(evaluated)<=planned
+        selected=report['selected_checkpoint']['update'] if report.get('selected_checkpoint') else a.preview_update
+        assert selected in evaluated, 'A preview needs actual physical evaluation, never a saved-only checkpoint'
+    else:
+        assert set(evaluated)==planned and a.preview_update is None
+        selected=report['selected_checkpoint']['update']
     files={}
 
     def recording(row,update,kind):
@@ -129,7 +136,9 @@ def main():
         'scene_revision':report['protocol']['scene_revision'],'scenarios':scenarios,'recordings':files,'checkpoints':[cps[k] for k in sorted(cps)],
         'held_out':report.get('held_out'),'paired_held_out':report.get('paired_held_out'),
         'improvement_goal_met':report.get('improvement_goal_met'),'component_results':report.get('component_results'),
-        'test_pairs_available':len(parents),'evaluation_status':'development_preview' if a.development_preview else 'completed','selection_finalized':True,
+        'test_pairs_available':len(parents),'evaluation_status':'development_preview' if a.development_preview else 'completed',
+        'selection_finalized':bool(report.get('selected_checkpoint')),
+        'pending_evaluation_updates':sorted(planned-set(evaluated)),
         'default_scenario':next((s['id'] for s in scenarios if s['partition']=='held_out'),scenarios[0]['id']),'workflow_run':report['run_id'],
         'campaign_id':report['run_id'],'execution_workflow_run':a.execution_workflow_run,'source_sha':report['source_sha'],
         'services':report['services']['eligibility'],'campaign_modal_rollouts_completed':report['campaign_modal_rollouts_completed'],

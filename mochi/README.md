@@ -1,5 +1,16 @@
 # MOCHI: Walking, Contact and Recovery Policy Learning
 
+## V18 development preview: more foot lift, later failures
+
+[Inspect steps after descent](https://howdymary--mochi-contact-v18-demo-web.us-east.modal.run/?scenario=development-185001&phase=desk) · [Development results](docs/contact-v18-development-preview.md) · [Training interface](docs/contact-v18-training-interface.md) · [Active execution](https://github.com/howdymary/mochi-demo/actions/runs/44800327838)
+
+Tinker completed 16 new optimizer updates and 96 domain-gradient calls on the six-domain Qwen3.5-4B LoRA controller selector. Final checkpoint selection and fresh-scenario tests are pending. The native ONNX gait weights remain fixed.
+
+The preview compares checkpoint 1 with its parent on all three development scenarios. After descending from the books, checkpoint 1 chose the physical foot-lift controller and raised median minimum-sole clearance from about 2.5 mm to 4.8 mm. It also used more moving swings and completed 0/3 full routes, with one laptop-contact fall and two later forbidden contacts. The parent completed 2/3 routes, with 1/3 within all quality limits. This is a walking-clearance change with a complete-route regression, not a promoted result. Every recording and failure remains visible.
+
+The inspection link plays both recorded attempts at the same physical time and a labelled 0.5×. Restart shows the complete continuous attempt. An earlier [fixed-controller preflight](https://howdymary--mochi-contact-v18-demo-web.us-east.modal.run/contact-v18-preflight.html?phase=desk) remains available separately; it completed all four tasks but exceeded a lateral-motion quality limit and receives no training credit.
+
+
 ## V17: completed training, failed transfer test
 
 [Checkpoint replay](https://howdymary--mochi-smooth-v17-demo-web.us-east.modal.run/) · [Assessment](docs/smooth-v17-assessment.md) · [Numerical audit](docs/smooth-v17-assessment.json) · [Execution prompt](docs/smooth-v17-prompt.md) · [Previous validated study](https://howdymary--mochi-efficient-v15-demo-web.us-east.modal.run/)

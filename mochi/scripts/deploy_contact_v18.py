@@ -32,7 +32,10 @@ def web():
     def health():
         report = json.loads(Path('/web/contact-v18/manifest.json').read_text())
         return {'status': 'ok', 'release': os.environ.get('MOCHI_RELEASE'), 'study': report['study'],
-                'scenarios': len(report['scenarios']), 'new_tinker_updates': report['optimizer_updates_completed'], 'selected_update':report['selected_update'], 'goal_met':report['improvement_goal_met'],
+                'scenarios': len(report['scenarios']), 'new_tinker_updates': report['optimizer_updates_completed'],
+                'evaluation_status': report['evaluation_status'], 'selection_finalized':report['selection_finalized'],
+                'selected_update':report['selected_update'] if report['selection_finalized'] else None,
+                'displayed_update':report['selected_update'], 'goal_met':report['improvement_goal_met'],
                 'recorded_source_sha': report['source_sha'], 'mode': 'recorded MuJoCo model-checkpoint comparison with measured steps'}
 
     api.mount('/', StaticFiles(directory='/web', html=True))
