@@ -11,11 +11,11 @@ Checkpoint 4 completed the continuous clock, book descent, drawer, Post-it cross
 | Parent | 2/3 | 1/3 |
 | 1 additional update | 0/3 | 0/3 |
 | 4 additional updates | 2/3 | 0/3 |
-| 16 additional updates | Evaluation pending | Evaluation pending |
+| 16 additional updates | 1/3 | 0/3 |
 
 Checkpoint 4 chose the shorter clock reach, the lifted walking option and the steady laptop press in these attempts. All three post-descent desk legs completed with approximately 4.8 mm median minimum-sole clearance and 128 measured moving swings. The parent had approximately 2.5 mm and 116 swings. More visible stepping has not established fewer steps. The viewer offers all three cases and checkpoints 0, 1 and 4, with exact checkpoint identifiers.
 
-Sixteen optimizer updates have finished. Final checkpoint selection and fresh-scenario testing remain pending. These development outcomes are not an unseen-test result. The final selection rule and all quality limits are unchanged.
+Sixteen optimizer updates have finished, and development evaluation retained checkpoint 0, the parent. None of the trained checkpoints completed a route within every quality limit. Checkpoint 16 completed 1/3 routes; its other attempts stopped on printer contact during laptop approach and a laptop-task timeout. Fresh tests are pending. Parent and selected final cohorts use the same saved weights, so their repetitions cannot establish a training gain. The final selection rule and quality limits are unchanged.
 
 ## Checkpoint 1 and the measurement method
 
@@ -57,3 +57,5 @@ Browser verification covered a complete uninterrupted parent/checkpoint replay, 
 Checkpoint 4 verification covered a complete uninterrupted replay of development scenario 185000 and inspection of every checkpoint 4 quality failure. An explicit checkpoint query was also checked against a different preview default. [Checkpoint 4 browser verification](../evidence/contact-v18/development4-preview-browser-qa.json) · [Checkpoint query verification](../evidence/contact-v18/checkpoint-query-qa.json).
 
 The checkpoint 4 release was also checked live with the 0.5× foot camera, actual shared physical time and pending-selection disclosure. [Live checkpoint 4 inspection](../evidence/contact-v18/development4-preview-phase-qa.json) · [Release health](../evidence/contact-v18/development4-preview-live-health.json).
+
+After development selection, browser verification checked the retained-parent disclosure, identical-recording comparison label and all three rejected checkpoint 16 attempts through their actual endpoints. [Selection and rejected-checkpoint verification](../evidence/contact-v18/selection-browser-qa.json).

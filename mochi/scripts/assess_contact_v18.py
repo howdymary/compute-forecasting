@@ -45,6 +45,7 @@ def decision_audit(before, after):
                        'same_physical_state': a['initial_physical_state_sha256'] == b['initial_physical_state_sha256'],
                        'same_physical_time': math.isclose(a['t'], b['t'], abs_tol=1e-8)})
     return {'seed': before['seed'], 'identical_complete_action_sequence': choices(before) == choices(after),
+            'actions_match_until_shorter_attempt_stops': all(a == b for a, b in zip(choices(before), choices(after))),
             'first_action_difference': first_difference, 'shared_prefix_state_checks': prefix,
             'unexplained_prefix_variation': any(not x['same_physical_state'] or not x['same_physical_time'] for x in prefix),
             'parent_complete': before['complete_sequence_success'], 'selected_complete': after['complete_sequence_success']}
@@ -207,6 +208,10 @@ def main():
                 and pp['mean_time_reduction_fraction'] >= 0)
     assert goal == report['improvement_goal_met']
     choice_audits = [decision_audit(a, next(b for b in held['selected'] if b['seed'] == a['seed'])) for a in held['parent']]
+    development_choice_audits = [
+        {'from_update': left, 'to_update': right,
+         **decision_audit(a, next(b for b in development[right] if b['seed'] == a['seed']))}
+        for left, right in zip(evaluated, evaluated[1:]) for a in development[left]]
     static_seeds = {row['seed'] for row in held['static']}
     static_comparisons = [{'seed': a['seed'], 'identical_action_sequence': choices(a) == choices(next(b for b in held['static'] if b['seed'] == a['seed']))}
                           for a in held['selected'] if a['seed'] in static_seeds]
@@ -254,9 +259,11 @@ def main():
 
     audit = {'study': report['study'], 'source_sha': EXECUTION, 'run_id': report['run_id'],
              'execution_workflow_run': WORKFLOW, 'optimizer_updates': 16, 'domain_gradient_calls': 96,
+             'selected_is_parent': report['selected_checkpoint']['update'] == 0,
              'selected_update': report['selected_checkpoint']['update'], 'held_out': report['held_out'],
              'paired': pp, 'improvement_goal_met': goal, 'budget_usage': usage, 'teacher_branches_verified': teacher_branches,
              'public_recordings_verified': recordings, 'frozen_files_verified': 212, 'choice_audit': choice_audits,
+             'development_choice_audit': development_choice_audits,
              'runtime_amendment': amendment, 'runtime_reconciliation': reconciliation,
              'static_choice_audit': static_comparisons, 'failures': failures, 'service_eligibility': eligibility,
              'after_descent_clearance':{label:[{'seed':row['seed'],**after_descent_clearance(row['episode'])} for row in rows] for label,rows in held.items()},
@@ -285,6 +292,9 @@ def main():
              '## Fresh final scenarios', '',
              '| Policy | Complete | Within quality limits | Clear stepping | Mean steps | Seconds | Recovery travel, rad | Intertask arm travel, rad | Moving sole clearance, mm |',
              '| --- | --- | --- | --- | --- | --- | --- | --- | --- |']
+    if audit['selected_is_parent']:
+        lines.insert(4, 'No newly trained checkpoint was promoted. The parent and selected final cohorts use the same saved weights, so any difference between those repetitions cannot establish a training gain. The unpromoted development checkpoints retain their measured foot-lift changes and failures.')
+        lines.insert(5, '')
     for label, stats in report['held_out'].items():
         clearance = stats['successful_mean_flat_sole_clearance_m']
         lines.append(f"| {label} | {stats['complete_successes']}/{stats['n']} | {stats['qualified_complete_successes']}/{stats['n']} | {stats['clear_stepping_successes']}/{stats['n']} | {number(stats['successful_mean_steps'], 1)} | {number(stats['successful_mean_seconds'], 1)} | {number(stats['successful_mean_recovery_arm_joint_travel_rad'])} | {number(stats['successful_mean_intertask_arm_joint_travel_rad'])} | {number(None if clearance is None else clearance * 1000)} |")
@@ -315,6 +325,7 @@ def main():
               'Before training and final tests, the paired runtime was extended to 3600 seconds after one parent input took nearly 24 minutes. The completed baselines were retained. Update 8 remained saved without physical evaluation, and fixed/static controls used the predeclared seeds 186000 and 186001. The four fresh parent/selected pairs and original improvement criteria remained unchanged. See the [runtime amendment](contact-v18-runtime-amendment.md).', '',
               '## Attribution and failures', '',
               f"Parent and selected final tests run sequentially in the same worker from reset. {sum(x['unexplained_prefix_variation'] for x in choice_audits)}/4 pairs had a different physical state or time during their shared action prefix. Such variation cannot be attributed to learned selection. The numerical audit retains every prefix check.", '',
+              f"The audit also checked {len(development_choice_audits)} adjacent-checkpoint development pairs. In {sum(x['actions_match_until_shorter_attempt_stops'] and x['parent_complete'] != x['selected_complete'] for x in development_choice_audits)} pairs, actions agreed until the shorter attempt stopped, while completion differed. Those outcome differences do not demonstrate improved or degraded action selection. The state hashes are bitwise checks, not a measure of physical distance or tolerance.", '',
               f"The selected policy and training-derived static control chose identical complete action sequences in {sum(x['identical_action_sequence'] for x in static_comparisons)}/{len(static_comparisons)} matched control scenarios. This comparison limits claims that context-dependent selection was necessary.", '',
               'The static preference uses the two guarded teachers. The selector additionally receives three laptop regression labels. The fixed heuristic uses the regression-derived lid-angle rule. These information differences limit a claim of equal-data superiority over the static control.', '',
               'All failed attempts remain in the final table and replay. No checkpoint was selected using final-test outcomes. No service ablation establishes a causal improvement from Exa or past.dev.', '',

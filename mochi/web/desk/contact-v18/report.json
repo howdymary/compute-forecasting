@@ -466,7 +466,7 @@
   "scope": "Tinker updates six-domain Qwen3.5-4B LoRA controller-selection weights. Native ONNX weights remain fixed. All checkpoints and controls share the frozen laptop force/pulse library and measured swing-clearance option. Root/feet move only through forces and contacts. Fresh tests are uninterrupted from reset; previous 103xxx cases are training/regression evidence.",
   "protocol_sha256": "d4a05189995b2b6b969a231705c2355faed7172b2cd5bc20ef36e5fa5a7a52df",
   "status": "running",
-  "phase": "Matched development evaluations at every actual checkpoint",
+  "phase": "Fresh final tests with paired reset playback and fixed/static controls",
   "optimizer_updates_completed": 16,
   "training_log": [
     {
@@ -1449,7 +1449,36 @@
           "R4": 0.43772992491722107
         }
       },
-      "development": null
+      "development": {
+        "n": 3,
+        "complete_successes": 1,
+        "smooth_complete_successes": 0,
+        "wilson_95_complete_rate": [
+          0.0614903152761605,
+          0.7923450448735121
+        ],
+        "task_successes": {
+          "alarm": 3,
+          "drawer": 3,
+          "laptop": 1,
+          "globe": 1
+        },
+        "falls": 0,
+        "invalid_contacts": 1,
+        "mean_duration_s": 319.30059997714307,
+        "mean_roll_rms_deg": 0.4272572374371271,
+        "mean_contact_travel_m": 0.5916293109922476,
+        "recovery_successes": 8,
+        "successful_recovery_mean_joint_travel_rad": 3.4826918034253294,
+        "qualified_complete_successes": 0,
+        "successful_mean_steps": null,
+        "successful_mean_seconds": null,
+        "successful_mean_forward_facing_fraction": null,
+        "successful_mean_recovery_arm_joint_travel_rad": null,
+        "successful_mean_intertask_arm_joint_travel_rad": null,
+        "successful_mean_flat_sole_clearance_m": null,
+        "clear_stepping_successes": 0
+      }
     }
   ],
   "physics_receipts": [
@@ -2033,10 +2062,145 @@
         "inference_input_plus_max_output_tokens": 5172,
         "paired_same_process": false
       }
+    },
+    {
+      "phase": "Matched development evaluations at every actual checkpoint",
+      "seed": 185000,
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 846.206290198,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "SkylakeX"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "SkylakeX"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 3536,
+        "paired_same_process": false
+      }
+    },
+    {
+      "phase": "Matched development evaluations at every actual checkpoint",
+      "seed": 185001,
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 1209.592377188,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 3526,
+        "paired_same_process": false
+      }
+    },
+    {
+      "phase": "Matched development evaluations at every actual checkpoint",
+      "seed": 185002,
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 1415.165580166,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 5177,
+        "paired_same_process": false
+      }
     }
   ],
-  "campaign_modal_rollouts_completed": 65,
-  "held_out_opened": false,
+  "campaign_modal_rollouts_completed": 68,
+  "held_out_opened": true,
   "parent_selection": {
     "source": "Completed V15 selected update16",
     "checkpoint_id": "63463997da27066bfabda9a834fbd05d627b4dd362720c764077a3d20dd74ebe",
@@ -2761,17 +2925,17 @@
     "pending_ingestions": []
   },
   "budget_usage_or_reserved": {
-    "physical_rollouts": 127,
-    "simulation_cpu_hours": 6.823071601521164,
+    "physical_rollouts": 130,
+    "simulation_cpu_hours": 7.787228336952276,
     "optimizer_updates": 16,
     "training_token_presentations": 300707,
-    "inference_tokens": 114802,
+    "inference_tokens": 127041,
     "exa_searches": 1,
     "past_writes": 3,
     "past_recalls": 5
   },
-  "total_physical_attempts_accounted": 127,
-  "total_physical_rollouts_completed": 123,
+  "total_physical_attempts_accounted": 130,
+  "total_physical_rollouts_completed": 126,
   "runtime_wrapper_probe": {
     "seed": 184002,
     "expected_error": "Unavailable action",
@@ -184398,8 +184562,81 @@
     "recovery": 0.009531378746032715
   },
   "recovery_probe_scope": "Recovery is post-trained in every update; saturated retention examples may leave its chosen action unchanged. Physical arm-travel changes can also come from the task-end posture.",
+  "selected_checkpoint": {
+    "update": 0,
+    "cumulative_updates": 121,
+    "checkpoint_id": "63463997da27066bfabda9a834fbd05d627b4dd362720c764077a3d20dd74ebe",
+    "probe_distributions": {
+      "walk": {
+        "W0": 0.0001417440944351256,
+        "W3": 0.007738965097814798,
+        "W4": 0.6147821545600891,
+        "W5": 0.12105778604745865,
+        "W8": 0.256279319524765
+      },
+      "alarm": {
+        "B": 0.0002801275404635817,
+        "C": 0.041574619710445404,
+        "F": 0.9462339282035828,
+        "H0": 0.01191132701933384
+      },
+      "drawer": {
+        "A": 1.1432048268034123e-05,
+        "B": 0.004070091061294079,
+        "C": 0.9959184527397156
+      },
+      "laptop": {
+        "P0": 8.411872840952128e-05,
+        "P1": 0.00972280278801918,
+        "P2": 0.0922473818063736,
+        "P4": 0.01414659433066845,
+        "P5": 0.00858034286648035,
+        "P6": 0.8752188086509705
+      },
+      "globe": {
+        "A": 2.1333005861379206e-05,
+        "G0": 0.994758665561676,
+        "G1": 0.005220014601945877
+      },
+      "recovery": {
+        "R0": 7.42042830097489e-05,
+        "R1": 0.008576848544180393,
+        "R4": 0.991348922252655
+      }
+    },
+    "development": {
+      "n": 3,
+      "complete_successes": 2,
+      "smooth_complete_successes": 1,
+      "wilson_95_complete_rate": [
+        0.2076549551264879,
+        0.9385096847238394
+      ],
+      "task_successes": {
+        "alarm": 3,
+        "drawer": 3,
+        "laptop": 3,
+        "globe": 2
+      },
+      "falls": 0,
+      "invalid_contacts": 1,
+      "mean_duration_s": 338.57271657321377,
+      "mean_roll_rms_deg": 0.3579910960181554,
+      "mean_contact_travel_m": 0.665821458934219,
+      "recovery_successes": 11,
+      "successful_recovery_mean_joint_travel_rad": 5.310825979671132,
+      "qualified_complete_successes": 1,
+      "successful_mean_steps": 492.0,
+      "successful_mean_seconds": 349.50827892982255,
+      "successful_mean_forward_facing_fraction": 0.9347896378988019,
+      "successful_mean_recovery_arm_joint_travel_rad": 4.876965992142835,
+      "successful_mean_intertask_arm_joint_travel_rad": 144.5275047638246,
+      "successful_mean_flat_sole_clearance_m": 0.0026253346779955937,
+      "clear_stepping_successes": 0
+    }
+  },
   "presentation_assembly": {
-    "scope": "Running-campaign development preview. No final checkpoint selection or held-out claim. Physical records are unchanged; archive descriptors were derived from provider files.",
+    "scope": "Running-campaign development snapshot. Official development selection is copied unchanged. No final-test claim. Physical records are unchanged; archive descriptors were derived from provider files.",
     "development_archives": [
       {
         "path": "mochi-c18-44790861532/dev-1-185000-policy.json.gz",
@@ -184476,6 +184713,45 @@
           "sha256": "af5b977cf0e23e1d6fe99ba3f8117999e9090e1975c4ddc4163de627ee112c7c",
           "uncompressed_sha256": "a8c29435a049fa578e39fa0d8805ec0a8d2cf415002d7884808783a0ab81ead0",
           "bytes": 11607034,
+          "scope": "Official public export of actual body transforms; metadata reconstructed by hashing the immutable provider archive."
+        }
+      },
+      {
+        "path": "mochi-c18-44790861532/dev-16-185000-policy.json.gz",
+        "compressed_sha256": "96b3e6fd85899016ab3e11dcce428f14ba6e854fd0ed9b436e8f38a382d900d0",
+        "raw_sha256": "387fa6d9787ae632d50db02ac5043415d17e4a2c957cb7f969a667980a776c6f",
+        "public": {
+          "volume": "mochi-contact-v18-artifacts",
+          "path": "mochi-c18-44790861532/public/dev-16-185000-policy.json.gz",
+          "sha256": "8fe0b2d978a423e0f5c927a5704c7605e3be9e823904ece311dcc3b75761c78a",
+          "uncompressed_sha256": "0c060d7f94460ef1c2ad7921d84b26bde798f6bfeaaa51dc7f2637d745dda10c",
+          "bytes": 9516262,
+          "scope": "Official public export of actual body transforms; metadata reconstructed by hashing the immutable provider archive."
+        }
+      },
+      {
+        "path": "mochi-c18-44790861532/dev-16-185001-policy.json.gz",
+        "compressed_sha256": "785a341e485d1b72bf5874f795254fa903b8e70098bd75fac4d73c6340592c60",
+        "raw_sha256": "00315d8333e84bbb94476ac5768e442462092e278bd391e3f519905368837822",
+        "public": {
+          "volume": "mochi-contact-v18-artifacts",
+          "path": "mochi-c18-44790861532/public/dev-16-185001-policy.json.gz",
+          "sha256": "c22ee8bd8ca127d914197678d13447cef492433133acef78b440df496410a695",
+          "uncompressed_sha256": "8b6ffa7bffc8eeb17b1d9144cf0394084b338b759fcf858f69422f54d8de5d4a",
+          "bytes": 10392646,
+          "scope": "Official public export of actual body transforms; metadata reconstructed by hashing the immutable provider archive."
+        }
+      },
+      {
+        "path": "mochi-c18-44790861532/dev-16-185002-policy.json.gz",
+        "compressed_sha256": "16c4261af82b30f501fed8c08db5f895e24713ec4e31530671428e9495f6c152",
+        "raw_sha256": "26177af2452878ac214d9634955d2fc84a957db98a9c7c3b7b1bc73e32ad31d0",
+        "public": {
+          "volume": "mochi-contact-v18-artifacts",
+          "path": "mochi-c18-44790861532/public/dev-16-185002-policy.json.gz",
+          "sha256": "b7c4437644adb42ed62d90dbda3c8b8a95bcce555946e523e45e2d2fa18fc61e",
+          "uncompressed_sha256": "66b9aa6bf17a8c8bbc59fd6018f1213bba72fde3fa542af3a9b46c1308d8f881",
+          "bytes": 11540692,
           "scope": "Official public export of actual body transforms; metadata reconstructed by hashing the immutable provider archive."
         }
       }

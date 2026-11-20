@@ -1,0 +1,49 @@
+{
+  "selection_finalized": true,
+  "selected_update": 0,
+  "no_promoted_model": true,
+  "recordings": 12,
+  "checks": [
+    {
+      "scenario": "development-185000",
+      "complete": false,
+      "qualified": false,
+      "phase": "Stopped: unintended contact · 367 steps · roll 8.9° · 299.3 s",
+      "summary": "DEVELOPMENT PREVIEW · 16 optimizer updates completed. Update 0 selected on development data. Final testing is pending. No newly trained checkpoint was promoted.",
+      "tasks": [
+        "task-state passed",
+        "task-state passed",
+        "task-state pending",
+        "task-state pending"
+      ]
+    },
+    {
+      "scenario": "development-185001",
+      "complete": false,
+      "qualified": false,
+      "phase": "laptop-failed:laptop · 386 steps · roll -0.2° · 327.1 s",
+      "summary": "DEVELOPMENT PREVIEW · 16 optimizer updates completed. Update 0 selected on development data. Final testing is pending. No newly trained checkpoint was promoted.",
+      "tasks": [
+        "task-state passed",
+        "task-state passed",
+        "task-state failed",
+        "task-state pending"
+      ]
+    },
+    {
+      "scenario": "development-185002",
+      "complete": true,
+      "qualified": false,
+      "phase": "Tasks verified; quality limits exceeded · 509 steps · roll -0.2° · 331.4 s",
+      "summary": "DEVELOPMENT PREVIEW · 16 optimizer updates completed. Update 0 selected on development data. Final testing is pending. No newly trained checkpoint was promoted.",
+      "tasks": [
+        "task-state passed",
+        "task-state passed",
+        "task-state passed",
+        "task-state passed"
+      ]
+    }
+  ],
+  "exceptions": [],
+  "consoleErrors": []
+}
