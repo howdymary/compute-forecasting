@@ -1,5 +1,8 @@
 # Development preview: stepping after the books
 
+These notes retain intermediate development snapshots. The [completed study and final tests](contact-v18-assessment.md) are now available.
+
+
 ## Checkpoint 4
 
 [Inspect the latest evaluated stepping](https://howdymary--mochi-contact-v18-demo-web.us-east.modal.run/?scenario=development-185000&checkpoint=4&phase=desk) · [Complete recorded attempt](https://howdymary--mochi-contact-v18-demo-web.us-east.modal.run/?scenario=development-185000&checkpoint=4)

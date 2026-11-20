@@ -1,16 +1,64 @@
 # MOCHI: Walking, Contact and Recovery Policy Learning
 
-## V18 development preview: lifted steps across checkpoints
+## V18: lifted footsteps, no promoted checkpoint
 
-[Inspect post-descent stepping](https://howdymary--mochi-contact-v18-demo-web.us-east.modal.run/?scenario=development-185000&checkpoint=4&phase=desk) · [Full checkpoint comparison](https://howdymary--mochi-contact-v18-demo-web.us-east.modal.run/?scenario=development-185000&checkpoint=4) · [Development results](docs/contact-v18-development-preview.md) · [Training interface](docs/contact-v18-training-interface.md) · [Active execution](https://github.com/howdymary/mochi-demo/actions/runs/44800327838)
+[Inspect stepping after the books](https://howdymary--mochi-contact-v18-demo-web.us-east.modal.run/?scenario=development-185000&checkpoint=4&phase=desk) · [Complete development attempt](https://howdymary--mochi-contact-v18-demo-web.us-east.modal.run/?scenario=development-185000&checkpoint=4) · [Final evaluation](https://howdymary--mochi-contact-v18-demo-web.us-east.modal.run/) · [Assessment](docs/contact-v18-assessment.md) · [Numerical audit](docs/contact-v18-assessment.json)
 
-Tinker completed 16 new optimizer updates and 96 domain-gradient calls on the six-domain Qwen3.5-4B LoRA controller selector. Development selection retained the parent checkpoint. No newly trained version completed a route within every quality limit. Fresh tests are pending, and both parent and selected final cohorts use the same saved weights. The native ONNX gait weights remain fixed.
+Tinker completed 16 additional optimizer updates and 96 domain-gradient calls on the six-domain Qwen3.5-4B LoRA controller selector. Every update included walking, clock, drawer, laptop, globe and arm-recovery examples. The native ONNX gait weights stayed fixed. Training changed which walking, contact and recovery controllers the model chose.
 
-Checkpoint 4 completed all four tasks on two of the three development scenarios, with no falls or forbidden contacts in those completed attempts. Both exceeded the lateral-path quality limit, and the third case failed during laptop contact. The parent completed 2/3, with 1/3 within every quality limit; checkpoint 1 completed 0/3. Checkpoint 16 completed 1/3, with 0/3 within every quality limit. The preview retains checkpoints 0, 1, 4 and 16 on all three cases, including every failure.
+Book traversal uses planned contact footsteps; flat-ground travel previously switched to a native gait with much lower foot clearance. The new W8 option adds a bounded, contact-gated swing correction through leg actuator targets. On all three development scenarios, trained checkpoints raised post-descent median minimum-sole clearance from approximately 2.5 mm to 4.8 mm. Moving swings increased from 116 to 128 on that leg. This is clearer physical stepping, with more steps rather than an efficiency gain.
 
-After descending from the books, checkpoints 1 and 4 chose the physical foot-lift controller. Median minimum-sole clearance rose from about 2.5 mm to 4.8 mm. Moving swings increased from 116 to 128 on that leg, so the visual improvement is not an efficiency gain. The inspection link uses the same physical time and a labelled 0.5× playback speed. Restart shows the full continuous attempt.
+Checkpoint 4 completed all four tasks on 2/3 development cases, including the linked continuous recording. Both completed attempts exceeded the frozen lateral-path limit. Checkpoint 1 completed 0/3 and checkpoint 16 completed 1/3; none of the trained versions completed a route within every quality limit. Development selection retained checkpoint 0, the parent.
 
-The earlier [fixed-controller preflight](https://howdymary--mochi-contact-v18-demo-web.us-east.modal.run/contact-v18-preflight.html?phase=desk) remains available separately. It completed all four tasks but exceeded a lateral-motion quality limit and receives no training credit.
+| Final-test policy | Complete routes | Within all quality limits |
+| --- | ---: | ---: |
+| Parent | 1/4 | 0/4 |
+| Selected checkpoint 0 | 1/4 | 0/4 |
+| Fixed controller | 0/2 | 0/2 |
+| Training-derived static policy | 1/2 | 0/2 |
+
+The parent and selected final cohorts used the same saved weights and produced identical observed outcomes on all four paired cases. These repetitions establish no training gain. There were no matched qualified completions, so step, time and recovery-travel reductions are undefined. The full improvement target was not met. Laptop approach, contact and later fixture clearance remain unreliable.
+
+The foot-lift correction also completed the first post-descent walking leg on both fresh fixed-controller cases, at approximately 4.8 mm clearance, before later task failures. That is controller-engineering evidence, not evidence that the trained selector generalized. The [fixed preflight](https://howdymary--mochi-contact-v18-demo-web.us-east.modal.run/contact-v18-preflight.html?phase=desk) remains available separately and receives no training credit.
+
+The viewer retains 20 uninterrupted recordings: four evaluated checkpoints on three development cases and all four parent/selected final pairs. Checkpoint 8 was saved and probed without physical evaluation under the pre-training runtime amendment. Each comparison uses the same scenario, physical-time clock and playback speed. The inspection link opens checkpoint 4 at a labelled 0.5×; Restart shows its full attempt. Failures and quality-limit violations remain visible.
+
+### Training and service evidence
+
+- Tinker: 16 completed optimizer updates, 96 finite domain-loss returns and 300,707 training-token presentations. Five states were saved. No native gait network was trained or newly trained checkpoint promoted.
+- Modal: 80 completed cloud attempts, including measured branches and uninterrupted evaluations. Total accounting was 142 attempts, including 58 local engineering attempts and four interrupted stages, with 11.727 simulation CPU-hours. Limits were 160 attempts, 14 CPU-hours, 16 optimizer updates and four physics workers. These are budget records, not an invoice.
+- Exa: one failure-driven search in the main research loop. Sources and their use remain in the report. No ablation establishes a search benefit.
+- past.dev: six writes and eight logical recalls across four writing and four reading identities. The audience-isolation canary passed, with no pending ingestion. No ablation establishes a memory benefit.
+
+[Execution and artifacts](https://github.com/howdymary/mochi-demo/actions/runs/44800327838) · [Training interface](docs/contact-v18-training-interface.md) · [Runtime amendment](docs/contact-v18-runtime-amendment.md) · [Compressed results](evidence/contact-v18/results.json.gz) · [Service records](evidence/contact-v18/service-receipts.json) · [Recording manifest](evidence/contact-v18/recording-manifest.json)
+
+### past.dev challenge
+
+Agents: research, design, execution and review used distinct instructions, author identities and explicit reader identities. Shared Mochi research and critic-private audiences were kept separate.
+
+Layers: prompts held working context; past.dev stored sourced hypotheses, plans, observations and conclusions; versioned code held procedures; artifact storage held exact measurements and trajectories.
+
+Results: the designer recalled the sourced hypothesis and selected a training allocation. The critic recalled the measured training and final results; the researcher recalled the resulting verdict. Source IDs were verified before resolving canonical numerical records. A separate private-canary recall checked audience isolation.
+
+Caveats: the study did not demonstrate improved complete-route performance. The model saw identical rounded inputs with conflicting walking labels in two training states. Small cross-worker physical differences also affected some outcomes under matching action prefixes. These limits and rejected candidates remain in the audit.
+
+### Reproduce the recordings and audit
+
+From the repository root, with the package, visual assets and authenticated Modal profile configured below:
+
+```sh
+gh run download 44800327838 --repo howdymary/mochi-demo --name mochi-contact-v18-training-44800327838 --dir mochi/.cache/contact-v18-completed
+PYTHONPATH=mochi/src mochi/.venv/bin/python mochi/scripts/build_contact_v18_preview.py --source mochi/.cache/contact-v18-completed
+PYTHONPATH=mochi/src mochi/.venv/bin/python mochi/scripts/assess_contact_v18.py --source mochi/.cache/contact-v18-completed
+node mochi/scripts/check_contact_v18_ui.mjs
+python3 -m http.server 4120 --directory mochi/web/desk
+```
+
+Open `http://127.0.0.1:4120/contact-v18.html`. The public replay needs no service credentials. Exact model re-execution requires the retained backend checkpoints and provider access. Large trajectories stay in artifact storage rather than Git.
+
+The independent audit verified all 212 frozen files, training counts, budget accounting and 20 public recordings. UI checks covered all seven scenarios and every available recorded version. Browser verification replayed both fresh attempts continuously, inspected all four final selected attempts and checked post-descent foot playback. The separate checkpoint 4 development verification retains its complete four-task recording and quality-limit warning. [Browser verification](evidence/contact-v18/browser-qa.json) · [UI verification](evidence/contact-v18/ui-verification.txt).
+
+Integration paths: [Tinker and research loop](src/mochi/contact_v18/train.py), [parallel MuJoCo evaluation](src/mochi/contact_v18/remote.py), [paired worker wrapper](src/mochi/contact_v18/paired_remote.py), [physical foot lift](src/mochi/contact_v18/residual.py), [laptop contact control](src/mochi/contact_v18/contact.py), and [audience-aware memory client](src/mochi/smooth_v17/finalize_memory.py).
 
 ## V17: completed training, failed transfer test
 

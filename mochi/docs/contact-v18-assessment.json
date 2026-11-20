@@ -1,0 +1,1420 @@
+{
+  "study": "mochi-contact-v18",
+  "source_sha": "bdba8600e9abb94c20aa1dc68ee617b51ee4999c",
+  "run_id": "mochi-c18-44790861532",
+  "execution_workflow_run": 44800327838,
+  "optimizer_updates": 16,
+  "domain_gradient_calls": 96,
+  "selected_is_parent": true,
+  "selected_update": 0,
+  "held_out": {
+    "parent": {
+      "n": 4,
+      "complete_successes": 1,
+      "smooth_complete_successes": 0,
+      "wilson_95_complete_rate": [
+        0.045586062644636216,
+        0.6993639475573634
+      ],
+      "task_successes": {
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 2,
+        "globe": 1
+      },
+      "falls": 2,
+      "invalid_contacts": 1,
+      "mean_duration_s": 324.5059734371824,
+      "mean_roll_rms_deg": 0.37186394036663734,
+      "mean_contact_travel_m": 0.48381238926049175,
+      "recovery_successes": 11,
+      "successful_recovery_mean_joint_travel_rad": 5.4659006750101815,
+      "qualified_complete_successes": 0,
+      "successful_mean_steps": null,
+      "successful_mean_seconds": null,
+      "successful_mean_forward_facing_fraction": null,
+      "successful_mean_recovery_arm_joint_travel_rad": null,
+      "successful_mean_intertask_arm_joint_travel_rad": null,
+      "successful_mean_flat_sole_clearance_m": null,
+      "clear_stepping_successes": 0
+    },
+    "selected": {
+      "n": 4,
+      "complete_successes": 1,
+      "smooth_complete_successes": 0,
+      "wilson_95_complete_rate": [
+        0.045586062644636216,
+        0.6993639475573634
+      ],
+      "task_successes": {
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 2,
+        "globe": 1
+      },
+      "falls": 2,
+      "invalid_contacts": 1,
+      "mean_duration_s": 324.5059734371824,
+      "mean_roll_rms_deg": 0.37186394036663734,
+      "mean_contact_travel_m": 0.48381238926049175,
+      "recovery_successes": 11,
+      "successful_recovery_mean_joint_travel_rad": 5.4659006750101815,
+      "qualified_complete_successes": 0,
+      "successful_mean_steps": null,
+      "successful_mean_seconds": null,
+      "successful_mean_forward_facing_fraction": null,
+      "successful_mean_recovery_arm_joint_travel_rad": null,
+      "successful_mean_intertask_arm_joint_travel_rad": null,
+      "successful_mean_flat_sole_clearance_m": null,
+      "clear_stepping_successes": 0
+    },
+    "fixed": {
+      "n": 2,
+      "complete_successes": 0,
+      "smooth_complete_successes": 0,
+      "wilson_95_complete_rate": [
+        0,
+        0.6576280471103807
+      ],
+      "task_successes": {
+        "alarm": 2,
+        "drawer": 2,
+        "laptop": 1,
+        "globe": 0
+      },
+      "falls": 0,
+      "invalid_contacts": 1,
+      "mean_duration_s": 316.37419531431044,
+      "mean_roll_rms_deg": 0.40630352263229863,
+      "mean_contact_travel_m": 0.475952522648286,
+      "recovery_successes": 5,
+      "successful_recovery_mean_joint_travel_rad": 3.7879375834708866,
+      "qualified_complete_successes": 0,
+      "successful_mean_steps": null,
+      "successful_mean_seconds": null,
+      "successful_mean_forward_facing_fraction": null,
+      "successful_mean_recovery_arm_joint_travel_rad": null,
+      "successful_mean_intertask_arm_joint_travel_rad": null,
+      "successful_mean_flat_sole_clearance_m": null,
+      "clear_stepping_successes": 0
+    },
+    "static": {
+      "n": 2,
+      "complete_successes": 1,
+      "smooth_complete_successes": 0,
+      "wilson_95_complete_rate": [
+        0.09452865480086614,
+        0.9054713451991339
+      ],
+      "task_successes": {
+        "alarm": 2,
+        "drawer": 2,
+        "laptop": 1,
+        "globe": 1
+      },
+      "falls": 0,
+      "invalid_contacts": 1,
+      "mean_duration_s": 323.6664322326396,
+      "mean_roll_rms_deg": 0.4318523565435559,
+      "mean_contact_travel_m": 0.527345097241317,
+      "recovery_successes": 6,
+      "successful_recovery_mean_joint_travel_rad": 3.81184130727516,
+      "qualified_complete_successes": 0,
+      "successful_mean_steps": null,
+      "successful_mean_seconds": null,
+      "successful_mean_forward_facing_fraction": null,
+      "successful_mean_recovery_arm_joint_travel_rad": null,
+      "successful_mean_intertask_arm_joint_travel_rad": null,
+      "successful_mean_flat_sole_clearance_m": null,
+      "clear_stepping_successes": 0
+    }
+  },
+  "paired": {
+    "n": 0,
+    "scenario_step_reductions": [],
+    "mean_step_reduction_fraction": null,
+    "mean_time_reduction_fraction": null,
+    "mean_recovery_arm_travel_reduction_fraction": null,
+    "mean_intertask_arm_travel_reduction_fraction": null,
+    "mean_step_reduction_bootstrap_95": null,
+    "mean_time_reduction_bootstrap_95": null,
+    "uncertainty_scope": "Deterministic paired resampling of this small fixed-layout cohort; not a guarantee for other layouts or hardware."
+  },
+  "improvement_goal_met": false,
+  "budget_usage": {
+    "physical_rollouts": 142,
+    "simulation_cpu_hours": 11.727207965543387,
+    "optimizer_updates": 16,
+    "training_token_presentations": 300707,
+    "inference_tokens": 165677,
+    "exa_searches": 1,
+    "past_writes": 6,
+    "past_recalls": 8
+  },
+  "teacher_branches_verified": 52,
+  "public_recordings_verified": 20,
+  "frozen_files_verified": 212,
+  "choice_audit": [
+    {
+      "seed": 186000,
+      "identical_complete_action_sequence": true,
+      "actions_match_until_shorter_attempt_stops": true,
+      "first_action_difference": null,
+      "shared_prefix_state_checks": [
+        {
+          "decision_index": 0,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 1,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 2,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 3,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 4,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 5,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 6,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 7,
+          "same_physical_state": true,
+          "same_physical_time": true
+        }
+      ],
+      "unexplained_prefix_variation": false,
+      "parent_complete": false,
+      "selected_complete": false
+    },
+    {
+      "seed": 186001,
+      "identical_complete_action_sequence": true,
+      "actions_match_until_shorter_attempt_stops": true,
+      "first_action_difference": null,
+      "shared_prefix_state_checks": [
+        {
+          "decision_index": 0,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 1,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 2,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 3,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 4,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 5,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 6,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 7,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 8,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 9,
+          "same_physical_state": true,
+          "same_physical_time": true
+        }
+      ],
+      "unexplained_prefix_variation": false,
+      "parent_complete": false,
+      "selected_complete": false
+    },
+    {
+      "seed": 186002,
+      "identical_complete_action_sequence": true,
+      "actions_match_until_shorter_attempt_stops": true,
+      "first_action_difference": null,
+      "shared_prefix_state_checks": [
+        {
+          "decision_index": 0,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 1,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 2,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 3,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 4,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 5,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 6,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 7,
+          "same_physical_state": true,
+          "same_physical_time": true
+        }
+      ],
+      "unexplained_prefix_variation": false,
+      "parent_complete": false,
+      "selected_complete": false
+    },
+    {
+      "seed": 186003,
+      "identical_complete_action_sequence": true,
+      "actions_match_until_shorter_attempt_stops": true,
+      "first_action_difference": null,
+      "shared_prefix_state_checks": [
+        {
+          "decision_index": 0,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 1,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 2,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 3,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 4,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 5,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 6,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 7,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 8,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 9,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 10,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 11,
+          "same_physical_state": true,
+          "same_physical_time": true
+        }
+      ],
+      "unexplained_prefix_variation": false,
+      "parent_complete": true,
+      "selected_complete": true
+    }
+  ],
+  "development_choice_audit": [
+    {
+      "from_update": 0,
+      "to_update": 1,
+      "seed": 185000,
+      "identical_complete_action_sequence": false,
+      "actions_match_until_shorter_attempt_stops": false,
+      "first_action_difference": 3,
+      "shared_prefix_state_checks": [
+        {
+          "decision_index": 0,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 1,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 2,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 3,
+          "same_physical_state": true,
+          "same_physical_time": true
+        }
+      ],
+      "unexplained_prefix_variation": false,
+      "parent_complete": false,
+      "selected_complete": false
+    },
+    {
+      "from_update": 0,
+      "to_update": 1,
+      "seed": 185001,
+      "identical_complete_action_sequence": false,
+      "actions_match_until_shorter_attempt_stops": false,
+      "first_action_difference": 3,
+      "shared_prefix_state_checks": [
+        {
+          "decision_index": 0,
+          "same_physical_state": false,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 1,
+          "same_physical_state": false,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 2,
+          "same_physical_state": false,
+          "same_physical_time": false
+        },
+        {
+          "decision_index": 3,
+          "same_physical_state": false,
+          "same_physical_time": false
+        }
+      ],
+      "unexplained_prefix_variation": true,
+      "parent_complete": true,
+      "selected_complete": false
+    },
+    {
+      "from_update": 0,
+      "to_update": 1,
+      "seed": 185002,
+      "identical_complete_action_sequence": false,
+      "actions_match_until_shorter_attempt_stops": false,
+      "first_action_difference": 3,
+      "shared_prefix_state_checks": [
+        {
+          "decision_index": 0,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 1,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 2,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 3,
+          "same_physical_state": true,
+          "same_physical_time": true
+        }
+      ],
+      "unexplained_prefix_variation": false,
+      "parent_complete": true,
+      "selected_complete": false
+    },
+    {
+      "from_update": 1,
+      "to_update": 4,
+      "seed": 185000,
+      "identical_complete_action_sequence": false,
+      "actions_match_until_shorter_attempt_stops": false,
+      "first_action_difference": 1,
+      "shared_prefix_state_checks": [
+        {
+          "decision_index": 0,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 1,
+          "same_physical_state": true,
+          "same_physical_time": true
+        }
+      ],
+      "unexplained_prefix_variation": false,
+      "parent_complete": false,
+      "selected_complete": true
+    },
+    {
+      "from_update": 1,
+      "to_update": 4,
+      "seed": 185001,
+      "identical_complete_action_sequence": false,
+      "actions_match_until_shorter_attempt_stops": false,
+      "first_action_difference": 1,
+      "shared_prefix_state_checks": [
+        {
+          "decision_index": 0,
+          "same_physical_state": false,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 1,
+          "same_physical_state": false,
+          "same_physical_time": true
+        }
+      ],
+      "unexplained_prefix_variation": true,
+      "parent_complete": false,
+      "selected_complete": false
+    },
+    {
+      "from_update": 1,
+      "to_update": 4,
+      "seed": 185002,
+      "identical_complete_action_sequence": false,
+      "actions_match_until_shorter_attempt_stops": false,
+      "first_action_difference": 1,
+      "shared_prefix_state_checks": [
+        {
+          "decision_index": 0,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 1,
+          "same_physical_state": true,
+          "same_physical_time": true
+        }
+      ],
+      "unexplained_prefix_variation": false,
+      "parent_complete": false,
+      "selected_complete": true
+    },
+    {
+      "from_update": 4,
+      "to_update": 16,
+      "seed": 185000,
+      "identical_complete_action_sequence": false,
+      "actions_match_until_shorter_attempt_stops": true,
+      "first_action_difference": null,
+      "shared_prefix_state_checks": [
+        {
+          "decision_index": 0,
+          "same_physical_state": false,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 1,
+          "same_physical_state": false,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 2,
+          "same_physical_state": false,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 3,
+          "same_physical_state": false,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 4,
+          "same_physical_state": false,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 5,
+          "same_physical_state": false,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 6,
+          "same_physical_state": false,
+          "same_physical_time": false
+        },
+        {
+          "decision_index": 7,
+          "same_physical_state": false,
+          "same_physical_time": false
+        }
+      ],
+      "unexplained_prefix_variation": true,
+      "parent_complete": true,
+      "selected_complete": false
+    },
+    {
+      "from_update": 4,
+      "to_update": 16,
+      "seed": 185001,
+      "identical_complete_action_sequence": false,
+      "actions_match_until_shorter_attempt_stops": false,
+      "first_action_difference": 7,
+      "shared_prefix_state_checks": [
+        {
+          "decision_index": 0,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 1,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 2,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 3,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 4,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 5,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 6,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 7,
+          "same_physical_state": true,
+          "same_physical_time": true
+        }
+      ],
+      "unexplained_prefix_variation": false,
+      "parent_complete": false,
+      "selected_complete": false
+    },
+    {
+      "from_update": 4,
+      "to_update": 16,
+      "seed": 185002,
+      "identical_complete_action_sequence": false,
+      "actions_match_until_shorter_attempt_stops": false,
+      "first_action_difference": 7,
+      "shared_prefix_state_checks": [
+        {
+          "decision_index": 0,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 1,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 2,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 3,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 4,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 5,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 6,
+          "same_physical_state": true,
+          "same_physical_time": true
+        },
+        {
+          "decision_index": 7,
+          "same_physical_state": true,
+          "same_physical_time": true
+        }
+      ],
+      "unexplained_prefix_variation": false,
+      "parent_complete": true,
+      "selected_complete": true
+    }
+  ],
+  "runtime_amendment": {
+    "document": "docs/contact-v18-runtime-amendment.md",
+    "document_sha256": "32e39a044de1e7ff9bd55e2775db81a3a62efb54bda9ba817b0ce25eb72daa75",
+    "before_optimizer_updates": true,
+    "before_final_tests": true,
+    "paired_runtime_seconds_max": 3600,
+    "original_single_runtime_seconds_max": 2400,
+    "saved_checkpoint_updates": [
+      0,
+      1,
+      4,
+      8,
+      16
+    ],
+    "physical_evaluation_updates": [
+      0,
+      1,
+      4,
+      16
+    ],
+    "control_seeds": [
+      186000,
+      186001
+    ],
+    "unchanged_baseline_support_files": 210,
+    "maximum_planned_physical_attempts": 158,
+    "scope": "Runtime and secondary evaluation budget amendment only. Original controller/evaluator algorithms, verifiers, seed partitions, primary fresh tests and improvement criteria unchanged."
+  },
+  "runtime_reconciliation": {
+    "campaign_id": "mochi-c18-44790861532",
+    "prior_workflow_run": 44791618165,
+    "prior_execution_source_sha": "4d2be964a9be26f6697513a314a3b23a64d07b90",
+    "prior_conclusion": "cancelled",
+    "reason": "Measured completed parent input took1425.90seconds. A40minute same-worker pair could time out. Amend paired runtime before any optimizer update.",
+    "optimizer_updates_completed": 0,
+    "final_tests_opened": false,
+    "confirmed_completed_cloud_rollouts": 4,
+    "terminated_teacher_calls": [
+      {
+        "function_call_id": "fc-01M7X5MM8YRVXSGXJKFEHHEZGW",
+        "service_method_name": null,
+        "enqueued_at": "2026-11-20T19:06:25.438910Z",
+        "started_at": "2026-11-20T19:06:37.147690Z",
+        "container_id": "ta-01M7X5MP0QFQM470C3FT8F1MAR",
+        "startup_time_seconds": null,
+        "execution_time_seconds": null,
+        "status": "terminated"
+      },
+      {
+        "function_call_id": "fc-01M7X5MM5TMRG4SV85J8SAHP74",
+        "service_method_name": null,
+        "enqueued_at": "2026-11-20T19:06:25.338570Z",
+        "started_at": "2026-11-20T19:06:36.208739Z",
+        "container_id": "ta-01M7X5MMWA1T4NAXFRQJQ8VMVR",
+        "startup_time_seconds": null,
+        "execution_time_seconds": null,
+        "status": "terminated"
+      }
+    ],
+    "interrupted_physical_attempts_upper_bound": 4,
+    "interrupted_simulation_cpu_hours_bound": 0.13333333333333333,
+    "interrupted_input_elapsed_bound_seconds": 240,
+    "bound_evidence": "Two terminated one-CPU inputs enqueued19:06:25UTC; app-stop log19:08:47UTC. Four minutes per input includes queue, runtime and a cancellation margin. Both inputs logged only the initial walk/alarm branch at attempt2. No branch or teacher archive exists. Main prefixes and the two unfinished branch attempts are charged, without success labels.",
+    "last_log_sha256": "fa944c54784989cc756955560c5fc3428c65873c91a7124046d50c5d2d9165e0",
+    "volume_listing_sha256": "0416b9636fdc6a8a3a401e71a84d5a4986ea4dd4d74ab9b21f2c2125c72444be",
+    "baseline_artifact_sha256": "bad1937199573bf7d0335ee552155f2f99aff8445c2ac590d3cd564db76e9f41",
+    "usage_before": {
+      "physical_rollouts": 132,
+      "simulation_cpu_hours": 6.257219892906162,
+      "optimizer_updates": 0,
+      "training_token_presentations": 0,
+      "inference_tokens": 65927,
+      "exa_searches": 1,
+      "past_writes": 2,
+      "past_recalls": 3
+    },
+    "usage_after": {
+      "physical_rollouts": 66,
+      "simulation_cpu_hours": 2.3905532262394953,
+      "optimizer_updates": 0,
+      "training_token_presentations": 0,
+      "inference_tokens": 65927,
+      "exa_searches": 1,
+      "past_writes": 2,
+      "past_recalls": 3
+    },
+    "scope": "Refund unused reservations only. Retain completed evidence and charge interrupted-input bounds. Keep all65927 inference tokens including two unfinished input caps. No budget reset, repeated optimizer update or positive label from interrupted data."
+  },
+  "static_choice_audit": [
+    {
+      "seed": 186000,
+      "identical_action_sequence": false
+    },
+    {
+      "seed": 186001,
+      "identical_action_sequence": false
+    }
+  ],
+  "failures": {
+    "parent": [
+      {
+        "seed": 186000,
+        "failure": "fall",
+        "duration_s": 314.2385561742247,
+        "last_station": "laptop-station",
+        "last_decision_domain": "laptop",
+        "verified_tasks": [
+          "alarm",
+          "drawer"
+        ],
+        "postit_loaded_contact": true,
+        "contact_examples": []
+      },
+      {
+        "seed": 186001,
+        "failure": "invalid_fixture_contact",
+        "duration_s": 324.1986048949155,
+        "last_station": "laptop-station",
+        "last_decision_domain": "walk",
+        "verified_tasks": [
+          "alarm",
+          "drawer",
+          "laptop"
+        ],
+        "postit_loaded_contact": true,
+        "contact_examples": [
+          {
+            "body": "right_ankle_roll_link",
+            "fixture": "laptop-base-contact",
+            "phase": "walk",
+            "force_n": 0.10550910945718889
+          }
+        ]
+      },
+      {
+        "seed": 186002,
+        "failure": "fall",
+        "duration_s": 315.4500460136915,
+        "last_station": "laptop-station",
+        "last_decision_domain": "laptop",
+        "verified_tasks": [
+          "alarm",
+          "drawer"
+        ],
+        "postit_loaded_contact": true,
+        "contact_examples": []
+      }
+    ],
+    "selected": [
+      {
+        "seed": 186000,
+        "failure": "fall",
+        "duration_s": 314.2385561742247,
+        "last_station": "laptop-station",
+        "last_decision_domain": "laptop",
+        "verified_tasks": [
+          "alarm",
+          "drawer"
+        ],
+        "postit_loaded_contact": true,
+        "contact_examples": []
+      },
+      {
+        "seed": 186001,
+        "failure": "invalid_fixture_contact",
+        "duration_s": 324.1986048949155,
+        "last_station": "laptop-station",
+        "last_decision_domain": "walk",
+        "verified_tasks": [
+          "alarm",
+          "drawer",
+          "laptop"
+        ],
+        "postit_loaded_contact": true,
+        "contact_examples": [
+          {
+            "body": "right_ankle_roll_link",
+            "fixture": "laptop-base-contact",
+            "phase": "walk",
+            "force_n": 0.10550910945718889
+          }
+        ]
+      },
+      {
+        "seed": 186002,
+        "failure": "fall",
+        "duration_s": 315.4500460136915,
+        "last_station": "laptop-station",
+        "last_decision_domain": "laptop",
+        "verified_tasks": [
+          "alarm",
+          "drawer"
+        ],
+        "postit_loaded_contact": true,
+        "contact_examples": []
+      }
+    ],
+    "fixed": [
+      {
+        "seed": 186000,
+        "failure": "laptop-failed:laptop",
+        "duration_s": 327.11288375975977,
+        "last_station": "laptop-station",
+        "last_decision_domain": null,
+        "verified_tasks": [
+          "alarm",
+          "drawer"
+        ],
+        "postit_loaded_contact": true,
+        "contact_examples": []
+      },
+      {
+        "seed": 186001,
+        "failure": "invalid_fixture_contact",
+        "duration_s": 305.6355068688611,
+        "last_station": "laptop-station",
+        "last_decision_domain": null,
+        "verified_tasks": [
+          "alarm",
+          "drawer",
+          "laptop"
+        ],
+        "postit_loaded_contact": true,
+        "contact_examples": [
+          {
+            "body": "right_knee_link",
+            "fixture": "printer-output-tray-contact",
+            "phase": null,
+            "force_n": 1.0934293688688501
+          }
+        ]
+      }
+    ],
+    "static": [
+      {
+        "seed": 186000,
+        "failure": "invalid_fixture_contact",
+        "duration_s": 308.60455619203486,
+        "last_station": "laptop-station",
+        "last_decision_domain": "laptop",
+        "verified_tasks": [
+          "alarm",
+          "drawer"
+        ],
+        "postit_loaded_contact": true,
+        "contact_examples": [
+          {
+            "body": "left_knee_link",
+            "fixture": "printer-output-tray-contact",
+            "phase": null,
+            "force_n": 0.5302417997266797
+          }
+        ]
+      }
+    ]
+  },
+  "service_eligibility": {
+    "writers": 4,
+    "readers": 4,
+    "cross_agent_reads": 7,
+    "isolation_passed": true
+  },
+  "after_descent_clearance": {
+    "parent": [
+      {
+        "seed": 186000,
+        "descent_exit_reached": true,
+        "completed_leg": true,
+        "moving_swings": 116,
+        "median_peak_m": 0.0025405808506760697,
+        "start_t": 217.06431852435966,
+        "end_t": 234.88188434151138,
+        "scope": "Descriptive first-leg diagnostic added for the post-descent walking question; not a checkpoint-selection or joint-goal criterion. Partial legs remain labelled incomplete."
+      },
+      {
+        "seed": 186001,
+        "descent_exit_reached": true,
+        "completed_leg": true,
+        "moving_swings": 116,
+        "median_peak_m": 0.0025247570089468162,
+        "start_t": 218.52350163060007,
+        "end_t": 236.34106744775178,
+        "scope": "Descriptive first-leg diagnostic added for the post-descent walking question; not a checkpoint-selection or joint-goal criterion. Partial legs remain labelled incomplete."
+      },
+      {
+        "seed": 186002,
+        "descent_exit_reached": true,
+        "completed_leg": true,
+        "moving_swings": 116,
+        "median_peak_m": 0.002540994999788075,
+        "start_t": 219.43171027543653,
+        "end_t": 237.492064542198,
+        "scope": "Descriptive first-leg diagnostic added for the post-descent walking question; not a checkpoint-selection or joint-goal criterion. Partial legs remain labelled incomplete."
+      },
+      {
+        "seed": 186003,
+        "descent_exit_reached": true,
+        "completed_leg": true,
+        "moving_swings": 116,
+        "median_peak_m": 0.00252643599082839,
+        "start_t": 218.35428543844782,
+        "end_t": 236.17185125559953,
+        "scope": "Descriptive first-leg diagnostic added for the post-descent walking question; not a checkpoint-selection or joint-goal criterion. Partial legs remain labelled incomplete."
+      }
+    ],
+    "selected": [
+      {
+        "seed": 186000,
+        "descent_exit_reached": true,
+        "completed_leg": true,
+        "moving_swings": 116,
+        "median_peak_m": 0.0025405808506760697,
+        "start_t": 217.06431852435966,
+        "end_t": 234.88188434151138,
+        "scope": "Descriptive first-leg diagnostic added for the post-descent walking question; not a checkpoint-selection or joint-goal criterion. Partial legs remain labelled incomplete."
+      },
+      {
+        "seed": 186001,
+        "descent_exit_reached": true,
+        "completed_leg": true,
+        "moving_swings": 116,
+        "median_peak_m": 0.0025247570089468162,
+        "start_t": 218.52350163060007,
+        "end_t": 236.34106744775178,
+        "scope": "Descriptive first-leg diagnostic added for the post-descent walking question; not a checkpoint-selection or joint-goal criterion. Partial legs remain labelled incomplete."
+      },
+      {
+        "seed": 186002,
+        "descent_exit_reached": true,
+        "completed_leg": true,
+        "moving_swings": 116,
+        "median_peak_m": 0.002540994999788075,
+        "start_t": 219.43171027543653,
+        "end_t": 237.492064542198,
+        "scope": "Descriptive first-leg diagnostic added for the post-descent walking question; not a checkpoint-selection or joint-goal criterion. Partial legs remain labelled incomplete."
+      },
+      {
+        "seed": 186003,
+        "descent_exit_reached": true,
+        "completed_leg": true,
+        "moving_swings": 116,
+        "median_peak_m": 0.00252643599082839,
+        "start_t": 218.35428543844782,
+        "end_t": 236.17185125559953,
+        "scope": "Descriptive first-leg diagnostic added for the post-descent walking question; not a checkpoint-selection or joint-goal criterion. Partial legs remain labelled incomplete."
+      }
+    ],
+    "fixed": [
+      {
+        "seed": 186000,
+        "descent_exit_reached": true,
+        "completed_leg": true,
+        "moving_swings": 128,
+        "median_peak_m": 0.004825543958041328,
+        "start_t": 203.92267840339568,
+        "end_t": 223.45856516694366,
+        "scope": "Descriptive first-leg diagnostic added for the post-descent walking question; not a checkpoint-selection or joint-goal criterion. Partial legs remain labelled incomplete."
+      },
+      {
+        "seed": 186001,
+        "descent_exit_reached": true,
+        "completed_leg": true,
+        "moving_swings": 128,
+        "median_peak_m": 0.004818974291782926,
+        "start_t": 203.99298078274396,
+        "end_t": 224.75180195914103,
+        "scope": "Descriptive first-leg diagnostic added for the post-descent walking question; not a checkpoint-selection or joint-goal criterion. Partial legs remain labelled incomplete."
+      }
+    ],
+    "static": [
+      {
+        "seed": 186000,
+        "descent_exit_reached": true,
+        "completed_leg": true,
+        "moving_swings": 116,
+        "median_peak_m": 0.002539863591861258,
+        "start_t": 213.0783371092178,
+        "end_t": 230.89590292636953,
+        "scope": "Descriptive first-leg diagnostic added for the post-descent walking question; not a checkpoint-selection or joint-goal criterion. Partial legs remain labelled incomplete."
+      },
+      {
+        "seed": 186001,
+        "descent_exit_reached": true,
+        "completed_leg": true,
+        "moving_swings": 116,
+        "median_peak_m": 0.002533349388881806,
+        "start_t": 213.1486394885661,
+        "end_t": 232.19240959667613,
+        "scope": "Descriptive first-leg diagnostic added for the post-descent walking question; not a checkpoint-selection or joint-goal criterion. Partial legs remain labelled incomplete."
+      }
+    ]
+  },
+  "walking_training_candidates": [
+    {
+      "seed": 184000,
+      "destination": "drawer",
+      "action": "W4",
+      "valid": true,
+      "success": true,
+      "failure": null,
+      "moving_sole_clearance_m": 0.002526436527860211,
+      "steps": 168,
+      "duration_s": 156.90673601008143,
+      "native_acceleration_rms_rad_s2": 139.70016531543126,
+      "selected_training_label": true,
+      "initial_state_sha256": "7d8c0321ebf8a70a5807030c3e6213ffb5ffefe53cffefe8880dfbb07209efbc"
+    },
+    {
+      "seed": 184000,
+      "destination": "drawer",
+      "action": "W5",
+      "valid": true,
+      "success": true,
+      "failure": null,
+      "moving_sole_clearance_m": 0.002553682101333953,
+      "steps": 170,
+      "duration_s": 147.99550069292366,
+      "native_acceleration_rms_rad_s2": 138.9689742733846,
+      "selected_training_label": false,
+      "initial_state_sha256": "7d8c0321ebf8a70a5807030c3e6213ffb5ffefe53cffefe8880dfbb07209efbc"
+    },
+    {
+      "seed": 184000,
+      "destination": "drawer",
+      "action": "W8",
+      "valid": false,
+      "success": true,
+      "failure": null,
+      "moving_sole_clearance_m": 0.004831898361709688,
+      "steps": 182,
+      "duration_s": 149.46939825065556,
+      "native_acceleration_rms_rad_s2": 161.7027351883435,
+      "selected_training_label": false,
+      "initial_state_sha256": "7d8c0321ebf8a70a5807030c3e6213ffb5ffefe53cffefe8880dfbb07209efbc"
+    },
+    {
+      "seed": 184000,
+      "destination": "laptop",
+      "action": "W4",
+      "valid": true,
+      "success": true,
+      "failure": null,
+      "moving_sole_clearance_m": 0.0025604844892239903,
+      "steps": 144,
+      "duration_s": 64.65529985365035,
+      "native_acceleration_rms_rad_s2": 140.84987486387206,
+      "selected_training_label": false,
+      "initial_state_sha256": "0775f3310c573a9363a5415740bf8ae41a9492a990cb568ca67b832eca287864"
+    },
+    {
+      "seed": 184000,
+      "destination": "laptop",
+      "action": "W5",
+      "valid": true,
+      "success": true,
+      "failure": null,
+      "moving_sole_clearance_m": 0.0025604844892239903,
+      "steps": 142,
+      "duration_s": 61.723854128732654,
+      "native_acceleration_rms_rad_s2": 140.68961713827113,
+      "selected_training_label": false,
+      "initial_state_sha256": "0775f3310c573a9363a5415740bf8ae41a9492a990cb568ca67b832eca287864"
+    },
+    {
+      "seed": 184000,
+      "destination": "laptop",
+      "action": "W8",
+      "valid": true,
+      "success": true,
+      "failure": null,
+      "moving_sole_clearance_m": 0.004825720798162805,
+      "steps": 170,
+      "duration_s": 65.19074239403548,
+      "native_acceleration_rms_rad_s2": 157.0503313954876,
+      "selected_training_label": true,
+      "initial_state_sha256": "0775f3310c573a9363a5415740bf8ae41a9492a990cb568ca67b832eca287864"
+    },
+    {
+      "seed": 184000,
+      "destination": "globe",
+      "action": "W8",
+      "valid": true,
+      "success": true,
+      "failure": null,
+      "moving_sole_clearance_m": 0.0046623741851946265,
+      "steps": 122,
+      "duration_s": 16.704989790488867,
+      "native_acceleration_rms_rad_s2": 154.2778948663584,
+      "selected_training_label": true,
+      "initial_state_sha256": "80ca61c966a450265b4f437407e5ec318415bd3c59d0ac20e764e27231f9ae45"
+    },
+    {
+      "seed": 184000,
+      "destination": "globe",
+      "action": "W5",
+      "valid": true,
+      "success": true,
+      "failure": null,
+      "moving_sole_clearance_m": 0.00248156217767211,
+      "steps": 134,
+      "duration_s": 18.17316506152963,
+      "native_acceleration_rms_rad_s2": 136.30530595711625,
+      "selected_training_label": false,
+      "initial_state_sha256": "80ca61c966a450265b4f437407e5ec318415bd3c59d0ac20e764e27231f9ae45"
+    },
+    {
+      "seed": 184000,
+      "destination": "globe",
+      "action": "W6",
+      "valid": true,
+      "success": true,
+      "failure": null,
+      "moving_sole_clearance_m": 0.002480179936432083,
+      "steps": 120,
+      "duration_s": 16.461383871351813,
+      "native_acceleration_rms_rad_s2": 138.59558466033567,
+      "selected_training_label": false,
+      "initial_state_sha256": "80ca61c966a450265b4f437407e5ec318415bd3c59d0ac20e764e27231f9ae45"
+    },
+    {
+      "seed": 184001,
+      "destination": "drawer",
+      "action": "W4",
+      "valid": true,
+      "success": true,
+      "failure": null,
+      "moving_sole_clearance_m": 0.0025333489526770583,
+      "steps": 178,
+      "duration_s": 158.13294030103975,
+      "native_acceleration_rms_rad_s2": 139.01310660323915,
+      "selected_training_label": false,
+      "initial_state_sha256": "fa499027790099b6accc8cae394ed108fd274334ed43e00e50fd4ebdca6b2bcf"
+    },
+    {
+      "seed": 184001,
+      "destination": "drawer",
+      "action": "W5",
+      "valid": true,
+      "success": true,
+      "failure": null,
+      "moving_sole_clearance_m": 0.0025492382037678946,
+      "steps": 164,
+      "duration_s": 147.25814317929405,
+      "native_acceleration_rms_rad_s2": 138.02174567508845,
+      "selected_training_label": false,
+      "initial_state_sha256": "fa499027790099b6accc8cae394ed108fd274334ed43e00e50fd4ebdca6b2bcf"
+    },
+    {
+      "seed": 184001,
+      "destination": "drawer",
+      "action": "W8",
+      "valid": true,
+      "success": true,
+      "failure": null,
+      "moving_sole_clearance_m": 0.004818974808230788,
+      "steps": 192,
+      "duration_s": 150.69233266350466,
+      "native_acceleration_rms_rad_s2": 158.43023795590693,
+      "selected_training_label": true,
+      "initial_state_sha256": "fa499027790099b6accc8cae394ed108fd274334ed43e00e50fd4ebdca6b2bcf"
+    },
+    {
+      "seed": 184001,
+      "destination": "laptop",
+      "action": "W4",
+      "valid": true,
+      "success": true,
+      "failure": null,
+      "moving_sole_clearance_m": 0.002556929129375424,
+      "steps": 142,
+      "duration_s": 64.39370960491257,
+      "native_acceleration_rms_rad_s2": 141.61867387675076,
+      "selected_training_label": false,
+      "initial_state_sha256": "177b115d61adf5d0be773f65924657ca1e96519f99f8f59e24e9aa9e1847265f"
+    },
+    {
+      "seed": 184001,
+      "destination": "laptop",
+      "action": "W5",
+      "valid": true,
+      "success": true,
+      "failure": null,
+      "moving_sole_clearance_m": 0.0025613752712195974,
+      "steps": 138,
+      "duration_s": 61.25462662005927,
+      "native_acceleration_rms_rad_s2": 141.68905040497003,
+      "selected_training_label": false,
+      "initial_state_sha256": "177b115d61adf5d0be773f65924657ca1e96519f99f8f59e24e9aa9e1847265f"
+    },
+    {
+      "seed": 184001,
+      "destination": "laptop",
+      "action": "W8",
+      "valid": true,
+      "success": true,
+      "failure": null,
+      "moving_sole_clearance_m": 0.00482406893837139,
+      "steps": 162,
+      "duration_s": 64.22858076039685,
+      "native_acceleration_rms_rad_s2": 159.30850191917435,
+      "selected_training_label": true,
+      "initial_state_sha256": "177b115d61adf5d0be773f65924657ca1e96519f99f8f59e24e9aa9e1847265f"
+    },
+    {
+      "seed": 184001,
+      "destination": "globe",
+      "action": "W8",
+      "valid": true,
+      "success": true,
+      "failure": null,
+      "moving_sole_clearance_m": 0.004659906896872654,
+      "steps": 124,
+      "duration_s": 16.953500526789753,
+      "native_acceleration_rms_rad_s2": 153.49374051974738,
+      "selected_training_label": true,
+      "initial_state_sha256": "6e6036c7c81c2652d91fe87a8ce933a3b34b30175c014549e23dc2fca179cfc4"
+    },
+    {
+      "seed": 184001,
+      "destination": "globe",
+      "action": "W5",
+      "valid": true,
+      "success": true,
+      "failure": null,
+      "moving_sole_clearance_m": 0.002475548093190558,
+      "steps": 130,
+      "duration_s": 17.67941346703708,
+      "native_acceleration_rms_rad_s2": 135.67048779435822,
+      "selected_training_label": false,
+      "initial_state_sha256": "6e6036c7c81c2652d91fe87a8ce933a3b34b30175c014549e23dc2fca179cfc4"
+    },
+    {
+      "seed": 184001,
+      "destination": "globe",
+      "action": "W6",
+      "valid": true,
+      "success": true,
+      "failure": null,
+      "moving_sole_clearance_m": 0.002470878930170434,
+      "steps": 116,
+      "duration_s": 15.963544929222735,
+      "native_acceleration_rms_rad_s2": 136.5908729146396,
+      "selected_training_label": false,
+      "initial_state_sha256": "6e6036c7c81c2652d91fe87a8ce933a3b34b30175c014549e23dc2fca179cfc4"
+    }
+  ],
+  "identical_observation_label_conflicts": [
+    {
+      "observation": {
+        "available_actions": [
+          "W0",
+          "W3",
+          "W4",
+          "W5",
+          "W8"
+        ],
+        "body_tilt_degrees": 0,
+        "domain": "walk",
+        "goal_offset_mm": [
+          245.0,
+          -20.0
+        ],
+        "heading_degrees": 90,
+        "loaded_feet": {
+          "left": 0.8,
+          "right": 0.8
+        },
+        "navigation": "turn toward travel, walk forward, align before task",
+        "required_route": "supported 180-degree book turn and forward descent",
+        "root_height_mm": 142,
+        "station": "drawer",
+        "steps_so_far": 20,
+        "terrain": "book_descent_and_flat"
+      },
+      "labels": [
+        {
+          "seed": 184000,
+          "action": "W4"
+        },
+        {
+          "seed": 184001,
+          "action": "W8"
+        }
+      ]
+    }
+  ],
+  "static_control_training_scope": "Built from the two guarded teachers. The selector additionally receives three laptop regression examples; this static control does not receive those three labels.",
+  "resource_receipt_caveat": "The shared receipt helper reports 3072 MiB, inherited from an older function. C18 functions declare 4096 MiB. CPU and measured duration accounting use the actual one-CPU configuration.",
+  "limits": [
+    "Four final scenarios in one furnished layout. No hardware validation.",
+    "Tinker trains LoRA controller selection. Native gait weights stay fixed.",
+    "P5/P6 laptop repair and W8 foot lift are engineered and shared by every checkpoint.",
+    "A foot-clearance gain alone does not establish fewer steps, faster completion or smoother arms.",
+    "Identical action prefixes with different physical states cannot be attributed to a changed selector.",
+    "The static control omits the three additional regression labels used for selector training.",
+    "Parent proposals are evaluated on a guarded trajectory. Teacher overrides change subsequent states; these are not all states visited by the unmodified parent.",
+    "No causal search or memory ablation."
+  ]
+}

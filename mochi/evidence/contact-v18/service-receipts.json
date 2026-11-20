@@ -1,0 +1,1921 @@
+{
+  "study": "mochi-contact-v18",
+  "run_id": "mochi-c18-44790861532",
+  "source_sha": "bdba8600e9abb94c20aa1dc68ee617b51ee4999c",
+  "execution_workflow_run": 44800327838,
+  "budget_usage": {
+    "physical_rollouts": 142,
+    "simulation_cpu_hours": 11.727207965543387,
+    "optimizer_updates": 16,
+    "training_token_presentations": 300707,
+    "inference_tokens": 165677,
+    "exa_searches": 1,
+    "past_writes": 6,
+    "past_recalls": 8
+  },
+  "physics_receipts": [
+    {
+      "phase": "Frozen repair preflight and untrained-parent development baseline",
+      "seed": 184002,
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 1189.394388521,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 0,
+        "paired_same_process": false
+      }
+    },
+    {
+      "phase": "Frozen repair preflight and untrained-parent development baseline",
+      "seed": 185000,
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 1241.5381540419999,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 4562,
+        "paired_same_process": false
+      }
+    },
+    {
+      "phase": "Frozen repair preflight and untrained-parent development baseline",
+      "seed": 185001,
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 1425.858415772,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 5185,
+        "paired_same_process": false
+      }
+    },
+    {
+      "phase": "Frozen repair preflight and untrained-parent development baseline",
+      "seed": 185002,
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 1451.931131416,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 5180,
+        "paired_same_process": false
+      }
+    },
+    {
+      "phase": "Verify paired runtime wrapper without changing the physical evaluator",
+      "seed": 184002,
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 4.407922986000001,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt"
+      }
+    },
+    {
+      "phase": "Guarded collection on actual parent-visited training states",
+      "seed": 184000,
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 27,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 4309.4460650129995,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 5186
+      }
+    },
+    {
+      "phase": "Guarded collection on actual parent-visited training states",
+      "seed": 184001,
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 27,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 4580.5625502600005,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 5173
+      }
+    },
+    {
+      "phase": "Matched development evaluations at every actual checkpoint",
+      "seed": 185001,
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 850.939156186,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "SkylakeX"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "SkylakeX"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 3541,
+        "paired_same_process": false
+      }
+    },
+    {
+      "phase": "Matched development evaluations at every actual checkpoint",
+      "seed": 185000,
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 1165.623393064,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 4561,
+        "paired_same_process": false
+      }
+    },
+    {
+      "phase": "Matched development evaluations at every actual checkpoint",
+      "seed": 185002,
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 1288.8643218410002,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 4552,
+        "paired_same_process": false
+      }
+    },
+    {
+      "phase": "Matched development evaluations at every actual checkpoint",
+      "seed": 185001,
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 1138.271839398,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 3526,
+        "paired_same_process": false
+      }
+    },
+    {
+      "phase": "Matched development evaluations at every actual checkpoint",
+      "seed": 185000,
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 1267.206867636,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 5174,
+        "paired_same_process": false
+      }
+    },
+    {
+      "phase": "Matched development evaluations at every actual checkpoint",
+      "seed": 185002,
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 1351.74403463,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 5172,
+        "paired_same_process": false
+      }
+    },
+    {
+      "phase": "Matched development evaluations at every actual checkpoint",
+      "seed": 185000,
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 846.206290198,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "SkylakeX"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "SkylakeX"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 3536,
+        "paired_same_process": false
+      }
+    },
+    {
+      "phase": "Matched development evaluations at every actual checkpoint",
+      "seed": 185001,
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 1209.592377188,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 3526,
+        "paired_same_process": false
+      }
+    },
+    {
+      "phase": "Matched development evaluations at every actual checkpoint",
+      "seed": 185002,
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 1415.165580166,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 5177,
+        "paired_same_process": false
+      }
+    },
+    {
+      "phase": "Fresh final tests with paired reset playback and fixed/static controls",
+      "seed": 186000,
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 2,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 1718.9434546070001,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "SkylakeX"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "SkylakeX"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 7064,
+        "paired_same_process": true,
+        "paired_runtime_seconds_max": 3600,
+        "runtime_scope": "Original evaluator called locally inside the same worker; timeout envelope only."
+      }
+    },
+    {
+      "phase": "Fresh final tests with paired reset playback and fixed/static controls",
+      "seed": 186001,
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 2,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 2350.270088933,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 9132,
+        "paired_same_process": true,
+        "paired_runtime_seconds_max": 3600,
+        "runtime_scope": "Original evaluator called locally inside the same worker; timeout envelope only."
+      }
+    },
+    {
+      "phase": "Fresh final tests with paired reset playback and fixed/static controls",
+      "seed": 186002,
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 2,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 2516.779334133,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "SkylakeX"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "SkylakeX"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 7068,
+        "paired_same_process": true,
+        "paired_runtime_seconds_max": 3600,
+        "runtime_scope": "Original evaluator called locally inside the same worker; timeout envelope only."
+      }
+    },
+    {
+      "phase": "Fresh final tests with paired reset playback and fixed/static controls",
+      "seed": 186003,
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 2,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 2560.09307926,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 10372,
+        "paired_same_process": true,
+        "paired_runtime_seconds_max": 3600,
+        "runtime_scope": "Original evaluator called locally inside the same worker; timeout envelope only."
+      }
+    },
+    {
+      "phase": "Fresh final tests with paired reset playback and fixed/static controls",
+      "seed": 186000,
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 2,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 2342.2735070660005,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 0,
+        "paired_same_process": true,
+        "paired_runtime_seconds_max": 3600,
+        "runtime_scope": "Original evaluator called locally inside the same worker; timeout envelope only."
+      }
+    },
+    {
+      "phase": "Fresh final tests with paired reset playback and fixed/static controls",
+      "seed": 186001,
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 2,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 2695.5671989290004,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 0,
+        "paired_same_process": true,
+        "paired_runtime_seconds_max": 3600,
+        "runtime_scope": "Original evaluator called locally inside the same worker; timeout envelope only."
+      }
+    }
+  ],
+  "services": {
+    "actors": {
+      "researcher": "mochi-c18-44790861532-researcher",
+      "designer": "mochi-c18-44790861532-designer",
+      "experimenter": "mochi-c18-44790861532-experimenter",
+      "critic": "mochi-c18-44790861532-critic"
+    },
+    "audiences": {
+      "shared": "mochi-c18-44790861532-shared",
+      "critic_private": "mochi-c18-44790861532-critic"
+    },
+    "records": [
+      {
+        "id": "mochi-c18-44790861532-r0",
+        "role": "researcher",
+        "author": "mochi-c18-44790861532-researcher",
+        "audience": "mochi-c18-44790861532-shared",
+        "at": "2026-11-20T18:16:03.963677+00:00",
+        "sha256": "ec9243de80c7c7e11350abf6c6eba1612f51fe83d9b0786372275c95e0d0ec87",
+        "ingestion_id": "b4f16acc-aebb-44a4-ad4a-caa29bd44dac",
+        "payload": {
+          "record_id": "mochi-c18-44790861532-r0",
+          "author": "mochi-c18-44790861532-researcher",
+          "occurred_at": "2026-11-20T18:16:03.963677+00:00",
+          "content": {
+            "kind": "hypothesis",
+            "experiment_id": "mochi-c18-44790861532",
+            "observation": "V17 selected model failed at laptop contact on all four opened cases; those cases are now regression evidence.",
+            "engineering_evidence": {
+              "path": "evidence/contact-v18/engineering.json",
+              "sha256": "3c9ffdd1f4bf103b389c6dc55cc0df4a4e2c758badf25a93dcaa4b2aeb037801",
+              "production_validations": [
+                "production-103000",
+                "production-103001",
+                "production-old-training"
+              ]
+            },
+            "sources": [
+              {
+                "url": "https://arxiv.org/abs/2609.25486",
+                "title": "Brace Yourself: Task-Conditioned Environmental Bracing for Forceful Humanoid Manipulation",
+                "retrieved_at": "2026-11-20T18:16:03.899283+00:00",
+                "excerpt_sha256": "525d18e8a4e3e6137869f00ea9e3876edc8f852df9d176f691e6d66eea2efe14",
+                "excerpt_storage": "Backend artifact; URL and provenance retained in this public report"
+              },
+              {
+                "url": "https://opt2skill.github.io/",
+                "title": "Opt2Skill",
+                "retrieved_at": "2026-11-20T18:16:03.899301+00:00",
+                "excerpt_sha256": "fe35cb53d1c3e36668a027f0aca0b2f3a0288d7ecf9a1878835dfdbe611ea59e",
+                "excerpt_storage": "Backend artifact; URL and provenance retained in this public report"
+              },
+              {
+                "url": "https://www.centropiaggio.unipi.it/sites/default/files/2015_fgb_2015.pdf",
+                "title": "Optimal Contact Force Distribution for Compliant Humanoid Robots in Whole-Body Loco-Manipulation Tasks",
+                "retrieved_at": "2026-11-20T18:16:03.899321+00:00",
+                "excerpt_sha256": "ec1b788aa3d837f104248b9569c8f28e1f4e1aaa044098f069ee8d7cbccf9091",
+                "excerpt_storage": "Backend artifact; URL and provenance retained in this public report"
+              }
+            ],
+            "hypothesis": "A verified contact mechanism and arm posture can preserve support during lid closure. Evaluate the frozen repair; do not infer success from a source."
+          }
+        },
+        "status": "completed",
+        "write_to_ready_seconds": 5.517799547999999
+      },
+      {
+        "id": "mochi-c18-44790861532-r1",
+        "role": "designer",
+        "author": "mochi-c18-44790861532-designer",
+        "audience": "mochi-c18-44790861532-shared",
+        "at": "2026-11-20T18:16:13.196974+00:00",
+        "sha256": "3b8e40de2d6511faff644fc5639827728a91d7ab1508801ccf02812fb10049a4",
+        "ingestion_id": "12219442-510c-4a48-bff6-9e0eb50c5b72",
+        "payload": {
+          "record_id": "mochi-c18-44790861532-r1",
+          "author": "mochi-c18-44790861532-designer",
+          "occurred_at": "2026-11-20T18:16:13.196974+00:00",
+          "content": {
+            "kind": "experiment-plan",
+            "experiment_id": "mochi-c18-44790861532",
+            "allocation": "contact_and_recovery",
+            "training_seeds": [
+              184000,
+              184001
+            ],
+            "criteria": "Actual completed contact and safe withdrawal; fixed verifiers; no positive labels for failed branches."
+          }
+        },
+        "status": "completed",
+        "write_to_ready_seconds": 5.396620928000004
+      },
+      {
+        "id": "mochi-c18-44790861532-r2",
+        "role": "experimenter",
+        "author": "mochi-c18-44790861532-experimenter",
+        "audience": "mochi-c18-44790861532-shared",
+        "at": "2026-11-20T20:34:28.281833+00:00",
+        "sha256": "cc2b161052fdd03d90c2814d3942372b254072fcb3c6925359ecca1bbcae9d87",
+        "ingestion_id": "323893e9-728c-4a94-8c64-2c3affb8ceae",
+        "payload": {
+          "record_id": "mochi-c18-44790861532-r2",
+          "author": "mochi-c18-44790861532-experimenter",
+          "occurred_at": "2026-11-20T20:34:28.281833+00:00",
+          "content": {
+            "kind": "training-observations",
+            "experiment_id": "mochi-c18-44790861532",
+            "data_audit": {
+              "walk": {
+                "examples": 8,
+                "labels": {
+                  "W2": 2,
+                  "W4": 1,
+                  "W8": 5
+                }
+              },
+              "alarm": {
+                "examples": 2,
+                "labels": {
+                  "H0": 2
+                }
+              },
+              "drawer": {
+                "examples": 2,
+                "labels": {
+                  "C": 2
+                }
+              },
+              "laptop": {
+                "examples": 5,
+                "labels": {
+                  "P4": 2,
+                  "P5": 1,
+                  "P6": 2
+                }
+              },
+              "globe": {
+                "examples": 2,
+                "labels": {
+                  "G0": 2
+                }
+              },
+              "recovery": {
+                "examples": 8,
+                "labels": {
+                  "R4": 6,
+                  "R0": 2
+                }
+              }
+            },
+            "complete_guarded_sequences": 2,
+            "data_sha256": "9e0c0692eca00eef44ca3c09f94d3cc3e4ab5c155448a14d6bd67fa6f6e37a8d"
+          }
+        },
+        "status": "completed",
+        "write_to_ready_seconds": 17.02185422399998
+      },
+      {
+        "id": "mochi-c18-44790861532-r3",
+        "role": "experimenter",
+        "author": "mochi-c18-44790861532-experimenter",
+        "audience": "mochi-c18-44790861532-shared",
+        "at": "2026-11-20T23:16:13.812302+00:00",
+        "sha256": "ceca87d795d0edcdbdbcea3296a9c484074cf220882905cd9bda2a41e4a37fcc",
+        "ingestion_id": "a30a1398-865b-421a-a189-4c46ea55f564",
+        "payload": {
+          "record_id": "mochi-c18-44790861532-r3",
+          "author": "mochi-c18-44790861532-experimenter",
+          "occurred_at": "2026-11-20T23:16:13.812302+00:00",
+          "content": {
+            "kind": "final-observation",
+            "experiment_id": "mochi-c18-44790861532",
+            "selected_update": 0,
+            "optimizer_updates": 16,
+            "cohort": {
+              "parent": {
+                "n": 4,
+                "complete_successes": 1,
+                "qualified_complete_successes": 0,
+                "falls": 2,
+                "invalid_contacts": 1,
+                "successful_mean_steps": null,
+                "successful_mean_seconds": null,
+                "successful_mean_recovery_arm_joint_travel_rad": null
+              },
+              "selected": {
+                "n": 4,
+                "complete_successes": 1,
+                "qualified_complete_successes": 0,
+                "falls": 2,
+                "invalid_contacts": 1,
+                "successful_mean_steps": null,
+                "successful_mean_seconds": null,
+                "successful_mean_recovery_arm_joint_travel_rad": null
+              },
+              "fixed": {
+                "n": 2,
+                "complete_successes": 0,
+                "qualified_complete_successes": 0,
+                "falls": 0,
+                "invalid_contacts": 1,
+                "successful_mean_steps": null,
+                "successful_mean_seconds": null,
+                "successful_mean_recovery_arm_joint_travel_rad": null
+              },
+              "static": {
+                "n": 2,
+                "complete_successes": 1,
+                "qualified_complete_successes": 0,
+                "falls": 0,
+                "invalid_contacts": 1,
+                "successful_mean_steps": null,
+                "successful_mean_seconds": null,
+                "successful_mean_recovery_arm_joint_travel_rad": null
+              }
+            },
+            "paired": {
+              "n": 0,
+              "scenario_step_reductions": [],
+              "mean_step_reduction_fraction": null,
+              "mean_time_reduction_fraction": null,
+              "mean_recovery_arm_travel_reduction_fraction": null,
+              "mean_intertask_arm_travel_reduction_fraction": null,
+              "mean_step_reduction_bootstrap_95": null,
+              "mean_time_reduction_bootstrap_95": null,
+              "uncertainty_scope": "Deterministic paired resampling of this small fixed-layout cohort; not a guarantee for other layouts or hardware."
+            },
+            "all_fresh_tasks_qualified": false,
+            "improvement_goal_met": false
+          }
+        },
+        "status": "completed",
+        "write_to_ready_seconds": 21.852119279999897
+      },
+      {
+        "id": "mochi-c18-44790861532-r4",
+        "role": "critic",
+        "author": "mochi-c18-44790861532-critic",
+        "audience": "mochi-c18-44790861532-shared",
+        "at": "2026-11-20T23:16:42.661643+00:00",
+        "sha256": "ad65268d5025b454f32883d84b25212a17bda82f4f2408564df2cabc26c0638d",
+        "ingestion_id": "73ac9813-89d2-42d7-a12d-c29c8079a1c7",
+        "payload": {
+          "record_id": "mochi-c18-44790861532-r4",
+          "author": "mochi-c18-44790861532-critic",
+          "occurred_at": "2026-11-20T23:16:42.661643+00:00",
+          "content": {
+            "kind": "conclusion",
+            "experiment_id": "mochi-c18-44790861532",
+            "model_verdict": "reject_joint_improvement",
+            "measured_goal_met": false,
+            "all_fresh_tasks_qualified": false,
+            "qualification": "Deterministic measurements govern the conclusion. Fixed and static controls limit claims of adaptation; no hardware or native gait training."
+          }
+        },
+        "status": "completed",
+        "write_to_ready_seconds": 10.831629050999254
+      }
+    ],
+    "reads": [
+      {
+        "reader": "mochi-c18-44790861532-designer",
+        "reader_role": "designer",
+        "author": "mochi-c18-44790861532-researcher",
+        "record_id": "mochi-c18-44790861532-r0",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "ec9243de80c7c7e11350abf6c6eba1612f51fe83d9b0786372275c95e0d0ec87",
+        "at": "2026-11-20T18:16:10.319364+00:00",
+        "retrieval": "source-verified compact evidence, 8000-token budget, no occurrence window",
+        "attempts": [
+          {
+            "at": "2026-11-20T18:16:10.319350+00:00",
+            "returned_documents": 73,
+            "used_evidence_tokens": 7989,
+            "required_source_verified": true,
+            "returned_source_ids": [
+              "mochi-c18-44790861532-r0"
+            ],
+            "unrelated_source_ids_omitted": 24,
+            "all_returned_source_ids_sha256": "a076a3f4ac61b9978f7f76394b738a0facb5e78ccfae753a6271e5d80e333925"
+          }
+        ]
+      },
+      {
+        "reader": "mochi-c18-44790861532-experimenter",
+        "reader_role": "experimenter",
+        "author": "mochi-c18-44790861532-designer",
+        "record_id": "mochi-c18-44790861532-r1",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "3b8e40de2d6511faff644fc5639827728a91d7ab1508801ccf02812fb10049a4",
+        "at": "2026-11-20T18:16:19.569010+00:00",
+        "retrieval": "source-verified compact evidence, 8000-token budget, no occurrence window",
+        "attempts": [
+          {
+            "at": "2026-11-20T18:16:19.568998+00:00",
+            "returned_documents": 84,
+            "used_evidence_tokens": 7996,
+            "required_source_verified": true,
+            "returned_source_ids": [
+              "mochi-c18-44790861532-r0",
+              "mochi-c18-44790861532-r1"
+            ],
+            "unrelated_source_ids_omitted": 25,
+            "all_returned_source_ids_sha256": "10d5a3d6488cba10c3ff291690f95ae64bf90e965142be22fe80fdcca82ff9a9"
+          }
+        ]
+      },
+      {
+        "reader": "mochi-c18-44790861532-experimenter",
+        "reader_role": "experimenter",
+        "author": "mochi-c18-44790861532-designer",
+        "record_id": "mochi-c18-44790861532-r1",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "3b8e40de2d6511faff644fc5639827728a91d7ab1508801ccf02812fb10049a4",
+        "at": "2026-11-20T18:21:28.828905+00:00",
+        "retrieval": "source-verified compact evidence, 8000-token budget, no occurrence window",
+        "attempts": [
+          {
+            "at": "2026-11-20T18:21:28.828889+00:00",
+            "returned_documents": 84,
+            "used_evidence_tokens": 7996,
+            "required_source_verified": true,
+            "returned_source_ids": [
+              "mochi-c18-44790861532-r0",
+              "mochi-c18-44790861532-r1"
+            ],
+            "unrelated_source_ids_omitted": 25,
+            "all_returned_source_ids_sha256": "10d5a3d6488cba10c3ff291690f95ae64bf90e965142be22fe80fdcca82ff9a9"
+          }
+        ]
+      },
+      {
+        "reader": "mochi-c18-44790861532-experimenter",
+        "reader_role": "experimenter",
+        "author": "mochi-c18-44790861532-designer",
+        "record_id": "mochi-c18-44790861532-r1",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "3b8e40de2d6511faff644fc5639827728a91d7ab1508801ccf02812fb10049a4",
+        "at": "2026-11-20T19:17:05.801107+00:00",
+        "retrieval": "source-verified compact evidence, 8000-token budget, no occurrence window",
+        "attempts": [
+          {
+            "at": "2026-11-20T19:17:05.801090+00:00",
+            "returned_documents": 84,
+            "used_evidence_tokens": 7996,
+            "required_source_verified": true,
+            "returned_source_ids": [
+              "mochi-c18-44790861532-r0",
+              "mochi-c18-44790861532-r1"
+            ],
+            "unrelated_source_ids_omitted": 25,
+            "all_returned_source_ids_sha256": "10d5a3d6488cba10c3ff291690f95ae64bf90e965142be22fe80fdcca82ff9a9"
+          }
+        ]
+      },
+      {
+        "reader": "mochi-c18-44790861532-critic",
+        "reader_role": "critic",
+        "author": "mochi-c18-44790861532-experimenter",
+        "record_id": "mochi-c18-44790861532-r2",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "cc2b161052fdd03d90c2814d3942372b254072fcb3c6925359ecca1bbcae9d87",
+        "at": "2026-11-20T20:34:47.506041+00:00",
+        "retrieval": "source-verified compact evidence, 8000-token budget, no occurrence window",
+        "attempts": [
+          {
+            "at": "2026-11-20T20:34:47.506026+00:00",
+            "returned_documents": 74,
+            "used_evidence_tokens": 8000,
+            "required_source_verified": true,
+            "returned_source_ids": [
+              "mochi-c18-44790861532-r0",
+              "mochi-c18-44790861532-r1",
+              "mochi-c18-44790861532-r2"
+            ],
+            "unrelated_source_ids_omitted": 23,
+            "all_returned_source_ids_sha256": "1b9e4fd72f410ca18c187adce508248261ed895b28ce9939de28b264bfb9156d"
+          }
+        ]
+      },
+      {
+        "reader": "mochi-c18-44790861532-critic",
+        "reader_role": "critic",
+        "author": "mochi-c18-44790861532-experimenter",
+        "record_id": "mochi-c18-44790861532-r3",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "ceca87d795d0edcdbdbcea3296a9c484074cf220882905cd9bda2a41e4a37fcc",
+        "at": "2026-11-20T23:16:37.789841+00:00",
+        "retrieval": "source-verified compact evidence, 8000-token budget, no occurrence window",
+        "attempts": [
+          {
+            "at": "2026-11-20T23:16:37.789824+00:00",
+            "returned_documents": 76,
+            "used_evidence_tokens": 7994,
+            "required_source_verified": true,
+            "returned_source_ids": [
+              "mochi-c18-44790861532-r0",
+              "mochi-c18-44790861532-r1",
+              "mochi-c18-44790861532-r2",
+              "mochi-c18-44790861532-r3"
+            ],
+            "unrelated_source_ids_omitted": 11,
+            "all_returned_source_ids_sha256": "51f7fe6f29fd61a7b8670a176aa8dc8b8388b0c69c9875de7891855d715c20db"
+          }
+        ]
+      },
+      {
+        "reader": "mochi-c18-44790861532-researcher",
+        "reader_role": "researcher",
+        "author": "mochi-c18-44790861532-critic",
+        "record_id": "mochi-c18-44790861532-r4",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "ad65268d5025b454f32883d84b25212a17bda82f4f2408564df2cabc26c0638d",
+        "at": "2026-11-20T23:16:56.220589+00:00",
+        "retrieval": "source-verified compact evidence, 8000-token budget, no occurrence window",
+        "attempts": [
+          {
+            "at": "2026-11-20T23:16:56.220560+00:00",
+            "returned_documents": 74,
+            "used_evidence_tokens": 7990,
+            "required_source_verified": true,
+            "returned_source_ids": [
+              "mochi-c18-44790861532-r0",
+              "mochi-c18-44790861532-r1",
+              "mochi-c18-44790861532-r2",
+              "mochi-c18-44790861532-r3",
+              "mochi-c18-44790861532-r4"
+            ],
+            "unrelated_source_ids_omitted": 10,
+            "all_returned_source_ids_sha256": "f7b7745e0b28896a5ecadc824426dcf33799503103511c842de529dfbfc21803"
+          }
+        ]
+      },
+      {
+        "reader": "mochi-c18-44790861532-designer",
+        "reader_role": "designer",
+        "author": "mochi-c18-44790861532-critic",
+        "record_id": "mochi-c18-44790861532-r5",
+        "source_id_verified": false,
+        "expected_access": false,
+        "cross_agent_use": false,
+        "sha256": null,
+        "at": "2026-11-20T23:17:05.235155+00:00",
+        "retrieval": "source-verified compact evidence, 8000-token budget, no occurrence window",
+        "attempts": [
+          {
+            "at": "2026-11-20T23:17:05.234595+00:00",
+            "returned_documents": 74,
+            "used_evidence_tokens": 8000,
+            "required_source_verified": false,
+            "returned_source_ids": [
+              "mochi-c18-44790861532-r0",
+              "mochi-c18-44790861532-r1",
+              "mochi-c18-44790861532-r2",
+              "mochi-c18-44790861532-r3",
+              "mochi-c18-44790861532-r4"
+            ],
+            "unrelated_source_ids_omitted": 24,
+            "all_returned_source_ids_sha256": "4f685cf3363392aa8056ed8a5cc226527aa7889563917e1e45a6a23f68e7ec1f"
+          }
+        ]
+      }
+    ],
+    "decisions": [
+      {
+        "role": "designer",
+        "question": "Choose a balanced six-domain training allocation or extra laptop/recovery examples.",
+        "selected": "contact_and_recovery",
+        "distribution": {
+          "balanced": 0.14804719388484955,
+          "contact_and_recovery": 0.8519527316093445
+        },
+        "input_record_ids": [
+          "mochi-c18-44790861532-r0"
+        ],
+        "context_sha256": "49e5fec532d0023af227d960bac048aa24ac6d4741c23986382597b2b712b9ef",
+        "at": "2026-11-20T18:16:13.126629+00:00"
+      },
+      {
+        "role": "critic",
+        "question": "Does this evidence establish both complete fresh-scenario success and the declared efficiency improvement?",
+        "selected": "reject_joint_improvement",
+        "distribution": {
+          "qualified_success": 0.03308597952127457,
+          "reject_joint_improvement": 0.9669140577316284
+        },
+        "input_record_ids": [
+          "mochi-c18-44790861532-r3"
+        ],
+        "context_sha256": "c52b258d3b58aa06721361b2255f5d72493018687b1335692beca566bb0d3175",
+        "at": "2026-11-20T23:16:42.559415+00:00"
+      }
+    ],
+    "calls": [
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-20T18:15:57.446575+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-20T18:15:57.528441+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-20T18:15:57.575228+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-20T18:15:57.618643+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "audiences",
+        "status": 201,
+        "at": "2026-11-20T18:15:57.696174+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "audiences",
+        "status": 201,
+        "at": "2026-11-20T18:15:57.739447+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-20T18:16:04.242295+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-20T18:16:04.293566+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-20T18:16:09.481445+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-20T18:16:10.319029+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-20T18:16:13.335387+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-20T18:16:13.389520+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-20T18:16:18.593571+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-20T18:16:19.568678+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-20T18:21:22.405634+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-20T18:21:22.582091+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-20T18:21:22.657208+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-20T18:21:22.731419+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "audiences",
+        "status": 200,
+        "at": "2026-11-20T18:21:22.809512+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "audiences",
+        "status": 200,
+        "at": "2026-11-20T18:21:22.887355+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-20T18:21:28.828556+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-20T19:16:59.102387+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-20T19:16:59.214093+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-20T19:16:59.294275+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "identities",
+        "status": 200,
+        "at": "2026-11-20T19:16:59.371172+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "audiences",
+        "status": 200,
+        "at": "2026-11-20T19:16:59.496714+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "PUT",
+        "kind": "audiences",
+        "status": 200,
+        "at": "2026-11-20T19:16:59.578817+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-20T19:17:05.800664+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-20T20:34:29.262748+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-20T20:34:29.389475+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-20T20:34:34.700074+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-20T20:34:40.007927+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-20T20:34:45.303657+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-20T20:34:47.505623+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-20T23:16:14.386341+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-20T23:16:14.498254+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-20T23:16:19.801927+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-20T23:16:25.084344+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-20T23:16:30.361103+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-20T23:16:35.664391+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-20T23:16:37.789212+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-20T23:16:42.778664+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-20T23:16:42.856901+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-20T23:16:48.188042+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-20T23:16:53.493237+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-20T23:16:56.220086+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-20T23:16:57.797891+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-20T23:16:57.875755+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-20T23:17:03.182193+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-20T23:17:05.234125+00:00"
+      }
+    ],
+    "sources": [
+      {
+        "query": "humanoid robot quasi static laptop lid pushing contact force support polygon whole body manipulation balance",
+        "request_id": "afcd49898387d95ee89acd895e5b1e6a",
+        "cost_dollars": {
+          "total": 0.007,
+          "search": {
+            "neural": 0.007
+          }
+        },
+        "sources": [
+          {
+            "url": "https://arxiv.org/abs/2609.25486",
+            "title": "Brace Yourself: Task-Conditioned Environmental Bracing for Forceful Humanoid Manipulation",
+            "retrieved_at": "2026-11-20T18:16:03.899283+00:00",
+            "excerpt_sha256": "525d18e8a4e3e6137869f00ea9e3876edc8f852df9d176f691e6d66eea2efe14",
+            "excerpt_storage": "Backend artifact; URL and provenance retained in this public report"
+          },
+          {
+            "url": "https://opt2skill.github.io/",
+            "title": "Opt2Skill",
+            "retrieved_at": "2026-11-20T18:16:03.899301+00:00",
+            "excerpt_sha256": "fe35cb53d1c3e36668a027f0aca0b2f3a0288d7ecf9a1878835dfdbe611ea59e",
+            "excerpt_storage": "Backend artifact; URL and provenance retained in this public report"
+          },
+          {
+            "url": "https://www.centropiaggio.unipi.it/sites/default/files/2015_fgb_2015.pdf",
+            "title": "Optimal Contact Force Distribution for Compliant Humanoid Robots in Whole-Body Loco-Manipulation Tasks",
+            "retrieved_at": "2026-11-20T18:16:03.899321+00:00",
+            "excerpt_sha256": "ec1b788aa3d837f104248b9569c8f28e1f4e1aaa044098f069ee8d7cbccf9091",
+            "excerpt_storage": "Backend artifact; URL and provenance retained in this public report"
+          }
+        ],
+        "response_sha256": "f0a887677958cd8bf6920a6390e21db6f939b3580484df962d45dbcbad74531f",
+        "at": "2026-11-20T18:16:03.899387+00:00"
+      }
+    ],
+    "eligibility": {
+      "writers": 4,
+      "readers": 4,
+      "cross_agent_reads": 7,
+      "isolation_passed": true
+    },
+    "pending_ingestions": []
+  },
+  "scope": "Provider API activity and measured function-duration accounting, not a billing invoice."
+}

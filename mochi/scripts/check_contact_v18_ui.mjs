@@ -39,6 +39,10 @@ for(const scenario of m.scenarios){
   assert.equal(a.maximum_applied_base_force,0);assert.equal(b.maximum_applied_base_force,0);assert.equal(a.steps.attempts,a.step_events.length);assert.equal(b.steps.attempts,b.step_events.length);
   assert.match(meta.checkpoint_id,/^[0-9a-f]{64}$/);assert.equal(meta.checkpoint_update,v.update);
   assert.equal(nodes.get('#right-id').textContent,meta.checkpoint_id.slice(0,12));
+  if(m.recordings[scenario.parent_file].checkpoint_id===meta.checkpoint_id){
+   assert.match(nodes.get('#pair-headline').textContent,/Same checkpoint/);
+   assert.match(nodes.get('#pair-detail').textContent,scenario.parent_file===v.file?/same parent recording/:/do not establish a training gain/);
+  }
   for(const [j,episode] of stages.map(s=>s.episode).entries()){
    const measured=episode.flat_foot_clearance?.moving_median_peak_m;
    const text=nodes.get('#'+(j?'right':'left')+'-clearance').textContent;
@@ -72,6 +76,9 @@ for(const scenario of m.scenarios){
  }
 }
 assert.equal(nodes.get('#scenario').children.length,m.scenarios.length);
+if(m.evaluation_status==='completed'){assert.equal(Object.keys(m.recordings).length,20);assert.equal(m.scenarios.length,7)}
+if(m.selection_finalized&&m.selected_update===0)assert.match(nodes.get('#campaign-summary').textContent,/No newly trained checkpoint was promoted/);
 assert(m.optimizer_updates_completed>0);if(m.held_out)assert.equal(m.held_out.parent.n,m.held_out.selected.n);else{assert.equal(m.evaluation_status,'development_preview');assert.equal(m.selection_finalized,Boolean(JSON.parse(fs.readFileSync(base+folder+'report.json')).selected_checkpoint));assert.match(nodes.get('#test-table').children[0].textContent,/pending/)}
 for(const file of Object.keys(m.recordings))assert(gunzipSync(fs.readFileSync(base+folder+file)).length>0);
 console.log('C18 passed: actual checkpoint IDs, every available recorded version and scenario, gzip loading, synchronized full episodes, identical initial states and preserved failures. WebGL rendering is not tested.');
+console.log(JSON.stringify({evaluation_status:m.evaluation_status,recordings:Object.keys(m.recordings).length,scenarios:m.scenarios.length,selected_update:m.selected_update}));
