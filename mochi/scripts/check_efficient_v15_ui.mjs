@@ -19,6 +19,8 @@ vm.runInContext(fs.readFileSync(base+page+'.js','utf8').replace(/^import[^\n]+\n
 async function settle(){for(let i=0;i<1000;i++){await new Promise(r=>setTimeout(r,10));if(context.renderScheduled&&!vm.runInContext('loading',context))return}throw Error('Checkpoint viewer did not load')}
 await settle();
 assert.equal(stages.length,2);
+context.tick(performance.now()-1000);
+assert(parseFloat(nodes.get('#time').textContent)>=0,'A stale animation timestamp must not reverse the replay clock');
 for(const scenario of m.scenarios){
  if(scenario.partition==='held_out_pending')assert.equal(m.selection_finalized,true);
  await nodes.get('#scenario').onchange({target:{value:scenario.id}});await settle();

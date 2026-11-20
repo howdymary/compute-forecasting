@@ -30,6 +30,26 @@ def number(value, suffix=''):
     return 'Unavailable' if value is None else f'{value:.2f}{suffix}'
 
 
+def check_completed_physics(episode):
+    """Read physical endpoint and contact evidence, independently of a score."""
+    assert not episode['fall'] and not episode['invalid_contact']
+    assert episode['maximum_applied_base_force'] == 0
+    assert set(episode['results']) == set(TASKS)
+    for result in episode['results'].values():
+        assert result['success'] and result['contacts'] > 0
+        assert result['non_hand_contact_steps'] == 0 and result['max_force_n'] < .8
+    values, speeds = episode['final_object_states'], episode['final_object_speeds']
+    assert values['drawer'] < .002 and values['laptop'] < math.radians(5)
+    assert abs(values['globe']) < math.radians(3)
+    assert all(abs(speeds[task]) < limit for task, limit in [('drawer', .01), ('laptop', .15), ('globe', .07)])
+    assert [r['task'] for r in episode['recoveries']] == list(TASKS)
+    assert all(r['success'] for r in episode['recoveries'])
+    task_events = [e for e in episode['events'] if e.get('task') in TASKS
+        and e.get('phase') != 'recover' and isinstance(e.get('success'), bool)]
+    assert [e['task'] for e in task_events] == list(TASKS)
+    assert all(e['success'] for e in task_events)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--source', required=True)
@@ -61,6 +81,7 @@ def main():
     selection = read(source / 'selection-freeze.json')
     assert not selection['held_out_opened'] and selection['selected_checkpoint']['update'] == selected
     assert not selection.get('held_out'), 'Selection must precede final test results'
+    assert selection['selected_checkpoint']['checkpoint_id'] == cps[selected]['checkpoint_id']
     partitions = [set(cfg[k]) for k in ('training_seeds', 'development_seeds', 'held_out_seeds')]
     assert not any(a & b for i, a in enumerate(partitions) for b in partitions[i + 1:])
 
@@ -73,6 +94,9 @@ def main():
         stats = report['held_out'][label]
         assert stats['n'] == len(rows) and stats['qualified_complete_successes'] == len(valid)
         assert stats['complete_successes'] == sum(r['complete_sequence_success'] for r in rows)
+        for row in rows:
+            if row['complete_sequence_success']:
+                check_completed_physics(row['episode'])
         if valid:
             close(stats['successful_mean_steps'], mean(r['episode']['steps']['attempts'] for r in valid))
             close(stats['successful_mean_seconds'], mean(r['episode']['duration'] for r in valid))
@@ -122,7 +146,10 @@ def main():
         clip = json.loads(raw)
         assert clip['scenario']['seed'] == meta['seed'] and clip['maximum_applied_base_force'] == 0
         assert clip['steps']['attempts'] == len(clip['step_events']) == meta['steps']['attempts']
-        assert clip['trajectory']['frames'] and clip['trajectory']['frames'][-1]['t'] <= clip['duration'] + 1e-5
+        frames = clip['trajectory']['frames']
+        assert frames and frames[0]['t'] == 0
+        assert all(0 < b['t'] - a['t'] <= .05 for a, b in zip(frames, frames[1:])), 'Missing or reversed trajectory samples'
+        assert 0 <= clip['duration'] - frames[-1]['t'] <= .05
         assert set(clip['results']) <= set(TASKS)
         first_frames[filename] = clip['trajectory']['frames'][0]
     for scenario in manifest['scenarios']:
@@ -163,10 +190,10 @@ def main():
     for update, cp in sorted(cps.items()):
         s = cp['development']
         lines.append(f"| {update} | {s['qualified_complete_successes']}/{s['n']} | {number(s['successful_mean_steps'])} | {number(s['successful_mean_seconds'])} |")
-    lines += ['', '| Final-test policy | All four tasks | Qualified complete | Steps on qualified completions |', '|---|---:|---:|---:|']
+    lines += ['', '| Final-test policy | All four tasks | Qualified complete | Steps on qualified completions | Physical seconds |', '|---|---:|---:|---:|---:|']
     for label, item in evidence.items():
         s = item['statistics']
-        lines.append(f"| {label} | {s['complete_successes']}/{s['n']} | {s['qualified_complete_successes']}/{s['n']} | {number(s['successful_mean_steps'])} |")
+        lines.append(f"| {label} | {s['complete_successes']}/{s['n']} | {s['qualified_complete_successes']}/{s['n']} | {number(s['successful_mean_steps'])} | {number(s['successful_mean_seconds'])} |")
     lines += ['', f"The 20% step-reduction goal was {'met' if met else 'not met'} on this cohort.",
         f"Paired efficiency uses {len(pairs)} scenarios where both policies completed within all declared quality limits."]
     if pairs:

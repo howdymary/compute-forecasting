@@ -28,7 +28,7 @@ async function selectScenario(id){
  const selected=scenario.versions.findIndex(v=>v.update===manifest.selected_update);$('#checkpoint').value=selected<0?0:selected;await load();
 }
 function tick(now){
- const dt=Math.min(.07,(now-last)/1000);last=now;
+ const dt=Math.max(0,Math.min(.07,(now-last)/1000));last=now;
  if(episodes&&!loading){
   if(playing){time=Math.min(+$('#scrub').max,time+dt*+$('#speed').value);if(time>=+$('#scrub').max)setPlayback(false)}
   for(let i=0;i<2;i++){
