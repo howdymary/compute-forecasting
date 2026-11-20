@@ -69,8 +69,9 @@ def main():
         assert all(e.get('step_category') != 'postit_crossing' for e in episode['balance_measurements'])
         assert episode['maximum_applied_base_force'] == 0
         assert episode['steps']['attempts'] == meta['steps']['attempts'] == len(episode['step_events'])
-        assert episode['trajectory'][0]['t'] < .1
-        assert all(b['t'] > a['t'] for a, b in zip(episode['trajectory'], episode['trajectory'][1:]))
+        frames = episode['trajectory']['frames']
+        assert frames[0]['t'] < .1
+        assert all(b['t'] > a['t'] for a, b in zip(frames, frames[1:]))
     result = {'study': report['study'], 'run_id': report['run_id'], 'source_sha': report['source_sha'],
         'frozen_files_verified': len(cfg['frozen_sha256']), 'optimizer_updates_verified': 8,
         'domain_backwards_verified': losses, 'physical_attempts_accounted': attempts,
