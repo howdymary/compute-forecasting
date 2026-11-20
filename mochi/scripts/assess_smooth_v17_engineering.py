@@ -3,7 +3,7 @@ import json,hashlib
 from pathlib import Path
 root=Path(__file__).resolve().parents[1];out=root/'artifacts/smooth-v17-engineering';rows=[]
 for f in sorted(out.glob('*.json')):
- if f.name=='grid-ledger.json':continue
+ if f.name=='grid-ledger.json' or f.stem.startswith('globe-'):continue
  d=json.loads(f.read_text());result=d.get('result') or {};recovery=d.get('recovery') or {}
  rows.append({'id':f.stem,'parameters':d.get('parameters'),'artifact':str(f.relative_to(root)),'sha256':hashlib.sha256(f.read_bytes()).hexdigest(),'physical_attempts':d['physical_attempts'],'wall_seconds':d['wall_seconds'],'status':d.get('status','completed'),'success':result.get('success'),'failure':d.get('error'),'task_duration':result.get('duration'),'peak_force':result.get('max_force_n'),'recovery_joint_travel':recovery.get('arm_joint_travel_rad')})
 f=out/'full-reference/result.json';r=json.loads(f.read_text());rows.append({'id':'full-reference','artifact':str(f.relative_to(root)),'sha256':hashlib.sha256(f.read_bytes()).hexdigest(),'physical_attempts':1,'wall_seconds':r['wall_seconds'],'status':'completed','success':r['complete_sequence_success']})

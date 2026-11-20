@@ -263,6 +263,7 @@ async def main():
             'held_out': previous['held_out'], 'failures': assessment['held_out'], 'step_objective':cfg['objective'],
             'current_engineering':engineering['validated_route'],
             'current_failure':engineering['failed_attempts'],
+            'manual_controller_origin':'H0/P4/W6 were engineered and physically validated before this baseline; Exa supplies research corroboration, not a claim that search invented them.',
             'qualification': 'Previous test scenarios are historical evidence; V16 uses separate unopened final seeds.'})
         observation = await read('researcher', eid)
         await change('exa_searches', 1)
@@ -297,7 +298,7 @@ async def main():
             ['recovery_first', 'balanced'], [eid, hid])
         pid = await write('designer', {'kind': 'proposal', 'experiment_id': run_id,
             'hypothesis_record': hid, 'allocation': allocation,
-            'frozen_protocol_sha256': digest(cfg), 'controller_changes':'H0 IK prior and P4 force/horizon are manually engineered, validated, and frozen before every model baseline. Native gait and task verifiers stay fixed.'})
+            'frozen_protocol_sha256': digest(cfg), 'controller_changes':'H0 IK prior, P4 force/horizon and W6 globe commands are manually engineered, validated, and frozen before every model baseline. Native gait and task verifiers stay fixed.'})
         proposal = await read('experimenter', pid)
         counts = {'walk': 12 if proposal['allocation'] == 'recovery_first' else 16,
                   **{t: 3 if proposal['allocation']=='recovery_first' else 2 for t in TASKS},'recovery':16}
@@ -354,6 +355,7 @@ async def main():
                 report['data_collection_provenance']={'historical_prefixes':[t['historical_prefix'] for t in teachers],
                     'historical_behavior_policy':'121-update parent, original action library; source episodes are not relabeled as new online behavior.',
                     'new_physical_stage_count':sum(t['receipt']['physical_rollouts'] for t in teachers),
+                    'reused_clock_R4_subsegments':sum(t['reused_physical_subsegments'] for t in teachers),
                     'new_clock_reach_and_recovery_branches':True,'snapshot_training_only':True,
                     'final_evaluation_uses_uninterrupted_run':True}
                 save('training-observations',data)

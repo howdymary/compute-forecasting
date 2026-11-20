@@ -1,7 +1,7 @@
 {
   "study": "mochi-smooth-v17",
   "implementation_prompt": "docs/smooth-v17-prompt.md",
-  "prompt_sha256": "361a8ddc930048e5001d08c3fc6e88709bea544d125224567d3a85f94b14683b",
+  "prompt_sha256": "ed5771a84b01a2632759b136b27a48c8ec74929fafd638b410726ce22dc4cd91",
   "engineering_evidence_sha256": "9390d27d48d1664c526004832a1b73644df6b731c7a62390be600983eb2aa65b",
   "preflight_seed": 41001,
   "training_seeds": [
@@ -32,8 +32,8 @@
     "past_recalls": 16
   },
   "engineering_usage": {
-    "physical_rollouts": 73,
-    "simulation_cpu_hours": 3.834878270621678
+    "physical_rollouts": 77,
+    "simulation_cpu_hours": 3.870402069239898
   },
   "training": {
     "updates": 16,
@@ -265,25 +265,39 @@
     "version": "richdesk-v16-open-hinge",
     "laptop_hinge_friction_increment_nm": 0.015
   },
-  "scope": "Tinker post-trains shared Qwen3.5-4B LoRA decisions for walking, four tasks and arm recovery. H0 home-regularized clock IK and P4 0.60 N/16 s laptop control are engineered and frozen before every baseline. Native gait and physical success/force/contact predicates remain fixed. Offline historical parent-prefix states supply measured counterfactual training examples; final tests are uninterrupted physical rollouts. Prior resource use remains charged to the same 224-attempt/18-hour pool.",
+  "scope": "Tinker post-trains shared Qwen3.5-4B LoRA decisions for walking, four tasks and arm recovery. H0 home-regularized clock IK, P4 0.60 N/16 s laptop control and W6 globe-leg commands are engineered and frozen before every baseline. Native gait and physical success/force/contact predicates remain fixed. Offline historical parent-prefix states supply measured counterfactual training examples; final tests are uninterrupted physical rollouts. Prior resource use remains charged to the same 224-attempt/18-hour pool.",
   "execution_variant": "fixed H0/P4 library, offline prefix data and linked resource budget",
   "prior_execution_id": "mochi-t16r1-44686221838",
   "continuation_frozen_sha256": {
-    "docs/smooth-v17-prompt.md": "361a8ddc930048e5001d08c3fc6e88709bea544d125224567d3a85f94b14683b",
+    "docs/smooth-v16-continuation-prompt.md": "393fcf70846c464670f5109f9a11b4752be3272a3013f466e59b3e4bae388d47",
+    "evidence/smooth-v16/resume-state-probe.json": "61532c6a108ef0a7cf6cf5096c90678f61903358bc33f8763989540df12a3dc2",
+    "evidence/smooth-v16/stopped-execution.json": "6507ca36a5fdf31b749b97fa6bede5bbcffacb29b3215f000a0467bedb976495",
+    "scripts/freeze_smooth_v16r1.py": "692920f1ad8418b6b59dae54e5d432fd30a7cbcc465c309540e898b505371603",
+    "scripts/probe_smooth_v16r1_state.py": "950d9217ff805754e9f10936b5c38fd1f625f2ac4f90df0cffc23b33599f17a9",
+    "src/mochi/smooth_v16_resume/__init__.py": "d9c1d63f0a7dcd1eb1bf2ac39d9b2956acfcdadaec639c231b7ffde4f2389c15",
+    "src/mochi/smooth_v16_resume/objective.py": "afbc67d18f2313c375a03461e714eef58d185bc5c5eb8849418bf839bab69d2f",
+    "src/mochi/smooth_v16_resume/remote.py": "4a7f07b3c24c20052940c83780e13152ecda21df54a7eadfcc63a562485838a6",
+    "src/mochi/smooth_v16_resume/services.py": "5462f8ce8c11161de8fc1dc31c75b5751d19da52c893e9667a7f9c8dad28dc7f",
+    "src/mochi/smooth_v16_resume/train.py": "033a706f6687793145be87de794357c0de779a1cd693f6b8e8564dbd62fd0906",
+    "tests/test_smooth_v16_resume.py": "18dcfcdcd839f693f6e7637b0c9271b6b32781c7bd5e2e6d73834313fd8aa1f7",
+    "docs/smooth-v17-prompt.md": "ed5771a84b01a2632759b136b27a48c8ec74929fafd638b410726ce22dc4cd91",
     "evidence/smooth-v17/carried-budget.json": "a0c2e6a08cda47e32fee69ead37cfca2bd89d1109ec7296f5481d0132c9cbe95",
+    "evidence/smooth-v17/cloud-recovery-segment-probe.json": "190ee050a99edd2fdd7830a38a178cdd8a769d7621aa71721ba8294d36c60295",
     "evidence/smooth-v17/cloud-state-probe.json": "1a5072811d0a6d4913d5736512c63bc114beb988eed73485f47099b5ca037506",
     "evidence/smooth-v17/engineering.json": "9390d27d48d1664c526004832a1b73644df6b731c7a62390be600983eb2aa65b",
-    "scripts/freeze_smooth_v17.py": "3c221a0226a81c501e04aede8dd7bd13216b3e43e9092af4f2000106d38b7897",
+    "evidence/smooth-v17/globe-command-probes.json": "1c76174874dbc126c06494b14bee77d4440d3a18d62bfbf66ea9ad5343daae25",
+    "scripts/freeze_smooth_v17.py": "50ef36bb317148559889bed5fe1d33a90f2498e64ec8bde4aa86ecdd80e2efc7",
     "src/mochi/smooth_v17/__init__.py": "600b405f0b212d0469acc88b923869b5c7559f42e47e95996eabbe07e572ddac",
     "src/mochi/smooth_v17/contact.py": "62d6503c219a69bbfb184f07e0f32fe1fb8a060413bc203a115810eb69f711f9",
+    "src/mochi/smooth_v17/gait.py": "bd5d1dd70d1362ab8a466cb9dbfe8ed2c2c3024910d138bb87bad919ff6e8f6c",
     "src/mochi/smooth_v17/home_clock.py": "5f8ea1e9603327f323ec54946dbe7888be88999192c80af907aa76f46de78483",
-    "src/mochi/smooth_v17/policy.py": "c2f1df0c51c07184b5cac4725ae3587ccca711fc2c0a8fcdb8746c61192acc03",
+    "src/mochi/smooth_v17/policy.py": "05cc973a870ec7467ddc4576271b31fab9acb9ea3e95abaabeed28f4e15a825a",
     "src/mochi/smooth_v17/remote.py": "edec8bc1e3c2afac7af8cf9b6e0bc0643c36fe1067f9e35282b87ec64afe9e0c",
     "src/mochi/smooth_v17/sequence.py": "a5ffef4e5b4b28ba49235a2245fc8df7bc07c286aabf0f33de2e93e06e6a22b5",
     "src/mochi/smooth_v17/services.py": "1323ffc9fc028d5ab0c52438178586f5869e796e5bfe805e2b2d3cc99f2d448f",
-    "src/mochi/smooth_v17/staged.py": "7c5320159c44e9a797759f7d200fa470c7f9c1639c92be17dea27e7d97871622",
-    "src/mochi/smooth_v17/train.py": "583cb03b4b9c837d2219dfa128da8b5c6e44ebbec22aaf65853a9efdca6427f5",
-    "tests/test_smooth_v17.py": "16c5717ea9bc1efc585f01466ef4fd9b4263ed6451f73fcc3ce85a7fbaaab055"
+    "src/mochi/smooth_v17/staged.py": "39e2240b2a0de4e1ec9b47d29c8f85ea4ee632a989518878269725d953c357e0",
+    "src/mochi/smooth_v17/train.py": "2d5620681b18e76b74740650a72b89657d131e808426309f5b5fb0edf35cd516",
+    "tests/test_smooth_v17.py": "741b0cfbd395ab4ad4e88f83a5b060f825f3da16f49b65abcb3bce22e1f184ab"
   },
   "selection_without_qualified_parent": {
     "steps": 500,
@@ -294,8 +308,8 @@
   "workflow_sha256": "ce609aff81ab0f793964d7700e38dfe27597be1f4de9b54e11f3661d2108dcad",
   "engineering_usage_provenance": "evidence/smooth-v16/resume-state-probe.json",
   "carried_budget_usage": {
-    "physical_rollouts": 73,
-    "simulation_cpu_hours": 3.834878270621678,
+    "physical_rollouts": 77,
+    "simulation_cpu_hours": 3.870402069239898,
     "optimizer_updates": 0,
     "training_token_presentations": 0,
     "inference_tokens": 98000,
@@ -585,5 +599,447 @@
     "src/mochi/smooth_v16_resume/services.py": "5462f8ce8c11161de8fc1dc31c75b5751d19da52c893e9667a7f9c8dad28dc7f",
     "src/mochi/smooth_v16_resume/train.py": "033a706f6687793145be87de794357c0de779a1cd693f6b8e8564dbd62fd0906",
     "tests/test_smooth_v16_resume.py": "18dcfcdcd839f693f6e7637b0c9271b6b32781c7bd5e2e6d73834313fd8aa1f7"
+  },
+  "prelaunch_command_probes": {
+    "before": {
+      "physical_rollouts": 73,
+      "simulation_cpu_hours": 3.834878270621678,
+      "optimizer_updates": 0,
+      "training_token_presentations": 0,
+      "inference_tokens": 98000,
+      "exa_searches": 1,
+      "past_writes": 3,
+      "past_recalls": 4
+    },
+    "after": {
+      "physical_rollouts": 76,
+      "simulation_cpu_hours": 3.8636676463971202,
+      "optimizer_updates": 0,
+      "training_token_presentations": 0,
+      "inference_tokens": 98000,
+      "exa_searches": 1,
+      "past_writes": 3,
+      "past_recalls": 4
+    },
+    "status": "completed",
+    "attempts": [
+      {
+        "seed": 101002,
+        "candidate": "W5",
+        "status": "completed",
+        "walking_valid": true,
+        "walking_outcome": {
+          "success": true,
+          "fall": false,
+          "invalid_contact": false,
+          "duration_s": 18.661194369331042,
+          "metrics": {
+            "roll_rms_deg": 0.3704043067973131,
+            "lateral_rms_m": 0.006729524394255996,
+            "roll_peak_deg": 1.3320890220712203,
+            "sampled_joint_speed_rms_rad_s": 2.276064528321663
+          },
+          "native_smoothness": {
+            "sampled_acceleration_rms_rad_s2": 136.82585940242706,
+            "sampled_torque_change_rms_nm": 0.003103294642092728,
+            "scope": "Only adjacent samples inside native walking and turning, excluding holds and book-controller phases."
+          },
+          "longest_unsupported_seconds": 0.0,
+          "steps": {
+            "attempts": 138,
+            "completed": 138,
+            "unfinished": 0,
+            "by_category": {
+              "fixture_clearance": 34,
+              "turning": 46,
+              "flat_transit": 43,
+              "alignment": 15
+            },
+            "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+          }
+        },
+        "task_success": true,
+        "recovery_success": true,
+        "initial_state_sha256": "8dba72450eeb8259285334ecfaf6807abb159f76aac9d8ca8a3be752b97bbd32",
+        "wall_seconds": 35.8571318751201
+      },
+      {
+        "seed": 101002,
+        "candidate": "W6",
+        "status": "completed",
+        "walking_valid": true,
+        "walking_outcome": {
+          "success": true,
+          "fall": false,
+          "invalid_contact": false,
+          "duration_s": 16.70417232096156,
+          "metrics": {
+            "roll_rms_deg": 0.37386645100617355,
+            "lateral_rms_m": 0.006135429342259422,
+            "roll_peak_deg": 1.2084285186457449,
+            "sampled_joint_speed_rms_rad_s": 2.275357337730317
+          },
+          "native_smoothness": {
+            "sampled_acceleration_rms_rad_s2": 136.08613951049938,
+            "sampled_torque_change_rms_nm": 0.0031176271066930836,
+            "scope": "Only adjacent samples inside native walking and turning, excluding holds and book-controller phases."
+          },
+          "longest_unsupported_seconds": 0.0,
+          "steps": {
+            "attempts": 122,
+            "completed": 122,
+            "unfinished": 0,
+            "by_category": {
+              "fixture_clearance": 34,
+              "turning": 39,
+              "flat_transit": 38,
+              "alignment": 11
+            },
+            "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+          }
+        },
+        "task_success": true,
+        "recovery_success": true,
+        "initial_state_sha256": "8dba72450eeb8259285334ecfaf6807abb159f76aac9d8ca8a3be752b97bbd32",
+        "wall_seconds": 34.060760624706745
+      },
+      {
+        "seed": 101001,
+        "candidate": "W6",
+        "status": "completed",
+        "walking_valid": true,
+        "walking_outcome": {
+          "success": true,
+          "fall": false,
+          "invalid_contact": false,
+          "duration_s": 16.709077138125394,
+          "metrics": {
+            "roll_rms_deg": 0.3741521185343813,
+            "lateral_rms_m": 0.006177375369432977,
+            "roll_peak_deg": 1.1695033796762169,
+            "sampled_joint_speed_rms_rad_s": 2.2826051253027932
+          },
+          "native_smoothness": {
+            "sampled_acceleration_rms_rad_s2": 137.36286209261138,
+            "sampled_torque_change_rms_nm": 0.003123039572466927,
+            "scope": "Only adjacent samples inside native walking and turning, excluding holds and book-controller phases."
+          },
+          "longest_unsupported_seconds": 0.0,
+          "steps": {
+            "attempts": 122,
+            "completed": 122,
+            "unfinished": 0,
+            "by_category": {
+              "fixture_clearance": 34,
+              "turning": 39,
+              "flat_transit": 38,
+              "alignment": 11
+            },
+            "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+          }
+        },
+        "task_success": true,
+        "recovery_success": true,
+        "initial_state_sha256": "9d5436c67ba4b6c1a72e2e5af648e4c02955a5f7a880db6f587ebd39dfd7f68f",
+        "wall_seconds": 33.72386029176414
+      }
+    ]
+  },
+  "prelaunch_segment_probe": {
+    "status": "completed",
+    "before": {
+      "physical_rollouts": 76,
+      "simulation_cpu_hours": 3.8636676463971202,
+      "optimizer_updates": 0,
+      "training_token_presentations": 0,
+      "inference_tokens": 98000,
+      "exa_searches": 1,
+      "past_writes": 3,
+      "past_recalls": 4
+    },
+    "after": {
+      "physical_rollouts": 77,
+      "simulation_cpu_hours": 3.870402069239898,
+      "optimizer_updates": 0,
+      "training_token_presentations": 0,
+      "inference_tokens": 98000,
+      "exa_searches": 1,
+      "past_writes": 3,
+      "past_recalls": 4
+    },
+    "receipt": {
+      "provider": "Modal",
+      "physical_rollouts": 1,
+      "cpu": 1,
+      "memory_mib": 4096,
+      "duration_seconds": 24.243922234000003,
+      "architecture": "x86_64",
+      "threadpools": [
+        {
+          "user_api": "blas",
+          "internal_api": "openblas",
+          "num_threads": 1,
+          "prefix": "libscipy_openblas",
+          "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+          "version": "0.3.30",
+          "threading_layer": "pthreads",
+          "architecture": "SkylakeX"
+        },
+        {
+          "user_api": "blas",
+          "internal_api": "openblas",
+          "num_threads": 1,
+          "prefix": "libscipy_openblas",
+          "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+          "version": "0.3.29.dev",
+          "threading_layer": "pthreads",
+          "architecture": "SkylakeX"
+        },
+        {
+          "user_api": "openmp",
+          "internal_api": "openmp",
+          "num_threads": 1,
+          "prefix": "libgomp",
+          "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+          "version": null
+        }
+      ],
+      "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+      "operation": "branch",
+      "cursor": 1
+    },
+    "outcome": {
+      "action": "H0",
+      "success": true,
+      "failure": null,
+      "duration_s": 5.06749359976709,
+      "metrics": {
+        "roll_rms_deg": 0.08344394173571239,
+        "lateral_rms_m": 0.0015060067626575262,
+        "roll_peak_deg": 0.26202687031375826,
+        "sampled_joint_speed_rms_rad_s": 0.050661503857845465
+      },
+      "steps": {
+        "attempts": 0,
+        "completed": 0,
+        "unfinished": 0,
+        "by_category": {},
+        "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+      },
+      "result": {
+        "task": "alarm",
+        "success": true,
+        "value": -0.0003119871682246435,
+        "duration": 3.419475032719106,
+        "contacts": 712,
+        "non_hand_contact_steps": 0,
+        "max_force_n": 0.12250656147438613,
+        "fall": false,
+        "profile": {
+          "code": "H0",
+          "speed": 0.025,
+          "depth": 0.0008,
+          "force": 0.3,
+          "brake": 0.0005,
+          "hold": 0.4
+        },
+        "phase": "release",
+        "final_tip": [
+          -0.33515699430726786,
+          0.09986090231601993,
+          0.17062927162487407
+        ],
+        "final_target": [
+          -0.335,
+          0.1,
+          0.17049999999999998
+        ],
+        "controller": "home-regularized absolute IK, 0.0007 m/rad"
+      },
+      "coupled_recovery": {
+        "task": "alarm",
+        "action": "R4",
+        "success": true,
+        "duration_s": 1.648018567047984,
+        "arm_joint_travel_rad": 3.621222954512788,
+        "hand_path_m": 0.11812540627547208,
+        "fixture_contact_steps": 0,
+        "peak_fixture_force_n": 0.0,
+        "end_max_joint_error_rad": 6.35787209654829e-07,
+        "end_max_joint_speed_rad_s": 7.78977385084298e-07,
+        "fall": false,
+        "observation": {
+          "domain": "recovery",
+          "task": "alarm",
+          "active_arm": "right",
+          "joint_error_degrees": [
+            -12.4,
+            -54.6,
+            -7.8,
+            -56.2,
+            -0.0,
+            -41.5,
+            34.9
+          ],
+          "joint_speed_degrees_s": [
+            -0.1,
+            -0.0,
+            -0.0,
+            -0.0,
+            0.0,
+            -0.0,
+            -0.0
+          ],
+          "hand_body_offset_mm": [
+            62.0,
+            -39.6,
+            29.0
+          ],
+          "body_tilt_degrees": 0.5,
+          "hand_contact": false,
+          "maximum_joint_error_degrees": 56.2
+        },
+        "profile": {
+          "code": "R4",
+          "duration": 1.2,
+          "clearance": 0.55
+        }
+      },
+      "fall": false,
+      "invalid_contact": false,
+      "native_smoothness": {
+        "sampled_acceleration_rms_rad_s2": null,
+        "sampled_torque_change_rms_nm": null,
+        "scope": "Only adjacent samples inside native walking and turning, excluding holds and book-controller phases."
+      },
+      "longest_unsupported_seconds": 0.0,
+      "initial_state_sha256": "c44979a19bfe678a19a45f5cd3f9e6ac15961ff49b3ce04eac95455966d7548f",
+      "posttask_state": {
+        "path": "mochi-v17-cloud-recovery-probe-20261120/augmentation/101000-H0-posttask.pickle.gz",
+        "sha256": "44b4b4f061e73643d26fd9ce724f34170012ab92b478a478a8cf3855bbe9892f",
+        "physical_state_sha256": "5fa147dc06c362e604a8433e37d16476f8e848a6a7f1baef6b8b8888f650815b"
+      },
+      "posttask_observation": {
+        "domain": "recovery",
+        "task": "alarm",
+        "active_arm": "right",
+        "joint_error_degrees": [
+          -10,
+          -55,
+          -10,
+          -55,
+          0,
+          -40,
+          35
+        ],
+        "joint_speed_degrees_s": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "hand_body_offset_mm": [
+          60,
+          -40,
+          30
+        ],
+        "body_tilt_degrees": 0,
+        "hand_contact": false,
+        "maximum_joint_error_degrees": 56.2,
+        "available_actions": [
+          "R0",
+          "R1",
+          "R4"
+        ]
+      },
+      "coupled_recovery_outcome": {
+        "action": "R4",
+        "success": true,
+        "failure": null,
+        "duration_s": 1.648018567047984,
+        "metrics": {
+          "roll_rms_deg": 0.052863760042271384,
+          "lateral_rms_m": 0.0014693463266295683,
+          "roll_peak_deg": 0.08851023670433,
+          "sampled_joint_speed_rms_rad_s": 0.002881518799062918
+        },
+        "steps": {
+          "attempts": 0,
+          "completed": 0,
+          "unfinished": 0,
+          "by_category": {},
+          "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+        },
+        "result": {
+          "task": "alarm",
+          "action": "R4",
+          "success": true,
+          "duration_s": 1.648018567047984,
+          "arm_joint_travel_rad": 3.621222954512788,
+          "hand_path_m": 0.11812540627547208,
+          "fixture_contact_steps": 0,
+          "peak_fixture_force_n": 0.0,
+          "end_max_joint_error_rad": 6.35787209654829e-07,
+          "end_max_joint_speed_rad_s": 7.78977385084298e-07,
+          "fall": false,
+          "observation": {
+            "domain": "recovery",
+            "task": "alarm",
+            "active_arm": "right",
+            "joint_error_degrees": [
+              -12.4,
+              -54.6,
+              -7.8,
+              -56.2,
+              -0.0,
+              -41.5,
+              34.9
+            ],
+            "joint_speed_degrees_s": [
+              -0.1,
+              -0.0,
+              -0.0,
+              -0.0,
+              0.0,
+              -0.0,
+              -0.0
+            ],
+            "hand_body_offset_mm": [
+              62.0,
+              -39.6,
+              29.0
+            ],
+            "body_tilt_degrees": 0.5,
+            "hand_contact": false,
+            "maximum_joint_error_degrees": 56.2
+          },
+          "profile": {
+            "code": "R4",
+            "duration": 1.2,
+            "clearance": 0.55
+          }
+        },
+        "coupled_recovery": null,
+        "fall": false,
+        "invalid_contact": false,
+        "native_smoothness": {
+          "sampled_acceleration_rms_rad_s2": null,
+          "sampled_torque_change_rms_nm": null,
+          "scope": "Only adjacent samples inside native walking and turning, excluding holds and book-controller phases."
+        },
+        "longest_unsupported_seconds": 0.0,
+        "initial_state_sha256": "5fa147dc06c362e604a8433e37d16476f8e848a6a7f1baef6b8b8888f650815b",
+        "scope": "Actual R4 subsegment of this H0 rollout; reused as measured data without another simulation."
+      },
+      "archive": {
+        "volume": "mochi-smooth-v16-artifacts",
+        "path": "mochi-v17-cloud-recovery-probe-20261120/branch-101000-alarm-alarm-H0.json.gz",
+        "uncompressed_sha256": "7233073079de0b6b31c2658b0c02d3c37bbf76babd693549826c54d102324989",
+        "compressed_bytes": 1563
+      }
+    }
   }
 }

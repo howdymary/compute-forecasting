@@ -1,0 +1,145 @@
+{
+  "before": {
+    "physical_rollouts": 73,
+    "simulation_cpu_hours": 3.834878270621678,
+    "optimizer_updates": 0,
+    "training_token_presentations": 0,
+    "inference_tokens": 98000,
+    "exa_searches": 1,
+    "past_writes": 3,
+    "past_recalls": 4
+  },
+  "after": {
+    "physical_rollouts": 76,
+    "simulation_cpu_hours": 3.8636676463971202,
+    "optimizer_updates": 0,
+    "training_token_presentations": 0,
+    "inference_tokens": 98000,
+    "exa_searches": 1,
+    "past_writes": 3,
+    "past_recalls": 4
+  },
+  "status": "completed",
+  "attempts": [
+    {
+      "seed": 101002,
+      "candidate": "W5",
+      "status": "completed",
+      "walking_valid": true,
+      "walking_outcome": {
+        "success": true,
+        "fall": false,
+        "invalid_contact": false,
+        "duration_s": 18.661194369331042,
+        "metrics": {
+          "roll_rms_deg": 0.3704043067973131,
+          "lateral_rms_m": 0.006729524394255996,
+          "roll_peak_deg": 1.3320890220712203,
+          "sampled_joint_speed_rms_rad_s": 2.276064528321663
+        },
+        "native_smoothness": {
+          "sampled_acceleration_rms_rad_s2": 136.82585940242706,
+          "sampled_torque_change_rms_nm": 0.003103294642092728,
+          "scope": "Only adjacent samples inside native walking and turning, excluding holds and book-controller phases."
+        },
+        "longest_unsupported_seconds": 0.0,
+        "steps": {
+          "attempts": 138,
+          "completed": 138,
+          "unfinished": 0,
+          "by_category": {
+            "fixture_clearance": 34,
+            "turning": 46,
+            "flat_transit": 43,
+            "alignment": 15
+          },
+          "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+        }
+      },
+      "task_success": true,
+      "recovery_success": true,
+      "initial_state_sha256": "8dba72450eeb8259285334ecfaf6807abb159f76aac9d8ca8a3be752b97bbd32",
+      "wall_seconds": 35.8571318751201
+    },
+    {
+      "seed": 101002,
+      "candidate": "W6",
+      "status": "completed",
+      "walking_valid": true,
+      "walking_outcome": {
+        "success": true,
+        "fall": false,
+        "invalid_contact": false,
+        "duration_s": 16.70417232096156,
+        "metrics": {
+          "roll_rms_deg": 0.37386645100617355,
+          "lateral_rms_m": 0.006135429342259422,
+          "roll_peak_deg": 1.2084285186457449,
+          "sampled_joint_speed_rms_rad_s": 2.275357337730317
+        },
+        "native_smoothness": {
+          "sampled_acceleration_rms_rad_s2": 136.08613951049938,
+          "sampled_torque_change_rms_nm": 0.0031176271066930836,
+          "scope": "Only adjacent samples inside native walking and turning, excluding holds and book-controller phases."
+        },
+        "longest_unsupported_seconds": 0.0,
+        "steps": {
+          "attempts": 122,
+          "completed": 122,
+          "unfinished": 0,
+          "by_category": {
+            "fixture_clearance": 34,
+            "turning": 39,
+            "flat_transit": 38,
+            "alignment": 11
+          },
+          "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+        }
+      },
+      "task_success": true,
+      "recovery_success": true,
+      "initial_state_sha256": "8dba72450eeb8259285334ecfaf6807abb159f76aac9d8ca8a3be752b97bbd32",
+      "wall_seconds": 34.060760624706745
+    },
+    {
+      "seed": 101001,
+      "candidate": "W6",
+      "status": "completed",
+      "walking_valid": true,
+      "walking_outcome": {
+        "success": true,
+        "fall": false,
+        "invalid_contact": false,
+        "duration_s": 16.709077138125394,
+        "metrics": {
+          "roll_rms_deg": 0.3741521185343813,
+          "lateral_rms_m": 0.006177375369432977,
+          "roll_peak_deg": 1.1695033796762169,
+          "sampled_joint_speed_rms_rad_s": 2.2826051253027932
+        },
+        "native_smoothness": {
+          "sampled_acceleration_rms_rad_s2": 137.36286209261138,
+          "sampled_torque_change_rms_nm": 0.003123039572466927,
+          "scope": "Only adjacent samples inside native walking and turning, excluding holds and book-controller phases."
+        },
+        "longest_unsupported_seconds": 0.0,
+        "steps": {
+          "attempts": 122,
+          "completed": 122,
+          "unfinished": 0,
+          "by_category": {
+            "fixture_clearance": 34,
+            "turning": 39,
+            "flat_transit": 38,
+            "alignment": 11
+          },
+          "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+        }
+      },
+      "task_success": true,
+      "recovery_success": true,
+      "initial_state_sha256": "9d5436c67ba4b6c1a72e2e5af648e4c02955a5f7a880db6f587ebd39dfd7f68f",
+      "wall_seconds": 33.72386029176414
+    }
+  ]
+}

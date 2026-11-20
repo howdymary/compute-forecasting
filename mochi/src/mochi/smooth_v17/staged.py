@@ -115,6 +115,7 @@ def physics_stage(seed,run_id,operation,descriptor=None,cursor=0,action=None,dec
                     posttask=persist(f'{run_id}/augmentation/{seed}-H0-posttask.pickle.gz',{'state':state(w,include_history=False),'arrivals':saved['arrivals'],'cursor':2})
                     posttask_observation=observation(w,'recovery','alarm')
                 if success and domain not in ['walk','recovery']:
+                    recovery_start=float(w.d.time);recovery_index=len(w.measurements);recovery_initial=physical_hash(w)
                     withdrawal=execute(w,'recovery',task,'R4');success=success and withdrawal['success']
             except PhysicalStop as exc:
                 success=False;failure=str(exc)
@@ -127,6 +128,13 @@ def physics_stage(seed,run_id,operation,descriptor=None,cursor=0,action=None,dec
             if domain=='alarm' and action=='H0' and success:
                 row['posttask_state']=posttask
                 row['posttask_observation']=posttask_observation
+                assert recovery_initial==posttask['physical_state_sha256']
+                row['coupled_recovery_outcome']={'action':'R4','success':withdrawal['success'],'failure':None,
+                    'duration_s':float(w.d.time)-recovery_start,'metrics':branch_metrics(w.measurements[recovery_index:]),
+                    'steps':w.step_counter.summary(since=recovery_start),'result':withdrawal,'coupled_recovery':None,
+                    'fall':w.fall,'invalid_contact':w.invalid_contact,'native_smoothness':e['native_smoothness'],
+                    'longest_unsupported_seconds':e['longest_unsupported_seconds'],'initial_state_sha256':recovery_initial,
+                    'scope':'Actual R4 subsegment of this H0 rollout; reused as measured data without another simulation.'}
             row['archive']=archive(row,run_id,f'branch-{seed}-{domain}-{task}-{action}')
             result={'seed':seed,'outcome':row}
         elif operation=='advance':
@@ -210,8 +218,13 @@ async def staged_collect(seed,payload,run_id):
             recovery_preference,recovery_distribution=await selector.select(recovery_obs)
             recovery_rows=[]
             for action in choices('recovery','alarm'):
-                r=await call('branch',descriptor=descriptor,cursor=2,action=action)
-                recovery_rows.append(r['outcome'])
+                if action=='R4':
+                    measured=copy.deepcopy(home['coupled_recovery_outcome']);measured['archive']=home['archive']
+                    assert measured['initial_state_sha256']==descriptor['physical_state_sha256']
+                    recovery_rows.append(measured)
+                else:
+                    r=await call('branch',descriptor=descriptor,cursor=2,action=action)
+                    recovery_rows.append(r['outcome'])
             valid_recovery=[r for r in recovery_rows if valid_branch(r)]
             assert valid_recovery,'New clock reach has no safe recovery'
             action=min(valid_recovery,key=lambda r:branch_rank('recovery',r))['action']
@@ -258,6 +271,7 @@ async def staged_collect(seed,payload,run_id):
         'examples':history['examples']+([history['extra_example']] if history.get('extra_example') else []),
         'trials':history['trials']+([history['extra_trial']] if history.get('extra_trial') else []),
         'row':final['row'],'historical_prefix':history['historical_prefix'],
+        'reused_physical_subsegments':int(bool(history.get('extra_trial'))),
         'failed_trial':history.get('failed_trial'),'physical_receipts':children,
         'receipt':{'provider':'Modal','cpu':1,
             'physical_rollouts':sum(r['physical_rollouts'] for r in children),

@@ -9,6 +9,7 @@ def test_extension_keeps_every_existing_action_in_order():
         for domain in ['walk',task,'recovery']:
             old=old_choices(domain,task)
             assert policy.choices(domain,task)[:len(old)]==old
+    assert policy.choices('walk','globe')[-1]=='W6'
     assert policy.choices('alarm','alarm')[-1]=='H0'
     assert policy.choices('laptop','laptop')[-1]=='P4'
     assert next(p for p in PRESSES if p.code=='P2').force==.55

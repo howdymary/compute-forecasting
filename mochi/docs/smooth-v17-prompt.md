@@ -6,12 +6,13 @@ The first V16 execution timed out before training. Its successor preserved exact
 
 ## Freeze the engineered capability before comparing models
 
-The new library adds two classical controller choices:
+The new library adds three classical controller choices:
 
 - H0: the existing clock contact settings with a 0.0007 m/rad joint-rest prior in inverse kinematics. A matched development test reduced subsequent R4 recovery travel from about 9.06 to 3.62 rad while still physically pressing and releasing the clock.
+- W6: globe-leg speed cap 0.12 m/s and turn cap 1.0 rad/s with bounded feedback gains. It passed two development states. In a matched case it used 122 steps versus 138 for W5 and 16.70 versus 18.66 physical seconds; native acceleration and torque-change checks remained within their fixed limits.
 - P4: steady 0.60 N laptop control with a 16-second action horizon. It closed the hard training case within 12.72 seconds with peak contact force about 0.619 N. The global 0.8 N force limit, contact predicates and task-success checks are unchanged.
 
-The complete fixed-reference sequence passed locally in 339.60 physical seconds and 470 measured steps, including the supported book turnaround, forward descent, loaded Post-it crossing and all four tasks. This is controller engineering, not a Tinker result. Keep that distinction visible.
+The H0/P4 fixed-reference sequence, before adding the separately tested W6 option, passed locally in 339.60 physical seconds and 470 measured steps, including the supported book turnaround, forward descent, loaded Post-it crossing and all four tasks. This is controller engineering, not a Tinker result. Keep that distinction visible.
 
 All parent, intermediate, selected, fixed and static policies must see the same extended library, scene, route and verifiers. Reevaluate the parent with the new choice descriptions before training. Never use the older, narrower library to make the new checkpoints look better. Native ONNX locomotion weights remain fixed.
 
@@ -19,7 +20,7 @@ All parent, intermediate, selected, fixed and static policies must see the same 
 
 Reuse the recorded parent-prefix state before the laptop from each interrupted training sequence. These are offline states produced by the verified 121-update parent. Do not describe their stored actions as fresh behavior from the extended policy.
 
-From the saved clock-approach state, measure every clock choice with the same R4 withdrawal. Prefer valid task completion and less recovery joint travel, then time. Add recovery examples from the actual H0 terminal state by physically testing R0, R1 and R4. Keep the original prefix and failed alternative records.
+From the saved clock-approach state, measure every clock choice with the same R4 withdrawal. Prefer valid task completion and less recovery joint travel, then time. Add recovery examples from the actual H0 terminal state by physically testing R0 and R1 and reusing the actual R4 subsegment already recorded after that same H0 reach. Verify its exact initial-state hash; do not run or charge that segment twice. Keep the original prefix and failed alternative records.
 
 Continue each saved laptop-prefix state through the remaining tasks using new physical stages. Persist every result, state, cursor and receipt. If one training case has no valid action, retain its failed prefix and let the other cases finish. Require at least two complete training sequences and all six decision domains before scaling training. Never turn a failed task into a positive label.
 
@@ -39,7 +40,7 @@ Compare parent, selected, competent fixed and training-derived static policies. 
 
 The budget is the same pool opened by execution 44686221838: at most 224 physical attempts or stages, 18 accounted CPU-hours, 16 optimizer updates and four concurrent physics workers. Do not create a fresh allowance.
 
-The reconciled starting debit is 73 physical attempts and 3.834878270621678 accounted CPU-hours. It includes all 53 started remote stages, the preceding three local state probes 16 additional local engineering attempts and one completed cloud state probe. Two interrupted remote calls retain full timeout bounds, and the old supervisors retain conservative CPU bounds. The original reservations and reconciliation remain archived. Preserve the existing inference, search and memory counters as well.
+The reconciled starting debit is 77 physical attempts and 3.870402069239898 accounted CPU-hours. It includes all 53 started remote stages, the preceding three local state probes 16 additional local engineering attempts and two completed cloud state/segment probes and three globe-command probes. Two interrupted remote calls retain full timeout bounds, and the old supervisors retain conservative CPU bounds. The original reservations and reconciliation remain archived. Preserve the existing inference, search and memory counters as well.
 
 Use real Modal physics workers and low-CPU supervisors. Count new child calls and supervisor CPU separately. Join collection before checkpoint evaluation so concurrency stays within four physics workers. Run expensive component diagnostics serially if necessary to honor the remaining budget.
 
