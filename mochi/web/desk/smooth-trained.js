@@ -1,4 +1,4 @@
-import {createCurriculumStage} from './curriculum-stage.js';
+import {createCurriculumStage} from './smooth-stage.js';
 import {stepCountAt,taskStatesAt,comparisonEvidence,taskNames,activityAt} from './efficient-evidence.mjs';
 const $=q=>document.querySelector(q),folder='smooth-v16/';
 let manifest,stages,scenario,version,episodes,playing=true,time=0,last=performance.now(),loading=false,requestId=0;
@@ -51,7 +51,7 @@ function tick(now){
  requestAnimationFrame(tick);
 }
 async function init(){
- manifest=await json(folder+'manifest.json');stages=[createCurriculumStage($('#left'),{scene:manifest.scene,fullBody:true}),createCurriculumStage($('#right'),{scene:manifest.scene,fullBody:true})];await Promise.all(stages.map(s=>s.ready));
+ manifest=await json(folder+'manifest.json');stages=[createCurriculumStage($('#left'),{scene:manifest.scene,fullBody:true,cameraOffset:[.45,-.52,.30]}),createCurriculumStage($('#right'),{scene:manifest.scene,fullBody:true,cameraOffset:[.45,-.52,.30]})];await Promise.all(stages.map(s=>s.ready));
  for(const s of manifest.scenarios){const option=document.createElement('option');option.value=s.id;option.textContent=s.label;$('#scenario').append(option)}
  $('#scenario').onchange=e=>selectScenario(e.target.value);$('#checkpoint').oninput=()=>load();
  const query=new URLSearchParams(globalThis.location?.search||'');
@@ -62,6 +62,7 @@ async function init(){
  if(!manifest.held_out){const p=document.createElement('p');p.textContent=`Final testing is pending. ${manifest.test_pairs_available||0} matched test case${manifest.test_pairs_available===1?'':'s'} available to inspect; the full cohort summary is pending.`;$('#test-table').append(p)}
  else for(const [name,s]of Object.entries(manifest.held_out)){const p=document.createElement('p');p.textContent=`${name}: ${s.qualified_complete_successes}/${s.n} qualified completions · ${s.successful_mean_steps?.toFixed(0)??'unavailable'} steps · ${s.successful_mean_recovery_arm_joint_travel_rad?.toFixed(2)??'unavailable'} rad/recovery on successful cases`;$('#test-table').append(p)}
  for(const [id,stage]of [['left',stages[0]],['right',stages[1]]]){$('#'+id+'-follow').onclick=()=>stage.view(false);$('#'+id+'-wide').onclick=()=>stage.view(true);$('#'+id+'-feet').onclick=()=>stage.inspect('feet')}
+ $('#footfalls').onchange=e=>stages.forEach(s=>s.showFootfalls(e.target.checked));
  $('#play').onclick=()=>{if(!playing&&time>=+$('#scrub').max)time=0;setPlayback(!playing)};$('#restart').onclick=()=>{time=0;setPlayback(true)};$('#scrub').oninput=e=>{const value=+e.target.value,maximum=+$('#scrub').max;time=maximum-value<=.021?maximum:value;setPlayback(false)};
  await selectScenario(initialScenario);const requestedTime=Number(query.get('t'));if(Number.isFinite(requestedTime)&&requestedTime>0){time=Math.min(requestedTime,+$('#scrub').max);setPlayback(false)}requestAnimationFrame(tick);
 }
