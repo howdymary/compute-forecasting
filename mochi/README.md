@@ -1,15 +1,16 @@
 # MOCHI: Walking, Contact and Recovery Policy Learning
 
-## V18 development preview: more foot lift, later failures
+## V18 development preview: lifted steps across checkpoints
 
-[Inspect steps after descent](https://howdymary--mochi-contact-v18-demo-web.us-east.modal.run/?scenario=development-185001&phase=desk) · [Development results](docs/contact-v18-development-preview.md) · [Training interface](docs/contact-v18-training-interface.md) · [Active execution](https://github.com/howdymary/mochi-demo/actions/runs/44800327838)
+[Inspect post-descent stepping](https://howdymary--mochi-contact-v18-demo-web.us-east.modal.run/?scenario=development-185000&checkpoint=4&phase=desk) · [Full checkpoint comparison](https://howdymary--mochi-contact-v18-demo-web.us-east.modal.run/?scenario=development-185000&checkpoint=4) · [Development results](docs/contact-v18-development-preview.md) · [Training interface](docs/contact-v18-training-interface.md) · [Active execution](https://github.com/howdymary/mochi-demo/actions/runs/44800327838)
 
 Tinker completed 16 new optimizer updates and 96 domain-gradient calls on the six-domain Qwen3.5-4B LoRA controller selector. Final checkpoint selection and fresh-scenario tests are pending. The native ONNX gait weights remain fixed.
 
-The preview compares checkpoint 1 with its parent on all three development scenarios. After descending from the books, checkpoint 1 chose the physical foot-lift controller and raised median minimum-sole clearance from about 2.5 mm to 4.8 mm. It also used more moving swings and completed 0/3 full routes, with one laptop-contact fall and two later forbidden contacts. The parent completed 2/3 routes, with 1/3 within all quality limits. This is a walking-clearance change with a complete-route regression, not a promoted result. Every recording and failure remains visible.
+Checkpoint 4 completed all four tasks on two of the three development scenarios, with no falls or forbidden contacts in those completed attempts. Both exceeded the lateral-path quality limit, and the third case failed during laptop contact. The parent completed 2/3, with 1/3 within every quality limit; checkpoint 1 completed 0/3. The preview retains checkpoints 0, 1 and 4 on all three cases, including every failure. Checkpoint 16 evaluation is pending.
 
-The inspection link plays both recorded attempts at the same physical time and a labelled 0.5×. Restart shows the complete continuous attempt. An earlier [fixed-controller preflight](https://howdymary--mochi-contact-v18-demo-web.us-east.modal.run/contact-v18-preflight.html?phase=desk) remains available separately; it completed all four tasks but exceeded a lateral-motion quality limit and receives no training credit.
+After descending from the books, checkpoints 1 and 4 chose the physical foot-lift controller. Median minimum-sole clearance rose from about 2.5 mm to 4.8 mm. Moving swings increased from 116 to 128 on that leg, so the visual improvement is not an efficiency gain. The inspection link uses the same physical time and a labelled 0.5× playback speed. Restart shows the full continuous attempt.
 
+The earlier [fixed-controller preflight](https://howdymary--mochi-contact-v18-demo-web.us-east.modal.run/contact-v18-preflight.html?phase=desk) remains available separately. It completed all four tasks but exceeded a lateral-motion quality limit and receives no training credit.
 
 ## V17: completed training, failed transfer test
 

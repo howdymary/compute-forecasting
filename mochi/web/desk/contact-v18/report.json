@@ -1331,7 +1331,36 @@
           "R4": 0.7109070420265198
         }
       },
-      "development": null
+      "development": {
+        "n": 3,
+        "complete_successes": 2,
+        "smooth_complete_successes": 0,
+        "wilson_95_complete_rate": [
+          0.2076549551264879,
+          0.9385096847238394
+        ],
+        "task_successes": {
+          "alarm": 3,
+          "drawer": 3,
+          "laptop": 2,
+          "globe": 2
+        },
+        "falls": 0,
+        "invalid_contacts": 1,
+        "mean_duration_s": 322.0372154647196,
+        "mean_roll_rms_deg": 0.44604843758892776,
+        "mean_contact_travel_m": 0.6229674878456714,
+        "recovery_successes": 10,
+        "successful_recovery_mean_joint_travel_rad": 3.592113530820528,
+        "qualified_complete_successes": 0,
+        "successful_mean_steps": null,
+        "successful_mean_seconds": null,
+        "successful_mean_forward_facing_fraction": null,
+        "successful_mean_recovery_arm_joint_travel_rad": null,
+        "successful_mean_intertask_arm_joint_travel_rad": null,
+        "successful_mean_flat_sole_clearance_m": null,
+        "clear_stepping_successes": 0
+      }
     },
     {
       "update": 8,
@@ -1375,7 +1404,8 @@
           "R4": 0.4995180368423462
         }
       },
-      "development": null
+      "development": null,
+      "evaluation_scope": "Saved and probed; no physical development evaluation in the amended budget."
     },
     {
       "update": 16,
@@ -1868,9 +1898,144 @@
         "inference_input_plus_max_output_tokens": 4552,
         "paired_same_process": false
       }
+    },
+    {
+      "phase": "Matched development evaluations at every actual checkpoint",
+      "seed": 185001,
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 1138.271839398,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 3526,
+        "paired_same_process": false
+      }
+    },
+    {
+      "phase": "Matched development evaluations at every actual checkpoint",
+      "seed": 185000,
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 1267.206867636,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 5174,
+        "paired_same_process": false
+      }
+    },
+    {
+      "phase": "Matched development evaluations at every actual checkpoint",
+      "seed": 185002,
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 3072,
+        "duration_seconds": 1351.74403463,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 5172,
+        "paired_same_process": false
+      }
     }
   ],
-  "campaign_modal_rollouts_completed": 62,
+  "campaign_modal_rollouts_completed": 65,
   "held_out_opened": false,
   "parent_selection": {
     "source": "Completed V15 selected update16",
@@ -2596,17 +2761,17 @@
     "pending_ingestions": []
   },
   "budget_usage_or_reserved": {
-    "physical_rollouts": 124,
-    "simulation_cpu_hours": 5.779398617725608,
+    "physical_rollouts": 127,
+    "simulation_cpu_hours": 6.823071601521164,
     "optimizer_updates": 16,
     "training_token_presentations": 300707,
-    "inference_tokens": 100930,
+    "inference_tokens": 114802,
     "exa_searches": 1,
     "past_writes": 3,
     "past_recalls": 5
   },
-  "total_physical_attempts_accounted": 124,
-  "total_physical_rollouts_completed": 120,
+  "total_physical_attempts_accounted": 127,
+  "total_physical_rollouts_completed": 123,
   "runtime_wrapper_probe": {
     "seed": 184002,
     "expected_error": "Unavailable action",
@@ -184272,6 +184437,45 @@
           "sha256": "74169bd79698da90d545724cf9ce07383c9b694bdd72861dc27cdea79605edea",
           "uncompressed_sha256": "7e001546b33a6404e6498216e2a1b5ed53b74e1b1e2f73e665f43d6bf410d63a",
           "bytes": 9733265,
+          "scope": "Official public export of actual body transforms; metadata reconstructed by hashing the immutable provider archive."
+        }
+      },
+      {
+        "path": "mochi-c18-44790861532/dev-4-185000-policy.json.gz",
+        "compressed_sha256": "df04b9d18f9b08bd436b5e757eaee6008f47d23ba1e028b59a4ea879488cc176",
+        "raw_sha256": "49016340a57f193875e00287bf46fb92525ad40426fb49edc8e2f57524cfa803",
+        "public": {
+          "volume": "mochi-contact-v18-artifacts",
+          "path": "mochi-c18-44790861532/public/dev-4-185000-policy.json.gz",
+          "sha256": "fe8fc7ecd4cf16c21cf73c2640710b873b31dabb58de37cac5ab14c84e0ba98f",
+          "uncompressed_sha256": "134dea0bf65962e2164e4cee7c81ad6973886daf8c5d6ac650219562423c1ffa",
+          "bytes": 11552512,
+          "scope": "Official public export of actual body transforms; metadata reconstructed by hashing the immutable provider archive."
+        }
+      },
+      {
+        "path": "mochi-c18-44790861532/dev-4-185001-policy.json.gz",
+        "compressed_sha256": "f5100d435dca07c5d6ba351f664b019eebb2584a39d6d1ba8c09733ea306e1f6",
+        "raw_sha256": "3badbcd9bf0115c17d89dfcd41c68a95ba8c75ceda8ebe89cf8207324f6b7d91",
+        "public": {
+          "volume": "mochi-contact-v18-artifacts",
+          "path": "mochi-c18-44790861532/public/dev-4-185001-policy.json.gz",
+          "sha256": "528d7c7cdc17475cde97392a28d20c74e50a593f75eb2a2dda0975cfe7aa8b0a",
+          "uncompressed_sha256": "eb2a5b7bf8521db4165c9cc53bde2857e31ef22853becc822d1bce972f4c8bea",
+          "bytes": 9766283,
+          "scope": "Official public export of actual body transforms; metadata reconstructed by hashing the immutable provider archive."
+        }
+      },
+      {
+        "path": "mochi-c18-44790861532/dev-4-185002-policy.json.gz",
+        "compressed_sha256": "e1ecaf7d5cacae0a2781de5fa93dfb0aaa2e99e9e93228ebab3f50cd7b732608",
+        "raw_sha256": "d251fa43f227cc7bcf8fb52d07316a35a6a9bf5ae15a47eae459e0fc2b34f7dd",
+        "public": {
+          "volume": "mochi-contact-v18-artifacts",
+          "path": "mochi-c18-44790861532/public/dev-4-185002-policy.json.gz",
+          "sha256": "af5b977cf0e23e1d6fe99ba3f8117999e9090e1975c4ddc4163de627ee112c7c",
+          "uncompressed_sha256": "a8c29435a049fa578e39fa0d8805ec0a8d2cf415002d7884808783a0ab81ead0",
+          "bytes": 11607034,
           "scope": "Official public export of actual body transforms; metadata reconstructed by hashing the immutable provider archive."
         }
       }

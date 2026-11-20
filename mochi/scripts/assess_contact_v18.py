@@ -74,6 +74,7 @@ def main():
     for entry in log:
         assert entry['optimizer_completed'] and entry['forward_backward_completed']
         assert set(entry['domain_loss_metrics']) == set(entry['domain_counts']) == domains
+        assert all(math.isfinite(metrics['loss:sum']) for metrics in entry['domain_loss_metrics'].values())
         assert all(n > 0 for n in entry['domain_counts'].values()) and entry['tokens'] > 0
         assert len(entry['batch_sha256']) == 64
     assert max(report['first_optimizer_probability_change'].values()) > 1e-7

@@ -1,8 +1,28 @@
 # Development preview: stepping after the books
 
+## Checkpoint 4
+
+[Inspect the latest evaluated stepping](https://howdymary--mochi-contact-v18-demo-web.us-east.modal.run/?scenario=development-185000&checkpoint=4&phase=desk) · [Complete recorded attempt](https://howdymary--mochi-contact-v18-demo-web.us-east.modal.run/?scenario=development-185000&checkpoint=4)
+
+Checkpoint 4 completed the continuous clock, book descent, drawer, Post-it crossing, laptop and globe sequence on development scenarios 185000 and 185002, without a fall or forbidden contact. Their lateral-path spans were 6.73 and 6.66 cm, above the frozen 6 cm limit. Scenario 185001 failed during laptop contact. This is 2/3 task completions and 0/3 completions within every quality limit. It cannot establish the declared smoothness or efficiency improvement.
+
+| Development checkpoint | Complete routes | Within all quality limits |
+| --- | ---: | ---: |
+| Parent | 2/3 | 1/3 |
+| 1 additional update | 0/3 | 0/3 |
+| 4 additional updates | 2/3 | 0/3 |
+| 16 additional updates | Evaluation pending | Evaluation pending |
+
+Checkpoint 4 chose the shorter clock reach, the lifted walking option and the steady laptop press in these attempts. All three post-descent desk legs completed with approximately 4.8 mm median minimum-sole clearance and 128 measured moving swings. The parent had approximately 2.5 mm and 116 swings. More visible stepping has not established fewer steps. The viewer offers all three cases and checkpoints 0, 1 and 4, with exact checkpoint identifiers.
+
+Sixteen optimizer updates have finished. Final checkpoint selection and fresh-scenario testing remain pending. These development outcomes are not an unseen-test result. The final selection rule and all quality limits are unchanged.
+
+## Checkpoint 1 and the measurement method
+
+
 Tinker completed 16 additional optimizer updates and 96 domain-gradient calls. Physical evaluation is still running. This preview shows checkpoint 1 against its parent on all three development scenarios. It is not a final checkpoint selection or a fresh-scenario result.
 
-[Inspect the physical steps](https://howdymary--mochi-contact-v18-demo-web.us-east.modal.run/?scenario=development-185001&phase=desk) · [Full episode comparison](https://howdymary--mochi-contact-v18-demo-web.us-east.modal.run/?scenario=development-185001) · [Execution](https://github.com/howdymary/mochi-demo/actions/runs/44800327838)
+[Inspect the physical steps](https://howdymary--mochi-contact-v18-demo-web.us-east.modal.run/?scenario=development-185001&checkpoint=1&phase=desk) · [Full episode comparison](https://howdymary--mochi-contact-v18-demo-web.us-east.modal.run/?scenario=development-185001&checkpoint=1) · [Execution](https://github.com/howdymary/mochi-demo/actions/runs/44800327838)
 
 ## What changed
 
@@ -33,3 +53,5 @@ Execution source: `bdba8600e9abb94c20aa1dc68ee617b51ee4999c`. Parent recordings 
 The fixed preflight completed all four tasks before training, but exceeded the lateral-motion quality limit. It remains available at its explicit preflight URL and is not credited to the trained model.
 
 Browser verification covered a complete uninterrupted parent/checkpoint replay, all three development failures, post-descent foot inspection and the live inspection link. No browser exceptions or console errors were observed. [Full replay verification](../evidence/contact-v18/development-preview-browser-qa.json) · [Live inspection verification](../evidence/contact-v18/development-preview-phase-qa.json) · [Published release](../evidence/contact-v18/development-preview-live-health.json).
+
+Checkpoint 4 verification covered a complete uninterrupted replay of development scenario 185000 and inspection of every checkpoint 4 quality failure. An explicit checkpoint query was also checked against a different preview default. [Checkpoint 4 browser verification](../evidence/contact-v18/development4-preview-browser-qa.json) · [Checkpoint query verification](../evidence/contact-v18/checkpoint-query-qa.json).

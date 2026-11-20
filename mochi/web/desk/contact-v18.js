@@ -24,13 +24,14 @@ async function load(){
   const comparison=comparisonEvidence(before,after);$('#pair-result').className='pair-result '+comparison.status;$('#pair-headline').textContent=comparison.headline;
   const comparable=before.qualified_complete&&after.qualified_complete;
   $('#pair-detail').textContent=comparison.detail+` ${before.complete&&after.complete?'Complete-attempt':'Partial-attempt'} recovery totals: ${before.recovery_arm_joint_travel_rad.toFixed(2)} and ${after.recovery_arm_joint_travel_rad.toFixed(2)} rad.`+(comparable?'':' These totals do not establish an efficiency gain.');
+  if(manifest.evaluation_status!=='completed'&&!manifest.selection_finalized)$('#campaign-summary').textContent=`DEVELOPMENT PREVIEW · ${manifest.optimizer_updates_completed} optimizer updates completed. Showing update ${version.update}; checkpoint selection is pending. Final testing is pending.`;
   setPlayback(true);
   for(const key of cache.keys()){if(cache.size<=4)break;if(key!==scenario.parent_file&&key!==version.file)cache.delete(key)}
  }finally{if(id===requestId)loading=false}
 }
-async function selectScenario(id){
+async function selectScenario(id,preferredUpdate){
  scenario=manifest.scenarios.find(s=>s.id===id);$('#checkpoint').max=scenario.versions.length-1;$('#checkpoint').disabled=scenario.versions.length===1;
- const selected=scenario.versions.findIndex(v=>v.update===manifest.selected_update);$('#checkpoint').value=selected<0?0:selected;await load();
+ let selected=scenario.versions.findIndex(v=>v.update===preferredUpdate);if(selected<0)selected=scenario.versions.findIndex(v=>v.update===manifest.selected_update);$('#checkpoint').value=selected<0?0:selected;await load();
 }
 function tick(now){
  const dt=Math.max(0,(now-last)/1000);last=Math.max(last,now);
@@ -72,7 +73,7 @@ async function init(){
  for(const [id,stage]of [['left',stages[0]],['right',stages[1]]]){$('#'+id+'-follow').onclick=()=>stage.view(false);$('#'+id+'-wide').onclick=()=>stage.view(true);$('#'+id+'-feet').onclick=()=>stage.inspect('feet')}
  $('#footfalls').onchange=e=>stages.forEach(s=>s.showFootfalls(e.target.checked));
  $('#play').onclick=()=>{if(!playing&&time>=+$('#scrub').max)time=0;setPlayback(!playing)};$('#restart').onclick=()=>{time=0;setPlayback(true)};$('#after-descent').onclick=()=>{const a=manifest.recordings[scenario.parent_file].after_descent_clearance,b=manifest.recordings[version.file].after_descent_clearance;if(!a?.completed_leg||!b?.completed_leg)return;const lo=Math.max(a.start_t,b.start_t),hi=Math.min(a.end_t,b.end_t);if(hi<=lo)return;time=lo+Math.min(1.25,(hi-lo)/3);$('#speed').value='0.5';stages.forEach(s=>s.inspect('feet'));setPlayback(true)};$('#scrub').oninput=e=>{const value=+e.target.value,maximum=+$('#scrub').max;time=maximum-value<=.021?maximum:value;setPlayback(false)};
- await selectScenario(initialScenario);if(query.get('view')==='feet')stages.forEach(s=>s.inspect('feet'));if(query.get('phase')==='desk'&&!$('#after-descent').disabled)$('#after-descent').click();const requestedTime=Number(query.get('t'));if(Number.isFinite(requestedTime)&&requestedTime>0){time=Math.min(requestedTime,+$('#scrub').max);setPlayback(false)}requestAnimationFrame(tick);
+ await selectScenario(initialScenario,query.has('checkpoint')?Number(query.get('checkpoint')):undefined);if(query.get('view')==='feet')stages.forEach(s=>s.inspect('feet'));if(query.get('phase')==='desk'&&!$('#after-descent').disabled)$('#after-descent').click();const requestedTime=Number(query.get('t'));if(Number.isFinite(requestedTime)&&requestedTime>0){time=Math.min(requestedTime,+$('#scrub').max);setPlayback(false)}requestAnimationFrame(tick);
 }
 document.addEventListener?.('visibilitychange',()=>{last=performance.now()});
 init().catch(e=>{$('#scope').textContent=e.message;console.error(e)});
