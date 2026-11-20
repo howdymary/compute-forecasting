@@ -1,0 +1,63 @@
+{
+  "run_id": "mochi-t16-44669222147",
+  "workflow_run": 44669222147,
+  "status": "incomplete",
+  "error_type": "FunctionTimeoutError",
+  "optimizer_updates_completed": 0,
+  "source_sha": "795a664f98433e514b5a76e9c2c606ba6136b130",
+  "parent_baseline": {
+    "n": 3,
+    "complete_successes": 2,
+    "smooth_complete_successes": 0,
+    "wilson_95_complete_rate": [
+      0.2076549551264879,
+      0.9385096847238394
+    ],
+    "task_successes": {
+      "alarm": 3,
+      "drawer": 3,
+      "laptop": 2,
+      "globe": 2
+    },
+    "falls": 0,
+    "invalid_contacts": 0,
+    "mean_duration_s": 321.2843260300712,
+    "mean_roll_rms_deg": 0.33484442164182115,
+    "mean_contact_travel_m": 0.560308790615854,
+    "recovery_successes": 10,
+    "successful_recovery_mean_joint_travel_rad": 5.414917354634154,
+    "qualified_complete_successes": 0,
+    "successful_mean_steps": null,
+    "successful_mean_seconds": null,
+    "successful_mean_forward_facing_fraction": null,
+    "successful_mean_recovery_arm_joint_travel_rad": null,
+    "successful_mean_intertask_arm_joint_travel_rad": null
+  },
+  "finished_action_outcomes": 68,
+  "logged_action_starts": 69,
+  "unfinished_guarded_sequence_attempts": 3,
+  "minimum_started_physical_attempts_including_engineering": 106,
+  "finished_physical_attempts_including_engineering": 102,
+  "counter_scope": "30 finished engineering attempts, four finished evaluation episodes, 69 started candidate branches (68 finished), and three unfinished guarded sequence attempts. Distinct from original conservative reservations.",
+  "budget_usage_or_reserved": {
+    "physical_rollouts": 34,
+    "simulation_cpu_hours": 2.603269900844076,
+    "optimizer_updates": 0,
+    "training_token_presentations": 0,
+    "inference_tokens": 19984,
+    "exa_searches": 1,
+    "past_writes": 3,
+    "past_recalls": 4
+  },
+  "incomplete_artifact_sha256": "184a72185b5fbcc6100877125ae854cc645aad199ee9206b90bc8323867d51d4",
+  "preserved_branch_snapshot_sha256": "eb1b5138264e62f7350fef051d1bd6a66c7bc55ef1e0019039c2d49b2bd0a1fa",
+  "log_sha256": "1b22a6cd2eff058a6367dd84b3146f5568b4ecafb8ccaeef99d35b4844b51c12",
+  "workers_observed_stopped": true,
+  "training_artifact": "mochi-smooth-v16-training-44669222147",
+  "services": {
+    "exa_searches": 1,
+    "past_writes": 3,
+    "past_recalls": 4
+  },
+  "qualification": "No new model checkpoint or measured post-training improvement was produced. Resource figures are function budgets and traces, not provider invoices."
+}

@@ -13,6 +13,25 @@ ROOT=Path(__file__).resolve().parents[1]
 SOURCE='795a664f98433e514b5a76e9c2c606ba6136b130'
 def read(p):return json.loads(p.read_text())
 def close(a,b):assert math.isclose(a,b,rel_tol=1e-9,abs_tol=1e-9),(a,b)
+def qualification_failures(row,cfg):
+    e=row['episode'];m=e['balance_metrics'];s=cfg['smoothness'];n=e['native_smoothness']
+    checks={
+        'sequence_completed':(row['complete_sequence_success'],True),
+        'efficiency_validity':(e['efficiency_validity'],True),
+        'roll_rms_deg':(m['roll_rms_deg'],s['roll_rms_degrees_max']),
+        'roll_peak_deg':(m['roll_peak_deg'],s['roll_peak_degrees_max']),
+        'lateral_rms_m':(m['lateral_rms_m'],s['path_lateral_rms_m_max']),
+        'lateral_peak_to_peak_m':(m['lateral_peak_to_peak_m'],s['path_lateral_peak_to_peak_m_max']),
+        'duration_s':(e['duration'],s['sequence_time_seconds_max']),
+        'loaded_contact_travel_m':(sum(e['foot_slip_estimate_m'].values()),s['loaded_contact_travel_estimate_m_max']),
+        'native_acceleration_rms':(n['sampled_acceleration_rms_rad_s2'],s['native_acceleration_rms_max']),
+        'native_torque_change_rms':(n['sampled_torque_change_rms_nm'],s['native_torque_change_rms_max'])}
+    failures={k:{'observed':v,'limit':limit} for k,(v,limit) in checks.items() if (not v if isinstance(limit,bool) else v is None or v>limit)}
+    direction=row['direction_metrics']['forward_facing_fraction']
+    if direction is None or direction<.9:failures['forward_facing_fraction']={'observed':direction,'minimum':.9}
+    assert bool(failures)==(not row['qualified_complete'])
+    return failures
+
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--source',required=True);a=p.parse_args();folder=Path(a.source)
     from mochi.smooth_v16.objective import summary,paired,valid_branch
@@ -89,6 +108,7 @@ def main():
         'selected_update':r['selected_checkpoint']['update'],'selected_checkpoint_id':r['selected_checkpoint']['checkpoint_id'],
         'held_out':r['held_out'],'paired_summary':pp,'improvement_goal_met':goal,'usage':usage,'engineering_usage':eng,
         'component_branches':len(reached),'valid_component_branches':sum(valid_branch(x) for x in reached),
+        'qualification_failures':{label:[{'seed':row['seed'],'failed_criteria':qualification_failures(row,cfg)} for row in rows] for label,rows in held.items()},
         'static_choice_audit':comparisons,'public_recordings_verified':len(starts),'selection_preceded_final_tests':True,
         'service_eligibility':eligible,'limits':['Four final scenarios in one fixed furnished layout. No hardware validation.','Native gait and physical controllers remain fixed; Tinker updates shared LoRA decision weights.','Engineering changes include the forward descent, route shortcut, paper-top support rule, hinge friction and laptop release. These are shared by all new checkpoints.','No causal memory/search ablation. Static-policy equivalence and unchanged decisions limit adaptation claims.']}
     (ROOT/'docs/smooth-v16-assessment.json').write_text(json.dumps(audit,indent=2)+'\n')

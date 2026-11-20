@@ -8,9 +8,11 @@ The new route includes a supported 180-degree turnaround on the books, forward-f
 
 The direct drawer-to-paper approach used 108 steps versus 218 for the detour in an isolated matched-state test. The longer route also exposed passive laptop-hinge creep. The new scene adds 0.015 N m of physical hinge friction and uses a 42-degree hand-release threshold. Contact-based task success remains required. All new checkpoints and baselines use the same revised scene and route.
 
-The separate bounded campaign restores the completed V15 selection and will compare additional updates 0, 1, 4, 8 and 16. Its targets are 10% fewer steps and 15% less recovery joint travel without reduced completion or longer successful time. Held-out gains remain pending. Tinker updates the shared controller-selection weights; the native gait remains fixed.
+Execution [44669222147](https://github.com/howdymary/mochi-demo/actions/runs/44669222147) timed out during collection before any optimizer update. It preserved 68 completed action tests. The parent completed two of three development sequences, but none passed every smoothness criterion. No new trained-checkpoint improvement was established. [Stopped-run accounting](evidence/smooth-v16/stopped-execution.json) separates completed attempts, unfinished work and conservative reservations.
 
-Thirty local engineering attempts used 1.190 single-worker hours and are already charged to the campaign's overall 224-rollout, 18-hour budget. The new workflow uses the existing backend secret references and separate Mochi app, artifact and memory names. Archived V15 results and the forecasting application are preserved.
+The [continuation prompt](docs/smooth-v16-continuation-prompt.md) replaces monolithic collection with durable physical stages. It preserves the physical scene and quality limits, validates cached outcomes against exact initial-state hashes, and records previous expenditure separately. The additional execution is bounded at 16 updates, 224 physical stages/branches, 18 aggregate CPU-hours and four physics workers. Model training and final-test results remain pending. Tinker updates shared controller-selection weights; the native gait stays fixed.
+
+Thirty local engineering attempts used 1.190 single-worker hours, already charged to the stopped execution. Neither that ledger nor its checkpoints are reset. Archived V15 results, the working preview and the forecasting application are preserved.
 
 ## Completed V15 walking and task-control study
 

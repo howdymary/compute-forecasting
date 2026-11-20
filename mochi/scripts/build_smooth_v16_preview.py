@@ -85,6 +85,8 @@ def main():
         scenarios.append({'id':'held-out-'+str(before['seed']),'label':f'Final test scenario · {before["seed"]}',
             'partition':'held_out','parent_file':bf,'versions':[{'update':selected,'file':af}]})
     manifest={'study':report['study'],'optimizer_updates_completed':report['optimizer_updates_completed'],
+        'execution_source_sha':report.get('execution_source_sha',report['source_sha']),
+        'prior_execution':report.get('prior_execution'),'data_collection_provenance':report.get('data_collection_provenance'),
         'selected_update':selected,'scope':report['scope'],'scene':json.loads((ROOT/'configs/richdesk-v9.json').read_text()),
         'scene_revision':report['protocol']['scene_revision'],'scenarios':scenarios,'recordings':files,'checkpoints':[cps[k] for k in sorted(cps)],
         'held_out':report.get('held_out'),'paired_held_out':report.get('paired_held_out'),
