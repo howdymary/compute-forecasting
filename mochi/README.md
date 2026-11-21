@@ -2,11 +2,11 @@
 
 ## V19: paper-free desk and step-first post-training
 
-[Paper-free comparison](https://howdymary--mochi-paperfree-v19-demo-web.us-east.modal.run/) · [Training run](https://github.com/howdymary/mochi-demo/actions/runs/44839589468) · [Frozen protocol](docs/paperfree-v19-protocol.md) · [Engineering records](evidence/paperfree-v19/engineering.json)
+[Paper-free comparison](https://howdymary--mochi-paperfree-v19-demo-web.us-east.modal.run/) · [Training run](https://github.com/howdymary/mochi-demo/actions/runs/44847672231) · [Frozen protocol](docs/paperfree-v19-protocol.md) · [Engineering records](evidence/paperfree-v19/engineering.json)
 
 The Post-it and its forced crossing are removed from both physics and rendering. Ordinary flat walking connects drawer and laptop. In a matched physical engineering check, W8 used 468 steps and W10 used 414, with all four tasks and existing quality limits satisfied. This 11.5% reduction precedes new training and is not attributed to Tinker.
 
-The new reward first requires valid completion and visible foot lift, then charges one point for every measured step, including turns, alignment and corrections. One fewer step outweighs every time or arm-travel tie-breaker. Failed or shuffling attempts cannot win. An eight-update Tinker study is running with new-scene parent baselines, intermediate checkpoints and fresh paired tests. No new training improvement is established yet. The native gait network and book controller remain fixed.
+The new reward first requires valid completion and visible foot lift, then charges one point for every measured step, including turns, alignment and corrections. One fewer step outweighs every time or arm-travel tie-breaker. Failed or shuffling attempts cannot win. The first collection stopped at zero updates because a full-route smoothness average was applied to short branch histories. The [declared correction](docs/paperfree-v19r1-amendment.md) keeps full-route quality limits unchanged, retains the qualified reference and records superseding targets from measured branch outcomes. An eight-update continuation is running with the original parent evidence, intermediate checkpoints and fresh paired tests. All prior resource usage is carried. No new training improvement is established yet. The native gait network and book controller remain fixed.
 
 ## V18: lifted footsteps, no promoted checkpoint
 
