@@ -91,4 +91,13 @@ PYTHONPATH=mochi/src mochi/.venv/bin/python mochi/scripts/build_inkling_v21_demo
 
 The reproduction wrapper verifies the 239 frozen hashes and uses a separate named ledger under `mochi/artifacts/inkling-v21-reproduction/`. It preserves the 24-attempt, three-hour ceiling and the archived campaign ledger. The numerical audit requires the retained original raw artifacts under `mochi/artifacts/inkling-v21/`; it does not consume the independent reproduction files. Public replay clips and their hashes are available in the viewer manifest. Credentials and canonical backend artifacts are not embedded in the frontend.
 
+The published demo release is `55b8be47656f76b4cc0ece87e69d4c764c6a63a1`. Verify its served HTML, script, manifest, report and all twelve recording hashes:
+
+```sh
+mochi/.venv/bin/python mochi/scripts/verify_inkling_v21_live.py \
+  --release 55b8be47656f76b4cc0ece87e69d4c764c6a63a1
+```
+
+[Live release and recording verification](../evidence/inkling-v21/live-health.json) · [Local browser playback verification](../evidence/inkling-v21/browser-qa.json) · [Live browser playback verification](../evidence/inkling-v21/live-browser-qa.json)
+
 The next physical bottleneck is laptop closing from the actual arrival states that still fail. The clearance change should be retained while contact proposals are tested in a new development cohort. New weight training needs validated action differences and a new frozen evaluation; this pilot supplies useful evidence, not a claim that more training already happened.
