@@ -1,0 +1,194 @@
+{
+  "scope": "Independent local diagnostic. No neural training, no accepted controller change, no changes to the frozen C19r1 study.",
+  "plan": {
+    "created_at": "2026-11-21T02:39:21.614597+00:00",
+    "scope": "Independent prospective contact-geometry diagnostic. Frozen C19r1 remains unchanged. Prefix captured before this plan; no candidate outcomes exist yet. No Tinker training in this diagnostic.",
+    "caps": {
+      "attempts": 8,
+      "single_thread_wall_seconds": 1800
+    },
+    "prefix_seed": 212000,
+    "prefix_source_sha256": "b97ee9902c85edfcf58275f657f6719b415f31a0108370d3fb79a7d924016c2f",
+    "prefix_snapshot_sha256": "fda155fcf72ffa8b15a86ede1a533759650bcfa955620f63f4f0b14d724f1fe3",
+    "matched_candidates": [
+      {
+        "id": "baseline-212000",
+        "radius": 0.15,
+        "contact_x": 0.263
+      },
+      {
+        "id": "lower-inset-a-212000",
+        "radius": 0.14,
+        "contact_x": 0.258
+      },
+      {
+        "id": "lower-inset-b-212000",
+        "radius": 0.135,
+        "contact_x": 0.255
+      },
+      {
+        "id": "lower-inset-c-212000",
+        "radius": 0.14,
+        "contact_x": 0.255
+      }
+    ],
+    "selection": "Qualified completion first; then laptop success, no fall or invalid contact, lower final hinge angle, then fewer steps/time. Accept an engineering fix only with complete from-reset physical verification. Failure is retained.",
+    "later_attempts": "At most one selected complete run from reset and a second condition within the remaining cap. No autonomous budget increase."
+  },
+  "attempts": {
+    "prefix-212000": {
+      "id": "prefix-212000",
+      "parameters": {
+        "id": "prefix-212000",
+        "mode": "prefix",
+        "seed": 212000,
+        "radius": 0.15,
+        "contact_x": 0.263
+      },
+      "created_at": "2026-11-21T02:32:33.151972+00:00",
+      "status": "completed",
+      "reserved_seconds": 420.0,
+      "scope": "Local diagnostic only; no model training or alteration of C19 results.",
+      "prefix_source_sha256": "250b592b74fd47e1a6222a6c9cb29a9ce2de7b4502e84734a4593ee538345660",
+      "complete": false,
+      "qualified": null,
+      "failure": "diagnostic-prefix-complete",
+      "steps": 296,
+      "laptop": {
+        "success": null,
+        "value": null,
+        "duration": null,
+        "contacts": null,
+        "max_force_n": null,
+        "phase": null,
+        "contact_progress": null
+      },
+      "artifact_sha256": "2603114b074458308605a9aaea187ca1a3bc57f110aadca73706f415f9f28fe2",
+      "wall_seconds": 245.45851804222912
+    },
+    "baseline-212000": {
+      "id": "baseline-212000",
+      "parameters": {
+        "id": "baseline-212000",
+        "mode": "branch",
+        "seed": 212000,
+        "radius": 0.15,
+        "contact_x": 0.263
+      },
+      "created_at": "2026-11-21T02:39:23.139271+00:00",
+      "status": "completed",
+      "reserved_seconds": 180.0,
+      "scope": "Local diagnostic only; no model training or alteration of C19 results.",
+      "prefix_source_sha256": "250b592b74fd47e1a6222a6c9cb29a9ce2de7b4502e84734a4593ee538345660",
+      "complete": false,
+      "qualified": false,
+      "failure": "laptop-incomplete",
+      "steps": 296,
+      "laptop": {
+        "success": false,
+        "value": 1.2211341384389618,
+        "duration": 32.00066211590294,
+        "contacts": 2596,
+        "max_force_n": 0.6983416229003706,
+        "phase": "push",
+        "contact_progress": 0.02208644285738215
+      },
+      "artifact_sha256": "71dcaa321a9fdd89c60bde143b05440b18861f2aca0fc4163658d5be4cb57032",
+      "wall_seconds": 31.992204417474568
+    },
+    "lower-inset-a-212000": {
+      "id": "lower-inset-a-212000",
+      "parameters": {
+        "id": "lower-inset-a-212000",
+        "mode": "branch",
+        "seed": 212000,
+        "radius": 0.14,
+        "contact_x": 0.258
+      },
+      "created_at": "2026-11-21T02:39:23.926853+00:00",
+      "status": "completed",
+      "reserved_seconds": 180.0,
+      "scope": "Local diagnostic only; no model training or alteration of C19 results.",
+      "prefix_source_sha256": "250b592b74fd47e1a6222a6c9cb29a9ce2de7b4502e84734a4593ee538345660",
+      "complete": false,
+      "qualified": false,
+      "failure": "laptop-incomplete",
+      "steps": 296,
+      "laptop": {
+        "success": false,
+        "value": 1.2391037245541794,
+        "duration": 8.183687437855838,
+        "contacts": 970,
+        "max_force_n": 0.8290599322619269,
+        "phase": "push",
+        "contact_progress": 0.003964640645827577
+      },
+      "artifact_sha256": "3343263170ce2608ed31c213959982a20b171572d74fcacbac2d5bed3cd4636b",
+      "wall_seconds": 16.143357041291893
+    },
+    "lower-inset-b-212000": {
+      "id": "lower-inset-b-212000",
+      "parameters": {
+        "id": "lower-inset-b-212000",
+        "mode": "branch",
+        "seed": 212000,
+        "radius": 0.135,
+        "contact_x": 0.255
+      },
+      "created_at": "2026-11-21T02:39:25.137409+00:00",
+      "status": "completed",
+      "reserved_seconds": 180.0,
+      "scope": "Local diagnostic only; no model training or alteration of C19 results.",
+      "prefix_source_sha256": "250b592b74fd47e1a6222a6c9cb29a9ce2de7b4502e84734a4593ee538345660",
+      "complete": false,
+      "qualified": false,
+      "failure": "laptop-incomplete",
+      "steps": 296,
+      "laptop": {
+        "success": false,
+        "value": 1.2342164864627083,
+        "duration": 32.00066211590294,
+        "contacts": 2580,
+        "max_force_n": 0.7377849598472337,
+        "phase": "push",
+        "contact_progress": 0.008811989723308322
+      },
+      "artifact_sha256": "0e63f01ac0fcb7ef105c18a1544d4e8103180fc2a334250dd42cafc2e5522154",
+      "wall_seconds": 33.48891291581094
+    },
+    "lower-inset-c-212000": {
+      "id": "lower-inset-c-212000",
+      "parameters": {
+        "id": "lower-inset-c-212000",
+        "mode": "branch",
+        "seed": 212000,
+        "radius": 0.14,
+        "contact_x": 0.255
+      },
+      "created_at": "2026-11-21T02:39:26.680428+00:00",
+      "status": "completed",
+      "reserved_seconds": 180.0,
+      "scope": "Local diagnostic only; no model training or alteration of C19 results.",
+      "prefix_source_sha256": "250b592b74fd47e1a6222a6c9cb29a9ce2de7b4502e84734a4593ee538345660",
+      "complete": false,
+      "qualified": false,
+      "failure": "laptop-incomplete",
+      "steps": 296,
+      "laptop": {
+        "success": false,
+        "value": 1.2348409522228276,
+        "duration": 32.00066211590294,
+        "contacts": 2890,
+        "max_force_n": 0.7239694044705868,
+        "phase": "push",
+        "contact_progress": 0.00834045316230747
+      },
+      "artifact_sha256": "cf308cbab19488386b979ac06805b6a83f7a8c74e998fced17244f5e47ecfeae",
+      "wall_seconds": 32.26889391615987
+    }
+  },
+  "attempt_count": 5,
+  "single_thread_wall_seconds": 359.3518863329664,
+  "decision": "Reject all three changed contact locations. None closed the laptop from the matched physical snapshot. No from-reset verification is warranted. Stop below the eight-attempt/1800-second cap.",
+  "limitations": "One checkpoint-4-generated development prefix replayed locally. Restored branches are counterfactual diagnostics, not continuous demonstrations or Tinker checkpoint evaluations."
+}

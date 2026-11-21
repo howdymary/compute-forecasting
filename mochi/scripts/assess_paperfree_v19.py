@@ -12,6 +12,39 @@ from mochi.paperfree_v19.objective import paired, select_checkpoint, summary
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def choice_comparison(before, after):
+    """Describe executed choices separately from numerical differences."""
+    def choices(row):
+        result = {}
+        for item in row['model_decisions']:
+            o = item['observation']
+            station = o.get('station') or o.get('task') or o['domain']
+            key = o['domain'] + ':' + station
+            assert key not in result
+            result[key] = item['action']
+        return result
+
+    a, b = choices(before), choices(after)
+    categories = []
+    for row in [before, after]:
+        counts = {}
+        for event in row['episode']['step_events']:
+            name = event['category']
+            counts[name] = counts.get(name, 0) + 1
+        assert sum(counts.values()) == row['episode']['steps']['attempts']
+        categories.append(counts)
+    return {
+        'seed': before['seed'],
+        'both_qualified': bool(before['qualified_complete'] and after['qualified_complete']),
+        'changed_choices': [{'decision': key, 'before': a[key], 'after': b[key]}
+            for key in sorted(a.keys() & b.keys()) if a[key] != b[key]],
+        'unmatched_choices': {'before_only': sorted(a.keys() - b.keys()),
+            'after_only': sorted(b.keys() - a.keys())},
+        'step_categories': {'before': categories[0], 'after': categories[1]},
+        'interpretation': 'Observed action and step differences do not isolate causality. Native gait weights stayed fixed. Shorter failed attempts are not efficiency gains.',
+    }
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument('--source', required=True)
@@ -47,6 +80,15 @@ def main():
         cohorts[label] = json.loads((source / ('held-out-' + label + '.json')).read_text())
         assert summary(cohorts[label], cfg) == report['held_out'][label], label
     assert paired(cohorts['parent'], cohorts['selected']) == report['paired_held_out']
+    selected = report['selected_checkpoint']['update']
+    parent_dev = json.loads((source / 'checkpoint-0.json').read_text())
+    selected_dev = json.loads((source / f'checkpoint-{selected}.json').read_text())
+    action_audit = {}
+    for name, before, after in [('development', parent_dev, selected_dev),
+            ('held_out', cohorts['parent'], cohorts['selected'])]:
+        by_seed = {row['seed']: row for row in after}
+        action_audit[name] = [choice_comparison(row, by_seed[row['seed']]) for row in before]
+    (ROOT / 'evidence/paperfree-v19r1/choice-audit.json').write_text(json.dumps(action_audit, indent=2) + '\n')
     receipts = [r['receipt'] for r in report['physics_receipts']]
     carried = cfg.get('carried_usage', cfg['engineering_usage'])
     attempts = carried['physical_rollouts'] + sum(r['physical_rollouts'] for r in receipts)
