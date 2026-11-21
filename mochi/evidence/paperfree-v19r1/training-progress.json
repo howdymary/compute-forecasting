@@ -1,0 +1,65 @@
+{
+  "study": "mochi-paperfree-v19r1",
+  "run_id": "mochi-p19r1-44847672231",
+  "source_sha": "68bd7461bd6ec0942a3122b538aa3e03f64a26b8",
+  "optimizer_updates_completed": 8,
+  "first_optimizer_probability_change": {
+    "walk": 0.017102360725402832,
+    "alarm": 0.8114827126264572,
+    "drawer": 0.0023603439331054688,
+    "laptop": 0.04493206739425659,
+    "globe": 0.003974199295043945,
+    "recovery": 0.007364988327026367
+  },
+  "data_audit": {
+    "walk": {
+      "examples": 5,
+      "labels": {
+        "W10": 4,
+        "W9": 1
+      }
+    },
+    "alarm": {
+      "examples": 2,
+      "labels": {
+        "H0": 2
+      }
+    },
+    "drawer": {
+      "examples": 2,
+      "labels": {
+        "C": 2
+      }
+    },
+    "laptop": {
+      "examples": 1,
+      "labels": {
+        "P5": 1
+      }
+    },
+    "globe": {
+      "examples": 1,
+      "labels": {
+        "G0": 1
+      }
+    },
+    "recovery": {
+      "examples": 6,
+      "labels": {
+        "R4": 5,
+        "R0": 1
+      }
+    }
+  },
+  "data_provenance": {
+    "new_complete_references": 0,
+    "retained_complete_references": 1,
+    "retained_measured_branch_targets": 17,
+    "prior_campaign": "mochi-p19-44839589468"
+  },
+  "status": "evaluation_in_progress",
+  "domain_backward_calls": 48,
+  "training_token_presentations": 193113,
+  "native_gait_weights_trained": false,
+  "scope": "Actual Tinker LoRA post-training of walking/task/recovery selection. Full physical checkpoint evaluation and fresh tests are pending."
+}
