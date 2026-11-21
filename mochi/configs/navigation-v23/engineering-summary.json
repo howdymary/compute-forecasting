@@ -1,0 +1,76 @@
+{
+  "observed_failure": {
+    "run_id": "mochi-nav23-20261121b",
+    "layout_sha256": "ea345fb63bee81c49c3984b6a5c7ff9d213c9488feb563e4aef0632f1bc34a9c",
+    "all_three_candidates_timed_out": true,
+    "direct_final_phase_switches": 345,
+    "cause": "Switching between travel bearing and final heading at the same near-distance threshold."
+  },
+  "engineering_change": "Latch final-heading alignment with a separate geometric exit threshold. Enforce the existing position tolerance during supported dwell. Allow bounded backward position correction while aligning. Native gait unchanged.",
+  "matched_probes": [
+    {
+      "id": "alignment-r1-engineering-zero-direct",
+      "action": "direct",
+      "qualified": true,
+      "physical_seconds": 19.562863257866113,
+      "steps": {
+        "attempts": 144,
+        "completed": 144,
+        "unfinished": 0,
+        "by_category": {
+          "initialization": 2,
+          "flat_transit": 113,
+          "turning": 3,
+          "alignment": 26
+        },
+        "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+      },
+      "layout_sha256": "bebdc25cbba101cfd7265b90e77695e3bc950f385e057ad7f53e328d841eda3f",
+      "artifact_sha256": "e7c57e0c6cd5bc50eaa036319bfa7183fa1ff30ba72d4d371898b0e381cbb348",
+      "navigation_sha256": "13bda4d55e7a25bc4d02c6d24ca1309269758680839a1ec6e574006311d7975e"
+    },
+    {
+      "id": "alignment-r1-failed-training-buffered",
+      "action": "buffered",
+      "qualified": true,
+      "physical_seconds": 51.823480683398195,
+      "steps": {
+        "attempts": 392,
+        "completed": 392,
+        "unfinished": 0,
+        "by_category": {
+          "initialization": 2,
+          "flat_transit": 242,
+          "turning": 42,
+          "alignment": 106
+        },
+        "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+      },
+      "layout_sha256": "ea345fb63bee81c49c3984b6a5c7ff9d213c9488feb563e4aef0632f1bc34a9c",
+      "artifact_sha256": "d3357443955889b736b4447eded3bfa62f7712d17f219b8c452a4ebccc1645e0",
+      "navigation_sha256": "13bda4d55e7a25bc4d02c6d24ca1309269758680839a1ec6e574006311d7975e"
+    },
+    {
+      "id": "alignment-r1-failed-training-direct",
+      "action": "direct",
+      "qualified": true,
+      "physical_seconds": 46.18784576215375,
+      "steps": {
+        "attempts": 334,
+        "completed": 334,
+        "unfinished": 0,
+        "by_category": {
+          "initialization": 2,
+          "flat_transit": 203,
+          "turning": 29,
+          "alignment": 100
+        },
+        "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+      },
+      "layout_sha256": "ea345fb63bee81c49c3984b6a5c7ff9d213c9488feb563e4aef0632f1bc34a9c",
+      "artifact_sha256": "c4187d05e7c3f948209a967c21fe0b00b7449401ceb0b3601f538beb9697c217",
+      "navigation_sha256": "13bda4d55e7a25bc4d02c6d24ca1309269758680839a1ec6e574006311d7975e"
+    }
+  ],
+  "qualification": "The repaired controller is shared by every subsequent policy. Engineering gains do not count as Tinker gains. Final layouts remain unopened."
+}

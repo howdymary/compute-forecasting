@@ -1,0 +1,85 @@
+{
+  "study": "mochi-navigation-v23",
+  "run_id": "mochi-nav23-20261121c",
+  "phase": "A",
+  "model": "Qwen/Qwen3.5-4B",
+  "lora_rank": 16,
+  "updates": [
+    0,
+    4,
+    8,
+    15
+  ],
+  "training_layouts": 16,
+  "development_layouts": 8,
+  "final_navigation_layouts": 8,
+  "final_sequence_layouts": 8,
+  "physics_seeds": [
+    231000,
+    231001
+  ],
+  "gate": {
+    "development_first_attempt_fraction": 0.9,
+    "development_falls_max": 0,
+    "development_contacts_max": 0
+  },
+  "bounds": {
+    "physical_rollouts": 512,
+    "simulation_cpu_hours": 12,
+    "modal_concurrency": 4,
+    "optimizer_updates": 16,
+    "training_token_presentations": 1500000,
+    "inference_input_plus_max_output_tokens": 2000000,
+    "exa_searches": 4,
+    "past_writes": 96,
+    "past_actual_recalls": 256,
+    "past_ingested_bytes": 350000,
+    "past_estimated_credits": 2000,
+    "modeled_provider_usd": 50
+  },
+  "navigation_verifier": {
+    "position_m": 0.012,
+    "heading_degrees": 9,
+    "dwell_seconds": 0.4,
+    "episode_seconds": 120,
+    "roll_rms_degrees": 2,
+    "roll_peak_degrees": 12,
+    "unsupported_seconds": 0.06,
+    "moving_sole_clearance_m": 0.0045,
+    "fall_or_fixture_contact": "failure"
+  },
+  "retry_budget": 3,
+  "primary_memory_condition": "disabled",
+  "info": "Exact geometry is privileged state. Native ONNX gait is fixed. Full-route V19 task predicates stay unchanged.",
+  "held_out_opened": false,
+  "carried_usage": {
+    "physical_rollouts": 39,
+    "simulation_cpu_hours": 1.5955141017795333,
+    "optimizer_updates": 1,
+    "training_token_presentations": 37344,
+    "inference_input_plus_max_output_tokens": 96990,
+    "exa_searches": 2,
+    "past_writes": 8,
+    "past_actual_recalls": 8,
+    "past_ingested_bytes": 16560,
+    "past_estimated_credits": 58,
+    "modeled_provider_usd": 2.902882428000001
+  },
+  "pretraining_interruption": {
+    "run_id": "mochi-nav23-20261120a",
+    "optimizer_updates": 0,
+    "physical_receipts": 0,
+    "reserved_but_never_dispatched_rollouts": 9,
+    "final_layouts_opened": false,
+    "cause": "Unhydrated sibling function imported into serialized orchestrator; fixed by deployed-name lookup. Conservative prior budget reservations carried forward."
+  },
+  "carried_actual_physical_rollouts": 30,
+  "carried_optimizer_updates_not_promoted": 1,
+  "restore_untrained_parent_from": "mochi-nav23-20261121b",
+  "research_query": "mobile robot navigation final pose alignment oscillation phase switching hysteresis goal heading tolerance",
+  "research_question": "Can separating travel and final-heading alignment prevent observed phase chatter without relaxing pose or contact constraints?",
+  "research_hypothesis": "Phase hysteresis can remove a controller defect. After sharing that repair across controls, geometry-aware route selection may still improve physical efficiency; that incremental claim requires new measurements.",
+  "controller_revision": "alignment-r1: latch final-heading phase, position-valid dwell, bounded local correction",
+  "budget_amendment": "One optimizer update from the interrupted controller-feasibility probe remains charged and unpromoted. The new comparison may perform at most fifteen more, preserving the original sixteen-update total ceiling. All used training layouts and unlabelled failures are retained.",
+  "unlabelled_training_rule": "Retain every physically failed candidate set. If all three fail, record no supervised label and continue to the next pre-generated training layout without an optimizer update. Save and evaluate the actual endpoint if bounded data is exhausted before fifteen updates."
+}

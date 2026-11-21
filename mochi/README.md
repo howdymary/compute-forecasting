@@ -1,4 +1,18 @@
-# MOCHI: Walking, Contact and Recovery Policy Learning
+# MOCHI: Navigation Policy Learning on Cluttered Desks
+
+## V23: unseen layouts, measured controls
+
+[Latest paired demo](https://howdymary--mochi-navigation-v23-demo-web.us-east.modal.run/) · [Findings](docs/navigation-v23-findings.md) · [Methods and setup](docs/navigation-v23-methods.md) · [Numerical evidence](evidence/navigation-v23/results.json)
+
+Can post-training improve humanoid navigation across unseen cluttered desk layouts, and does shared memory help within three attempts?
+
+We completed fifteen real Tinker updates on a Qwen3.5-4B LoRA navigation selector. On eight unseen layouts with two physics seeds, the parent and selected model each qualified on 14/16 attempts. A training-selected fixed strategy qualified on 16/16. Training changed one final route choice, reducing that attempt from 512 to 341 steps. It did not establish better reliability or a learned obstacle-clearance rule.
+
+The viewer shows identical layouts and initial states, actual MuJoCo body trajectories, planned routes, footprints, failures, all development checkpoints and stronger controls. Its opening case is explicitly labelled a post-evaluation highlight. Geometry is privileged. The native gait network stays fixed.
+
+Exa supplied failure-driven sources, past.dev carried real cross-role evidence and isolated retry memories, Modal ran parallel physical experiments, and Tinker performed weight training and checkpoint sampling. First-attempt retrieval passed 14/16 with the same selected weights, matching the no-retrieval condition. Retry outcomes, costs, access checks and uncertainty are in the findings.
+
+The separate [four-task preflight](https://howdymary--mochi-navigation-v23-demo-web.us-east.modal.run/task-preflight-v24.html) retains five uninterrupted engineering attempts. It completed clock, drawer and laptop in its strongest prefix, but did not validate the globe transition. No new task training or four-task generalization is claimed; final sequence layouts remain unopened. Previous demos remain available below.
 
 ## V22: visual materials and isolated GMR/mink tests
 

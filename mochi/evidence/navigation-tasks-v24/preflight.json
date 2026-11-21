@@ -1,0 +1,828 @@
+{
+  "study": "navigation-tasks-v24-preflight",
+  "status": "bounded preflight complete; task training withheld",
+  "counted_physical_attempts": 12,
+  "conservative_wall_hours": 0.34734003472193664,
+  "bounds": {
+    "attempts": 12,
+    "cpu_hours": 1
+  },
+  "task_optimizer_updates": 0,
+  "qualified_complete_prefixes": 0,
+  "sequence_final_opened": false,
+  "engineering_attempts": [
+    {
+      "id": "physical-r0-books",
+      "status": "completed",
+      "arguments": {
+        "id": "physical-r0-books",
+        "development_index": 0,
+        "until": "books",
+        "navigation_report": "mochi/.cache/navigation-v23/live-progress-c.json"
+      },
+      "reserved_seconds": 900,
+      "navigation_gate_evidence_sha256": "d543a19430bcce86c6c5c555d4a125334cfb8383aea4defe7566960a27e6e36c",
+      "navigation_still_running": true,
+      "layout_sha256": "2a7291a56354660e823ffcdd08322ff5d87b85a57d4e26c5fce7411930aa5758",
+      "source_sha256": {
+        "src/mochi/navigation_tasks_v24/__init__.py": "70a61f975adc7648650955e00af17841c4b02c05012bd827c45657e45d009ddb",
+        "src/mochi/navigation_tasks_v24/approaches.py": "22a6cd280891c8b29e0564e3e406b7b6154348836b522a436cf063b18b0e4732",
+        "src/mochi/navigation_tasks_v24/policy.py": "6bc8c2f8b4416fba88f2f69c824385340c2d1d802012d94418dc98f76895e0d0",
+        "src/mochi/navigation_tasks_v24/relative_laptop.py": "5268947c324f36ca3169b68add494f6d4f226debc9437be321c66c73877588bd",
+        "src/mochi/navigation_tasks_v24/sequence.py": "71823e2c363e21bcb89213a5f9e6428d42807d58d8a97a46633b220d4604f592",
+        "src/mochi/navigation_tasks_v24/world.py": "c2cafc4fa6ddc61f17fdc5d5a067a505da68dfbd4a33eb173fa221c12a31dbf7"
+      },
+      "failure": null,
+      "qualified_complete": null,
+      "artifact_sha256": "2c58f75ce670b8a9c55359e3d98f8b0fda7111dd1ef66c19c5148b1b3153baa2",
+      "physical_seconds": 214.4901069828745,
+      "steps": 124,
+      "fall": false,
+      "invalid_contact": false,
+      "tasks": {
+        "alarm": true
+      },
+      "arrivals": [
+        {
+          "label": "book-entry-transit-0",
+          "success": true,
+          "duration_s": 4.905634633341152
+        },
+        {
+          "label": "book-ascent",
+          "success": true,
+          "duration_s": 68.52765300438074
+        },
+        {
+          "label": "book-turn-clearance",
+          "success": true,
+          "duration_s": 14.623712373968942
+        },
+        {
+          "label": "book-top-turnaround",
+          "success": true,
+          "duration_s": 59.53548820413572
+        },
+        {
+          "label": "book-forward-descent",
+          "success": true,
+          "duration_s": 47.15899956072974
+        },
+        {
+          "label": "forward-descent-exit-stance",
+          "success": true,
+          "duration_s": 8.427293356992891
+        },
+        {
+          "label": "book-exit-clearance-transit-0",
+          "success": true,
+          "duration_s": 4.79936359481087
+        }
+      ],
+      "wall_seconds": 184.97636550012976
+    },
+    {
+      "id": "physical-r0-full",
+      "status": "completed",
+      "arguments": {
+        "id": "physical-r0-full",
+        "development_index": 0,
+        "until": "all",
+        "navigation_report": "mochi/.cache/navigation-v23/live-progress-c.json"
+      },
+      "reserved_seconds": 900,
+      "navigation_gate_evidence_sha256": "fc0b2e689147811493e273b14191f51505b17354c70f3906b7e0d25fc5c08b4f",
+      "navigation_still_running": true,
+      "layout_sha256": "2a7291a56354660e823ffcdd08322ff5d87b85a57d4e26c5fce7411930aa5758",
+      "source_sha256": {
+        "src/mochi/navigation_tasks_v24/__init__.py": "70a61f975adc7648650955e00af17841c4b02c05012bd827c45657e45d009ddb",
+        "src/mochi/navigation_tasks_v24/approaches.py": "22a6cd280891c8b29e0564e3e406b7b6154348836b522a436cf063b18b0e4732",
+        "src/mochi/navigation_tasks_v24/policy.py": "6bc8c2f8b4416fba88f2f69c824385340c2d1d802012d94418dc98f76895e0d0",
+        "src/mochi/navigation_tasks_v24/relative_laptop.py": "5268947c324f36ca3169b68add494f6d4f226debc9437be321c66c73877588bd",
+        "src/mochi/navigation_tasks_v24/sequence.py": "71823e2c363e21bcb89213a5f9e6428d42807d58d8a97a46633b220d4604f592",
+        "src/mochi/navigation_tasks_v24/world.py": "c2cafc4fa6ddc61f17fdc5d5a067a505da68dfbd4a33eb173fa221c12a31dbf7"
+      },
+      "failure": "drawer-failed:drawer",
+      "qualified_complete": false,
+      "artifact_sha256": "2b66c0391e9211b5c070441581bb57be5c59515c0b52485823b2f1c78d921783",
+      "physical_seconds": 240.9573178684462,
+      "steps": 288,
+      "fall": false,
+      "invalid_contact": false,
+      "tasks": {
+        "alarm": true,
+        "drawer": false
+      },
+      "arrivals": [
+        {
+          "label": "book-entry-transit-0",
+          "success": true,
+          "duration_s": 4.905634633341152
+        },
+        {
+          "label": "book-ascent",
+          "success": true,
+          "duration_s": 68.52765300438074
+        },
+        {
+          "label": "book-turn-clearance",
+          "success": true,
+          "duration_s": 14.623712373968942
+        },
+        {
+          "label": "book-top-turnaround",
+          "success": true,
+          "duration_s": 59.53548820413572
+        },
+        {
+          "label": "book-forward-descent",
+          "success": true,
+          "duration_s": 47.15899956072974
+        },
+        {
+          "label": "forward-descent-exit-stance",
+          "success": true,
+          "duration_s": 8.427293356992891
+        },
+        {
+          "label": "book-exit-clearance-transit-0",
+          "success": true,
+          "duration_s": 4.79936359481087
+        },
+        {
+          "label": "drawer-transit-0",
+          "success": true,
+          "duration_s": 13.18660094496579
+        },
+        {
+          "label": "drawer-transit-1",
+          "success": true,
+          "duration_s": 3.569071956216021
+        },
+        {
+          "label": "drawer-transit-2",
+          "success": true,
+          "duration_s": 6.509509845934076
+        },
+        {
+          "label": "drawer-object-relative-pose",
+          "success": true,
+          "duration_s": 0.8011201367594367
+        }
+      ],
+      "wall_seconds": 202.80619041714817
+    },
+    {
+      "id": "physical-r1-full",
+      "status": "completed",
+      "arguments": {
+        "id": "physical-r1-full",
+        "development_index": 0,
+        "until": "all",
+        "navigation_report": "mochi/.cache/navigation-v23/live-progress-c.json"
+      },
+      "reserved_seconds": 900,
+      "navigation_gate_evidence_sha256": "1178383d69a70de5b75622874f37290c393bb7147bca2e454b52ecbf4c9c3fb7",
+      "navigation_still_running": true,
+      "layout_sha256": "2a7291a56354660e823ffcdd08322ff5d87b85a57d4e26c5fce7411930aa5758",
+      "source_sha256": {
+        "src/mochi/navigation_tasks_v24/__init__.py": "70a61f975adc7648650955e00af17841c4b02c05012bd827c45657e45d009ddb",
+        "src/mochi/navigation_tasks_v24/approaches.py": "22a6cd280891c8b29e0564e3e406b7b6154348836b522a436cf063b18b0e4732",
+        "src/mochi/navigation_tasks_v24/branches.py": "e94aceb52e565fdde69d2eda9b17576544dfa4fe7d32c96ce3b92410789a688b",
+        "src/mochi/navigation_tasks_v24/policy.py": "6bc8c2f8b4416fba88f2f69c824385340c2d1d802012d94418dc98f76895e0d0",
+        "src/mochi/navigation_tasks_v24/relative_laptop.py": "5268947c324f36ca3169b68add494f6d4f226debc9437be321c66c73877588bd",
+        "src/mochi/navigation_tasks_v24/sequence.py": "71823e2c363e21bcb89213a5f9e6428d42807d58d8a97a46633b220d4604f592",
+        "src/mochi/navigation_tasks_v24/snapshot.py": "7e91eb721d8910614dda35669fbfce09e77bce307e5a880ceef5df13791e82dc",
+        "src/mochi/navigation_tasks_v24/world.py": "ba89a40d04ab8f9b3e9514da1134650896a80826bad26057d573bd0d518c7476"
+      },
+      "failure": "invalid_fixture_contact",
+      "qualified_complete": false,
+      "artifact_sha256": "66566e8bcad8dfa006ae9c742e22a615379aba84e8d03577d418a9591457c4d3",
+      "physical_seconds": 259.56619418802967,
+      "steps": 416,
+      "fall": false,
+      "invalid_contact": true,
+      "tasks": {
+        "alarm": true,
+        "drawer": true
+      },
+      "arrivals": [
+        {
+          "label": "book-entry-transit-0",
+          "success": true,
+          "duration_s": 4.907269572395756
+        },
+        {
+          "label": "book-ascent",
+          "success": true,
+          "duration_s": 68.51130361383464
+        },
+        {
+          "label": "book-turn-clearance",
+          "success": true,
+          "duration_s": 14.623712373968942
+        },
+        {
+          "label": "book-top-turnaround",
+          "success": true,
+          "duration_s": 59.53548820413572
+        },
+        {
+          "label": "book-forward-descent",
+          "success": true,
+          "duration_s": 47.15899956072974
+        },
+        {
+          "label": "forward-descent-exit-stance",
+          "success": true,
+          "duration_s": 8.427293356992891
+        },
+        {
+          "label": "book-exit-clearance-transit-0",
+          "success": true,
+          "duration_s": 3.3262835066062735
+        },
+        {
+          "label": "drawer-transit-0",
+          "success": true,
+          "duration_s": 10.978615751713505
+        },
+        {
+          "label": "drawer-transit-1",
+          "success": true,
+          "duration_s": 4.060371142126655
+        },
+        {
+          "label": "drawer-transit-2",
+          "success": true,
+          "duration_s": 8.716677569659055
+        },
+        {
+          "label": "drawer-transit-3",
+          "success": true,
+          "duration_s": 9.618346458277074
+        },
+        {
+          "label": "drawer-object-relative-pose",
+          "success": true,
+          "duration_s": 4.554940206146512
+        }
+      ],
+      "wall_seconds": 215.05996554158628
+    },
+    {
+      "id": "physical-r2-full",
+      "status": "completed",
+      "arguments": {
+        "id": "physical-r2-full",
+        "development_index": 0,
+        "training_index": 0,
+        "capture_states": true,
+        "until": "all",
+        "navigation_report": "mochi/.cache/navigation-v23/live-progress-c.json"
+      },
+      "reserved_seconds": 900,
+      "navigation_gate_evidence_sha256": "be0bc1fc4f9fbacfe9cda5d403cb6f6c1ac83b7ca12679ec18dd4e26563e55b2",
+      "navigation_still_running": true,
+      "layout_sha256": "68df733629fb21758d635346057f9f8b9b6d82c098d577793754993fd69dd7b8",
+      "source_sha256": {
+        "src/mochi/navigation_tasks_v24/__init__.py": "70a61f975adc7648650955e00af17841c4b02c05012bd827c45657e45d009ddb",
+        "src/mochi/navigation_tasks_v24/approaches.py": "da6bf6f110e5d6b48dbeaffc9cc5fcb672322c4308aeb11ab204229b1bef8462",
+        "src/mochi/navigation_tasks_v24/branches.py": "e94aceb52e565fdde69d2eda9b17576544dfa4fe7d32c96ce3b92410789a688b",
+        "src/mochi/navigation_tasks_v24/policy.py": "6bc8c2f8b4416fba88f2f69c824385340c2d1d802012d94418dc98f76895e0d0",
+        "src/mochi/navigation_tasks_v24/relative_laptop.py": "5268947c324f36ca3169b68add494f6d4f226debc9437be321c66c73877588bd",
+        "src/mochi/navigation_tasks_v24/sequence.py": "71823e2c363e21bcb89213a5f9e6428d42807d58d8a97a46633b220d4604f592",
+        "src/mochi/navigation_tasks_v24/snapshot.py": "7e91eb721d8910614dda35669fbfce09e77bce307e5a880ceef5df13791e82dc",
+        "src/mochi/navigation_tasks_v24/world.py": "ba89a40d04ab8f9b3e9514da1134650896a80826bad26057d573bd0d518c7476"
+      },
+      "failure": "laptop-failed:laptop",
+      "qualified_complete": false,
+      "artifact_sha256": "feee337de78a3c35125c30ee75b9080c87941e793ffc5a6d106b76a42ff55162",
+      "physical_seconds": 349.5704066138978,
+      "steps": 846,
+      "fall": false,
+      "invalid_contact": false,
+      "tasks": {
+        "alarm": true,
+        "drawer": true,
+        "laptop": false
+      },
+      "arrivals": [
+        {
+          "label": "book-entry-transit-0",
+          "success": true,
+          "duration_s": 10.557618945107146
+        },
+        {
+          "label": "book-ascent",
+          "success": true,
+          "duration_s": 68.51947830913224
+        },
+        {
+          "label": "book-turn-clearance",
+          "success": true,
+          "duration_s": 14.623712373968942
+        },
+        {
+          "label": "book-top-turnaround",
+          "success": true,
+          "duration_s": 59.53548820413572
+        },
+        {
+          "label": "book-forward-descent",
+          "success": true,
+          "duration_s": 47.347017552010016
+        },
+        {
+          "label": "forward-descent-exit-stance",
+          "success": true,
+          "duration_s": 8.427293356992891
+        },
+        {
+          "label": "book-exit-clearance-transit-0",
+          "success": true,
+          "duration_s": 4.062006081181266
+        },
+        {
+          "label": "drawer-transit-0",
+          "success": true,
+          "duration_s": 15.935750965294346
+        },
+        {
+          "label": "drawer-transit-1",
+          "success": true,
+          "duration_s": 5.773787271359083
+        },
+        {
+          "label": "drawer-transit-2",
+          "success": true,
+          "duration_s": 6.758838051762268
+        },
+        {
+          "label": "drawer-object-relative-pose",
+          "success": true,
+          "duration_s": 3.8159477534622965
+        },
+        {
+          "label": "laptop-transit-0",
+          "success": true,
+          "duration_s": 13.96483193496067
+        },
+        {
+          "label": "laptop-transit-1",
+          "success": true,
+          "duration_s": 10.765256205086757
+        },
+        {
+          "label": "laptop-transit-2",
+          "success": true,
+          "duration_s": 19.905382989890086
+        },
+        {
+          "label": "laptop-transit-3",
+          "success": true,
+          "duration_s": 4.842689479758064
+        },
+        {
+          "label": "laptop-transit-4",
+          "success": true,
+          "duration_s": 6.75475070412574
+        },
+        {
+          "label": "laptop-object-relative-pose",
+          "success": true,
+          "duration_s": 5.282488085448449
+        }
+      ],
+      "snapshots": [
+        {
+          "domain": "alarm",
+          "task": "alarm",
+          "file": "0-alarm-alarm.pickle",
+          "sha256": "8c4f8042e352c83ce4b90a1a872ce3943170bba3cf2b61ffe5e607b32d20b375",
+          "split": "training",
+          "physical_time": 79.47765732261756,
+          "scope": "Actual uninterrupted reached state; not a generated successful trajectory."
+        },
+        {
+          "domain": "recovery",
+          "task": "alarm",
+          "file": "1-recovery-alarm.pickle",
+          "sha256": "21f6b6830d0fbe6618e31ffb459cea88bf29618f8af5bf54836f59e40f37b6f4",
+          "split": "training",
+          "physical_time": 82.84072695795258,
+          "scope": "Actual uninterrupted reached state; not a generated successful trajectory."
+        },
+        {
+          "domain": "navigation",
+          "task": "drawer",
+          "file": "2-navigation-drawer.pickle",
+          "sha256": "c592dc538e5339b199764c08a079b859e615e7e9d7d2b0f1b7b9c9c8586d31ed",
+          "split": "training",
+          "physical_time": 219.52571927107667,
+          "scope": "Actual uninterrupted reached state; not a generated successful trajectory."
+        },
+        {
+          "domain": "drawer",
+          "task": "drawer",
+          "file": "3-drawer-drawer.pickle",
+          "sha256": "e007f26f8e46f914d6bf3eac3654a73ccb0a1854af6169f40b5272b6fb62e37d",
+          "split": "training",
+          "physical_time": 251.81004331295466,
+          "scope": "Actual uninterrupted reached state; not a generated successful trajectory."
+        },
+        {
+          "domain": "recovery",
+          "task": "drawer",
+          "file": "4-recovery-drawer.pickle",
+          "sha256": "7574ffeb0945826207d64016cdb6468c577506f066546d42d2d16277c0481f50",
+          "split": "training",
+          "physical_time": 255.24259785811066,
+          "scope": "Actual uninterrupted reached state; not a generated successful trajectory."
+        },
+        {
+          "domain": "navigation",
+          "task": "laptop",
+          "file": "5-navigation-laptop.pickle",
+          "sha256": "df3f719265f547abd56822b63c54f4517cef5127836f5e2d6b8fce350fd506ca",
+          "split": "training",
+          "physical_time": 256.05434509872504,
+          "scope": "Actual uninterrupted reached state; not a generated successful trajectory."
+        },
+        {
+          "domain": "laptop",
+          "task": "laptop",
+          "file": "6-laptop-laptop.pickle",
+          "sha256": "140bf08aa77ce26bb6fbcbe70c81248600b3a5eba98cc2a0ee45538265a0f4f3",
+          "split": "training",
+          "physical_time": 317.5697444979948,
+          "scope": "Actual uninterrupted reached state; not a generated successful trajectory."
+        }
+      ],
+      "wall_seconds": 261.28575870767236
+    },
+    {
+      "id": "laptop-release-48",
+      "status": "completed",
+      "reserved_seconds": 150,
+      "scope": "Isolated contact engineering branch, not a full sequence or a training result.",
+      "result": {
+        "task": "laptop",
+        "success": false,
+        "value": 0.752941371351826,
+        "duration": 32.00066211590297,
+        "contacts": 1507,
+        "non_hand_contact_steps": 0,
+        "max_force_n": 0.506529238492845,
+        "fall": false,
+        "max_tilt_deg": 4.718437630013769,
+        "profile": {
+          "code": "P5",
+          "force": 0.65,
+          "radius": 0.15,
+          "contact_x": 0.263,
+          "pulse_on": 10,
+          "pulse_off": 0,
+          "slew": 0.012,
+          "release_degrees": 48.0
+        },
+        "phase": "release",
+        "contact_progress": 0.3964931304303916,
+        "abort": null,
+        "approach_stage": 1,
+        "final_tip": [
+          0.2910748276275915,
+          0.25954195128015506,
+          0.14235004409707583
+        ],
+        "final_target": [
+          0.2925202757128996,
+          0.25996610588422736,
+          0.14360582124322085
+        ],
+        "controller": "angle and closing-speed force schedule; nominal .16 kg lid / .070 Nm friction; measured foot-load guard; bounded stalled-contact pulse finish"
+      },
+      "recovery": null,
+      "artifact_sha256": "e61a89cd22765ab133a5a35c204f009482adf098a0400a06e5bcdb4a9d21f54a",
+      "snapshot_sha256": "140bf08aa77ce26bb6fbcbe70c81248600b3a5eba98cc2a0ee45538265a0f4f3",
+      "fall": false,
+      "invalid_contact": false,
+      "wall_seconds": 44.99857783317566
+    },
+    {
+      "id": "laptop-release-52",
+      "status": "completed",
+      "reserved_seconds": 150,
+      "scope": "Isolated contact engineering branch, not a full sequence or a training result.",
+      "result": {
+        "task": "laptop",
+        "success": false,
+        "value": 0.7529413713517351,
+        "duration": 32.00066211590297,
+        "contacts": 1180,
+        "non_hand_contact_steps": 0,
+        "max_force_n": 0.506529238492845,
+        "fall": false,
+        "max_tilt_deg": 4.718437630013769,
+        "profile": {
+          "code": "P5",
+          "force": 0.65,
+          "radius": 0.15,
+          "contact_x": 0.263,
+          "pulse_on": 10,
+          "pulse_off": 0,
+          "slew": 0.012,
+          "release_degrees": 52.0
+        },
+        "phase": "release",
+        "contact_progress": 0.3964931304304825,
+        "abort": null,
+        "approach_stage": 1,
+        "final_tip": [
+          0.29212606284283416,
+          0.2692775644012349,
+          0.15113549351683286
+        ],
+        "final_target": [
+          0.2921045201639645,
+          0.2692727523020446,
+          0.15112943271603707
+        ],
+        "controller": "angle and closing-speed force schedule; nominal .16 kg lid / .070 Nm friction; measured foot-load guard; bounded stalled-contact pulse finish"
+      },
+      "recovery": null,
+      "artifact_sha256": "b086b72bbedb49446a8db03c4f34feface45c44c5afd45c677ebae39da6e4275",
+      "snapshot_sha256": "140bf08aa77ce26bb6fbcbe70c81248600b3a5eba98cc2a0ee45538265a0f4f3",
+      "fall": false,
+      "invalid_contact": false,
+      "wall_seconds": 44.7952072089538
+    },
+    {
+      "id": "physical-r3-full",
+      "status": "completed",
+      "arguments": {
+        "id": "physical-r3-full",
+        "development_index": 0,
+        "training_index": 0,
+        "capture_states": true,
+        "clear_task_workspace": true,
+        "until": "all",
+        "navigation_report": "mochi/.cache/navigation-v23/live-progress-c.json"
+      },
+      "reserved_seconds": 900,
+      "navigation_gate_evidence_sha256": "04f0da2e5b3b6bb158b03229b3f4fa1c89264a1ea10efd9aa876352be61551ba",
+      "navigation_still_running": true,
+      "layout_sha256": "20530ac18f0795fe2b29c8508912272c92ed60103378f369c61e6247a33b9b08",
+      "source_sha256": {
+        "src/mochi/navigation_tasks_v24/__init__.py": "70a61f975adc7648650955e00af17841c4b02c05012bd827c45657e45d009ddb",
+        "src/mochi/navigation_tasks_v24/approaches.py": "da6bf6f110e5d6b48dbeaffc9cc5fcb672322c4308aeb11ab204229b1bef8462",
+        "src/mochi/navigation_tasks_v24/branches.py": "e94aceb52e565fdde69d2eda9b17576544dfa4fe7d32c96ce3b92410789a688b",
+        "src/mochi/navigation_tasks_v24/layouts.py": "15c37295d2ed66511550ad8c21eacb2d392bc39cc647480b1e4ef1501497fc79",
+        "src/mochi/navigation_tasks_v24/policy.py": "6bc8c2f8b4416fba88f2f69c824385340c2d1d802012d94418dc98f76895e0d0",
+        "src/mochi/navigation_tasks_v24/relative_laptop.py": "5268947c324f36ca3169b68add494f6d4f226debc9437be321c66c73877588bd",
+        "src/mochi/navigation_tasks_v24/sequence.py": "71823e2c363e21bcb89213a5f9e6428d42807d58d8a97a46633b220d4604f592",
+        "src/mochi/navigation_tasks_v24/snapshot.py": "7e91eb721d8910614dda35669fbfce09e77bce307e5a880ceef5df13791e82dc",
+        "src/mochi/navigation_tasks_v24/world.py": "ba89a40d04ab8f9b3e9514da1134650896a80826bad26057d573bd0d518c7476"
+      },
+      "failure": "invalid_fixture_contact",
+      "qualified_complete": false,
+      "artifact_sha256": "a13ed8a0f87a4e178deb0d1e15c98f3877bf68cac1c34d4efc238bf3f9a6d42d",
+      "physical_seconds": 330.2282601283212,
+      "steps": 848,
+      "fall": false,
+      "invalid_contact": true,
+      "tasks": {
+        "alarm": true,
+        "drawer": true,
+        "laptop": true
+      },
+      "arrivals": [
+        {
+          "label": "book-entry-transit-0",
+          "success": true,
+          "duration_s": 10.557618945107146
+        },
+        {
+          "label": "book-ascent",
+          "success": true,
+          "duration_s": 68.51947830913224
+        },
+        {
+          "label": "book-turn-clearance",
+          "success": true,
+          "duration_s": 14.623712373968942
+        },
+        {
+          "label": "book-top-turnaround",
+          "success": true,
+          "duration_s": 59.53548820413572
+        },
+        {
+          "label": "book-forward-descent",
+          "success": true,
+          "duration_s": 47.347017552010016
+        },
+        {
+          "label": "forward-descent-exit-stance",
+          "success": true,
+          "duration_s": 8.427293356992891
+        },
+        {
+          "label": "book-exit-clearance-transit-0",
+          "success": true,
+          "duration_s": 4.062006081181266
+        },
+        {
+          "label": "drawer-transit-0",
+          "success": true,
+          "duration_s": 15.935750965294346
+        },
+        {
+          "label": "drawer-transit-1",
+          "success": true,
+          "duration_s": 5.773787271359083
+        },
+        {
+          "label": "drawer-transit-2",
+          "success": true,
+          "duration_s": 6.758838051762268
+        },
+        {
+          "label": "drawer-object-relative-pose",
+          "success": true,
+          "duration_s": 3.8159477534622965
+        },
+        {
+          "label": "laptop-transit-0",
+          "success": true,
+          "duration_s": 13.96483193496067
+        },
+        {
+          "label": "laptop-transit-1",
+          "success": true,
+          "duration_s": 10.765256205086757
+        },
+        {
+          "label": "laptop-transit-2",
+          "success": true,
+          "duration_s": 19.905382989890086
+        },
+        {
+          "label": "laptop-transit-3",
+          "success": true,
+          "duration_s": 4.842689479758064
+        },
+        {
+          "label": "laptop-transit-4",
+          "success": true,
+          "duration_s": 6.75475070412574
+        },
+        {
+          "label": "laptop-object-relative-pose",
+          "success": true,
+          "duration_s": 5.282488085448449
+        }
+      ],
+      "snapshots": [
+        {
+          "domain": "alarm",
+          "task": "alarm",
+          "file": "0-alarm-alarm.pickle",
+          "sha256": "4c3177a7bea4590f31d5ef19f299fa5e29f7bbaabb28833a80d9408653d122be",
+          "split": "training",
+          "physical_time": 79.47765732261756,
+          "scope": "Actual uninterrupted reached state; not a generated successful trajectory."
+        },
+        {
+          "domain": "recovery",
+          "task": "alarm",
+          "file": "1-recovery-alarm.pickle",
+          "sha256": "2580aa4800729f0e87b14938094290762776d9ca61b8e9f9c7bf82e9ee7ec781",
+          "split": "training",
+          "physical_time": 82.84072695795258,
+          "scope": "Actual uninterrupted reached state; not a generated successful trajectory."
+        },
+        {
+          "domain": "navigation",
+          "task": "drawer",
+          "file": "2-navigation-drawer.pickle",
+          "sha256": "d9d180446c240308674d2167a47a787d0112004c36e65b979eb2384233d0e2ff",
+          "split": "training",
+          "physical_time": 219.52571927107667,
+          "scope": "Actual uninterrupted reached state; not a generated successful trajectory."
+        },
+        {
+          "domain": "drawer",
+          "task": "drawer",
+          "file": "3-drawer-drawer.pickle",
+          "sha256": "32bce7037bc0474b9c95415bf48de3ae47bc9612bc2f55507791fa10ff523232",
+          "split": "training",
+          "physical_time": 251.81004331295466,
+          "scope": "Actual uninterrupted reached state; not a generated successful trajectory."
+        },
+        {
+          "domain": "recovery",
+          "task": "drawer",
+          "file": "4-recovery-drawer.pickle",
+          "sha256": "46563bc63620bc54f143edb1e8abd28a8248e228fa24ac1eb91ea91a4069939b",
+          "split": "training",
+          "physical_time": 255.24259785811066,
+          "scope": "Actual uninterrupted reached state; not a generated successful trajectory."
+        },
+        {
+          "domain": "navigation",
+          "task": "laptop",
+          "file": "5-navigation-laptop.pickle",
+          "sha256": "eb0f43bead0093bb3b9a125916f9439df34022f493e68c173e65aa9068339968",
+          "split": "training",
+          "physical_time": 256.05434509872504,
+          "scope": "Actual uninterrupted reached state; not a generated successful trajectory."
+        },
+        {
+          "domain": "laptop",
+          "task": "laptop",
+          "file": "6-laptop-laptop.pickle",
+          "sha256": "a69789d7eebc91eadce72c96410cd72d245882393556dc065470a07a776bc63a",
+          "split": "training",
+          "physical_time": 317.5697444979948,
+          "scope": "Actual uninterrupted reached state; not a generated successful trajectory."
+        },
+        {
+          "domain": "recovery",
+          "task": "laptop",
+          "file": "7-recovery-laptop.pickle",
+          "sha256": "a5e0710662e112162d2b307c6e5d57c781c2aed4e088d29fdac0d4338a9f7133",
+          "split": "training",
+          "physical_time": 327.7946533455326,
+          "scope": "Actual uninterrupted reached state; not a generated successful trajectory."
+        },
+        {
+          "domain": "navigation",
+          "task": "globe",
+          "file": "8-navigation-globe.pickle",
+          "sha256": "da0b7efbbf7e3ef3adaf23efe7fcdd89ddf79c1471e67d830eee97c9142cafe7",
+          "split": "training",
+          "physical_time": 330.04432948467746,
+          "scope": "Actual uninterrupted reached state; not a generated successful trajectory."
+        }
+      ],
+      "wall_seconds": 256.6116072079167
+    },
+    {
+      "id": "globe-southwest-r1",
+      "status": "completed",
+      "reserved_seconds": 150,
+      "scope": "Restored physical component branch, not an uninterrupted four-task demonstration.",
+      "eligible_as_continuous_sequence": false,
+      "physical_failure": "invalid_fixture_contact",
+      "wall_seconds": 2.8107352079823613
+    },
+    {
+      "id": "globe-hold-arms-r2",
+      "status": "completed",
+      "reserved_seconds": 150,
+      "scope": "Restored physical component branch, not an uninterrupted four-task demonstration.",
+      "eligible_as_continuous_sequence": false,
+      "physical_failure": "invalid_fixture_contact",
+      "artifact_sha256": "5a65576a352035472860cddaae5eff1f2fec94196466c4c7624b8e066888856a",
+      "contact_failures": [
+        {
+          "t": 330.1980137558109,
+          "body": "right_wrist_yaw_link",
+          "fixture": "globe-contact",
+          "force_n": 0.42326738128096025,
+          "phase": "walk",
+          "normal": [
+            -0.9896565109829617,
+            0.09045394231165049,
+            -0.11134664157176899
+          ]
+        }
+      ],
+      "wall_seconds": 2.983902707695961
+    }
+  ],
+  "snapshot_probes": [
+    {
+      "id": "snapshot-r1-probe",
+      "physical_attempts": 2,
+      "status": "completed",
+      "clone_check": {
+        "qpos_exact": true,
+        "qvel_exact": true,
+        "control_exact": true,
+        "scope": "Restored branch next step equals the real uninterrupted prefix next step. Branches remain component data, never full-sequence recordings."
+      },
+      "wall_seconds": 4.095814666710794
+    },
+    {
+      "id": "snapshot-r0-probe",
+      "status": "incomplete",
+      "physical_attempts": 1,
+      "wall_seconds_reserved": 30,
+      "failure": "Test setup used HoldWalker before installing HubWalker; no clone was constructed, no model update."
+    }
+  ],
+  "recording_caveat": "globe-southwest-r1 retained an error summary only; its initial exception handler did not save a trajectory. Other full prefixes and the later globe failure retain recorded physics. The short failed snapshot setup also has no trajectory.",
+  "next_required_work": "Validate a retreat into clear turning space and a complete object-relative sequence before collecting task-training labels."
+}
