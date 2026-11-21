@@ -1,0 +1,59 @@
+{
+  "created_at": "2026-11-21T07:06:41.526197+00:00",
+  "held_out_seeds": [
+    226000,
+    226001,
+    226002,
+    226003
+  ],
+  "selected_candidate": "mink-recovery-only",
+  "walking_promoted": false,
+  "new_optimizer_updates": 0,
+  "selection_reason": "Both development pairs qualified. The gentler recovery candidate reduced measured recovery jerk in matched component testing. GMR gait/turning results were mixed and are not part of the selected full-route candidate. Duration and IK changes are not separately identified.",
+  "development": {
+    "full-parent-dev-225000": {
+      "complete": true,
+      "qualified": true,
+      "steps": 418,
+      "seconds": 276.8278807266136,
+      "failure": null,
+      "artifact_sha256": "71b3dd310936993fe9cb108b7a2db7ef84e9d675b7f2193ac413997b4a832ab1"
+    },
+    "full-mink-dev-225000": {
+      "complete": true,
+      "qualified": true,
+      "steps": 418,
+      "seconds": 277.2938383571778,
+      "failure": null,
+      "artifact_sha256": "f2866534922c544ee7f9224ab4cb15436c872fdc8d0a63b059a37eef73370b7e"
+    },
+    "full-mink-dev-225001": {
+      "complete": true,
+      "qualified": true,
+      "steps": 418,
+      "seconds": 278.04427538324427,
+      "failure": null,
+      "artifact_sha256": "acdc82900b4c7df914c7e48a250874fe62572d6f0a31ce21d0b078595915850a"
+    },
+    "full-parent-dev-225001": {
+      "complete": true,
+      "qualified": true,
+      "steps": 430,
+      "seconds": 278.98763521775487,
+      "failure": null,
+      "artifact_sha256": "90c505157f678eadfa79c7fd4cd2a8fbfd600a2136b9c0595865dcfcfeadf7f2"
+    }
+  },
+  "source_sha256": {
+    "src/mochi/visual_motion_v22/__init__.py": "b9e7668b7b59240e1775fc65f0c31c4570472de255d2c790dcbd17fc16fc806f",
+    "src/mochi/visual_motion_v22/controller.py": "acfed7ae0aa5c35e1d123007fc41e12818c63eb02e1736963e4bf745a9ff1684",
+    "src/mochi/visual_motion_v22/experiment.py": "1f35dd3d03940009b3a27e705ee2465a41e0032aca16f7076a54e5736b4fe1c0",
+    "src/mochi/visual_motion_v22/ik_worker.py": "4b1aeb2e25c46e1d6a4ec57dab8433ce0a3ff2d3ce8752185f53fdb4816b3412",
+    "src/mochi/visual_motion_v22/metrics.py": "85cb525f56fc072dc3d5133b52e212a92eb6f53aac5fa326be157bacc45027bb",
+    "src/mochi/visual_motion_v22/references.py": "923fdd463bc77a9ad381ee93bbacf0d6ee2eaf526f8b9344f5b4b0ea5eb613ff",
+    "configs/visual-motion-v22/mink-recovery-only.json": "db0a5422655ed311fd5127913981a042bff291b439f30cdf7b0ca080873fa44e",
+    "scripts/run_visual_v22_final.py": "43ed129aee9d06f3db680ed767844ac26a4feac090894dc7a2f17e2668ecaa71",
+    "artifacts/visual-motion-v22/gmr-walking-reference-calibrated.json": "b48b8d8647d819a52d12fbd58ab866e4f0ecffd064c7fd597e487ff65705d8b3",
+    "artifacts/visual-motion-v22/reference-model.xml": "663856c6fbfa0759168ac52637e5f85776b3d2311a8a365e83acfc2a825d2c3d"
+  }
+}

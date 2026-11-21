@@ -1,0 +1,582 @@
+{
+  "study": "mochi-visual-motion-v22",
+  "scene": {
+    "version": "richdesk-v19-paperfree",
+    "units": "metres",
+    "desk": [
+      1.2,
+      0.8
+    ],
+    "initial_pose": [
+      -0.375,
+      -0.225,
+      1.5707963267948966
+    ],
+    "clock_offset": [
+      0,
+      0,
+      0.024
+    ],
+    "globe_offset": [
+      0,
+      -0.37,
+      0
+    ],
+    "book_height": 0.008,
+    "book_collision_scope": "Fixed, nonsliding book terrain; visual meshes and collision envelopes share the same placements. No root motion is authored.",
+    "props": [
+      {
+        "name": "book-step-1",
+        "asset": "book",
+        "pos": [
+          -0.36,
+          0.02,
+          0
+        ],
+        "size": [
+          0.23,
+          0.3,
+          0.008
+        ],
+        "yaw": 0,
+        "color": "#334d56",
+        "shape": "box",
+        "climb": true,
+        "title": "FIELD NOTES"
+      },
+      {
+        "name": "book-step-2",
+        "asset": "book",
+        "pos": [
+          -0.36,
+          0.045,
+          0.008
+        ],
+        "size": [
+          0.22,
+          0.23,
+          0.008
+        ],
+        "yaw": 0,
+        "color": "#8f5248",
+        "shape": "box",
+        "climb": true,
+        "title": "ROBOT MOTION"
+      },
+      {
+        "name": "book-step-3",
+        "asset": "book",
+        "pos": [
+          -0.36,
+          0.07,
+          0.016
+        ],
+        "size": [
+          0.2,
+          0.18,
+          0.008
+        ],
+        "yaw": 0,
+        "color": "#777c55",
+        "shape": "box",
+        "climb": true,
+        "title": "PRACTICAL MECHANICS"
+      },
+      {
+        "name": "printer",
+        "asset": "printer",
+        "pos": [
+          0.435,
+          0.29,
+          0
+        ],
+        "size": [
+          0.28,
+          0.18,
+          0.17
+        ],
+        "yaw": 0,
+        "shape": "box"
+      },
+      {
+        "name": "coffee-mug",
+        "asset": "mug",
+        "pos": [
+          -0.06,
+          -0.13,
+          0
+        ],
+        "size": [
+          0.105,
+          0.085,
+          0.095
+        ],
+        "yaw": -0.3,
+        "shape": "cylinder"
+      },
+      {
+        "name": "spiral-notebook",
+        "asset": "notebook",
+        "pos": [
+          0.055,
+          -0.265,
+          0
+        ],
+        "size": [
+          0.2,
+          0.145,
+          0.007
+        ],
+        "yaw": -0.12,
+        "shape": "box"
+      },
+      {
+        "name": "pencil-1",
+        "asset": "pencil",
+        "pos": [
+          -0.214,
+          -0.239,
+          0
+        ],
+        "size": [
+          0.17,
+          0.007,
+          0.007
+        ],
+        "yaw": 0.22,
+        "shape": "capsule"
+      },
+      {
+        "name": "pencil-2",
+        "asset": "pencil",
+        "pos": [
+          0.1,
+          -0.235,
+          0.007
+        ],
+        "size": [
+          0.16,
+          0.0065,
+          0.0065
+        ],
+        "yaw": -0.46,
+        "shape": "capsule"
+      },
+      {
+        "name": "pencil-3",
+        "asset": "pencil",
+        "pos": [
+          -0.267,
+          0.293,
+          0
+        ],
+        "size": [
+          0.15,
+          0.007,
+          0.007
+        ],
+        "yaw": 0.33,
+        "shape": "capsule"
+      },
+      {
+        "name": "pen-1",
+        "asset": "pen",
+        "pos": [
+          -0.115,
+          -0.265,
+          0
+        ],
+        "size": [
+          0.145,
+          0.009,
+          0.009
+        ],
+        "yaw": -0.62,
+        "shape": "capsule"
+      },
+      {
+        "name": "pen-2",
+        "asset": "pen",
+        "pos": [
+          0.245,
+          -0.276,
+          0
+        ],
+        "size": [
+          0.14,
+          0.009,
+          0.009
+        ],
+        "yaw": 0.15,
+        "shape": "capsule"
+      },
+      {
+        "name": "stapler",
+        "asset": "stapler",
+        "pos": [
+          0.213,
+          0.327,
+          0
+        ],
+        "size": [
+          0.11,
+          0.035,
+          0.04
+        ],
+        "yaw": 0.12,
+        "shape": "box"
+      },
+      {
+        "name": "reading-glasses",
+        "asset": "glasses",
+        "pos": [
+          0.235,
+          -0.325,
+          0
+        ],
+        "size": [
+          0.14,
+          0.044,
+          0.016
+        ],
+        "yaw": -0.1,
+        "shape": "box"
+      },
+      {
+        "name": "reference-book",
+        "asset": "book",
+        "pos": [
+          -0.43,
+          0.285,
+          0
+        ],
+        "size": [
+          0.19,
+          0.14,
+          0.015
+        ],
+        "yaw": -0.08,
+        "color": "#545755",
+        "shape": "box",
+        "title": "WORKSHOP HANDBOOK"
+      },
+      {
+        "name": "loose-page-1",
+        "asset": "paper",
+        "pos": [
+          0.355,
+          -0.315,
+          0
+        ],
+        "size": [
+          0.15,
+          0.105,
+          0.0002
+        ],
+        "yaw": 0.12,
+        "shape": "box"
+      },
+      {
+        "name": "loose-page-2",
+        "asset": "paper",
+        "pos": [
+          0.365,
+          -0.298,
+          0.0002
+        ],
+        "size": [
+          0.15,
+          0.105,
+          0.0002
+        ],
+        "yaw": 0.07,
+        "shape": "box"
+      },
+      {
+        "name": "printer-output-tray",
+        "asset": "tray",
+        "pos": [
+          0.435,
+          0.185,
+          0.048
+        ],
+        "size": [
+          0.19,
+          0.065,
+          0.005
+        ],
+        "yaw": 0,
+        "shape": "box"
+      },
+      {
+        "name": "printer-printout",
+        "asset": "paper",
+        "pos": [
+          0.435,
+          0.181,
+          0.054
+        ],
+        "size": [
+          0.17,
+          0.085,
+          0.0002
+        ],
+        "yaw": 0.03,
+        "shape": "box"
+      }
+    ],
+    "route": [
+      {
+        "name": "climb-to-alarm",
+        "goal": [
+          -0.375,
+          0.025,
+          1.5707963267948966
+        ],
+        "surface_height": 0.024
+      },
+      {
+        "name": "descend-books",
+        "goal": [
+          -0.375,
+          -0.19,
+          1.5707963267948966
+        ],
+        "surface_height": 0
+      },
+      {
+        "name": "clear-books",
+        "goal": [
+          -0.19,
+          -0.17,
+          0
+        ],
+        "surface_height": 0
+      },
+      {
+        "name": "drawer",
+        "goal": [
+          -0.13,
+          0.02,
+          1.5707963267948966
+        ],
+        "surface_height": 0
+      },
+      {
+        "name": "laptop-corridor",
+        "goal": [
+          0.3,
+          0.02,
+          0
+        ],
+        "surface_height": 0
+      },
+      {
+        "name": "laptop",
+        "goal": [
+          0.3,
+          0.16,
+          1.5707963267948966
+        ],
+        "surface_height": 0
+      },
+      {
+        "name": "globe-corridor",
+        "goal": [
+          0.35,
+          0.02,
+          1.5707963267948966
+        ],
+        "surface_height": 0
+      },
+      {
+        "name": "globe",
+        "goal": [
+          0.35,
+          -0.145,
+          0
+        ],
+        "surface_height": 0
+      }
+    ],
+    "revision_notes": "Post-it stack removed from physics and rendering. Drawer-to-laptop transit is ordinary flat walking."
+  },
+  "scenarios": [
+    {
+      "id": "development-221000",
+      "label": "Development scenario 221000",
+      "before": "../inkling-v21/clearance-full-221000.json.gz",
+      "after": "../inkling-v21/clearance-full-221000.json.gz",
+      "before_meta": {
+        "sha256": "4c46e7515284485416735d2615c31be92973f81e77d62ed5fc1123519af2a94a",
+        "steps": 418,
+        "success": true,
+        "complete": true,
+        "failure": null,
+        "duration": 277.8153839155987,
+        "component": false
+      },
+      "after_meta": {
+        "sha256": "4c46e7515284485416735d2615c31be92973f81e77d62ed5fc1123519af2a94a",
+        "steps": 418,
+        "success": true,
+        "complete": true,
+        "failure": null,
+        "duration": 277.8153839155987,
+        "component": false
+      },
+      "before_label": "ORIGINAL MATERIALS & LIGHTING",
+      "after_label": "V22 MATERIALS & LIGHTING",
+      "scope": "APPEARANCE COMPARISON \u00b7 Identical recorded MuJoCo movement, task outcomes, camera settings and playback speed. No new motion is claimed in this mode.",
+      "finding_title": "Identical physical movement.",
+      "finding_detail": "Both panes share recording 4c46e7515284. The robot finish and lighting change. Original geometry, joint pivots and body bindings are preserved; the compressed model differs by less than 0.001 mm in measured body bounds."
+    },
+    {
+      "id": "development-221001",
+      "label": "Development scenario 221001",
+      "before": "../inkling-v21/clearance-full-221001.json.gz",
+      "after": "../inkling-v21/clearance-full-221001.json.gz",
+      "before_meta": {
+        "sha256": "31acd7e0602ca8e5d946b09f1fbe85c470d91965a02db40728cf56fea1d30ee0",
+        "steps": 298,
+        "success": false,
+        "complete": false,
+        "failure": "laptop-failed:laptop",
+        "duration": 272.75361260252276,
+        "component": false
+      },
+      "after_meta": {
+        "sha256": "31acd7e0602ca8e5d946b09f1fbe85c470d91965a02db40728cf56fea1d30ee0",
+        "steps": 298,
+        "success": false,
+        "complete": false,
+        "failure": "laptop-failed:laptop",
+        "duration": 272.75361260252276,
+        "component": false
+      },
+      "before_label": "ORIGINAL MATERIALS & LIGHTING",
+      "after_label": "V22 MATERIALS & LIGHTING",
+      "scope": "APPEARANCE COMPARISON \u00b7 Identical recorded MuJoCo movement, task outcomes, camera settings and playback speed. No new motion is claimed in this mode.",
+      "finding_title": "Identical physical movement.",
+      "finding_detail": "Both panes share recording 31acd7e0602c. The robot finish and lighting change. Original geometry, joint pivots and body bindings are preserved; the compressed model differs by less than 0.001 mm in measured body bounds."
+    },
+    {
+      "id": "held-out-223000",
+      "label": "Fresh test scenario 223000",
+      "before": "../inkling-v21/fresh-clearance-223000.json.gz",
+      "after": "../inkling-v21/fresh-clearance-223000.json.gz",
+      "before_meta": {
+        "sha256": "bc127e61c2d43d136481029856bf2750f34e296451165f463a715e956b63dc0a",
+        "steps": 306,
+        "success": false,
+        "complete": false,
+        "failure": "laptop-failed:laptop",
+        "duration": 273.481977951352,
+        "component": false
+      },
+      "after_meta": {
+        "sha256": "bc127e61c2d43d136481029856bf2750f34e296451165f463a715e956b63dc0a",
+        "steps": 306,
+        "success": false,
+        "complete": false,
+        "failure": "laptop-failed:laptop",
+        "duration": 273.481977951352,
+        "component": false
+      },
+      "before_label": "ORIGINAL MATERIALS & LIGHTING",
+      "after_label": "V22 MATERIALS & LIGHTING",
+      "scope": "APPEARANCE COMPARISON \u00b7 Identical recorded MuJoCo movement, task outcomes, camera settings and playback speed. No new motion is claimed in this mode.",
+      "finding_title": "Identical physical movement.",
+      "finding_detail": "Both panes share recording bc127e61c2d4. The robot finish and lighting change. Original geometry, joint pivots and body bindings are preserved; the compressed model differs by less than 0.001 mm in measured body bounds."
+    },
+    {
+      "id": "held-out-223001",
+      "label": "Fresh test scenario 223001",
+      "before": "../inkling-v21/fresh-clearance-223001.json.gz",
+      "after": "../inkling-v21/fresh-clearance-223001.json.gz",
+      "before_meta": {
+        "sha256": "01ff9630c85ed65f14b503bc02bab490a634468a14c1e4445dec4171552e0744",
+        "steps": 292,
+        "success": false,
+        "complete": false,
+        "failure": "laptop-failed:laptop",
+        "duration": 271.8748328606693,
+        "component": false
+      },
+      "after_meta": {
+        "sha256": "01ff9630c85ed65f14b503bc02bab490a634468a14c1e4445dec4171552e0744",
+        "steps": 292,
+        "success": false,
+        "complete": false,
+        "failure": "laptop-failed:laptop",
+        "duration": 271.8748328606693,
+        "component": false
+      },
+      "before_label": "ORIGINAL MATERIALS & LIGHTING",
+      "after_label": "V22 MATERIALS & LIGHTING",
+      "scope": "APPEARANCE COMPARISON \u00b7 Identical recorded MuJoCo movement, task outcomes, camera settings and playback speed. No new motion is claimed in this mode.",
+      "finding_title": "Identical physical movement.",
+      "finding_detail": "Both panes share recording 01ff9630c85e. The robot finish and lighting change. Original geometry, joint pivots and body bindings are preserved; the compressed model differs by less than 0.001 mm in measured body bounds."
+    },
+    {
+      "id": "held-out-223002",
+      "label": "Fresh test scenario 223002",
+      "before": "../inkling-v21/fresh-clearance-223002.json.gz",
+      "after": "../inkling-v21/fresh-clearance-223002.json.gz",
+      "before_meta": {
+        "sha256": "c67573ce38d321a666b50969a0e9a60b2932823d2cf7e727cca585489b623767",
+        "steps": 444,
+        "success": true,
+        "complete": true,
+        "failure": null,
+        "duration": 279.9309950522655,
+        "component": false
+      },
+      "after_meta": {
+        "sha256": "c67573ce38d321a666b50969a0e9a60b2932823d2cf7e727cca585489b623767",
+        "steps": 444,
+        "success": true,
+        "complete": true,
+        "failure": null,
+        "duration": 279.9309950522655,
+        "component": false
+      },
+      "before_label": "ORIGINAL MATERIALS & LIGHTING",
+      "after_label": "V22 MATERIALS & LIGHTING",
+      "scope": "APPEARANCE COMPARISON \u00b7 Identical recorded MuJoCo movement, task outcomes, camera settings and playback speed. No new motion is claimed in this mode.",
+      "finding_title": "Identical physical movement.",
+      "finding_detail": "Both panes share recording c67573ce38d3. The robot finish and lighting change. Original geometry, joint pivots and body bindings are preserved; the compressed model differs by less than 0.001 mm in measured body bounds."
+    },
+    {
+      "id": "held-out-223003",
+      "label": "Fresh test scenario 223003",
+      "before": "../inkling-v21/fresh-clearance-223003.json.gz",
+      "after": "../inkling-v21/fresh-clearance-223003.json.gz",
+      "before_meta": {
+        "sha256": "07005d25c7a8f44ca8c2bca73efeedfb091f44c4dc9c64fcdd64f6a8d0e8fc68",
+        "steps": 412,
+        "success": true,
+        "complete": true,
+        "failure": null,
+        "duration": 275.1438935003642,
+        "component": false
+      },
+      "after_meta": {
+        "sha256": "07005d25c7a8f44ca8c2bca73efeedfb091f44c4dc9c64fcdd64f6a8d0e8fc68",
+        "steps": 412,
+        "success": true,
+        "complete": true,
+        "failure": null,
+        "duration": 275.1438935003642,
+        "component": false
+      },
+      "before_label": "ORIGINAL MATERIALS & LIGHTING",
+      "after_label": "V22 MATERIALS & LIGHTING",
+      "scope": "APPEARANCE COMPARISON \u00b7 Identical recorded MuJoCo movement, task outcomes, camera settings and playback speed. No new motion is claimed in this mode.",
+      "finding_title": "Identical physical movement.",
+      "finding_detail": "Both panes share recording 07005d25c7a8. The robot finish and lighting change. Original geometry, joint pivots and body bindings are preserved; the compressed model differs by less than 0.001 mm in measured body bounds."
+    }
+  ],
+  "default_scenario": "held-out-223002",
+  "summary": "Compare the original finish with authored metal and polymer surfaces, procedural detail and revised studio lighting. Every appearance comparison uses one physical recording on both sides."
+}

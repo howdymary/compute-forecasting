@@ -1,0 +1,830 @@
+{
+  "study": "mochi-visual-motion-v22",
+  "scene": {
+    "version": "richdesk-v19-paperfree",
+    "units": "metres",
+    "desk": [
+      1.2,
+      0.8
+    ],
+    "initial_pose": [
+      -0.375,
+      -0.225,
+      1.5707963267948966
+    ],
+    "clock_offset": [
+      0,
+      0,
+      0.024
+    ],
+    "globe_offset": [
+      0,
+      -0.37,
+      0
+    ],
+    "book_height": 0.008,
+    "book_collision_scope": "Fixed, nonsliding book terrain; visual meshes and collision envelopes share the same placements. No root motion is authored.",
+    "props": [
+      {
+        "name": "book-step-1",
+        "asset": "book",
+        "pos": [
+          -0.36,
+          0.02,
+          0
+        ],
+        "size": [
+          0.23,
+          0.3,
+          0.008
+        ],
+        "yaw": 0,
+        "color": "#334d56",
+        "shape": "box",
+        "climb": true,
+        "title": "FIELD NOTES"
+      },
+      {
+        "name": "book-step-2",
+        "asset": "book",
+        "pos": [
+          -0.36,
+          0.045,
+          0.008
+        ],
+        "size": [
+          0.22,
+          0.23,
+          0.008
+        ],
+        "yaw": 0,
+        "color": "#8f5248",
+        "shape": "box",
+        "climb": true,
+        "title": "ROBOT MOTION"
+      },
+      {
+        "name": "book-step-3",
+        "asset": "book",
+        "pos": [
+          -0.36,
+          0.07,
+          0.016
+        ],
+        "size": [
+          0.2,
+          0.18,
+          0.008
+        ],
+        "yaw": 0,
+        "color": "#777c55",
+        "shape": "box",
+        "climb": true,
+        "title": "PRACTICAL MECHANICS"
+      },
+      {
+        "name": "printer",
+        "asset": "printer",
+        "pos": [
+          0.435,
+          0.29,
+          0
+        ],
+        "size": [
+          0.28,
+          0.18,
+          0.17
+        ],
+        "yaw": 0,
+        "shape": "box"
+      },
+      {
+        "name": "coffee-mug",
+        "asset": "mug",
+        "pos": [
+          -0.06,
+          -0.13,
+          0
+        ],
+        "size": [
+          0.105,
+          0.085,
+          0.095
+        ],
+        "yaw": -0.3,
+        "shape": "cylinder"
+      },
+      {
+        "name": "spiral-notebook",
+        "asset": "notebook",
+        "pos": [
+          0.055,
+          -0.265,
+          0
+        ],
+        "size": [
+          0.2,
+          0.145,
+          0.007
+        ],
+        "yaw": -0.12,
+        "shape": "box"
+      },
+      {
+        "name": "pencil-1",
+        "asset": "pencil",
+        "pos": [
+          -0.214,
+          -0.239,
+          0
+        ],
+        "size": [
+          0.17,
+          0.007,
+          0.007
+        ],
+        "yaw": 0.22,
+        "shape": "capsule"
+      },
+      {
+        "name": "pencil-2",
+        "asset": "pencil",
+        "pos": [
+          0.1,
+          -0.235,
+          0.007
+        ],
+        "size": [
+          0.16,
+          0.0065,
+          0.0065
+        ],
+        "yaw": -0.46,
+        "shape": "capsule"
+      },
+      {
+        "name": "pencil-3",
+        "asset": "pencil",
+        "pos": [
+          -0.267,
+          0.293,
+          0
+        ],
+        "size": [
+          0.15,
+          0.007,
+          0.007
+        ],
+        "yaw": 0.33,
+        "shape": "capsule"
+      },
+      {
+        "name": "pen-1",
+        "asset": "pen",
+        "pos": [
+          -0.115,
+          -0.265,
+          0
+        ],
+        "size": [
+          0.145,
+          0.009,
+          0.009
+        ],
+        "yaw": -0.62,
+        "shape": "capsule"
+      },
+      {
+        "name": "pen-2",
+        "asset": "pen",
+        "pos": [
+          0.245,
+          -0.276,
+          0
+        ],
+        "size": [
+          0.14,
+          0.009,
+          0.009
+        ],
+        "yaw": 0.15,
+        "shape": "capsule"
+      },
+      {
+        "name": "stapler",
+        "asset": "stapler",
+        "pos": [
+          0.213,
+          0.327,
+          0
+        ],
+        "size": [
+          0.11,
+          0.035,
+          0.04
+        ],
+        "yaw": 0.12,
+        "shape": "box"
+      },
+      {
+        "name": "reading-glasses",
+        "asset": "glasses",
+        "pos": [
+          0.235,
+          -0.325,
+          0
+        ],
+        "size": [
+          0.14,
+          0.044,
+          0.016
+        ],
+        "yaw": -0.1,
+        "shape": "box"
+      },
+      {
+        "name": "reference-book",
+        "asset": "book",
+        "pos": [
+          -0.43,
+          0.285,
+          0
+        ],
+        "size": [
+          0.19,
+          0.14,
+          0.015
+        ],
+        "yaw": -0.08,
+        "color": "#545755",
+        "shape": "box",
+        "title": "WORKSHOP HANDBOOK"
+      },
+      {
+        "name": "loose-page-1",
+        "asset": "paper",
+        "pos": [
+          0.355,
+          -0.315,
+          0
+        ],
+        "size": [
+          0.15,
+          0.105,
+          0.0002
+        ],
+        "yaw": 0.12,
+        "shape": "box"
+      },
+      {
+        "name": "loose-page-2",
+        "asset": "paper",
+        "pos": [
+          0.365,
+          -0.298,
+          0.0002
+        ],
+        "size": [
+          0.15,
+          0.105,
+          0.0002
+        ],
+        "yaw": 0.07,
+        "shape": "box"
+      },
+      {
+        "name": "printer-output-tray",
+        "asset": "tray",
+        "pos": [
+          0.435,
+          0.185,
+          0.048
+        ],
+        "size": [
+          0.19,
+          0.065,
+          0.005
+        ],
+        "yaw": 0,
+        "shape": "box"
+      },
+      {
+        "name": "printer-printout",
+        "asset": "paper",
+        "pos": [
+          0.435,
+          0.181,
+          0.054
+        ],
+        "size": [
+          0.17,
+          0.085,
+          0.0002
+        ],
+        "yaw": 0.03,
+        "shape": "box"
+      }
+    ],
+    "route": [
+      {
+        "name": "climb-to-alarm",
+        "goal": [
+          -0.375,
+          0.025,
+          1.5707963267948966
+        ],
+        "surface_height": 0.024
+      },
+      {
+        "name": "descend-books",
+        "goal": [
+          -0.375,
+          -0.19,
+          1.5707963267948966
+        ],
+        "surface_height": 0
+      },
+      {
+        "name": "clear-books",
+        "goal": [
+          -0.19,
+          -0.17,
+          0
+        ],
+        "surface_height": 0
+      },
+      {
+        "name": "drawer",
+        "goal": [
+          -0.13,
+          0.02,
+          1.5707963267948966
+        ],
+        "surface_height": 0
+      },
+      {
+        "name": "laptop-corridor",
+        "goal": [
+          0.3,
+          0.02,
+          0
+        ],
+        "surface_height": 0
+      },
+      {
+        "name": "laptop",
+        "goal": [
+          0.3,
+          0.16,
+          1.5707963267948966
+        ],
+        "surface_height": 0
+      },
+      {
+        "name": "globe-corridor",
+        "goal": [
+          0.35,
+          0.02,
+          1.5707963267948966
+        ],
+        "surface_height": 0
+      },
+      {
+        "name": "globe",
+        "goal": [
+          0.35,
+          -0.145,
+          0
+        ],
+        "surface_height": 0
+      }
+    ],
+    "revision_notes": "Post-it stack removed from physics and rendering. Drawer-to-laptop transit is ordinary flat walking."
+  },
+  "scenarios": [
+    {
+      "id": "recovery-component",
+      "label": "Arm recovery: matched development state",
+      "before": "recovery-parent-221000.json.gz",
+      "after": "recovery-smooth-221000.json.gz",
+      "before_meta": {
+        "success": true,
+        "complete": null,
+        "failure": null,
+        "duration": 2.1131587280848407,
+        "steps": 0,
+        "component": true,
+        "arm_jerk_rms": 2.1748507679774076,
+        "arm_travel_rad": 6.239993315104016,
+        "quality_failures": [],
+        "forward_facing_fraction": null,
+        "sha256": "7af99654855ad305ec6830646f338815f6e882897544da8861d31ff39b1a88f4",
+        "bytes": 59693,
+        "source_artifact_sha256": "b4f1033c6e54d610f93bf76260814496e6ac2a8f06fb843f4f5711998e5681e6"
+      },
+      "after_meta": {
+        "success": true,
+        "complete": null,
+        "failure": null,
+        "duration": 2.3608519948584217,
+        "steps": 0,
+        "component": true,
+        "arm_jerk_rms": 1.542162658837859,
+        "arm_travel_rad": 6.2399842523007365,
+        "quality_failures": [],
+        "forward_facing_fraction": null,
+        "sha256": "ec220b0d8f1026dfc9ab98c5585b2d5de754747300c364a443c779c77b72e622",
+        "bytes": 64679,
+        "source_artifact_sha256": "31a59a1ac02cef460813fef83484e3af79d2819b6c725a7addbb22af970dff7f"
+      },
+      "before_label": "FROZEN R4 RECOVERY",
+      "after_label": "MINK SMOOTH RECOVERY",
+      "scope": "RESTORED-STATE COMPONENT \u00b7 Same saved physical state, same rendering and physical-time playback. This is not a full four-task rollout.",
+      "finding_title": "Smoother recovery, longer return.",
+      "finding_detail": "Both recoveries passed. Measured arm jerk is 29.1% lower; recovery takes 11.7% longer (2.11 \u2192 2.36 s). Arm travel is essentially unchanged. One development component, not a generalization claim."
+    },
+    {
+      "id": "gmr-walk",
+      "label": "GMR walking: mixed development result",
+      "before": "walk-parent-221000.json.gz",
+      "after": "walk-gmr-legs-221000.json.gz",
+      "before_meta": {
+        "success": true,
+        "complete": null,
+        "failure": null,
+        "duration": 14.362122125231167,
+        "steps": 110,
+        "component": true,
+        "arm_jerk_rms": 264.6165289080044,
+        "arm_travel_rad": 34.48110532026465,
+        "quality_failures": [],
+        "forward_facing_fraction": null,
+        "sha256": "cbccc50a6c93e3d62a86ea6757de1c023edc1e277c9e6b44ded1fa1f56cd70cb",
+        "bytes": 1315177,
+        "source_artifact_sha256": "9ac72f6a3edb52783256e7e5a5faa7dbc98aa3d393e44dcdfd71381ffee59ae3"
+      },
+      "after_meta": {
+        "success": true,
+        "complete": null,
+        "failure": null,
+        "duration": 14.59837081862247,
+        "steps": 112,
+        "component": true,
+        "arm_jerk_rms": 263.1062829821869,
+        "arm_travel_rad": 35.25535692094885,
+        "quality_failures": [],
+        "forward_facing_fraction": null,
+        "sha256": "79890dbb0994659c18951fcf4eda3f6ecc6cb7d7823fad20d241c47736f40c74",
+        "bytes": 1337372,
+        "source_artifact_sha256": "425cef33b29a0f66b1067791e51fdc85d1fc65765b86f444a2595455b2fc79ff"
+      },
+      "before_label": "FROZEN NATIVE WALKING",
+      "after_label": "BOUNDED GMR LEG REFERENCE",
+      "scope": "RESTORED-STATE COMPONENT \u00b7 Same saved physical state, same rendering and physical-time playback. This is not a full four-task rollout.",
+      "finding_title": "Straight walking did not improve.",
+      "finding_detail": "Both components passed. The GMR residual used 112 versus 110 steps and slightly more time, sliding and sway. Native gait weights were fixed. This candidate was not promoted."
+    },
+    {
+      "id": "gmr-turn",
+      "label": "GMR turning: mixed development result",
+      "before": "turn-parent-221000.json.gz",
+      "after": "turn-gmr-legs-221000.json.gz",
+      "before_meta": {
+        "success": true,
+        "complete": null,
+        "failure": null,
+        "duration": 17.932011550974465,
+        "steps": 132,
+        "component": true,
+        "arm_jerk_rms": 246.5063717332765,
+        "arm_travel_rad": 40.33067984247889,
+        "quality_failures": [],
+        "forward_facing_fraction": null,
+        "sha256": "15a652bd9855fe54eb7f5cc0276f3a039b4207d7aae8a29beaceab3517842c30",
+        "bytes": 1635909,
+        "source_artifact_sha256": "33af936eda11d9ed0ea2920d63cef0f038aa6861e63776354b30faa077990e74"
+      },
+      "after_meta": {
+        "success": true,
+        "complete": null,
+        "failure": null,
+        "duration": 17.680230936564357,
+        "steps": 130,
+        "component": true,
+        "arm_jerk_rms": 238.5026547508314,
+        "arm_travel_rad": 39.96967313996727,
+        "quality_failures": [],
+        "forward_facing_fraction": null,
+        "sha256": "2c862cc49db4202fbb05cde034e767eb02fc1091078f264adcf762f00814077e",
+        "bytes": 1612482,
+        "source_artifact_sha256": "fa9057cee93f4fa1c2864d88cc32c18c423f070916cbd66bfb19ce585c073977"
+      },
+      "before_label": "FROZEN NATIVE TURNING",
+      "after_label": "BOUNDED GMR LEG REFERENCE",
+      "scope": "RESTORED-STATE COMPONENT \u00b7 Same saved physical state, same rendering and physical-time playback. This is not a full four-task rollout.",
+      "finding_title": "Fewer steps and less sliding, with more sway.",
+      "finding_detail": "This one development component used 130 versus 132 steps, about 29% less loaded-foot sliding and about 3% lower measured arm jerk. Torso sway and native joint acceleration increased. This does not establish a general walking improvement."
+    },
+    {
+      "id": "rejected-walking",
+      "label": "Rejected: arm reference during walking",
+      "before": "walk-parent-221000.json.gz",
+      "after": "walk-mink-r1-221000.json.gz",
+      "before_meta": {
+        "success": true,
+        "complete": null,
+        "failure": null,
+        "duration": 14.362122125231167,
+        "steps": 110,
+        "component": true,
+        "arm_jerk_rms": 264.6165289080044,
+        "arm_travel_rad": 34.48110532026465,
+        "quality_failures": [],
+        "forward_facing_fraction": null,
+        "sha256": "cbccc50a6c93e3d62a86ea6757de1c023edc1e277c9e6b44ded1fa1f56cd70cb",
+        "bytes": 1315177,
+        "source_artifact_sha256": "9ac72f6a3edb52783256e7e5a5faa7dbc98aa3d393e44dcdfd71381ffee59ae3"
+      },
+      "after_meta": {
+        "success": false,
+        "complete": null,
+        "failure": "invalid_fixture_contact",
+        "duration": 2.255398425836006,
+        "steps": 19,
+        "component": true,
+        "arm_jerk_rms": 354.78658029518647,
+        "arm_travel_rad": 4.106888738565045,
+        "quality_failures": [],
+        "forward_facing_fraction": null,
+        "sha256": "28295eb48717e2926e7422e64bebf5b9584a668e1e3066ed9c07cddbb06405f5",
+        "bytes": 214304,
+        "source_artifact_sha256": "27d5a22d9b3bb4b3a872483df5e8a068a463cb03c50107c4208aa87283ce33cd"
+      },
+      "before_label": "FROZEN NATIVE WALKING",
+      "after_label": "REJECTED MINK ARM BLEND",
+      "scope": "RESTORED-STATE COMPONENT \u00b7 Same saved physical state, same rendering and physical-time playback. This is not a full four-task rollout.",
+      "finding_title": "A quieter arm reference caused contact.",
+      "finding_detail": "The baseline reached the laptop. The candidate contacted the drawer and was rejected. A shorter failed attempt does not count as a reduction in steps or time."
+    },
+    {
+      "id": "dev-225000",
+      "label": "Development continuous scenario 225000",
+      "before": "full-parent-dev-225000.json.gz",
+      "after": "full-mink-dev-225000.json.gz",
+      "before_meta": {
+        "success": true,
+        "complete": true,
+        "failure": null,
+        "duration": 276.8278807266136,
+        "steps": 418,
+        "component": false,
+        "arm_jerk_rms": 136.59719094085048,
+        "arm_travel_rad": 174.7669930726909,
+        "quality_failures": [],
+        "forward_facing_fraction": 0.900492616617925,
+        "sha256": "74d057914db4c0bc9fa7c5082145477304037f260f9067edce8609d37d3d570a",
+        "bytes": 9521036,
+        "source_artifact_sha256": "71b3dd310936993fe9cb108b7a2db7ef84e9d675b7f2193ac413997b4a832ab1"
+      },
+      "after_meta": {
+        "success": true,
+        "complete": true,
+        "failure": null,
+        "duration": 277.2938383571778,
+        "steps": 418,
+        "component": false,
+        "arm_jerk_rms": 132.86803138451205,
+        "arm_travel_rad": 174.10007388214828,
+        "quality_failures": [],
+        "forward_facing_fraction": 0.9036673607899077,
+        "sha256": "b005e5cd7854a52e20a8b65292b87853a0c538387e5af4b8fa9dac4862aa7ddf",
+        "bytes": 9534409,
+        "source_artifact_sha256": "f2866534922c544ee7f9224ab4cb15436c872fdc8d0a63b059a37eef73370b7e"
+      },
+      "before_label": "FROZEN C21 REFERENCE",
+      "after_label": "MINK RECOVERY CANDIDATE",
+      "scope": "CONTINUOUS FOUR-TASK ATTEMPTS \u00b7 Matched seed, scene, initial state and playback speed. No cuts or state restoration within either attempt. Failures stop where they occur.",
+      "finding_title": "Both completed all four tasks.",
+      "finding_detail": "Reference: 418 steps, 276.83 s. Candidate: 418 steps, 277.29 s. Only arm recovery changed. Walking, route targets, manipulation profiles and native gait weights stayed fixed. Numerical results are in the evidence report."
+    },
+    {
+      "id": "dev-225001",
+      "label": "Development continuous scenario 225001",
+      "before": "full-parent-dev-225001.json.gz",
+      "after": "full-mink-dev-225001.json.gz",
+      "before_meta": {
+        "success": true,
+        "complete": true,
+        "failure": null,
+        "duration": 278.98763521775487,
+        "steps": 430,
+        "component": false,
+        "arm_jerk_rms": 142.81205156366977,
+        "arm_travel_rad": 179.28467604293235,
+        "quality_failures": [],
+        "forward_facing_fraction": 0.9029278072076126,
+        "sha256": "7fa57ea1f4f290ad8b536cb213fe43a73bbefe4883a257c3b01cf5c41e6b8a75",
+        "bytes": 9689317,
+        "source_artifact_sha256": "90c505157f678eadfa79c7fd4cd2a8fbfd600a2136b9c0595865dcfcfeadf7f2"
+      },
+      "after_meta": {
+        "success": true,
+        "complete": true,
+        "failure": null,
+        "duration": 278.04427538324427,
+        "steps": 418,
+        "component": false,
+        "arm_jerk_rms": 130.97257432092835,
+        "arm_travel_rad": 174.81895549808704,
+        "quality_failures": [],
+        "forward_facing_fraction": 0.9013895842566481,
+        "sha256": "6c8fb2c2c43a298ad61b1f1848f602b69c1bbe6259564f1a4794c973aa775ffe",
+        "bytes": 9564761,
+        "source_artifact_sha256": "acdc82900b4c7df914c7e48a250874fe62572d6f0a31ce21d0b078595915850a"
+      },
+      "before_label": "FROZEN C21 REFERENCE",
+      "after_label": "MINK RECOVERY CANDIDATE",
+      "scope": "CONTINUOUS FOUR-TASK ATTEMPTS \u00b7 Matched seed, scene, initial state and playback speed. No cuts or state restoration within either attempt. Failures stop where they occur.",
+      "finding_title": "Both completed all four tasks.",
+      "finding_detail": "Reference: 430 steps, 278.99 s. Candidate: 418 steps, 278.04 s. Only arm recovery changed. Walking, route targets, manipulation profiles and native gait weights stayed fixed. Numerical results are in the evidence report."
+    },
+    {
+      "id": "fresh-226000",
+      "label": "Fresh test continuous scenario 226000",
+      "before": "full-parent-fresh-226000.json.gz",
+      "after": "full-mink-fresh-226000.json.gz",
+      "before_meta": {
+        "success": false,
+        "complete": true,
+        "failure": null,
+        "duration": 278.0892362072461,
+        "steps": 432,
+        "component": false,
+        "arm_jerk_rms": 136.63749834931153,
+        "arm_travel_rad": 177.23646527030178,
+        "quality_failures": [
+          "forward_facing_fraction"
+        ],
+        "forward_facing_fraction": 0.8999795116549826,
+        "sha256": "c234276ff24eb7341be8c5d9b0db227ae3715a90601e858227105946292aeb85",
+        "bytes": 9660284,
+        "source_artifact_sha256": "1ebaf58f8bc4b7b11afdd0d77faa35afe19a9f63c2c73dade809cf7cea8bf0ea"
+      },
+      "after_meta": {
+        "success": false,
+        "complete": true,
+        "failure": null,
+        "duration": 278.92550753367965,
+        "steps": 426,
+        "component": false,
+        "arm_jerk_rms": 125.94331676385953,
+        "arm_travel_rad": 177.18487220305357,
+        "quality_failures": [
+          "forward_facing_fraction"
+        ],
+        "forward_facing_fraction": 0.8968784824169056,
+        "sha256": "1e3fd82e2b2146bb22e86cc8d9a67228937089fbc8e998fa1db8c090e76a30e6",
+        "bytes": 9629654,
+        "source_artifact_sha256": "ad3ec77ea8c619cd1f897e33467b20cd7ede6a70b5c84941a74b58a8761ae18b"
+      },
+      "before_label": "FROZEN C21 REFERENCE",
+      "after_label": "MINK RECOVERY CANDIDATE",
+      "scope": "CONTINUOUS FOUR-TASK ATTEMPTS \u00b7 Matched seed, scene, initial state and playback speed. No cuts or state restoration within either attempt. Failures stop where they occur.",
+      "finding_title": "Neither attempt passed every quality check.",
+      "finding_detail": "Reference: 432 steps, 278.09 s. Candidate: 426 steps, 278.93 s. Only arm recovery changed. Walking, route targets, manipulation profiles and native gait weights stayed fixed. Forward-facing fraction: reference 89.998%, candidate 89.688%; 90% required. Quality failures: reference forward_facing_fraction; candidate forward_facing_fraction. Numerical results are in the evidence report."
+    },
+    {
+      "id": "fresh-226001",
+      "label": "Fresh test continuous scenario 226001",
+      "before": "full-parent-fresh-226001.json.gz",
+      "after": "full-mink-fresh-226001.json.gz",
+      "before_meta": {
+        "success": false,
+        "complete": false,
+        "failure": "laptop-failed:laptop",
+        "duration": 271.0181247960531,
+        "steps": 286,
+        "component": false,
+        "arm_jerk_rms": 183.7111564695318,
+        "arm_travel_rad": 122.28413329328612,
+        "quality_failures": [
+          "native_acceleration",
+          "three_clearance_qualified_flat_legs"
+        ],
+        "forward_facing_fraction": 0.9828352774813921,
+        "sha256": "6450bf11df3724c3f789bb4db4ca987a22610522eeb7ab391a6472173cf7607c",
+        "bytes": 8194148,
+        "source_artifact_sha256": "96a740ec09f99522fcf8ce822a06ef6ec15ab24ddf669b5fd47937d9253b2dbf"
+      },
+      "after_meta": {
+        "success": false,
+        "complete": false,
+        "failure": "laptop-failed:laptop",
+        "duration": 271.2813499838455,
+        "steps": 286,
+        "component": false,
+        "arm_jerk_rms": 179.94318195085938,
+        "arm_travel_rad": 122.14458436188859,
+        "quality_failures": [
+          "native_acceleration",
+          "three_clearance_qualified_flat_legs"
+        ],
+        "forward_facing_fraction": 0.9838838934135286,
+        "sha256": "846f359b1bd2e0a1a90ab82000dcd18dd3a1161633b123a29759f63553ec105b",
+        "bytes": 8197265,
+        "source_artifact_sha256": "a55f2357152f5b6dc4e7efe3444e93dd98fc414330a455d6371e7b5ded07dd4e"
+      },
+      "before_label": "FROZEN C21 REFERENCE",
+      "after_label": "MINK RECOVERY CANDIDATE",
+      "scope": "CONTINUOUS FOUR-TASK ATTEMPTS \u00b7 Matched seed, scene, initial state and playback speed. No cuts or state restoration within either attempt. Failures stop where they occur.",
+      "finding_title": "Neither attempt passed every quality check.",
+      "finding_detail": "Reference: 286 steps, 271.02 s. Candidate: 286 steps, 271.28 s. Only arm recovery changed. Walking, route targets, manipulation profiles and native gait weights stayed fixed. Quality failures: reference native_acceleration, three_clearance_qualified_flat_legs; candidate native_acceleration, three_clearance_qualified_flat_legs. Numerical results are in the evidence report."
+    },
+    {
+      "id": "fresh-226002",
+      "label": "Fresh test continuous scenario 226002",
+      "before": "full-parent-fresh-226002.json.gz",
+      "after": "full-mink-fresh-226002.json.gz",
+      "before_meta": {
+        "success": false,
+        "complete": true,
+        "failure": null,
+        "duration": 283.89326985111546,
+        "steps": 416,
+        "component": false,
+        "arm_jerk_rms": 143.76805931525575,
+        "arm_travel_rad": 178.82655460254267,
+        "quality_failures": [
+          "forward_facing_fraction"
+        ],
+        "forward_facing_fraction": 0.8985540500549123,
+        "sha256": "3ef7330eb6818531d923bd644b724633a782bc91794fb30693fc2372ec9e36db",
+        "bytes": 9681154,
+        "source_artifact_sha256": "8e6ad5efd24452b79be57d74bdaa537aa95c639bd06f15a2ea8ecdc4f6a567db"
+      },
+      "after_meta": {
+        "success": true,
+        "complete": true,
+        "failure": null,
+        "duration": 281.91908094267257,
+        "steps": 414,
+        "component": false,
+        "arm_jerk_rms": 140.67110906985397,
+        "arm_travel_rad": 176.11612064289375,
+        "quality_failures": [],
+        "forward_facing_fraction": 0.9111037511452328,
+        "sha256": "8f5034d2437487c23520de09ac5b327e78b4cd64fe2fbbac774c7f494fda1cbc",
+        "bytes": 9600329,
+        "source_artifact_sha256": "7a7d7d8bf571be11b189c55586f638ccf21a40e63543a91f163673d3b13b2f7b"
+      },
+      "before_label": "FROZEN C21 REFERENCE",
+      "after_label": "MINK RECOVERY CANDIDATE",
+      "scope": "CONTINUOUS FOUR-TASK ATTEMPTS \u00b7 Matched seed, scene, initial state and playback speed. No cuts or state restoration within either attempt. Failures stop where they occur.",
+      "finding_title": "Candidate completed; reference did not qualify.",
+      "finding_detail": "Reference: 416 steps, 283.89 s. Candidate: 414 steps, 281.92 s. Only arm recovery changed. Walking, route targets, manipulation profiles and native gait weights stayed fixed. Forward-facing fraction: reference 89.855%, candidate 91.110%; 90% required. Quality failures: reference forward_facing_fraction; candidate none. Numerical results are in the evidence report."
+    },
+    {
+      "id": "fresh-226003",
+      "label": "Fresh test continuous scenario 226003",
+      "before": "full-parent-fresh-226003.json.gz",
+      "after": "full-mink-fresh-226003.json.gz",
+      "before_meta": {
+        "success": true,
+        "complete": true,
+        "failure": null,
+        "duration": 277.5905797955897,
+        "steps": 399,
+        "component": false,
+        "arm_jerk_rms": 132.04672839831142,
+        "arm_travel_rad": 170.6455222241477,
+        "quality_failures": [],
+        "forward_facing_fraction": 0.9063497027789935,
+        "sha256": "d45e7ab9b4e71544228aba847b620040406b549aecfd99d2517ee578ac077333",
+        "bytes": 9384062,
+        "source_artifact_sha256": "ef0e0d7f81aa1d6573b3751e65874c35f6d73fe8469abcedbbdf015f602e150f"
+      },
+      "after_meta": {
+        "success": true,
+        "complete": true,
+        "failure": null,
+        "duration": 283.4591935321162,
+        "steps": 408,
+        "component": false,
+        "arm_jerk_rms": 148.92136099507962,
+        "arm_travel_rad": 177.310492363594,
+        "quality_failures": [],
+        "forward_facing_fraction": 0.9015486410969661,
+        "sha256": "0b2f6204345c4399d7a02b2ba65bc22a13bc7d44d4b62363cda8b893e6ec190c",
+        "bytes": 9605806,
+        "source_artifact_sha256": "0f160d476c69ae7b2eedb535a7abaf03daecd3f90725cc6417fc0099cdd6b214"
+      },
+      "before_label": "FROZEN C21 REFERENCE",
+      "after_label": "MINK RECOVERY CANDIDATE",
+      "scope": "CONTINUOUS FOUR-TASK ATTEMPTS \u00b7 Matched seed, scene, initial state and playback speed. No cuts or state restoration within either attempt. Failures stop where they occur.",
+      "finding_title": "Both completed all four tasks.",
+      "finding_detail": "Reference: 399 steps, 277.59 s. Candidate: 408 steps, 283.46 s. Only arm recovery changed. Walking, route targets, manipulation profiles and native gait weights stayed fixed. Numerical results are in the evidence report."
+    }
+  ],
+  "default_scenario": "recovery-component",
+  "summary": "Fresh complete-route qualification: reference 1/4, recovery candidate 2/4. The matched development recovery component had 29.1% lower measured jerk with 11.7% more time. GMR walking and turning results were mixed."
+}

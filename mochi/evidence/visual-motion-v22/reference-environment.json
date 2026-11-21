@@ -1,0 +1,82 @@
+{
+  "gmr_checkout": "25f56db79ac411258b377b6d4ccba0c8ff3372ac",
+  "reference_runs": {
+    "gmr-walking-reference-calibrated.json": {
+      "source": "CMU Graphics Lab recording 07_01, Bruce Hahne BVH conversion",
+      "source_url": "https://github.com/una-dinosauria/cmu-mocap/blob/master/data/007/07_01.bvh",
+      "permission_url": "https://mocap.cs.cmu.edu/faqs.php",
+      "source_sha256": "f8d82ea6ed1aab0cb7d9ee680f476b65471e2322e1da84add8a8527a2cb0b9a2",
+      "source_git_blob": "0e50b7db19c7ea0bf2cd3df942f82642b9b22ebc",
+      "gmr_commit": "25f56db79ac411258b377b6d4ccba0c8ff3372ac",
+      "gmr_core_sha256": "5ec97cd4ebb6e3ce4fb525731ead381ccc3567eeb425a88a842688bed2f49718",
+      "calibration_sha256": "1e5b256ec34ccfcedac7e692114898c183276188a5d2d21eea0f9aa2768883d9",
+      "calibration_scope": "CMU neutral bone basis and per-landmark scale calibrated to the G1 T-pose. Unadapted LaFAN mapping retained as a rejected kinematic diagnostic.",
+      "versions": {
+        "mink": "1.4.0",
+        "mujoco": "3.10.0",
+        "numpy": "2.3.4",
+        "scipy": "1.16.3",
+        "qpsolvers": "4.12.0"
+      },
+      "gmr_retarget_calls": 158,
+      "mink_solve_ik": 628,
+      "dt": 0.016666666666666666,
+      "actual_human_height_m": 1.4728194246066937,
+      "source_units_to_metres": 0.05644444444444445,
+      "scope": "Kinematic reference generation only. Root references are never assigned to the physical executor. No optimizer updates or claim of physical improvement.",
+      "artifact_sha256": "b48b8d8647d819a52d12fbd58ab866e4f0ecffd064c7fd597e487ff65705d8b3"
+    },
+    "gmr-unadapted-cmu-reference.json": {
+      "source": "CMU Graphics Lab recording 07_01, Bruce Hahne BVH conversion",
+      "source_url": "https://github.com/una-dinosauria/cmu-mocap/blob/master/data/007/07_01.bvh",
+      "permission_url": "https://mocap.cs.cmu.edu/faqs.php",
+      "source_sha256": "f8d82ea6ed1aab0cb7d9ee680f476b65471e2322e1da84add8a8527a2cb0b9a2",
+      "source_git_blob": "0e50b7db19c7ea0bf2cd3df942f82642b9b22ebc",
+      "gmr_commit": "25f56db79ac411258b377b6d4ccba0c8ff3372ac",
+      "gmr_core_sha256": "5ec97cd4ebb6e3ce4fb525731ead381ccc3567eeb425a88a842688bed2f49718",
+      "versions": {
+        "mink": "1.4.0",
+        "mujoco": "3.10.0",
+        "numpy": "2.3.4",
+        "scipy": "1.16.3",
+        "qpsolvers": "4.12.0"
+      },
+      "gmr_retarget_calls": 158,
+      "mink_solve_ik": 565,
+      "dt": 0.016666666666666666,
+      "actual_human_height_m": 1.4728194246066937,
+      "source_units_to_metres": 0.05644444444444445,
+      "scope": "Kinematic reference generation only. Root references are never assigned to the physical executor. No optimizer updates or claim of physical improvement.",
+      "artifact_sha256": "8543c883e0033d4b107ca4f4ab90243dac3c8b696a458ba401751692e664e26a"
+    }
+  },
+  "physical_runtime": "MuJoCo 3.3.7, existing mochi/.venv",
+  "reference_runtime": "Isolated motion-env; dependency lock in configs/visual-motion-v22/reference-requirements.txt",
+  "scope": "Actual core GMR retargeting and actual mink IK. No new neural optimizer updates. No GMR floating-base replay into physics.",
+  "licenses": {
+    "GMR": "MIT; https://github.com/YanjieZe/GMR/blob/main/LICENSE",
+    "mink": "Apache-2.0; https://github.com/kevinzakka/mink/blob/main/LICENSE",
+    "CMU_mocap": "https://mocap.cs.cmu.edu/faqs.php",
+    "BVH_conversion": "https://github.com/una-dinosauria/cmu-mocap/blob/master/READMEFIRST.txt",
+    "textures": "Original procedural maps, CC0",
+    "robot": "Existing G1-LICENSE.txt preserved"
+  },
+  "asset_delivery": {
+    "source_bytes": 8193584,
+    "authored_bytes": 12654296,
+    "optimized_bytes": 8526300,
+    "source_sha256": "0b089c11bc93a9a73c628dad5b846cb8d566d04ec2f95cf44ae80b9617150dd8",
+    "authored_sha256": "76b9cc7ed6347effa3c13550d31be258792dc9ed20913f08a6ac23b6f4c96fb4",
+    "optimized_sha256": "37f8323fef38a8bd14a6dbd7e4dc374be9f432691b8145c60dc82f7a6aba0d94",
+    "preserved_body_bindings": 44,
+    "max_body_matrix_error": 0,
+    "max_world_bounds_error_m": 4.462440581012861e-07,
+    "node_count": 95,
+    "mesh_count": 51,
+    "versions": {
+      "gltf_transform": "4.5.1",
+      "meshoptimizer": "1.3.0"
+    },
+    "scope": "Visual materials, UVs and mesh compression. No geometry simplification, physical model or trajectory change."
+  }
+}

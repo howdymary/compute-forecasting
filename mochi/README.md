@@ -1,5 +1,15 @@
 # MOCHI: Walking, Contact and Recovery Policy Learning
 
+## V22: visual materials and isolated GMR/mink tests
+
+[Visual before/after](https://howdymary--mochi-visual-motion-v22-demo-web.us-east.modal.run/) · [Physical motion tests](https://howdymary--mochi-visual-motion-v22-demo-web.us-east.modal.run/?mode=motion) · [Findings](docs/visual-motion-v22-findings.md) · [Reproduce](docs/visual-motion-v22-methods.md)
+
+The separate V22 viewer adds authored G1 materials, softer lighting, antialiasing and a detailed laptop display. Appearance comparisons use identical physical recordings. The original demo and all 276 frozen files remain unchanged.
+
+Actual GMR retargeting and mink IK ran in an isolated environment. A gentler recovery controller reduced measured arm jerk by 29.1% in one matched component, with 11.7% more recovery time. Both development pairs qualified. Fresh complete-route qualification was reference 1/4, recovery candidate 2/4. Walking and turning results were mixed; GMR gait changes were not promoted. The viewer retains full attempts and failures. This is controller engineering with zero new Tinker optimizer updates.
+
+In the only mutually qualified fresh pair, the candidate used 9 additional steps and took 5.87 seconds longer. No complete-route efficiency gain was demonstrated.
+
 ## Inkling 2 Mini: controller-research pilot
 
 [Inkling proposal replay](https://howdymary--mochi-inkling-v21-demo-web.us-east.modal.run/) · [Findings](docs/inkling-v21-findings.md) · [Protocol](docs/inkling-v21-protocol.md) · [Exact model access](evidence/inkling-v21/access.json)
