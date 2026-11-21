@@ -1,0 +1,9 @@
+{
+  "id": "globe-clearance-y-lower",
+  "domain": "navigation",
+  "changes": {
+    "globe_clearance_y_m": 0.055
+  },
+  "mechanism": "Move the initial laptop-clearance target farther below the laptop-base-contact AABB while keeping x at the permitted maximum, reducing the chance that the right ankle/foot sweeps into the laptop base during the post-laptop departure.",
+  "predicted_measurement": "No right_ankle_roll_link/laptop-base-contact during the initial clearance/walk segment on the seed-221000-like case, with unchanged task success and no increase in falls or support-capture failures."
+}

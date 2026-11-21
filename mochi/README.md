@@ -1,5 +1,15 @@
 # MOCHI: Walking, Contact and Recovery Policy Learning
 
+## Inkling 2 Mini: controller-research pilot
+
+[Inkling proposal replay](https://howdymary--mochi-inkling-v21-demo-web.us-east.modal.run/) · [Protocol](docs/inkling-v21-protocol.md) · [Exact model access](evidence/inkling-v21/access.json)
+
+Inkling 2 Mini is connected through Tinker in an isolated backend. Four inference attempts produced three structured proposal batches using recorded failures, controller code and three replay images. past.dev carried the original proposal into the measured review; Exa supplied failure-driven research and Modal hosted the authenticated backend. This pilot performs zero new optimizer updates. The separate eight-update Qwen training study remains below.
+
+The first proposals regressed or failed. After receiving those measurements and actual collision geometry, Inkling proposed backing farther clear of the laptop before turning. Changing the clearance target from y = 0.105 m to 0.055 m converted one uninterrupted development attempt from an ankle/laptop collision into all four tasks completed within every quality limit. The other development scenario still failed at laptop contact. No fresh-scenario efficiency gain is established. Four fresh paired tests and two additional pulsed-contact controls are running with a frozen configuration.
+
+The replay distinguishes controller engineering from neural weight training and preserves failures, parameter changes and measured step counts. [Development browser verification](evidence/inkling-v21/development-browser-qa.json).
+
 ## V19: paper-free desk and step-first post-training
 
 [Latest checkpoint replay](https://howdymary--mochi-paperfree-v19-demo-web.us-east.modal.run/) · [Training run](https://github.com/howdymary/mochi-demo/actions/runs/44847672231) · [Assessment](docs/paperfree-v19-assessment.md) · [Numerical audit](docs/paperfree-v19-assessment.json)

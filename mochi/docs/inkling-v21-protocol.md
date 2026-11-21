@@ -41,3 +41,9 @@ The next review receives actual laptop and printer collision AABBs and recalls t
 The fixed P5 reference failed the second development laptop case before reaching the revised clearance route. Prior measured C19r1 controller choices favored the existing pulsed P6 contact controller. The next component check therefore includes P6 as a conventional control. Final paired tests will use P6 on both sides, with H0/C/G0, W10 and R4 unchanged, so changing the laptop profile cannot be attributed to the clearance proposal. This is a fixed control vector based on recorded choices, not a new live evaluation of the Qwen selector.
 
 The proposal interface can explicitly select P5 or P6. Any such choice is an existing-controller selection, not a new locomotion network. Exact executed contact profiles remain in each episode. There are still zero optimizer updates in this pilot. Final scenarios 223000 through 223003 remain unopened until the chosen configuration is frozen.
+
+## Final selection
+
+The P6 component control fell on the hard development snapshot. Lowering the P5 target to 0.30 rad/s failed to close on both tested failed snapshots. Those contact proposals are not promoted. The clearance-only configuration completed one development route within every quality limit and retained the other development laptop failure.
+
+Before opening final scenarios, freeze clearance y = 0.055 m with P5 retained as the primary reference on both sides. Keep two additional P6 controls on final seeds 223000 and 223001 rather than silently dropping that comparator. This supersedes the tentative P6-primary plan based on development evidence, with no final data observed. The 239-file freeze includes the earlier 236 physical sources plus the current adapter, experiment runner and selected configuration. Four fresh pairs and two extra controls bring total physical attempts to the unchanged ceiling of 24.
