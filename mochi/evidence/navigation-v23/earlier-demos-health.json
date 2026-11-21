@@ -1,0 +1,35 @@
+[
+  {
+    "url": "https://howdymary--mochi-visual-motion-v22-demo-web.us-east.modal.run/api/health",
+    "http_status": 200,
+    "health": {
+      "status": "ok",
+      "release": "4eefdfd01a7f6b061e1d3b4e18ab9472c17550d1",
+      "study": "mochi-visual-motion-v22",
+      "appearance_cases": 6,
+      "motion_cases": 10,
+      "physical_attempts": 28,
+      "optimizer_updates": 0,
+      "evaluation_complete": true,
+      "mode": "Recorded simulation; appearance and motion compared separately; original demo preserved"
+    }
+  },
+  {
+    "url": "https://howdymary--mochi-inkling-v21-demo-web.us-east.modal.run/api/health",
+    "http_status": 200,
+    "health": {
+      "status": "ok",
+      "release": "55b8be47656f76b4cc0ece87e69d4c764c6a63a1",
+      "study": "mochi-inkling-v21",
+      "scenarios": 6,
+      "new_tinker_updates": 0,
+      "evaluation_status": "engineering",
+      "selection_finalized": true,
+      "selected_update": 0,
+      "displayed_update": 0,
+      "goal_met": false,
+      "controller_source_sha256": "d18fe72876a10b487b9b31b8689c89ff870f7ef738eb628a6bf536c2fa3892ad",
+      "mode": "recorded MuJoCo controller-engineering comparison; zero new weight updates"
+    }
+  }
+]

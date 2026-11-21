@@ -24,6 +24,17 @@ health = json.loads(fetch('/api/health'))
 assert health['release'] == args.release and health['evaluation_complete'] and not health['preview']
 assert health['cases'] == 32 and health['optimizer_updates'] == 15
 assert health['privileged_state'] and not health['native_gait_weights_trained']
+web = ROOT / 'web/desk'
+frontend = ['navigation-v23.html', 'navigation-v23.js', 'navigation-v23.css',
+    'navigation-v23-stage.js', 'navigation-v23-renderer.js', 'task-preflight-v24.html',
+    'task-preflight-v24.js', 'task-preflight-v24.json']
+source_files = frontend + [str(path.relative_to(web)) for path in (web / 'assets').rglob('*') if path.is_file()]
+source_checks = []
+for name in source_files:
+    expected = hashlib.sha256((web / name).read_bytes()).hexdigest()
+    assert hashlib.sha256(fetch('/' + name)).hexdigest() == expected, name
+    source_checks.append({'path': name, 'sha256': expected})
+assert hashlib.sha256(fetch('/')).hexdigest() == hashlib.sha256((web / 'navigation-v23.html').read_bytes()).hexdigest()
 report_bytes = fetch('/navigation-v23/report.json')
 local = ROOT / 'web/desk/navigation-v23/report.json'
 assert hashlib.sha256(report_bytes).hexdigest() == hashlib.sha256(local.read_bytes()).hexdigest()
@@ -41,6 +52,7 @@ def verify(item):
 with ThreadPoolExecutor(max_workers=4) as pool:
     verified = list(pool.map(verify, manifest.items()))
 result = {'url': base, 'health': health, 'report_sha256': hashlib.sha256(report_bytes).hexdigest(),
+    'frontend_and_asset_checks': source_checks,
     'verified_recordings': len(verified), 'verified_bytes': sum(r['bytes'] for r in verified),
     'wall_seconds': time.perf_counter() - start, 'recordings': verified}
 (ROOT / 'evidence/navigation-v23/live-verification.json').write_text(json.dumps(result, indent=2) + '\n')

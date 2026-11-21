@@ -93,3 +93,9 @@ Caveats: the two conditions share local failure information, and the retrieval p
 [Methods and commands](navigation-v23-methods.md) · [Integration paths](navigation-v23-integrations.md) · [Checkpoint receipts](../evidence/navigation-v23/checkpoint-receipts.json) · [Recording manifest](../evidence/navigation-v23/recording-manifest.json) · [Tensor audit](../evidence/navigation-v23/weight-tensor-audit.json) · [Trajectory audit](../evidence/navigation-v23/trajectory-equivalence-audit.json)
 
 Training and evaluation are in `src/mochi/navigation_v23/campaign.py`; authenticated services in `services.py`; CPU batches in `remote.py`; physical verification in `engine.py`; collision-aware planning in `planner.py`. Existing apps and archived results are preserved. Reproduction must use a new experiment identity and final set, rather than overwrite this archive.
+
+## Release verification
+
+The hosted application was built from published Git commit `e7d85dcf4f1744c3a44f8ec93861addf80b7f1fb`. All 238 downloadable recordings, totalling 747,248,615 bytes, and 46 frontend or asset files matched their source hashes. The complete local browser pass covered 144 available comparisons across sixteen development and final layouts; hosted checks covered four representative comparisons and all five task-preflight recordings. Rendered body positions matched the exported trajectory coordinates. The separate V21 and V22 apps remained healthy, and all 339 earlier files plus 231 frozen study files remained unchanged.
+
+[Hosted integrity checks](../evidence/navigation-v23/live-verification.json) · [All local comparisons](../evidence/navigation-v23/browser-qa-local.json) · [Hosted navigation](../evidence/navigation-v23/browser-qa.json) · [Hosted task preflight](../evidence/navigation-tasks-v24/browser-qa.json) · [Preservation checks](../evidence/navigation-v23/preservation.json) · [Release fingerprint](../evidence/navigation-v23/release.json)

@@ -28,6 +28,17 @@ diagnostic_text = ''
 if diagnostic:
     counts = {name: sum(c['runs'][name]['qualified'] for c in diagnostic['cases']) for name in ['parent', 'selected', 'planner']}
     diagnostic_text = (f"Across the four variants in two counterfactual pairs, parent and selected qualified on {counts['parent']}/4 and {counts['selected']}/4, while the planner qualified on {counts['planner']}/4. In the first pair, moving the mug caused both model-controlled attempts to miss the foot-clearance check; the planner still qualified. The selected model kept the same profile in both pairs, while its A* routes changed. These observations do not demonstrate a learned turning-clearance rule. [Counterfactual evidence](../evidence/navigation-v23/counterfactual-results.json).")
+verification_text = ''
+verification = ROOT / 'evidence/navigation-v23/live-verification.json'
+if verification.exists():
+    checked = json.loads(verification.read_text())
+    assert checked['verified_recordings'] == len(p['recording_manifest'])
+    verification_text = f'''## Release verification
+
+The hosted application was built from published Git commit `{checked['health']['release']}`. All {checked['verified_recordings']} downloadable recordings, totalling {checked['verified_bytes']:,} bytes, and {len(checked['frontend_and_asset_checks'])} frontend or asset files matched their source hashes. The complete local browser pass covered 144 available comparisons across sixteen development and final layouts; hosted checks covered four representative comparisons and all five task-preflight recordings. Rendered body positions matched the exported trajectory coordinates. The separate V21 and V22 apps remained healthy, and all 339 earlier files plus 231 frozen study files remained unchanged.
+
+[Hosted integrity checks](../evidence/navigation-v23/live-verification.json) · [All local comparisons](../evidence/navigation-v23/browser-qa-local.json) · [Hosted navigation](../evidence/navigation-v23/browser-qa.json) · [Hosted task preflight](../evidence/navigation-tasks-v24/browser-qa.json) · [Preservation checks](../evidence/navigation-v23/preservation.json) · [Release fingerprint](../evidence/navigation-v23/release.json)
+'''
 cross = sum(r['cross_agent_use'] for r in services['reads'])
 denied = [r for r in services['reads'] if not r['expected_access']]
 assert all(not r['source_id_verified'] for r in denied)
@@ -118,8 +129,10 @@ Caveats: the two conditions share local failure information, and the retrieval p
 [Methods and commands](navigation-v23-methods.md) · [Integration paths](navigation-v23-integrations.md) · [Checkpoint receipts](../evidence/navigation-v23/checkpoint-receipts.json) · [Recording manifest](../evidence/navigation-v23/recording-manifest.json) · [Tensor audit](../evidence/navigation-v23/weight-tensor-audit.json) · [Trajectory audit](../evidence/navigation-v23/trajectory-equivalence-audit.json)
 
 Training and evaluation are in `src/mochi/navigation_v23/campaign.py`; authenticated services in `services.py`; CPU batches in `remote.py`; physical verification in `engine.py`; collision-aware planning in `planner.py`. Existing apps and archived results are preserved. Reproduction must use a new experiment identity and final set, rather than overwrite this archive.
+
+{verification_text}
 '''
-(ROOT / 'docs/navigation-v23-findings.md').write_text(doc)
+(ROOT / 'docs/navigation-v23-findings.md').write_text(doc.rstrip() + '\n')
 readme = ROOT / 'README.md'
 old = readme.read_text()
 old = old[old.index('## V22:'):]
