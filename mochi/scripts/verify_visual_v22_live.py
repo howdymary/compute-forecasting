@@ -2,6 +2,7 @@
 from concurrent.futures import ThreadPoolExecutor
 import hashlib
 import json
+import os
 from pathlib import Path
 from urllib.request import urlopen
 
@@ -27,7 +28,12 @@ health = json.loads(get('api/health'))
 expected = json.loads((WEB / 'visual-motion-v22/report.json').read_text())
 assert health['study'] == expected['study']
 assert health['physical_attempts'] == expected['physical_attempts']
+if os.environ.get('MOCHI_EXPECTED_RELEASE'):
+    assert health['release'] == os.environ['MOCHI_EXPECTED_RELEASE']
 targets = {}
+for file, meta in expected['recordings'].items():
+    targets['visual-motion-v22/' + file] = meta['sha256']
+targets['visual-motion-v22/arm-telemetry.json.gz'] = expected['arm_measurement_data']['sha256']
 for mode in ['appearance', 'motion']:
     path = 'visual-motion-v22/' + mode + '-manifest.json'
     manifest = json.loads(get(path))

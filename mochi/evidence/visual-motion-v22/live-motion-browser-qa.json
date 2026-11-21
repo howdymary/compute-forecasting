@@ -1,0 +1,93 @@
+{
+  "url": "https://howdymary--mochi-visual-motion-v22-demo-web.us-east.modal.run/?mode=motion",
+  "mode": "motion",
+  "scenarios": 10,
+  "summary": "Fresh complete-route qualification: reference 1/4, recovery candidate 2/4. The matched development recovery component had 29.1% lower measured jerk with 11.7% more time. GMR walking and turning results were mixed.",
+  "bindings": 70,
+  "before": "7af99654855ad305ec6830646f338815f6e882897544da8861d31ff39b1a88f4",
+  "after": "ec220b0d8f1026dfc9ab98c5585b2d5de754747300c364a443c779c77b72e622",
+  "cases": [
+    {
+      "id": "recovery-component",
+      "bodies": 70,
+      "max_body_position_error_m": 0,
+      "before_frames": 53,
+      "after_frames": 59,
+      "scope": "RESTORED-STATE COMPONENT · Same saved physical state, same rendering and physical-time playback. This is not a full four-task rollout."
+    },
+    {
+      "id": "gmr-walk",
+      "bodies": 70,
+      "max_body_position_error_m": 0,
+      "before_frames": 1352,
+      "after_frames": 1374,
+      "scope": "RESTORED-STATE COMPONENT · Same saved physical state, same rendering and physical-time playback. This is not a full four-task rollout."
+    },
+    {
+      "id": "gmr-turn",
+      "bodies": 70,
+      "max_body_position_error_m": 0,
+      "before_frames": 1688,
+      "after_frames": 1664,
+      "scope": "RESTORED-STATE COMPONENT · Same saved physical state, same rendering and physical-time playback. This is not a full four-task rollout."
+    },
+    {
+      "id": "rejected-walking",
+      "bodies": 70,
+      "max_body_position_error_m": 0,
+      "before_frames": 1352,
+      "after_frames": 213,
+      "scope": "RESTORED-STATE COMPONENT · Same saved physical state, same rendering and physical-time playback. This is not a full four-task rollout."
+    },
+    {
+      "id": "dev-225000",
+      "bodies": 70,
+      "max_body_position_error_m": 0,
+      "before_frames": 10205,
+      "after_frames": 10216,
+      "scope": "CONTINUOUS FOUR-TASK ATTEMPTS · Matched seed, scene, initial state and playback speed. No cuts or state restoration within either attempt. Failures stop where they occur."
+    },
+    {
+      "id": "dev-225001",
+      "bodies": 70,
+      "max_body_position_error_m": 0,
+      "before_frames": 10360,
+      "after_frames": 10235,
+      "scope": "CONTINUOUS FOUR-TASK ATTEMPTS · Matched seed, scene, initial state and playback speed. No cuts or state restoration within either attempt. Failures stop where they occur."
+    },
+    {
+      "id": "fresh-226000",
+      "bodies": 70,
+      "max_body_position_error_m": 0,
+      "before_frames": 10354,
+      "after_frames": 10325,
+      "scope": "CONTINUOUS FOUR-TASK ATTEMPTS · Matched seed, scene, initial state and playback speed. No cuts or state restoration within either attempt. Failures stop where they occur."
+    },
+    {
+      "id": "fresh-226001",
+      "bodies": 70,
+      "max_body_position_error_m": 0,
+      "before_frames": 8821,
+      "after_frames": 8827,
+      "scope": "CONTINUOUS FOUR-TASK ATTEMPTS · Matched seed, scene, initial state and playback speed. No cuts or state restoration within either attempt. Failures stop where they occur."
+    },
+    {
+      "id": "fresh-226002",
+      "bodies": 70,
+      "max_body_position_error_m": 0,
+      "before_frames": 10364,
+      "after_frames": 10297,
+      "scope": "CONTINUOUS FOUR-TASK ATTEMPTS · Matched seed, scene, initial state and playback speed. No cuts or state restoration within either attempt. Failures stop where they occur."
+    },
+    {
+      "id": "fresh-226003",
+      "bodies": 70,
+      "max_body_position_error_m": 0,
+      "before_frames": 10054,
+      "after_frames": 10284,
+      "scope": "CONTINUOUS FOUR-TASK ATTEMPTS · Matched seed, scene, initial state and playback speed. No cuts or state restoration within either attempt. Failures stop where they occur."
+    }
+  ],
+  "exceptions": [],
+  "errors": []
+}
