@@ -365,8 +365,8 @@
     }
   },
   "protocol_sha256": "8102951488b53518e1202b4726054c47f736b2fde6bca0be4003f396f2c0c8dd",
-  "status": "running",
-  "phase": "Fresh paired tests and fixed/static controls",
+  "status": "completed",
+  "phase": "Completed bounded paper-free study",
   "scope": "Tinker post-trains Qwen3.5-4B LoRA walking/task/recovery selection on real branches. Full-route physics and qualification are unchanged. Branch eligibility uses local constraints; full-route native RMS limits apply to complete references and evaluations. Native gait and book-controller weights stay fixed. Prior zero-update usage, reference and parent measurements are explicitly carried.",
   "optimizer_updates_completed": 8,
   "training_log": [
@@ -1394,9 +1394,279 @@
         "inference_input_plus_max_output_tokens": 6067,
         "paired_same_process": false
       }
+    },
+    {
+      "phase": "Fresh paired tests and fixed/static controls",
+      "seed": 213001,
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 2,
+        "cpu": 1,
+        "memory_mib": 4096,
+        "duration_seconds": 1940.180411181,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 12160,
+        "paired_same_process": true
+      }
+    },
+    {
+      "phase": "Fresh paired tests and fixed/static controls",
+      "seed": 213000,
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 2,
+        "cpu": 1,
+        "memory_mib": 4096,
+        "duration_seconds": 1953.0551093699999,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 10759,
+        "paired_same_process": true
+      }
+    },
+    {
+      "phase": "Fresh paired tests and fixed/static controls",
+      "seed": 213003,
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 2,
+        "cpu": 1,
+        "memory_mib": 4096,
+        "duration_seconds": 2046.7082355119999,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 13301,
+        "paired_same_process": true
+      }
+    },
+    {
+      "phase": "Fresh paired tests and fixed/static controls",
+      "seed": 213002,
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 2,
+        "cpu": 1,
+        "memory_mib": 4096,
+        "duration_seconds": 2226.1073445839997,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 14426,
+        "paired_same_process": true
+      }
+    },
+    {
+      "phase": "Fresh paired tests and fixed/static controls",
+      "seed": 213000,
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 2,
+        "cpu": 1,
+        "memory_mib": 4096,
+        "duration_seconds": 1809.772893245,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 0,
+        "paired_same_process": true
+      }
+    },
+    {
+      "phase": "Fresh paired tests and fixed/static controls",
+      "seed": 213001,
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 2,
+        "cpu": 1,
+        "memory_mib": 4096,
+        "duration_seconds": 2159.8335978309997,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 0,
+        "paired_same_process": true
+      }
     }
   ],
-  "campaign_modal_rollouts_completed": 9,
+  "campaign_modal_rollouts_completed": 21,
   "held_out_opened": true,
   "parent_selection": {
     "source": "Completed V15 selected update16",
@@ -1562,6 +1832,69 @@
         },
         "status": "completed",
         "write_to_ready_seconds": 5.250758901000012
+      },
+      {
+        "id": "mochi-p19r1-44847672231-r3",
+        "role": "experimenter",
+        "author": "mochi-p19r1-44847672231-experimenter",
+        "audience": "mochi-p19r1-44847672231-shared",
+        "at": "2026-11-21T03:26:44.343082+00:00",
+        "sha256": "1c5f4df07aa50e3840b0133e6d0ccee355f52345768f43cd47b88e98b62d72ff",
+        "ingestion_id": "7c42324f-357a-4d3c-a937-654696457531",
+        "payload": {
+          "record_id": "mochi-p19r1-44847672231-r3",
+          "author": "mochi-p19r1-44847672231-experimenter",
+          "occurred_at": "2026-11-21T03:26:44.343082+00:00",
+          "content": {
+            "kind": "final-observation",
+            "experiment_id": "mochi-p19r1-44847672231",
+            "selected_update": 1,
+            "optimizer_updates": 8,
+            "qualified": {
+              "parent": 0,
+              "selected": 2,
+              "fixed": 1,
+              "static": 0
+            },
+            "paired": {
+              "n": 0,
+              "scenario_step_reductions": [],
+              "mean_step_reduction_fraction": null,
+              "mean_time_reduction_fraction": null,
+              "mean_recovery_arm_travel_reduction_fraction": null,
+              "mean_intertask_arm_travel_reduction_fraction": null,
+              "mean_step_reduction_bootstrap_95": null,
+              "mean_time_reduction_bootstrap_95": null,
+              "uncertainty_scope": "Deterministic paired resampling of this small fixed-layout cohort; not a guarantee for other layouts or hardware."
+            },
+            "goal_met": false
+          }
+        },
+        "status": "completed",
+        "write_to_ready_seconds": 16.050413487000696
+      },
+      {
+        "id": "mochi-p19r1-44847672231-r4",
+        "role": "critic",
+        "author": "mochi-p19r1-44847672231-critic",
+        "audience": "mochi-p19r1-44847672231-shared",
+        "at": "2026-11-21T03:27:06.395981+00:00",
+        "sha256": "b8271db49b23a50c144e7633a6c2068ab125fe148ad1aa76ab093e586d34968d",
+        "ingestion_id": "f387dc24-f76e-45bc-aae7-b1bdeb135568",
+        "payload": {
+          "record_id": "mochi-p19r1-44847672231-r4",
+          "author": "mochi-p19r1-44847672231-critic",
+          "occurred_at": "2026-11-21T03:27:06.395981+00:00",
+          "content": {
+            "kind": "conclusion",
+            "experiment_id": "mochi-p19r1-44847672231",
+            "model_verdict": "reject_improvement_claim",
+            "measured_goal_met": false,
+            "qualification": "Deterministic measurements govern. Scene removal is shared engineering; Tinker trains selector weights, not native gait."
+          }
+        },
+        "status": "completed",
+        "write_to_ready_seconds": 10.304487622001034
       }
     ],
     "reads": [
@@ -1642,6 +1975,92 @@
             "all_returned_source_ids_sha256": "969c4f84ffb1932ded07641b771a085ec254e453ded476380e1d6c8fe9a0ef83"
           }
         ]
+      },
+      {
+        "reader": "mochi-p19r1-44847672231-critic",
+        "reader_role": "critic",
+        "author": "mochi-p19r1-44847672231-experimenter",
+        "record_id": "mochi-p19r1-44847672231-r3",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "1c5f4df07aa50e3840b0133e6d0ccee355f52345768f43cd47b88e98b62d72ff",
+        "at": "2026-11-21T03:27:02.052685+00:00",
+        "retrieval": "source-verified compact evidence, 8000-token budget, no occurrence window",
+        "attempts": [
+          {
+            "at": "2026-11-21T03:27:02.052668+00:00",
+            "returned_documents": 82,
+            "used_evidence_tokens": 7999,
+            "required_source_verified": true,
+            "returned_source_ids": [
+              "mochi-p19r1-44847672231-r0",
+              "mochi-p19r1-44847672231-r1",
+              "mochi-p19r1-44847672231-r2",
+              "mochi-p19r1-44847672231-r3"
+            ],
+            "unrelated_source_ids_omitted": 14,
+            "all_returned_source_ids_sha256": "469c998262eba39ececee098b5733997895f9fe162065605745a7c2afa3d73ab"
+          }
+        ]
+      },
+      {
+        "reader": "mochi-p19r1-44847672231-researcher",
+        "reader_role": "researcher",
+        "author": "mochi-p19r1-44847672231-critic",
+        "record_id": "mochi-p19r1-44847672231-r4",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "b8271db49b23a50c144e7633a6c2068ab125fe148ad1aa76ab093e586d34968d",
+        "at": "2026-11-21T03:27:18.497611+00:00",
+        "retrieval": "source-verified compact evidence, 8000-token budget, no occurrence window",
+        "attempts": [
+          {
+            "at": "2026-11-21T03:27:18.497599+00:00",
+            "returned_documents": 81,
+            "used_evidence_tokens": 7999,
+            "required_source_verified": true,
+            "returned_source_ids": [
+              "mochi-p19r1-44847672231-r0",
+              "mochi-p19r1-44847672231-r1",
+              "mochi-p19r1-44847672231-r2",
+              "mochi-p19r1-44847672231-r3",
+              "mochi-p19r1-44847672231-r4"
+            ],
+            "unrelated_source_ids_omitted": 13,
+            "all_returned_source_ids_sha256": "40feb9950b54bf611c1531bc43bb66321c8f04fd28d1bf64ea97dac2add9a8fd"
+          }
+        ]
+      },
+      {
+        "reader": "mochi-p19r1-44847672231-designer",
+        "reader_role": "designer",
+        "author": "mochi-p19r1-44847672231-critic",
+        "record_id": "mochi-p19r1-44847672231-r5",
+        "source_id_verified": false,
+        "expected_access": false,
+        "cross_agent_use": false,
+        "sha256": null,
+        "at": "2026-11-21T03:27:26.411863+00:00",
+        "retrieval": "source-verified compact evidence, 8000-token budget, no occurrence window",
+        "attempts": [
+          {
+            "at": "2026-11-21T03:27:26.411320+00:00",
+            "returned_documents": 82,
+            "used_evidence_tokens": 7993,
+            "required_source_verified": false,
+            "returned_source_ids": [
+              "mochi-p19r1-44847672231-r0",
+              "mochi-p19r1-44847672231-r1",
+              "mochi-p19r1-44847672231-r2",
+              "mochi-p19r1-44847672231-r3",
+              "mochi-p19r1-44847672231-r4"
+            ],
+            "unrelated_source_ids_omitted": 24,
+            "all_returned_source_ids_sha256": "a26ee2d088cffdee4da61d7374ba3a0a83d2c2dfcc8abf2ec6f70306fdf0c2a3"
+          }
+        ]
       }
     ],
     "decisions": [
@@ -1658,6 +2077,20 @@
         ],
         "context_sha256": "c6ffba871c161d6406a37cd749a68f95fb2a63adb9e680b2128461b1d98afbac",
         "at": "2026-11-21T01:04:19.063683+00:00"
+      },
+      {
+        "role": "critic",
+        "question": "Do the measurements establish a safe full-route step reduction?",
+        "selected": "reject_improvement_claim",
+        "distribution": {
+          "qualified_step_improvement": 0.005911069456487894,
+          "reject_improvement_claim": 0.9940890073776245
+        },
+        "input_record_ids": [
+          "mochi-p19r1-44847672231-r3"
+        ],
+        "context_sha256": "e55d5b892530778ce942d88705347872ef6f9ad8aa387051593fea2c100a1f74",
+        "at": "2026-11-21T03:27:06.361913+00:00"
       }
     ],
     "calls": [
@@ -1793,6 +2226,111 @@
         "kind": "recall",
         "status": 200,
         "at": "2026-11-21T01:05:09.398112+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-21T03:26:45.157911+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-21T03:26:45.210016+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-21T03:26:50.259383+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-21T03:26:55.292932+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-21T03:27:00.393477+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-21T03:27:02.052021+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-21T03:27:06.540975+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-21T03:27:06.562166+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-21T03:27:11.644706+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-21T03:27:16.700438+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-21T03:27:18.497161+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "ingest",
+        "status": 202,
+        "at": "2026-11-21T03:27:19.926735+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-21T03:27:19.956557+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "GET",
+        "kind": "ingest",
+        "status": 200,
+        "at": "2026-11-21T03:27:25.069534+00:00"
+      },
+      {
+        "provider": "past.dev",
+        "method": "POST",
+        "kind": "recall",
+        "status": 200,
+        "at": "2026-11-21T03:27:26.410926+00:00"
       }
     ],
     "sources": [
@@ -1833,22 +2371,22 @@
       }
     ],
     "eligibility": {
-      "writers": 3,
-      "readers": 3,
-      "cross_agent_reads": 3,
-      "isolation_passed": false
+      "writers": 4,
+      "readers": 4,
+      "cross_agent_reads": 5,
+      "isolation_passed": true
     },
     "pending_ingestions": []
   },
   "budget_usage_or_reserved": {
-    "physical_rollouts": 63,
-    "simulation_cpu_hours": 4.619903925763774,
+    "physical_rollouts": 75,
+    "simulation_cpu_hours": 7.990919923464608,
     "optimizer_updates": 8,
     "training_token_presentations": 193113,
-    "inference_tokens": 96546,
+    "inference_tokens": 152192,
     "exa_searches": 2,
-    "past_writes": 5,
-    "past_recalls": 5
+    "past_writes": 8,
+    "past_recalls": 8
   },
   "preflight": {
     "study": "mochi-paperfree-v19",
@@ -175874,13 +176412,136 @@
       "mean_valid_step_reward": 579.999775438442
     }
   },
-  "preview_export": {
-    "source": "Authenticated immutable Modal archives and their public trajectory exports",
-    "scope": "Development evidence only. Official workflow descriptors will be checked again after completion.",
-    "completed_development_updates": [
-      1,
-      4,
-      8
-    ]
-  }
+  "held_out": {
+    "parent": {
+      "n": 4,
+      "complete_successes": 1,
+      "smooth_complete_successes": 0,
+      "wilson_95_complete_rate": [
+        0.045586062644636216,
+        0.6993639475573634
+      ],
+      "task_successes": {
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 4,
+        "globe": 1
+      },
+      "falls": 0,
+      "invalid_contacts": 3,
+      "mean_duration_s": 263.9987183324622,
+      "mean_roll_rms_deg": 0.40442268281850724,
+      "mean_contact_travel_m": 0.3590464148107396,
+      "recovery_successes": 13,
+      "successful_recovery_mean_joint_travel_rad": 5.439205432173655,
+      "qualified_complete_successes": 0,
+      "successful_mean_steps": null,
+      "successful_mean_seconds": null,
+      "successful_mean_forward_facing_fraction": null,
+      "successful_mean_recovery_arm_joint_travel_rad": null,
+      "successful_mean_intertask_arm_joint_travel_rad": null,
+      "mean_valid_step_reward": null
+    },
+    "selected": {
+      "n": 4,
+      "complete_successes": 2,
+      "smooth_complete_successes": 2,
+      "wilson_95_complete_rate": [
+        0.15003570882017148,
+        0.8499642911798285
+      ],
+      "task_successes": {
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 3,
+        "globe": 2
+      },
+      "falls": 0,
+      "invalid_contacts": 2,
+      "mean_duration_s": 263.890607987476,
+      "mean_roll_rms_deg": 0.41409369151583186,
+      "mean_contact_travel_m": 0.39569741516920653,
+      "recovery_successes": 13,
+      "successful_recovery_mean_joint_travel_rad": 3.523690665724231,
+      "qualified_complete_successes": 2,
+      "successful_mean_steps": 417.0,
+      "successful_mean_seconds": 277.473681653185,
+      "successful_mean_forward_facing_fraction": 0.941175945147542,
+      "successful_mean_recovery_arm_joint_travel_rad": 3.6299022123095765,
+      "successful_mean_intertask_arm_joint_travel_rad": 126.32468538340189,
+      "mean_valid_step_reward": 582.9997887387492
+    },
+    "fixed": {
+      "n": 2,
+      "complete_successes": 1,
+      "smooth_complete_successes": 1,
+      "wilson_95_complete_rate": [
+        0.09452865480086614,
+        0.9054713451991339
+      ],
+      "task_successes": {
+        "alarm": 2,
+        "drawer": 2,
+        "laptop": 2,
+        "globe": 1
+      },
+      "falls": 0,
+      "invalid_contacts": 1,
+      "mean_duration_s": 276.5156073671829,
+      "mean_roll_rms_deg": 0.41515750062682333,
+      "mean_contact_travel_m": 0.6400791175831839,
+      "recovery_successes": 7,
+      "successful_recovery_mean_joint_travel_rad": 3.937865747943756,
+      "qualified_complete_successes": 1,
+      "successful_mean_steps": 468.0,
+      "successful_mean_seconds": 288.20869148576145,
+      "successful_mean_forward_facing_fraction": 0.9350015622545944,
+      "successful_mean_recovery_arm_joint_travel_rad": 3.744263715620022,
+      "successful_mean_intertask_arm_joint_travel_rad": 142.8651872095504,
+      "mean_valid_step_reward": 531.9997816083343
+    },
+    "static": {
+      "n": 2,
+      "complete_successes": 0,
+      "smooth_complete_successes": 0,
+      "wilson_95_complete_rate": [
+        0,
+        0.6576280471103807
+      ],
+      "task_successes": {
+        "alarm": 2,
+        "drawer": 2,
+        "laptop": 1,
+        "globe": 0
+      },
+      "falls": 0,
+      "invalid_contacts": 1,
+      "mean_duration_s": 265.5423051673969,
+      "mean_roll_rms_deg": 0.3870523376109135,
+      "mean_contact_travel_m": 0.4103951634607566,
+      "recovery_successes": 5,
+      "successful_recovery_mean_joint_travel_rad": 3.6984065039623326,
+      "qualified_complete_successes": 0,
+      "successful_mean_steps": null,
+      "successful_mean_seconds": null,
+      "successful_mean_forward_facing_fraction": null,
+      "successful_mean_recovery_arm_joint_travel_rad": null,
+      "successful_mean_intertask_arm_joint_travel_rad": null,
+      "mean_valid_step_reward": null
+    }
+  },
+  "paired_held_out": {
+    "n": 0,
+    "scenario_step_reductions": [],
+    "mean_step_reduction_fraction": null,
+    "mean_time_reduction_fraction": null,
+    "mean_recovery_arm_travel_reduction_fraction": null,
+    "mean_intertask_arm_travel_reduction_fraction": null,
+    "mean_step_reduction_bootstrap_95": null,
+    "mean_time_reduction_bootstrap_95": null,
+    "uncertainty_scope": "Deterministic paired resampling of this small fixed-layout cohort; not a guarantee for other layouts or hardware."
+  },
+  "numerical_goal_met": false,
+  "improvement_goal_met": false,
+  "completed_at": "2026-11-21T03:27:27.294107+00:00"
 }

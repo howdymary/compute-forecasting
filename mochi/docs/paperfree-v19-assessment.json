@@ -1,0 +1,148 @@
+{
+  "study": "mochi-paperfree-v19r1",
+  "run_id": "mochi-p19r1-44847672231",
+  "source_sha": "68bd7461bd6ec0942a3122b538aa3e03f64a26b8",
+  "frozen_files_verified": 236,
+  "optimizer_updates_verified": 8,
+  "domain_backwards_verified": 48,
+  "physical_attempts_accounted": 75,
+  "simulation_cpu_hours_accounted": 7.990919923464607,
+  "recordings_verified": 20,
+  "selected_update": 1,
+  "held_out": {
+    "parent": {
+      "n": 4,
+      "complete_successes": 1,
+      "smooth_complete_successes": 0,
+      "wilson_95_complete_rate": [
+        0.045586062644636216,
+        0.6993639475573634
+      ],
+      "task_successes": {
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 4,
+        "globe": 1
+      },
+      "falls": 0,
+      "invalid_contacts": 3,
+      "mean_duration_s": 263.9987183324622,
+      "mean_roll_rms_deg": 0.40442268281850724,
+      "mean_contact_travel_m": 0.3590464148107396,
+      "recovery_successes": 13,
+      "successful_recovery_mean_joint_travel_rad": 5.439205432173655,
+      "qualified_complete_successes": 0,
+      "successful_mean_steps": null,
+      "successful_mean_seconds": null,
+      "successful_mean_forward_facing_fraction": null,
+      "successful_mean_recovery_arm_joint_travel_rad": null,
+      "successful_mean_intertask_arm_joint_travel_rad": null,
+      "mean_valid_step_reward": null
+    },
+    "selected": {
+      "n": 4,
+      "complete_successes": 2,
+      "smooth_complete_successes": 2,
+      "wilson_95_complete_rate": [
+        0.15003570882017148,
+        0.8499642911798285
+      ],
+      "task_successes": {
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 3,
+        "globe": 2
+      },
+      "falls": 0,
+      "invalid_contacts": 2,
+      "mean_duration_s": 263.890607987476,
+      "mean_roll_rms_deg": 0.41409369151583186,
+      "mean_contact_travel_m": 0.39569741516920653,
+      "recovery_successes": 13,
+      "successful_recovery_mean_joint_travel_rad": 3.523690665724231,
+      "qualified_complete_successes": 2,
+      "successful_mean_steps": 417.0,
+      "successful_mean_seconds": 277.473681653185,
+      "successful_mean_forward_facing_fraction": 0.941175945147542,
+      "successful_mean_recovery_arm_joint_travel_rad": 3.6299022123095765,
+      "successful_mean_intertask_arm_joint_travel_rad": 126.32468538340189,
+      "mean_valid_step_reward": 582.9997887387492
+    },
+    "fixed": {
+      "n": 2,
+      "complete_successes": 1,
+      "smooth_complete_successes": 1,
+      "wilson_95_complete_rate": [
+        0.09452865480086614,
+        0.9054713451991339
+      ],
+      "task_successes": {
+        "alarm": 2,
+        "drawer": 2,
+        "laptop": 2,
+        "globe": 1
+      },
+      "falls": 0,
+      "invalid_contacts": 1,
+      "mean_duration_s": 276.5156073671829,
+      "mean_roll_rms_deg": 0.41515750062682333,
+      "mean_contact_travel_m": 0.6400791175831839,
+      "recovery_successes": 7,
+      "successful_recovery_mean_joint_travel_rad": 3.937865747943756,
+      "qualified_complete_successes": 1,
+      "successful_mean_steps": 468.0,
+      "successful_mean_seconds": 288.20869148576145,
+      "successful_mean_forward_facing_fraction": 0.9350015622545944,
+      "successful_mean_recovery_arm_joint_travel_rad": 3.744263715620022,
+      "successful_mean_intertask_arm_joint_travel_rad": 142.8651872095504,
+      "mean_valid_step_reward": 531.9997816083343
+    },
+    "static": {
+      "n": 2,
+      "complete_successes": 0,
+      "smooth_complete_successes": 0,
+      "wilson_95_complete_rate": [
+        0,
+        0.6576280471103807
+      ],
+      "task_successes": {
+        "alarm": 2,
+        "drawer": 2,
+        "laptop": 1,
+        "globe": 0
+      },
+      "falls": 0,
+      "invalid_contacts": 1,
+      "mean_duration_s": 265.5423051673969,
+      "mean_roll_rms_deg": 0.3870523376109135,
+      "mean_contact_travel_m": 0.4103951634607566,
+      "recovery_successes": 5,
+      "successful_recovery_mean_joint_travel_rad": 3.6984065039623326,
+      "qualified_complete_successes": 0,
+      "successful_mean_steps": null,
+      "successful_mean_seconds": null,
+      "successful_mean_forward_facing_fraction": null,
+      "successful_mean_recovery_arm_joint_travel_rad": null,
+      "successful_mean_intertask_arm_joint_travel_rad": null,
+      "mean_valid_step_reward": null
+    }
+  },
+  "paired_held_out": {
+    "n": 0,
+    "scenario_step_reductions": [],
+    "mean_step_reduction_fraction": null,
+    "mean_time_reduction_fraction": null,
+    "mean_recovery_arm_travel_reduction_fraction": null,
+    "mean_intertask_arm_travel_reduction_fraction": null,
+    "mean_step_reduction_bootstrap_95": null,
+    "mean_time_reduction_bootstrap_95": null,
+    "uncertainty_scope": "Deterministic paired resampling of this small fixed-layout cohort; not a guarantee for other layouts or hardware."
+  },
+  "improvement_goal_met": false,
+  "services": {
+    "writers": 4,
+    "readers": 4,
+    "cross_agent_reads": 5,
+    "isolation_passed": true
+  }
+}
