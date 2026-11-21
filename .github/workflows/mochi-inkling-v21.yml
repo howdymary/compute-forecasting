@@ -1,0 +1,48 @@
+name: Mochi Inkling 2 Mini research gateway
+on:
+  push:
+    branches: [mochi-desk-v3]
+    paths: ['mochi/configs/inkling-v21-launch.json']
+permissions:
+  contents: read
+concurrency:
+  group: mochi-inkling-v21-setup
+  cancel-in-progress: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      PYTHONPATH: ${{ github.workspace }}/mochi/src
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - run: python -m pip install modal==1.6.4
+      - name: Deploy isolated authenticated gateway
+        env:
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+          PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
+          EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: python -m modal deploy -m mochi.inkling_v21.remote
+      - name: Verify exact model access without training
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+        run: |
+          python - <<'PY'
+          import json, pathlib, modal
+          result=modal.Function.from_name('mochi-inkling-v21-research','access').remote()
+          output=pathlib.Path('mochi/artifacts/inkling-v21');output.mkdir(parents=True,exist_ok=True)
+          (output/'access.json').write_text(json.dumps(result,indent=2)+'\n')
+          print(json.dumps(result))
+          assert result['available'], 'The exact Inkling 2 Mini model is unavailable; do not silently substitute a model'
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mochi-inkling-v21-access-${{ github.run_id }}
+          path: mochi/artifacts/inkling-v21/
+          retention-days: 30

@@ -1,0 +1,59 @@
+{
+  "base": "https://howdymary--mochi-paperfree-v19-demo-web.us-east.modal.run/",
+  "inspected": [
+    {
+      "name": "fresh",
+      "query": "",
+      "state": {
+        "steps": [
+          401,
+          417
+        ],
+        "right": "All tasks verified · 417 steps · roll -0.2° · 277.8 s",
+        "left": "Tasks verified; quality limits exceeded · 401 steps · roll -0.3° · 278.4 s",
+        "campaign": "8 real Tinker optimizer updates; development selected update 1. Fresh scenarios: selected 2/4 complete (2/4 within all quality limits); parent 1/4 complete (0/4 qualified). The declared improvement target was not met. Failures and step counts remain visible below."
+      }
+    },
+    {
+      "name": "failure",
+      "query": "?scenario=held-out-213000",
+      "state": {
+        "steps": [
+          291,
+          290
+        ],
+        "right": "Stopped: unintended contact · 290 steps · roll -3.6° · 247.3 s",
+        "left": "Stopped: unintended contact · 291 steps · roll 1.0° · 254.6 s",
+        "campaign": "8 real Tinker optimizer updates; development selected update 1. Fresh scenarios: selected 2/4 complete (2/4 within all quality limits); parent 1/4 complete (0/4 qualified). The declared improvement target was not met. Failures and step counts remain visible below."
+      }
+    },
+    {
+      "name": "rejected",
+      "query": "?scenario=development-212000&checkpoint=8",
+      "state": {
+        "steps": [
+          288,
+          286
+        ],
+        "right": "Stopped: laptop did not close · 286 steps · roll -0.1° · 271.3 s",
+        "left": "Stopped: fall · 288 steps · roll 2.1° · 252.7 s",
+        "campaign": "8 real Tinker optimizer updates; development selected update 1. Fresh scenarios: selected 2/4 complete (2/4 within all quality limits); parent 1/4 complete (0/4 qualified). The declared improvement target was not met. Failures and step counts remain visible below."
+      }
+    },
+    {
+      "name": "engineering",
+      "query": "?mode=engineering",
+      "state": {
+        "steps": [
+          468,
+          414
+        ],
+        "right": "All tasks verified · 414 steps · roll -0.2° · 278.0 s",
+        "left": "All tasks verified · 468 steps · roll -0.2° · 284.1 s",
+        "campaign": "Paper-free physical engineering comparison. Zero new Tinker updates. All three fixed-controller attempts and their failures are preserved. Training and fresh-scenario tests are pending."
+      }
+    }
+  ],
+  "exceptions": [],
+  "consoleErrors": []
+}
