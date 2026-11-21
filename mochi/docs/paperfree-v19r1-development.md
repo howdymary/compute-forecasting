@@ -4,6 +4,6 @@ The first trained checkpoint and the parent both completed scenario 212002 withi
 
 The only changed discrete choice in this pair was the clock approach, F to H0. Walking remained W10 and recovery remained R4 at every station. Earlier task actions affect the physical states reached later in the sequence. These observations do not establish that the native gait was trained or isolate the effect of the clock change from simulator variability. Tinker updated the shared selector, with actual gradient calls for all six domains.
 
-Both policies still failed during laptop contact on scenarios 212000 and 212001. The preview retains those failures. Checkpoints 4 and 8 are undergoing physical evaluation; selection and fresh tests remain pending.
+Both policies still failed during laptop contact on scenarios 212000 and 212001. The preview retains those failures. Checkpoints 4 and 8 completed no development routes out of three and were rejected. The frozen selection rule chose checkpoint 1 before opening four fresh paired test scenarios. Those tests and the fixed/static controls are running. The viewer retains all twelve development recordings, including the regressions.
 
 [Paired measurements](../evidence/paperfree-v19r1/development-update1-paired.json) · [Continuous browser verification](../evidence/paperfree-v19r1/development-preview-browser-qa.json)

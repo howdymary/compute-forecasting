@@ -4,7 +4,7 @@ const $=q=>document.querySelector(q),folder='paperfree-v19/',engineeringMode=new
 let manifest,stages,scenario,version,episodes,playing=true,time=0,last=performance.now(),loading=false,requestId=0;
 const cache=new Map();
 function setPlayback(value){playing=value;last=performance.now();$('#play').textContent=value?'Ⅱ':'▶'}
-function outcomeLabel(value){return ({fall:'Stopped: fall',invalid_fixture_contact:'Stopped: unintended contact',inference_token_limit:'Stopped: inference limit'})[value]||String(value).replaceAll('_',' ')}
+function outcomeLabel(value){if(String(value).startsWith('laptop-failed'))return 'Stopped: laptop did not close';if(String(value).startsWith('recovery-failed'))return 'Stopped: arm recovery incomplete';if(String(value).startsWith('directional-navigation-timeout')||String(value).startsWith('walk-failed'))return 'Stopped: walking target not reached';return ({fall:'Stopped: fall',invalid_fixture_contact:'Stopped: unintended contact',inference_token_limit:'Stopped: inference limit'})[value]||String(value).replaceAll('_',' ')}
 async function json(path){const r=await fetch(path);if(!r.ok)throw Error('Missing completed recording');return r.json()}
 async function episode(file){if(!cache.has(file))cache.set(file,(async()=>{const r=await fetch(folder+file);if(!r.ok)throw Error('Missing measured trajectory');const bytes=new Uint8Array(await r.arrayBuffer());return bytes[0]===31&&bytes[1]===139?new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'))).json():JSON.parse(new TextDecoder().decode(bytes))})());return cache.get(file)}
 async function load(){

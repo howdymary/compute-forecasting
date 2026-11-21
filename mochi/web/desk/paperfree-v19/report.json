@@ -366,7 +366,7 @@
   },
   "protocol_sha256": "8102951488b53518e1202b4726054c47f736b2fde6bca0be4003f396f2c0c8dd",
   "status": "running",
-  "phase": "Matched development selection by qualified completion and fewest steps",
+  "phase": "Fresh paired tests and fixed/static controls",
   "scope": "Tinker post-trains Qwen3.5-4B LoRA walking/task/recovery selection on real branches. Full-route physics and qualification are unchanged. Branch eligibility uses local constraints; full-route native RMS limits apply to complete references and evaluations. Native gait and book-controller weights stay fixed. Prior zero-update usage, reference and parent measurements are explicitly carried.",
   "optimizer_updates_completed": 8,
   "training_log": [
@@ -888,7 +888,35 @@
           "R4": 0.8342960476875305
         }
       },
-      "development": null
+      "development": {
+        "n": 3,
+        "complete_successes": 0,
+        "smooth_complete_successes": 0,
+        "wilson_95_complete_rate": [
+          0,
+          0.5615060804490177
+        ],
+        "task_successes": {
+          "alarm": 3,
+          "drawer": 3,
+          "laptop": 1,
+          "globe": 0
+        },
+        "falls": 0,
+        "invalid_contacts": 1,
+        "mean_duration_s": 268.0844991523959,
+        "mean_roll_rms_deg": 0.386483405338332,
+        "mean_contact_travel_m": 0.42878433409284605,
+        "recovery_successes": 7,
+        "successful_recovery_mean_joint_travel_rad": 3.608105070694666,
+        "qualified_complete_successes": 0,
+        "successful_mean_steps": null,
+        "successful_mean_seconds": null,
+        "successful_mean_forward_facing_fraction": null,
+        "successful_mean_recovery_arm_joint_travel_rad": null,
+        "successful_mean_intertask_arm_joint_travel_rad": null,
+        "mean_valid_step_reward": null
+      }
     },
     {
       "update": 8,
@@ -930,7 +958,35 @@
           "R4": 0.9363167881965637
         }
       },
-      "development": null
+      "development": {
+        "n": 3,
+        "complete_successes": 0,
+        "smooth_complete_successes": 0,
+        "wilson_95_complete_rate": [
+          0,
+          0.5615060804490177
+        ],
+        "task_successes": {
+          "alarm": 3,
+          "drawer": 3,
+          "laptop": 1,
+          "globe": 0
+        },
+        "falls": 0,
+        "invalid_contacts": 1,
+        "mean_duration_s": 267.68966137070737,
+        "mean_roll_rms_deg": 0.3848210955196032,
+        "mean_contact_travel_m": 0.45209090214252323,
+        "recovery_successes": 7,
+        "successful_recovery_mean_joint_travel_rad": 3.6079993911564827,
+        "qualified_complete_successes": 0,
+        "successful_mean_steps": null,
+        "successful_mean_seconds": null,
+        "successful_mean_forward_facing_fraction": null,
+        "successful_mean_recovery_arm_joint_travel_rad": null,
+        "successful_mean_intertask_arm_joint_travel_rad": null,
+        "mean_valid_step_reward": null
+      }
     }
   ],
   "physics_receipts": [
@@ -1068,10 +1124,280 @@
         "inference_input_plus_max_output_tokens": 4686,
         "paired_same_process": false
       }
+    },
+    {
+      "phase": "Matched development selection by qualified completion and fewest steps",
+      "seed": 212000,
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 4096,
+        "duration_seconds": 712.631641659,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "SkylakeX"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "SkylakeX"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 4680,
+        "paired_same_process": false
+      }
+    },
+    {
+      "phase": "Matched development selection by qualified completion and fewest steps",
+      "seed": 212002,
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 4096,
+        "duration_seconds": 994.724433166,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 6067,
+        "paired_same_process": false
+      }
+    },
+    {
+      "phase": "Matched development selection by qualified completion and fewest steps",
+      "seed": 212001,
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 4096,
+        "duration_seconds": 1082.401233405,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 4686,
+        "paired_same_process": false
+      }
+    },
+    {
+      "phase": "Matched development selection by qualified completion and fewest steps",
+      "seed": 212001,
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 4096,
+        "duration_seconds": 698.175747412,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "SkylakeX"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "SkylakeX"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 4686,
+        "paired_same_process": false
+      }
+    },
+    {
+      "phase": "Matched development selection by qualified completion and fewest steps",
+      "seed": 212000,
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 4096,
+        "duration_seconds": 1039.5297054910002,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 4681,
+        "paired_same_process": false
+      }
+    },
+    {
+      "phase": "Matched development selection by qualified completion and fewest steps",
+      "seed": 212002,
+      "receipt": {
+        "provider": "Modal",
+        "physical_rollouts": 1,
+        "cpu": 1,
+        "memory_mib": 4096,
+        "duration_seconds": 1074.279942833,
+        "architecture": "x86_64",
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-8fb3d286.so",
+            "version": "0.3.30",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "/usr/local/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "version": "0.3.29.dev",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          },
+          {
+            "user_api": "openmp",
+            "internal_api": "openmp",
+            "num_threads": 1,
+            "prefix": "libgomp",
+            "filepath": "/usr/local/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+            "version": null
+          }
+        ],
+        "duration_scope": "Function execution including imports; not an invoice or cold-start billing receipt",
+        "inference_input_plus_max_output_tokens": 6067,
+        "paired_same_process": false
+      }
     }
   ],
-  "campaign_modal_rollouts_completed": 3,
-  "held_out_opened": false,
+  "campaign_modal_rollouts_completed": 9,
+  "held_out_opened": true,
   "parent_selection": {
     "source": "Completed V15 selected update16",
     "checkpoint_id": "63463997da27066bfabda9a834fbd05d627b4dd362720c764077a3d20dd74ebe",
@@ -1515,11 +1841,11 @@
     "pending_ingestions": []
   },
   "budget_usage_or_reserved": {
-    "physical_rollouts": 57,
-    "simulation_cpu_hours": 3.063864285773218,
+    "physical_rollouts": 63,
+    "simulation_cpu_hours": 4.619903925763774,
     "optimizer_updates": 8,
     "training_token_presentations": 193113,
-    "inference_tokens": 65679,
+    "inference_tokens": 96546,
     "exa_searches": 2,
     "past_writes": 5,
     "past_recalls": 5
@@ -175478,11 +175804,83 @@
     "globe": 0.003974199295043945,
     "recovery": 0.007364988327026367
   },
+  "selected_checkpoint": {
+    "update": 1,
+    "cumulative_updates": 122,
+    "checkpoint_id": "4bc7718118f0313f2e7198ab1cde70ac037edb8e99fe834618950fba3421aed7",
+    "probe_distributions": {
+      "walk": {
+        "W8": 0.0002514433581382036,
+        "W9": 0.03731750324368477,
+        "W10": 0.9624310731887817
+      },
+      "alarm": {
+        "B": 0.0006684124236926436,
+        "C": 0.04135321080684662,
+        "F": 0.12737686932086945,
+        "H0": 0.8306014537811279
+      },
+      "drawer": {
+        "A": 1.0701605788199231e-05,
+        "B": 0.007577160373330116,
+        "C": 0.9924121499061584
+      },
+      "laptop": {
+        "P0": 8.433052425971255e-05,
+        "P1": 0.012515759095549583,
+        "P2": 0.08161300420761108,
+        "P4": 0.014182212762534618,
+        "P5": 0.014182212762534618,
+        "P6": 0.8774224519729614
+      },
+      "globe": {
+        "A": 5.1205097406636924e-05,
+        "G0": 0.9953393936157227,
+        "G1": 0.0046093356795609
+      },
+      "recovery": {
+        "R0": 0.00012143205822212622,
+        "R1": 0.015904460102319717,
+        "R4": 0.9839741587638855
+      }
+    },
+    "development": {
+      "n": 3,
+      "complete_successes": 1,
+      "smooth_complete_successes": 1,
+      "wilson_95_complete_rate": [
+        0.0614903152761605,
+        0.7923450448735121
+      ],
+      "task_successes": {
+        "alarm": 3,
+        "drawer": 3,
+        "laptop": 1,
+        "globe": 1
+      },
+      "falls": 2,
+      "invalid_contacts": 0,
+      "mean_duration_s": 257.7958276817283,
+      "mean_roll_rms_deg": 0.44280623865976665,
+      "mean_contact_travel_m": 0.469803327636744,
+      "recovery_successes": 8,
+      "successful_recovery_mean_joint_travel_rad": 3.552694317084183,
+      "qualified_complete_successes": 1,
+      "successful_mean_steps": 420.0,
+      "successful_mean_seconds": 277.0306131693854,
+      "successful_mean_forward_facing_fraction": 0.9453372759157777,
+      "successful_mean_recovery_arm_joint_travel_rad": 3.965047205275171,
+      "successful_mean_intertask_arm_joint_travel_rad": 128.43666614322953,
+      "mean_valid_step_reward": 579.999775438442
+    }
+  },
   "preview_export": {
     "source": "Authenticated immutable Modal archives and their public trajectory exports",
     "scope": "Development evidence only. Official workflow descriptors will be checked again after completion.",
     "completed_development_updates": [
-      1
+      1,
+      4,
+      8
     ]
   }
 }
