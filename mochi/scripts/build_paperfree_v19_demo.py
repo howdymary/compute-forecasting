@@ -34,7 +34,10 @@ def metadata(row, episode, checkpoint, descriptor, label=None):
             and a.get('book_top', {}).get('instant_valid') for a in row['arrivals']),
         forward_descent_verified=any(a['label'] == 'book-forward-descent' and a['success']
             and a.get('forward_verification', {}).get('verified') for a in row['arrivals']),
-        task_outcomes={t: r['success'] for t, r in episode['results'].items()})
+        task_outcomes={t: r['success'] for t, r in episode['results'].items()},
+        action_summary=[{'domain': d['observation']['domain'],
+            'station': d['observation'].get('station', d['observation'].get('task', d['observation']['domain'])),
+            'action': d['action']} for d in row.get('model_decisions', [])])
 
 
 def main():
@@ -42,6 +45,8 @@ def main():
     p.add_argument('--engineering', action='store_true')
     p.add_argument('--source')
     p.add_argument('--workflow-run', type=int)
+    p.add_argument('--development-preview', action='store_true')
+    p.add_argument('--preview-update', type=int)
     a = p.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
     files, scenarios = {}, []
@@ -84,10 +89,19 @@ def main():
         import modal
         source = Path(a.source)
         report = json.loads((source / 'report.json').read_text())
-        assert report['study'] in ['mochi-paperfree-v19', 'mochi-paperfree-v19r1'] and report['status'] == 'completed'
-        cps = {c['update']: c for c in report['checkpoints']}
-        assert set(cps) == {0, 1, 4, 8} and all(c['development'] for c in cps.values())
-        selected = report['selected_checkpoint']['update']
+        assert report['study'] in ['mochi-paperfree-v19', 'mochi-paperfree-v19r1']
+        all_cps = {c['update']: c for c in report['checkpoints']}
+        assert set(all_cps) == {0, 1, 4, 8}
+        cps = {u: c for u, c in all_cps.items() if c['development'] is not None}
+        if a.development_preview:
+            assert report['status'] == 'running' and not report.get('held_out')
+            if (OUT / 'manifest.json').exists():
+                assert json.loads((OUT / 'manifest.json').read_text())['evaluation_status'] != 'completed'
+            selected = a.preview_update
+            assert selected in cps
+        else:
+            assert report['status'] == 'completed' and len(cps) == 4
+            selected = report['selected_checkpoint']['update']
         volumes = {}
 
         def recording(row, update, kind):
@@ -121,23 +135,32 @@ def main():
                 versions.append({'update': update, 'file': recording(row, update, 'development')})
             scenarios.append({'id': 'development-' + str(seed), 'label': 'Development scenario ' + str(seed),
                 'partition': 'development', 'parent_file': versions[0]['file'], 'versions': versions})
-        parents = json.loads((source / 'held-out-parent.json').read_text())
-        trained = {r['seed']: r for r in json.loads((source / 'held-out-selected.json').read_text())}
-        assert len(parents) == len(trained) == 4
+        parents = [] if a.development_preview else json.loads((source / 'held-out-parent.json').read_text())
+        trained = {} if a.development_preview else {r['seed']: r for r in json.loads((source / 'held-out-selected.json').read_text())}
+        if not a.development_preview:
+            assert len(parents) == len(trained) == 4
         for before in parents:
             bf = recording(before, 0, 'held-out-parent')
             af = recording(trained[before['seed']], selected, 'held-out-selected')
             scenarios.append({'id': 'held-out-' + str(before['seed']), 'label': 'Fresh test scenario ' + str(before['seed']),
                 'partition': 'held_out', 'parent_file': bf, 'versions': [{'update': selected, 'file': af}]})
-        manifest = {k: report[k] for k in ['study', 'optimizer_updates_completed', 'scope',
+        manifest = {k: report.get(k) for k in ['study', 'optimizer_updates_completed', 'scope',
             'checkpoints', 'held_out', 'paired_held_out', 'improvement_goal_met', 'source_sha']}
-        manifest.update(evaluation_status='completed', selection_finalized=True, selected_update=selected,
+        manifest.update(evaluation_status='development_preview' if a.development_preview else 'completed',
+            selection_finalized=bool(report.get('selected_checkpoint')), selected_update=selected,
+            pending_evaluation_updates=sorted(set(all_cps) - set(cps)),
             services=report['services']['eligibility'], campaign_id=report['run_id'],
             execution_workflow_run=a.workflow_run, display_note=note,
             budget_usage_or_reserved=report['budget_usage_or_reserved'], carried_baseline=report.get('carried_baseline'), data_provenance=report.get('data_provenance'))
         report = public_evidence(public_report(report), report['run_id'])
+    preferred = next((s['id'] for s in scenarios if s['partition'] == 'held_out' and files[s['parent_file']]['qualified_complete'] and files[s['versions'][0]['file']]['qualified_complete']), None)
+    preferred = preferred or next((s['id'] for s in scenarios if s['partition'] == 'held_out' and files[s['versions'][0]['file']]['qualified_complete']), None)
+    if a.development_preview:
+        preferred = next((s['id'] for s in scenarios if files[s['parent_file']]['qualified_complete']
+            and files[next(v['file'] for v in s['versions'] if v['update'] == a.preview_update)]['qualified_complete']), None)
     manifest.update(scene=scene, scenarios=scenarios, recordings=files,
-        default_scenario=next((s['id'] for s in scenarios if s['partition'] == 'held_out'), scenarios[0]['id']))
+        default_scenario=preferred or scenarios[0]['id'],
+        default_selection_rule='First qualified matched development pair; otherwise first development scenario. All cases and failures remain available.' if a.development_preview else 'First qualified fresh parent/selected pair; otherwise first qualified selected fresh attempt; otherwise first development scenario. All cases and failures remain available.')
     for name, value in [('manifest', manifest), ('report', report)]:
         raw = json.dumps(value, indent=2) + '\n'
         assert 'tinker://' not in raw, 'Private optimizer references stay backend-only'
