@@ -1,4 +1,3 @@
-import math
 import pytest
 from mochi.inkling_v21.controls import validate
 
@@ -23,3 +22,16 @@ def test_valid_proposal_is_copied_without_executing_explanation():
     copy = validate(candidate)
     copy['changes']['terminal_translation_deadband'] = False
     assert candidate['changes']['terminal_translation_deadband'] is True
+
+
+@pytest.mark.parametrize('changes', [{'station_position_tolerance_m': .0121}, {'globe_clearance_y_m': .04}])
+def test_new_fields_cannot_loosen_arrival_or_exceed_route_bounds(changes):
+    domain = 'laptop' if 'station_position_tolerance_m' in changes else 'navigation'
+    with pytest.raises(ValueError):
+        validate({'id': 'proposal', 'domain': domain, 'changes': changes})
+
+
+def test_profile_choice_is_limited_to_existing_force_limited_controllers():
+    validate({'id': 'pulse', 'domain': 'laptop', 'changes': {'profile': 'P6'}})
+    with pytest.raises(ValueError):
+        validate({'id': 'pulse', 'domain': 'laptop', 'changes': {'profile': '__import__("os")'}})

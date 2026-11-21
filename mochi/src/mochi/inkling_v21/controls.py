@@ -16,6 +16,7 @@ LIMITS = {
         'globe_clearance_x_m': (.295, .32), 'globe_clearance_y_m': (.055, .105),
         'globe_corridor_x_m': (.295, .32), 'parked_arms': bool},
     'laptop': {'station_x_m': (.300, .318), 'station_y_m': (.148, .165),
+        'profile': {'P5', 'P6'},
         'force_n': (.45, .65), 'radius_m': (.145, .15), 'contact_x_m': (.257, .263),
         'closing_speed_rad_s': (.12, .45), 'release_degrees': (42., 56.),
         'station_position_tolerance_m': (.008, .012)},
@@ -36,6 +37,9 @@ def validate(candidate):
         if bound is bool:
             if type(value) is not bool:
                 raise ValueError('Expected a boolean')
+        elif isinstance(bound, set):
+            if not isinstance(value, str) or value not in bound:
+                raise ValueError('Unsupported controller profile')
         elif (type(value) not in [int, float] or not math.isfinite(value)
                 or not bound[0] <= value <= bound[1]):
             raise ValueError('Out-of-bounds controller parameter: ' + name)
@@ -53,7 +57,7 @@ def apply(candidate=None):
     from mochi.contact_v18 import policy as contact
     from mochi.smooth_v16 import navigation, recovery
     original = (policy.config, policy.clearance_move, navigation.command,
-        contact.PRESSES, contact.CLOSING_SPEED, recovery.SmoothRecovery, policy.navigate)
+        contact.PRESSES, contact.CLOSING_SPEED, recovery.SmoothRecovery, policy.navigate, contact.execute)
     cfg = copy.deepcopy(original[0]())
     changes = c['changes']
     try:
@@ -90,13 +94,21 @@ def apply(candidate=None):
             goal[0], goal[1] = changes.get('station_x_m', goal[0]), changes.get('station_y_m', goal[1])
             mapping = {'force_n': 'force', 'radius_m': 'radius', 'contact_x_m': 'contact_x', 'release_degrees': 'release_degrees'}
             contact.PRESSES = dict(original[3])
-            contact.PRESSES['P5'] = replace(original[3]['P5'], **{mapping[k]: v for k, v in changes.items() if k in mapping})
+            selected_profile = changes.get('profile', 'P5')
+            contact.PRESSES[selected_profile] = replace(original[3][selected_profile], **{mapping[k]: v for k, v in changes.items() if k in mapping})
             contact.CLOSING_SPEED = {**original[4], 'P5': changes.get('closing_speed_rad_s', original[4]['P5'])}
+
+            def contact_action(w, domain, task, action):
+                if domain == 'laptop' and action in ['P5', 'P6'] and 'profile' in changes:
+                    action = selected_profile
+                return original[7](w, domain, task, action)
+
+            contact.execute = contact_action
 
             def precise_arrival(w, goal, **kwargs):
                 # A proposed base pose must actually be reached through walking.
                 # This is declared candidate implementation, not a looser verifier.
-                if kwargs.get('label') == 'laptop-station' and any(k in changes for k in ['station_x_m', 'station_y_m']):
+                if kwargs.get('label') == 'laptop-station' and any(k in changes for k in ['station_x_m', 'station_y_m', 'station_position_tolerance_m']):
                     kwargs['position_tolerance'] = changes.get('station_position_tolerance_m', .012)
                 token = _POSITION_TOLERANCE.set(kwargs.get('position_tolerance', .012))
                 try:
@@ -111,4 +123,4 @@ def apply(candidate=None):
         yield
     finally:
         (policy.config, policy.clearance_move, navigation.command,
-            contact.PRESSES, contact.CLOSING_SPEED, recovery.SmoothRecovery, policy.navigate) = original
+            contact.PRESSES, contact.CLOSING_SPEED, recovery.SmoothRecovery, policy.navigate, contact.execute) = original

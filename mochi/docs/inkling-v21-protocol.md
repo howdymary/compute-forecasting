@@ -27,3 +27,17 @@ Limits are eight model calls, 200,000 input/output tokens actual or reserved, tw
 Start with exact model access and one bounded proposal batch. Reject invalid schemas, unsupported claims, unsafe contacts and infeasible motions. Fix feasibility before expanding experiments. Select changes on development data; freeze them before opening fresh scenarios. A shorter failed route cannot count as an efficiency gain. Keep the existing validated demo available throughout.
 
 Official references: [release](https://thinkingmachines.ai/news/inkling-2-mini/), [model card](https://thinkingmachines.ai/model-card/inkling-2-mini/), [renderer](https://tinker-docs.thinkingmachines.ai/cookbook/inkling/tml-renderers/) and [image input](https://tinker-docs.thinkingmachines.ai/cookbook/inkling/images/).
+
+## Interpreter revision after the first measured proposals
+
+The first station proposal used the declared 4 mm tracking requirement. It timed out after 367 alignment attempts and did not attempt the laptop task. The original-target controller can only be assumed to track within its native 12 mm window. Subsequent station proposals therefore expose an explicit 8 to 12 mm controller tolerance, with measured realized position reported; the original 12 mm bound is never loosened. This does not rehabilitate the rejected attempt. Its original adapter and experiment source are retained under the first-revision hashes.
+
+The model's XY-only terminal deadband increased the matched laptop leg from 110 to 154 steps, including alignment increasing from 12 to 56. It is rejected on that case. The next proposal interface permits an independently controlled yaw deadband and a bounded change to the existing post-laptop clearance waypoint's y coordinate. Both modify commands or route targets, not physical poses, support checks, object geometry or global validity limits.
+
+The next review receives actual laptop and printer collision AABBs and recalls the earlier model proposal through past.dev. The baseline fixed vector completed the laptop on development seed 221000, then hit the laptop base during the following walking leg. Earlier cases also included a knee striking the printer tray. These are separate contact observations and should not be conflated with hand-contact or arm-recovery failures.
+
+## Stronger contact reference before final tests
+
+The fixed P5 reference failed the second development laptop case before reaching the revised clearance route. Prior measured C19r1 controller choices favored the existing pulsed P6 contact controller. The next component check therefore includes P6 as a conventional control. Final paired tests will use P6 on both sides, with H0/C/G0, W10 and R4 unchanged, so changing the laptop profile cannot be attributed to the clearance proposal. This is a fixed control vector based on recorded choices, not a new live evaluation of the Qwen selector.
+
+The proposal interface can explicitly select P5 or P6. Any such choice is an existing-controller selection, not a new locomotion network. Exact executed contact profiles remain in each episode. There are still zero optimizer updates in this pilot. Final scenarios 223000 through 223003 remain unopened until the chosen configuration is frozen.

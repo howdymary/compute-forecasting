@@ -47,6 +47,7 @@ def main():
     p.add_argument('--snapshot')
     p.add_argument('--domain', choices=['walk', 'laptop', 'recovery'], default='laptop')
     p.add_argument('--task', choices=['laptop', 'globe'], default='laptop')
+    p.add_argument('--laptop-action', choices=['P5', 'P6'], default='P5')
     a = p.parse_args()
     candidates = [validate(json.loads(Path(f).read_text())) for f in a.candidate]
     assert len(candidates) <= 3
@@ -57,7 +58,8 @@ def main():
     reserved = 180. if a.mode == 'branch' else 600.
     meta = {'id': a.id, 'created_at': now(), 'status': 'running', 'reserved_seconds': reserved,
         'arguments': vars(a), 'candidates': candidates,
-        'scope': 'Inkling-proposed numeric controller engineering. Fixed action vector H0/C/P5/G0, W10 and R4; no new trained weights or live neural selection during physics.',
+        'scope': f'Inkling-proposed numeric controller engineering. Reference action vector H0/C/{a.laptop_action}/G0, W10 and R4, with explicit candidate overrides; no new trained weights or live neural selection during physics.',
+        'experiment_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         'adapter_sha256': hashlib.sha256((Path(__file__).with_name('controls.py')).read_bytes()).hexdigest()}
     (OUT / (a.id + '.started.json')).write_text(json.dumps(meta, indent=2) + '\n')
     account(a.id, meta)
@@ -67,7 +69,7 @@ def main():
     captures = {}
 
     def choose(w, domain, task, default, available):
-        action = 'W10' if domain == 'walk' else 'R4' if domain == 'recovery' else {'alarm': 'H0', 'drawer': 'C', 'laptop': 'P5', 'globe': 'G0'}[task]
+        action = 'W10' if domain == 'walk' else 'R4' if domain == 'recovery' else {'alarm': 'H0', 'drawer': 'C', 'laptop': a.laptop_action, 'globe': 'G0'}[task]
         w.decisions.append({'t': float(w.d.time), 'observation': policy.observation(w, domain, task),
             'action': action, 'source': 'Declared fixed control vector for engineering comparison',
             'candidate_ids': [c['id'] for c in candidates]})
@@ -98,12 +100,12 @@ def main():
                 success = False
                 try:
                     # Pose proposals are tracked through actuators, never assigned.
-                    if a.domain == 'laptop' and any(c['domain'] == 'laptop' and any(k in c['changes'] for k in ['station_x_m', 'station_y_m']) for c in candidates):
+                    if a.domain == 'laptop' and any(c['domain'] == 'laptop' and any(k in c['changes'] for k in ['station_x_m', 'station_y_m', 'station_position_tolerance_m']) for c in candidates):
                         from mochi.smooth_v16.navigation import NavigationParameters
                         goal = policy.config()['routes']['laptop'][-1]
                         detail['pose_arrival'] = policy.navigate(w, goal, speed=.06, stop=True, label='laptop-station',
                             parameters=NavigationParameters(**policy.walking_profile('W10', 'laptop')['navigation']))
-                    action = 'W10' if a.domain == 'walk' else 'R4' if a.domain == 'recovery' else 'P5'
+                    action = 'W10' if a.domain == 'walk' else 'R4' if a.domain == 'recovery' else a.laptop_action
                     result = policy.execute(w, a.domain, a.task, action)
                     detail['result'] = result
                     success = all(r['success'] for r in result) if a.domain == 'walk' else result['success']
