@@ -2,6 +2,7 @@
 import gzip
 import hashlib
 import json
+import math
 from pathlib import Path
 
 from mochi.paperfree_v19.objective import paired, summary
@@ -11,7 +12,21 @@ SOURCE = ROOT / 'artifacts/inkling-v21'
 
 
 def load(name):
-    return json.loads(gzip.decompress((SOURCE / 'physics' / (name + '.json.gz')).read_bytes()))
+    row = json.loads(gzip.decompress((SOURCE / 'physics' / (name + '.json.gz')).read_bytes()))
+    for key in ['trajectory', 'control_telemetry', 'book_motion_samples', 'balance_measurements']:
+        row['episode'].pop(key, None)
+    return row
+
+
+def add_qualified_interval(cohort):
+    n, wins, z = cohort['n'], cohort['qualified_complete_successes'], 1.959963984540054
+    proportion = wins / n
+    denominator = 1 + z * z / n
+    center = (proportion + z * z / (2 * n)) / denominator
+    half = z * math.sqrt(proportion * (1 - proportion) / n + z * z / (4 * n * n)) / denominator
+    cohort['wilson_95_qualified_rate'] = [max(0., center - half), min(1., center + half)]
+    cohort['uncertainty_scope'] = 'Descriptive binomial interval for a small fixed-layout simulation cohort; not a hardware or other-layout guarantee.'
+    return cohort
 
 
 def main():
@@ -27,6 +42,7 @@ def main():
     assert len(attempts) == 24 and all(v['status'] == 'completed' for v in attempts.values())
     seconds = sum(v['wall_seconds'] for v in attempts.values())
     assert seconds <= 10800
+    initial_states = {}
     for name, meta in attempts.items():
         data = (SOURCE / 'physics' / (name + '.json.gz')).read_bytes()
         assert hashlib.sha256(data).hexdigest() == meta['artifact_sha256']
@@ -38,37 +54,54 @@ def main():
         if meta['arguments']['mode'] != 'branch':
             assert e['trajectory']['frames'][0]['t'] < .1
             assert all(b['t'] > a['t'] for a, b in zip(e['trajectory']['frames'], e['trajectory']['frames'][1:]))
+            initial_states[name] = hashlib.sha256(json.dumps(e['trajectory']['frames'][0], sort_keys=True).encode()).hexdigest()
+        del row, e, data
+    for seed in freeze['held_out_seeds']:
+        assert initial_states['fresh-parent-' + str(seed)] == initial_states['fresh-clearance-' + str(seed)]
     cfg = json.loads((ROOT / 'configs/paperfree-v19-training.json').read_text())
     cohorts = {
         'parent': [load('fresh-parent-' + str(s)) for s in freeze['held_out_seeds']],
         'selected': [load('fresh-clearance-' + str(s)) for s in freeze['held_out_seeds']],
         'p6_control': [load('fresh-p6-control-' + str(s)) for s in freeze['extra_p6_control_seeds']],
     }
-    summaries = {label: summary(rows, cfg) for label, rows in cohorts.items()}
+    summaries = {label: add_qualified_interval(summary(rows, cfg)) for label, rows in cohorts.items()}
     matched = paired(cohorts['parent'], cohorts['selected'])
-    development = {label: summary([load(prefix + str(s)) for s in [221000, 221001]], cfg)
+    development = {label: add_qualified_interval(summary([load(prefix + str(s)) for s in [221000, 221001]], cfg))
         for label, prefix in [('parent', 'baseline-prefix-'), ('selected', 'clearance-full-')]}
     budget = json.loads((SOURCE / 'budget.json').read_text())
     assert budget['model_calls'] <= 8 and budget['tokens_actual_or_reserved'] <= 200000 and budget['exa_searches'] <= 2
     assert json.loads((ROOT / 'evidence/inkling-v21/access.json').read_text())['available']
-    receipts = []
+    receipts, raw_receipts = [], []
     for p in SOURCE.glob('*.json'):
         d = json.loads(p.read_text())
-        if d.get('model') != 'thinkingmachines/Inkling-2-Mini' or not d.get('request_id'):
+        if not isinstance(d, dict) or d.get('model') != 'thinkingmachines/Inkling-2-Mini' or not d.get('request_id'):
             continue
         assert d['optimizer_updates'] == d['native_gait_updates'] == 0
         if d['status'] == 'completed':
             assert d['renderer'] == 'tml_v0' and d['input_tokens'] > 0 and d['output_tokens'] > 0
             assert d['output_tokens_sha256']
-        receipts.append({'request_id': d['request_id'], 'status': d['status'], 'sha256': hashlib.sha256(p.read_bytes()).hexdigest()})
-    assert len(receipts) == budget['model_calls']
+        raw_receipts.append((d, hashlib.sha256(p.read_bytes()).hexdigest()))
+    previous = 0
+    for receipt, fingerprint in sorted(raw_receipts, key=lambda item: item[0]['created_at']):
+        calls = receipt['budget']['model_calls']
+        assert calls in [previous, previous + 1]
+        advanced = calls == previous + 1
+        if not advanced:
+            assert receipt['status'] == 'failed' and not receipt.get('input_tokens')
+        receipts.append({'request_id': receipt['request_id'], 'status': receipt['status'],
+            'sampling_budget_advanced': advanced, 'sha256': fingerprint})
+        previous = calls
+    assert previous == budget['model_calls']
     r3 = json.loads((SOURCE / 'measured-review-r3.json').read_text())
     assert any(r['reader_role'] == 'critic' and r['source_id_verified'] and r['cross_agent_use']
         and r['record_id'] == 'mochi-ink21-20261120-r4' for r in r3['memory']['reads'])
     result = {'study': 'mochi-inkling-v21', 'model': 'thinkingmachines/Inkling-2-Mini',
         'new_optimizer_updates': 0, 'native_gait_updates': 0, 'frozen_files_verified': len(freeze['frozen_sha256']),
         'physical_attempts_accounted': len(attempts), 'simulation_seconds_accounted': seconds,
+        'initial_state_sha256': initial_states,
         'model_budget': budget, 'model_receipts': receipts, 'development': development,
+        'gateway_attempts_accounted': len(receipts),
+        'pre_sampling_rejections': [r['request_id'] for r in receipts if not r['sampling_budget_advanced']],
         'held_out': summaries, 'paired_held_out': matched,
         'step_goal_met': bool(summaries['selected']['qualified_complete_successes'] == 4 and matched['n'] >= 2
             and matched['mean_step_reduction_fraction'] >= .1 and matched['mean_time_reduction_fraction'] >= 0),

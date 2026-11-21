@@ -1,0 +1,1557 @@
+{
+  "study": "mochi-inkling-v21",
+  "attempts": {
+    "baseline-prefix-221000": {
+      "id": "baseline-prefix-221000",
+      "created_at": "2026-11-21T05:05:13.556024+00:00",
+      "status": "completed",
+      "reserved_seconds": 600.0,
+      "arguments": {
+        "id": "baseline-prefix-221000",
+        "mode": "prefix",
+        "seed": 221000,
+        "candidate": [],
+        "snapshot": null,
+        "domain": "laptop",
+        "task": "laptop"
+      },
+      "candidates": [],
+      "scope": "Inkling-proposed numeric controller engineering. Fixed action vector H0/C/P5/G0, W10 and R4; no new trained weights or live neural selection during physics.",
+      "adapter_sha256": "cf5dcebe83f1e4b0327053c6903ab5f36f4450bd5204bddc733927e25925e90d",
+      "artifact_sha256": "848efb2cb95e7d034303eef2a6809d901a3fb23164c292cb86899645d46a3277",
+      "captures": {
+        "walk:laptop": {
+          "path": "mochi/artifacts/inkling-v21/physics/baseline-prefix-221000-walk-laptop.pickle.gz",
+          "sha256": "641ef0f3e0e6c90879ee2c3cc57f34e3218b97ed04d9e1c3c99f6876489b1a40"
+        },
+        "laptop:laptop": {
+          "path": "mochi/artifacts/inkling-v21/physics/baseline-prefix-221000-laptop-laptop.pickle.gz",
+          "sha256": "ae40486c5b93709e066227029ae5c02fe03f5c3ba22235c00b286861cbb2e606"
+        },
+        "recovery:laptop": {
+          "path": "mochi/artifacts/inkling-v21/physics/baseline-prefix-221000-recovery-laptop.pickle.gz",
+          "sha256": "7f331c108a9e205a9b7e0d85e1e4b38ba868c620554dd88aca1bb255ac6d87d6"
+        },
+        "walk:globe": {
+          "path": "mochi/artifacts/inkling-v21/physics/baseline-prefix-221000-walk-globe.pickle.gz",
+          "sha256": "fcefd64b8eba5626da42e072d0d29f3e8aa542cb13557598113d951398f2d495"
+        }
+      },
+      "complete": false,
+      "qualified": false,
+      "branch_success": null,
+      "branch_valid": null,
+      "failure": "invalid_fixture_contact",
+      "steps": 339,
+      "branch_steps": null,
+      "seconds": 259.2007853093241,
+      "branch_seconds": null,
+      "tasks": {
+        "alarm": {
+          "success": true,
+          "value": -0.00044193613860144947,
+          "duration": 3.421109971773717,
+          "max_force_n": 0.17322633137561505,
+          "phase": "release"
+        },
+        "drawer": {
+          "success": true,
+          "value": -1.6681967921597e-06,
+          "duration": 3.6949622634210755,
+          "max_force_n": 0.4951794162978348,
+          "phase": "release"
+        },
+        "laptop": {
+          "success": true,
+          "value": -0.0031043083615724942,
+          "duration": 10.413744308345372,
+          "max_force_n": 0.5955330045440475,
+          "phase": "release"
+        }
+      },
+      "wall_seconds": 317.8838580418378
+    },
+    "matched-laptop-baseline-212000": {
+      "id": "matched-laptop-baseline-212000",
+      "created_at": "2026-11-21T05:06:57.030408+00:00",
+      "status": "completed",
+      "reserved_seconds": 180.0,
+      "arguments": {
+        "id": "matched-laptop-baseline-212000",
+        "mode": "branch",
+        "seed": 212000,
+        "candidate": [],
+        "snapshot": "mochi/artifacts/contact-geometry-v20/prefix-212000.pickle.gz",
+        "domain": "laptop",
+        "task": "laptop"
+      },
+      "candidates": [],
+      "scope": "Inkling-proposed numeric controller engineering. Fixed action vector H0/C/P5/G0, W10 and R4; no new trained weights or live neural selection during physics.",
+      "adapter_sha256": "cf5dcebe83f1e4b0327053c6903ab5f36f4450bd5204bddc733927e25925e90d",
+      "snapshot_sha256": "fda155fcf72ffa8b15a86ede1a533759650bcfa955620f63f4f0b14d724f1fe3",
+      "artifact_sha256": "69db556de8a22794394af1927915851527e0d0af442ce0d4475962ce74ae4239",
+      "captures": {},
+      "complete": null,
+      "qualified": null,
+      "branch_success": false,
+      "branch_valid": false,
+      "failure": null,
+      "steps": 296,
+      "branch_steps": {
+        "attempts": 0,
+        "completed": 0,
+        "unfinished": 0,
+        "by_category": {},
+        "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+      },
+      "seconds": 272.47403802418427,
+      "branch_seconds": 32.00066211590294,
+      "tasks": {
+        "alarm": {
+          "success": true,
+          "value": -0.00030547672708066136,
+          "duration": 3.4186575631918004,
+          "max_force_n": 0.12778112898384197,
+          "phase": "release"
+        },
+        "drawer": {
+          "success": true,
+          "value": -1.0982646515764573e-06,
+          "duration": 3.569071956216021,
+          "max_force_n": 0.5159689077833933,
+          "phase": "release"
+        },
+        "laptop": {
+          "success": false,
+          "value": 1.2211341384389618,
+          "duration": 32.00066211590294,
+          "max_force_n": 0.6983416229003706,
+          "phase": "push"
+        }
+      },
+      "wall_seconds": 31.242149790748954
+    },
+    "model-station-212000": {
+      "id": "model-station-212000",
+      "created_at": "2026-11-21T05:10:55.537715+00:00",
+      "status": "completed",
+      "reserved_seconds": 180.0,
+      "arguments": {
+        "id": "model-station-212000",
+        "mode": "branch",
+        "seed": 212000,
+        "candidate": [
+          "mochi/artifacts/inkling-v21/candidates/laptop-station-reach-shift.json"
+        ],
+        "snapshot": "mochi/artifacts/contact-geometry-v20/prefix-212000.pickle.gz",
+        "domain": "laptop",
+        "task": "laptop"
+      },
+      "candidates": [
+        {
+          "id": "laptop-station-reach-shift",
+          "domain": "laptop",
+          "changes": {
+            "station_x_m": 0.3,
+            "station_y_m": 0.165
+          },
+          "mechanism": "Shift the laptop station slightly toward the observed left-arm reach geometry while keeping contact_x/radius fixed; reached through existing walking actuators with 4 mm arrival tolerance and unchanged support/heading checks.",
+          "predicted_measurement": "Higher laptop contact_progress and lid-angle decrease from the same physical snapshot, with max_force_n staying below the fixed 0.8 N limit and no new non-hand contacts; if reachability does not improve, reject the station shift."
+        }
+      ],
+      "scope": "Inkling-proposed numeric controller engineering. Fixed action vector H0/C/P5/G0, W10 and R4; no new trained weights or live neural selection during physics.",
+      "adapter_sha256": "cf5dcebe83f1e4b0327053c6903ab5f36f4450bd5204bddc733927e25925e90d",
+      "snapshot_sha256": "fda155fcf72ffa8b15a86ede1a533759650bcfa955620f63f4f0b14d724f1fe3",
+      "artifact_sha256": "566657989717c9b17c12fe5dcb7f15932002f0200a17a1806bdd28459e342731",
+      "captures": {},
+      "complete": null,
+      "qualified": null,
+      "branch_success": false,
+      "branch_valid": false,
+      "failure": "directional-navigation-timeout:laptop-station",
+      "steps": 663,
+      "branch_steps": {
+        "attempts": 367,
+        "completed": 366,
+        "unfinished": 1,
+        "by_category": {
+          "alignment": 367
+        },
+        "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+      },
+      "seconds": 285.4734384473971,
+      "branch_seconds": 45.00006253911576,
+      "tasks": {
+        "alarm": {
+          "success": true,
+          "value": -0.00030547672708066136,
+          "duration": 3.4186575631918004,
+          "max_force_n": 0.12778112898384197,
+          "phase": "release"
+        },
+        "drawer": {
+          "success": true,
+          "value": -1.0982646515764573e-06,
+          "duration": 3.569071956216021,
+          "max_force_n": 0.5159689077833933,
+          "phase": "release"
+        }
+      },
+      "wall_seconds": 28.658960999920964
+    },
+    "nav-baseline-221000": {
+      "id": "nav-baseline-221000",
+      "created_at": "2026-11-21T05:11:49.160153+00:00",
+      "status": "completed",
+      "reserved_seconds": 180.0,
+      "arguments": {
+        "id": "nav-baseline-221000",
+        "mode": "branch",
+        "seed": 221000,
+        "candidate": [],
+        "snapshot": "mochi/artifacts/inkling-v21/physics/baseline-prefix-221000-walk-laptop.pickle.gz",
+        "domain": "walk",
+        "task": "laptop"
+      },
+      "candidates": [],
+      "scope": "Inkling-proposed numeric controller engineering. Fixed action vector H0/C/P5/G0, W10 and R4; no new trained weights or live neural selection during physics.",
+      "adapter_sha256": "cf5dcebe83f1e4b0327053c6903ab5f36f4450bd5204bddc733927e25925e90d",
+      "snapshot_sha256": "641ef0f3e0e6c90879ee2c3cc57f34e3218b97ed04d9e1c3c99f6876489b1a40",
+      "artifact_sha256": "abcb1656fca4a866975c6b1f4911583f87c90a2800dc6795fcc11bb5973562b9",
+      "captures": {},
+      "complete": null,
+      "qualified": null,
+      "branch_success": true,
+      "branch_valid": true,
+      "failure": null,
+      "steps": 286,
+      "branch_steps": {
+        "attempts": 110,
+        "completed": 110,
+        "unfinished": 0,
+        "by_category": {
+          "turning": 22,
+          "flat_transit": 76,
+          "alignment": 12
+        },
+        "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+      },
+      "seconds": 239.36733963783692,
+      "branch_seconds": 14.362122125231167,
+      "tasks": {
+        "alarm": {
+          "success": true,
+          "value": -0.00044193613860144947,
+          "duration": 3.421109971773717,
+          "max_force_n": 0.17322633137561505,
+          "phase": "release"
+        },
+        "drawer": {
+          "success": true,
+          "value": -1.6681967921597e-06,
+          "duration": 3.6949622634210755,
+          "max_force_n": 0.4951794162978348,
+          "phase": "release"
+        }
+      },
+      "wall_seconds": 17.118378458544612
+    },
+    "nav-deadband-221000": {
+      "id": "nav-deadband-221000",
+      "created_at": "2026-11-21T05:11:50.301453+00:00",
+      "status": "completed",
+      "reserved_seconds": 180.0,
+      "arguments": {
+        "id": "nav-deadband-221000",
+        "mode": "branch",
+        "seed": 221000,
+        "candidate": [
+          "mochi/artifacts/inkling-v21/candidates/terminal-deadband-w10.json"
+        ],
+        "snapshot": "mochi/artifacts/inkling-v21/physics/baseline-prefix-221000-walk-laptop.pickle.gz",
+        "domain": "walk",
+        "task": "laptop"
+      },
+      "candidates": [
+        {
+          "id": "terminal-deadband-w10",
+          "domain": "navigation",
+          "changes": {
+            "terminal_translation_deadband": true
+          },
+          "mechanism": "Zero XY commands only inside the existing position tolerance and 9-degree heading window, leaving yaw correction, loaded support capture and physical checks active; targets chattering/alignment corrections without relaxing capture.",
+          "predicted_measurement": "Fewer measured steps and lower alignment/correction movement on qualified walking legs, with no increase in falls, support-capture failures or contact-force violations; success must remain at least unchanged."
+        }
+      ],
+      "scope": "Inkling-proposed numeric controller engineering. Fixed action vector H0/C/P5/G0, W10 and R4; no new trained weights or live neural selection during physics.",
+      "adapter_sha256": "cf5dcebe83f1e4b0327053c6903ab5f36f4450bd5204bddc733927e25925e90d",
+      "snapshot_sha256": "641ef0f3e0e6c90879ee2c3cc57f34e3218b97ed04d9e1c3c99f6876489b1a40",
+      "artifact_sha256": "45533f4c2c8d430aa254f8225412525f05449c569d3c7af83e9841bc9b533297",
+      "captures": {},
+      "complete": null,
+      "qualified": null,
+      "branch_success": true,
+      "branch_valid": true,
+      "failure": null,
+      "steps": 330,
+      "branch_steps": {
+        "attempts": 154,
+        "completed": 154,
+        "unfinished": 0,
+        "by_category": {
+          "turning": 22,
+          "flat_transit": 76,
+          "alignment": 56
+        },
+        "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+      },
+      "seconds": 244.76345598758084,
+      "branch_seconds": 19.758238474975087,
+      "tasks": {
+        "alarm": {
+          "success": true,
+          "value": -0.00044193613860144947,
+          "duration": 3.421109971773717,
+          "max_force_n": 0.17322633137561505,
+          "phase": "release"
+        },
+        "drawer": {
+          "success": true,
+          "value": -1.6681967921597e-06,
+          "duration": 3.6949622634210755,
+          "max_force_n": 0.4951794162978348,
+          "phase": "release"
+        }
+      },
+      "wall_seconds": 21.640261333435774
+    },
+    "baseline-prefix-221001": {
+      "id": "baseline-prefix-221001",
+      "created_at": "2026-11-21T05:17:42.038072+00:00",
+      "status": "completed",
+      "reserved_seconds": 600.0,
+      "arguments": {
+        "id": "baseline-prefix-221001",
+        "mode": "prefix",
+        "seed": 221001,
+        "candidate": [],
+        "snapshot": null,
+        "domain": "laptop",
+        "task": "laptop"
+      },
+      "candidates": [],
+      "scope": "Inkling-proposed numeric controller engineering. Fixed action vector H0/C/P5/G0, W10 and R4; no new trained weights or live neural selection during physics.",
+      "adapter_sha256": "eee41c1627f8fd88628e9b89c6e2acac25a05a5c237f174cfec68ded576050a0",
+      "artifact_sha256": "942e617d3d1b436c8e8b159d095cb33b4564a07cffc82b9f5925f3044c703eb1",
+      "captures": {
+        "walk:laptop": {
+          "path": "mochi/artifacts/inkling-v21/physics/baseline-prefix-221001-walk-laptop.pickle.gz",
+          "sha256": "d68fb633bdfec567a4fdd322436cefbe8810e69813f72c34bc0c9bee7e239c16"
+        },
+        "laptop:laptop": {
+          "path": "mochi/artifacts/inkling-v21/physics/baseline-prefix-221001-laptop-laptop.pickle.gz",
+          "sha256": "3e2ae3aedd7e9970c0451bd8961c0e5df730143b677e922e78a43b3921bbbee4"
+        }
+      },
+      "complete": false,
+      "qualified": false,
+      "branch_success": null,
+      "branch_valid": null,
+      "failure": "laptop-failed:laptop",
+      "steps": 298,
+      "branch_steps": null,
+      "seconds": 272.75361260252276,
+      "branch_seconds": null,
+      "tasks": {
+        "alarm": {
+          "success": true,
+          "value": -0.0005958166435103178,
+          "duration": 3.417840093664495,
+          "max_force_n": 0.20049816271177873,
+          "phase": "release"
+        },
+        "drawer": {
+          "success": true,
+          "value": -1.9723752906582643e-06,
+          "duration": 3.67943034240227,
+          "max_force_n": 0.6256893517462893,
+          "phase": "release"
+        },
+        "laptop": {
+          "success": false,
+          "value": 1.1348925990606722,
+          "duration": 32.00066211590294,
+          "max_force_n": 0.6585982073891128,
+          "phase": "push"
+        }
+      },
+      "wall_seconds": 315.30069295782596
+    },
+    "globe-baseline-221000": {
+      "id": "globe-baseline-221000",
+      "created_at": "2026-11-21T05:18:48.197517+00:00",
+      "status": "completed",
+      "reserved_seconds": 180.0,
+      "arguments": {
+        "id": "globe-baseline-221000",
+        "mode": "branch",
+        "seed": 221000,
+        "candidate": [],
+        "snapshot": "mochi/artifacts/inkling-v21/physics/baseline-prefix-221000-walk-globe.pickle.gz",
+        "domain": "walk",
+        "task": "globe"
+      },
+      "candidates": [],
+      "scope": "Inkling-proposed numeric controller engineering. Fixed action vector H0/C/P5/G0, W10 and R4; no new trained weights or live neural selection during physics.",
+      "adapter_sha256": "eee41c1627f8fd88628e9b89c6e2acac25a05a5c237f174cfec68ded576050a0",
+      "snapshot_sha256": "fcefd64b8eba5626da42e072d0d29f3e8aa542cb13557598113d951398f2d495",
+      "artifact_sha256": "6fbe0c9ffbec30513b4ed1215c2ce02bc4060f3f2251d0782083ce0bb5d6660c",
+      "captures": {},
+      "complete": null,
+      "qualified": null,
+      "branch_success": false,
+      "branch_valid": false,
+      "failure": "invalid_fixture_contact",
+      "steps": 339,
+      "branch_steps": {
+        "attempts": 53,
+        "completed": 52,
+        "unfinished": 1,
+        "by_category": {
+          "fixture_clearance": 28,
+          "turning": 24,
+          "flat_transit": 1
+        },
+        "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+      },
+      "seconds": 259.2007853093241,
+      "branch_seconds": 7.306542635056957,
+      "tasks": {
+        "alarm": {
+          "success": true,
+          "value": -0.00044193613860144947,
+          "duration": 3.421109971773717,
+          "max_force_n": 0.17322633137561505,
+          "phase": "release"
+        },
+        "drawer": {
+          "success": true,
+          "value": -1.6681967921597e-06,
+          "duration": 3.6949622634210755,
+          "max_force_n": 0.4951794162978348,
+          "phase": "release"
+        },
+        "laptop": {
+          "success": true,
+          "value": -0.0031043083615724942,
+          "duration": 10.413744308345372,
+          "max_force_n": 0.5955330045440475,
+          "phase": "release"
+        }
+      },
+      "wall_seconds": 15.518886124715209
+    },
+    "globe-clearance-lower-221000": {
+      "id": "globe-clearance-lower-221000",
+      "created_at": "2026-11-21T05:18:49.084593+00:00",
+      "status": "completed",
+      "reserved_seconds": 180.0,
+      "arguments": {
+        "id": "globe-clearance-lower-221000",
+        "mode": "branch",
+        "seed": 221000,
+        "candidate": [
+          "mochi/artifacts/inkling-v21/candidates/globe-clearance-y-lower.json"
+        ],
+        "snapshot": "mochi/artifacts/inkling-v21/physics/baseline-prefix-221000-walk-globe.pickle.gz",
+        "domain": "walk",
+        "task": "globe"
+      },
+      "candidates": [
+        {
+          "id": "globe-clearance-y-lower",
+          "domain": "navigation",
+          "changes": {
+            "globe_clearance_y_m": 0.055
+          },
+          "mechanism": "Move the initial laptop-clearance target farther below the laptop-base-contact AABB while keeping x at the permitted maximum, reducing the chance that the right ankle/foot sweeps into the laptop base during the post-laptop departure.",
+          "predicted_measurement": "No right_ankle_roll_link/laptop-base-contact during the initial clearance/walk segment on the seed-221000-like case, with unchanged task success and no increase in falls or support-capture failures."
+        }
+      ],
+      "scope": "Inkling-proposed numeric controller engineering. Fixed action vector H0/C/P5/G0, W10 and R4; no new trained weights or live neural selection during physics.",
+      "adapter_sha256": "eee41c1627f8fd88628e9b89c6e2acac25a05a5c237f174cfec68ded576050a0",
+      "snapshot_sha256": "fcefd64b8eba5626da42e072d0d29f3e8aa542cb13557598113d951398f2d495",
+      "artifact_sha256": "9b229bd91a7577f5364e0365fc310633c4600dc4431aac4ff2aa4934f86adf53",
+      "captures": {},
+      "complete": null,
+      "qualified": null,
+      "branch_success": true,
+      "branch_valid": true,
+      "failure": null,
+      "steps": 418,
+      "branch_steps": {
+        "attempts": 132,
+        "completed": 132,
+        "unfinished": 0,
+        "by_category": {
+          "fixture_clearance": 50,
+          "turning": 28,
+          "flat_transit": 42,
+          "alignment": 12
+        },
+        "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+      },
+      "seconds": 269.8262542252416,
+      "branch_seconds": 17.932011550974465,
+      "tasks": {
+        "alarm": {
+          "success": true,
+          "value": -0.00044193613860144947,
+          "duration": 3.421109971773717,
+          "max_force_n": 0.17322633137561505,
+          "phase": "release"
+        },
+        "drawer": {
+          "success": true,
+          "value": -1.6681967921597e-06,
+          "duration": 3.6949622634210755,
+          "max_force_n": 0.4951794162978348,
+          "phase": "release"
+        },
+        "laptop": {
+          "success": true,
+          "value": -0.0031043083615724942,
+          "duration": 10.413744308345372,
+          "max_force_n": 0.5955330045440475,
+          "phase": "release"
+        }
+      },
+      "wall_seconds": 23.811732333153486
+    },
+    "earlier-align-221000": {
+      "id": "earlier-align-221000",
+      "created_at": "2026-11-21T05:18:50.435227+00:00",
+      "status": "completed",
+      "reserved_seconds": 180.0,
+      "arguments": {
+        "id": "earlier-align-221000",
+        "mode": "branch",
+        "seed": 221000,
+        "candidate": [
+          "mochi/artifacts/inkling-v21/candidates/near-distance-earlier-align.json"
+        ],
+        "snapshot": "mochi/artifacts/inkling-v21/physics/baseline-prefix-221000-walk-laptop.pickle.gz",
+        "domain": "walk",
+        "task": "laptop"
+      },
+      "candidates": [
+        {
+          "id": "near-distance-earlier-align",
+          "domain": "navigation",
+          "changes": {
+            "near_distance": 0.045
+          },
+          "mechanism": "Start task-alignment earlier on the laptop corridor so heading/lateral corrections happen before the final approach, aiming to reduce late chattering corrections without changing support capture or terminal capture guards.",
+          "predicted_measurement": "Lower alignment/correction step count on qualified laptop walking legs, with no increase in falls, support-capture failures, or non-hand contacts; if alignment steps rise or chattering increases, reject."
+        }
+      ],
+      "scope": "Inkling-proposed numeric controller engineering. Fixed action vector H0/C/P5/G0, W10 and R4; no new trained weights or live neural selection during physics.",
+      "adapter_sha256": "eee41c1627f8fd88628e9b89c6e2acac25a05a5c237f174cfec68ded576050a0",
+      "snapshot_sha256": "641ef0f3e0e6c90879ee2c3cc57f34e3218b97ed04d9e1c3c99f6876489b1a40",
+      "artifact_sha256": "41047b0799268f8a4911849fbbc9c6e9503df80f5c4ec1205cc491ba80891b88",
+      "captures": {},
+      "complete": null,
+      "qualified": null,
+      "branch_success": true,
+      "branch_valid": true,
+      "failure": null,
+      "steps": 286,
+      "branch_steps": {
+        "attempts": 110,
+        "completed": 110,
+        "unfinished": 0,
+        "by_category": {
+          "turning": 22,
+          "flat_transit": 73,
+          "alignment": 15
+        },
+        "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+      },
+      "seconds": 239.3632522902004,
+      "branch_seconds": 14.35803477759464,
+      "tasks": {
+        "alarm": {
+          "success": true,
+          "value": -0.00044193613860144947,
+          "duration": 3.421109971773717,
+          "max_force_n": 0.17322633137561505,
+          "phase": "release"
+        },
+        "drawer": {
+          "success": true,
+          "value": -1.6681967921597e-06,
+          "duration": 3.6949622634210755,
+          "max_force_n": 0.4951794162978348,
+          "phase": "release"
+        }
+      },
+      "wall_seconds": 18.986487832851708
+    },
+    "clearance-full-221000": {
+      "id": "clearance-full-221000",
+      "created_at": "2026-11-21T05:20:38.348143+00:00",
+      "status": "completed",
+      "reserved_seconds": 600.0,
+      "arguments": {
+        "id": "clearance-full-221000",
+        "mode": "full",
+        "seed": 221000,
+        "candidate": [
+          "mochi/artifacts/inkling-v21/candidates/globe-clearance-y-lower.json"
+        ],
+        "snapshot": null,
+        "domain": "laptop",
+        "task": "laptop"
+      },
+      "candidates": [
+        {
+          "id": "globe-clearance-y-lower",
+          "domain": "navigation",
+          "changes": {
+            "globe_clearance_y_m": 0.055
+          },
+          "mechanism": "Move the initial laptop-clearance target farther below the laptop-base-contact AABB while keeping x at the permitted maximum, reducing the chance that the right ankle/foot sweeps into the laptop base during the post-laptop departure.",
+          "predicted_measurement": "No right_ankle_roll_link/laptop-base-contact during the initial clearance/walk segment on the seed-221000-like case, with unchanged task success and no increase in falls or support-capture failures."
+        }
+      ],
+      "scope": "Inkling-proposed numeric controller engineering. Fixed action vector H0/C/P5/G0, W10 and R4; no new trained weights or live neural selection during physics.",
+      "adapter_sha256": "eee41c1627f8fd88628e9b89c6e2acac25a05a5c237f174cfec68ded576050a0",
+      "artifact_sha256": "b12f2304588dc5c3b251787ee27d66c7fd1f315af2f9ff6dd89e0bbd5621609b",
+      "captures": {},
+      "complete": true,
+      "qualified": true,
+      "branch_success": null,
+      "branch_valid": null,
+      "failure": null,
+      "steps": 418,
+      "branch_steps": null,
+      "seconds": 277.8153839155987,
+      "branch_seconds": null,
+      "tasks": {
+        "alarm": {
+          "success": true,
+          "value": -0.00044193613860144947,
+          "duration": 3.421109971773717,
+          "max_force_n": 0.17322633137561505,
+          "phase": "release"
+        },
+        "drawer": {
+          "success": true,
+          "value": -1.6681967921597e-06,
+          "duration": 3.6949622634210755,
+          "max_force_n": 0.4951794162978348,
+          "phase": "release"
+        },
+        "laptop": {
+          "success": true,
+          "value": -0.0031043083615724942,
+          "duration": 10.413744308345372,
+          "max_force_n": 0.5955330045440475,
+          "phase": "release"
+        },
+        "globe": {
+          "success": true,
+          "value": 0.014672321884500194,
+          "duration": 5.780327027577528,
+          "max_force_n": 0.29891430223118587,
+          "phase": "release"
+        }
+      },
+      "wall_seconds": 321.9408795842901
+    },
+    "clearance-full-221001": {
+      "id": "clearance-full-221001",
+      "created_at": "2026-11-21T05:20:39.536872+00:00",
+      "status": "completed",
+      "reserved_seconds": 600.0,
+      "arguments": {
+        "id": "clearance-full-221001",
+        "mode": "full",
+        "seed": 221001,
+        "candidate": [
+          "mochi/artifacts/inkling-v21/candidates/globe-clearance-y-lower.json"
+        ],
+        "snapshot": null,
+        "domain": "laptop",
+        "task": "laptop"
+      },
+      "candidates": [
+        {
+          "id": "globe-clearance-y-lower",
+          "domain": "navigation",
+          "changes": {
+            "globe_clearance_y_m": 0.055
+          },
+          "mechanism": "Move the initial laptop-clearance target farther below the laptop-base-contact AABB while keeping x at the permitted maximum, reducing the chance that the right ankle/foot sweeps into the laptop base during the post-laptop departure.",
+          "predicted_measurement": "No right_ankle_roll_link/laptop-base-contact during the initial clearance/walk segment on the seed-221000-like case, with unchanged task success and no increase in falls or support-capture failures."
+        }
+      ],
+      "scope": "Inkling-proposed numeric controller engineering. Fixed action vector H0/C/P5/G0, W10 and R4; no new trained weights or live neural selection during physics.",
+      "adapter_sha256": "eee41c1627f8fd88628e9b89c6e2acac25a05a5c237f174cfec68ded576050a0",
+      "artifact_sha256": "81d312c1a8a1cdb4e4ce5e9004d5140d9440b51eebefec368377f42624e8b048",
+      "captures": {},
+      "complete": false,
+      "qualified": false,
+      "branch_success": null,
+      "branch_valid": null,
+      "failure": "laptop-failed:laptop",
+      "steps": 298,
+      "branch_steps": null,
+      "seconds": 272.75361260252276,
+      "branch_seconds": null,
+      "tasks": {
+        "alarm": {
+          "success": true,
+          "value": -0.0005958166435103178,
+          "duration": 3.417840093664495,
+          "max_force_n": 0.20049816271177873,
+          "phase": "release"
+        },
+        "drawer": {
+          "success": true,
+          "value": -1.9723752906582643e-06,
+          "duration": 3.67943034240227,
+          "max_force_n": 0.6256893517462893,
+          "phase": "release"
+        },
+        "laptop": {
+          "success": false,
+          "value": 1.1348925990606722,
+          "duration": 32.00066211590294,
+          "max_force_n": 0.6585982073891128,
+          "phase": "push"
+        }
+      },
+      "wall_seconds": 314.2368551250547
+    },
+    "p6-control-221001": {
+      "id": "p6-control-221001",
+      "created_at": "2026-11-21T05:27:49.115475+00:00",
+      "status": "completed",
+      "reserved_seconds": 180.0,
+      "arguments": {
+        "id": "p6-control-221001",
+        "mode": "branch",
+        "seed": 221001,
+        "candidate": [],
+        "snapshot": "mochi/artifacts/inkling-v21/physics/baseline-prefix-221001-laptop-laptop.pickle.gz",
+        "domain": "laptop",
+        "task": "laptop",
+        "laptop_action": "P6"
+      },
+      "candidates": [],
+      "scope": "Inkling-proposed numeric controller engineering. Reference action vector H0/C/P6/G0, W10 and R4, with explicit candidate overrides; no new trained weights or live neural selection during physics.",
+      "experiment_sha256": "9242be64106b6b91a00b5f5d00a069ba37230817565c06305bbaa5bbd5510e71",
+      "adapter_sha256": "2149dc87e6bad5ff01a3a9d5f83e9916c90b0260e6d7f16d06df3999251b1ad4",
+      "snapshot_sha256": "3e2ae3aedd7e9970c0451bd8961c0e5df730143b677e922e78a43b3921bbbee4",
+      "artifact_sha256": "5f98c99ef31e60a385c9e48a8317d187374abd078013991e9d27ad2160f117f4",
+      "captures": {},
+      "complete": null,
+      "qualified": null,
+      "branch_success": false,
+      "branch_valid": false,
+      "failure": "fall",
+      "steps": 300,
+      "branch_steps": {
+        "attempts": 2,
+        "completed": 1,
+        "unfinished": 1,
+        "by_category": {
+          "flat_transit": 2
+        },
+        "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+      },
+      "seconds": 248.0725726341137,
+      "branch_seconds": 7.319622147493874,
+      "tasks": {
+        "alarm": {
+          "success": true,
+          "value": -0.0005958166435103178,
+          "duration": 3.417840093664495,
+          "max_force_n": 0.20049816271177873,
+          "phase": "release"
+        },
+        "drawer": {
+          "success": true,
+          "value": -1.9723752906582643e-06,
+          "duration": 3.67943034240227,
+          "max_force_n": 0.6256893517462893,
+          "phase": "release"
+        }
+      },
+      "wall_seconds": 16.398729832842946
+    },
+    "slower-p5-221001": {
+      "id": "slower-p5-221001",
+      "created_at": "2026-11-21T05:30:51.827893+00:00",
+      "status": "completed",
+      "reserved_seconds": 180.0,
+      "arguments": {
+        "id": "slower-p5-221001",
+        "mode": "branch",
+        "seed": 221001,
+        "candidate": [
+          "mochi/artifacts/inkling-v21/candidates/laptop-p5-slower-target.json"
+        ],
+        "snapshot": "mochi/artifacts/inkling-v21/physics/baseline-prefix-221001-laptop-laptop.pickle.gz",
+        "domain": "laptop",
+        "task": "laptop",
+        "laptop_action": "P5"
+      },
+      "candidates": [
+        {
+          "id": "laptop-p5-slower-target",
+          "domain": "laptop",
+          "changes": {
+            "closing_speed_rad_s": 0.3
+          },
+          "mechanism": "Lower the P5 desired closing speed from 0.40 to 0.30 rad/s to reduce force demand and chattering while retaining adaptive feedback and the same force/release checks.",
+          "predicted_measurement": "Measured closing speed tracks closer to 0.30 rad/s, max force and stall time do not increase versus P5, and closure/dwell improves or remains comparable; no closure or higher force/non-hand contacts rejects it."
+        }
+      ],
+      "scope": "Inkling-proposed numeric controller engineering. Reference action vector H0/C/P5/G0, W10 and R4, with explicit candidate overrides; no new trained weights or live neural selection during physics.",
+      "experiment_sha256": "9242be64106b6b91a00b5f5d00a069ba37230817565c06305bbaa5bbd5510e71",
+      "adapter_sha256": "2149dc87e6bad5ff01a3a9d5f83e9916c90b0260e6d7f16d06df3999251b1ad4",
+      "snapshot_sha256": "3e2ae3aedd7e9970c0451bd8961c0e5df730143b677e922e78a43b3921bbbee4",
+      "artifact_sha256": "f993c352bd47638bdf19b74c305629c8581d979441c2e88cf7a810b9d80a6304",
+      "captures": {},
+      "complete": null,
+      "qualified": null,
+      "branch_success": false,
+      "branch_valid": false,
+      "failure": null,
+      "steps": 298,
+      "branch_steps": {
+        "attempts": 0,
+        "completed": 0,
+        "unfinished": 0,
+        "by_category": {},
+        "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+      },
+      "seconds": 272.75361260252276,
+      "branch_seconds": 32.00066211590294,
+      "tasks": {
+        "alarm": {
+          "success": true,
+          "value": -0.0005958166435103178,
+          "duration": 3.417840093664495,
+          "max_force_n": 0.20049816271177873,
+          "phase": "release"
+        },
+        "drawer": {
+          "success": true,
+          "value": -1.9723752906582643e-06,
+          "duration": 3.67943034240227,
+          "max_force_n": 0.6256893517462893,
+          "phase": "release"
+        },
+        "laptop": {
+          "success": false,
+          "value": 1.1350271483850356,
+          "duration": 32.00066211590294,
+          "max_force_n": 0.6585982073891128,
+          "phase": "push"
+        }
+      },
+      "wall_seconds": 34.64361604116857
+    },
+    "slower-p5-212000": {
+      "id": "slower-p5-212000",
+      "created_at": "2026-11-21T05:30:52.470606+00:00",
+      "status": "completed",
+      "reserved_seconds": 180.0,
+      "arguments": {
+        "id": "slower-p5-212000",
+        "mode": "branch",
+        "seed": 212000,
+        "candidate": [
+          "mochi/artifacts/inkling-v21/candidates/laptop-p5-slower-target.json"
+        ],
+        "snapshot": "mochi/artifacts/contact-geometry-v20/prefix-212000.pickle.gz",
+        "domain": "laptop",
+        "task": "laptop",
+        "laptop_action": "P5"
+      },
+      "candidates": [
+        {
+          "id": "laptop-p5-slower-target",
+          "domain": "laptop",
+          "changes": {
+            "closing_speed_rad_s": 0.3
+          },
+          "mechanism": "Lower the P5 desired closing speed from 0.40 to 0.30 rad/s to reduce force demand and chattering while retaining adaptive feedback and the same force/release checks.",
+          "predicted_measurement": "Measured closing speed tracks closer to 0.30 rad/s, max force and stall time do not increase versus P5, and closure/dwell improves or remains comparable; no closure or higher force/non-hand contacts rejects it."
+        }
+      ],
+      "scope": "Inkling-proposed numeric controller engineering. Reference action vector H0/C/P5/G0, W10 and R4, with explicit candidate overrides; no new trained weights or live neural selection during physics.",
+      "experiment_sha256": "9242be64106b6b91a00b5f5d00a069ba37230817565c06305bbaa5bbd5510e71",
+      "adapter_sha256": "2149dc87e6bad5ff01a3a9d5f83e9916c90b0260e6d7f16d06df3999251b1ad4",
+      "snapshot_sha256": "fda155fcf72ffa8b15a86ede1a533759650bcfa955620f63f4f0b14d724f1fe3",
+      "artifact_sha256": "529cc4f44b47ce69f600c4d04c13e7f4c5bd9a33a92d5bad2568ea5ef0d4828c",
+      "captures": {},
+      "complete": null,
+      "qualified": null,
+      "branch_success": false,
+      "branch_valid": false,
+      "failure": null,
+      "steps": 296,
+      "branch_steps": {
+        "attempts": 0,
+        "completed": 0,
+        "unfinished": 0,
+        "by_category": {},
+        "definition": "Measured unload, at least 30 ms and 2 mm sole motion or 8 degree rotation, followed by loaded touchdown with 40 ms dwell. Unfinished attempts retained."
+      },
+      "seconds": 272.47403802418427,
+      "branch_seconds": 32.00066211590294,
+      "tasks": {
+        "alarm": {
+          "success": true,
+          "value": -0.00030547672708066136,
+          "duration": 3.4186575631918004,
+          "max_force_n": 0.12778112898384197,
+          "phase": "release"
+        },
+        "drawer": {
+          "success": true,
+          "value": -1.0982646515764573e-06,
+          "duration": 3.569071956216021,
+          "max_force_n": 0.5159689077833933,
+          "phase": "release"
+        },
+        "laptop": {
+          "success": false,
+          "value": 1.2211341384389618,
+          "duration": 32.00066211590294,
+          "max_force_n": 0.6983416229003706,
+          "phase": "push"
+        }
+      },
+      "wall_seconds": 30.759551832452416
+    },
+    "fresh-parent-223000": {
+      "id": "fresh-parent-223000",
+      "created_at": "2026-11-21T05:32:49.502797+00:00",
+      "status": "completed",
+      "reserved_seconds": 600.0,
+      "arguments": {
+        "id": "fresh-parent-223000",
+        "mode": "full",
+        "seed": 223000,
+        "candidate": [],
+        "snapshot": null,
+        "domain": "laptop",
+        "task": "laptop",
+        "laptop_action": "P5"
+      },
+      "candidates": [],
+      "scope": "Inkling-proposed numeric controller engineering. Reference action vector H0/C/P5/G0, W10 and R4, with explicit candidate overrides; no new trained weights or live neural selection during physics.",
+      "experiment_sha256": "9242be64106b6b91a00b5f5d00a069ba37230817565c06305bbaa5bbd5510e71",
+      "adapter_sha256": "2149dc87e6bad5ff01a3a9d5f83e9916c90b0260e6d7f16d06df3999251b1ad4",
+      "artifact_sha256": "8d716b0468814915af9cffc813a4414c26512aa38beadaa542e6c231dde97808",
+      "captures": {},
+      "complete": false,
+      "qualified": false,
+      "branch_success": null,
+      "branch_valid": null,
+      "failure": "laptop-failed:laptop",
+      "steps": 306,
+      "branch_steps": null,
+      "seconds": 273.481977951352,
+      "branch_seconds": null,
+      "tasks": {
+        "alarm": {
+          "success": true,
+          "value": -0.0004045938980207404,
+          "duration": 3.417840093664495,
+          "max_force_n": 0.14998657463438453,
+          "phase": "release"
+        },
+        "drawer": {
+          "success": true,
+          "value": -1.093534811996774e-06,
+          "duration": 3.4628009176663,
+          "max_force_n": 0.7087403160095707,
+          "phase": "release"
+        },
+        "laptop": {
+          "success": false,
+          "value": 1.0159147612530757,
+          "duration": 32.00066211590294,
+          "max_force_n": 0.5563746846175066,
+          "phase": "push"
+        }
+      },
+      "wall_seconds": 412.48879579175264
+    },
+    "fresh-clearance-223001": {
+      "id": "fresh-clearance-223001",
+      "created_at": "2026-11-21T05:32:49.502826+00:00",
+      "status": "completed",
+      "reserved_seconds": 600.0,
+      "arguments": {
+        "id": "fresh-clearance-223001",
+        "mode": "full",
+        "seed": 223001,
+        "candidate": [
+          "mochi/configs/inkling-v21-selected.json"
+        ],
+        "snapshot": null,
+        "domain": "laptop",
+        "task": "laptop",
+        "laptop_action": "P5"
+      },
+      "candidates": [
+        {
+          "id": "globe-clearance-y-lower",
+          "domain": "navigation",
+          "changes": {
+            "globe_clearance_y_m": 0.055
+          },
+          "mechanism": "Move the initial laptop-clearance target farther below the laptop-base-contact AABB while keeping x at the permitted maximum, reducing the chance that the right ankle/foot sweeps into the laptop base during the post-laptop departure.",
+          "predicted_measurement": "No right_ankle_roll_link/laptop-base-contact during the initial clearance/walk segment on the seed-221000-like case, with unchanged task success and no increase in falls or support-capture failures."
+        }
+      ],
+      "scope": "Inkling-proposed numeric controller engineering. Reference action vector H0/C/P5/G0, W10 and R4, with explicit candidate overrides; no new trained weights or live neural selection during physics.",
+      "experiment_sha256": "9242be64106b6b91a00b5f5d00a069ba37230817565c06305bbaa5bbd5510e71",
+      "adapter_sha256": "2149dc87e6bad5ff01a3a9d5f83e9916c90b0260e6d7f16d06df3999251b1ad4",
+      "artifact_sha256": "9102c95804e5ebf3a7793d4d2bfdea4ee100f1bef2e754b87f581e89b8b8cb6b",
+      "captures": {},
+      "complete": false,
+      "qualified": false,
+      "branch_success": null,
+      "branch_valid": null,
+      "failure": "laptop-failed:laptop",
+      "steps": 292,
+      "branch_steps": null,
+      "seconds": 271.8748328606693,
+      "branch_seconds": null,
+      "tasks": {
+        "alarm": {
+          "success": true,
+          "value": -0.0005703596010396809,
+          "duration": 3.404760581227606,
+          "max_force_n": 0.2177581813751973,
+          "phase": "release"
+        },
+        "drawer": {
+          "success": true,
+          "value": -2.2574322225371785e-06,
+          "duration": 3.406395520282217,
+          "max_force_n": 0.5001418914851404,
+          "phase": "release"
+        },
+        "laptop": {
+          "success": false,
+          "value": 1.2626239527063583,
+          "duration": 32.00066211590294,
+          "max_force_n": 0.7212223878341117,
+          "phase": "push"
+        }
+      },
+      "wall_seconds": 409.8261698335409
+    },
+    "fresh-clearance-223000": {
+      "id": "fresh-clearance-223000",
+      "created_at": "2026-11-21T05:32:49.502824+00:00",
+      "status": "completed",
+      "reserved_seconds": 600.0,
+      "arguments": {
+        "id": "fresh-clearance-223000",
+        "mode": "full",
+        "seed": 223000,
+        "candidate": [
+          "mochi/configs/inkling-v21-selected.json"
+        ],
+        "snapshot": null,
+        "domain": "laptop",
+        "task": "laptop",
+        "laptop_action": "P5"
+      },
+      "candidates": [
+        {
+          "id": "globe-clearance-y-lower",
+          "domain": "navigation",
+          "changes": {
+            "globe_clearance_y_m": 0.055
+          },
+          "mechanism": "Move the initial laptop-clearance target farther below the laptop-base-contact AABB while keeping x at the permitted maximum, reducing the chance that the right ankle/foot sweeps into the laptop base during the post-laptop departure.",
+          "predicted_measurement": "No right_ankle_roll_link/laptop-base-contact during the initial clearance/walk segment on the seed-221000-like case, with unchanged task success and no increase in falls or support-capture failures."
+        }
+      ],
+      "scope": "Inkling-proposed numeric controller engineering. Reference action vector H0/C/P5/G0, W10 and R4, with explicit candidate overrides; no new trained weights or live neural selection during physics.",
+      "experiment_sha256": "9242be64106b6b91a00b5f5d00a069ba37230817565c06305bbaa5bbd5510e71",
+      "adapter_sha256": "2149dc87e6bad5ff01a3a9d5f83e9916c90b0260e6d7f16d06df3999251b1ad4",
+      "artifact_sha256": "6897089c4a468c317249b764542d0bc97238a1a622c6d09cd91be4f9a0988bf1",
+      "captures": {},
+      "complete": false,
+      "qualified": false,
+      "branch_success": null,
+      "branch_valid": null,
+      "failure": "laptop-failed:laptop",
+      "steps": 306,
+      "branch_steps": null,
+      "seconds": 273.481977951352,
+      "branch_seconds": null,
+      "tasks": {
+        "alarm": {
+          "success": true,
+          "value": -0.0004045938980207404,
+          "duration": 3.417840093664495,
+          "max_force_n": 0.14998657463438453,
+          "phase": "release"
+        },
+        "drawer": {
+          "success": true,
+          "value": -1.093534811996774e-06,
+          "duration": 3.4628009176663,
+          "max_force_n": 0.7087403160095707,
+          "phase": "release"
+        },
+        "laptop": {
+          "success": false,
+          "value": 1.0159147612530757,
+          "duration": 32.00066211590294,
+          "max_force_n": 0.5563746846175066,
+          "phase": "push"
+        }
+      },
+      "wall_seconds": 413.81957712583244
+    },
+    "fresh-parent-223001": {
+      "id": "fresh-parent-223001",
+      "created_at": "2026-11-21T05:32:49.502824+00:00",
+      "status": "completed",
+      "reserved_seconds": 600.0,
+      "arguments": {
+        "id": "fresh-parent-223001",
+        "mode": "full",
+        "seed": 223001,
+        "candidate": [],
+        "snapshot": null,
+        "domain": "laptop",
+        "task": "laptop",
+        "laptop_action": "P5"
+      },
+      "candidates": [],
+      "scope": "Inkling-proposed numeric controller engineering. Reference action vector H0/C/P5/G0, W10 and R4, with explicit candidate overrides; no new trained weights or live neural selection during physics.",
+      "experiment_sha256": "9242be64106b6b91a00b5f5d00a069ba37230817565c06305bbaa5bbd5510e71",
+      "adapter_sha256": "2149dc87e6bad5ff01a3a9d5f83e9916c90b0260e6d7f16d06df3999251b1ad4",
+      "artifact_sha256": "180819c9fd31a95ba29b0e31fe0fd4fae3df56018f0640dc540d807f535f45a8",
+      "captures": {},
+      "complete": false,
+      "qualified": false,
+      "branch_success": null,
+      "branch_valid": null,
+      "failure": "laptop-failed:laptop",
+      "steps": 292,
+      "branch_steps": null,
+      "seconds": 271.8748328606693,
+      "branch_seconds": null,
+      "tasks": {
+        "alarm": {
+          "success": true,
+          "value": -0.0005703596010396809,
+          "duration": 3.404760581227606,
+          "max_force_n": 0.2177581813751973,
+          "phase": "release"
+        },
+        "drawer": {
+          "success": true,
+          "value": -2.2574322225371785e-06,
+          "duration": 3.406395520282217,
+          "max_force_n": 0.5001418914851404,
+          "phase": "release"
+        },
+        "laptop": {
+          "success": false,
+          "value": 1.2626239527063583,
+          "duration": 32.00066211590294,
+          "max_force_n": 0.7212223878341117,
+          "phase": "push"
+        }
+      },
+      "wall_seconds": 408.136266333051
+    },
+    "fresh-parent-223002": {
+      "id": "fresh-parent-223002",
+      "created_at": "2026-11-21T05:39:40.067414+00:00",
+      "status": "completed",
+      "reserved_seconds": 600.0,
+      "arguments": {
+        "id": "fresh-parent-223002",
+        "mode": "full",
+        "seed": 223002,
+        "candidate": [],
+        "snapshot": null,
+        "domain": "laptop",
+        "task": "laptop",
+        "laptop_action": "P5"
+      },
+      "candidates": [],
+      "scope": "Inkling-proposed numeric controller engineering. Reference action vector H0/C/P5/G0, W10 and R4, with explicit candidate overrides; no new trained weights or live neural selection during physics.",
+      "experiment_sha256": "9242be64106b6b91a00b5f5d00a069ba37230817565c06305bbaa5bbd5510e71",
+      "adapter_sha256": "2149dc87e6bad5ff01a3a9d5f83e9916c90b0260e6d7f16d06df3999251b1ad4",
+      "artifact_sha256": "c448ffa74ebbdaf37b16a678fa7c6d8993f989e4d69b7594c0e97206a25a69ec",
+      "captures": {},
+      "complete": false,
+      "qualified": false,
+      "branch_success": null,
+      "branch_valid": null,
+      "failure": "invalid_fixture_contact",
+      "steps": 353,
+      "branch_steps": null,
+      "seconds": 259.85721333975044,
+      "branch_seconds": null,
+      "tasks": {
+        "alarm": {
+          "success": true,
+          "value": -0.0004164696547017597,
+          "duration": 3.4186575631918004,
+          "max_force_n": 0.15712479758665765,
+          "phase": "release"
+        },
+        "drawer": {
+          "success": true,
+          "value": -8.296265359790928e-07,
+          "duration": 3.364704574389634,
+          "max_force_n": 0.7741967946665044,
+          "phase": "release"
+        },
+        "laptop": {
+          "success": true,
+          "value": -0.003038355650696545,
+          "duration": 9.712355453917212,
+          "max_force_n": 0.6849882396261904,
+          "phase": "release"
+        }
+      },
+      "wall_seconds": 312.7725432096049
+    },
+    "fresh-clearance-223002": {
+      "id": "fresh-clearance-223002",
+      "created_at": "2026-11-21T05:39:41.454759+00:00",
+      "status": "completed",
+      "reserved_seconds": 600.0,
+      "arguments": {
+        "id": "fresh-clearance-223002",
+        "mode": "full",
+        "seed": 223002,
+        "candidate": [
+          "mochi/configs/inkling-v21-selected.json"
+        ],
+        "snapshot": null,
+        "domain": "laptop",
+        "task": "laptop",
+        "laptop_action": "P5"
+      },
+      "candidates": [
+        {
+          "id": "globe-clearance-y-lower",
+          "domain": "navigation",
+          "changes": {
+            "globe_clearance_y_m": 0.055
+          },
+          "mechanism": "Move the initial laptop-clearance target farther below the laptop-base-contact AABB while keeping x at the permitted maximum, reducing the chance that the right ankle/foot sweeps into the laptop base during the post-laptop departure.",
+          "predicted_measurement": "No right_ankle_roll_link/laptop-base-contact during the initial clearance/walk segment on the seed-221000-like case, with unchanged task success and no increase in falls or support-capture failures."
+        }
+      ],
+      "scope": "Inkling-proposed numeric controller engineering. Reference action vector H0/C/P5/G0, W10 and R4, with explicit candidate overrides; no new trained weights or live neural selection during physics.",
+      "experiment_sha256": "9242be64106b6b91a00b5f5d00a069ba37230817565c06305bbaa5bbd5510e71",
+      "adapter_sha256": "2149dc87e6bad5ff01a3a9d5f83e9916c90b0260e6d7f16d06df3999251b1ad4",
+      "artifact_sha256": "c25cf8e86d128c02fd7c514f7e386d13dc24b90093e100ec1b9253c850bb0a1e",
+      "captures": {},
+      "complete": true,
+      "qualified": true,
+      "branch_success": null,
+      "branch_valid": null,
+      "failure": null,
+      "steps": 444,
+      "branch_steps": null,
+      "seconds": 279.9309950522655,
+      "branch_seconds": null,
+      "tasks": {
+        "alarm": {
+          "success": true,
+          "value": -0.0004164696547017597,
+          "duration": 3.4186575631918004,
+          "max_force_n": 0.15712479758665765,
+          "phase": "release"
+        },
+        "drawer": {
+          "success": true,
+          "value": -8.296265359790928e-07,
+          "duration": 3.364704574389634,
+          "max_force_n": 0.7741967946665044,
+          "phase": "release"
+        },
+        "laptop": {
+          "success": true,
+          "value": -0.003038355650696545,
+          "duration": 9.712355453917212,
+          "max_force_n": 0.6849882396261904,
+          "phase": "release"
+        },
+        "globe": {
+          "success": true,
+          "value": 0.014625943659311129,
+          "duration": 6.0787034050440525,
+          "max_force_n": 0.28031934330003205,
+          "phase": "release"
+        }
+      },
+      "wall_seconds": 335.21029462479055
+    },
+    "fresh-parent-223003": {
+      "id": "fresh-parent-223003",
+      "created_at": "2026-11-21T05:39:44.118886+00:00",
+      "status": "completed",
+      "reserved_seconds": 600.0,
+      "arguments": {
+        "id": "fresh-parent-223003",
+        "mode": "full",
+        "seed": 223003,
+        "candidate": [],
+        "snapshot": null,
+        "domain": "laptop",
+        "task": "laptop",
+        "laptop_action": "P5"
+      },
+      "candidates": [],
+      "scope": "Inkling-proposed numeric controller engineering. Reference action vector H0/C/P5/G0, W10 and R4, with explicit candidate overrides; no new trained weights or live neural selection during physics.",
+      "experiment_sha256": "9242be64106b6b91a00b5f5d00a069ba37230817565c06305bbaa5bbd5510e71",
+      "adapter_sha256": "2149dc87e6bad5ff01a3a9d5f83e9916c90b0260e6d7f16d06df3999251b1ad4",
+      "artifact_sha256": "1c5f3d3c224ddcfb6eb988878ed31cc540cf196baf38a27665ba649d97c7db4a",
+      "captures": {},
+      "complete": false,
+      "qualified": false,
+      "branch_success": null,
+      "branch_valid": null,
+      "failure": "invalid_fixture_contact",
+      "steps": 351,
+      "branch_steps": null,
+      "seconds": 258.978433597897,
+      "branch_seconds": null,
+      "tasks": {
+        "alarm": {
+          "success": true,
+          "value": -0.0005905807368455941,
+          "duration": 3.4162051546098837,
+          "max_force_n": 0.23744323886996715,
+          "phase": "release"
+        },
+        "drawer": {
+          "success": true,
+          "value": -1.8279428597248368e-06,
+          "duration": 3.325466037078968,
+          "max_force_n": 0.5103807545009128,
+          "phase": "release"
+        },
+        "laptop": {
+          "success": true,
+          "value": -0.003006947362816259,
+          "duration": 8.891616048502442,
+          "max_force_n": 0.5798534586055399,
+          "phase": "release"
+        }
+      },
+      "wall_seconds": 309.3267364166677
+    },
+    "fresh-clearance-223003": {
+      "id": "fresh-clearance-223003",
+      "created_at": "2026-11-21T05:39:45.371802+00:00",
+      "status": "completed",
+      "reserved_seconds": 600.0,
+      "arguments": {
+        "id": "fresh-clearance-223003",
+        "mode": "full",
+        "seed": 223003,
+        "candidate": [
+          "mochi/configs/inkling-v21-selected.json"
+        ],
+        "snapshot": null,
+        "domain": "laptop",
+        "task": "laptop",
+        "laptop_action": "P5"
+      },
+      "candidates": [
+        {
+          "id": "globe-clearance-y-lower",
+          "domain": "navigation",
+          "changes": {
+            "globe_clearance_y_m": 0.055
+          },
+          "mechanism": "Move the initial laptop-clearance target farther below the laptop-base-contact AABB while keeping x at the permitted maximum, reducing the chance that the right ankle/foot sweeps into the laptop base during the post-laptop departure.",
+          "predicted_measurement": "No right_ankle_roll_link/laptop-base-contact during the initial clearance/walk segment on the seed-221000-like case, with unchanged task success and no increase in falls or support-capture failures."
+        }
+      ],
+      "scope": "Inkling-proposed numeric controller engineering. Reference action vector H0/C/P5/G0, W10 and R4, with explicit candidate overrides; no new trained weights or live neural selection during physics.",
+      "experiment_sha256": "9242be64106b6b91a00b5f5d00a069ba37230817565c06305bbaa5bbd5510e71",
+      "adapter_sha256": "2149dc87e6bad5ff01a3a9d5f83e9916c90b0260e6d7f16d06df3999251b1ad4",
+      "artifact_sha256": "41a0031a647d64685ae473da34a0f682183c54b3a48e6c64fb14f22418a2d3e9",
+      "captures": {},
+      "complete": true,
+      "qualified": true,
+      "branch_success": null,
+      "branch_valid": null,
+      "failure": null,
+      "steps": 412,
+      "branch_steps": null,
+      "seconds": 275.1438935003642,
+      "branch_seconds": null,
+      "tasks": {
+        "alarm": {
+          "success": true,
+          "value": -0.0005905807368455941,
+          "duration": 3.4162051546098837,
+          "max_force_n": 0.23744323886996715,
+          "phase": "release"
+        },
+        "drawer": {
+          "success": true,
+          "value": -1.8279428597248368e-06,
+          "duration": 3.325466037078968,
+          "max_force_n": 0.5103807545009128,
+          "phase": "release"
+        },
+        "laptop": {
+          "success": true,
+          "value": -0.003006947362816259,
+          "duration": 8.891616048502442,
+          "max_force_n": 0.5798534586055399,
+          "phase": "release"
+        },
+        "globe": {
+          "success": true,
+          "value": 0.010067157486208237,
+          "duration": 5.626642756444085,
+          "max_force_n": 0.3016779868252554,
+          "phase": "release"
+        }
+      },
+      "wall_seconds": 327.63578325044364
+    },
+    "fresh-p6-control-223000": {
+      "id": "fresh-p6-control-223000",
+      "created_at": "2026-11-21T05:44:54.946141+00:00",
+      "status": "completed",
+      "reserved_seconds": 600.0,
+      "arguments": {
+        "id": "fresh-p6-control-223000",
+        "mode": "full",
+        "seed": 223000,
+        "candidate": [],
+        "snapshot": null,
+        "domain": "laptop",
+        "task": "laptop",
+        "laptop_action": "P6"
+      },
+      "candidates": [],
+      "scope": "Inkling-proposed numeric controller engineering. Reference action vector H0/C/P6/G0, W10 and R4, with explicit candidate overrides; no new trained weights or live neural selection during physics.",
+      "experiment_sha256": "9242be64106b6b91a00b5f5d00a069ba37230817565c06305bbaa5bbd5510e71",
+      "adapter_sha256": "2149dc87e6bad5ff01a3a9d5f83e9916c90b0260e6d7f16d06df3999251b1ad4",
+      "artifact_sha256": "c413e2cffec3814ea501e74e106ef577b9e8d1ff66a3e37fc9aed9292c4875d7",
+      "captures": {},
+      "complete": true,
+      "qualified": true,
+      "branch_success": null,
+      "branch_valid": null,
+      "failure": null,
+      "steps": 428,
+      "branch_steps": null,
+      "seconds": 279.3922826337711,
+      "branch_seconds": null,
+      "tasks": {
+        "alarm": {
+          "success": true,
+          "value": -0.0004045938980207404,
+          "duration": 3.417840093664495,
+          "max_force_n": 0.14998657463438453,
+          "phase": "release"
+        },
+        "drawer": {
+          "success": true,
+          "value": -1.093534811996774e-06,
+          "duration": 3.4628009176663,
+          "max_force_n": 0.7087403160095707,
+          "phase": "release"
+        },
+        "laptop": {
+          "success": true,
+          "value": -0.0031875663694647116,
+          "duration": 11.830418999165886,
+          "max_force_n": 0.6381663299508251,
+          "phase": "release"
+        },
+        "globe": {
+          "success": true,
+          "value": 0.006584238404532634,
+          "duration": 5.624190347862168,
+          "max_force_n": 0.2579032065716232,
+          "phase": "release"
+        }
+      },
+      "wall_seconds": 295.5929511655122
+    },
+    "fresh-p6-control-223001": {
+      "id": "fresh-p6-control-223001",
+      "created_at": "2026-11-21T05:44:55.260868+00:00",
+      "status": "completed",
+      "reserved_seconds": 600.0,
+      "arguments": {
+        "id": "fresh-p6-control-223001",
+        "mode": "full",
+        "seed": 223001,
+        "candidate": [],
+        "snapshot": null,
+        "domain": "laptop",
+        "task": "laptop",
+        "laptop_action": "P6"
+      },
+      "candidates": [],
+      "scope": "Inkling-proposed numeric controller engineering. Reference action vector H0/C/P6/G0, W10 and R4, with explicit candidate overrides; no new trained weights or live neural selection during physics.",
+      "experiment_sha256": "9242be64106b6b91a00b5f5d00a069ba37230817565c06305bbaa5bbd5510e71",
+      "adapter_sha256": "2149dc87e6bad5ff01a3a9d5f83e9916c90b0260e6d7f16d06df3999251b1ad4",
+      "artifact_sha256": "3b8924abf421bb0406f68b8dc57667b028557366a2b7e7020638bbf43a44c5ee",
+      "captures": {},
+      "complete": false,
+      "qualified": false,
+      "branch_success": null,
+      "branch_valid": null,
+      "failure": "fall",
+      "steps": 295,
+      "branch_steps": null,
+      "seconds": 248.01044495003848,
+      "branch_seconds": null,
+      "tasks": {
+        "alarm": {
+          "success": true,
+          "value": -0.0005703596010396809,
+          "duration": 3.404760581227606,
+          "max_force_n": 0.2177581813751973,
+          "phase": "release"
+        },
+        "drawer": {
+          "success": true,
+          "value": -2.2574322225371785e-06,
+          "duration": 3.406395520282217,
+          "max_force_n": 0.5001418914851404,
+          "phase": "release"
+        }
+      },
+      "wall_seconds": 269.42966299969703
+    }
+  },
+  "simulation_seconds_actual_or_reserved": 5002.379821039736,
+  "path_scope": "Local artifact paths are normalized to repository-relative paths; raw artifact hashes are unchanged."
+}

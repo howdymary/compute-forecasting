@@ -1,4 +1,5 @@
 """Export complete from-reset controller experiments, never restored branches."""
+import argparse
 import gzip
 import hashlib
 import json
@@ -12,8 +13,37 @@ SOURCE = ROOT / 'artifacts/inkling-v21'
 OUT = ROOT / 'web/desk/inkling-v21'
 
 
+def public_reads(reads):
+    """Retain verified Mochi provenance without publishing other projects' IDs."""
+    result = []
+    for read in reads:
+        item = dict(read)
+        item['attempts'] = []
+        for attempt in read.get('attempts', []):
+            ids = attempt.get('returned_source_ids', [])
+            own = [ident for ident in ids if ident.startswith('mochi-ink21-20261120-')]
+            item['attempts'].append({**attempt, 'returned_source_ids': own,
+                'other_authorized_source_ids_omitted': len(ids) - len(own)})
+        result.append(item)
+    return result
+
+
+def repository_paths(value):
+    if isinstance(value, dict):
+        return {key: repository_paths(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [repository_paths(item) for item in value]
+    if isinstance(value, str):
+        return value.replace(str(ROOT.parent) + '/', '')
+    return value
+
+
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--reuse-clips', action='store_true', help='Reuse byte-verified clips with unchanged raw artifact and adapter hashes')
+    options = parser.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
+    previous = json.loads((OUT / 'manifest.json').read_text())['recordings'] if options.reuse_clips and (OUT / 'manifest.json').exists() else {}
     ledger = json.loads((SOURCE / 'physics/ledger.json').read_text())
     files, scenarios, outcomes = {}, [], []
     pairs = [(f'development-{s}', s, f'baseline-prefix-{s}', f'clearance-full-{s}', 'development') for s in [221000, 221001]]
@@ -25,6 +55,15 @@ def main():
         for side, name in [('parent', before_name), ('selected', after_name)]:
             meta = ledger['attempts'][name]
             assert meta['arguments']['mode'] in ['prefix', 'full']
+            file = name + '.json.gz'
+            cached = previous.get(file)
+            if cached and cached.get('source_artifact_sha256') == meta['artifact_sha256'] and cached.get('adapter_sha256') == meta['adapter_sha256']:
+                assert hashlib.sha256((OUT / file).read_bytes()).hexdigest() == cached['sha256']
+                files[file] = cached
+                versions.append({'update': 0, 'file': file})
+                outcomes.append({'scenario': ident, 'partition': partition, 'side': side, 'complete': meta['complete'],
+                    'qualified': meta['qualified'], 'steps': meta['steps'], 'seconds': meta['seconds'], 'failure': meta['failure']})
+                continue
             packed = (SOURCE / 'physics' / (name + '.json.gz')).read_bytes()
             assert hashlib.sha256(packed).hexdigest() == meta['artifact_sha256']
             row = json.loads(gzip.decompress(packed))
@@ -37,7 +76,6 @@ def main():
             clip['model_decisions'] = row['model_decisions']
             raw = json.dumps(rounded(clip), separators=(',', ':')).encode()
             compressed = gzip.compress(raw, compresslevel=6, mtime=0)
-            file = name + '.json.gz'
             (OUT / file).write_bytes(compressed)
             laptop = meta['arguments'].get('laptop_action', 'P5')
             fingerprint = hashlib.sha256(json.dumps({'laptop': laptop, 'candidates': meta['candidates']}, sort_keys=True).encode()).hexdigest()
@@ -54,15 +92,16 @@ def main():
             'partition': partition, 'parent_file': versions[0]['file'], 'versions': versions})
     assert scenarios
     freeze = json.loads((SOURCE / 'selection-freeze.json').read_text())
-    model_records = []
+    model_records, memory_reports = [], []
     for path in sorted(SOURCE.glob('*.json')):
         d = json.loads(path.read_text())
-        if d.get('model') != 'thinkingmachines/Inkling-2-Mini' or not d.get('request_id'):
+        if not isinstance(d, dict) or d.get('model') != 'thinkingmachines/Inkling-2-Mini' or not d.get('request_id'):
             continue
         public = {k: v for k, v in d.items() if k != 'memory'}
         if d.get('memory'):
             m = d['memory']
-            public['memory_provenance'] = {'actors': m['actors'], 'audiences': m['audiences'], 'reads': m['reads'],
+            memory_reports.append((d['budget']['model_calls'], m))
+            public['memory_provenance'] = {'actors': m['actors'], 'audiences': m['audiences'], 'reads': public_reads(m['reads']),
                 'records': [{k: v for k, v in x.items() if k != 'payload'} for x in m['records']],
                 'source_urls': sorted({s['url'] for batch in m['sources'] for s in batch['sources']})}
         model_records.append(public)
@@ -84,7 +123,7 @@ def main():
         'selected_update': 0, 'selection_finalized': True, 'checkpoints': [], 'held_out': None,
         'source_sha': None, 'controller_source_sha256': hashlib.sha256(json.dumps(freeze['frozen_sha256'], sort_keys=True).encode()).hexdigest(),
         'improvement_goal_met': False,
-        'engineering_note': f'Inkling 2 Mini proposed a farther post-laptop clearance point after reviewing measured failures. {len(model_records)} retained model-call receipts. These are controller-engineering comparisons with zero new weight updates. Development results and fresh tests are kept separate.',
+        'engineering_note': f'Inkling 2 Mini proposed a farther post-laptop clearance point after reviewing measured failures. {len(model_records)} retained research-call receipts; {budget["model_calls"]} model sampling attempts. These are controller-engineering comparisons with zero new weight updates. Development results and fresh tests are kept separate.',
         'services': {}, 'display_note': 'Uninterrupted MuJoCo simulation replay. Fixed native gait and physical validity checks. This compares control configurations, not newly trained neural checkpoints.',
         'scene': json.loads((ROOT / 'configs/richdesk-v19-paperfree.json').read_text()), 'recordings': files,
         'scenarios': scenarios, 'default_scenario': default}
@@ -96,6 +135,27 @@ def main():
         text = json.dumps(data, indent=2) + '\n'
         assert 'tinker://' not in text
         (OUT / (name + '.json')).write_text(text)
+    evidence = ROOT / 'evidence/inkling-v21'
+    evidence.mkdir(parents=True, exist_ok=True)
+    latest = max(memory_reports, key=lambda item: item[0])[1]
+    services = {'study': report['study'], 'model': report['model'], 'scope': report['scope'],
+        'budget': budget, 'optimizer_updates': 0, 'native_gait_updates': 0,
+        'gateway_attempts': len(model_records), 'model_sampling_attempts': budget['model_calls'],
+        'pre_sampling_rejections': assessment.get('pre_sampling_rejections', []) if assessment else [],
+        'calls': [{k: v for k, v in record.items() if k != 'memory_provenance'} for record in model_records],
+        'memory': {'actors': latest['actors'], 'audiences': latest['audiences'],
+            'writes': len(latest['records']), 'logical_reads': len(latest['reads']),
+            'verified_cross_role_reads': sum(bool(r['source_id_verified'] and r['cross_agent_use']) for r in latest['reads']),
+            'writers': sorted({r['role'] for r in latest['records']}),
+            'readers': sorted({r['reader_role'] for r in latest['reads']}),
+            'api_calls_logged': len(latest['calls']), 'pending_ingestions': latest['pending_ingestions'],
+            'new_private_canary_tested': False, 'reads': public_reads(latest['reads'])},
+        'source_urls': sorted({s['url'] for batch in latest['sources'] for s in batch['sources']}),
+        'caveat': 'Real API activity, not a billed-credit total. No memory/search ablation. Physics ran locally; Modal hosted the authenticated research gateway.'}
+    (evidence / 'service-receipts.json').write_text(json.dumps(services, indent=2) + '\n')
+    (evidence / 'experiments.json').write_text(json.dumps({'study': report['study'],
+        'attempts': repository_paths(ledger['attempts']), 'simulation_seconds_actual_or_reserved': report['physical_seconds_actual_or_reserved'],
+        'path_scope': 'Local artifact paths are normalized to repository-relative paths; raw artifact hashes are unchanged.'}, indent=2) + '\n')
     print(json.dumps({'recordings': len(files), 'scenarios': len(scenarios), 'default': default}))
 
 

@@ -1,0 +1,259 @@
+{
+  "study": "mochi-inkling-v21",
+  "model": "thinkingmachines/Inkling-2-Mini",
+  "new_optimizer_updates": 0,
+  "native_gait_updates": 0,
+  "frozen_files_verified": 239,
+  "physical_attempts_accounted": 24,
+  "simulation_seconds_accounted": 5002.379821039736,
+  "initial_state_sha256": {
+    "baseline-prefix-221000": "2f62576f564516401749e1a38f45620abdc988fdd17ce7f4b31f5e9daba628be",
+    "baseline-prefix-221001": "5569b25208d8fa9a867855b2f744d2ef15afae700a5bd4952d53e5e1842a40a6",
+    "clearance-full-221000": "2f62576f564516401749e1a38f45620abdc988fdd17ce7f4b31f5e9daba628be",
+    "clearance-full-221001": "5569b25208d8fa9a867855b2f744d2ef15afae700a5bd4952d53e5e1842a40a6",
+    "fresh-parent-223000": "d053bbf0b6d99f6e4470e95b58d6dbe2ae08176e14eb31766c584efa7612893e",
+    "fresh-clearance-223001": "f86fcf60ad0b5c3e18d72a4e612f3269ceefc9f1ee0c9eabe8fe62f1729db4ef",
+    "fresh-clearance-223000": "d053bbf0b6d99f6e4470e95b58d6dbe2ae08176e14eb31766c584efa7612893e",
+    "fresh-parent-223001": "f86fcf60ad0b5c3e18d72a4e612f3269ceefc9f1ee0c9eabe8fe62f1729db4ef",
+    "fresh-parent-223002": "53126844e47f496490cd1d5cad2d4187f8b0da11c765d073a6c74dc217484d3a",
+    "fresh-clearance-223002": "53126844e47f496490cd1d5cad2d4187f8b0da11c765d073a6c74dc217484d3a",
+    "fresh-parent-223003": "5695bb0f315f24d3de7a59d66d49f280da8625e1a3f70107866415250359ac93",
+    "fresh-clearance-223003": "5695bb0f315f24d3de7a59d66d49f280da8625e1a3f70107866415250359ac93",
+    "fresh-p6-control-223000": "d053bbf0b6d99f6e4470e95b58d6dbe2ae08176e14eb31766c584efa7612893e",
+    "fresh-p6-control-223001": "f86fcf60ad0b5c3e18d72a4e612f3269ceefc9f1ee0c9eabe8fe62f1729db4ef"
+  },
+  "model_budget": {
+    "model_calls": 5,
+    "tokens_actual_or_reserved": 87228,
+    "exa_searches": 2
+  },
+  "model_receipts": [
+    {
+      "request_id": "initial-controller-proposals",
+      "status": "failed",
+      "sampling_budget_advanced": true,
+      "sha256": "940606cb9175271866306c20eefc94e962cbe6ee955dde1bd31d09d012050be5"
+    },
+    {
+      "request_id": "controller-proposals-r2",
+      "status": "completed",
+      "sampling_budget_advanced": true,
+      "sha256": "85740a6e8546fbb4c2638d056ad3b32a9b91f2960e0079617e87dfe431aeda08"
+    },
+    {
+      "request_id": "measured-review-r3",
+      "status": "completed",
+      "sampling_budget_advanced": true,
+      "sha256": "ffee9f4f441c8d868d99071f0e6bee6ce9b829e772cedd1269eb8601a7e24e66"
+    },
+    {
+      "request_id": "laptop-refinement-r4",
+      "status": "completed",
+      "sampling_budget_advanced": true,
+      "sha256": "c247c97b8d4e210cf053328de80fe35a157a585100bf35d00736cf6697f2b3a8"
+    },
+    {
+      "request_id": "frozen-final-review-r5",
+      "status": "failed",
+      "sampling_budget_advanced": false,
+      "sha256": "588991bd7da67676c8b1119b101e6d8864f7b6f2ab991f77de397128c768cf0e"
+    },
+    {
+      "request_id": "compact-final-review-r6",
+      "status": "completed",
+      "sampling_budget_advanced": true,
+      "sha256": "671d8589ee2730960f549db92407be2139a5a49771f9ca4f3c725ce8e98fb205"
+    }
+  ],
+  "development": {
+    "parent": {
+      "n": 2,
+      "complete_successes": 0,
+      "smooth_complete_successes": 0,
+      "wilson_95_complete_rate": [
+        0,
+        0.6576280471103807
+      ],
+      "task_successes": {
+        "alarm": 2,
+        "drawer": 2,
+        "laptop": 1,
+        "globe": 0
+      },
+      "falls": 0,
+      "invalid_contacts": 1,
+      "mean_duration_s": 265.9771989559234,
+      "mean_roll_rms_deg": 0.3877939062347441,
+      "mean_contact_travel_m": 0.4548603391291836,
+      "recovery_successes": 5,
+      "successful_recovery_mean_joint_travel_rad": 3.776307600791859,
+      "qualified_complete_successes": 0,
+      "successful_mean_steps": null,
+      "successful_mean_seconds": null,
+      "successful_mean_forward_facing_fraction": null,
+      "successful_mean_recovery_arm_joint_travel_rad": null,
+      "successful_mean_intertask_arm_joint_travel_rad": null,
+      "mean_valid_step_reward": null,
+      "wilson_95_qualified_rate": [
+        0.0,
+        0.6576197724933469
+      ],
+      "uncertainty_scope": "Descriptive binomial interval for a small fixed-layout simulation cohort; not a hardware or other-layout guarantee."
+    },
+    "selected": {
+      "n": 2,
+      "complete_successes": 1,
+      "smooth_complete_successes": 1,
+      "wilson_95_complete_rate": [
+        0.09452865480086614,
+        0.9054713451991339
+      ],
+      "task_successes": {
+        "alarm": 2,
+        "drawer": 2,
+        "laptop": 1,
+        "globe": 1
+      },
+      "falls": 0,
+      "invalid_contacts": 0,
+      "mean_duration_s": 275.28449825906074,
+      "mean_roll_rms_deg": 0.39435592933346464,
+      "mean_contact_travel_m": 0.5057549089214144,
+      "recovery_successes": 6,
+      "successful_recovery_mean_joint_travel_rad": 3.7329637490134164,
+      "qualified_complete_successes": 1,
+      "successful_mean_steps": 418.0,
+      "successful_mean_seconds": 277.8153839155987,
+      "successful_mean_forward_facing_fraction": 0.9033160756493755,
+      "successful_mean_recovery_arm_joint_travel_rad": 3.9830528194784947,
+      "successful_mean_intertask_arm_joint_travel_rad": 128.45121960086138,
+      "mean_valid_step_reward": 581.9997745313672,
+      "wilson_95_qualified_rate": [
+        0.09453120573423074,
+        0.9054687942657693
+      ],
+      "uncertainty_scope": "Descriptive binomial interval for a small fixed-layout simulation cohort; not a hardware or other-layout guarantee."
+    }
+  },
+  "gateway_attempts_accounted": 6,
+  "pre_sampling_rejections": [
+    "frozen-final-review-r5"
+  ],
+  "held_out": {
+    "parent": {
+      "n": 4,
+      "complete_successes": 0,
+      "smooth_complete_successes": 0,
+      "wilson_95_complete_rate": [
+        0,
+        0.48990002040399916
+      ],
+      "task_successes": {
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 2,
+        "globe": 0
+      },
+      "falls": 0,
+      "invalid_contacts": 2,
+      "mean_duration_s": 266.0481144374172,
+      "mean_roll_rms_deg": 0.39031134450465643,
+      "mean_contact_travel_m": 0.43679475090044606,
+      "recovery_successes": 10,
+      "successful_recovery_mean_joint_travel_rad": 3.782607216564004,
+      "qualified_complete_successes": 0,
+      "successful_mean_steps": null,
+      "successful_mean_seconds": null,
+      "successful_mean_forward_facing_fraction": null,
+      "successful_mean_recovery_arm_joint_travel_rad": null,
+      "successful_mean_intertask_arm_joint_travel_rad": null,
+      "mean_valid_step_reward": null,
+      "wilson_95_qualified_rate": [
+        0.0,
+        0.4898908364545973
+      ],
+      "uncertainty_scope": "Descriptive binomial interval for a small fixed-layout simulation cohort; not a hardware or other-layout guarantee."
+    },
+    "selected": {
+      "n": 4,
+      "complete_successes": 2,
+      "smooth_complete_successes": 2,
+      "wilson_95_complete_rate": [
+        0.15003570882017148,
+        0.8499642911798285
+      ],
+      "task_successes": {
+        "alarm": 4,
+        "drawer": 4,
+        "laptop": 2,
+        "globe": 2
+      },
+      "falls": 0,
+      "invalid_contacts": 0,
+      "mean_duration_s": 275.10792484116274,
+      "mean_roll_rms_deg": 0.3971418357373994,
+      "mean_contact_travel_m": 0.46842499130340715,
+      "recovery_successes": 12,
+      "successful_recovery_mean_joint_travel_rad": 3.730494687104143,
+      "qualified_complete_successes": 2,
+      "successful_mean_steps": 428.0,
+      "successful_mean_seconds": 277.53744427631483,
+      "successful_mean_forward_facing_fraction": 0.9012638284780533,
+      "successful_mean_recovery_arm_joint_travel_rad": 4.034219175525127,
+      "successful_mean_intertask_arm_joint_travel_rad": 131.54409567960448,
+      "mean_valid_step_reward": 571.999772550889,
+      "wilson_95_qualified_rate": [
+        0.15003898915214947,
+        0.8499610108478506
+      ],
+      "uncertainty_scope": "Descriptive binomial interval for a small fixed-layout simulation cohort; not a hardware or other-layout guarantee."
+    },
+    "p6_control": {
+      "n": 2,
+      "complete_successes": 1,
+      "smooth_complete_successes": 1,
+      "wilson_95_complete_rate": [
+        0.09452865480086614,
+        0.9054713451991339
+      ],
+      "task_successes": {
+        "alarm": 2,
+        "drawer": 2,
+        "laptop": 1,
+        "globe": 1
+      },
+      "falls": 1,
+      "invalid_contacts": 0,
+      "mean_duration_s": 263.7013637919048,
+      "mean_roll_rms_deg": 0.46268976655022875,
+      "mean_contact_travel_m": 0.4711133770945412,
+      "recovery_successes": 6,
+      "successful_recovery_mean_joint_travel_rad": 3.338232719883506,
+      "qualified_complete_successes": 1,
+      "successful_mean_steps": 428.0,
+      "successful_mean_seconds": 279.3922826337711,
+      "successful_mean_forward_facing_fraction": 0.940570985913008,
+      "successful_mean_recovery_arm_joint_travel_rad": 3.4912638380848318,
+      "successful_mean_intertask_arm_joint_travel_rad": 128.23985941674852,
+      "mean_valid_step_reward": 571.9997938274745,
+      "wilson_95_qualified_rate": [
+        0.09453120573423074,
+        0.9054687942657693
+      ],
+      "uncertainty_scope": "Descriptive binomial interval for a small fixed-layout simulation cohort; not a hardware or other-layout guarantee."
+    }
+  },
+  "paired_held_out": {
+    "n": 0,
+    "scenario_step_reductions": [],
+    "mean_step_reduction_fraction": null,
+    "mean_time_reduction_fraction": null,
+    "mean_recovery_arm_travel_reduction_fraction": null,
+    "mean_intertask_arm_travel_reduction_fraction": null,
+    "mean_step_reduction_bootstrap_95": null,
+    "mean_time_reduction_bootstrap_95": null,
+    "uncertainty_scope": "Deterministic paired resampling of this small fixed-layout cohort; not a guarantee for other layouts or hardware."
+  },
+  "step_goal_met": false,
+  "scope": "Inference-driven controller engineering, not a neural-training benchmark. Primary reference P5; P6 reported as an additional control. Four fixed-layout simulation cases, no hardware validation."
+}

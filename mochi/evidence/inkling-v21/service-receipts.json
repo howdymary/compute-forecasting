@@ -1,0 +1,913 @@
+{
+  "study": "mochi-inkling-v21",
+  "model": "thinkingmachines/Inkling-2-Mini",
+  "scope": "Inference-driven controller engineering. No new optimizer updates or native gait training.",
+  "budget": {
+    "model_calls": 5,
+    "tokens_actual_or_reserved": 87228,
+    "exa_searches": 2
+  },
+  "optimizer_updates": 0,
+  "native_gait_updates": 0,
+  "gateway_attempts": 6,
+  "model_sampling_attempts": 5,
+  "pre_sampling_rejections": [
+    "frozen-final-review-r5"
+  ],
+  "calls": [
+    {
+      "request_id": "compact-final-review-r6",
+      "model": "thinkingmachines/Inkling-2-Mini",
+      "phase": "review",
+      "created_at": "2026-11-21T05:58:56.324675+00:00",
+      "execution_source_sha": "637e7ac69d2e1ea7305ed6a1bdc00e53d4836818",
+      "packet_sha256": "0d6de61d1ec20f489b7054f0bdaaa296695e7828c170c3e903da29361bc85c75",
+      "image_sha256": [],
+      "versions": {
+        "tinker": "0.39.2",
+        "tinker-cookbook": "0.7.1",
+        "tml-renderers": "0.4.2",
+        "torch": "2.15.0+cpu"
+      },
+      "optimizer_updates": 0,
+      "native_gait_updates": 0,
+      "status": "completed",
+      "renderer": "tml_v0",
+      "input_tokens": 6411,
+      "output_tokens": 783,
+      "termination": "stop_sequence",
+      "answer": "\n{\"analysis\":[\"Selected change is only globe_clearance_y_m = 0.055; zero optimizer updates were performed.\",\"Development: parent 0/2 qualified vs selected 1/2 qualified (418 steps, 277.815 s); held-out: parent 0/4 qualified vs selected 2/4 qualified (428 steps, 277.537 s); P6 control 1/2 qualified (428 steps, 279.392 s).\",\"Held-out selected successes are fresh-223002 (444 steps, 279.931 s) and fresh-223003 (412 steps, 275.144 s); fresh-223000/223001 failed laptop-failed for both parent and selected, so the 2/4 is not a paired complete-success comparison.\",\"No paired complete, qualified attempts exist (n=0), so step/time/arm-travel reductions are not measurable; partial failed trajectories are not success evidence.\",\"Rejected/unsupported ideas remain rejected: XY terminal deadband regressed, 4 mm station tracking timed out, near-distance 0.045 increased alignment, and P6 is only a 2/4 hypothesis, not a validated fix.\"],\"candidates\":[],\"limitations\":[\"Closed study: no new changes may be proposed or executed after held-out results.\",\"Small fixed-layout cohort; no matched qualified pairs; bootstrap/paired uncertainty is null; results are not a guarantee for other layouts or hardware.\",\"Selected 2/4 held-out qualification is measured but not paired with a qualified parent success; do not claim step or arm-travel savings.\",\"No new critic-private canary test was run; service/search activity is not ablation evidence.\"]}",
+      "message_fields": [
+        "role",
+        "content"
+      ],
+      "output_tokens_sha256": "844bd73b87937aa99fdf57ad480b433a2b21c3340591e12e742ce822a58f1d32",
+      "budget": {
+        "model_calls": 5,
+        "tokens_actual_or_reserved": 87228,
+        "exa_searches": 2
+      },
+      "proposal": {
+        "analysis": [
+          "Selected change is only globe_clearance_y_m = 0.055; zero optimizer updates were performed.",
+          "Development: parent 0/2 qualified vs selected 1/2 qualified (418 steps, 277.815 s); held-out: parent 0/4 qualified vs selected 2/4 qualified (428 steps, 277.537 s); P6 control 1/2 qualified (428 steps, 279.392 s).",
+          "Held-out selected successes are fresh-223002 (444 steps, 279.931 s) and fresh-223003 (412 steps, 275.144 s); fresh-223000/223001 failed laptop-failed for both parent and selected, so the 2/4 is not a paired complete-success comparison.",
+          "No paired complete, qualified attempts exist (n=0), so step/time/arm-travel reductions are not measurable; partial failed trajectories are not success evidence.",
+          "Rejected/unsupported ideas remain rejected: XY terminal deadband regressed, 4 mm station tracking timed out, near-distance 0.045 increased alignment, and P6 is only a 2/4 hypothesis, not a validated fix."
+        ],
+        "candidates": [],
+        "limitations": [
+          "Closed study: no new changes may be proposed or executed after held-out results.",
+          "Small fixed-layout cohort; no matched qualified pairs; bootstrap/paired uncertainty is null; results are not a guarantee for other layouts or hardware.",
+          "Selected 2/4 held-out qualification is measured but not paired with a qualified parent success; do not claim step or arm-travel savings.",
+          "No new critic-private canary test was run; service/search activity is not ablation evidence."
+        ]
+      },
+      "memory_record_id": "mochi-ink21-20261120-r11",
+      "wall_seconds": 65.655495584
+    },
+    {
+      "request_id": "controller-proposals-r2",
+      "model": "thinkingmachines/Inkling-2-Mini",
+      "phase": "proposal",
+      "created_at": "2026-11-21T05:06:33.873750+00:00",
+      "execution_source_sha": "d8f69bd4f8697f5d67e7736e779e021733a5a132",
+      "packet_sha256": "9ebdd95dedcb949075d85ce65818efc040d3f4cc9962d268de071f75862ba234",
+      "image_sha256": [
+        "1bc5b26df17e7e8d5bb023529e26fd388af0c37a40b1fd0aa0647a4b7bd82afd",
+        "7b21e90062063344875eb9482d9d98d5fede29d92f5c2229cadb4c86400fba65",
+        "ef98c29aff51b451b198683eb5f810ccb09754c4d2a698f0331bc46df754d152"
+      ],
+      "versions": {
+        "tinker": "0.39.2",
+        "tinker-cookbook": "0.7.1",
+        "tml-renderers": "0.4.2",
+        "torch": "2.15.0+cpu"
+      },
+      "optimizer_updates": 0,
+      "native_gait_updates": 0,
+      "status": "completed",
+      "renderer": "tml_v0",
+      "input_tokens": 19876,
+      "output_tokens": 3119,
+      "termination": "stop_sequence",
+      "answer": "\n{\"analysis\":[\"Fresh result qualified 2/4 vs parent 0/4, but no matched qualified pairs, so step reduction is undefined; do not claim a measured step win.\",\"One development qualified pair improved 436 to 420 steps and alignment 54 to 38, with only clock F to H0 changed; native gait weights were fixed.\",\"Failed laptop P5 reached approach and contact but barely moved the lid; elbow/wrist coordinates appear near limits, so geometry/reachability is a hypothesis, not proven.\",\"Three lower/inset contact-position diagnostics failed and one exceeded the fixed 0.8 N limit; preserve those negative results and do not repeat contact_x/radius changes.\",\"Fresh cases 213002 and 213003 completed qualified; 213000 and 213001 failed with hip/knee contact, so completion remains the first target.\"],\"candidates\":[{\"id\":\"terminal-deadband-w10\",\"domain\":\"navigation\",\"changes\":{\"terminal_translation_deadband\":true},\"mechanism\":\"Zero XY commands only inside the existing position tolerance and 9-degree heading window, leaving yaw correction, loaded support capture and physical checks active; targets chattering/alignment corrections without relaxing capture.\",\"predicted_measurement\":\"Fewer measured steps and lower alignment/correction movement on qualified walking legs, with no increase in falls, support-capture failures or contact-force violations; success must remain at least unchanged.\"},{\"id\":\"laptop-station-reach-shift\",\"domain\":\"laptop\",\"changes\":{\"station_x_m\":0.300,\"station_y_m\":0.165},\"mechanism\":\"Shift the laptop station slightly toward the observed left-arm reach geometry while keeping contact_x/radius fixed; reached through existing walking actuators with 4 mm arrival tolerance and unchanged support/heading checks.\",\"predicted_measurement\":\"Higher laptop contact_progress and lid-angle decrease from the same physical snapshot, with max_force_n staying below the fixed 0.8 N limit and no new non-hand contacts; if reachability does not improve, reject the station shift.\"},{\"id\":\"laptop-closing-speed-demand\",\"domain\":\"laptop\",\"changes\":{\"closing_speed_rad_s\":0.25},\"mechanism\":\"Raise the bounded desired closing-speed demand from the near-zero measured schedule toward a moderate value, testing whether the push phase is under-driven rather than force-limited; keep force_n at 0.65 and radius/contact_x unchanged.\",\"predicted_measurement\":\"Increased lid closing speed and contact_progress before release, without exceeding 0.8 N or adding bad contacts; if force rises toward the limit or progress stalls, reject this candidate.\"}],\"limitations\":[\"No matched qualified pairs exist, so step-reduction claims are unverified.\",\"Fresh cases are development-only; 213000/213001 failures are not proof of a single cause.\",\"Elbow/wrist near-limit appearance is not a proven geometry cause; station shift is a bounded test, not a validated fix.\",\"Lower/inset contact-position failures are preserved and not overturned by this proposal.\",\"No optimizer updates or evaluator/physics/threshold changes are made.\"]}",
+      "message_fields": [
+        "role",
+        "content"
+      ],
+      "output_tokens_sha256": "02d232a333c5bf89b6745b0f498a9c446ac4c0878477d1fd334f9814c516770f",
+      "budget": {
+        "model_calls": 2,
+        "tokens_actual_or_reserved": 46788,
+        "exa_searches": 2
+      },
+      "proposal": {
+        "analysis": [
+          "Fresh result qualified 2/4 vs parent 0/4, but no matched qualified pairs, so step reduction is undefined; do not claim a measured step win.",
+          "One development qualified pair improved 436 to 420 steps and alignment 54 to 38, with only clock F to H0 changed; native gait weights were fixed.",
+          "Failed laptop P5 reached approach and contact but barely moved the lid; elbow/wrist coordinates appear near limits, so geometry/reachability is a hypothesis, not proven.",
+          "Three lower/inset contact-position diagnostics failed and one exceeded the fixed 0.8 N limit; preserve those negative results and do not repeat contact_x/radius changes.",
+          "Fresh cases 213002 and 213003 completed qualified; 213000 and 213001 failed with hip/knee contact, so completion remains the first target."
+        ],
+        "candidates": [
+          {
+            "id": "terminal-deadband-w10",
+            "domain": "navigation",
+            "changes": {
+              "terminal_translation_deadband": true
+            },
+            "mechanism": "Zero XY commands only inside the existing position tolerance and 9-degree heading window, leaving yaw correction, loaded support capture and physical checks active; targets chattering/alignment corrections without relaxing capture.",
+            "predicted_measurement": "Fewer measured steps and lower alignment/correction movement on qualified walking legs, with no increase in falls, support-capture failures or contact-force violations; success must remain at least unchanged."
+          },
+          {
+            "id": "laptop-station-reach-shift",
+            "domain": "laptop",
+            "changes": {
+              "station_x_m": 0.3,
+              "station_y_m": 0.165
+            },
+            "mechanism": "Shift the laptop station slightly toward the observed left-arm reach geometry while keeping contact_x/radius fixed; reached through existing walking actuators with 4 mm arrival tolerance and unchanged support/heading checks.",
+            "predicted_measurement": "Higher laptop contact_progress and lid-angle decrease from the same physical snapshot, with max_force_n staying below the fixed 0.8 N limit and no new non-hand contacts; if reachability does not improve, reject the station shift."
+          },
+          {
+            "id": "laptop-closing-speed-demand",
+            "domain": "laptop",
+            "changes": {
+              "closing_speed_rad_s": 0.25
+            },
+            "mechanism": "Raise the bounded desired closing-speed demand from the near-zero measured schedule toward a moderate value, testing whether the push phase is under-driven rather than force-limited; keep force_n at 0.65 and radius/contact_x unchanged.",
+            "predicted_measurement": "Increased lid closing speed and contact_progress before release, without exceeding 0.8 N or adding bad contacts; if force rises toward the limit or progress stalls, reject this candidate."
+          }
+        ],
+        "limitations": [
+          "No matched qualified pairs exist, so step-reduction claims are unverified.",
+          "Fresh cases are development-only; 213000/213001 failures are not proof of a single cause.",
+          "Elbow/wrist near-limit appearance is not a proven geometry cause; station shift is a bounded test, not a validated fix.",
+          "Lower/inset contact-position failures are preserved and not overturned by this proposal.",
+          "No optimizer updates or evaluator/physics/threshold changes are made."
+        ]
+      },
+      "memory_record_id": "mochi-ink21-20261120-r4",
+      "wall_seconds": 114.285712817
+    },
+    {
+      "request_id": "frozen-final-review-r5",
+      "model": "thinkingmachines/Inkling-2-Mini",
+      "phase": "review",
+      "created_at": "2026-11-21T05:52:29.980930+00:00",
+      "execution_source_sha": "637e7ac69d2e1ea7305ed6a1bdc00e53d4836818",
+      "packet_sha256": "03818fee27ce4711510811be7b27897699d4b0e7ed956cfe3fb1a5d3273c34e8",
+      "image_sha256": [],
+      "versions": {
+        "tinker": "0.39.2",
+        "tinker-cookbook": "0.7.1",
+        "tml-renderers": "0.4.2",
+        "torch": "2.15.0+cpu"
+      },
+      "optimizer_updates": 0,
+      "native_gait_updates": 0,
+      "status": "failed",
+      "error_type": "AssertionError",
+      "error": "",
+      "budget": {
+        "model_calls": 4,
+        "tokens_actual_or_reserved": 80034,
+        "exa_searches": 2
+      },
+      "wall_seconds": 308.69161639600003
+    },
+    {
+      "request_id": "initial-controller-proposals",
+      "model": "thinkingmachines/Inkling-2-Mini",
+      "phase": "proposal",
+      "created_at": "2026-11-21T05:00:13.002544+00:00",
+      "packet_sha256": "861fdd09a1bb4dd51c301e50a354518e880af6cc894e41a068b8b6c0a73369b3",
+      "image_sha256": [
+        "1bc5b26df17e7e8d5bb023529e26fd388af0c37a40b1fd0aa0647a4b7bd82afd",
+        "7b21e90062063344875eb9482d9d98d5fede29d92f5c2229cadb4c86400fba65",
+        "ef98c29aff51b451b198683eb5f810ccb09754c4d2a698f0331bc46df754d152"
+      ],
+      "versions": {
+        "tinker": "0.39.2",
+        "tinker-cookbook": "0.7.1",
+        "tml-renderers": "0.4.2",
+        "torch": "2.15.0+cpu"
+      },
+      "optimizer_updates": 0,
+      "native_gait_updates": 0,
+      "status": "failed",
+      "error_type": "JSONDecodeError",
+      "error": "Expecting value: line 1 column 1 (char 0)",
+      "budget": {
+        "model_calls": 1,
+        "tokens_actual_or_reserved": 23793,
+        "exa_searches": 1
+      },
+      "wall_seconds": 62.901545446
+    },
+    {
+      "request_id": "laptop-refinement-r4",
+      "model": "thinkingmachines/Inkling-2-Mini",
+      "phase": "proposal",
+      "created_at": "2026-11-21T05:27:33.375898+00:00",
+      "execution_source_sha": "637e7ac69d2e1ea7305ed6a1bdc00e53d4836818",
+      "packet_sha256": "ddae4e25717e0b3e3b427b564c935f6387b0ef4754db70bf73abff88bafd1c18",
+      "image_sha256": [],
+      "versions": {
+        "tinker": "0.39.2",
+        "tinker-cookbook": "0.7.1",
+        "tml-renderers": "0.4.2",
+        "torch": "2.15.0+cpu"
+      },
+      "optimizer_updates": 0,
+      "native_gait_updates": 0,
+      "status": "completed",
+      "renderer": "tml_v0",
+      "input_tokens": 12814,
+      "output_tokens": 1561,
+      "termination": "stop_sequence",
+      "answer": "\n{\"analysis\":[\"Seed 221000 completed all four tasks with clearance y=.055 (418 steps, 277.815 s); do not change that validated clearance parameter.\",\"Seed 221001 fails P5 laptop closing before the changed route is used: final angle 1.13489 rad after 32 s, max force 0.65860 N, contact retained but no closure; this is a contact/controller failure, not a route-clearance failure.\",\"P6 is a different controller (0.60 N, 0.30 s on/0.15 s off, 24 s horizon), not merely a lower force cap; it closed 3/4 prior fresh cases but full qualification was 2/4, so it is a hypothesis, not a proven fix.\",\"Near-distance .045 increased alignment 12 to 15 and is rejected; XY terminal deadband regressed and is rejected; 4 mm station tracking timed out and is rejected.\",\"No matched qualified pairs exist for P5 vs P6 or for any new P5 speed change; fresh scenarios will differ.\"],\"candidates\":[{\"id\":\"laptop-p6-profile\",\"domain\":\"laptop\",\"changes\":{\"profile\":\"P6\"},\"mechanism\":\"Use the existing fixed pulsed press controller on the same failed snapshot/final tests, separating the P5-to-P6 controller effect from the clearance repair; do not credit it to clearance.\",\"predicted_measurement\":\"Laptop reaches release/dwell within the 24 s horizon with no non-hand contacts and max force at or below the global guard, with realized position/force reported; failure to close or higher non-hand contacts rejects it.\"},{\"id\":\"laptop-p5-slower-target\",\"domain\":\"laptop\",\"changes\":{\"closing_speed_rad_s\":0.30},\"mechanism\":\"Lower the P5 desired closing speed from 0.40 to 0.30 rad/s to reduce force demand and chattering while retaining adaptive feedback and the same force/release checks.\",\"predicted_measurement\":\"Measured closing speed tracks closer to 0.30 rad/s, max force and stall time do not increase versus P5, and closure/dwell improves or remains comparable; no closure or higher force/non-hand contacts rejects it.\"}],\"limitations\":[\"Development diagnostics only; fresh scenarios will differ.\",\"P6 full qualification was 2/4, so it is not a validated success.\",\"No matched qualified pairs exist; step/alignment claims are unverified.\",\"No evaluator, physics, force-limit, threshold, task-order, or validated clearance-y changes are proposed.\"]}",
+      "message_fields": [
+        "role",
+        "content"
+      ],
+      "output_tokens_sha256": "74d9c3f78e5b452638089da533f4f1756d33935dc756972949caf31b15bc5a20",
+      "budget": {
+        "model_calls": 4,
+        "tokens_actual_or_reserved": 80034,
+        "exa_searches": 2
+      },
+      "proposal": {
+        "analysis": [
+          "Seed 221000 completed all four tasks with clearance y=.055 (418 steps, 277.815 s); do not change that validated clearance parameter.",
+          "Seed 221001 fails P5 laptop closing before the changed route is used: final angle 1.13489 rad after 32 s, max force 0.65860 N, contact retained but no closure; this is a contact/controller failure, not a route-clearance failure.",
+          "P6 is a different controller (0.60 N, 0.30 s on/0.15 s off, 24 s horizon), not merely a lower force cap; it closed 3/4 prior fresh cases but full qualification was 2/4, so it is a hypothesis, not a proven fix.",
+          "Near-distance .045 increased alignment 12 to 15 and is rejected; XY terminal deadband regressed and is rejected; 4 mm station tracking timed out and is rejected.",
+          "No matched qualified pairs exist for P5 vs P6 or for any new P5 speed change; fresh scenarios will differ."
+        ],
+        "candidates": [
+          {
+            "id": "laptop-p6-profile",
+            "domain": "laptop",
+            "changes": {
+              "profile": "P6"
+            },
+            "mechanism": "Use the existing fixed pulsed press controller on the same failed snapshot/final tests, separating the P5-to-P6 controller effect from the clearance repair; do not credit it to clearance.",
+            "predicted_measurement": "Laptop reaches release/dwell within the 24 s horizon with no non-hand contacts and max force at or below the global guard, with realized position/force reported; failure to close or higher non-hand contacts rejects it."
+          },
+          {
+            "id": "laptop-p5-slower-target",
+            "domain": "laptop",
+            "changes": {
+              "closing_speed_rad_s": 0.3
+            },
+            "mechanism": "Lower the P5 desired closing speed from 0.40 to 0.30 rad/s to reduce force demand and chattering while retaining adaptive feedback and the same force/release checks.",
+            "predicted_measurement": "Measured closing speed tracks closer to 0.30 rad/s, max force and stall time do not increase versus P5, and closure/dwell improves or remains comparable; no closure or higher force/non-hand contacts rejects it."
+          }
+        ],
+        "limitations": [
+          "Development diagnostics only; fresh scenarios will differ.",
+          "P6 full qualification was 2/4, so it is not a validated success.",
+          "No matched qualified pairs exist; step/alignment claims are unverified.",
+          "No evaluator, physics, force-limit, threshold, task-order, or validated clearance-y changes are proposed."
+        ]
+      },
+      "memory_record_id": "mochi-ink21-20261120-r8",
+      "wall_seconds": 68.429009523
+    },
+    {
+      "request_id": "measured-review-r3",
+      "model": "thinkingmachines/Inkling-2-Mini",
+      "phase": "review",
+      "created_at": "2026-11-21T05:16:34.668553+00:00",
+      "execution_source_sha": "637e7ac69d2e1ea7305ed6a1bdc00e53d4836818",
+      "packet_sha256": "f6b23978f0e21dde39da73b92c9c6c3b20106365eb0c3bedcecd7acc744d05f2",
+      "image_sha256": [],
+      "versions": {
+        "tinker": "0.39.2",
+        "tinker-cookbook": "0.7.1",
+        "tml-renderers": "0.4.2",
+        "torch": "2.15.0+cpu"
+      },
+      "optimizer_updates": 0,
+      "native_gait_updates": 0,
+      "status": "completed",
+      "renderer": "tml_v0",
+      "input_tokens": 16409,
+      "output_tokens": 2462,
+      "termination": "stop_sequence",
+      "answer": "\n{\"analysis\":[\"XY terminal deadband regressed on the laptop leg (154 steps/56 alignment vs baseline 110/12), so it is rejected and not reproposed.\",\"The 4 mm station-tracking candidate timed out at 367 alignment steps and is rejected; station pose/tolerance should not be tightened further.\",\"Seed 221000 completed clock/drawer/laptop/recoveries, then right_ankle_roll_link hit laptop-base-contact after the initial laptop-clearance maneuver; root after clearance was (0.309772, 0.107703), with laptop-base-contact AABB x .015-.265, y .085-.255.\",\"213000 failed with left_hip_roll_link vs laptop-contact during release; 213001 failed with right_knee_link vs printer-output-tray-contact during walking; 213002/213003 qualified.\",\"Current commanded closing-speed target is 0.40 rad/s; near-zero measured speed is not the same as demand, and apparent elbow/wrist plateaus are not proven joint-limit causes.\"],\"candidates\":[{\"id\":\"globe-clearance-y-lower\",\"domain\":\"navigation\",\"changes\":{\"globe_clearance_y_m\":0.055},\"mechanism\":\"Move the initial laptop-clearance target farther below the laptop-base-contact AABB while keeping x at the permitted maximum, reducing the chance that the right ankle/foot sweeps into the laptop base during the post-laptop departure.\",\"predicted_measurement\":\"No right_ankle_roll_link/laptop-base-contact during the initial clearance/walk segment on the seed-221000-like case, with unchanged task success and no increase in falls or support-capture failures.\"},{\"id\":\"laptop-station-tolerance-native\",\"domain\":\"laptop\",\"changes\":{\"station_position_tolerance_m\":0.012},\"mechanism\":\"Use the native 12 mm arrival tolerance rather than the rejected 4 mm tracking demand, reducing late alignment corrections without relaxing support capture or heading checks.\",\"predicted_measurement\":\"Fewer alignment/correction steps and lower alignment count on the laptop leg versus the 4 mm-tracking failure, with realized position error reported and success not worse than baseline.\"},{\"id\":\"near-distance-earlier-align\",\"domain\":\"navigation\",\"changes\":{\"near_distance\":0.045},\"mechanism\":\"Start task-alignment earlier on the laptop corridor so heading/lateral corrections happen before the final approach, aiming to reduce late chattering corrections without changing support capture or terminal capture guards.\",\"predicted_measurement\":\"Lower alignment/correction step count on qualified laptop walking legs, with no increase in falls, support-capture failures, or non-hand contacts; if alignment steps rise or chattering increases, reject.\"}],\"limitations\":[\"Development diagnostics only; fresh scenarios will differ.\",\"No matched qualified pairs exist, so step-reduction claims are unverified.\",\"The ankle/laptop-base collision is observed once; lowering clearance y is a bounded hypothesis, not a proven fix.\",\"Station tolerance and near-distance changes are not isolated from each other; run separately.\",\"No evaluator, physics, force-limit, threshold, or task-order changes are proposed.\"]}",
+      "message_fields": [
+        "role",
+        "content"
+      ],
+      "output_tokens_sha256": "eb984f71f6d51ac0b5e4a7b223420cea8e58fb230a92598a19b2099c23119751",
+      "budget": {
+        "model_calls": 3,
+        "tokens_actual_or_reserved": 65659,
+        "exa_searches": 2
+      },
+      "proposal": {
+        "analysis": [
+          "XY terminal deadband regressed on the laptop leg (154 steps/56 alignment vs baseline 110/12), so it is rejected and not reproposed.",
+          "The 4 mm station-tracking candidate timed out at 367 alignment steps and is rejected; station pose/tolerance should not be tightened further.",
+          "Seed 221000 completed clock/drawer/laptop/recoveries, then right_ankle_roll_link hit laptop-base-contact after the initial laptop-clearance maneuver; root after clearance was (0.309772, 0.107703), with laptop-base-contact AABB x .015-.265, y .085-.255.",
+          "213000 failed with left_hip_roll_link vs laptop-contact during release; 213001 failed with right_knee_link vs printer-output-tray-contact during walking; 213002/213003 qualified.",
+          "Current commanded closing-speed target is 0.40 rad/s; near-zero measured speed is not the same as demand, and apparent elbow/wrist plateaus are not proven joint-limit causes."
+        ],
+        "candidates": [
+          {
+            "id": "globe-clearance-y-lower",
+            "domain": "navigation",
+            "changes": {
+              "globe_clearance_y_m": 0.055
+            },
+            "mechanism": "Move the initial laptop-clearance target farther below the laptop-base-contact AABB while keeping x at the permitted maximum, reducing the chance that the right ankle/foot sweeps into the laptop base during the post-laptop departure.",
+            "predicted_measurement": "No right_ankle_roll_link/laptop-base-contact during the initial clearance/walk segment on the seed-221000-like case, with unchanged task success and no increase in falls or support-capture failures."
+          },
+          {
+            "id": "laptop-station-tolerance-native",
+            "domain": "laptop",
+            "changes": {
+              "station_position_tolerance_m": 0.012
+            },
+            "mechanism": "Use the native 12 mm arrival tolerance rather than the rejected 4 mm tracking demand, reducing late alignment corrections without relaxing support capture or heading checks.",
+            "predicted_measurement": "Fewer alignment/correction steps and lower alignment count on the laptop leg versus the 4 mm-tracking failure, with realized position error reported and success not worse than baseline."
+          },
+          {
+            "id": "near-distance-earlier-align",
+            "domain": "navigation",
+            "changes": {
+              "near_distance": 0.045
+            },
+            "mechanism": "Start task-alignment earlier on the laptop corridor so heading/lateral corrections happen before the final approach, aiming to reduce late chattering corrections without changing support capture or terminal capture guards.",
+            "predicted_measurement": "Lower alignment/correction step count on qualified laptop walking legs, with no increase in falls, support-capture failures, or non-hand contacts; if alignment steps rise or chattering increases, reject."
+          }
+        ],
+        "limitations": [
+          "Development diagnostics only; fresh scenarios will differ.",
+          "No matched qualified pairs exist, so step-reduction claims are unverified.",
+          "The ankle/laptop-base collision is observed once; lowering clearance y is a bounded hypothesis, not a proven fix.",
+          "Station tolerance and near-distance changes are not isolated from each other; run separately.",
+          "No evaluator, physics, force-limit, threshold, or task-order changes are proposed."
+        ]
+      },
+      "memory_record_id": "mochi-ink21-20261120-r6",
+      "wall_seconds": 80.54268217399999
+    }
+  ],
+  "memory": {
+    "actors": {
+      "researcher": "mochi-ink21-20261120-researcher",
+      "designer": "mochi-ink21-20261120-designer",
+      "experimenter": "mochi-ink21-20261120-experimenter",
+      "critic": "mochi-ink21-20261120-critic"
+    },
+    "audiences": {
+      "shared": "mochi-ink21-20261120-shared",
+      "critic_private": "mochi-ink21-20261120-critic"
+    },
+    "writes": 12,
+    "logical_reads": 17,
+    "verified_cross_role_reads": 15,
+    "writers": [
+      "critic",
+      "designer",
+      "experimenter",
+      "researcher"
+    ],
+    "readers": [
+      "critic",
+      "designer",
+      "experimenter",
+      "researcher"
+    ],
+    "api_calls_logged": 136,
+    "pending_ingestions": [],
+    "new_private_canary_tested": false,
+    "reads": [
+      {
+        "reader": "mochi-ink21-20261120-researcher",
+        "reader_role": "researcher",
+        "author": "mochi-ink21-20261120-experimenter",
+        "record_id": "mochi-ink21-20261120-r0",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "4de6c87d9396be202690ab1378c7cdd088c9bf318f0b7eee6e55a3359c1ba8da",
+        "at": "2026-11-21T05:00:39.183540+00:00",
+        "retrieval": "source-verified compact evidence, 8000-token budget, no occurrence window",
+        "attempts": [
+          {
+            "at": "2026-11-21T05:00:39.183521+00:00",
+            "returned_documents": 86,
+            "used_evidence_tokens": 7998,
+            "required_source_verified": true,
+            "returned_source_ids": [
+              "mochi-ink21-20261120-r0"
+            ],
+            "other_authorized_source_ids_omitted": 18
+          }
+        ]
+      },
+      {
+        "reader": "mochi-ink21-20261120-researcher",
+        "reader_role": "researcher",
+        "author": "mochi-ink21-20261120-experimenter",
+        "record_id": "mochi-ink21-20261120-r2",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "f8af9c863f425dd477ee94c4c3948953a8b3b6c716bdac6cce6306a6eda1175e",
+        "at": "2026-11-21T05:07:00.862374+00:00",
+        "retrieval": "source-verified compact evidence, 8000-token budget, no occurrence window",
+        "attempts": [
+          {
+            "at": "2026-11-21T05:07:00.862354+00:00",
+            "returned_documents": 82,
+            "used_evidence_tokens": 7986,
+            "required_source_verified": true,
+            "returned_source_ids": [
+              "mochi-ink21-20261120-r0",
+              "mochi-ink21-20261120-r1",
+              "mochi-ink21-20261120-r2"
+            ],
+            "other_authorized_source_ids_omitted": 13
+          }
+        ]
+      },
+      {
+        "reader": "mochi-ink21-20261120-designer",
+        "reader_role": "designer",
+        "author": "mochi-ink21-20261120-researcher",
+        "record_id": "mochi-ink21-20261120-r3",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "8b6f2dd0a4e637784b23f1d5363286140fbc3fdd85264b581d0c08489487e6b3",
+        "at": "2026-11-21T05:07:16.058355+00:00",
+        "retrieval": "source-verified compact evidence, 8000-token budget, no occurrence window",
+        "attempts": [
+          {
+            "at": "2026-11-21T05:07:16.058328+00:00",
+            "returned_documents": 72,
+            "used_evidence_tokens": 7984,
+            "required_source_verified": true,
+            "returned_source_ids": [
+              "mochi-ink21-20261120-r0",
+              "mochi-ink21-20261120-r2",
+              "mochi-ink21-20261120-r3"
+            ],
+            "other_authorized_source_ids_omitted": 19
+          }
+        ]
+      },
+      {
+        "reader": "mochi-ink21-20261120-experimenter",
+        "reader_role": "experimenter",
+        "author": "mochi-ink21-20261120-designer",
+        "record_id": "mochi-ink21-20261120-r4",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "187b94671fe4384cbd5f547377f94106020e81221f4004f319e5505e6b1b0fad",
+        "at": "2026-11-21T05:08:26.658845+00:00",
+        "retrieval": "source-verified compact evidence, 8000-token budget, no occurrence window",
+        "attempts": [
+          {
+            "at": "2026-11-21T05:08:26.658826+00:00",
+            "returned_documents": 63,
+            "used_evidence_tokens": 7996,
+            "required_source_verified": true,
+            "returned_source_ids": [
+              "mochi-ink21-20261120-r1",
+              "mochi-ink21-20261120-r2",
+              "mochi-ink21-20261120-r3",
+              "mochi-ink21-20261120-r4"
+            ],
+            "other_authorized_source_ids_omitted": 18
+          }
+        ]
+      },
+      {
+        "reader": "mochi-ink21-20261120-critic",
+        "reader_role": "critic",
+        "author": "mochi-ink21-20261120-experimenter",
+        "record_id": "mochi-ink21-20261120-r5",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "48c2c5dbaa08309120c5da768c86ec70b2764803a32b9a476b0d1890d0d8df4c",
+        "at": "2026-11-21T05:17:06.698893+00:00",
+        "retrieval": "source-verified compact evidence, 8000-token budget, no occurrence window",
+        "attempts": [
+          {
+            "at": "2026-11-21T05:17:06.698867+00:00",
+            "returned_documents": 62,
+            "used_evidence_tokens": 8000,
+            "required_source_verified": true,
+            "returned_source_ids": [
+              "mochi-ink21-20261120-r0",
+              "mochi-ink21-20261120-r1",
+              "mochi-ink21-20261120-r2",
+              "mochi-ink21-20261120-r3",
+              "mochi-ink21-20261120-r4",
+              "mochi-ink21-20261120-r5"
+            ],
+            "other_authorized_source_ids_omitted": 8
+          }
+        ]
+      },
+      {
+        "reader": "mochi-ink21-20261120-critic",
+        "reader_role": "critic",
+        "author": "mochi-ink21-20261120-designer",
+        "record_id": "mochi-ink21-20261120-r4",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "187b94671fe4384cbd5f547377f94106020e81221f4004f319e5505e6b1b0fad",
+        "at": "2026-11-21T05:17:07.130687+00:00",
+        "retrieval": "source-verified compact evidence, 8000-token budget, no occurrence window",
+        "attempts": [
+          {
+            "at": "2026-11-21T05:17:07.130666+00:00",
+            "returned_documents": 58,
+            "used_evidence_tokens": 7995,
+            "required_source_verified": true,
+            "returned_source_ids": [
+              "mochi-ink21-20261120-r1",
+              "mochi-ink21-20261120-r2",
+              "mochi-ink21-20261120-r3",
+              "mochi-ink21-20261120-r4",
+              "mochi-ink21-20261120-r5"
+            ],
+            "other_authorized_source_ids_omitted": 17
+          }
+        ]
+      },
+      {
+        "reader": "mochi-ink21-20261120-researcher",
+        "reader_role": "researcher",
+        "author": "mochi-ink21-20261120-critic",
+        "record_id": "mochi-ink21-20261120-r6",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "8e0ba728213fa7cd328161178af927e065435dc1affbd87d01b11e6b3778c74d",
+        "at": "2026-11-21T05:17:54.258380+00:00",
+        "retrieval": "source-verified compact evidence, 8000-token budget, no occurrence window",
+        "attempts": [
+          {
+            "at": "2026-11-21T05:17:54.258363+00:00",
+            "returned_documents": 52,
+            "used_evidence_tokens": 7964,
+            "required_source_verified": true,
+            "returned_source_ids": [
+              "mochi-ink21-20261120-r0",
+              "mochi-ink21-20261120-r1",
+              "mochi-ink21-20261120-r2",
+              "mochi-ink21-20261120-r3",
+              "mochi-ink21-20261120-r4",
+              "mochi-ink21-20261120-r5",
+              "mochi-ink21-20261120-r6"
+            ],
+            "other_authorized_source_ids_omitted": 13
+          }
+        ]
+      },
+      {
+        "reader": "mochi-ink21-20261120-researcher",
+        "reader_role": "researcher",
+        "author": "mochi-ink21-20261120-experimenter",
+        "record_id": "mochi-ink21-20261120-r7",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "8943ae56d5a7574637a2bd242dcc730570ab39034d825e6f2db859935e8d916f",
+        "at": "2026-11-21T05:27:59.405392+00:00",
+        "retrieval": "source-verified compact evidence, 8000-token budget, no occurrence window",
+        "attempts": [
+          {
+            "at": "2026-11-21T05:27:59.405364+00:00",
+            "returned_documents": 46,
+            "used_evidence_tokens": 7986,
+            "required_source_verified": true,
+            "returned_source_ids": [
+              "mochi-ink21-20261120-r0",
+              "mochi-ink21-20261120-r1",
+              "mochi-ink21-20261120-r2",
+              "mochi-ink21-20261120-r3",
+              "mochi-ink21-20261120-r4",
+              "mochi-ink21-20261120-r5",
+              "mochi-ink21-20261120-r6",
+              "mochi-ink21-20261120-r7"
+            ],
+            "other_authorized_source_ids_omitted": 5
+          }
+        ]
+      },
+      {
+        "reader": "mochi-ink21-20261120-designer",
+        "reader_role": "designer",
+        "author": "mochi-ink21-20261120-critic",
+        "record_id": "mochi-ink21-20261120-r6",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "8e0ba728213fa7cd328161178af927e065435dc1affbd87d01b11e6b3778c74d",
+        "at": "2026-11-21T05:27:59.772625+00:00",
+        "retrieval": "source-verified compact evidence, 8000-token budget, no occurrence window",
+        "attempts": [
+          {
+            "at": "2026-11-21T05:27:59.772606+00:00",
+            "returned_documents": 50,
+            "used_evidence_tokens": 7981,
+            "required_source_verified": true,
+            "returned_source_ids": [
+              "mochi-ink21-20261120-r0",
+              "mochi-ink21-20261120-r1",
+              "mochi-ink21-20261120-r2",
+              "mochi-ink21-20261120-r3",
+              "mochi-ink21-20261120-r4",
+              "mochi-ink21-20261120-r5",
+              "mochi-ink21-20261120-r6",
+              "mochi-ink21-20261120-r7"
+            ],
+            "other_authorized_source_ids_omitted": 10
+          }
+        ]
+      },
+      {
+        "reader": "mochi-ink21-20261120-experimenter",
+        "reader_role": "experimenter",
+        "author": "mochi-ink21-20261120-designer",
+        "record_id": "mochi-ink21-20261120-r8",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "1e81c31282916677b123af31562976c5b1178af08560ba1b32da618f62487766",
+        "at": "2026-11-21T05:28:40.636168+00:00",
+        "retrieval": "source-verified compact evidence, 8000-token budget, no occurrence window",
+        "attempts": [
+          {
+            "at": "2026-11-21T05:28:40.636146+00:00",
+            "returned_documents": 42,
+            "used_evidence_tokens": 7995,
+            "required_source_verified": true,
+            "returned_source_ids": [
+              "mochi-ink21-20261120-r0",
+              "mochi-ink21-20261120-r1",
+              "mochi-ink21-20261120-r2",
+              "mochi-ink21-20261120-r3",
+              "mochi-ink21-20261120-r4",
+              "mochi-ink21-20261120-r5",
+              "mochi-ink21-20261120-r6",
+              "mochi-ink21-20261120-r7",
+              "mochi-ink21-20261120-r8"
+            ],
+            "other_authorized_source_ids_omitted": 15
+          }
+        ]
+      },
+      {
+        "reader": "mochi-ink21-20261120-critic",
+        "reader_role": "critic",
+        "author": "mochi-ink21-20261120-experimenter",
+        "record_id": "mochi-ink21-20261120-r9",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "400494f944a78459c2299262a8afcff9ffa4cb9635926b6dd55aecd8a2b5d4d1",
+        "at": "2026-11-21T05:57:34.431100+00:00",
+        "retrieval": "source-verified compact evidence, 8000-token budget, no occurrence window",
+        "attempts": [
+          {
+            "at": "2026-11-21T05:57:34.431082+00:00",
+            "returned_documents": 41,
+            "used_evidence_tokens": 7997,
+            "required_source_verified": true,
+            "returned_source_ids": [
+              "mochi-ink21-20261120-r1",
+              "mochi-ink21-20261120-r2",
+              "mochi-ink21-20261120-r3",
+              "mochi-ink21-20261120-r4",
+              "mochi-ink21-20261120-r5",
+              "mochi-ink21-20261120-r6",
+              "mochi-ink21-20261120-r7",
+              "mochi-ink21-20261120-r8",
+              "mochi-ink21-20261120-r9"
+            ],
+            "other_authorized_source_ids_omitted": 5
+          }
+        ]
+      },
+      {
+        "reader": "mochi-ink21-20261120-critic",
+        "reader_role": "critic",
+        "author": "mochi-ink21-20261120-critic",
+        "record_id": "mochi-ink21-20261120-r6",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": false,
+        "sha256": "8e0ba728213fa7cd328161178af927e065435dc1affbd87d01b11e6b3778c74d",
+        "at": "2026-11-21T05:57:34.981369+00:00",
+        "retrieval": "source-verified compact evidence, 8000-token budget, no occurrence window",
+        "attempts": [
+          {
+            "at": "2026-11-21T05:57:34.981352+00:00",
+            "returned_documents": 45,
+            "used_evidence_tokens": 7985,
+            "required_source_verified": true,
+            "returned_source_ids": [
+              "mochi-ink21-20261120-r0",
+              "mochi-ink21-20261120-r1",
+              "mochi-ink21-20261120-r2",
+              "mochi-ink21-20261120-r3",
+              "mochi-ink21-20261120-r4",
+              "mochi-ink21-20261120-r5",
+              "mochi-ink21-20261120-r6",
+              "mochi-ink21-20261120-r7",
+              "mochi-ink21-20261120-r8",
+              "mochi-ink21-20261120-r9"
+            ],
+            "other_authorized_source_ids_omitted": 7
+          }
+        ]
+      },
+      {
+        "reader": "mochi-ink21-20261120-critic",
+        "reader_role": "critic",
+        "author": "mochi-ink21-20261120-designer",
+        "record_id": "mochi-ink21-20261120-r8",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "1e81c31282916677b123af31562976c5b1178af08560ba1b32da618f62487766",
+        "at": "2026-11-21T05:57:35.485064+00:00",
+        "retrieval": "source-verified compact evidence, 8000-token budget, no occurrence window",
+        "attempts": [
+          {
+            "at": "2026-11-21T05:57:35.485043+00:00",
+            "returned_documents": 41,
+            "used_evidence_tokens": 7977,
+            "required_source_verified": true,
+            "returned_source_ids": [
+              "mochi-ink21-20261120-r1",
+              "mochi-ink21-20261120-r2",
+              "mochi-ink21-20261120-r3",
+              "mochi-ink21-20261120-r4",
+              "mochi-ink21-20261120-r5",
+              "mochi-ink21-20261120-r6",
+              "mochi-ink21-20261120-r7",
+              "mochi-ink21-20261120-r8",
+              "mochi-ink21-20261120-r9"
+            ],
+            "other_authorized_source_ids_omitted": 14
+          }
+        ]
+      },
+      {
+        "reader": "mochi-ink21-20261120-critic",
+        "reader_role": "critic",
+        "author": "mochi-ink21-20261120-experimenter",
+        "record_id": "mochi-ink21-20261120-r10",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "11e109b6742876d1c9d059291fb6c81cdf0502860a5a2e3bda6ff33b9ab40eb3",
+        "at": "2026-11-21T05:59:13.430136+00:00",
+        "retrieval": "source-verified compact evidence, 8000-token budget, no occurrence window",
+        "attempts": [
+          {
+            "at": "2026-11-21T05:59:13.430121+00:00",
+            "returned_documents": 41,
+            "used_evidence_tokens": 7964,
+            "required_source_verified": true,
+            "returned_source_ids": [
+              "mochi-ink21-20261120-r1",
+              "mochi-ink21-20261120-r10",
+              "mochi-ink21-20261120-r2",
+              "mochi-ink21-20261120-r3",
+              "mochi-ink21-20261120-r4",
+              "mochi-ink21-20261120-r5",
+              "mochi-ink21-20261120-r6",
+              "mochi-ink21-20261120-r7",
+              "mochi-ink21-20261120-r8",
+              "mochi-ink21-20261120-r9"
+            ],
+            "other_authorized_source_ids_omitted": 5
+          }
+        ]
+      },
+      {
+        "reader": "mochi-ink21-20261120-critic",
+        "reader_role": "critic",
+        "author": "mochi-ink21-20261120-critic",
+        "record_id": "mochi-ink21-20261120-r6",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": false,
+        "sha256": "8e0ba728213fa7cd328161178af927e065435dc1affbd87d01b11e6b3778c74d",
+        "at": "2026-11-21T05:59:13.868654+00:00",
+        "retrieval": "source-verified compact evidence, 8000-token budget, no occurrence window",
+        "attempts": [
+          {
+            "at": "2026-11-21T05:59:13.868638+00:00",
+            "returned_documents": 45,
+            "used_evidence_tokens": 7995,
+            "required_source_verified": true,
+            "returned_source_ids": [
+              "mochi-ink21-20261120-r0",
+              "mochi-ink21-20261120-r1",
+              "mochi-ink21-20261120-r10",
+              "mochi-ink21-20261120-r2",
+              "mochi-ink21-20261120-r3",
+              "mochi-ink21-20261120-r4",
+              "mochi-ink21-20261120-r5",
+              "mochi-ink21-20261120-r6",
+              "mochi-ink21-20261120-r7",
+              "mochi-ink21-20261120-r8",
+              "mochi-ink21-20261120-r9"
+            ],
+            "other_authorized_source_ids_omitted": 7
+          }
+        ]
+      },
+      {
+        "reader": "mochi-ink21-20261120-critic",
+        "reader_role": "critic",
+        "author": "mochi-ink21-20261120-designer",
+        "record_id": "mochi-ink21-20261120-r8",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "1e81c31282916677b123af31562976c5b1178af08560ba1b32da618f62487766",
+        "at": "2026-11-21T05:59:14.375664+00:00",
+        "retrieval": "source-verified compact evidence, 8000-token budget, no occurrence window",
+        "attempts": [
+          {
+            "at": "2026-11-21T05:59:14.375647+00:00",
+            "returned_documents": 42,
+            "used_evidence_tokens": 7998,
+            "required_source_verified": true,
+            "returned_source_ids": [
+              "mochi-ink21-20261120-r1",
+              "mochi-ink21-20261120-r10",
+              "mochi-ink21-20261120-r2",
+              "mochi-ink21-20261120-r3",
+              "mochi-ink21-20261120-r4",
+              "mochi-ink21-20261120-r5",
+              "mochi-ink21-20261120-r6",
+              "mochi-ink21-20261120-r7",
+              "mochi-ink21-20261120-r8",
+              "mochi-ink21-20261120-r9"
+            ],
+            "other_authorized_source_ids_omitted": 14
+          }
+        ]
+      },
+      {
+        "reader": "mochi-ink21-20261120-researcher",
+        "reader_role": "researcher",
+        "author": "mochi-ink21-20261120-critic",
+        "record_id": "mochi-ink21-20261120-r11",
+        "source_id_verified": true,
+        "expected_access": true,
+        "cross_agent_use": true,
+        "sha256": "13290dc6dacb79ea0a6ca00984b097e2912579c588ef14eb50f54e7be611676c",
+        "at": "2026-11-21T05:59:59.824307+00:00",
+        "retrieval": "source-verified compact evidence, 8000-token budget, no occurrence window",
+        "attempts": [
+          {
+            "at": "2026-11-21T05:59:59.824291+00:00",
+            "returned_documents": 40,
+            "used_evidence_tokens": 7993,
+            "required_source_verified": true,
+            "returned_source_ids": [
+              "mochi-ink21-20261120-r0",
+              "mochi-ink21-20261120-r1",
+              "mochi-ink21-20261120-r10",
+              "mochi-ink21-20261120-r11",
+              "mochi-ink21-20261120-r2",
+              "mochi-ink21-20261120-r3",
+              "mochi-ink21-20261120-r4",
+              "mochi-ink21-20261120-r5",
+              "mochi-ink21-20261120-r6",
+              "mochi-ink21-20261120-r7",
+              "mochi-ink21-20261120-r8"
+            ],
+            "other_authorized_source_ids_omitted": 3
+          }
+        ]
+      }
+    ]
+  },
+  "source_urls": [
+    "https://elib.dlr.de/124149/1/sundaram_2018_autonomous.pdf",
+    "https://h-tr.github.io/blog/surveys/fast-planner-upstreams.html",
+    "https://www.hrl.uni-bonn.de/papers/burget13icra-1.pdf/@@download/file"
+  ],
+  "caveat": "Real API activity, not a billed-credit total. No memory/search ablation. Physics ran locally; Modal hosted the authenticated research gateway."
+}

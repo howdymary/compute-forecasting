@@ -2,13 +2,17 @@
 
 ## Inkling 2 Mini: controller-research pilot
 
-[Inkling proposal replay](https://howdymary--mochi-inkling-v21-demo-web.us-east.modal.run/) · [Protocol](docs/inkling-v21-protocol.md) · [Exact model access](evidence/inkling-v21/access.json)
+[Inkling proposal replay](https://howdymary--mochi-inkling-v21-demo-web.us-east.modal.run/) · [Findings](docs/inkling-v21-findings.md) · [Protocol](docs/inkling-v21-protocol.md) · [Exact model access](evidence/inkling-v21/access.json)
 
-Inkling 2 Mini is connected through Tinker in an isolated backend. Four inference attempts produced three structured proposal batches using recorded failures, controller code and three replay images. past.dev carried the original proposal into the measured review; Exa supplied failure-driven research and Modal hosted the authenticated backend. This pilot performs zero new optimizer updates. The separate eight-update Qwen training study remains below.
+Inkling 2 Mini is connected through Tinker in an isolated backend. Five model-sampling attempts produced four structured results using recorded failures, controller code and three replay images. A separate oversized review packet was rejected before sampling and retained. past.dev carried the original proposal into the measured review; Exa supplied failure-driven research and Modal hosted the authenticated backend. This pilot performs zero new optimizer updates. The separate eight-update Qwen training study remains below.
 
-The first proposals regressed or failed. After receiving those measurements and actual collision geometry, Inkling proposed backing farther clear of the laptop before turning. Changing the clearance target from y = 0.105 m to 0.055 m converted one uninterrupted development attempt from an ankle/laptop collision into all four tasks completed within every quality limit. The other development scenario still failed at laptop contact. No fresh-scenario efficiency gain is established. Four fresh paired tests and two additional pulsed-contact controls are running with a frozen configuration.
+The first proposals regressed or failed. After receiving those measurements and actual collision geometry, Inkling proposed backing farther clear of the laptop before turning. Changing the clearance target from y = 0.105 m to 0.055 m converted one uninterrupted development attempt from an ankle/laptop collision into all four tasks completed within every quality limit. The other development scenario still failed at laptop contact.
 
-The replay distinguishes controller engineering from neural weight training and preserves failures, parameter changes and measured step counts. [Development browser verification](evidence/inkling-v21/development-browser-qa.json).
+On four fresh paired scenarios, the fixed P5 reference qualified on 0/4 and the clearance proposal on 2/4. Both converted failures were ankle/laptop-base collisions. Both remaining failures occurred during laptop closing, before the changed waypoint. An additional P6 control qualified on 1/2 cases, including one where P5 failed, and fell on the other. It was not evaluated across the full four-case cohort. With no pairs where both primary versions qualified, step, time and recovery reductions are undefined. The complete reliability and step-reduction target was not met.
+
+The replay distinguishes controller engineering from neural weight training and preserves failures, parameter changes and measured step counts. All 239 frozen source/configuration hashes remained unchanged. The pilot accounts for 24 physical attempts and 1.390 summed single-thread simulation wall-hours within its three-hour ceiling. Physics ran locally; Modal hosted the research backend. [Service receipts](evidence/inkling-v21/service-receipts.json) · [All experiments](evidence/inkling-v21/experiments.json) · [Numerical assessment](evidence/inkling-v21/assessment.json).
+
+past.dev completed 12 writes and 17 logical recalls, including 15 verified cross-role recalls, with no pending ingestion. Exa made two searches. Tinker accounting is 87,228 actual-or-reserved tokens; the first failed structured-output call retains its conservative reservation. These are activity records rather than a billed-credit total. No new private-audience canary or search/memory ablation was run in this pilot.
 
 ## V19: paper-free desk and step-first post-training
 
