@@ -84,7 +84,7 @@ def main():
         import modal
         source = Path(a.source)
         report = json.loads((source / 'report.json').read_text())
-        assert report['study'] == 'mochi-paperfree-v19' and report['status'] == 'completed'
+        assert report['study'] in ['mochi-paperfree-v19', 'mochi-paperfree-v19r1'] and report['status'] == 'completed'
         cps = {c['update']: c for c in report['checkpoints']}
         assert set(cps) == {0, 1, 4, 8} and all(c['development'] for c in cps.values())
         selected = report['selected_checkpoint']['update']
@@ -110,6 +110,8 @@ def main():
             c = cps[update]
             files[file] = metadata(row, episode, {'checkpoint_update': update,
                 'checkpoint_id': c['checkpoint_id'], 'cumulative_updates': c['cumulative_updates']}, d)
+            files[file]['execution_source_sha'] = report['carried_baseline']['source_sha'] if kind == 'development' and update == 0 and report.get('carried_baseline') else report['source_sha']
+            files[file]['execution_workflow_run'] = report['carried_baseline']['workflow_run'] if kind == 'development' and update == 0 and report.get('carried_baseline') else a.workflow_run
             return file
 
         for seed in report['protocol']['development_seeds']:
@@ -132,7 +134,7 @@ def main():
         manifest.update(evaluation_status='completed', selection_finalized=True, selected_update=selected,
             services=report['services']['eligibility'], campaign_id=report['run_id'],
             execution_workflow_run=a.workflow_run, display_note=note,
-            budget_usage_or_reserved=report['budget_usage_or_reserved'])
+            budget_usage_or_reserved=report['budget_usage_or_reserved'], carried_baseline=report.get('carried_baseline'), data_provenance=report.get('data_provenance'))
         report = public_evidence(public_report(report), report['run_id'])
     manifest.update(scene=scene, scenarios=scenarios, recordings=files,
         default_scenario=next((s['id'] for s in scenarios if s['partition'] == 'held_out'), scenarios[0]['id']))

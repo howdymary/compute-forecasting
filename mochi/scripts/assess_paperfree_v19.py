@@ -20,7 +20,7 @@ def main():
     report = json.loads((source / 'report.json').read_text())
     cfg = report['protocol']
     assert report['status'] == 'completed' and report['held_out_opened']
-    assert report['study'] == cfg['study'] == 'mochi-paperfree-v19'
+    assert report['study'] == cfg['study'] and cfg['study'] in ['mochi-paperfree-v19', 'mochi-paperfree-v19r1']
     for name, expected in cfg['frozen_sha256'].items():
         assert hashlib.sha256((ROOT / name).read_bytes()).hexdigest() == expected, name
     partitions = [set(cfg[k]) for k in ['training_seeds', 'development_seeds', 'held_out_seeds']]
@@ -48,8 +48,9 @@ def main():
         assert summary(cohorts[label], cfg) == report['held_out'][label], label
     assert paired(cohorts['parent'], cohorts['selected']) == report['paired_held_out']
     receipts = [r['receipt'] for r in report['physics_receipts']]
-    attempts = cfg['engineering_usage']['physical_rollouts'] + sum(r['physical_rollouts'] for r in receipts)
-    hours = cfg['engineering_usage']['simulation_cpu_hours'] + sum(r['duration_seconds'] for r in receipts) / 3600.
+    carried = cfg.get('carried_usage', cfg['engineering_usage'])
+    attempts = carried['physical_rollouts'] + sum(r['physical_rollouts'] for r in receipts)
+    hours = carried['simulation_cpu_hours'] + sum(r['duration_seconds'] for r in receipts) / 3600.
     assert attempts == report['budget_usage_or_reserved']['physical_rollouts']
     assert abs(hours - report['budget_usage_or_reserved']['simulation_cpu_hours']) < 1e-8
     for key, used in report['budget_usage_or_reserved'].items():

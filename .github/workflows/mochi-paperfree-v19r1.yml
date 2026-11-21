@@ -1,0 +1,53 @@
+name: Mochi corrected branch-scope post-training
+on:
+  push:
+    branches: [mochi-desk-v3]
+    paths: ['mochi/configs/paperfree-v19r1-launch.json']
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: mochi-paperfree-v19r1-budget
+  cancel-in-progress: false
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    env:
+      PYTHONPATH: ${{ github.workspace }}/mochi/src
+      MOCHI_ROOT: ${{ github.workspace }}/mochi
+      PYTHONHASHSEED: '0'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - name: Install isolated pinned runtime
+        run: |
+          python -m pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install './mochi[remote,robotics,dev]' pyyaml==6.0.2
+          python mochi/scripts/fetch_visual_models.py
+      - name: Verify paper removal and reward contract
+        run: python -m pytest -q mochi/tests/test_paperfree_v19.py mochi/tests/test_paperfree_v19r1.py
+      - name: Retain the stopped zero-update campaign and measured branches
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p mochi/artifacts/paperfree-v19r1-carry
+          gh run download 44839589468 --repo howdymary/mochi-demo --name mochi-paperfree-v19-training-44839589468 --dir mochi/artifacts/paperfree-v19r1-carry
+      - name: Train and evaluate the paper-free selector
+        timeout-minutes: 220
+        env:
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+          EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
+          PAST_API_KEY: ${{ secrets.PAST_API_KEY }}
+        run: python -u -m mochi.paperfree_v19r1.train
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mochi-paperfree-v19r1-training-${{ github.run_id }}
+          path: mochi/artifacts/paperfree-v19r1-training/
+          retention-days: 30

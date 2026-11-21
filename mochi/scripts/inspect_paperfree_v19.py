@@ -9,10 +9,11 @@ import modal
 def main():
     p = argparse.ArgumentParser()
     p.add_argument('--run', default='mochi-p19-44839589468')
+    p.add_argument('--progress-dict', default='mochi-paperfree-v19-progress')
     p.add_argument('--save', help='Backend/local report destination, not a frontend asset')
     a = p.parse_args()
     try:
-        r = modal.Dict.from_name('mochi-paperfree-v19-progress').get(a.run)
+        r = modal.Dict.from_name(a.progress_dict).get(a.run)
     except modal.exception.NotFoundError:
         print(json.dumps({'run_id': a.run, 'status': 'coordinator-not-started'}))
         return
