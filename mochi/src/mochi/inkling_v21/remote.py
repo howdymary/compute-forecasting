@@ -96,6 +96,10 @@ async def research(request_id: str, packet: dict, images: list[bytes], phase: st
             'experiment_id': RUN, 'request_id': request_id, 'packet_sha256': digest(packet),
             'summary': packet['summary'], 'scope': 'Exact numerical and code records remain in the packet. Model suggestions are unverified until physical evaluation.'})
         recalled = await memory.read('researcher' if phase == 'proposal' else 'critic', observation)
+        prior_evidence = []
+        for rid in packet.get('recall_record_ids', [])[:2]:
+            assert rid in memory.records, 'Only this Mochi study\'s existing records may be requested'
+            prior_evidence.append(await memory.read('designer' if phase == 'proposal' else 'critic', rid))
         sources = []
         if phase == 'proposal' and packet.get('research_question') and budget['exa_searches'] < 2:
             budget['exa_searches'] += 1
@@ -116,7 +120,7 @@ async def research(request_id: str, packet: dict, images: list[bytes], phase: st
             'Every candidate needs an id, domain, changes, mechanism and predicted measurement. '
             'If the evidence does not justify a change, return no candidates. '
             'For a review, distinguish measured success from hypotheses and reject unsupported improvement claims.')
-        content = [{'type': 'text', 'text': json.dumps({'packet': packet, 'recalled_observation': recalled, 'sources': sources})}]
+        content = [{'type': 'text', 'text': json.dumps({'packet': packet, 'recalled_observation': recalled, 'recalled_prior_evidence': prior_evidence, 'sources': sources})}]
         content += [{'type': 'image_url', 'image_url': {'url': 'data:image/png;base64,' + base64.b64encode(x).decode()}} for x in images]
         prompt = renderer.build_generation_prompt([{'role': 'system', 'content': system}, {'role': 'user', 'content': content}], effort=.05)
         maximum = 8192
